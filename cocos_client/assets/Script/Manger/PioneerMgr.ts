@@ -35,11 +35,6 @@ export default class PioneerMgr {
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_MOVE_MEETTED, this._onPioneerMoveMeeted, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_LOGIC_MOVE, this._onPioneerLogicMove, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_REBIRTH_BEGIN, this._onPioneerRebirthBegin, this);
-
-        const originalPioneer = DataMgr.s.pioneer.getCurrentPlayer();
-        if (!!originalPioneer && originalPioneer.NFTId == null) {
-            this._bindPlayerNFT(originalPioneer.id, originalPioneer.NFTInitLinkId);
-        }
     }
     public pioneerHealHpToMax(pioneerId: string) {
         const costTroops: number = DataMgr.s.pioneer.gainHp(pioneerId, DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop));
@@ -92,10 +87,6 @@ export default class PioneerMgr {
                     consumeEnergy: 0,
                     exploredEvents: 0,
                 });
-                const player = pioneer as MapPlayerPioneerObject;
-                if (!!player && player.NFTId == null) {
-                    this._bindPlayerNFT(player.id, player.NFTInitLinkId);
-                }
             }
         }
     }
@@ -448,7 +439,7 @@ export default class PioneerMgr {
             } else if (stayBuilding.type == MapBuildingType.tavern) {
                 if (pioneer.type == MapPioneerType.player) {
                     const tavern = stayBuilding as MapBuildingTavernObject;
-                    if (tavern.tavernCountdownTime <= 0) {
+                    if (tavern.tavernCountdownTime <= 0 && tavern.nft == null) {
                         const result = await UIPanelManger.inst.pushPanel(UIName.TavernUI);
                         if (result.success) {
                             result.node.getComponent(TavernUI).configuration(stayBuilding.id);
@@ -461,11 +452,6 @@ export default class PioneerMgr {
                 }
             }
         }
-    }
-
-    private _bindPlayerNFT(id: string, linkId: string) {
-        const NFT = DataMgr.s.nftPioneer.generateNewNFT(linkId);
-        DataMgr.s.pioneer.bindPlayerNFT(id, NFT);
     }
 
     //------------------------------- notification

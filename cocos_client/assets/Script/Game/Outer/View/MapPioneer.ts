@@ -24,7 +24,7 @@ import {
     Event,
 } from "cc";
 import { LanMgr } from "../../../Utils/Global";
-import { MapPioneerActionType, MapPioneerEventStatus, MapPioneerMoveDirection, MapPioneerObject } from "../../../Const/PioneerDefine";
+import { MapPioneerActionType, MapPioneerEventStatus, MapPioneerMoveDirection, MapPioneerObject, MapPioneerType, MapPlayerPioneerObject } from "../../../Const/PioneerDefine";
 const { ccclass, property } = _decorator;
 
 @ccclass("MapPioneer")
@@ -50,7 +50,15 @@ export class MapPioneer extends Component {
 
     public refreshUI(model: MapPioneerObject) {
         this._model = model;
-        this.nameLabel.string = LanMgr.getLanById(this._model.name);
+
+        let isNFTPlayer: boolean = false;
+        if (model.type == MapPioneerType.player) {
+            const player = model as MapPlayerPioneerObject;
+            if (player.NFT != null) {
+                isNFTPlayer = true;
+            }
+        }
+        this.nameLabel.string = isNFTPlayer ? this._model.name : LanMgr.getLanById(this._model.name);
         this._actionTimeStamp = this._model.actionEndTimeStamp;
         this._actionTotalTime = this._actionTimeStamp - model.actionBeginTimeStamp;
 

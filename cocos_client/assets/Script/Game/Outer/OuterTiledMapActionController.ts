@@ -452,7 +452,7 @@ export class OuterTiledMapActionController extends ViewController {
             this._actionView.hide();
             this._mapActionCursorView.hide();
             outPioneerController.hideMovingPioneerAction();
-            outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
+            outPioneerController.clearPioneerFootStep();
             return;
         }
         if (this["_actionViewActioned"] == true) {
@@ -524,7 +524,7 @@ export class OuterTiledMapActionController extends ViewController {
                     if (tempTavern.nft != null) {
                         const result = await UIPanelManger.inst.pushPanel(UIName.NFTViewInfoUI);
                         if (result.success) {
-                            result.node.getComponent(NFTViewInfoUI).showItem(tempTavern.nft);
+                            result.node.getComponent(NFTViewInfoUI).showItem(stayBuilding.id, stayBuilding.stayMapPositions, tempTavern.nft);
                         }
                         return;
                     }
@@ -733,7 +733,7 @@ export class OuterTiledMapActionController extends ViewController {
                     this["_actionViewActioned"] = true;
                     this._mapActionCursorView.hide();
                     outPioneerController.hideMovingPioneerAction();
-                    outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
+                    outPioneerController.clearPioneerFootStep();
                 }
             );
             if (actionMovingPioneerId != null) {

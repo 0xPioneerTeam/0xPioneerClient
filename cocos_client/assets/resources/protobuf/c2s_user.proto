@@ -13,6 +13,7 @@ message login {
 // create player, only 1 plyaer per user
 message create_player {
     required string pname = 1;  // player name
+    required uint32 gender = 2; // player gender, 0=unknown, 1=male, 2=female
 }
 
 // enter game

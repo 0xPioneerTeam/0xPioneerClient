@@ -2,6 +2,7 @@ import { Vec2 } from "cc";
 import { TileHexDirection, TilePos } from "../Game/TiledMap/TileTool";
 import { AttrChangeType, GetPropData, MapMemberFactionType, MapMemberGetTalkCountStruct, MapMemberShowHideCountStruct } from "./ConstDefine";
 import { ItemConfigType } from "./Item";
+import { NFTPioneerObject } from "./NFTPioneerDefine";
 
 export interface PioneerConfigData {
     id: string;
@@ -170,8 +171,7 @@ export interface MapPioneerData {
 export interface MapPlayerPioneerData extends MapPioneerData {
     rebirthCountTime: number;
     killerId: string;
-    NFTInitLinkId: string;
-    NFTId: string;
+    NFT: NFTPioneerObject;
 }
 
 export interface MapNpcPioneerData extends MapPioneerData {

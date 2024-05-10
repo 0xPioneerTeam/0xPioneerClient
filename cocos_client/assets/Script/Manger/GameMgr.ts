@@ -117,8 +117,8 @@ export default class GameMgr {
         // nft
         let nftChangeRate: number = 0;
         const pioneer = DataMgr.s.pioneer.getById(pioneerId) as MapPlayerPioneerObject;
-        if (!!pioneer && pioneer.NFTId != null) {
-            nftChangeRate = DataMgr.s.nftPioneer.getNFTEffectById(pioneer.NFTId, type);
+        if (!!pioneer && pioneer.NFT != null) {
+            nftChangeRate = DataMgr.s.nftPioneer.getNFTEffectById(pioneer.NFT.uniqueId, type);
         }
 
         return this._getEffectResultNum(type, originalValue, artifactChangeRate + nftChangeRate);

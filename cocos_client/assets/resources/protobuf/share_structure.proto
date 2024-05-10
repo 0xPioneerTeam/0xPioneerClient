@@ -14,21 +14,8 @@ message user_data {
 // player simple info
 message player_sinfo {
     required uint32 playerid = 1; // player id
-    required uint32 mapid = 2;
-    required string pname = 3;
-    required uint32 speed = 4;
-    required uint32 level = 5;
-    required uint32 exp = 6;
-    optional uint32 lastAPRecTms = 7;
-    required pos2d pos = 8;
-    required uint32 treasureProgress = 9;
-    required heat_value_data heatValue = 10;
-    repeated string treasureDidGetRewards = 11;
-    repeated string pointTreasureDidGetRewards = 12;
-    required uint32 cityRadialRange = 13;
-    required bool didFinishRookie = 14;
-    optional string generateTroopInfo = 15;
-    optional string generateEnergyInfo = 16;
+    required uint32 gender = 2; // gender
+    required string pname = 3; // player name
 }
 
 // self player data
@@ -39,27 +26,9 @@ message player_data {
 // player info 
 message player_info {
     required player_sinfo sinfo = 1; // player simple info
-    repeated building_data buildings = 2;
-}
 
-message building_data {
-    required string id = 1;
-    required string anim = 2;
-    required uint32 level = 3;
-    optional string prefab = 4;
-    optional string desc = 5;
-    required uint32 upgradeCountTime = 6;
-    required uint32 upgradeTotalTime = 7;
-}
-
-message pos2d {
-    required uint32 x = 1;
-    required uint32 y = 2;
-}
-
-message heat_value_data {
-    required uint32 getTimestamp = 1;
-    required uint32 currentHeatValue = 2;
+    required uint32 level = 2; // user level
+    required uint32 exp = 3; // user exp
 }
 
 message tran_data {

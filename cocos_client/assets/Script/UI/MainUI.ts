@@ -75,11 +75,11 @@ export class MainUI extends ViewController {
         //DataMgr.n.websocketMsg.create_pioneer({
         //    type: "0"
         //});
-        // DataMgr.s.item.addObj_item([new ItemData("8005", 1000)]);
-        // DataMgr.s.item.addObj_item([new ItemData("8001", 1000)]);
-        // DataMgr.s.item.addObj_item([new ItemData("8002", 1000)]);
-        // DataMgr.s.item.addObj_item([new ItemData("8003", 1000)]);
-        // DataMgr.s.item.addObj_item([new ItemData("8004", 1000)]);
+        DataMgr.s.item.addObj_item([new ItemData("8001", 1000)]);
+        DataMgr.s.item.addObj_item([new ItemData("8002", 1000)]);
+        DataMgr.s.item.addObj_item([new ItemData("8003", 1000)]);
+        DataMgr.s.item.addObj_item([new ItemData("8004", 1000)]);
+        DataMgr.s.item.addObj_item([new ItemData("8005", 1000)]);
         // DataMgr.s.item.addObj_item([new ItemData("10", 1)]);
         // DataMgr.s.item.addObj_item([new ItemData("11", 1)]);
         // DataMgr.s.nftPioneer.generateNewNFT();

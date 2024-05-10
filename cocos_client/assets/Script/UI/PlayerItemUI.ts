@@ -1,6 +1,6 @@
 import { _decorator, Component, Label, log, Node, Sprite, SpriteFrame, Button, ProgressBar } from 'cc';
 import { LanMgr, PioneerMgr } from '../Utils/Global';
-import { MapPioneerActionType, MapPioneerEventStatus, MapPlayerPioneerObject } from '../Const/PioneerDefine';
+import { MapPioneerActionType, MapPioneerEventStatus, MapPioneerType, MapPlayerPioneerObject } from '../Const/PioneerDefine';
 import { DataMgr } from '../Data/DataMgr';
 const { ccclass, property } = _decorator;
 
@@ -9,7 +9,7 @@ export class PlayerItemUI extends Component {
 
     refreshUI(model: MapPlayerPioneerObject) {
         //name
-        this._nameLabel.string = LanMgr.getLanById(model.name);
+        this._nameLabel.string = model.NFT != null ? model.name : LanMgr.getLanById(model.name);
         //role
         let isSelf: boolean = true;
         for (const name of this._roleNames) {

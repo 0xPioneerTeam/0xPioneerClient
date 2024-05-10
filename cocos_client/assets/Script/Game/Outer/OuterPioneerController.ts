@@ -103,13 +103,12 @@ export class OuterPioneerController extends ViewController {
         const footViews = this._addFootSteps(movePaths);
         this._footPathMap.set(pioneerId, footViews);
     }
-    public clearPioneerFootStep(pioneerId: string) {
-        if (this._footPathMap.has(pioneerId)) {
-            for (const view of this._footPathMap.get(pioneerId)) {
-                view.destroy();
+    public clearPioneerFootStep() {
+        this._footPathMap.forEach((value: Node[])=> {
+            for (const temp of value) {
+                temp.destroy();
             }
-            this._footPathMap.delete(pioneerId);
-        }
+        });
     }
 
     @property(Prefab)

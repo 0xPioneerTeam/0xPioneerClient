@@ -24,7 +24,8 @@ message create_player_res {
 // enter game
 message enter_game_res {
     required int32 res = 1; // error code see {ServerErrorCode}
-    optional share.player_data data = 2;
+    optional share.player_data data = 2; // full player data of self
+    required string archives = 3;
 }
 
 // ----------------------------------------------------------------------------
@@ -178,8 +179,6 @@ message player_wormhole_set_attacker_res {
 
 message player_wormhole_fight_res {
     required uint32 res = 1;
-    required string defenderWallet = 2;
-    required string defenderData = 3;
 }
 
 message get_battle_report_res {

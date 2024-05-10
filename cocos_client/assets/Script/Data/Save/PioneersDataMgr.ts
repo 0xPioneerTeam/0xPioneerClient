@@ -17,7 +17,6 @@ import {
     MapPlayerPioneerObject,
     PioneerConfigData,
 } from "../../Const/PioneerDefine";
-import GameMainHelper from "../../Game/Helper/GameMainHelper";
 import { NotificationName } from "../../Const/Notification";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { Ichange_pioneer_type, s2c_user } from "../../Net/msg/WebsocketMsg";
@@ -338,55 +337,43 @@ export class PioneersDataMgr {
     }
 
     public createNFTPlayer(nft: NFTPioneerObject, originalStayPos: Vec2) {
-        // const obj: MapPlayerPioneerObject  = {
-        //     id: nft.uniqueId,
-        //     show: true,
-        //     faction: MapMemberFactionType.friend,
-        //     type: MapPioneerType.player,
-        //     animType: "self",
-        //     name: nft.name,
-        //     stayPos: originalStayPos,
+        const obj: MapPlayerPioneerObject  = {
+            id: nft.uniqueId,
+            show: true,
+            faction: MapMemberFactionType.friend,
+            type: MapPioneerType.player,
+            animType: "self",
+            name: nft.name,
+            stayPos: originalStayPos,
 
-        //     hpMax: nft.hp,
-        //     hp: nft.hp,
-        //     attack: nft.attack,
-        //     defend: nft.defense,
-        //     speed: nft.speed,
+            hpMax: nft.hp,
+            hp: nft.hp,
+            attack: nft.attack,
+            defend: nft.defense,
+            speed: nft.speed,
 
-        //     movePaths: [],
+            movePaths: [],
 
-        //     actionType: MapPioneerActionType.idle,
-        //     eventStatus: MapPioneerEventStatus.None,
-        //     actionBeginTimeStamp: 0,
-        //     actionEndTimeStamp: 0,
+            actionType: MapPioneerActionType.idle,
+            eventStatus: MapPioneerEventStatus.None,
+            actionBeginTimeStamp: 0,
+            actionEndTimeStamp: 0,
 
-        //     logics: null,
+            logics: [],
 
-        //     winProgress: null,
-        //     winExp: null,
-        //     drop: null,
+            winProgress: 0,
+            winExp: 0,
+            drop: [],
 
-        //     rebirthCountTime: -1,
-        //     killerId: null,
-        //     NFT: nft
-        // };
-        // this._pioneers.push(obj);
-        // this.saveObj();
-    }
-    public bindPlayerNFT(pioneerId: string, NFT: NFTPioneerObject) {
-        const findPioneer = this.getById(pioneerId) as MapPlayerPioneerObject;
-        if (findPioneer == undefined) {
-            return;
-        }
-        findPioneer.NFTId = NFT.uniqueId;
+            rebirthCountTime: -1,
+            killerId: null,
+            NFT: nft
+        };
+        this._pioneers.push(obj);
         this.saveObj();
-
-        this.changeHpMax(pioneerId, NFT.hp);
-        this.changeAttack(pioneerId, NFT.attack);
-        this.changeDefend(pioneerId, NFT.defense);
-        this.changeSpeed(pioneerId, NFT.speed);
+        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { id: obj.id, show: true });
     }
-    public unbindPlayerNFT(pioneerId: string, NFT: NFTPioneerObject) {}
+
 
     private _initData() {
         this._pioneers = [];
@@ -683,7 +670,7 @@ export class PioneersDataMgr {
         let currentPlayer: MapPlayerPioneerObject = null;
         const allPlayers = this.getAllPlayers();
         for (const player of allPlayers) {
-            if (player.NFTId == NFT.uniqueId) {
+            if (player.NFT.uniqueId == NFT.uniqueId) {
                 currentPlayer = player;
                 break;
             }
