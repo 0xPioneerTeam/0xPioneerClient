@@ -12,6 +12,7 @@ import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("UIHUDController")
@@ -90,6 +91,7 @@ export class UIHUDController extends ViewController {
         if (!GameMgr.enterGameSence) {
             return;
         }
+        GameMusicPlayMgr.playMapRefreshEffect();
         this._resoucesShowItems.push(tip);
         this._showResouceGettedView();
     }

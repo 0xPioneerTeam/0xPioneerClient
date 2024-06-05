@@ -37,6 +37,7 @@ import { NotificationName } from "../Const/Notification";
 import { GameExtraEffectType } from "../Const/ConstDefine";
 import ArtifactConfig from "../Config/ArtifactConfig";
 import LongPressButton from "../BasicView/LongPressButton";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("RelicTowerUI")
@@ -270,10 +271,12 @@ export class RelicTowerUI extends ViewController {
 
     //------------------------------------------------------------ action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private onTapOnEffectTab() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._isShowOnEffect) {
             return;
         }
@@ -281,6 +284,7 @@ export class RelicTowerUI extends ViewController {
         this._refreshUI();
     }
     private onTapStorageTab() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (!this._isShowOnEffect) {
             return;
         }
@@ -289,6 +293,7 @@ export class RelicTowerUI extends ViewController {
     }
     //------------------------------------------------------------ on effect
     private async onTapSlotItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         const result = await UIPanelManger.inst.pushPanel(UIName.RelicSelectUI);
         if (!result.success) {
@@ -297,6 +302,7 @@ export class RelicTowerUI extends ViewController {
         result.node.getComponent(RelicSelectUI).configuration(index);
     }
     private async onLongTapSlotItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const data = DataMgr.s.artifact.getByUnqueId(customEventData);
         if (data == undefined) {
             return;
@@ -309,6 +315,7 @@ export class RelicTowerUI extends ViewController {
     }
     //------------------------------------------------------------ storage
     private onTapInvokeSelectItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._compositeData != null) {
             return;
         }
@@ -329,6 +336,7 @@ export class RelicTowerUI extends ViewController {
         this._refreshUI();
     }
     private async onLongTapInvokeSelectItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (index < 0 || index > this._invokeStorageDatas.length - 1) {
             return;
@@ -341,6 +349,7 @@ export class RelicTowerUI extends ViewController {
         result.node.getComponent(ArtifactInfoUI).showItem([data]);
     }
     private onTapSelectedItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (index < 0 || index > this._invokeSelectDatas.length - 1) {
             return;
@@ -352,6 +361,7 @@ export class RelicTowerUI extends ViewController {
         this._refreshUI();
     }
     private async onLongTapSelectedItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (index < 0 || index > this._invokeSelectDatas.length - 1) {
             return;
@@ -365,6 +375,7 @@ export class RelicTowerUI extends ViewController {
     }
 
     private onTapInvoke() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._invokeSelectDatas.length != 3) {
             return;
         }
@@ -377,11 +388,13 @@ export class RelicTowerUI extends ViewController {
         });
     }
     private onTapR() {
+        GameMusicPlayMgr.playTapButtonEffect();
         this._invokeSelectRank = 0;
         this._invokeSelectDatas = [];
         this._refreshUI();
     }
     private onTapGet() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._compositeData == null) {
             return;
         }
@@ -390,6 +403,7 @@ export class RelicTowerUI extends ViewController {
         this._refreshUI();
     }
     private async onLongTapComposedItem() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._compositeData == null) {
             return;
         }

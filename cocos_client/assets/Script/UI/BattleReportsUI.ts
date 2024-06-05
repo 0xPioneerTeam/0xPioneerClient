@@ -8,6 +8,7 @@ import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 
 const { ccclass } = _decorator;
 
@@ -171,11 +172,13 @@ export class BattleReportsUI extends ViewController {
     }
 
     private _onClickMarkAllAsRead() {
+        GameMusicPlayMgr.playTapButtonEffect();
         DataMgr.s.battleReport.markAllAsRead();
         this.refreshUI();
     }
 
     private _onClickDeleteReadReports() {
+        GameMusicPlayMgr.playTapButtonEffect();
         DataMgr.s.battleReport.deleteReadReports();
         this.refreshUIAndResetScroll();
     }
@@ -198,6 +201,7 @@ export class BattleReportsUI extends ViewController {
         this._typeFilterButtons[0].node.on(
             Button.EventType.CLICK,
             () => {
+                GameMusicPlayMgr.playTapButtonEffect();
                 this._filterState.filterType = ReportsFilterType.None;
                 this.refreshUIAndResetScroll();
             },
@@ -212,6 +216,7 @@ export class BattleReportsUI extends ViewController {
             this._typeFilterButtons[i].node.on(
                 Button.EventType.CLICK,
                 () => {
+                    GameMusicPlayMgr.playTapButtonEffect();
                     this._filterState.filterType = ReportsFilterType.ReportType;
                     this._filterState.reportType = iCopy;
                     this.refreshUIAndResetScroll();
@@ -225,6 +230,7 @@ export class BattleReportsUI extends ViewController {
         this._pendingButton.node.on(
             Button.EventType.CLICK,
             () => {
+                GameMusicPlayMgr.playTapButtonEffect();
                 this._filterState.filterType = ReportsFilterType.Pending;
                 this.refreshUIAndResetScroll();
             },
@@ -271,6 +277,7 @@ export class BattleReportsUI extends ViewController {
     //---------------------------------------------------
     // action
     onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
     }
 

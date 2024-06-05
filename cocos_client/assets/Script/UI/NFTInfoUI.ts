@@ -15,6 +15,7 @@ import { NFTSkillDetailUI } from "./NFTSkillDetailUI";
 import { NFTSkillLearnUI } from "./NFTSkillLearnUI";
 import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("NFTInfoUI")
@@ -147,17 +148,20 @@ export class NFTInfoUI extends ViewController {
     }
     //---------------------------------------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
 
     private onTapShowLast() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._currentIndex > 0) {
             this._currentIndex -= 1;
         }
         this._refreshUI();
     }
     private onTapShowNext() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._currentIndex < this._NFTDatas.length - 1) {
             this._currentIndex += 1;
         }
@@ -165,6 +169,7 @@ export class NFTInfoUI extends ViewController {
     }
 
     private async onTapLevelUp() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._NFTDatas != null && this._currentIndex >= 0 && this._currentIndex < this._NFTDatas.length) {
             const result = await UIPanelManger.inst.pushPanel(UIName.NFTLevelUpUI);
             if (result.success) {
@@ -173,6 +178,7 @@ export class NFTInfoUI extends ViewController {
         }
     }
     private async onTapRankUp() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._NFTDatas != null && this._currentIndex >= 0 && this._currentIndex < this._NFTDatas.length) {
             const result = await UIPanelManger.inst.pushPanel(UIName.NFTRankUpUI);
             if (result.success) {
@@ -181,6 +187,7 @@ export class NFTInfoUI extends ViewController {
         }
     }
     private async onTapSkill(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const data = this._NFTDatas[this._currentIndex];
         const index = parseInt(customEventData);
         const result = await UIPanelManger.inst.pushPanel(UIName.NFTSkillDetailUI);
@@ -190,6 +197,7 @@ export class NFTInfoUI extends ViewController {
         result.node.getComponent(NFTSkillDetailUI).showItem(this._skillAllItems[index].worldPosition, data, index);
     }
     private async onTapAddSkill() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const data = this._NFTDatas[this._currentIndex];
         const result = await UIPanelManger.inst.pushPanel(UIName.NFTSkillLearnUI);
         if (!result.success) {

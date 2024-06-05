@@ -15,6 +15,7 @@ import ArtifactEffectConfig from "../Config/ArtifactEffectConfig";
 import { GetPropRankColor } from "../Const/ConstDefine";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("ArtifactInfoUI")
@@ -145,6 +146,7 @@ export class ArtifactInfoUI extends ViewController {
    
     //---------------------------------------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._artifacts.length <= 0) {
             await this.playExitAnimation();
             UIPanelManger.inst.popPanel(this.node);

@@ -11,6 +11,7 @@ import { AlterView } from "./View/AlterView";
 import { DataMgr } from "../Data/DataMgr";
 import { GetPropRankColor } from "../Const/ConstDefine";
 import { NetworkMgr } from "../Net/NetworkMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("NFTSkillDetailUI")
@@ -69,10 +70,12 @@ export class NFTSkillDetailUI extends ViewController {
 
     //---------------------------------------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapForget() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const result = await UIPanelManger.inst.pushPanel(HUDName.Alter, UIPanelLayerType.HUD);
         if (!result.success) {
             return;

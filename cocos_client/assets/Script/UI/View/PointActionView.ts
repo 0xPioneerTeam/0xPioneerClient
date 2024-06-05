@@ -10,6 +10,7 @@ import ItemData from "../../Const/Item";
 import ArtifactData from "../../Model/ArtifactData";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import { LanMgr } from "../../Utils/Global";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("PointActionView")
@@ -141,6 +142,7 @@ export class PointActionView extends Component {
 
     //----------------------------------------------
     private onTapOpen() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._isOpenBox) {
             return;
         }
@@ -148,6 +150,7 @@ export class PointActionView extends Component {
         this._refreshUI();
     }
     private onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (!this._isOpenBox) {
             return;
         }
@@ -155,9 +158,11 @@ export class PointActionView extends Component {
         this._refreshUI();
     }
     private async onTapProgress() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await UIPanelManger.inst.pushPanel(UIName.PointTreasureUI);
     }
     private async onTapTreasure() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._currentTreasureData == null) {
             return;
         }

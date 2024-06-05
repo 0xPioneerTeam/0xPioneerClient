@@ -11,6 +11,7 @@ import { ConfigType, WorldBoxThresholdParam, WorldTreasureChanceLimitHeatValueCo
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import { NetworkMgr } from "../../Net/NetworkMgr";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("ReWorldTreasureView")
@@ -99,6 +100,7 @@ export class ReWorldTreasureView extends Component {
     }
     //----------------------------------------------
     private async onTapProgress() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.pushPanel(UIName.WorldTreasureUIRe);
     }
 

@@ -3,6 +3,7 @@ import ViewController from "../BasicView/ViewController";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { NFTPioneerObject } from "../Const/NFTPioneerDefine";
 import { DataMgr } from "../Data/DataMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("DefenderSelectUI")
@@ -123,10 +124,12 @@ export class DefenderSelectUI extends ViewController {
 
     //---------------------------------------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private onTapItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index: number = parseInt(customEventData);
         if (index != this._selectIndex) {
             this._selectIndex = index;
@@ -134,6 +137,7 @@ export class DefenderSelectUI extends ViewController {
         }
     }
     private async onTapConfirm() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._selectIndex < 0 || this._selectIndex >= this._pioneerIds.length) {
             return;
         }

@@ -8,6 +8,7 @@ import { NFTInfoUI } from "./NFTInfoUI";
 import { DataMgr } from "../Data/DataMgr";
 import { LanMgr } from "../Utils/Global";
 import { BackpackArrangeType } from "../Const/ConstDefine";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("NFTBackpackUI")
@@ -103,10 +104,12 @@ export class NFTBackpackUI extends ViewController {
     }
     //------------------------------------------------------------ action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (index >= 0 && index < this._NFTDatas.length) {
             const view = await UIPanelManger.inst.pushPanel(UIName.NFTInfoUI);
@@ -116,15 +119,18 @@ export class NFTBackpackUI extends ViewController {
         }
     }
     private onTapArrange() {
+        GameMusicPlayMgr.playTapButtonEffect();
         DataMgr.s.nftPioneer.NFTSort(this._currentArrangeType);
         this._refreshBackpackUI();
     }
 
     private onTapSortMenuAction() {
+        GameMusicPlayMgr.playTapButtonEffect();
         this._selectSortMenuShow = !this._selectSortMenuShow;
         this._refreshMenu();
     }
     private onTapSelectSortCondition(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (customEventData == this._currentArrangeType) {
             return;
         }

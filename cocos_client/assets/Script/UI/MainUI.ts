@@ -16,6 +16,7 @@ import { NFTBackpackUI } from "./NFTBackpackUI";
 import CommonTools from "../Tool/CommonTools";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import ArtifactData from "../Model/ArtifactData";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -60,6 +61,7 @@ export class MainUI extends ViewController {
         this.backpackBtn.node.on(
             Button.EventType.CLICK,
             async () => {
+                GameMusicPlayMgr.playTapButtonEffect();
                 await UIPanelManger.inst.pushPanel(UIName.Backpack);
             },
             this
@@ -124,6 +126,7 @@ export class MainUI extends ViewController {
 
     //------------------------------------------------- action
     private async onTapNewSettlementTip() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const currentData = localStorage.getItem("local_newSettle");
         if (currentData != null) {
             NetworkMgr.websocketMsg.get_user_settlement_info({});
@@ -138,6 +141,7 @@ export class MainUI extends ViewController {
         }
     }
     private async onTapTaskList() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (UIPanelManger.inst.panelIsShow(UIName.TaskListUI)) {
             return;
         }
@@ -148,18 +152,22 @@ export class MainUI extends ViewController {
         result.node.getComponent(TaskListUI).refreshUI();
     }
     private async onTapNFT() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const result = await UIPanelManger.inst.pushPanel(UIName.NFTBackpackUI);
         if (result.success) {
             result.node.getComponent(NFTBackpackUI);
         }
     }
     private onTapChangeBuildingSetPos() {
+        GameMusicPlayMgr.playTapButtonEffect();
         GameMainHelper.instance.changeInnerBuildingLatticeEdit();
     }
     private async onTapSetDefender() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.pushPanel(UIName.DefenderSetUI);
     }
     private onTapTest() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const pioneerIds: string[] = ["pioneer_1", "pioneer_2", "pioneer_3"];
         for (let i = 0; i < pioneerIds.length; i++) {
             if (DataMgr.s.pioneer.getById(pioneerIds[i], true) == undefined) {
@@ -177,6 +185,7 @@ export class MainUI extends ViewController {
         }
     }
     private onTapRefreshMap() {
+        GameMusicPlayMgr.playTapButtonEffect();
         NetworkMgr.websocketMsg.reborn_all();
     }
     //----------------------------------------------------- notification

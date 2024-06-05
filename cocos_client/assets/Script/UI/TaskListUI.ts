@@ -12,6 +12,7 @@ import { MapNpcPioneerObject, MapPioneerObject } from "../Const/PioneerDefine";
 import { share } from "../Net/msg/WebsocketMsg";
 import TaskConfig from "../Config/TaskConfig";
 import TaskStepConfig from "../Config/TaskStepConfig";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -262,9 +263,11 @@ export class TaskListUI extends ViewController {
     //---------------------------------------------------
     // action
     private onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
     }
     private onTapShowDetail() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._isDetailShow) {
             return;
         }
@@ -273,6 +276,7 @@ export class TaskListUI extends ViewController {
         this.refreshUI();
     }
     private onTapActionItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (index >= this._toDoTaskList.length) {
             return;
@@ -319,6 +323,7 @@ export class TaskListUI extends ViewController {
         }
     }
     private onTapCloseDetail() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (!this._isDetailShow) {
             return;
         }
@@ -326,6 +331,7 @@ export class TaskListUI extends ViewController {
         this.refreshUI();
     }
     private onTapDetailToDo() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._isDetailToDoShow) {
             return;
         }
@@ -334,6 +340,7 @@ export class TaskListUI extends ViewController {
         this.refreshUI();
     }
     private onTapDetailCompleted() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (!this._isDetailToDoShow) {
             return;
         }
@@ -343,6 +350,7 @@ export class TaskListUI extends ViewController {
         this.refreshUI();
     }
     private onTapDetailTaskItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (index == this._detailSelectedIndex) {
             return;

@@ -7,6 +7,7 @@ import { InnerBuildingType } from "../Const/BuildingDefine";
 import { DataMgr } from "../Data/DataMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import { LanMgr } from "../Utils/Global";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("DelegateUI")
@@ -120,10 +121,12 @@ export class DelegateUI extends ViewController {
 
     //---------------------------------------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private onTapItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index: number = parseInt(customEventData);
         if (index != this._selectIndex) {
             this._selectIndex = index;
@@ -131,6 +134,7 @@ export class DelegateUI extends ViewController {
         }
     }
     private onTapConfirm() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._selectIndex < 0) {
             return;
         }

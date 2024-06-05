@@ -2,7 +2,7 @@ import NotificationMgr from "../Basic/NotificationMgr";
 import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
 import ItemData, { ItemConfigType, ItemType } from "../Const/Item";
 import { NotificationName } from "../Const/Notification";
-import { MINING_FINISHED_DATA, MapNpcPioneerObject, MapPioneerActionType, MapPioneerEventAttributesChangeType } from "../Const/PioneerDefine";
+import { MINING_FINISHED_DATA, MapNpcPioneerObject, MapPioneerActionType, MapPioneerEventAttributesChangeType, MapPioneerType, MapPlayerPioneerObject } from "../Const/PioneerDefine";
 import { c2s_user, s2c_user } from "../Net/msg/WebsocketMsg";
 import CLog from "../Utils/CLog";
 import { RunData } from "./RunData";
@@ -26,6 +26,8 @@ import GameMainHelper from "../Game/Helper/GameMainHelper";
 import TalkConfig from "../Config/TalkConfig";
 import { DialogueUI } from "../UI/Outer/DialogueUI";
 import MapBuildingConfig from "../Config/MapBuildingConfig";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import { ResourceCorrespondingItem } from "../Const/ConstDefine";
 
 export class DataMgr {
     public static r: RunData;
@@ -99,8 +101,17 @@ export class DataMgr {
 
             if (item.count > 0) {
                 const config = ItemConfig.getById(item.itemConfigId);
-                if (config != null && config.itemType != ItemType.Resource) {
-                    nonResourceGettedItems.push(item);
+                if (config != null) {
+                    if (config.itemType == ItemType.Resource) {
+                        GameMusicPlayMgr.playGetResourceEffect();
+                    } else {
+                        nonResourceGettedItems.push(item);
+                        if (config.grade >= 4) {
+                            GameMusicPlayMgr.playGetRateItemEffect();
+                        } else {
+                            GameMusicPlayMgr.playGetCommonItemEffect();
+                        }
+                    }
                 }
             }
         }
@@ -130,6 +141,9 @@ export class DataMgr {
             return;
         }
         for (const temple of p.data) {
+            if (temple.effectIndex >= 0) {
+                GameMusicPlayMgr.playEquepArtifactEffect();
+            }
             DataMgr.s.artifact.changeObj_artifact_effectIndex(temple.uniqueId, temple.effectIndex);
         }
     };
@@ -172,6 +186,22 @@ export class DataMgr {
         }
         DataMgr.s.innerBuilding.changePos(p.buildingId as InnerBuildingType, p.pos);
     };
+    public static player_building_levelup_res = (e: any) => {
+        const p: s2c_user.Iplayer_building_levelup_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        if (p.data.troopIng) {
+            GameMusicPlayMgr.playBeginBuildEffect();
+        }
+    };
+    public static player_generate_troop_start_res = (e: any) => {
+        const p = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        GameMusicPlayMgr.playBeginGenerateTroopEffect();
+    };
     //------------------------------------- storehouse
 
     //------------------------------------- map
@@ -206,6 +236,10 @@ export class DataMgr {
                                 } as MINING_FINISHED_DATA);
                             }
                         }
+                        if (oldData.type == newData.type && newData.type == MapPioneerType.player && oldData.actionType == MapPioneerActionType.dead) {
+                            // player rebirth
+                            GameMusicPlayMgr.playPioneerRebonEffect();
+                        }
                     }
                     // event
                     if (oldData.actionEventId != newData.actionEventId) {
@@ -235,7 +269,7 @@ export class DataMgr {
                     if (oldData.hp != newData.hp || oldData.hpMax != newData.hpMax) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
                     }
-
+                    // map reborn
                     if (oldData.rebornTime != newData.rebornTime) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_REBON_CHANGE);
                     }
@@ -319,11 +353,36 @@ export class DataMgr {
         if (p.res !== 1) {
             return;
         }
+        GameMusicPlayMgr.playMoveEffect();
         const movePath: TilePos[] = [];
         for (const temple of p.movePath) {
             movePath.push(GameMainHelper.instance.tiledMapGetTiledPos(temple.x, temple.y));
         }
         DataMgr.s.pioneer.beginMove(p.pioneerId, movePath);
+    };
+    public static player_gather_start_res = (e: any) => {
+        const p: s2c_user.Iplayer_gather_start_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        const buildingConfig = MapBuildingConfig.getById(p.buildingId);
+        if (buildingConfig == undefined) {
+            return;
+        }
+        if (buildingConfig.resources[0] == ResourceCorrespondingItem.Stone) {
+            GameMusicPlayMgr.playCollectMineEffect();
+        } else if (buildingConfig.resources[0] == ResourceCorrespondingItem.Wood) {
+            GameMusicPlayMgr.playCollectWoodEffect();
+        } else if (buildingConfig.resources[0] == ResourceCorrespondingItem.Food) {
+            GameMusicPlayMgr.playCollectFoodEffect();
+        }
+    };
+    public static player_explore_start_res = (e: any) => {
+        const p: s2c_user.Iplayer_explore_start_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        GameMusicPlayMgr.playExploreEffect();
     };
     public static player_event_select_res = (e: any) => {
         const p: s2c_user.Iplayer_event_select_res = e.data;
@@ -385,6 +444,13 @@ export class DataMgr {
             }
         }
     };
+    public static player_wormhole_set_attacker_res = (e: any) => {
+        const p = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        GameMusicPlayMgr.playWormholeSetAttackerEffect();
+    };
 
     public static player_fight_end = (e: any) => {
         const p: s2c_user.Iplayer_fight_end = e.data;
@@ -426,6 +492,7 @@ export class DataMgr {
         if (DataMgr.s.userInfo.data.id != p.defenderUid) {
             return;
         }
+        GameMusicPlayMgr.playWormholeAttackEffect();
         PioneerMgr.showFakeWormholeFight(p.attackerName);
     };
     public static player_wormhole_fight_res = (e: any) => {
@@ -447,6 +514,10 @@ export class DataMgr {
         const selfName: string = isSelfAttack ? p.attackerName : p.defenderName + " " + LanMgr.getLanById("110010");
         const otherName: string = !isSelfAttack ? p.attackerName : p.defenderName + " " + LanMgr.getLanById("110010");
         const isSelfWin: boolean = isSelfAttack && p.fightResult;
+        if (isSelfAttack) {
+            GameMusicPlayMgr.playWormholeAttackEffect();
+        }
+
         NotificationMgr.triggerEvent(NotificationName.FIGHT_FINISHED, {
             attacker: {
                 name: selfName,

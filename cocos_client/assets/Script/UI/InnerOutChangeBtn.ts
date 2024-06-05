@@ -2,6 +2,7 @@ import { _decorator, Component, Node, Button, SpriteFrame, Sprite, resources, La
 import NotificationMgr from '../Basic/NotificationMgr';
 import { NotificationName } from '../Const/Notification';
 import GameMainHelper from '../Game/Helper/GameMainHelper';
+import GameMusicPlayMgr from '../Manger/GameMusicPlayMgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('InnerOutChangeBtn')
@@ -32,6 +33,7 @@ export class InnerOutChangeBtn extends Component {
     }
 
     _onOutAndInnerChanged() {
+        GameMusicPlayMgr.playChangeInnerOuterEffect();
         const isOuterShow: boolean = GameMainHelper.instance.isGameShowOuter;
         if (!isOuterShow) {
             this._sprite.spriteFrame = this.OutIcon;
@@ -52,6 +54,7 @@ export class InnerOutChangeBtn extends Component {
 
 
     private onTapChange() {
+        GameMusicPlayMgr.playTapButtonEffect();
         GameMainHelper.instance.changeInnerAndOuterShow();
     }
 }

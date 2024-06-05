@@ -5,6 +5,7 @@ import ViewController from "../BasicView/ViewController";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
 import UIPanelManger from "../Basic/UIPanelMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("NewSettlementUI")
@@ -42,6 +43,7 @@ export class NewSettlementUI extends ViewController {
     //----------------------------------------------------------------------
     // action
     private onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
     }
 }

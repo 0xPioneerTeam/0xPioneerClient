@@ -44,19 +44,17 @@ export default class AudioMgr {
         this._effectSource.volume = this._effectVolume;
     }
 
-    public playMusic(path: string, loop: boolean = false) {
-        if (path == null || path.length <= 0) {
+    public async playMusic(clip: AudioClip, loop: boolean = false) {
+        if (clip == null) {
             return;
         }
-        resources.load(path, (err, clip: AudioClip) => {
-            if (err) {
-                return;
-            }
-            this._musicSource.stop();
-            this._musicSource.clip = clip;
-            this._musicSource.loop = loop;
-            this._musicSource.play();
-        });
+        this._musicSource.stop();
+        this._musicSource.clip = clip;
+        this._musicSource.loop = loop;
+        this._musicSource.play();
+    }
+    public stopMusic() {
+        this._musicSource.stop();
     }
 
     public changeMusicVolume(volume: number) {
@@ -66,16 +64,11 @@ export default class AudioMgr {
         localStorage.setItem(this._music_key, volume.toString());
     }
 
-    public playEffect(path: string) {
-        if (path == null || path.length <= 0) {
+    public playEffect(clip: AudioClip) {
+        if (clip == null) {
             return;
         }
-        resources.load(path, (err, clip: AudioClip) => {
-            if (err) {
-                return;
-            }
-            this._effectSource.playOneShot(clip);
-        });
+        this._effectSource.playOneShot(clip);
     }
 
     public changeEffectVolume(volume: number) {

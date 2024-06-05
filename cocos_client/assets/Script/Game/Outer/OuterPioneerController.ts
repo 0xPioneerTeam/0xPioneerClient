@@ -40,6 +40,7 @@ import {
 } from "../../Const/PioneerDefine";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import { OuterRebonView } from "./View/OuterRebonView";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -512,6 +513,7 @@ export class OuterPioneerController extends ViewController {
         }
     }
     private _onRookieGuideThirdEyes() {
+        GameMusicPlayMgr.playGameMusic();
         GameMainHelper.instance.changeGameCameraZoom(1, true);
     }
     //---------- pioneer

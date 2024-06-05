@@ -3,20 +3,14 @@ import { GameRankColor, GetPropRankColor } from "../Const/ConstDefine";
 import ArtifactData from "../Model/ArtifactData";
 import { ArtifactMgr, ItemMgr, UserInfoMgr } from "../Utils/Global";
 import ViewController from "../BasicView/ViewController";
-import { UIName } from "../Const/ConstUIDefine";
-import { ItemSelectFromThreeUI } from "./ItemSelectFromThreeUI";
 import ArtifactConfig from "../Config/ArtifactConfig";
-import DropConfig from "../Config/DropConfig";
-import ItemConfigDropTool from "../Tool/ItemConfigDropTool";
 import ItemConfig from "../Config/ItemConfig";
-import ItemData, { ItemConfigType } from "../Const/Item";
-import { BoxInfoConfigData } from "../Const/BoxInfo";
+import ItemData from "../Const/Item";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
-import { s2c_user } from "../Net/msg/WebsocketMsg";
-import { NetworkMgr } from "../Net/NetworkMgr";
 import ConfigConfig from "../Config/ConfigConfig";
 import { ConfigType, WorldBoxThresholdParam } from "../Const/Config";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("TreasureGettedUI")
@@ -107,10 +101,12 @@ export class TreasureGettedUI extends ViewController {
             })
             .start();
 
+        GameMusicPlayMgr.playOpenBoxStep1Effect();
         tween(itemShowAnim)
             .delay(5.5)
             .set({ active: true })
             .call(() => {
+                GameMusicPlayMgr.playOpenBoxStep2Effect();
                 itemShowAnim.getChildByName("Treasure_box_open_a").getComponent(ParticleSystem2D).resetSystem();
                 itemShowAnim.getChildByName("Treasure_box_open_b").getComponent(ParticleSystem2D).resetSystem();
             })

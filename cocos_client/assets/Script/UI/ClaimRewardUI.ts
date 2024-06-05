@@ -10,6 +10,7 @@ import { DataMgr } from "../Data/DataMgr";
 import ArtifactData from "../Model/ArtifactData";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import ItemData from "../Const/Item";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("ClaimRewardUI")
@@ -111,6 +112,7 @@ export class ClaimRewardUI extends Component {
 
     //------------------------------------------ action
     private async onTapBoxItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         const data = this._boxDatas[index];
         // 0-no 1-can 2-getted

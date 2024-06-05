@@ -11,6 +11,7 @@ import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import { FIGHT_FINISHED_DATA, MINING_FINISHED_DATA } from "../Const/PioneerDefine";
 import { EventUI } from "./Outer/EventUI";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -205,6 +206,7 @@ export class BattleReportListItemUI extends Component {
     }
 
     private onClickLocation() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (!this._locationInfo) {
             console.error("BattleReportListItemUI._locationInfo empty");
             return;
@@ -228,6 +230,7 @@ export class BattleReportListItemUI extends Component {
     }
 
     private async onClickLoots() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (!this._loots) {
             console.error("BattleReportListItemUI._loots empty");
             return;
@@ -239,6 +242,7 @@ export class BattleReportListItemUI extends Component {
     }
 
     async onClickBranchSelection() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const reportData = this.report.data as BattleReportExploringData;
 
         const building = DataMgr.s.mapBuilding.getBuildingById(reportData.buildingId);

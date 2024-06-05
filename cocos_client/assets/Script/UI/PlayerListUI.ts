@@ -5,6 +5,7 @@ import { NotificationName } from "../Const/Notification";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
 import { DataMgr } from "../Data/DataMgr";
 import { MapPioneerActionType, MapPlayerPioneerObject } from "../Const/PioneerDefine";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerListUI")
@@ -103,6 +104,7 @@ export class PlayerListUI extends Component {
     update(deltaTime: number) {}
 
     private onTapPlayerItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (GameMainHelper.instance.isGameShowOuter) {
             if (index < this._pioneers.length) {

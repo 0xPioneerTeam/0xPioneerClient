@@ -76,9 +76,7 @@ export class InnerMainCityBuildingView extends InnerBuildingView {
             result.node.getComponent(BuildingUpgradeUI).refreshUI();
         }
     }
-
-    //------------------------------- action
-
+    
     //-------------------------------- notification
     private _onResourceChanged() {
         this.refreshUI(this._building);

@@ -15,6 +15,7 @@ import { NFTSkillDetailUI } from "./NFTSkillDetailUI";
 import { NFTSkillLearnUI } from "./NFTSkillLearnUI";
 import { DataMgr } from "../Data/DataMgr";
 import CommonTools from "../Tool/CommonTools";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("NFTViewInfoUI")
@@ -114,10 +115,12 @@ export class NFTViewInfoUI extends ViewController {
     }
     //---------------------------------------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapSkill(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._NFTData == null) {
             return;
         }

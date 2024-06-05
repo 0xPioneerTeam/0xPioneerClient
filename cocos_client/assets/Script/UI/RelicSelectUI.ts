@@ -14,6 +14,7 @@ import { GameExtraEffectType } from "../Const/ConstDefine";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
 import LongPressButton from "../BasicView/LongPressButton";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("RelicSelectUI")
@@ -112,10 +113,12 @@ export class RelicSelectUI extends ViewController {
     
     //------------------------------------------------------------ action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private onTapCurrentSelectItem() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._selectedItem == null) {
             return;
         }
@@ -125,6 +128,7 @@ export class RelicSelectUI extends ViewController {
         });
     }
     private async onLongTapCurrentSelectItem() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._selectedItem == null) {
             return;
         }
@@ -135,6 +139,7 @@ export class RelicSelectUI extends ViewController {
         result.node.getComponent(ArtifactInfoUI).showItem([this._selectedItem]);
     }
     private onTapItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (index < 0 || index > this._itemDatas.length - 1) {
             return;
@@ -146,6 +151,7 @@ export class RelicSelectUI extends ViewController {
         });
     }
     private async onLongTapItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (index < 0 || index > this._itemDatas.length - 1) {
             return;

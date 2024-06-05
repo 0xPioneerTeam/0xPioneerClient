@@ -11,6 +11,7 @@ import UIPanelManger from "../../Basic/UIPanelMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import { s2c_user } from "../../Net/msg/WebsocketMsg";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("DialogueUI")
@@ -145,6 +146,7 @@ export class DialogueUI extends ViewController {
 
     //------------------------------------------------ action
     private onTapNext() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._talk == null) {
             return;
         } 
@@ -159,6 +161,7 @@ export class DialogueUI extends ViewController {
     }
 
     private onTapAction(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._talk == null) {
             return;
         }

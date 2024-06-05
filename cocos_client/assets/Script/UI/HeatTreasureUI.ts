@@ -16,6 +16,7 @@ import { ConfigType, WorldBoxThresholdParam } from "../Const/Config";
 import CommonTools from "../Tool/CommonTools";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("HeatTreasureUI")
@@ -128,6 +129,7 @@ export class HeatTreasureUI extends Component {
 
     //------------------------------------------ action
     private async onTapBoxItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         // 0-no 1-can 2-getted
         let getStatus: number = 0;
@@ -157,9 +159,11 @@ export class HeatTreasureUI extends Component {
         }
     }
     private onTapDetail() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.pushPanel(UIName.WorldTreasureDetailUI);
     }
     private onTapQuestion() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.pushPanel(UIName.WorldTreasureTipUI);
     }
 }

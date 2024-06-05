@@ -5263,7 +5263,7 @@
         "__id__": 816
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 822
@@ -19307,7 +19307,7 @@
         "__id__": 1013
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 1030
@@ -19496,7 +19496,7 @@
       "__id__": 851
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 859
@@ -19632,7 +19632,7 @@
       "__id__": 851
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 865
@@ -19772,7 +19772,7 @@
         "__id__": 871
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 877
@@ -20076,7 +20076,7 @@
         "__id__": 885
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 893
@@ -20402,7 +20402,7 @@
       "__id__": 851
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 900
@@ -20542,7 +20542,7 @@
         "__id__": 906
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 912
@@ -20846,7 +20846,7 @@
         "__id__": 920
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 928
@@ -21191,7 +21191,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -503.15,
-      "y": 123.719,
+      "y": -15.097,
       "z": 0
     },
     "_lrot": {
@@ -21464,7 +21464,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -0.524,
-      "y": 139.207,
+      "y": 0.391,
       "z": 0
     },
     "_lrot": {
@@ -22081,7 +22081,7 @@
       "__id__": 851
     },
     "_children": [],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 974
@@ -22221,7 +22221,7 @@
         "__id__": 980
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 986
@@ -22611,7 +22611,7 @@
         "__id__": 997
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 1003
@@ -23001,7 +23001,7 @@
         "__id__": 1014
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 1020

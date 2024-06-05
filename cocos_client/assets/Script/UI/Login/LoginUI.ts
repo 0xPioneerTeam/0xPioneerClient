@@ -9,6 +9,8 @@ import CLog from "../../Utils/CLog";
 import { DataMgr } from "../../Data/DataMgr";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import { ConfigType, LoginWhiteListParam } from "../../Const/Config";
+import { AudioMgr } from "../../Utils/Global";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("CompLogin")
@@ -21,6 +23,7 @@ export class LoginUI extends ViewController {
     }
     protected viewDidStart(): void {
         super.viewDidStart();
+        GameMusicPlayMgr.playLoginMusic();
     }
 
     protected viewDidDestroy(): void {
@@ -29,6 +32,7 @@ export class LoginUI extends ViewController {
 
     //--------------------------------------- action
     private onTapStart() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const chainConf = ChainConfig.getCurrentChainConfig();
         if (chainConf.api.init) {
             this.onTapStart_chain();

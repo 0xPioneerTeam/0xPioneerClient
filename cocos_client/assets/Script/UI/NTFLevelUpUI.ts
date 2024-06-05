@@ -10,6 +10,7 @@ import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
 import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("NTFLevelUpUI")
@@ -115,11 +116,13 @@ export class NTFLevelUpUI extends ViewController {
 
     //------------------------ action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
 
     private onTapAddLevel() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._levelUpNum + 1 > this._maxLevelUpNum) {
             return;
         }
@@ -127,12 +130,14 @@ export class NTFLevelUpUI extends ViewController {
         this._refreshUI();
     }
     private onTapReduceLevel() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._levelUpNum > 1) {
             this._levelUpNum -= 1;
             this._refreshUI();
         }
     }
     private onTapLevelMax() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const maxNum = Math.max(this._levelUpNum, this._maxLevelUpNum);
         if (this._levelUpNum != maxNum) {
             this._levelUpNum = maxNum;
@@ -140,6 +145,7 @@ export class NTFLevelUpUI extends ViewController {
         }
     }
     private onTapConfirmLevelUp() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._data != null && this._currentCost > 0) {
             NetworkMgr.websocketMsg.player_nft_lvlup({ nftId: this._data.uniqueId, levelUpNum: this._levelUpNum });
         }

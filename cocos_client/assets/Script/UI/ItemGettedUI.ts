@@ -5,6 +5,7 @@ import ViewController from '../BasicView/ViewController';
 import ItemData, { ItemType } from '../Const/Item';
 import ItemConfig from '../Config/ItemConfig';
 import UIPanelManger from '../Basic/UIPanelMgr';
+import GameMusicPlayMgr from '../Manger/GameMusicPlayMgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('ItemGettedUI')
@@ -66,6 +67,7 @@ export class ItemGettedUI extends ViewController {
 
     //---------------------------------------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
         if (this._closeCallback != null) {

@@ -28,6 +28,7 @@ import ViewController from "../BasicView/ViewController";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import ItemData from "../Const/Item";
 import ArtifactData from "../Model/ArtifactData";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("PointTreasureUI")
@@ -181,6 +182,7 @@ export class PointTreasureUI extends ViewController {
     }
     //------------------------------------------ action
     private async onTapBoxItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         const data = this._boxDatas[index];
         // 0-no 1-can 2-getted
@@ -213,6 +215,7 @@ export class PointTreasureUI extends ViewController {
         }
     }
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }

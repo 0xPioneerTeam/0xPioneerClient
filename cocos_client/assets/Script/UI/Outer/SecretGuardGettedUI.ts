@@ -6,12 +6,14 @@ import { ItemInfoUI } from '../ItemInfoUI';
 import { ArtifactInfoUI } from '../ArtifactInfoUI';
 import { ItemGettedUI } from '../ItemGettedUI';
 import UIPanelManger from '../../Basic/UIPanelMgr';
+import GameMusicPlayMgr from '../../Manger/GameMusicPlayMgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('SecretGuardGettedUI')
 export class SecretGuardGettedUI extends ViewController {
 
     public dialogShow(pioneerAnimType: string) {
+        GameMusicPlayMgr.playGetNewPioneerEffect();
         const names = [
             "secretGuard",
             "doomsdayGangSpy",

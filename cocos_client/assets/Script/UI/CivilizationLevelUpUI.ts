@@ -13,6 +13,7 @@ import ItemData, { ItemConfigType } from '../Const/Item';
 import { NotificationName } from '../Const/Notification';
 import { ItemGettedUI } from './ItemGettedUI';
 import UIPanelManger from '../Basic/UIPanelMgr';
+import GameMusicPlayMgr from '../Manger/GameMusicPlayMgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('CivilizationLevelUpUI')
@@ -191,6 +192,7 @@ export class CivilizationLevelUpUI extends ViewController {
     }
 
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
         if (UserInfoMgr.afterCivilizationClosedShowPioneerDatas.length > 0) {
             const result = await UIPanelManger.inst.pushPanel(UIName.SecretGuardGettedUI);

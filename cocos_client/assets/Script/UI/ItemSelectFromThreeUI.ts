@@ -16,6 +16,7 @@ import UIPanelManger, { UIPanelLayerType } from '../Basic/UIPanelMgr';
 import { DataMgr } from '../Data/DataMgr';
 import { s2c_user } from '../Net/msg/WebsocketMsg';
 import { NetworkMgr } from '../Net/NetworkMgr';
+import GameMusicPlayMgr from '../Manger/GameMusicPlayMgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('ItemSelectFromThreeUI')
@@ -136,11 +137,13 @@ export class ItemSelectFromThreeUI extends ViewController {
 
     //---------------------------------------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.UI);
     }
 
     private async onTapGet(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index: number = parseInt(customEventData);
         const item = this._items[index];
 
@@ -160,6 +163,7 @@ export class ItemSelectFromThreeUI extends ViewController {
     }
 
     private async onTapGetAll() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const energyNum: number = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Energy);
         const needNum: number = 200;
         if (energyNum >= needNum) {

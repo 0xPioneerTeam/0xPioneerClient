@@ -31,6 +31,7 @@ import { OuterFightResultView } from "./OuterFightResultView";
 import { NetworkMgr } from "../../../Net/NetworkMgr";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
+import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("MapPioneer")
@@ -236,6 +237,7 @@ export class MapPioneer extends Component {
                         defender = DataMgr.s.pioneer.getById(fightDatas[0].attackerId);
                     }
                     if (defender != null) {
+                        GameMusicPlayMgr.playBeginFightEffect();
                         this._fightAttackerOrigianlData = { id: attacker.id, name: attacker.name, hp: attacker.hp, hpmax: attacker.hpMax };
                         this._fightDefenderOriginalData = { id: defender.id, name: defender.name, hp: defender.hp, hpmax: defender.hpMax };
                         this._fightView.node.active = true;
@@ -421,6 +423,7 @@ export class MapPioneer extends Component {
 
     //----------------- event
     private onTapEventWaited(event: Event) {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._eventWaitedCallback != null) {
             this._eventWaitedCallback();
         }
@@ -462,6 +465,11 @@ export class MapPioneer extends Component {
         clearInterval(this._fightInterval);
         this._fightView.node.active = false;
         this._fightResultView.node.active = true;
+        if (this._model.fightResultWin) {
+            GameMusicPlayMgr.playFightWinEffect();
+        } else {
+            GameMusicPlayMgr.playFightFailEffect();
+        }
         this._fightResultView.showResult(this._model.fightResultWin, () => {
             NotificationMgr.triggerEvent(NotificationName.FIGHT_FINISHED, {
                 attacker: {

@@ -5,6 +5,7 @@ import NotificationMgr from '../Basic/NotificationMgr';
 import { NotificationName } from '../Const/Notification';
 import UIPanelManger from '../Basic/UIPanelMgr';
 import { DataMgr } from '../Data/DataMgr';
+import GameMusicPlayMgr from '../Manger/GameMusicPlayMgr';
 
 const {ccclass} = _decorator;
 
@@ -24,6 +25,7 @@ export class BattleReportEntryButton extends Component {
     }
 
     private async onClickButton() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await UIPanelManger.inst.pushPanel(UIName.BattleReportUI);
     }
 

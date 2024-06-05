@@ -456,6 +456,16 @@ export namespace s2c_user {
         pioneerId: string;
         movePath: share.pos2d[];
     }
+    export interface Iplayer_gather_start_res {
+        res: number;
+        buildingId: string;
+        pioneerId: string;
+    }
+    export interface Iplayer_explore_start_res {
+        res: number;
+        buildingId: string;
+        pioneerId: string;
+    }
     export interface Iplayer_event_select_res {
         res: number;
         eventId: string;
@@ -484,6 +494,10 @@ export namespace s2c_user {
         res: number;
         buildingId: string;
         pos: [number, number];
+    }
+    export interface Iplayer_building_levelup_res {
+        res: number;
+        data: share.Ibuilding_data;
     }
     export interface Iplayer_building_delegate_nft_res {
         innerBuildingId: string;

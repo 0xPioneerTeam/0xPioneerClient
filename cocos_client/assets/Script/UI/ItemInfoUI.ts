@@ -7,6 +7,7 @@ import ItemData, { ItemType } from '../Const/Item';
 import UIPanelManger from '../Basic/UIPanelMgr';
 import { DataMgr } from '../Data/DataMgr';
 import { NetworkMgr } from '../Net/NetworkMgr';
+import GameMusicPlayMgr from '../Manger/GameMusicPlayMgr';
 const { ccclass, property } = _decorator;
 
 @ccclass('ItemInfoUI')
@@ -80,6 +81,7 @@ export class ItemInfoUI extends ViewController {
 
     //---------------------------------------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._items.length <= 0) {
             await this.playExitAnimation();
             UIPanelManger.inst.popPanel(this.node);
@@ -91,6 +93,7 @@ export class ItemInfoUI extends ViewController {
         }
     }
     private async onTapUse() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._isGet) {
             
         } else {

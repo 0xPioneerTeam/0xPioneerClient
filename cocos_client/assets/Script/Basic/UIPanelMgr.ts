@@ -1,7 +1,6 @@
 import { _decorator, Prefab, instantiate, Node, Component } from "cc";
 import ResourcesManager from "./ResourcesMgr";
 import { ResourcesMgr } from "../Utils/Global";
-import { UIName } from "../Const/ConstUIDefine";
 
 export enum UIPanelLayerType {
     Game,

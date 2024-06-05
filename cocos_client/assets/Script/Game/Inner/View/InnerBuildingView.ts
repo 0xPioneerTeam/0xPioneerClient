@@ -11,6 +11,7 @@ import UIPanelManger from "../../../Basic/UIPanelMgr";
 import { UIName } from "../../../Const/ConstUIDefine";
 import { UIHUDController } from "../../../UI/UIHUDController";
 import { DataMgr } from "../../../Data/DataMgr";
+import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("InnerBuildingView")
@@ -170,6 +171,7 @@ export class InnerBuildingView extends ViewController {
     }
     //---------------------------- action
     private onTapBuilding() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._building == null) {
             return;
         }

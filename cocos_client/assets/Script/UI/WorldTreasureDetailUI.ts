@@ -22,6 +22,7 @@ import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
 import { share } from "../Net/msg/WebsocketMsg";
 import NetGlobalData from "../Data/Save/Data/NetGlobalData";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("WorldTreasureDetailUI")
@@ -122,6 +123,7 @@ export class WorldTreasureDetailUI extends ViewController {
 
     //------------------------------------------ action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }

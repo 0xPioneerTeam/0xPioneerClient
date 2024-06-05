@@ -11,6 +11,7 @@ import { ConfigType, WorldTreasureChanceLimitHeatValueCoefficientParam, WorldTre
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import { NetworkMgr } from "../../Net/NetworkMgr";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("WorldTreasureView")
@@ -130,6 +131,7 @@ export class WorldTreasureView extends Component {
     }
     //----------------------------------------------
     private onTapOpen() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._isOpenBox) {
             return;
         }
@@ -137,6 +139,7 @@ export class WorldTreasureView extends Component {
         this._refreshUI();
     }
     private onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (!this._isOpenBox) {
             return;
         }
@@ -144,9 +147,11 @@ export class WorldTreasureView extends Component {
         this._refreshUI();
     }
     private async onTapProgress() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.pushPanel(UIName.WorldTreasureUIRe);
     }
     private async onTapTreasure() {
+        GameMusicPlayMgr.playTapButtonEffect();
         NetworkMgr.websocketMsg.player_world_treasure_lottery({});
     }
 

@@ -14,6 +14,7 @@ import { DataMgr } from "../../Data/DataMgr";
 import { UIName } from "../../Const/ConstUIDefine";
 import { DelegateUI } from "../DelegateUI";
 import { NetworkMgr } from "../../Net/NetworkMgr";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 const { ccclass } = _decorator;
 
 @ccclass("BuildingUpgradeUI")
@@ -77,6 +78,7 @@ export class BuildingUpgradeUI extends ViewController {
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._onLangChang, this);
         NotificationMgr.addListener(NotificationName.ITEM_CHANGE, this.onItemChanged, this);
+
     }
 
     protected viewDidDestroy(): void {
@@ -84,6 +86,7 @@ export class BuildingUpgradeUI extends ViewController {
 
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this._onLangChang, this);
         NotificationMgr.removeListener(NotificationName.ITEM_CHANGE, this.onItemChanged, this);
+
     }
     protected viewPopAnimation(): boolean {
         return true;
@@ -183,21 +186,16 @@ export class BuildingUpgradeUI extends ViewController {
             }
         }
     }
-    private _closeBuildingUpgradeUI() {
-        this._levelInfoView.active = false;
-    }
-
     //----------------------------- action
     private onTapBuildingUpgradeShow(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const buildingType: InnerBuildingType = customEventData as InnerBuildingType;
         this._levelInfoView.active = true;
         this._curBuildingType = buildingType;
         this._refreshUpgradeUI(buildingType);
     }
-    private onTapBuildingUpgradeHide() {
-        this._closeBuildingUpgradeUI();
-    }
     private async onTapBuildingUpgrade(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const buildingType: InnerBuildingType = customEventData as InnerBuildingType;
 
         const userInnerData = DataMgr.s.innerBuilding.data.get(buildingType);
@@ -239,17 +237,18 @@ export class BuildingUpgradeUI extends ViewController {
             }
             NetworkMgr.websocketMsg.player_building_levelup({ innerBuildingId: buildingType });
 
-            this._closeBuildingUpgradeUI();
             await this.playExitAnimation();
             UIPanelManger.inst.popPanel(this.node);
         }
     }
 
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapDelegate() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const result = await UIPanelManger.inst.pushPanel(UIName.DelegateUI);
         if (!result.success) {
             return;

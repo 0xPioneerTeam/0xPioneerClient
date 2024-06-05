@@ -12,6 +12,7 @@ import { ConfigType, NFTLevelLimitPerRankAddNumParam } from "../Const/Config";
 import ItemConfig from "../Config/ItemConfig";
 import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("NTFRankUpUI")
@@ -112,11 +113,13 @@ export class NTFRankUpUI extends ViewController {
 
     //------------------------ action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
 
     private onTapConfirmRankUp() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._data != null && this._currentCost.length > 0) {
             NetworkMgr.websocketMsg.player_nft_rankup({ nftId: this._data.uniqueId, rankUpNum: this._rankUpNum });
         }

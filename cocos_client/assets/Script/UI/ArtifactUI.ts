@@ -10,6 +10,7 @@ import { NotificationName } from "../Const/Notification";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import { BackpackArrangeType } from "../Const/ConstDefine";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("ArtifactUI")
@@ -114,12 +115,14 @@ export class ArtifactUI extends ViewController {
 
     //------------------------------------------------------------ action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         this._selectSortMenuShow = false;
         this._refreshMenu();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (index < this._itemDatas.length) {
             const itemData = this._itemDatas[index];
@@ -130,15 +133,18 @@ export class ArtifactUI extends ViewController {
         }
     }
     private onTapArrange() {
+        GameMusicPlayMgr.playTapButtonEffect();
         DataMgr.s.artifact.getObj_artifact_sort(this._currentArrangeType);
     }
 
     private onTapSortMenuAction() {
+        GameMusicPlayMgr.playTapButtonEffect();
         this._selectSortMenuShow = !this._selectSortMenuShow;
 
         this._refreshMenu();
     }
     private onTapSelectSortCondition(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (customEventData == this._currentArrangeType) {
             return;
         }

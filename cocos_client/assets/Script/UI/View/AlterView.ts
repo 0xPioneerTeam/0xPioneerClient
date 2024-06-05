@@ -2,6 +2,7 @@ import { _decorator, Component, Label, Node, tween, v3 } from "cc";
 import ViewController from "../../BasicView/ViewController";
 import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { LanMgr } from "../../Utils/Global";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -36,6 +37,7 @@ export class AlterView extends ViewController {
 
     //-------------------------------- action
     private async onTapConfrim() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.HUD);
         if (this._confirmCallback != null) {
@@ -44,6 +46,7 @@ export class AlterView extends ViewController {
     }
 
     private async onTapCancel() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.HUD);
         if (this._cancelCallback != null) {

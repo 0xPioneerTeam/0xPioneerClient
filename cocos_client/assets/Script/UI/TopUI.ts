@@ -23,6 +23,7 @@ import LvlupConfig from "../Config/LvlupConfig";
 import { NotificationName } from "../Const/Notification";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("TopUI")
@@ -112,6 +113,7 @@ export default class TopUI extends Component {
 
     //------------------------------------------------ action
     private async onTapPlayerInfo() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await UIPanelManger.inst.pushPanel(UIName.PlayerInfoUI);
     }
     //----------------------------------------------- notification

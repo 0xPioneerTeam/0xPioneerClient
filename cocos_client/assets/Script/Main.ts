@@ -15,8 +15,6 @@ import ChainConfig from "./Config/ChainConfig";
 import CLog from "./Utils/CLog";
 import { EthereumEventData_accountChanged, EthereumEventData_chainChanged, EthereumEventData_init, EthereumEventType } from "./Net/ethers/Ethereum";
 import { s2c_user } from "./Net/msg/WebsocketMsg";
-import CommonTools from "./Tool/CommonTools";
-import { LoginUI } from "./UI/Login/LoginUI";
 const { ccclass, property } = _decorator;
 
 @ccclass("Main")
@@ -50,7 +48,7 @@ export class Main extends ViewController {
                 return;
             }
         }
-        
+
         await UIPanelManger.inst.pushPanel(UIName.LoginUI);
 
         if (chainConfig.api.init) {
@@ -150,7 +148,6 @@ export class Main extends ViewController {
         await UIPanelManger.inst.pushPanel(UIName.MainUI);
         await this.node.getChildByPath("UI_Canvas/UI_ROOT").getComponent(UIMainRootController).checkShowRookieGuide();
         await UIPanelManger.inst.pushPanel(GameName.GameMain, UIPanelLayerType.Game);
-        
     }
 
     private _addListener() {
@@ -181,16 +178,22 @@ export class Main extends ViewController {
         // inner builing
         NetworkMgr.websocket.on("building_change", DataMgr.building_change);
         NetworkMgr.websocket.on("player_building_pos_res", DataMgr.player_building_pos_res);
+        NetworkMgr.websocket.on("player_building_levelup_res", DataMgr.player_building_levelup_res);
+        NetworkMgr.websocket.on("player_generate_troop_start_res", DataMgr.player_generate_troop_start_res);
         // map
         NetworkMgr.websocket.on("pioneer_change", DataMgr.pioneer_change);
         NetworkMgr.websocket.on("mapbuilding_change", DataMgr.mapbuilding_change);
 
         NetworkMgr.websocket.on("mappioneer_reborn_change", DataMgr.mappioneer_reborn_change);
         NetworkMgr.websocket.on("mapbuilding_reborn_change", DataMgr.mapbuilding_reborn_change);
-        
-        NetworkMgr.websocket.on("player_explore_npc_start_res", DataMgr.player_explore_npc_start_res);
+
         NetworkMgr.websocket.on("player_move_res", DataMgr.player_move_res);
+        NetworkMgr.websocket.on("player_gather_start_res", DataMgr.player_gather_start_res);
+        NetworkMgr.websocket.on("player_explore_start_res", DataMgr.player_explore_start_res);
+        NetworkMgr.websocket.on("player_explore_npc_start_res", DataMgr.player_explore_npc_start_res);
         NetworkMgr.websocket.on("player_event_select_res", DataMgr.player_event_select_res);
+        NetworkMgr.websocket.on("player_wormhole_set_attacker_res", DataMgr.player_wormhole_set_attacker_res);
+
 
         NetworkMgr.websocket.on("player_fight_end", DataMgr.player_fight_end);
 

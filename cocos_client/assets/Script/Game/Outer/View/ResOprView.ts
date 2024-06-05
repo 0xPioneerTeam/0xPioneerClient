@@ -9,6 +9,7 @@ import MapBuildingConfig from "../../../Config/MapBuildingConfig";
 import ItemConfig from "../../../Config/ItemConfig";
 import PioneerConfig from "../../../Config/PioneerConfig";
 import { MapInteractType } from "../../../Const/ConstDefine";
+import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("ResOprView")
@@ -237,6 +238,7 @@ export class ResOprView extends Component {
     update(deltaTime: number) {}
 
     private onTapAction(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const data = customEventData.split("|");
         const actionType = parseInt(data[0]);
         const costEnergy = parseInt(data[1]);

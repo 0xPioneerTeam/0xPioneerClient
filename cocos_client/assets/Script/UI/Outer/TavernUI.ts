@@ -6,6 +6,7 @@ import CommonTools from "../../Tool/CommonTools";
 import { DataMgr } from "../../Data/DataMgr";
 import { ItemMgr } from "../../Utils/Global";
 import ItemConfig from "../../Config/ItemConfig";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("TavernUI")
@@ -109,10 +110,12 @@ export class TavernUI extends ViewController {
 
     //------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapRecruit() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._buildingId == null) {
             return;
         }

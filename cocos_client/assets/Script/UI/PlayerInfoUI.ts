@@ -32,6 +32,7 @@ import Config from "../Const/Config";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerInfoUI")
@@ -133,6 +134,7 @@ export class PlayerInfoUI extends ViewController {
 
     //-------------------------------- function
     private clearReset(): void {
+        GameMusicPlayMgr.playTapButtonEffect();
         localStorage.clear();
         Config.canSaveLocalData = false;
         window.location.reload();
@@ -140,6 +142,7 @@ export class PlayerInfoUI extends ViewController {
 
     private async onClickExportSave() {
         // see: LocalDataLoader._importSaveOnStartIfExists
+        GameMusicPlayMgr.playTapButtonEffect();
         const data = {};
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
@@ -150,6 +153,7 @@ export class PlayerInfoUI extends ViewController {
     }
 
     private onClickImportSave() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const saveText = prompt("Paste save text here");
         if (!saveText) {
             return;
@@ -424,6 +428,7 @@ export class PlayerInfoUI extends ViewController {
     //----------------------------------------------------------------------
     // action
     private onTapTab(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (this._selectIndex == index) {
             return;
@@ -434,13 +439,16 @@ export class PlayerInfoUI extends ViewController {
     //----------------------------------- info
     private onTapChangeNameShow() {
         return;
+        GameMusicPlayMgr.playTapButtonEffect();
         this._changeNameView.active = true;
         this._changeNameView.getChildByPath("Content/UserName").getComponent(EditBox).string = "";
     }
     private onTapChangeNameClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         this._changeNameView.active = false;
     }
     private onTapChangeNameConfirm() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const changedName: string = this._changeNameView.getChildByPath("Content/UserName").getComponent(EditBox).string;
         if (changedName.length <= 0) {
             // useLanMgr
@@ -453,14 +461,17 @@ export class PlayerInfoUI extends ViewController {
         this._changeNameView.active = false;
     }
     private onTapNextLevelShow() {
+        GameMusicPlayMgr.playTapButtonEffect();
         this._nextLevelView.active = true;
         this._refreshNextLevelView();
     }
     private onTapNextLevelClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         this._nextLevelView.active = false;
     }
     //-----------------------------------settlement
     private onTapSettleSelect(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         const scrollView = this.node.getChildByPath("Content/tabContents/SummaryContent/PeriodicSettlement").getComponent(ScrollView);
         let offsetY: number = 0;
@@ -495,6 +506,7 @@ export class PlayerInfoUI extends ViewController {
         this._refreshUI();
     }
     private onTapLangSelectShow() {
+        GameMusicPlayMgr.playTapButtonEffect();
         this._langSelectView.active = true;
         this.node.getChildByPath("Content/tabContents/SettingsContent/LanguageMenu/LanguageBtn/Arrow").angle = 180;
 
@@ -502,6 +514,7 @@ export class PlayerInfoUI extends ViewController {
         this._langSelectView.getChildByPath("View/Content/Chinese/ImgScreenSelect").active = this._selectLang == "cn";
     }
     private onTapLangItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         this._selectLang = customEventData;
         LanMgr.changeLang(this._selectLang);
         this._refreshUI();
@@ -510,11 +523,13 @@ export class PlayerInfoUI extends ViewController {
     }
 
     private onTapLangSelectClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         this._langSelectView.active = false;
         this.node.getChildByPath("Content/tabContents/SettingsContent/LanguageMenu/LanguageBtn/Arrow").angle = 0;
     }
 
     private onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
     }
 }

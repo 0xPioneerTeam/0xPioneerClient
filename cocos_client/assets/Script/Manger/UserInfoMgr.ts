@@ -1,10 +1,5 @@
-import { GameExtraEffectType, GetPropData, ResourceCorrespondingItem } from "../Const/ConstDefine";
-import ItemConfigDropTool from "../Tool/ItemConfigDropTool";
 import ArtifactData from "../Model/ArtifactData";
-import { GameMgr, ItemMgr } from "../Utils/Global";
 import NotificationMgr from "../Basic/NotificationMgr";
-import { InnerBuildingType } from "../Const/BuildingDefine";
-import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 import ItemData from "../Const/Item";
 import { NotificationName } from "../Const/Notification";
 import { DataMgr } from "../Data/DataMgr";

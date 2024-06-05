@@ -36,6 +36,7 @@ import { DataMgr } from "../../Data/DataMgr";
 import CommonTools from "../../Tool/CommonTools";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import { s2c_user } from "../../Net/msg/WebsocketMsg";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -378,6 +379,7 @@ export class InnerBuildingControllerRe extends ViewController {
         // const localPos: Vec3 = this.node.getChildByPath("BuildingLattice").getComponent(UITransform).convertToNodeSpaceAR(data.worldPos);
         this._buildingMap.forEach((value: InnerBuildingView, key: InnerBuildingType) => {
             if (value.node.getComponent(UITransform).getBoundingBoxToWorld().contains(v2(data.worldPos.x, data.worldPos.y))) {
+                GameMusicPlayMgr.playTapButtonEffect();
                 // ghost show
                 if (this._ghostBuildingView == null) {
                     this._ghostBuildingView = instantiate(value.node);

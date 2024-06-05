@@ -55,6 +55,7 @@ import { MapActionConfrimTipUI } from "../../UI/MapActionConfrimTipUI";
 import { EventUI } from "../../UI/Outer/EventUI";
 import { share } from "../../Net/msg/WebsocketMsg";
 import CLog from "../../Utils/CLog";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -169,6 +170,7 @@ export class OuterTiledMapActionController extends ViewController {
                 if (Math.abs(downx - pos.x) <= 3 && Math.abs(downy - pos.y) <= 3) {
                     //if pick a empty area.
                     //let pioneer move to
+                    GameMusicPlayMgr.playTapButtonEffect();
                     const wpos = GameMainHelper.instance.getGameCameraScreenToWorld(v3(pos.x, pos.y, 0));
                     this._clickOnMap(wpos);
                 }

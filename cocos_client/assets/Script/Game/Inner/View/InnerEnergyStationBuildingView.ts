@@ -13,6 +13,7 @@ import UIPanelManger from "../../../Basic/UIPanelMgr";
 import { DataMgr } from "../../../Data/DataMgr";
 import { NetworkMgr } from "../../../Net/NetworkMgr";
 import LvlupConfig from "../../../Config/LvlupConfig";
+import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -125,6 +126,7 @@ export class InnerEnergyStationBuildingView extends InnerBuildingView {
     }
     //------------------------------- action
     private onTapGetEnergy() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (DataMgr.s.userInfo.data.energyDidGetTimes >= this._limitGetTimes) {
             // useLanMgr
             // UIHUDController.showCenterTip(LanMgr.getLanById("201003"));

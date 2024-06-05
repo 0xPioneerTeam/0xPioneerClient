@@ -14,6 +14,7 @@ import { DataMgr } from "../../Data/DataMgr";
 import { UIName } from "../../Const/ConstUIDefine";
 import { DelegateUI } from "../DelegateUI";
 import { NetworkMgr } from "../../Net/NetworkMgr";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("RecruitUI")
@@ -174,11 +175,13 @@ export class RecruitUI extends ViewController {
     //---------------------------------- action
 
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
 
     private onTapGenerateMax() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const maxTroop: number = this._currentGenerateMaxNum();
         if (maxTroop != this._selectGenerateNum) {
             this._selectGenerateNum = maxTroop;
@@ -186,6 +189,7 @@ export class RecruitUI extends ViewController {
         }
     }
     private onTapGenerateSub() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const maxTroop: number = this._currentGenerateMaxNum();
         const minNum: number = Math.min(1, maxTroop);
         let changedNum = Math.max(minNum, this._selectGenerateNum - 100);
@@ -195,6 +199,7 @@ export class RecruitUI extends ViewController {
         }
     }
     private onTapGenerateAdd() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const maxTroop: number = this._currentGenerateMaxNum();
         const changedNum = Math.min(this._selectGenerateNum + 100, maxTroop);
         if (changedNum != this._selectGenerateNum) {
@@ -214,6 +219,7 @@ export class RecruitUI extends ViewController {
     }
 
     private async onTapGenerate() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._generateTimeNum <= 0) {
             // useLanMgr
             // LanMgr.getLanById("107549")
@@ -226,10 +232,12 @@ export class RecruitUI extends ViewController {
         NetworkMgr.websocketMsg.player_generate_troop_start({
             num: this._selectGenerateNum,
         });
+
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapDelegate() {
+        GameMusicPlayMgr.playTapButtonEffect();
         const result = await UIPanelManger.inst.pushPanel(UIName.DelegateUI);
         if (!result.success) {
             return;

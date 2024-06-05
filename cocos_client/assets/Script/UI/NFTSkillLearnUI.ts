@@ -13,6 +13,7 @@ import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("NFTSkillLearnUI")
@@ -91,10 +92,12 @@ export class NFTSkillLearnUI extends ViewController {
     }
     //---------------------------------------------------- action
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapBookItem(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index: number = parseInt(customEventData);
         const result = await UIPanelManger.inst.pushPanel(UIName.ItemInfoUI);
         if (!result.success) {
@@ -103,6 +106,7 @@ export class NFTSkillLearnUI extends ViewController {
         result.node.getComponent(ItemInfoUI).showItem([this._skillBooks[index]]);
     }
     private async onTapLearn(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const itemConfigId: string = customEventData;
         const config = ItemConfig.getById(itemConfigId);
         if (config == null) {

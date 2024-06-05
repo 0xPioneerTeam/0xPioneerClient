@@ -3,6 +3,7 @@ import {BackpackItem} from './BackpackItem';
 import ViewController from '../BasicView/ViewController';
 import ItemData from '../Const/Item';
 import UIPanelManger from '../Basic/UIPanelMgr';
+import GameMusicPlayMgr from '../Manger/GameMusicPlayMgr';
 
 const {ccclass, property} = _decorator;
 
@@ -47,6 +48,7 @@ export class LootsPopup extends ViewController {
     }
 
     private onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
     }
 }

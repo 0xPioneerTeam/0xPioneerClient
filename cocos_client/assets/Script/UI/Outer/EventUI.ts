@@ -16,6 +16,7 @@ import { DataMgr } from "../../Data/DataMgr";
 import { MapPioneerAttributesChangeModel, MapPioneerEventAttributesChangeType } from "../../Const/PioneerDefine";
 import { AttrChangeType } from "../../Const/ConstDefine";
 import { NetworkMgr } from "../../Net/NetworkMgr";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("EventUI")
@@ -267,6 +268,7 @@ export class EventUI extends ViewController {
     }
     //------------------------------------------------ action
     private onTapNext(actionEvent: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         NetworkMgr.websocketMsg.player_event_select({
             buildingId: this._eventBuildingId,
             pioneerId: this._triggerPioneerId,
@@ -274,6 +276,7 @@ export class EventUI extends ViewController {
         UIPanelManger.inst.popPanel(this.node);
     }
     private onTapFight(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         NetworkMgr.websocketMsg.player_event_select({
             buildingId: this._eventBuildingId,
             pioneerId: this._triggerPioneerId,
@@ -281,6 +284,7 @@ export class EventUI extends ViewController {
         UIPanelManger.inst.popPanel(this.node);
     }
     private onTapSelect(actionEvent: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const datas = customEventData.split("|");
         const index = parseInt(datas[0]);
         const eventId = datas[1];
@@ -298,6 +302,7 @@ export class EventUI extends ViewController {
         UIPanelManger.inst.popPanel(this.node);
     }
     private onTapHoldOn() {
+        GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
     }
 }

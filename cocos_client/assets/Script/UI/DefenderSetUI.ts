@@ -8,6 +8,7 @@ import { NetworkMgr } from "../Net/NetworkMgr";
 import { NTFBackpackItem } from "./View/NTFBackpackItem";
 import { MapPlayerPioneerObject } from "../Const/PioneerDefine";
 import { DefenderSelectUI } from "./DefenderSelectUI";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("DefenderSetUI")
@@ -45,9 +46,9 @@ export class DefenderSetUI extends ViewController {
         super.viewDidStart();
 
         const datas = DataMgr.s.userInfo.data.wormholeDefenderIds;
-        datas.forEach((value: string, key: number)=> {
+        datas.forEach((value: string, key: number) => {
             this._addDefender(value, key);
-        })
+        });
     }
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
@@ -89,6 +90,7 @@ export class DefenderSetUI extends ViewController {
     }
 
     private async _onTapTBD(index: number) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const result = await UIPanelManger.inst.pushPanel(UIName.DefenderSelectUI);
         if (!result.success) {
             return;
@@ -100,6 +102,7 @@ export class DefenderSetUI extends ViewController {
     }
     //------------------------------------------ action
     private onTapDelete(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
         if (!this._allDefenderItemMap.has(index)) {
             return;
@@ -110,6 +113,7 @@ export class DefenderSetUI extends ViewController {
         this._sendRequestSetDefender("", index);
     }
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
@@ -130,6 +134,7 @@ export class DefenderSetUI extends ViewController {
             const delta = event.getUIDelta();
             if (Math.abs(delta.x) >= 2 || Math.abs(delta.y) >= 2) {
                 // begin drag init
+                GameMusicPlayMgr.playTapButtonEffect();
                 this._isDragging = true;
             }
         }

@@ -5,6 +5,7 @@ import ConfigConfig from "../Config/ConfigConfig";
 import { ConfigType, OneStepCostEnergyParam } from "../Const/Config";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
 import CommonTools from "../Tool/CommonTools";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("MapActionConfrimTipUI")
@@ -61,6 +62,7 @@ export class MapActionConfrimTipUI extends ViewController {
         );
     }
     private async onTapClose() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._actionCallback != null) {
             this._actionCallback(false);
         }
@@ -68,6 +70,7 @@ export class MapActionConfrimTipUI extends ViewController {
         UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapAction() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._actionCallback != null) {
             this._actionCallback(true);
         }
