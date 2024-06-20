@@ -66,12 +66,12 @@ export class OuterPioneerController extends ViewController {
             if (pioneer != null) {
                 const path = [];
                 let stepLogic: MapPioneerLogicObject = null;
-                for (const logic of pioneer.logics) {
-                    if (logic.type == MapPioneerLogicType.stepmove) {
-                        stepLogic = logic;
-                        break;
-                    }
-                }
+                // for (const logic of pioneer.logics) {
+                //     if (logic.type == MapPioneerLogicType.stepmove) {
+                //         stepLogic = logic;
+                //         break;
+                //     }
+                // }
                 if (stepLogic != null) {
                     let nextTilePos = tilePos;
                     for (let i = 0; i < 15; i++) {
@@ -238,11 +238,11 @@ export class OuterPioneerController extends ViewController {
                 continue;
             }
             let usedSpeed = pioneer.speed;
-            for (const logic of pioneer.logics) {
-                if (logic.moveSpeed > 0) {
-                    usedSpeed = logic.moveSpeed;
-                }
-            }
+            // for (const logic of pioneer.logics) {
+            //     if (logic.moveSpeed > 0) {
+            //         usedSpeed = logic.moveSpeed;
+            //     }
+            // }
             // artifact move speed
             if (pioneer.type == MapPioneerType.player) {
                 usedSpeed = GameMgr.getAfterEffectValue(GameExtraEffectType.MOVE_SPEED, usedSpeed);

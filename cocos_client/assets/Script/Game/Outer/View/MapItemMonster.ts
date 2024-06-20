@@ -41,13 +41,13 @@ export class MapItemMonster extends Component {
         infoView.getChildByPath("Content/Icon/Level").getComponent(Label).string = "Lv." + model.level;
 
         let moveCounting: boolean = false;
-        if (model.logics.length > 0) {
-            const logic = model.logics[0];
-            if (logic.type == MapPioneerLogicType.stepmove && logic.currentCd > 0) {
-                moveCounting = true;
-                this._moveCountLabel.string = "movecount:" + logic.currentCd + "s";
-            }
-        }
+        // if (model.logics.length > 0) {
+        //     const logic = model.logics[0];
+        //     if (logic.type == MapPioneerLogicType.stepmove && logic.currentCd > 0) {
+        //         moveCounting = true;
+        //         this._moveCountLabel.string = "movecount:" + logic.currentCd + "s";
+        //     }
+        // }
         this._moveCountLabel.node.active = moveCounting;
         this._moveCountLabel.node.active = false;
 
