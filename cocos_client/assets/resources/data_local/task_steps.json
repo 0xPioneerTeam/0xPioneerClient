@@ -231,8 +231,8 @@
     "progress": 100,
     "exp": 5
   },
-  "770302": {
-    "id": "770302",
+  "7703021": {
+    "id": "7703021",
     "name": "501045",
     "start_action": null,
     "complete_con": [
@@ -260,16 +260,164 @@
           "hred_17",
           "hred_18"
         ],
-        5
+        1
       ]
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "770306": {
-    "id": "770306",
+  "7703022": {
+    "id": "7703022",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "7703023": {
+    "id": "7703023",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "7703024": {
+    "id": "7703024",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "7703025": {
+    "id": "7703025",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "7703061": {
+    "id": "7703061",
     "name": "501047",
     "start_action": null,
     "complete_con": [
@@ -325,48 +473,11 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800031": {
-    "id": "800031",
-    "name": "501045",
-    "start_action": null,
-    "complete_con": [
-      1,
-      [
-        3,
-        0,
-        [
-          "hred_1",
-          "hred_2",
-          "hred_3",
-          "hred_4",
-          "hred_5",
-          "hred_6",
-          "hred_7",
-          "hred_8",
-          "hred_9",
-          "hred_10",
-          "hred_11",
-          "hred_12",
-          "hred_13",
-          "hred_14",
-          "hred_15",
-          "hred_16",
-          "hred_17",
-          "hred_18"
-        ],
-        5
-      ]
-    ],
-    "complete_action": null,
-    "quit_con": null,
-    "progress": 100,
-    "exp": 5
-  },
-  "800041": {
-    "id": "800041",
+  "7703062": {
+    "id": "7703062",
     "name": "501047",
     "start_action": null,
     "complete_con": [
@@ -422,11 +533,11 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800051": {
-    "id": "800051",
+  "8000311": {
+    "id": "8000311",
     "name": "501045",
     "start_action": null,
     "complete_con": [
@@ -454,16 +565,164 @@
           "hred_17",
           "hred_18"
         ],
-        5
+        1
       ]
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800061": {
-    "id": "800061",
+  "8000312": {
+    "id": "8000312",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000313": {
+    "id": "8000313",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000314": {
+    "id": "8000314",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000315": {
+    "id": "8000315",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000411": {
+    "id": "8000411",
     "name": "501047",
     "start_action": null,
     "complete_con": [
@@ -519,48 +778,11 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800071": {
-    "id": "800071",
-    "name": "501045",
-    "start_action": null,
-    "complete_con": [
-      1,
-      [
-        3,
-        0,
-        [
-          "hred_1",
-          "hred_2",
-          "hred_3",
-          "hred_4",
-          "hred_5",
-          "hred_6",
-          "hred_7",
-          "hred_8",
-          "hred_9",
-          "hred_10",
-          "hred_11",
-          "hred_12",
-          "hred_13",
-          "hred_14",
-          "hred_15",
-          "hred_16",
-          "hred_17",
-          "hred_18"
-        ],
-        5
-      ]
-    ],
-    "complete_action": null,
-    "quit_con": null,
-    "progress": 100,
-    "exp": 5
-  },
-  "800081": {
-    "id": "800081",
+  "8000412": {
+    "id": "8000412",
     "name": "501047",
     "start_action": null,
     "complete_con": [
@@ -616,11 +838,11 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800091": {
-    "id": "800091",
+  "8000511": {
+    "id": "8000511",
     "name": "501045",
     "start_action": null,
     "complete_con": [
@@ -648,16 +870,164 @@
           "hred_17",
           "hred_18"
         ],
-        5
+        1
       ]
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800101": {
-    "id": "800101",
+  "8000512": {
+    "id": "8000512",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000513": {
+    "id": "8000513",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000514": {
+    "id": "8000514",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000515": {
+    "id": "8000515",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000611": {
+    "id": "8000611",
     "name": "501047",
     "start_action": null,
     "complete_con": [
@@ -713,48 +1083,11 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800111": {
-    "id": "800111",
-    "name": "501045",
-    "start_action": null,
-    "complete_con": [
-      1,
-      [
-        3,
-        0,
-        [
-          "hred_1",
-          "hred_2",
-          "hred_3",
-          "hred_4",
-          "hred_5",
-          "hred_6",
-          "hred_7",
-          "hred_8",
-          "hred_9",
-          "hred_10",
-          "hred_11",
-          "hred_12",
-          "hred_13",
-          "hred_14",
-          "hred_15",
-          "hred_16",
-          "hred_17",
-          "hred_18"
-        ],
-        5
-      ]
-    ],
-    "complete_action": null,
-    "quit_con": null,
-    "progress": 100,
-    "exp": 5
-  },
-  "800121": {
-    "id": "800121",
+  "8000612": {
+    "id": "8000612",
     "name": "501047",
     "start_action": null,
     "complete_con": [
@@ -810,11 +1143,11 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800131": {
-    "id": "800131",
+  "8000711": {
+    "id": "8000711",
     "name": "501045",
     "start_action": null,
     "complete_con": [
@@ -842,16 +1175,164 @@
           "hred_17",
           "hred_18"
         ],
-        5
+        1
       ]
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800141": {
-    "id": "800141",
+  "8000712": {
+    "id": "8000712",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000713": {
+    "id": "8000713",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000714": {
+    "id": "8000714",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000715": {
+    "id": "8000715",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000811": {
+    "id": "8000811",
     "name": "501047",
     "start_action": null,
     "complete_con": [
@@ -907,48 +1388,11 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800151": {
-    "id": "800151",
-    "name": "501045",
-    "start_action": null,
-    "complete_con": [
-      1,
-      [
-        3,
-        0,
-        [
-          "hred_1",
-          "hred_2",
-          "hred_3",
-          "hred_4",
-          "hred_5",
-          "hred_6",
-          "hred_7",
-          "hred_8",
-          "hred_9",
-          "hred_10",
-          "hred_11",
-          "hred_12",
-          "hred_13",
-          "hred_14",
-          "hred_15",
-          "hred_16",
-          "hred_17",
-          "hred_18"
-        ],
-        5
-      ]
-    ],
-    "complete_action": null,
-    "quit_con": null,
-    "progress": 100,
-    "exp": 5
-  },
-  "800161": {
-    "id": "800161",
+  "8000812": {
+    "id": "8000812",
     "name": "501047",
     "start_action": null,
     "complete_con": [
@@ -1004,11 +1448,11 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800171": {
-    "id": "800171",
+  "8000911": {
+    "id": "8000911",
     "name": "501045",
     "start_action": null,
     "complete_con": [
@@ -1036,16 +1480,164 @@
           "hred_17",
           "hred_18"
         ],
-        5
+        1
       ]
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
     "exp": 5
   },
-  "800181": {
-    "id": "800181",
+  "8000912": {
+    "id": "8000912",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000913": {
+    "id": "8000913",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000914": {
+    "id": "8000914",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8000915": {
+    "id": "8000915",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001011": {
+    "id": "8001011",
     "name": "501047",
     "start_action": null,
     "complete_con": [
@@ -1101,7 +1693,1287 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 100,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001012": {
+    "id": "8001012",
+    "name": "501047",
+    "start_action": null,
+    "complete_con": [
+      2,
+      [
+        6,
+        1,
+        "building_5",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_6",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_7",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_8",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_9",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_10",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_11",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_12",
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001111": {
+    "id": "8001111",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001112": {
+    "id": "8001112",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001113": {
+    "id": "8001113",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001114": {
+    "id": "8001114",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001115": {
+    "id": "8001115",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001211": {
+    "id": "8001211",
+    "name": "501047",
+    "start_action": null,
+    "complete_con": [
+      2,
+      [
+        6,
+        1,
+        "building_5",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_6",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_7",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_8",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_9",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_10",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_11",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_12",
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001212": {
+    "id": "8001212",
+    "name": "501047",
+    "start_action": null,
+    "complete_con": [
+      2,
+      [
+        6,
+        1,
+        "building_5",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_6",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_7",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_8",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_9",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_10",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_11",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_12",
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001311": {
+    "id": "8001311",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001312": {
+    "id": "8001312",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001313": {
+    "id": "8001313",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001314": {
+    "id": "8001314",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001315": {
+    "id": "8001315",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001411": {
+    "id": "8001411",
+    "name": "501047",
+    "start_action": null,
+    "complete_con": [
+      2,
+      [
+        6,
+        1,
+        "building_5",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_6",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_7",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_8",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_9",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_10",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_11",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_12",
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001412": {
+    "id": "8001412",
+    "name": "501047",
+    "start_action": null,
+    "complete_con": [
+      2,
+      [
+        6,
+        1,
+        "building_5",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_6",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_7",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_8",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_9",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_10",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_11",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_12",
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001511": {
+    "id": "8001511",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001512": {
+    "id": "8001512",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001513": {
+    "id": "8001513",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001514": {
+    "id": "8001514",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001515": {
+    "id": "8001515",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001611": {
+    "id": "8001611",
+    "name": "501047",
+    "start_action": null,
+    "complete_con": [
+      2,
+      [
+        6,
+        1,
+        "building_5",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_6",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_7",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_8",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_9",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_10",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_11",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_12",
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001612": {
+    "id": "8001612",
+    "name": "501047",
+    "start_action": null,
+    "complete_con": [
+      2,
+      [
+        6,
+        1,
+        "building_5",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_6",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_7",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_8",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_9",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_10",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_11",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_12",
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001711": {
+    "id": "8001711",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001712": {
+    "id": "8001712",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001713": {
+    "id": "8001713",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001714": {
+    "id": "8001714",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001715": {
+    "id": "8001715",
+    "name": "501045",
+    "start_action": null,
+    "complete_con": [
+      1,
+      [
+        3,
+        0,
+        [
+          "hred_1",
+          "hred_2",
+          "hred_3",
+          "hred_4",
+          "hred_5",
+          "hred_6",
+          "hred_7",
+          "hred_8",
+          "hred_9",
+          "hred_10",
+          "hred_11",
+          "hred_12",
+          "hred_13",
+          "hred_14",
+          "hred_15",
+          "hred_16",
+          "hred_17",
+          "hred_18"
+        ],
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001811": {
+    "id": "8001811",
+    "name": "501047",
+    "start_action": null,
+    "complete_con": [
+      2,
+      [
+        6,
+        1,
+        "building_5",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_6",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_7",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_8",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_9",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_10",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_11",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_12",
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
+    "exp": 5
+  },
+  "8001812": {
+    "id": "8001812",
+    "name": "501047",
+    "start_action": null,
+    "complete_con": [
+      2,
+      [
+        6,
+        1,
+        "building_5",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_6",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_7",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_8",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_9",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_10",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_11",
+        1
+      ],
+      [
+        6,
+        1,
+        "building_12",
+        1
+      ]
+    ],
+    "complete_action": null,
+    "quit_con": null,
+    "progress": 10,
     "exp": 5
   },
   "task0101": {

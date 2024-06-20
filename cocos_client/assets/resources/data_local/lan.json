@@ -1681,7 +1681,7 @@
   },
   "501045": {
     "id": "501045",
-    "eng": "Hunting Beasts"
+    "eng": "Hunt 5 beasts"
   },
   "501046": {
     "id": "501046",
@@ -1689,11 +1689,11 @@
   },
   "501047": {
     "id": "501047",
-    "eng": "collection"
+    "eng": "Collect any 2 resources"
   },
   "501100": {
     "id": "501100",
-    "eng": "Hunting Beasts"
+    "eng": "Hunting Season"
   },
   "501101": {
     "id": "501101",
@@ -1701,7 +1701,7 @@
   },
   "501102": {
     "id": "501102",
-    "eng": "collection"
+    "eng": "Resource Shortage"
   },
   "502001": {
     "id": "502001",
@@ -2097,7 +2097,7 @@
   },
   "503102": {
     "id": "503102",
-    "eng": "Really? Help me hunt 5 wild beasts, I can pay you the reward."
+    "eng": "Really? Help me hunt FIVE wild beasts, I can pay you the reward."
   },
   "503103": {
     "id": "503103",
@@ -2121,7 +2121,7 @@
   },
   "503108": {
     "id": "503108",
-    "eng": "Collect any 1 resource point and I will reward you."
+    "eng": "Collect any TWO resource point and I will reward you."
   },
   "503109": {
     "id": "503109",
