@@ -6,8 +6,8 @@ import { OuterTiledMapActionController } from "./OuterTiledMapActionController";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import { DataMgr } from "../../Data/DataMgr";
-import { BuildingStayPosType } from "../../Const/BuildingDefine";
-import { OuterRebonView } from "./View/OuterRebonView";
+import { BuildingStayPosType, MapBuildingType } from "../../Const/BuildingDefine";
+import { OuterRebonAndDestroyView } from "./View/OuterRebonAndDestroyView";
 
 const { ccclass, property } = _decorator;
 
@@ -28,10 +28,9 @@ export class OuterBuildingController extends Component {
     private rebonPrefab;
 
     private _buildingMap: Map<string, { node: Node; stayPositons: Vec2[] }> = new Map();
-    private _rebornMap: Map<string, Node> = new Map();
 
     protected onLoad() {
-        NotificationMgr.addListener(NotificationName.MAP_BUILDING_SHOW_CHANGE, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.MAP_BUILDING_SHOW_CHANGE, this._onBuildingShowChange, this);
         NotificationMgr.addListener(NotificationName.MAP_BUILDING_WORMHOLE_ATTACKER_CHANGE, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.MAP_BUILDING_WORMHOLE_ATTACK_COUNT_DONW_TIME_CHANGE, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.MAP_BUILDING_ACTION_PIONEER_CHANGE, this._refreshUI, this);
@@ -95,7 +94,7 @@ export class OuterBuildingController extends Component {
     update(deltaTime: number) {}
 
     protected onDestroy(): void {
-        NotificationMgr.removeListener(NotificationName.MAP_BUILDING_SHOW_CHANGE, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.MAP_BUILDING_SHOW_CHANGE, this._onBuildingShowChange, this);
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_WORMHOLE_ATTACKER_CHANGE, this._refreshUI, this);
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_WORMHOLE_ATTACK_COUNT_DONW_TIME_CHANGE, this._refreshUI, this);
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_ACTION_PIONEER_CHANGE, this._refreshUI, this);
@@ -145,10 +144,6 @@ export class OuterBuildingController extends Component {
                         }
                     }
                 }
-                if (this._rebornMap.has(building.id)) {
-                    this._rebornMap.get(building.id).destroy();
-                    this._rebornMap.delete(building.id);
-                }
             } else {
                 if (this._buildingMap.has(building.id)) {
                     const data = this._buildingMap.get(building.id);
@@ -157,31 +152,6 @@ export class OuterBuildingController extends Component {
                         GameMainHelper.instance.tiledMapRemoveDynamicBlock(pos);
                     }
                     this._buildingMap.delete(building.id);
-                }
-                const currentTimestamp = new Date().getTime();
-                if (building.rebornTime > currentTimestamp) {
-                    if (!this._rebornMap.has(building.id)) {
-                        if (building.stayMapPositions.length > 0) {
-                            let worldPos = null;
-                            if (building.stayMapPositions.length == 7) {
-                                worldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[3].x, building.stayMapPositions[3].y);
-                            } else if (building.stayMapPositions.length == 3) {
-                                const beginWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(
-                                    building.stayMapPositions[0].x,
-                                    building.stayMapPositions[0].y
-                                );
-                                const endWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[1].x, building.stayMapPositions[1].y);
-                                worldPos = v3(beginWorldPos.x, endWorldPos.y + (beginWorldPos.y - endWorldPos.y) / 2, 0);
-                            } else {
-                                worldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
-                            }
-                            const rebornView: Node = instantiate(this.rebonPrefab);
-                            rebornView.setParent(decorationView);
-                            rebornView.setWorldPosition(worldPos);
-                            rebornView.getComponent(OuterRebonView).refreshUI(true, building.rebornTime);
-                            this._rebornMap.set(building.id, rebornView);
-                        }
-                    }
                 }
             }
         }
@@ -209,6 +179,33 @@ export class OuterBuildingController extends Component {
     }
 
     //------------------------------------------------- notification
+    private _onBuildingShowChange(data: { id: string; show: boolean }) {
+        const { id, show } = data;
+        this._refreshUI();
+        const building = DataMgr.s.mapBuilding.getBuildingById(id);
+        if (building == null || (building.type != MapBuildingType.event && building.type != MapBuildingType.resource)) {
+            return;
+        }
+        if (building.stayMapPositions.length > 0) {
+            let worldPos = null;
+            if (building.stayMapPositions.length == 7) {
+                worldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[3].x, building.stayMapPositions[3].y);
+            } else if (building.stayMapPositions.length == 3) {
+                const beginWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
+                const endWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[1].x, building.stayMapPositions[1].y);
+                worldPos = v3(beginWorldPos.x, endWorldPos.y + (beginWorldPos.y - endWorldPos.y) / 2, 0);
+            } else {
+                worldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
+            }
+            const decorationView = this.node.getComponent(OuterTiledMapActionController).mapDecorationView();
+
+            const rebornView: Node = instantiate(this.rebonPrefab);
+            rebornView.setParent(decorationView);
+            rebornView.setWorldPosition(worldPos);
+            rebornView.getComponent(OuterRebonAndDestroyView).playAnim(show ?  2 : 0);
+        }
+    }
+
     private _onRookieTapBuilding(data: { buildingId: string }) {
         const struct = this._buildingMap.get(data.buildingId);
         if (struct == null) {

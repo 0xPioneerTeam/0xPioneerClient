@@ -30,13 +30,13 @@ import {
     MapPioneerType,
 } from "../../Const/PioneerDefine";
 import { NetworkMgr } from "../../Net/NetworkMgr";
-import { OuterRebonView } from "./View/OuterRebonView";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { RookieStep } from "../../Const/RookieDefine";
 import RookieStepMgr from "../../Manger/RookieStepMgr";
 import { share } from "../../Net/msg/WebsocketMsg";
 import { ItemConfigData } from "../../Const/Item";
 import { OuterFightResultView } from "./View/OuterFightResultView";
+import { OuterRebonAndDestroyView } from "./View/OuterRebonAndDestroyView";
 
 const { ccclass, property } = _decorator;
 
@@ -136,7 +136,6 @@ export class OuterPioneerController extends ViewController {
     private rebonPrefab: Prefab;
 
     private _pioneerMap: Map<string, Node> = new Map();
-    private _rebornMap: Map<string, Node> = new Map();
 
     private _movingPioneerIds: string[] = [];
     private _fightDataMap: Map<
@@ -348,24 +347,10 @@ export class OuterPioneerController extends ViewController {
                         temple.setWorldPosition(worldPos);
                     }
                 }
-                if (this._rebornMap.has(pioneer.id)) {
-                    this._rebornMap.get(pioneer.id).destroy();
-                    this._rebornMap.delete(pioneer.id);
-                }
             } else {
                 if (this._pioneerMap.has(pioneer.id)) {
                     this._pioneerMap.get(pioneer.id).destroy();
                     this._pioneerMap.delete(pioneer.id);
-                }
-                const currentTimestamp = new Date().getTime();
-                if (pioneer.rebornTime > currentTimestamp) {
-                    if (!this._rebornMap.has(pioneer.id)) {
-                        const rebornView: Node = instantiate(this.rebonPrefab);
-                        rebornView.setParent(decorationView);
-                        rebornView.setWorldPosition(GameMainHelper.instance.tiledMapGetPosWorld(pioneer.stayPos.x, pioneer.stayPos.y));
-                        rebornView.getComponent(OuterRebonView).refreshUI(false, pioneer.rebornTime);
-                        this._rebornMap.set(pioneer.id, rebornView);
-                    }
                 }
             }
         }
@@ -613,8 +598,21 @@ export class OuterPioneerController extends ViewController {
                     });
                 }
             }
+           
         }
         this._refreshUI();
+
+        const pioneer = DataMgr.s.pioneer.getById(data.id);
+        if (pioneer == null || pioneer.type != MapPioneerType.hred) {
+            return;
+        }
+        // hred
+        const decorationView = this.node.getComponent(OuterTiledMapActionController).mapDecorationView();
+
+        const rebornView: Node = instantiate(this.rebonPrefab);
+        rebornView.setParent(decorationView);
+        rebornView.setWorldPosition(GameMainHelper.instance.tiledMapGetPosWorld(pioneer.stayPos.x, pioneer.stayPos.y));
+        rebornView.getComponent(OuterRebonAndDestroyView).playAnim(data.show ?  1 : 0);
     }
     private async _onPioneerEventIdChange(data: { triggerPioneerId: string; eventBuildingId: string; eventId: string }) {
         const eventConfig = EventConfig.getById(data.eventId);

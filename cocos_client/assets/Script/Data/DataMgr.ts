@@ -452,7 +452,7 @@ export class DataMgr {
                     const oldData = localDatas[i];
                     const newData = DataMgr.s.mapBuilding.replaceData(i, temple);
                     if (oldData.show != newData.show) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_SHOW_CHANGE, { id: newData.id });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_SHOW_CHANGE, { id: newData.id, show: newData.show });
                     }
                     if (oldData.faction != newData.faction) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_FACTION_CHANGE, { id: newData.id });
