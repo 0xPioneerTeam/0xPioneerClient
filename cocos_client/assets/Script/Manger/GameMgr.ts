@@ -35,6 +35,9 @@ export default class GameMgr {
     }
 
     public taskTracking(currentStepTask: TaskStepObject) {
+        if (DataMgr.s.userInfo.data.rookieStep == RookieStep.FINISH) {
+            return;
+        }
         if (currentStepTask == null) {
             return;
         }

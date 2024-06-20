@@ -37,7 +37,7 @@ export class MapItemMonster extends Component {
         infoView.getChildByPath("Gap").getComponent(UITransform).height = this._viewHeightMap[this._model.animType];
         infoView.getComponent(Layout).updateLayout();
 
-        this._nameLabel.string = LanMgr.getLanById(model.name);
+        infoView.getChildByPath("Content/name").getComponent(Label).string = LanMgr.getLanById(model.name);
         infoView.getChildByPath("Content/Icon/Level").getComponent(Label).string = "Lv." + model.level;
 
         let moveCounting: boolean = false;
@@ -48,8 +48,8 @@ export class MapItemMonster extends Component {
         //         this._moveCountLabel.string = "movecount:" + logic.currentCd + "s";
         //     }
         // }
-        this._moveCountLabel.node.active = moveCounting;
-        this._moveCountLabel.node.active = false;
+        // this._moveCountLabel.node.active = moveCounting;
+        // this._moveCountLabel.node.active = false;
 
         for (const child of this.node.getChildByPath("role").children) {
             child.active = child.name == model.animType;
@@ -84,16 +84,15 @@ export class MapItemMonster extends Component {
                 // view.getChildByPath("walk_bottom").active = false;
             }
         }
-        this._nameLabel.node.active = false;
+        this.node.getChildByPath("InfoView/Content/name").active = false;
         this._moveCountLabel.node.active = false;
     }
 
-    private _nameLabel: Label = null;
     private _moveCountLabel: Label = null;
     private _currentShowMonster: Node = null;
     onLoad() {
-        this._nameLabel = this.node.getChildByPath("InfoView/Content/name").getComponent(Label);
         this._moveCountLabel = this.node.getChildByPath("MoveCountLabel").getComponent(Label);
+        this._moveCountLabel.node.active = false;
 
         NotificationMgr.addListener(NotificationName.ARTIFACT_EQUIP_DID_CHANGE, this._onArtifactEquipChange, this);
     }
