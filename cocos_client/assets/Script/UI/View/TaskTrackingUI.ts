@@ -75,17 +75,30 @@ export class TaskTrackingUI extends Component {
                 this._showIndex = 0;
             }
             const task = this._doingTask[this._showIndex];
-            const currentTaskStep = task.steps[task.stepIndex];
-            if (currentTaskStep == null) {
-                return;
+            
+            // ORIGINAL CODE
+            const taskConfig = TaskConfig.getById(task.taskId);
+            if (taskConfig != null) {
+                this._titleLabel.string = LanMgr.getLanById(taskConfig.name);
+                this._progress.progress = task.stepIndex / task.steps.length;
+                this._progressValueUse.string = task.stepIndex.toString();
+                this._progressValueLimit.string = task.steps.length.toString();
             }
-            const stepObj = DataMgr.s.task.getTaskStep(currentTaskStep.id);
-            if (stepObj != null) {
-                this._titleLabel.string = LanMgr.getLanById(stepObj.name);
-                this._progress.progress = currentTaskStep.completeIndex / stepObj.completeCon.conditions.length;
-                this._progressValueUse.string = currentTaskStep.completeIndex.toString();
-                this._progressValueLimit.string = stepObj.completeCon.conditions.length.toString();
-            }
+            
+
+            // CHANGE TASK PROGRESS TO TASK STEP PROGRESS
+            
+            // const currentTaskStep = task.steps[task.stepIndex];
+            // if (currentTaskStep == null) {
+            //     return;
+            // }
+            // const stepObj = DataMgr.s.task.getTaskStep(currentTaskStep.id);
+            // if (stepObj != null) {
+            //     this._titleLabel.string = LanMgr.getLanById(stepObj.name);
+            //     this._progress.progress = currentTaskStep.completeIndex / stepObj.completeCon.conditions.length;
+            //     this._progressValueUse.string = currentTaskStep.completeIndex.toString();
+            //     this._progressValueLimit.string = stepObj.completeCon.conditions.length.toString();
+            // }
             this._showNextButton.getComponent(Sprite).grayscale = !(this._doingTask.length > 1);
             this._showNextButton.getComponent(Button).interactable = this._doingTask.length > 1;
         }
