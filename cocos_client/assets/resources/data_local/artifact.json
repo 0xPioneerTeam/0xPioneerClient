@@ -329,7 +329,7 @@
     "id": "7012",
     "name": "107012",
     "rank": 4,
-    "icon": "",
+    "icon": "icon_7012",
     "prop": null,
     "prop_value": null,
     "eff_sp": "70011",
@@ -348,7 +348,7 @@
     "id": "7013",
     "name": "107013",
     "rank": 4,
-    "icon": "",
+    "icon": "icon_7013",
     "prop": null,
     "prop_value": null,
     "eff_sp": "70011",
@@ -366,7 +366,7 @@
     "id": "7014",
     "name": "107014",
     "rank": 4,
-    "icon": "",
+    "icon": "icon_7014",
     "prop": null,
     "prop_value": null,
     "eff_sp": "70011",
@@ -384,7 +384,7 @@
     "id": "7015",
     "name": "107015",
     "rank": 4,
-    "icon": "",
+    "icon": "icon_7015",
     "prop": null,
     "prop_value": null,
     "eff_sp": "70011",
@@ -397,44 +397,11 @@
     "des": "117015",
     "ani": ""
   },
-  "7016": {
-    "id": "7016",
-    "name": "107016",
-    "rank": 5,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "70011",
-    "effect": [
-      "70047",
-      "70048",
-      "70049",
-      "70050"
-    ],
-    "des": "117016",
-    "ani": ""
-  },
-  "7017": {
-    "id": "7017",
-    "name": "107017",
-    "rank": 5,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "70011",
-    "effect": [
-      "70053",
-      "70054",
-      "70055"
-    ],
-    "des": "117017",
-    "ani": ""
-  },
   "7018": {
     "id": "7018",
     "name": "107018",
     "rank": 3,
-    "icon": "",
+    "icon": "icon_7018",
     "prop": null,
     "prop_value": null,
     "eff_sp": "",
@@ -450,7 +417,7 @@
     "id": "7019",
     "name": "107019",
     "rank": 3,
-    "icon": "",
+    "icon": "icon_7019",
     "prop": null,
     "prop_value": null,
     "eff_sp": "",
@@ -466,7 +433,7 @@
     "id": "7020",
     "name": "107020",
     "rank": 3,
-    "icon": "",
+    "icon": "icon_7020",
     "prop": null,
     "prop_value": null,
     "eff_sp": "",
@@ -485,7 +452,7 @@
     "id": "7021",
     "name": "107021",
     "rank": 3,
-    "icon": "",
+    "icon": "icon_7021",
     "prop": null,
     "prop_value": null,
     "eff_sp": "",
@@ -500,47 +467,11 @@
     "des": "117021",
     "ani": ""
   },
-  "7022": {
-    "id": "7022",
-    "name": "107022",
-    "rank": 3,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70029",
-      "70030",
-      "70031",
-      "70032",
-      "70033"
-    ],
-    "des": "117022",
-    "ani": ""
-  },
-  "7023": {
-    "id": "7023",
-    "name": "107023",
-    "rank": 5,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "70011",
-    "effect": [
-      "70035",
-      "70036",
-      "70037",
-      "70038",
-      "70039"
-    ],
-    "des": "117023",
-    "ani": ""
-  },
   "7024": {
     "id": "7024",
     "name": "107024",
     "rank": 4,
-    "icon": "",
+    "icon": "icon_7024",
     "prop": null,
     "prop_value": null,
     "eff_sp": "70011",
@@ -553,114 +484,11 @@
     "des": "117024",
     "ani": ""
   },
-  "7025": {
-    "id": "7025",
-    "name": "107025",
-    "rank": 5,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "70011",
-    "effect": [
-      "70047",
-      "70048",
-      "70049",
-      "70050"
-    ],
-    "des": "117025",
-    "ani": ""
-  },
-  "7026": {
-    "id": "7026",
-    "name": "107026",
-    "rank": 2,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70053",
-      "70054",
-      "70055"
-    ],
-    "des": "117026",
-    "ani": ""
-  },
-  "7027": {
-    "id": "7027",
-    "name": "107027",
-    "rank": 2,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70059",
-      "70060",
-      "70061"
-    ],
-    "des": "117027",
-    "ani": ""
-  },
-  "7028": {
-    "id": "7028",
-    "name": "107028",
-    "rank": 2,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70065",
-      "70066",
-      "70067"
-    ],
-    "des": "117028",
-    "ani": ""
-  },
-  "7029": {
-    "id": "7029",
-    "name": "107029",
-    "rank": 2,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70011",
-      "70012",
-      "70013",
-      "70014",
-      "70015",
-      "70016"
-    ],
-    "des": "117029",
-    "ani": ""
-  },
-  "7030": {
-    "id": "7030",
-    "name": "107030",
-    "rank": 2,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70023",
-      "70024",
-      "70025",
-      "70026",
-      "70027",
-      "70028"
-    ],
-    "des": "117030",
-    "ani": ""
-  },
   "7031": {
     "id": "7031",
     "name": "107031",
     "rank": 4,
-    "icon": "",
+    "icon": "icon_7031",
     "prop": null,
     "prop_value": null,
     "eff_sp": "70011",
@@ -678,7 +506,7 @@
     "id": "7032",
     "name": "107032",
     "rank": 4,
-    "icon": "",
+    "icon": "icon_7032",
     "prop": null,
     "prop_value": null,
     "eff_sp": "70011",
@@ -690,88 +518,6 @@
       "70039"
     ],
     "des": "117032",
-    "ani": ""
-  },
-  "7033": {
-    "id": "7033",
-    "name": "107033",
-    "rank": 1,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70041",
-      "70042",
-      "70043",
-      "70044"
-    ],
-    "des": "117033",
-    "ani": ""
-  },
-  "7034": {
-    "id": "7034",
-    "name": "107034",
-    "rank": 1,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70047",
-      "70048",
-      "70049",
-      "70050"
-    ],
-    "des": "117034",
-    "ani": ""
-  },
-  "7035": {
-    "id": "7035",
-    "name": "107035",
-    "rank": 1,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70053",
-      "70054",
-      "70055"
-    ],
-    "des": "117035",
-    "ani": ""
-  },
-  "7036": {
-    "id": "7036",
-    "name": "107036",
-    "rank": 1,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70059",
-      "70060",
-      "70061"
-    ],
-    "des": "117036",
-    "ani": ""
-  },
-  "7037": {
-    "id": "7037",
-    "name": "107037",
-    "rank": 1,
-    "icon": "",
-    "prop": null,
-    "prop_value": null,
-    "eff_sp": "",
-    "effect": [
-      "70065",
-      "70066",
-      "70067"
-    ],
-    "des": "117037",
     "ani": ""
   }
 }

@@ -23,7 +23,7 @@
     "max_barr": 1500,
     "time_barr": 20,
     "rec_cost_barr": "[[8001,10],[8003,5]]",
-    "prefab_house": "Damage_house_A",
+    "prefab_house": "Pioneer_house",
     "desc_house": "121003",
     "prefab_energy": "Energy_Station_LV1_Group",
     "info_y_energy": 250,
