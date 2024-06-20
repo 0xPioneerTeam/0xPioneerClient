@@ -6,10 +6,11 @@ import TaskConfig from "../../Config/TaskConfig";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
-import { TaskCondition, TaskConditionType, TaskStepObject } from "../../Const/TaskDefine";
+import { TaskCondition, TaskConditionType, TaskStepConfigData, TaskStepObject } from "../../Const/TaskDefine";
 import { MapNpcPioneerObject, MapPioneerObject } from "../../Const/PioneerDefine";
 import CommonTools from "../../Tool/CommonTools";
 import GameMainHelper from "../../Game/Helper/GameMainHelper";
+import TaskStepConfig from "../../Config/TaskStepConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("TaskTrackingUI")
@@ -74,12 +75,16 @@ export class TaskTrackingUI extends Component {
                 this._showIndex = 0;
             }
             const task = this._doingTask[this._showIndex];
-            const taskConfig = TaskConfig.getById(task.taskId);
-            if (taskConfig != null) {
-                this._titleLabel.string = LanMgr.getLanById(taskConfig.name);
-                this._progress.progress = task.stepIndex / task.steps.length;
-                this._progressValueUse.string = task.stepIndex.toString();
-                this._progressValueLimit.string = task.steps.length.toString();
+            const currentTaskStep = task.steps[task.stepIndex];
+            if (currentTaskStep == null) {
+                return;
+            }
+            const stepObj = DataMgr.s.task.getTaskStep(currentTaskStep.id);
+            if (stepObj != null) {
+                this._titleLabel.string = LanMgr.getLanById(stepObj.name);
+                this._progress.progress = currentTaskStep.completeIndex / stepObj.completeCon.conditions.length;
+                this._progressValueUse.string = currentTaskStep.completeIndex.toString();
+                this._progressValueLimit.string = stepObj.completeCon.conditions.length.toString();
             }
             this._showNextButton.getComponent(Sprite).grayscale = !(this._doingTask.length > 1);
             this._showNextButton.getComponent(Button).interactable = this._doingTask.length > 1;
