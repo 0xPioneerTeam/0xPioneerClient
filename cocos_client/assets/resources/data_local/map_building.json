@@ -36,7 +36,7 @@
     ],
     "node": "ruin",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": null,
     "quota": null,
     "exp": 5,
@@ -111,7 +111,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8002",
       100
@@ -139,7 +139,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8002",
       100
@@ -167,7 +167,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8001",
       100
@@ -195,7 +195,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8001",
       100
@@ -223,7 +223,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8001",
       100
@@ -279,7 +279,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8003",
       100
@@ -307,7 +307,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8003",
       100
@@ -335,7 +335,7 @@
     ],
     "node": "ancient_ruins",
     "level": 1,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -360,7 +360,7 @@
     ],
     "node": "spider_cave",
     "level": 1,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -385,7 +385,7 @@
     ],
     "node": "laboratory",
     "level": 3,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -410,7 +410,7 @@
     ],
     "node": "Tree_Group",
     "level": 3,
-    "progress": 8,
+    "progress": 30,
     "resources": null,
     "quota": null,
     "exp": 10,
@@ -435,7 +435,7 @@
     ],
     "node": "Pyramid_Group",
     "level": 4,
-    "progress": 10,
+    "progress": 40,
     "resources": null,
     "quota": null,
     "exp": 15,
@@ -460,7 +460,7 @@
     ],
     "node": "Aquatic_Relics_Group",
     "level": 5,
-    "progress": 15,
+    "progress": 50,
     "resources": null,
     "quota": null,
     "exp": 20,
@@ -535,7 +535,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8002",
       100
@@ -563,7 +563,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8001",
       100
@@ -591,7 +591,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8003",
       100
@@ -619,7 +619,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8002",
       100
@@ -647,7 +647,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8001",
       100
@@ -675,7 +675,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8002",
       100
@@ -703,7 +703,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8003",
       100
@@ -731,7 +731,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8001",
       100
@@ -759,7 +759,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8003",
       100
@@ -787,7 +787,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8002",
       100
@@ -815,7 +815,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8001",
       100
@@ -843,7 +843,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8003",
       100
@@ -871,7 +871,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8002",
       100
@@ -899,7 +899,7 @@
     ],
     "node": "ancient_ruins",
     "level": 1,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -924,7 +924,7 @@
     ],
     "node": "spider_cave",
     "level": 1,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -949,7 +949,7 @@
     ],
     "node": "laboratory",
     "level": 3,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -974,7 +974,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8002",
       100
@@ -1002,7 +1002,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8003",
       100
@@ -1025,12 +1025,12 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      13,
-      32
+      19,
+      29
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8001",
       100
@@ -1058,7 +1058,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8003",
       100
@@ -1086,7 +1086,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8002",
       100
@@ -1114,7 +1114,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8001",
       100
@@ -1142,7 +1142,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8003",
       100
@@ -1170,7 +1170,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8002",
       100
@@ -1198,7 +1198,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 2,
+    "progress": 40,
     "resources": [
       "8001",
       100
@@ -1226,7 +1226,7 @@
     ],
     "node": "ancient_ruins",
     "level": 1,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -1251,7 +1251,7 @@
     ],
     "node": "spider_cave",
     "level": 1,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -1276,7 +1276,7 @@
     ],
     "node": "laboratory",
     "level": 3,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -1301,7 +1301,7 @@
     ],
     "node": "ancient_ruins",
     "level": 1,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -1326,7 +1326,7 @@
     ],
     "node": "spider_cave",
     "level": 1,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -1351,7 +1351,7 @@
     ],
     "node": "laboratory",
     "level": 3,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -1376,7 +1376,7 @@
     ],
     "node": "ancient_ruins",
     "level": 1,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -1401,7 +1401,7 @@
     ],
     "node": "spider_cave",
     "level": 1,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
@@ -1426,7 +1426,7 @@
     ],
     "node": "laboratory",
     "level": 3,
-    "progress": 5,
+    "progress": 25,
     "resources": null,
     "quota": null,
     "exp": 8,
