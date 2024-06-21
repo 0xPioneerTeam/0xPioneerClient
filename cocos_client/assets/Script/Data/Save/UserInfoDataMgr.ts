@@ -75,15 +75,18 @@ export default class UserInfoDataMgr {
         if (this._data != null && this._data.rookieStep != null) {
             step = this._data.rookieStep;
         }
-        if (
-            step != null &&
-            (newObj.rookieStep == RookieStep.NPC_TALK_3 ||
+        if (step != null) {
+            // protect step
+            if (
+                newObj.rookieStep == RookieStep.NPC_TALK_3 ||
                 newObj.rookieStep == RookieStep.NPC_TALK_4 ||
                 newObj.rookieStep == RookieStep.NPC_TALK_5 ||
                 newObj.rookieStep == RookieStep.NPC_TALK_7 ||
-                newObj.rookieStep == RookieStep.SYSTEM_TALK_21)
-        ) {
-            newObj.rookieStep = step;
+                newObj.rookieStep == RookieStep.SYSTEM_TALK_21 ||
+                newObj.rookieStep < step
+            ) {
+                newObj.rookieStep = step;
+            }
         }
         if (netData.defender != null) {
             for (const key in netData.defender) {
