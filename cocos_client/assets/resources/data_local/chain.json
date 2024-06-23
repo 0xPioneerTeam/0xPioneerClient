@@ -90,6 +90,24 @@
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
             }
+        },
+        "111112": {
+            "chainId": "534351",
+            "chainName": "Scroll Sepolia",
+            "nativeCurrency": {
+                "name": "ETH",
+                "symbol": "ETH",
+                "decimals": 18
+            },
+            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
+            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
+            "abi": "deployresult_scrollTestnet",
+            "api": {
+                "ws_host": "ws://api.0xpioneerdapp.com/wss",
+                "http_host": "http://api.0xpioneerdapp.com/api",
+                "init": true,
+                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            }
         }
     }
 }
