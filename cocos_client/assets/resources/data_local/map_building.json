@@ -119,7 +119,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -149,7 +149,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -179,7 +179,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -209,7 +209,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -239,7 +239,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -269,7 +269,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 5,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -299,7 +299,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -329,7 +329,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -575,7 +575,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -605,7 +605,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -635,7 +635,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -665,7 +665,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -695,7 +695,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -725,7 +725,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -755,7 +755,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -785,7 +785,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -815,7 +815,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -845,7 +845,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -875,7 +875,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -905,7 +905,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -935,7 +935,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -987,7 +987,7 @@
     "show": 0,
     "pos_type": 1,
     "positions": [
-      45,
+      44,
       5
     ],
     "node": "spider_cave",
@@ -1046,7 +1046,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -1076,7 +1076,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -1106,7 +1106,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -1136,7 +1136,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -1166,7 +1166,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -1196,7 +1196,7 @@
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -1226,7 +1226,7 @@
     ],
     "node": "sand_mineral",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -1256,7 +1256,7 @@
     ],
     "node": "swamp_jungle",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -1281,12 +1281,12 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      32,
-      6
+      28,
+      10
     ],
     "node": "oasis",
     "level": 1,
-    "progress": 40,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
@@ -1420,7 +1420,7 @@
     "pos_type": 1,
     "positions": [
       52,
-      53
+      22
     ],
     "node": "spider_cave",
     "level": 1,
@@ -1500,8 +1500,8 @@
     "show": 0,
     "pos_type": 1,
     "positions": [
-      56,
-      15
+      16,
+      2
     ],
     "node": "spider_cave",
     "level": 1,
