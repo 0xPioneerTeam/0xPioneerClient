@@ -133,7 +133,7 @@ export default class PioneerMgr {
             }
             let interactPioneer: MapPioneerObject = null;
             for (const stayPioneer of stayPioneers) {
-                if (stayPioneer.id != pioneer.id) {
+                if (stayPioneer.id == movingTargetData.id) {
                     interactPioneer = stayPioneer;
                     break;
                 }
