@@ -13,6 +13,7 @@ import { NetworkMgr } from "../../Net/NetworkMgr";
 import { s2c_user } from "../../Net/msg/WebsocketMsg";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { RookieStep } from "../../Const/RookieDefine";
+import TaskConfig from "../../Config/TaskConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("DialogueUI")
@@ -102,7 +103,9 @@ export class DialogueUI extends ViewController {
                 }
             }
             if (dialogView.getChildByName("name_bg").active) {
-                dialogView.getChildByName("name_bg").position = isRoleShow ? v3(-302, dialogView.getChildByName("name_bg").position.y) : v3(-651, dialogView.getChildByName("name_bg").position.y);
+                dialogView.getChildByName("name_bg").position = isRoleShow
+                    ? v3(-302, dialogView.getChildByName("name_bg").position.y)
+                    : v3(-651, dialogView.getChildByName("name_bg").position.y);
             }
         } else if (currentMesssage.type == "1") {
             if (currentMesssage.text != undefined) {
@@ -179,10 +182,36 @@ export class DialogueUI extends ViewController {
         NotificationMgr.triggerEvent(NotificationName.TALK_FINISH, { talkId: talkId });
     }
 
+    private _checkLastestStepRejectGetTask(selectIndex: number): boolean {
+        if (DataMgr.s.userInfo.data.rookieStep != RookieStep.FINISH) {
+            return false;
+        }
+        if (this._talk == null) {
+            return false;
+        }
+        if (this._dialogStep + 1 >= this._talk.messsages.length) {
+            const allTaskConfigs = TaskConfig.getAll();
+            for (const key in allTaskConfigs) {
+                if (Object.prototype.hasOwnProperty.call(allTaskConfigs, key)) {
+                    const element = allTaskConfigs[key];
+                    const condition = element.take_con[1];
+                    if (condition[0] == 1 && condition[1] == this._talk.id && condition[2] != selectIndex) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     //------------------------------------------------ action
     private onTapNext() {
         GameMusicPlayMgr.playTapButtonEffect();
         if (this._talk == null) {
+            return;
+        }
+        if (this._checkLastestStepRejectGetTask(-1)) {
+            UIPanelManger.inst.popPanel(this.node);
             return;
         }
         NetworkMgr.websocketMsg.player_talk_select({
@@ -198,6 +227,10 @@ export class DialogueUI extends ViewController {
             return;
         }
         const selectIndex = parseInt(customEventData);
+        if (this._checkLastestStepRejectGetTask(selectIndex)) {
+            UIPanelManger.inst.popPanel(this.node);
+            return;
+        }
         NetworkMgr.websocketMsg.player_talk_select({
             talkId: this._talk.id,
             selectIndex: selectIndex,

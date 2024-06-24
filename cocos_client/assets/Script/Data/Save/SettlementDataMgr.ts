@@ -10,6 +10,8 @@ export class SettlementDataMgr {
             const element = netData[key];
             this._data.push(this._convertNetDataToObject(element));
         }
+
+        console.log("exce data:", this._data);
     }
     public getObj(beginLevel: number, endLevel: number) {
         const newSettlement: SettlementModel = {

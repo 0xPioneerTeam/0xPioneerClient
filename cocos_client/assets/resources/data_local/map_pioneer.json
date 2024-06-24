@@ -6,6 +6,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "",
     "hp": 60,
@@ -30,6 +31,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "",
     "hp": 100,
@@ -54,6 +56,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "",
     "hp": 150,
@@ -78,6 +81,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "",
     "hp": 100,
@@ -102,6 +106,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "",
     "hp": 100,
@@ -126,6 +131,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "",
     "hp": 180,
@@ -150,6 +156,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "",
     "hp": 200,
@@ -174,6 +181,7 @@
     "friendly": 1,
     "show": 1,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "30001",
     "hp": 100,
@@ -198,6 +206,7 @@
     "friendly": 1,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "30002",
     "hp": 100,
@@ -237,6 +246,7 @@
     "friendly": 1,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "30003",
     "hp": 100,
@@ -261,6 +271,7 @@
     "friendly": 1,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "30001",
     "hp": 100,
@@ -285,6 +296,7 @@
     "friendly": 1,
     "show": 1,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090051",
     "nft_pioneer": "",
     "hp": 50,
@@ -309,6 +321,7 @@
     "friendly": 1,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090061",
     "nft_pioneer": "",
     "hp": 50,
@@ -333,6 +346,7 @@
     "friendly": 1,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090071",
     "nft_pioneer": "",
     "hp": 80,
@@ -357,6 +371,7 @@
     "friendly": 1,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090081",
     "nft_pioneer": "",
     "hp": 50,
@@ -381,6 +396,7 @@
     "friendly": 1,
     "show": 1,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090091",
     "nft_pioneer": "",
     "hp": 50,
@@ -405,6 +421,7 @@
     "friendly": 1,
     "show": 1,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090301",
     "nft_pioneer": "",
     "hp": 1,
@@ -429,6 +446,7 @@
     "friendly": 1,
     "show": 1,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090311",
     "nft_pioneer": "",
     "hp": 1,
@@ -453,6 +471,7 @@
     "friendly": 1,
     "show": 1,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090321",
     "nft_pioneer": "",
     "hp": 1,
@@ -477,6 +496,7 @@
     "friendly": 1,
     "show": 1,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090331",
     "nft_pioneer": "",
     "hp": 1,
@@ -501,6 +521,7 @@
     "friendly": 1,
     "show": 1,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090351",
     "nft_pioneer": "",
     "hp": 1,
@@ -525,6 +546,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": -1,
     "des": "1090402",
     "nft_pioneer": "",
     "hp": 100,
@@ -549,6 +571,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090402",
     "nft_pioneer": "",
     "hp": 80,
@@ -573,6 +596,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090402",
     "nft_pioneer": "",
     "hp": 180,
@@ -612,6 +636,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "1090402",
     "nft_pioneer": "",
     "hp": 100,
@@ -636,6 +661,7 @@
     "friendly": 0,
     "show": 1,
     "level": 1,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 60,
@@ -645,7 +671,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_a_1",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
         "x": 48,
@@ -688,6 +720,7 @@
     "friendly": 0,
     "show": 1,
     "level": 1,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 40,
@@ -697,7 +730,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_b_2",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
         "x": 50,
@@ -730,6 +769,7 @@
     "friendly": 0,
     "show": 1,
     "level": 1,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 40,
@@ -739,7 +779,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_c_3",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
         "x": 39,
@@ -754,6 +800,7 @@
     "friendly": 0,
     "show": 1,
     "level": 2,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 60,
@@ -763,11 +810,17 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_sandspider",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        50
+      ]
+    ],
     "pos": [
       {
-        "x": 28,
-        "y": 11
+        "x": 29,
+        "y": 12
       }
     ]
   },
@@ -778,6 +831,7 @@
     "friendly": 0,
     "show": 1,
     "level": 2,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 60,
@@ -787,11 +841,17 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_scorpion",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        50
+      ]
+    ],
     "pos": [
       {
-        "x": 42,
-        "y": 44
+        "x": 41,
+        "y": 45
       }
     ]
   },
@@ -802,6 +862,7 @@
     "friendly": 0,
     "show": 0,
     "level": 3,
+    "refresh_limit": 3,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 120,
@@ -811,11 +872,17 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_spiderqueen",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        100
+      ]
+    ],
     "pos": [
       {
         "x": 30,
-        "y": 3
+        "y": 4
       }
     ],
     "logics": [
@@ -844,6 +911,7 @@
     "friendly": 0,
     "show": 0,
     "level": 3,
+    "refresh_limit": 2,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 75,
@@ -853,7 +921,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_dhs",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        80
+      ]
+    ],
     "pos": [
       {
         "x": 24,
@@ -886,6 +960,7 @@
     "friendly": 0,
     "show": 0,
     "level": 4,
+    "refresh_limit": 3,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 90,
@@ -895,11 +970,17 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_ths",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        150
+      ]
+    ],
     "pos": [
       {
-        "x": 8,
-        "y": 16
+        "x": 9,
+        "y": 14
       }
     ],
     "logics": [
@@ -928,6 +1009,7 @@
     "friendly": 0,
     "show": 0,
     "level": 5,
+    "refresh_limit": 3,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 150,
@@ -937,7 +1019,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_teshark",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        200
+      ]
+    ],
     "pos": [
       {
         "x": 39,
@@ -970,6 +1058,7 @@
     "friendly": 0,
     "show": 0,
     "level": 3,
+    "refresh_limit": 2,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 75,
@@ -979,7 +1068,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_deathworm",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        80
+      ]
+    ],
     "pos": [
       {
         "x": 48,
@@ -1012,6 +1107,7 @@
     "friendly": 0,
     "show": 0,
     "level": 2,
+    "refresh_limit": 2,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 60,
@@ -1021,7 +1117,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_sandspider",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        40
+      ]
+    ],
     "pos": [
       {
         "x": 30,
@@ -1036,6 +1138,7 @@
     "friendly": 0,
     "show": 0,
     "level": 2,
+    "refresh_limit": 2,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 60,
@@ -1045,10 +1148,16 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_scorpion",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        40
+      ]
+    ],
     "pos": [
       {
-        "x": 20,
+        "x": 17,
         "y": 26
       }
     ]
@@ -1060,6 +1169,7 @@
     "friendly": 0,
     "show": 0,
     "level": 3,
+    "refresh_limit": 2,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 75,
@@ -1069,7 +1179,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_deathworm",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        40
+      ]
+    ],
     "pos": [
       {
         "x": 34,
@@ -1084,6 +1200,7 @@
     "friendly": 0,
     "show": 1,
     "level": 1,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 60,
@@ -1093,7 +1210,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_a_1",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
         "x": 14,
@@ -1108,6 +1231,7 @@
     "friendly": 0,
     "show": 1,
     "level": 1,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 40,
@@ -1117,7 +1241,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_b_2",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
         "x": 46,
@@ -1132,6 +1262,7 @@
     "friendly": 0,
     "show": 1,
     "level": 2,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 60,
@@ -1141,7 +1272,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_sandspider",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
         "x": 19,
@@ -1156,6 +1293,7 @@
     "friendly": 0,
     "show": 1,
     "level": 1,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 40,
@@ -1165,7 +1303,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_c_3",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
         "x": 7,
@@ -1180,6 +1324,7 @@
     "friendly": 0,
     "show": 1,
     "level": 2,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
     "hp": 60,
@@ -1189,7 +1334,13 @@
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_scorpion",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
         "x": 13,
@@ -1204,6 +1355,7 @@
     "friendly": 0,
     "show": 0,
     "level": 1,
+    "refresh_limit": null,
     "des": "320005",
     "nft_pioneer": "",
     "hp": 50,

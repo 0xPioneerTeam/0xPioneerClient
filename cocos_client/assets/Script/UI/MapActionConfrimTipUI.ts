@@ -73,7 +73,7 @@ export class MapActionConfrimTipUI extends ViewController {
         this.node.getChildByPath("Content/CostView/Content/Value").getComponent(Label).string = this._costEnergy.toString();
         this.node.getChildByPath("Content/MoveCountView/Content/Value").getComponent(Label).string = this._step.toString();
 
-        const perStepTime: number = ((GameMainHelper.instance.tiledMapTilewidth * 0.5) / this._moveSpeed) * (1 / 60) * 1000;
+        const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / this._moveSpeed;
         this.node.getChildByPath("Content/CostTimeView/Value").getComponent(Label).string = CommonTools.formatSeconds(perStepTime * this._step);
         this.node.getChildByPath("Content/ArriveTimeView/Value").getComponent(Label).string = CommonTools.formatDateTime(
             perStepTime * this._step + new Date().getTime()

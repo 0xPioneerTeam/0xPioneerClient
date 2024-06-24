@@ -49,7 +49,7 @@ export default class UserInfoMgr {
     }
     //-------------------------------------------------- notification
     private _onUserInfoDidChangeLevel(data: { hpMaxChangeValue: number; showBuildingIds: string[]; items: ItemData[]; artifacts: ArtifactData[] }) {
-        if (data.items.length > 0) {
+        if (data.items != null && data.items.length > 0) {
             setTimeout(async () => {
                 if (UIPanelManger.inst.panelIsShow(UIName.CivilizationLevelUpUI) || UIPanelManger.inst.panelIsShow(UIName.SecretGuardGettedUI)) {
                     this._afterCivilizationClosedShowItemDatas.push(...data.items);
@@ -61,7 +61,7 @@ export default class UserInfoMgr {
                 }
             });
         }
-        if (data.artifacts.length > 0) {
+        if (data.artifacts != null && data.artifacts.length > 0) {
             setTimeout(async () => {
                 if (UIPanelManger.inst.panelIsShow(UIName.CivilizationLevelUpUI) || UIPanelManger.inst.panelIsShow(UIName.SecretGuardGettedUI)) {
                     this._afterCivilizationClosedShowArtifactDatas.push(...data.artifacts);

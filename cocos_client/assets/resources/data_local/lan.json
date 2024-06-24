@@ -107,6 +107,14 @@
     "id": "106012",
     "eng": "%s has recovered HP."
   },
+  "106013": {
+    "id": "106013",
+    "eng": "Civilization EXP + %s"
+  },
+  "106014": {
+    "id": "106014",
+    "eng": "Treasure chest progress + %s"
+  },
   "107001": {
     "id": "107001",
     "eng": "Eye of Pharaoh"
