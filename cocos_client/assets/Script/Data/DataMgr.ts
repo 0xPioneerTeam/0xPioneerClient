@@ -91,10 +91,20 @@ export class DataMgr {
         // exp
         if (localData.exp != p.info.exp) {
             NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_EXP, { exp: p.info.exp - localData.exp });
+            const gap = p.info.exp - localData.exp;
+            if (gap > 0) {
+                // get exp
+                NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.replaceLanById("106013", [gap]));
+            }
         }
         // treasure progress
         if (localData.exploreProgress != p.info.treasureProgress) {
             NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_TREASURE_PROGRESS);
+            const gap = p.info.treasureProgress - localData.exploreProgress;
+            if (gap > 0) {
+                // get progress
+                NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.replaceLanById("106014", [gap]));
+            }
         }
         // heat
         if (localData.heatValue.currentHeatValue != p.info.heatValue.currentHeatValue) {
@@ -380,9 +390,28 @@ export class DataMgr {
                             // player rebirth
                             GameMusicPlayMgr.playPioneerRebonEffect();
                         }
+                        if (oldData.actionType == MapPioneerActionType.eventStarting && newData.actionType == MapPioneerActionType.eventing) {
+                            // event
+                            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
+                                triggerPioneerId: newData.id,
+                                eventBuildingId: newData.actionBuildingId,
+                                eventId: newData.actionEventId,
+                            });
+                            const stepEndData: EVENT_STEPEND_DATA = {
+                                pioneerId: newData.id,
+                                buildingId: newData.actionBuildingId,
+                                eventId: newData.actionEventId,
+                                hasNextStep:
+                                    newData.actionEventId != "-1" &&
+                                    newData.actionEventId != "-2" &&
+                                    newData.actionEventId != "" &&
+                                    newData.actionEventId != null,
+                            };
+                            NotificationMgr.triggerEvent(NotificationName.EVENT_STEPEND, stepEndData);
+                        }
                     }
                     // event
-                    if (oldData.actionEventId != newData.actionEventId) {
+                    if (newData.actionType == MapPioneerActionType.eventing && oldData.actionEventId != newData.actionEventId) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
                             triggerPioneerId: newData.id,
                             eventBuildingId: newData.actionBuildingId,

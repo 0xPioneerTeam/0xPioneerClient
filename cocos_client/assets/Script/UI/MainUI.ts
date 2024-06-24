@@ -18,6 +18,7 @@ import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Con
 import TalkConfig from "../Config/TalkConfig";
 import { DialogueUI } from "./Outer/DialogueUI";
 import ItemData from "../Const/Item";
+import { TreasureGettedUI } from "./TreasureGettedUI";
 
 const { ccclass, property } = _decorator;
 
@@ -148,7 +149,7 @@ export class MainUI extends ViewController {
 
             // innerBuildButton.active = !GameMainHelper.instance.isGameShowOuter;
 
-            taskTrackView.active = true;
+            taskTrackView.active = GameMainHelper.instance.isGameShowOuter;
         } else if (rookieStep >= RookieStep.DEFEND_TAP) {
             defendButton.active = true;
             taskButton.active = true;
@@ -186,7 +187,7 @@ export class MainUI extends ViewController {
     private _refreshSettlememntTip() {
         const newSettle = localStorage.getItem("local_newSettle");
         const view = this.node.getChildByPath("CommonContent/NewSettlementTipView");
-        view.active = newSettle != null;
+        view.active = newSettle != null && newSettle.length > 0 && newSettle.indexOf("|") != -1;
     }
     private _refreshInnerOuterChange() {
         let isEnemy: boolean = false;
@@ -211,7 +212,8 @@ export class MainUI extends ViewController {
     private async onTapNewSettlementTip() {
         GameMusicPlayMgr.playTapButtonEffect();
         const currentData = localStorage.getItem("local_newSettle");
-        if (currentData != null) {
+        if (currentData != null && currentData.length > 0 && currentData.indexOf("|") != -1) {
+            localStorage.removeItem("local_newSettle");
             NetworkMgr.websocketMsg.get_user_settlement_info({});
             const beginLevel = parseInt(currentData.split("|")[0]);
             const endLevel = parseInt(currentData.split("|")[1]);
@@ -219,7 +221,6 @@ export class MainUI extends ViewController {
             if (result.success) {
                 result.node.getComponent(NewSettlementUI).refreshUI(beginLevel, endLevel);
             }
-            localStorage.removeItem("local_newSettle");
             this._refreshSettlememntTip();
         }
     }
@@ -249,7 +250,10 @@ export class MainUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.pushPanel(UIName.DefenderSetUI);
     }
-    private onTapTest() {
+    private async onTapTest() {
+        DataMgr.s.userInfo.data.level = 8;
+        NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_LEVEL, {});
+        return;
         GameMusicPlayMgr.playTapButtonEffect();
         const pioneerIds: string[] = ["pioneer_1", "pioneer_2", "pioneer_3"];
         for (let i = 0; i < pioneerIds.length; i++) {
@@ -292,9 +296,7 @@ export class MainUI extends ViewController {
             const currentSettle: number = currentLevel / gap - 1;
             const beginLevel: number = currentSettle * gap + 1;
             const endLevel: number = (currentSettle + 1) * gap;
-            if (Config.canSaveLocalData) {
-                localStorage.setItem("local_newSettle", beginLevel + "|" + endLevel);
-            }
+            localStorage.setItem("local_newSettle", beginLevel + "|" + endLevel);
             this._refreshSettlememntTip();
         }
     }

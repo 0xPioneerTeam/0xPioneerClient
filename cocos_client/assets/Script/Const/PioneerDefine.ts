@@ -46,6 +46,7 @@ export enum MapPioneerActionType {
     mining = "mining",
     fighting = "fighting",
     exploring = "exploring",
+    eventStarting = "eventStarting",
     eventing = "eventing",
     addingtroops = "addingtroops",
     wormhole = "wormhole",

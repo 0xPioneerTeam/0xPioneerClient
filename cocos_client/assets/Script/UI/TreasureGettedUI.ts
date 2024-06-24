@@ -23,18 +23,13 @@ export class TreasureGettedUI extends ViewController {
         for (let i = 1; i <= 5; i++) {
             this.node.getChildByPath("Content/Treasure_box_" + i).active = i == heatRank;
         }
+        const boxView = this.node.getChildByPath("Content/Treasure_box_" + heatRank);
         // prepare treasure box node
-        let treasureBoxCameraNode = this.node.getChildByPath("Content/Treasure_box_" + heatRank + "/Treasure_box_camera");
         let treasureBoxNode = this.node.getChildByPath("Content/Treasure_box_" + heatRank + "/Treasure_box");
-
-        let tbcAni = treasureBoxCameraNode.getComponent(Animation);
         let tbAni = treasureBoxNode.getComponent(Animation);
 
-        let tbcAniState = tbcAni.getState(tbcAni.defaultClip.name);
         let tbAniState = tbAni.getState(tbAni.defaultClip.name);
-        tbcAniState.time = 0;
         tbAniState.time = 0;
-        tbcAniState.play();
         tbAniState.play();
 
         // prepare item show node
@@ -90,10 +85,14 @@ export class TreasureGettedUI extends ViewController {
         GameMusicPlayMgr.playOpenBoxStep1Effect();
         tween(itemShowAnim)
             .delay(3)
+            .call(() => {})
+            .delay(0.5)
             .call(() => {
-                
+                tween(boxView)
+                    .to(1, { scale: v3(2, 2, 2) })
+                    .start();
             })
-            .delay(2.5)
+            .delay(2)
             .set({ active: true })
             .call(() => {
                 GameMusicPlayMgr.playOpenBoxStep2Effect();

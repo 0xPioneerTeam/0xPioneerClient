@@ -20,7 +20,7 @@ export class OuterRebonAndDestroyView extends Component {
             destroyAnim.active = true;
             this.scheduleOnce(()=> {
                 this.node.destroy();
-            }, 60);
+            }, 20);
         } else if (type == 1) {
             pioneerAnim.active = true;
             this.scheduleOnce(()=> {

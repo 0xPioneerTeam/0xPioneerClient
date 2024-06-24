@@ -7,7 +7,7 @@ export interface TaskConfigData {
     pre_con: [][];
     pre_action: [][];
     close_con: [][];
-    take_con: [][];
+    take_con: [number, any[]];
     fail_con: [][];
     steps: string[];
 }
