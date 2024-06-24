@@ -180,11 +180,11 @@ export class DataMgr {
         player.fightData = p.fightRes;
         player.fightResultWin = true;
         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: player.id });
-        setTimeout(() => {
-            player.hp = p.hp;
-            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
-            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { id: player.id });
-        }, (p.fightRes.length + 1) * 1000);
+        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT, {
+            playerId: player.id,
+            resultHp: p.hp,
+            delayTime: p.fightRes.length + 1,
+        });
     };
     //------------------------------------- item
     public static storhouse_change = async (e: any) => {

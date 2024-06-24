@@ -1,4 +1,21 @@
-import { _decorator, Component, Node, Camera, EventHandler, Vec3, tween, inverseLerp, find, AssetManager, loader, Asset, Prefab, instantiate } from "cc";
+import {
+    _decorator,
+    Component,
+    Node,
+    Camera,
+    EventHandler,
+    Vec3,
+    tween,
+    inverseLerp,
+    find,
+    AssetManager,
+    loader,
+    Asset,
+    Prefab,
+    instantiate,
+    Details,
+    pingPong,
+} from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
 import ViewController from "../BasicView/ViewController";
 import { NotificationName } from "../Const/Notification";
@@ -21,6 +38,8 @@ export class GameMain extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
         GameMainHelper.instance.setGameCamera(find("Main/Canvas/GameCamera").getComponent(Camera));
+
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT, this._onRookieWormholeFightCount, this);
     }
 
     protected viewDidStart(): void {
@@ -41,6 +60,12 @@ export class GameMain extends ViewController {
         super.viewDidDisAppear();
 
         NotificationMgr.removeListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onGameInnerOuterChange, this);
+    }
+
+    protected onDestroy(): void {
+        super.onDestroy();
+
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT, this._onRookieWormholeFightCount, this);
     }
 
     //--------------------------------------- function
@@ -114,5 +139,18 @@ export class GameMain extends ViewController {
         } else {
             this._refreshUI(loadingAnim);
         }
+    }
+
+    private _onRookieWormholeFightCount(data: { playerId: string; resultHp: number; delayTime: number }) {
+        const { playerId, resultHp, delayTime } = data;
+        console.log("exce data:", data);
+        this.scheduleOnce(() => {
+            const pioneer = DataMgr.s.pioneer.getById(playerId);
+            if (pioneer != undefined) {
+                pioneer.hp = resultHp;
+                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
+            }
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { id: playerId });
+        }, delayTime);
     }
 }
