@@ -265,7 +265,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "7703022": {
@@ -302,7 +302,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "7703023": {
@@ -339,7 +339,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "7703024": {
@@ -376,7 +376,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "7703025": {
@@ -411,9 +411,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "7703061": {
@@ -605,7 +612,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "7703062": {
@@ -795,9 +802,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000311": {
@@ -834,7 +848,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000312": {
@@ -871,7 +885,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000313": {
@@ -908,7 +922,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000314": {
@@ -945,7 +959,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000315": {
@@ -980,9 +994,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000411": {
@@ -1174,7 +1195,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000412": {
@@ -1364,9 +1385,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000511": {
@@ -1403,7 +1431,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000512": {
@@ -1440,7 +1468,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000513": {
@@ -1477,7 +1505,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000514": {
@@ -1514,7 +1542,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000515": {
@@ -1549,9 +1577,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000611": {
@@ -1743,7 +1778,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000612": {
@@ -1933,9 +1968,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000711": {
@@ -1972,7 +2014,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000712": {
@@ -2009,7 +2051,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000713": {
@@ -2046,7 +2088,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000714": {
@@ -2083,7 +2125,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000715": {
@@ -2118,9 +2160,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000811": {
@@ -2312,7 +2361,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000812": {
@@ -2502,9 +2551,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000911": {
@@ -2541,7 +2597,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000912": {
@@ -2578,7 +2634,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000913": {
@@ -2615,7 +2671,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000914": {
@@ -2652,7 +2708,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8000915": {
@@ -2687,9 +2743,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001011": {
@@ -2881,7 +2944,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001012": {
@@ -3071,9 +3134,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001111": {
@@ -3110,7 +3180,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001112": {
@@ -3147,7 +3217,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001113": {
@@ -3184,7 +3254,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001114": {
@@ -3221,7 +3291,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001115": {
@@ -3256,9 +3326,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001211": {
@@ -3450,7 +3527,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001212": {
@@ -3640,9 +3717,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001311": {
@@ -3679,7 +3763,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001312": {
@@ -3716,7 +3800,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001313": {
@@ -3753,7 +3837,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001314": {
@@ -3790,7 +3874,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001315": {
@@ -3825,9 +3909,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001411": {
@@ -4019,7 +4110,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001412": {
@@ -4209,9 +4300,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001511": {
@@ -4248,7 +4346,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001512": {
@@ -4285,7 +4383,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001513": {
@@ -4322,7 +4420,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001514": {
@@ -4359,7 +4457,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001515": {
@@ -4394,9 +4492,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001611": {
@@ -4588,7 +4693,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001612": {
@@ -4778,9 +4883,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001711": {
@@ -4817,7 +4929,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001712": {
@@ -4854,7 +4966,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001713": {
@@ -4891,7 +5003,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001714": {
@@ -4928,7 +5040,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001715": {
@@ -4963,9 +5075,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001811": {
@@ -5157,7 +5276,7 @@
     ],
     "complete_action": null,
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "8001812": {
@@ -5347,9 +5466,16 @@
         1
       ]
     ],
-    "complete_action": null,
+    "complete_action": [
+      [
+        4,
+        1,
+        "8005",
+        200
+      ]
+    ],
     "quit_con": null,
-    "progress": 10,
+    "progress": 20,
     "exp": 5
   },
   "task0101": {
