@@ -122,7 +122,7 @@ export enum NotificationName {
     MAP_PIONEER_HP_CHANGED,
 
     MAP_PIONEER_REBON_CHANGE,
-
+    MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT,
     //---------------------- nft
     NFT_LEVEL_UP,
     NFT_RANK_UP,
