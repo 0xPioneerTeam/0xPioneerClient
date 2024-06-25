@@ -669,7 +669,7 @@
         "__id__": 26
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 32
@@ -1036,7 +1036,7 @@
         "__id__": 42
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 48
@@ -2504,7 +2504,7 @@
         "__id__": 106
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 112
@@ -2868,7 +2868,7 @@
         "__id__": 116
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 122
@@ -3110,7 +3110,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
+      "x": 1.173,
       "y": 0,
       "z": 0
     },
@@ -3146,7 +3146,7 @@
       "__id__": 125
     },
     "_children": [],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 127
@@ -3161,7 +3161,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": -0.6,
       "z": 0
     },
     "_lrot": {
@@ -3297,7 +3297,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": -0.6,
       "z": 0
     },
     "_lrot": {
@@ -3374,7 +3374,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "a4f6b46d-9313-45eb-8e77-cbd18ce9a6e5@f9941",
+      "__uuid__": "4fea723d-5056-4b8d-b8aa-52287896c548@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -3463,7 +3463,7 @@
         "__id__": 142
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 148
@@ -3524,8 +3524,8 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": 1.173,
+      "y": -0.588,
       "z": 0
     },
     "_lrot": {

@@ -66,6 +66,8 @@ export default class UserInfoDataMgr {
             wormholeDefenderIds: new Map(),
             boxes: netData.boxes,
             talkIds: netData.talkIds,
+
+            boxRefreshTimestamp: netData.boxRefreshTs * 1000,
         };
         if (GAME_SKIP_ROOKIE) {
             newObj.rookieStep = RookieStep.FINISH;

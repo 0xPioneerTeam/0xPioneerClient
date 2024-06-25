@@ -694,6 +694,9 @@ export namespace share {
         limitFetchTimes: number;
 
         defender: { [key: string]: string };
+
+        boxRefreshTs: number;
+        mapRefreshTs: number;
     }
     export interface Ibuilding_data {
         id: string;

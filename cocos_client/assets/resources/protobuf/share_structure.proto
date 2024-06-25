@@ -50,6 +50,9 @@ message player_sinfo {
     optional uint32 limitFetchTimes = 31;
 
     map<string,string> defender = 40;
+
+    required uint32 boxRefreshTs = 50;
+    required uint32 mapRefreshTs = 51;
 }
 
 // self player data
