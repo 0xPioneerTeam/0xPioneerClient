@@ -115,6 +115,10 @@
     "id": "106014",
     "eng": "Treasure chest progress + %s"
   },
+  "106015": {
+    "id": "106015",
+    "eng": "Map and Teasure chest refresh countdown: "
+  },
   "107001": {
     "id": "107001",
     "eng": "Eye of Pharaoh"

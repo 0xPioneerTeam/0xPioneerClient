@@ -1,17 +1,16 @@
-import {_decorator, instantiate, Node, Prefab} from 'cc';
-import {BackpackItem} from './BackpackItem';
-import ViewController from '../BasicView/ViewController';
-import ItemData from '../Const/Item';
-import UIPanelManger from '../Basic/UIPanelMgr';
-import GameMusicPlayMgr from '../Manger/GameMusicPlayMgr';
+import { _decorator, instantiate, Layout, Node, Prefab } from "cc";
+import { BackpackItem } from "./BackpackItem";
+import ViewController from "../BasicView/ViewController";
+import ItemData from "../Const/Item";
+import UIPanelManger from "../Basic/UIPanelMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import CommonTools from "../Tool/CommonTools";
 
-const {ccclass, property} = _decorator;
+const { ccclass, property } = _decorator;
 
-
-@ccclass('LootsPopup')
+@ccclass("LootsPopup")
 export class LootsPopup extends ViewController {
-
-    public showItems(items: { id: string, num: number }[]) {
+    public showItems(items: { id: string; num: number }[]) {
         this._items = items;
         this._refreshUI();
     }
@@ -21,15 +20,15 @@ export class LootsPopup extends ViewController {
 
     @property(Node)
     itemsParentNode: Node;
-    
-    private _items: { id: string, num: number }[];
+
+    private _items: { id: string; num: number }[];
 
     protected viewDidStart(): void {
         super.viewDidStart();
 
         this._refreshUI();
     }
-    
+
     private _refreshUI() {
         const items = this._items;
 
@@ -42,9 +41,11 @@ export class LootsPopup extends ViewController {
             const itemData = new ItemData(items[i].id, items[i].num);
 
             let itemTile = instantiate(this.BackpackItemPfb).getComponent(BackpackItem);
-            itemTile.refreshUI(itemData).catch(()=>{});
+            CommonTools.changeLayerIteratively(itemTile.node, this.node.layer);
+            itemTile.refreshUI(itemData).catch(() => {});
             itemTile.node.parent = this.itemsParentNode;
         }
+        this.itemsParentNode.getComponent(Layout).updateLayout();
     }
 
     private onTapClose() {

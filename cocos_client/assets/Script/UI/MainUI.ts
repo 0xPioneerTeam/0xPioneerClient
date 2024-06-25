@@ -19,6 +19,7 @@ import TalkConfig from "../Config/TalkConfig";
 import { DialogueUI } from "./Outer/DialogueUI";
 import ItemData from "../Const/Item";
 import { TreasureGettedUI } from "./TreasureGettedUI";
+import { LanMgr } from "../Utils/Global";
 
 const { ccclass, property } = _decorator;
 
@@ -33,6 +34,7 @@ export class MainUI extends ViewController {
     private _animView: Node = null;
 
     private _gangsterComingTipView: Node = null;
+    private _worldBoxCountTipView: Node = null;
 
     protected viewDidLoad(): void {
         super.viewDidLoad();
@@ -42,6 +44,9 @@ export class MainUI extends ViewController {
 
         this._gangsterComingTipView = this.node.getChildByPath("CommonContent/GangsterTipView");
         this._gangsterComingTipView.active = false;
+
+        this._worldBoxCountTipView = this.node.getChildByPath("CommonContent/WorldBoxCountTipView");
+        this._worldBoxCountTipView.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("106015");
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this.changeLang, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_BUILDING_LATTICE_EDIT_CHANGED, this._onInnerBuildingLatticeEditChanged, this);
@@ -54,6 +59,8 @@ export class MainUI extends ViewController {
         NotificationMgr.addListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_TASK, this._onRookieTapTask, this);
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_DEFEND, this._onRookieTapDefend, this);
+
+        this._refreshWorldBoxCountTip();
     }
 
     protected async viewDidStart(): Promise<void> {
@@ -136,6 +143,8 @@ export class MainUI extends ViewController {
         rewardView.active = true;
         taskTrackView.active = false;
 
+        this._worldBoxCountTipView.active = false;
+
         const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
         if (rookieStep >= RookieStep.FINISH) {
             taskButton.active = true;
@@ -150,6 +159,8 @@ export class MainUI extends ViewController {
             // innerBuildButton.active = !GameMainHelper.instance.isGameShowOuter;
 
             taskTrackView.active = GameMainHelper.instance.isGameShowOuter;
+
+            this._worldBoxCountTipView.active = true;
         } else if (rookieStep >= RookieStep.DEFEND_TAP) {
             defendButton.active = true;
             taskButton.active = true;
@@ -206,6 +217,13 @@ export class MainUI extends ViewController {
         }
 
         this._gangsterComingTipView.active = false;
+    }
+    private _refreshWorldBoxCountTip() {
+        this.schedule(() => {
+            this._worldBoxCountTipView.getChildByPath("Content/Time").getComponent(Label).string = CommonTools.formatSeconds(
+                (DataMgr.s.userInfo.data.boxRefreshTimestamp - new Date().getTime()) / 1000
+            );
+        }, 1);
     }
 
     //------------------------------------------------- action

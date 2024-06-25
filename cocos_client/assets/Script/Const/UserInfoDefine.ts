@@ -48,4 +48,6 @@ export interface UserInfoObject {
     boxes: share.box_data[];
 
     talkIds: string[];
+
+    boxRefreshTimestamp: number;
 }

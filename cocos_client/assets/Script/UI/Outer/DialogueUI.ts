@@ -138,7 +138,6 @@ export class DialogueUI extends ViewController {
                 }
             }
         }
-
         let view: Node = null;
         const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
         if (rookieStep != RookieStep.FINISH) {
