@@ -187,6 +187,16 @@ export default class RookieStepMgr {
             NetworkMgr.websocketMsg.player_rookie_update({
                 rookieStep: RookieStep.NPC_TALK_19,
             });
+        } else if (rookieStep == RookieStep.NPC_TALK_19) {
+            const pioneerId = "npc_9";
+            const view = find("Main/Canvas/GameContent/Game/OutScene/TiledMap/deco_layer/MAP_" + pioneerId + "/role/RookieSizeView");
+            if (view == null) {
+                return;
+            }
+            // show mask
+            this._maskView.configuration(true, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
+                NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_TAP_MAP_PIONEER, { pioneerId: pioneerId });
+            });
         } else if (rookieStep == RookieStep.RESOURCE_COLLECT) {
             const view = find("Main/Canvas/GameContent/Game/OutScene/TiledMap/deco_layer/MAP_building_10/BuildingContent/RookieSizeView");
             if (view == null) {
@@ -262,12 +272,16 @@ export default class RookieStepMgr {
             if (pioneer == undefined) {
                 return;
             }
-            // erase shadow
-            GameMainHelper.instance.tiledMapShadowErase(pioneer.stayPos);
-            // show mask
-            this._maskView.configuration(true, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
-                NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_TAP_MAP_PIONEER, { pioneerId: npcId });
-            });
+            if (npcId == "npc_9") {
+                GameMainHelper.instance.changeGameCameraWorldPosition(view.worldPosition, true, true);
+                // erase shadow
+                GameMainHelper.instance.tiledMapShadowErase(pioneer.stayPos);
+            } else {
+                // show mask
+                this._maskView.configuration(true, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
+                    NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_TAP_MAP_PIONEER, { pioneerId: npcId });
+                });
+            }
         } else if (rookieStep == RookieStep.PIOT_TO_HEAT) {
             const view = find("Main/UI_Canvas/UI_ROOT/MainUI/CommonContent/HeatTreasureUI/__ViewContent/Content/HeatProgress/HeatValue");
             if (view == null) {

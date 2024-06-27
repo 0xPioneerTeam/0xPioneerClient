@@ -517,11 +517,11 @@ export class OuterTiledMapActionController extends ViewController {
             }
 
             if (stayBuilding.type == MapBuildingType.wormhole) {
-                if (DataMgr.s.userInfo.data.rookieStep == RookieStep.FINISH) {
-                    UIHUDController.showCenterTip("Wormhole is updating, close temporarily");
+                // if (DataMgr.s.userInfo.data.rookieStep == RookieStep.FINISH) {
+                //     UIHUDController.showCenterTip("Wormhole is updating, close temporarily");
                     // UIHUDController.showCenterTip(LanMgr.getLanById("203005"));
-                    return;
-                }
+                    // return;
+                // }
                 const tempWormhole = stayBuilding as MapBuildingWormholeObject;
                 if (tempWormhole.wormholdCountdownTime > new Date().getTime()) {
                     UIHUDController.showCenterTip("Wormhole is Busy");
