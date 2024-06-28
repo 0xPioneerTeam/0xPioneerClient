@@ -247,7 +247,7 @@ export default class PioneerMgr {
                 if (pioneer.type == MapPioneerType.player) {
                     if (stayBuilding.faction != MapMemberFactionType.enemy) {
                         let emptyIndex: number = -1;
-                        for (let i = 0; i < 3; i++) {
+                        for (let i = 0; i < 1; i++) {
                             if (!wormholeObj.attacker.has(i)) {
                                 emptyIndex = i;
                                 break;
