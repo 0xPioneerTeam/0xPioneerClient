@@ -1,7 +1,25 @@
 {
-    "currentConfigId": "PROD",
+    "currentConfigId": "534351",
     "configs": {
-        "PROD": {
+        "42161": {
+            "chainId": "42161",
+            "chainName": "Arbitrum One",
+            "nativeCurrency": {
+                "name": "ETH",
+                "symbol": "ETH",
+                "decimals": 18
+            },
+            "rpcUrls": ["https://arb1.arbitrum.io/rpc"],
+            "blockExplorerUrls": ["https://arbiscan.io"],
+            "abi": "deployresult_arbitrumOne",
+            "api": {
+                "ws_host": "",
+                "http_host": "",
+                "init": false,
+                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            }
+        },
+        "534351": {
             "chainId": "534351",
             "chainName": "Scroll Sepolia",
             "nativeCurrency": {
@@ -13,8 +31,80 @@
             "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
             "abi": "deployresult_scrollTestnet",
             "api": {
-                "ws_host": "wss://api.0xpioneerdapp.com/wss",
-                "http_host": "https://api.0xpioneerdapp.com/api",
+                "ws_host": "wss://apitest.0xpioneerdev.com/wss",
+                "http_host": "https://apitest.0xpioneerdev.com/api",
+                "init": true,
+                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            }
+        },
+        "123456": {
+            "chainId": "534351",
+            "chainName": "Scroll Sepolia",
+            "nativeCurrency": {
+                "name": "ETH",
+                "symbol": "ETH",
+                "decimals": 18
+            },
+            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
+            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
+            "abi": "deployresult_scrollTestnet",
+            "api": {
+                "ws_host": "ws://10.1.6.36:4091",
+                "http_host": "http://10.1.6.36:8080",
+                "init": true,
+                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            }
+        },
+        "23456": {
+            "chainId": "534351",
+            "chainName": "Scroll Sepolia",
+            "nativeCurrency": {
+                "name": "ETH",
+                "symbol": "ETH",
+                "decimals": 18
+            },
+            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
+            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
+            "abi": "deployresult_scrollTestnet",
+            "api": {
+                "ws_host": "ws://127.0.0.1:4091",
+                "http_host": "http://127.0.0.1:8080",
+                "init": true,
+                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            }
+        },
+        "111111": {
+            "chainId": "534351",
+            "chainName": "Scroll Sepolia",
+            "nativeCurrency": {
+                "name": "ETH",
+                "symbol": "ETH",
+                "decimals": 18
+            },
+            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
+            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
+            "abi": "deployresult_scrollTestnet",
+            "api": {
+                "ws_host": "ws://18.167.224.150:5091",
+                "http_host": "http://18.167.224.150:9080",
+                "init": true,
+                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            }
+        },
+        "111112": {
+            "chainId": "534351",
+            "chainName": "Scroll Sepolia",
+            "nativeCurrency": {
+                "name": "ETH",
+                "symbol": "ETH",
+                "decimals": 18
+            },
+            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
+            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
+            "abi": "deployresult_scrollTestnet",
+            "api": {
+                "ws_host": "ws://api.0xpioneerdapp.com/wss",
+                "http_host": "http://api.0xpioneerdapp.com/api",
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
             }
