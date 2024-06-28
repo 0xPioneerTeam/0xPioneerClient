@@ -1,2546 +1,3182 @@
 {
   "104001": {
     "id": "104001",
-    "eng": "No qualification"
+    "eng": "No qualification",
+    "tc": ""
   },
   "104002": {
     "id": "104002",
-    "eng": "Server not responding…Please try again later"
+    "eng": "Server not responding…Please try again later",
+    "tc": ""
   },
   "104003": {
     "id": "104003",
-    "eng": "Please launch the wallet first"
+    "eng": "Please launch the wallet first",
+    "tc": ""
   },
   "104004": {
     "id": "104004",
-    "eng": "Please follow the instruction"
+    "eng": "Please follow the instruction",
+    "tc": ""
   },
   "104005": {
     "id": "104005",
-    "eng": "You are going to spend %s PIOT, Confirm?"
+    "eng": "You are going to spend %s PIOT, Confirm?",
+    "tc": ""
   },
   "105001": {
     "id": "105001",
-    "eng": "Common"
+    "eng": "Common",
+    "tc": ""
   },
   "105002": {
     "id": "105002",
-    "eng": "Rare"
+    "eng": "Rare",
+    "tc": ""
   },
   "105003": {
     "id": "105003",
-    "eng": "Legend"
+    "eng": "Legend",
+    "tc": ""
   },
   "105004": {
     "id": "105004",
-    "eng": "Relic the Mythic"
+    "eng": "Relic the Mythic",
+    "tc": ""
   },
   "105005": {
     "id": "105005",
-    "eng": "Relic the Genesis"
+    "eng": "Relic the Genesis",
+    "tc": ""
   },
   "105101": {
     "id": "105101",
-    "eng": "Common Box"
+    "eng": "Common Box",
+    "tc": ""
   },
   "105102": {
     "id": "105102",
-    "eng": "Rare Box"
+    "eng": "Rare Box",
+    "tc": ""
   },
   "105103": {
     "id": "105103",
-    "eng": "Legend Box"
+    "eng": "Legend Box",
+    "tc": ""
   },
   "105104": {
     "id": "105104",
-    "eng": "Box the Mythic"
+    "eng": "Box the Mythic",
+    "tc": ""
   },
   "105105": {
     "id": "105105",
-    "eng": "Box the Genesis"
+    "eng": "Box the Genesis",
+    "tc": ""
   },
   "106001": {
     "id": "106001",
-    "eng": "%s is dead, please wait for the rebirth…"
+    "eng": "%s is dead, please wait for the rebirth…",
+    "tc": ""
   },
   "106002": {
     "id": "106002",
-    "eng": "Insufficient energy for move…"
+    "eng": "Insufficient energy for move…",
+    "tc": ""
   },
   "106003": {
     "id": "106003",
-    "eng": "%s + %s"
+    "eng": "%s + %s",
+    "tc": ""
   },
   "106004": {
     "id": "106004",
-    "eng": "%s Lv%s completed!"
+    "eng": "%s Lv%s completed!",
+    "tc": ""
   },
   "106005": {
     "id": "106005",
-    "eng": "Let %s learn %s, confirm?"
+    "eng": "Let %s learn %s, confirm?",
+    "tc": ""
   },
   "106006": {
     "id": "106006",
-    "eng": "Let %s LOSS %s, and NO skill book returned, confirm?"
+    "eng": "Let %s LOSS %s, and NO skill book returned, confirm?",
+    "tc": ""
   },
   "106007": {
     "id": "106007",
-    "eng": "Worm Hole Battle has finished."
+    "eng": "Worm Hole Battle has finished.",
+    "tc": ""
   },
   "106008": {
     "id": "106008",
-    "eng": "The rewards from the World Treasure Chest are affected by civilization level, heat value, and exploration value.\r\n\r\n- Civilization Level: Higher levels increase the quality of chests and daily opening limits, and the chance to find rare items.\r\n\r\n- Heat Value: Earned through PSYC and PIOT consumption, it raises the odds of getting head rewards from chests.\r\n\r\n- Exploration Value: Gained by exploring, gathering, building, and warring, it grants opportunities to open the World Treasure Chest."
+    "eng": "The rewards from the World Treasure Chest are affected by civilization level, heat value, and exploration value.\r\n\r\n- Civilization Level: Higher levels increase the quality of chests and daily opening limits, and the chance to find rare items.\r\n\r\n- Heat Value: Earned through PSYC and PIOT consumption, it raises the odds of getting head rewards from chests.\r\n\r\n- Exploration Value: Gained by exploring, gathering, building, and warring, it grants opportunities to open the World Treasure Chest.",
+    "tc": ""
   },
   "106009": {
     "id": "106009",
-    "eng": "New enemies are coming…"
+    "eng": "New enemies are coming…",
+    "tc": ""
   },
   "106010": {
     "id": "106010",
-    "eng": "New things are discovered nearby…"
+    "eng": "New things are discovered nearby…",
+    "tc": ""
   },
   "106011": {
     "id": "106011",
-    "eng": "%s has respawned."
+    "eng": "%s has respawned.",
+    "tc": ""
   },
   "106012": {
     "id": "106012",
-    "eng": "%s has recovered HP."
+    "eng": "%s has recovered HP.",
+    "tc": ""
   },
   "106013": {
     "id": "106013",
-    "eng": "Civilization EXP + %s"
+    "eng": "Civilization EXP + %s",
+    "tc": ""
   },
   "106014": {
     "id": "106014",
-    "eng": "Treasure chest progress + %s"
+    "eng": "Treasure chest progress + %s",
+    "tc": ""
   },
   "106015": {
     "id": "106015",
-    "eng": "Map and Teasure chest refresh countdown: "
+    "eng": "Map and Teasure chest refresh countdown: ",
+    "tc": ""
   },
   "107001": {
     "id": "107001",
-    "eng": "Eye of Pharaoh"
+    "eng": "Eye of Pharaoh",
+    "tc": ""
   },
   "107002": {
     "id": "107002",
-    "eng": "Bane of Behemoth"
+    "eng": "Bane of Behemoth",
+    "tc": ""
   },
   "107003": {
     "id": "107003",
-    "eng": "Tooth of Megalodon"
+    "eng": "Tooth of Megalodon",
+    "tc": ""
   },
   "107004": {
     "id": "107004",
-    "eng": "Crystal Skull"
+    "eng": "Crystal Skull",
+    "tc": ""
   },
   "107005": {
     "id": "107005",
-    "eng": "Stinger of Sand King"
+    "eng": "Stinger of Sand King",
+    "tc": ""
   },
   "107006": {
     "id": "107006",
-    "eng": "Golden Spear"
+    "eng": "Golden Spear",
+    "tc": ""
   },
   "107007": {
     "id": "107007",
-    "eng": "Antiquity Rune"
+    "eng": "Antiquity Rune",
+    "tc": ""
   },
   "107008": {
     "id": "107008",
-    "eng": "Iridescent Crystal"
+    "eng": "Iridescent Crystal",
+    "tc": ""
   },
   "107009": {
     "id": "107009",
-    "eng": "Dull Gemstone"
+    "eng": "Dull Gemstone",
+    "tc": ""
   },
   "107010": {
     "id": "107010",
-    "eng": "Ancient Axe"
+    "eng": "Ancient Axe",
+    "tc": ""
   },
   "107011": {
     "id": "107011",
-    "eng": "Divine Compass"
+    "eng": "Divine Compass",
+    "tc": ""
   },
   "107012": {
     "id": "107012",
-    "eng": "Tables of Decalogue"
+    "eng": "Tables of Decalogue",
+    "tc": ""
   },
   "107013": {
     "id": "107013",
-    "eng": "Jade Hook"
+    "eng": "Jade Hook",
+    "tc": ""
   },
   "107014": {
     "id": "107014",
-    "eng": "Celestial Globe"
+    "eng": "Celestial Globe",
+    "tc": ""
   },
   "107015": {
     "id": "107015",
-    "eng": "Time's Hourglass"
+    "eng": "Time's Hourglass",
+    "tc": ""
   },
   "107016": {
     "id": "107016",
-    "eng": "Ouroboros Emblem"
+    "eng": "Ouroboros Emblem",
+    "tc": ""
   },
   "107017": {
     "id": "107017",
-    "eng": "Nirvana Lotus"
+    "eng": "Nirvana Lotus",
+    "tc": ""
   },
   "107018": {
     "id": "107018",
-    "eng": "Glazed Bead"
+    "eng": "Glazed Bead",
+    "tc": ""
   },
   "107019": {
     "id": "107019",
-    "eng": "Golden Scarab"
+    "eng": "Golden Scarab",
+    "tc": ""
   },
   "107020": {
     "id": "107020",
-    "eng": "Thorn Crown"
+    "eng": "Thorn Crown",
+    "tc": ""
   },
   "107021": {
     "id": "107021",
-    "eng": "Brass Sextant"
+    "eng": "Brass Sextant",
+    "tc": ""
   },
   "107022": {
     "id": "107022",
-    "eng": "Flintlock Pistol"
+    "eng": "Flintlock Pistol",
+    "tc": ""
   },
   "107023": {
     "id": "107023",
-    "eng": "Jiuzhou Cauldron"
+    "eng": "Jiuzhou Cauldron",
+    "tc": ""
   },
   "107024": {
     "id": "107024",
-    "eng": "Ancient Trumpet"
+    "eng": "Ancient Trumpet",
+    "tc": ""
   },
   "107025": {
     "id": "107025",
-    "eng": "Mechanical Core"
+    "eng": "Mechanical Core",
+    "tc": ""
   },
   "107026": {
     "id": "107026",
-    "eng": "Psychic Meteor"
+    "eng": "Psychic Meteor",
+    "tc": ""
   },
   "107027": {
     "id": "107027",
-    "eng": "Tengu Fan"
+    "eng": "Tengu Fan",
+    "tc": ""
   },
   "107028": {
     "id": "107028",
-    "eng": "Binoculars"
+    "eng": "Binoculars",
+    "tc": ""
   },
   "107029": {
     "id": "107029",
-    "eng": "Twin Fish Jade"
+    "eng": "Twin Fish Jade",
+    "tc": ""
   },
   "107030": {
     "id": "107030",
-    "eng": "Crystal Lens"
+    "eng": "Crystal Lens",
+    "tc": ""
   },
   "107031": {
     "id": "107031",
-    "eng": "Dharma Mace"
+    "eng": "Dharma Mace",
+    "tc": ""
   },
   "107032": {
     "id": "107032",
-    "eng": "Ra's Crown"
+    "eng": "Ra's Crown",
+    "tc": ""
   },
   "107033": {
     "id": "107033",
-    "eng": "Ancient Jar"
+    "eng": "Ancient Jar",
+    "tc": ""
   },
   "107034": {
     "id": "107034",
-    "eng": "Torch"
+    "eng": "Torch",
+    "tc": ""
   },
   "107035": {
     "id": "107035",
-    "eng": "Horseshoe"
+    "eng": "Horseshoe",
+    "tc": ""
   },
   "107036": {
     "id": "107036",
-    "eng": "Wooden Wheel"
+    "eng": "Wooden Wheel",
+    "tc": ""
   },
   "107037": {
     "id": "107037",
-    "eng": "Damaged Gear"
+    "eng": "Damaged Gear",
+    "tc": ""
   },
   "107549": {
     "id": "107549",
-    "eng": "text for English version"
+    "eng": "text for English version",
+    "tc": ""
   },
   "108001": {
     "id": "108001",
-    "eng": "Skill Name"
+    "eng": "Skill Name",
+    "tc": ""
   },
   "109001": {
     "id": "109001",
-    "eng": "0xPioneer"
+    "eng": "0xPioneer",
+    "tc": ""
   },
   "109002": {
     "id": "109002",
-    "eng": "Dual Blades Keen"
+    "eng": "Dual Blades Keen",
+    "tc": ""
   },
   "109003": {
     "id": "109003",
-    "eng": "Dual Guns Jack"
+    "eng": "Dual Guns Jack",
+    "tc": ""
   },
   "109004": {
     "id": "109004",
-    "eng": "Rebels Camus"
+    "eng": "Rebels Camus",
+    "tc": ""
   },
   "109005": {
     "id": "109005",
-    "eng": "Tinuvel the Prophetess"
+    "eng": "Tinuvel the Prophetess",
+    "tc": ""
   },
   "109006": {
     "id": "109006",
-    "eng": "Artisan Tom"
+    "eng": "Artisan Tom",
+    "tc": ""
   },
   "109007": {
     "id": "109007",
-    "eng": "Guard Keen"
+    "eng": "Guard Keen",
+    "tc": ""
   },
   "109008": {
     "id": "109008",
-    "eng": "Spy Jack"
+    "eng": "Spy Jack",
+    "tc": ""
   },
   "109009": {
     "id": "109009",
-    "eng": "Hunter John"
+    "eng": "Hunter John",
+    "tc": ""
   },
   "109010": {
     "id": "109010",
-    "eng": "Gang Team"
+    "eng": "Gang Team",
+    "tc": ""
   },
   "109011": {
     "id": "109011",
-    "eng": "Rebels Camus"
+    "eng": "Rebels Camus",
+    "tc": ""
   },
   "109012": {
     "id": "109012",
-    "eng": "DoomsDay Gang Team"
+    "eng": "DoomsDay Gang Team",
+    "tc": ""
   },
   "109013": {
     "id": "109013",
-    "eng": "Boar"
+    "eng": "Boar",
+    "tc": ""
   },
   "109014": {
     "id": "109014",
-    "eng": "Lion"
+    "eng": "Lion",
+    "tc": ""
   },
   "109015": {
     "id": "109015",
-    "eng": "Buffalo"
+    "eng": "Buffalo",
+    "tc": ""
   },
   "109016": {
     "id": "109016",
-    "eng": "Sand Spider"
+    "eng": "Sand Spider",
+    "tc": ""
   },
   "109017": {
     "id": "109017",
-    "eng": "Scorpion"
+    "eng": "Scorpion",
+    "tc": ""
   },
   "109018": {
     "id": "109018",
-    "eng": "Spider Queen"
+    "eng": "Spider Queen",
+    "tc": ""
   },
   "109019": {
     "id": "109019",
-    "eng": "Double-headed Snake"
+    "eng": "Double-headed Snake",
+    "tc": ""
   },
   "109020": {
     "id": "109020",
-    "eng": "Three-headed Snake"
+    "eng": "Three-headed Snake",
+    "tc": ""
   },
   "109021": {
     "id": "109021",
-    "eng": "Terrestrial Shark"
+    "eng": "Terrestrial Shark",
+    "tc": ""
   },
   "109022": {
     "id": "109022",
-    "eng": "Death Worm "
+    "eng": "Death Worm ",
+    "tc": ""
   },
   "109023": {
     "id": "109023",
-    "eng": "bats"
+    "eng": "bats",
+    "tc": ""
   },
   "109024": {
     "id": "109024",
-    "eng": "guard"
+    "eng": "guard",
+    "tc": ""
   },
   "109025": {
     "id": "109025",
-    "eng": "sand king"
+    "eng": "sand king",
+    "tc": ""
   },
   "109026": {
     "id": "109026",
-    "eng": "land sharks"
+    "eng": "land sharks",
+    "tc": ""
   },
   "109027": {
     "id": "109027",
-    "eng": "old bot"
+    "eng": "old bot",
+    "tc": ""
   },
   "109028": {
     "id": "109028",
-    "eng": "big land shark"
+    "eng": "big land shark",
+    "tc": ""
   },
   "109029": {
     "id": "109029",
-    "eng": "Pharaoh"
+    "eng": "Pharaoh",
+    "tc": ""
   },
   "109030": {
     "id": "109030",
-    "eng": "Village Chief"
+    "eng": "Village Chief",
+    "tc": ""
   },
   "109031": {
     "id": "109031",
-    "eng": "Rabbit Mad"
+    "eng": "Rabbit Mad",
+    "tc": ""
   },
   "109032": {
     "id": "109032",
-    "eng": "Doc Nervall"
+    "eng": "Doc Nervall",
+    "tc": ""
   },
   "109033": {
     "id": "109033",
-    "eng": "Scavenger"
+    "eng": "Scavenger",
+    "tc": ""
   },
   "109034": {
     "id": "109034",
-    "eng": "Monster King"
+    "eng": "Monster King",
+    "tc": ""
   },
   "109035": {
     "id": "109035",
-    "eng": "Scavenger Unknow"
+    "eng": "Scavenger Unknow",
+    "tc": ""
   },
   "109036": {
     "id": "109036",
-    "eng": "Space-time Raiders"
+    "eng": "Space-time Raiders",
+    "tc": ""
   },
   "110001": {
     "id": "110001",
-    "eng": "Desert Grotto"
+    "eng": "Desert Grotto",
+    "tc": ""
   },
   "110002": {
     "id": "110002",
-    "eng": "Deadwood Marsh"
+    "eng": "Deadwood Marsh",
+    "tc": ""
   },
   "110003": {
     "id": "110003",
-    "eng": "Desert Oasis"
+    "eng": "Desert Oasis",
+    "tc": ""
   },
   "110004": {
     "id": "110004",
-    "eng": "Ancient Ruins"
+    "eng": "Ancient Ruins",
+    "tc": ""
   },
   "110005": {
     "id": "110005",
-    "eng": "Sand Spider Cavern"
+    "eng": "Sand Spider Cavern",
+    "tc": ""
   },
   "110006": {
     "id": "110006",
-    "eng": "Energy Tower"
+    "eng": "Energy Tower",
+    "tc": ""
   },
   "110007": {
     "id": "110007",
-    "eng": "Aquatic Ruins"
+    "eng": "Aquatic Ruins",
+    "tc": ""
   },
   "110008": {
     "id": "110008",
-    "eng": "Village Undercroft"
+    "eng": "Village Undercroft",
+    "tc": ""
   },
   "110009": {
     "id": "110009",
-    "eng": "Mechanical Pyramid"
+    "eng": "Mechanical Pyramid",
+    "tc": ""
   },
   "110010": {
     "id": "110010",
-    "eng": "Main City"
+    "eng": "Main City",
+    "tc": ""
   },
   "110011": {
     "id": "110011",
-    "eng": "Treasure"
+    "eng": "Treasure",
+    "tc": ""
   },
   "110012": {
     "id": "110012",
-    "eng": "Ambush"
+    "eng": "Ambush",
+    "tc": ""
   },
   "110013": {
     "id": "110013",
-    "eng": "Ruin"
+    "eng": "Ruin",
+    "tc": ""
   },
   "110014": {
     "id": "110014",
-    "eng": "Worm Hole"
+    "eng": "Worm Hole",
+    "tc": ""
   },
   "110015": {
     "id": "110015",
-    "eng": "Worm Hole"
+    "eng": "Worm Hole",
+    "tc": ""
   },
   "117001": {
     "id": "117001",
-    "eng": "Also known as Eye of Ramesses, it symbolizes Egypt's prosperity and peace, blessed by divine power"
+    "eng": "Also known as Eye of Ramesses, it symbolizes Egypt's prosperity and peace, blessed by divine power",
+    "tc": ""
   },
   "117002": {
     "id": "117002",
-    "eng": "With this weapon, people brought an end to the era of the giant beasts' rule."
+    "eng": "With this weapon, people brought an end to the era of the giant beasts' rule.",
+    "tc": ""
   },
   "117003": {
     "id": "117003",
-    "eng": "The terrifying teeth of the giant land shark, with their sharp serrated edges, can easily slice through the flesh and skin of their prey."
+    "eng": "The terrifying teeth of the giant land shark, with their sharp serrated edges, can easily slice through the flesh and skin of their prey.",
+    "tc": ""
   },
   "117004": {
     "id": "117004",
-    "eng": "The crystal skull imbued with mysterious powers, said to allow communication with the spirits."
+    "eng": "The crystal skull imbued with mysterious powers, said to allow communication with the spirits.",
+    "tc": ""
   },
   "117005": {
     "id": "117005",
-    "eng": "The stinger of the desert giant scorpion, capable of killing its prey by piercing through them, even without the venom."
+    "eng": "The stinger of the desert giant scorpion, capable of killing its prey by piercing through them, even without the venom.",
+    "tc": ""
   },
   "117006": {
     "id": "117006",
-    "eng": "The divine spear that once pierced the body of a saint, also known as the Spear of Destiny."
+    "eng": "The divine spear that once pierced the body of a saint, also known as the Spear of Destiny.",
+    "tc": ""
   },
   "117007": {
     "id": "117007",
-    "eng": "The stone inscribed with mystical writings, containing unknown forces within."
+    "eng": "The stone inscribed with mystical writings, containing unknown forces within.",
+    "tc": ""
   },
   "117008": {
     "id": "117008",
-    "eng": "The crystal cluster that emits a dazzling light, rejuvenating the wearer's energy."
+    "eng": "The crystal cluster that emits a dazzling light, rejuvenating the wearer's energy.",
+    "tc": ""
   },
   "117009": {
     "id": "117009",
-    "eng": "The energy gemstone that has lost its original power."
+    "eng": "The energy gemstone that has lost its original power.",
+    "tc": ""
   },
   "117010": {
     "id": "117010",
-    "eng": "An old axe, used to belong to someone."
+    "eng": "An old axe, used to belong to someone.",
+    "tc": ""
   },
   "117011": {
     "id": "117011",
-    "eng": "Not just for navigation but a diviner of one's deepest truths and desires."
+    "eng": "Not just for navigation but a diviner of one's deepest truths and desires.",
+    "tc": ""
   },
   "117012": {
     "id": "117012",
-    "eng": "Ancient stone tablets inscribed with the Ten Commandments, symbolizing divine law and moral guidance."
+    "eng": "Ancient stone tablets inscribed with the Ten Commandments, symbolizing divine law and moral guidance.",
+    "tc": ""
   },
   "117013": {
     "id": "117013",
-    "eng": "A delicately carved jade artifact, often used as a ceremonial tool in ancient Chinese rituals."
+    "eng": "A delicately carved jade artifact, often used as a ceremonial tool in ancient Chinese rituals.",
+    "tc": ""
   },
   "117014": {
     "id": "117014",
-    "eng": "A model of the celestial sphere, representing the heavens and used for astronomical navigation and study."
+    "eng": "A model of the celestial sphere, representing the heavens and used for astronomical navigation and study.",
+    "tc": ""
   },
   "117015": {
     "id": "117015",
-    "eng": "A timekeeping device with flowing sand, a metaphor for the relentless passage of time."
+    "eng": "A timekeeping device with flowing sand, a metaphor for the relentless passage of time.",
+    "tc": ""
   },
   "117016": {
     "id": "117016",
-    "eng": "A symbol of infinity and self-renewal, depicting a serpent eating its own tail."
+    "eng": "A symbol of infinity and self-renewal, depicting a serpent eating its own tail.",
+    "tc": ""
   },
   "117017": {
     "id": "117017",
-    "eng": "A lotus flower representing purity and enlightenment, often associated with Buddhist concepts of spiritual awakening."
+    "eng": "A lotus flower representing purity and enlightenment, often associated with Buddhist concepts of spiritual awakening.",
+    "tc": ""
   },
   "117018": {
     "id": "117018",
-    "eng": "A small, colorful bead with a glossy finish, used in jewelry and as a status symbol in ancient cultures."
+    "eng": "A small, colorful bead with a glossy finish, used in jewelry and as a status symbol in ancient cultures.",
+    "tc": ""
   },
   "117019": {
     "id": "117019",
-    "eng": "A golden representation of the scarab beetle, revered in ancient Egypt as a symbol of rebirth and transformation."
+    "eng": "A golden representation of the scarab beetle, revered in ancient Egypt as a symbol of rebirth and transformation.",
+    "tc": ""
   },
   "117020": {
     "id": "117020",
-    "eng": "A crown adorned with thorns, symbolizing sacrifice and suffering, often associated with religious martyrdom."
+    "eng": "A crown adorned with thorns, symbolizing sacrifice and suffering, often associated with religious martyrdom.",
+    "tc": ""
   },
   "117021": {
     "id": "117021",
-    "eng": "A navigational instrument used to measure the angular distance between celestial bodies and the horizon."
+    "eng": "A navigational instrument used to measure the angular distance between celestial bodies and the horizon.",
+    "tc": ""
   },
   "117022": {
     "id": "117022",
-    "eng": "An early firearm with a flint ignition mechanism, a symbol of the technological advancements of the early modern period."
+    "eng": "An early firearm with a flint ignition mechanism, a symbol of the technological advancements of the early modern period.",
+    "tc": ""
   },
   "117023": {
     "id": "117023",
-    "eng": "A mythical cauldron from Chinese legend, said to have the power to unify the nine provinces and bring peace."
+    "eng": "A mythical cauldron from Chinese legend, said to have the power to unify the nine provinces and bring peace.",
+    "tc": ""
   },
   "117024": {
     "id": "117024",
-    "eng": "A wind instrument from antiquity, used in both warfare for signaling and in ceremonies for its resonant sound."
+    "eng": "A wind instrument from antiquity, used in both warfare for signaling and in ceremonies for its resonant sound.",
+    "tc": ""
   },
   "117025": {
     "id": "117025",
-    "eng": "The central component of a mechanical device, often intricate and complex, symbolizing the ingenuity of engineering."
+    "eng": "The central component of a mechanical device, often intricate and complex, symbolizing the ingenuity of engineering.",
+    "tc": ""
   },
   "117026": {
     "id": "117026",
-    "eng": "A meteorite believed to possess mystical powers, associated with psychic phenomena and cosmic energy."
+    "eng": "A meteorite believed to possess mystical powers, associated with psychic phenomena and cosmic energy.",
+    "tc": ""
   },
   "117027": {
     "id": "117027",
-    "eng": "A fan associated with the Tengu, a mythical creature from Japanese folklore, known for its sharp wit and martial prowess."
+    "eng": "A fan associated with the Tengu, a mythical creature from Japanese folklore, known for its sharp wit and martial prowess.",
+    "tc": ""
   },
   "117028": {
     "id": "117028",
-    "eng": "Optical instruments for observing distant objects, enhancing the viewer's perspective and understanding of the world."
+    "eng": "Optical instruments for observing distant objects, enhancing the viewer's perspective and understanding of the world.",
+    "tc": ""
   },
   "117029": {
     "id": "117029",
-    "eng": "A jade carving depicting two fish, often symbolizing harmony, abundance, and the unity of yin and yang."
+    "eng": "A jade carving depicting two fish, often symbolizing harmony, abundance, and the unity of yin and yang.",
+    "tc": ""
   },
   "117030": {
     "id": "117030",
-    "eng": "A lens made of crystal, prized for its clarity and used in early optical devices for magnification and illumination."
+    "eng": "A lens made of crystal, prized for its clarity and used in early optical devices for magnification and illumination.",
+    "tc": ""
   },
   "117031": {
     "id": "117031",
-    "eng": "A ceremonial mace used in religious rituals to ward off evil spirits and protect the faithful."
+    "eng": "A ceremonial mace used in religious rituals to ward off evil spirits and protect the faithful.",
+    "tc": ""
   },
   "117032": {
     "id": "117032",
-    "eng": "The crown of a sovereign, often adorned with sun motifs, representing the ruler's divine right and power."
+    "eng": "The crown of a sovereign, often adorned with sun motifs, representing the ruler's divine right and power.",
+    "tc": ""
   },
   "117033": {
     "id": "117033",
-    "eng": "A vessel from a bygone era, crafted with simple yet enduring techniques, reflecting the daily life of ancient civilizations."
+    "eng": "A vessel from a bygone era, crafted with simple yet enduring techniques, reflecting the daily life of ancient civilizations.",
+    "tc": ""
   },
   "117034": {
     "id": "117034",
-    "eng": "A handheld source of light, often used in ancient times for navigation and signaling in the darkness."
+    "eng": "A handheld source of light, often used in ancient times for navigation and signaling in the darkness.",
+    "tc": ""
   },
   "117035": {
     "id": "117035",
-    "eng": "A U-shaped piece of metal attached to a horse's hoof, believed to bring good luck and protect against evil."
+    "eng": "A U-shaped piece of metal attached to a horse's hoof, believed to bring good luck and protect against evil.",
+    "tc": ""
   },
   "117036": {
     "id": "117036",
-    "eng": "A simple wheel made of wood, a fundamental component of early transportation and machinery."
+    "eng": "A simple wheel made of wood, a fundamental component of early transportation and machinery.",
+    "tc": ""
   },
   "117037": {
     "id": "117037",
-    "eng": "A gear with visible wear or breakage, a reminder of the passage of time and the inevitability of decay."
+    "eng": "A gear with visible wear or breakage, a reminder of the passage of time and the inevitability of decay.",
+    "tc": ""
   },
   "120001": {
     "id": "120001",
-    "eng": "City Hall"
+    "eng": "City Hall",
+    "tc": ""
   },
   "120002": {
     "id": "120002",
-    "eng": "Barracks"
+    "eng": "Barracks",
+    "tc": ""
   },
   "120003": {
     "id": "120003",
-    "eng": "House"
+    "eng": "House",
+    "tc": ""
   },
   "120004": {
     "id": "120004",
-    "eng": "Energy Station"
+    "eng": "Energy Station",
+    "tc": ""
   },
   "120005": {
     "id": "120005",
-    "eng": "Babel Tower"
+    "eng": "Babel Tower",
+    "tc": ""
   },
   "121001": {
     "id": "121001",
-    "eng": "More buildings are able to be constructed"
+    "eng": "More buildings are able to be constructed",
+    "tc": ""
   },
   "121002": {
     "id": "121002",
-    "eng": "Faster recruitment pace"
+    "eng": "Faster recruitment pace",
+    "tc": ""
   },
   "121003": {
     "id": "121003",
-    "eng": "More citizens are able to be contained"
+    "eng": "More citizens are able to be contained",
+    "tc": ""
   },
   "121004": {
     "id": "121004",
-    "eng": "Accelerated energy production efficiency"
+    "eng": "Accelerated energy production efficiency",
+    "tc": ""
   },
   "121005": {
     "id": "121005",
-    "eng": "More Relics are able to be acitved"
+    "eng": "More Relics are able to be acitved",
+    "tc": ""
   },
   "122001": {
     "id": "122001",
-    "eng": "staff effect description"
+    "eng": "staff effect description",
+    "tc": ""
   },
   "200001": {
     "id": "200001",
-    "eng": "Boot ends"
+    "eng": "Boot ends",
+    "tc": ""
   },
   "200002": {
     "id": "200002",
-    "eng": "Please explore more to get it"
+    "eng": "Please explore more to get it",
+    "tc": ""
   },
   "200003": {
     "id": "200003",
-    "eng": "Big Team Coming: %s"
+    "eng": "Big Team Coming: %s",
+    "tc": ""
   },
   "200004": {
     "id": "200004",
-    "eng": "Relic Choice"
+    "eng": "Relic Choice",
+    "tc": ""
   },
   "201001": {
     "id": "201001",
-    "eng": "The building is being upgraded, please wait."
+    "eng": "The building is being upgraded, please wait.",
+    "tc": ""
   },
   "201002": {
     "id": "201002",
-    "eng": "Recruiting…Please wait…"
+    "eng": "Recruiting…Please wait…",
+    "tc": ""
   },
   "201003": {
     "id": "201003",
-    "eng": "The building is being upgraded, please wait."
+    "eng": "The building is being upgraded, please wait.",
+    "tc": ""
   },
   "201004": {
     "id": "201004",
-    "eng": "Insufficient resources for building upgrades"
+    "eng": "Insufficient resources for building upgrades",
+    "tc": ""
   },
   "201005": {
     "id": "201005",
-    "eng": "Unlock"
+    "eng": "Unlock",
+    "tc": ""
   },
   "201006": {
     "id": "201006",
-    "eng": "Upgrade"
+    "eng": "Upgrade",
+    "tc": ""
   },
   "202001": {
     "id": "202001",
-    "eng": "task hide: %s s"
+    "eng": "task hide: %s s",
+    "tc": ""
   },
   "202002": {
     "id": "202002",
-    "eng": "prepare task... %s s"
+    "eng": "prepare task... %s s",
+    "tc": ""
   },
   "202003": {
     "id": "202003",
-    "eng": "All %s Tasks"
+    "eng": "All %s Tasks",
+    "tc": ""
   },
   "202004": {
     "id": "202004",
-    "eng": "New Task Taken"
+    "eng": "New Task Taken",
+    "tc": ""
   },
   "203001": {
     "id": "203001",
-    "eng": "cann't move to block"
+    "eng": "cann't move to block",
+    "tc": ""
   },
   "203002": {
     "id": "203002",
-    "eng": "pioneer is busy"
+    "eng": "pioneer is busy",
+    "tc": ""
   },
   "203003": {
     "id": "203003",
-    "eng": "pioneer is dead"
+    "eng": "pioneer is dead",
+    "tc": ""
   },
   "203004": {
     "id": "203004",
-    "eng": "pioneer is defending"
+    "eng": "pioneer is defending",
+    "tc": ""
   },
   "203005": {
     "id": "203005",
-    "eng": "pioneer is processing an event"
+    "eng": "pioneer is processing an event",
+    "tc": ""
   },
   "204001": {
     "id": "204001",
-    "eng": "HP"
+    "eng": "HP",
+    "tc": ""
   },
   "204002": {
     "id": "204002",
-    "eng": "ATK"
+    "eng": "ATK",
+    "tc": ""
   },
   "204003": {
     "id": "204003",
-    "eng": "Get"
+    "eng": "Get",
+    "tc": ""
   },
   "204004": {
     "id": "204004",
-    "eng": "Get"
+    "eng": "Get",
+    "tc": ""
   },
   "205001": {
     "id": "205001",
-    "eng": "Get"
+    "eng": "Get",
+    "tc": ""
   },
   "205002": {
     "id": "205002",
-    "eng": "Use"
+    "eng": "Use",
+    "tc": ""
   },
   "206001": {
     "id": "206001",
-    "eng": "Dual Guns Jack"
+    "eng": "Dual Guns Jack",
+    "tc": ""
   },
   "206002": {
     "id": "206002",
-    "eng": "Dual Blades Keen"
+    "eng": "Dual Blades Keen",
+    "tc": ""
   },
   "206003": {
     "id": "206003",
-    "eng": "Rebels Camus"
+    "eng": "Rebels Camus",
+    "tc": ""
   },
   "206004": {
     "id": "206004",
-    "eng": "Gunman as Graceful as a Gazelle"
+    "eng": "Gunman as Graceful as a Gazelle",
+    "tc": ""
   },
   "206005": {
     "id": "206005",
-    "eng": "Warrior as Wild as the Wind"
+    "eng": "Warrior as Wild as the Wind",
+    "tc": ""
   },
   "206006": {
     "id": "206006",
-    "eng": "Berserker as Fearless as a Beast"
+    "eng": "Berserker as Fearless as a Beast",
+    "tc": ""
   },
   "207001": {
     "id": "207001",
-    "eng": "Your HP has changed"
+    "eng": "Your HP has changed",
+    "tc": ""
   },
   "207002": {
     "id": "207002",
-    "eng": "Your Attack has changed"
+    "eng": "Your Attack has changed",
+    "tc": ""
   },
   "207003": {
     "id": "207003",
-    "eng": "Enemy's HP has changed"
+    "eng": "Enemy's HP has changed",
+    "tc": ""
   },
   "207004": {
     "id": "207004",
-    "eng": "Enemy's Attack has changed"
+    "eng": "Enemy's Attack has changed",
+    "tc": ""
   },
   "207005": {
     "id": "207005",
-    "eng": "%s's HP has changed"
+    "eng": "%s's HP has changed",
+    "tc": ""
   },
   "207006": {
     "id": "207006",
-    "eng": "%s's Attack has changed"
+    "eng": "%s's Attack has changed",
+    "tc": ""
   },
   "207007": {
     "id": "207007",
-    "eng": "you need AT LEAST %s "
+    "eng": "you need AT LEAST %s ",
+    "tc": ""
   },
   "207008": {
     "id": "207008",
-    "eng": "You lost %s %s"
+    "eng": "You lost %s %s",
+    "tc": ""
   },
   "207009": {
     "id": "207009",
-    "eng": "You obtained %s %s"
+    "eng": "You obtained %s %s",
+    "tc": ""
   },
   "207010": {
     "id": "207010",
-    "eng": "Event Ended"
+    "eng": "Event Ended",
+    "tc": ""
   },
   "310101": {
     "id": "310101",
-    "eng": "You found and entered a cave."
+    "eng": "You found and entered a cave.",
+    "tc": ""
   },
   "310102": {
     "id": "310102",
-    "eng": "You encounter a small swarm of sand spiders and fight them."
+    "eng": "You encounter a small swarm of sand spiders and fight them.",
+    "tc": ""
   },
   "310103": {
     "id": "310103",
-    "eng": "You killed the spiders, and found some spider cocoons with different shapes."
+    "eng": "You killed the spiders, and found some spider cocoons with different shapes.",
+    "tc": ""
   },
   "310104": {
     "id": "310104",
-    "eng": "You are killed by the spiders!"
+    "eng": "You are killed by the spiders!",
+    "tc": ""
   },
   "310105": {
     "id": "310105",
-    "eng": "You opened the human-shaped cocoons and you found some humans who are not dead yet."
+    "eng": "You opened the human-shaped cocoons and you found some humans who are not dead yet.",
+    "tc": ""
   },
   "310106": {
     "id": "310106",
-    "eng": "You opened the egg-shaped cocoons and..."
+    "eng": "You opened the egg-shaped cocoons and...",
+    "tc": ""
   },
   "310107": {
     "id": "310107",
-    "eng": "Those who were saved by you decided to join you!"
+    "eng": "Those who were saved by you decided to join you!",
+    "tc": ""
   },
   "310108": {
     "id": "310108",
-    "eng": "And they also gave you some resources."
+    "eng": "And they also gave you some resources.",
+    "tc": ""
   },
   "310109": {
     "id": "310109",
-    "eng": "Surprise! Another swarm of sand spiders!"
+    "eng": "Surprise! Another swarm of sand spiders!",
+    "tc": ""
   },
   "310110": {
     "id": "310110",
-    "eng": "You killed the spiders, and found some resources."
+    "eng": "You killed the spiders, and found some resources.",
+    "tc": ""
   },
   "310111": {
     "id": "310111",
-    "eng": "You are killed by the spiders!"
+    "eng": "You are killed by the spiders!",
+    "tc": ""
   },
   "310112": {
     "id": "310112",
-    "eng": "You continued deeper into the cave and eventually discovered the spider queen."
+    "eng": "You continued deeper into the cave and eventually discovered the spider queen.",
+    "tc": ""
   },
   "310113": {
     "id": "310113",
-    "eng": "You killed the spider queen and obtained her treasure."
+    "eng": "You killed the spider queen and obtained her treasure.",
+    "tc": ""
   },
   "310114": {
     "id": "310114",
-    "eng": "You are killed by the spider queen!"
+    "eng": "You are killed by the spider queen!",
+    "tc": ""
   },
   "310201": {
     "id": "310201",
-    "eng": "You found an ancient."
+    "eng": "You found an ancient.",
+    "tc": ""
   },
   "310202": {
     "id": "310202",
-    "eng": "You entered the ancient."
+    "eng": "You entered the ancient.",
+    "tc": ""
   },
   "310203": {
     "id": "310203",
-    "eng": "You saw a guardian."
+    "eng": "You saw a guardian.",
+    "tc": ""
   },
   "310204": {
     "id": "310204",
-    "eng": "You fight with the guardian."
+    "eng": "You fight with the guardian.",
+    "tc": ""
   },
   "310205": {
     "id": "310205",
-    "eng": "You killed the guardian and got a special token."
+    "eng": "You killed the guardian and got a special token.",
+    "tc": ""
   },
   "310206": {
     "id": "310206",
-    "eng": "You are killed by the guardian."
+    "eng": "You are killed by the guardian.",
+    "tc": ""
   },
   "310207": {
     "id": "310207",
-    "eng": "You evaded."
+    "eng": "You evaded.",
+    "tc": ""
   },
   "310208": {
     "id": "310208",
-    "eng": "You reached the door to the last room."
+    "eng": "You reached the door to the last room.",
+    "tc": ""
   },
   "310209": {
     "id": "310209",
-    "eng": "You found a secret entry and you are considering how to get into it."
+    "eng": "You found a secret entry and you are considering how to get into it.",
+    "tc": ""
   },
   "310210": {
     "id": "310210",
-    "eng": "You made a rope and used it to get into the ancient."
+    "eng": "You made a rope and used it to get into the ancient.",
+    "tc": ""
   },
   "310211": {
     "id": "310211",
-    "eng": "You jumped into the ancient and lost a little HP."
+    "eng": "You jumped into the ancient and lost a little HP.",
+    "tc": ""
   },
   "310212": {
     "id": "310212",
-    "eng": "You got into the ancient and found a mecha-mon waiting for you."
+    "eng": "You got into the ancient and found a mecha-mon waiting for you.",
+    "tc": ""
   },
   "310213": {
     "id": "310213",
-    "eng": "You destroyed the mecha-mon and got a special token."
+    "eng": "You destroyed the mecha-mon and got a special token.",
+    "tc": ""
   },
   "310214": {
     "id": "310214",
-    "eng": "You are killed."
+    "eng": "You are killed.",
+    "tc": ""
   },
   "310215": {
     "id": "310215",
-    "eng": "You entered the last room."
+    "eng": "You entered the last room.",
+    "tc": ""
   },
   "310216": {
     "id": "310216",
-    "eng": "Do you want to use the token to open the big box?"
+    "eng": "Do you want to use the token to open the big box?",
+    "tc": ""
   },
   "310217": {
     "id": "310217",
-    "eng": "You opened the big treasure box and gain a lot!"
+    "eng": "You opened the big treasure box and gain a lot!",
+    "tc": ""
   },
   "310218": {
     "id": "310218",
-    "eng": "You could not obtain the big reward, so you took away a few resources."
+    "eng": "You could not obtain the big reward, so you took away a few resources.",
+    "tc": ""
   },
   "310301": {
     "id": "310301",
-    "eng": "You entered a deserted lab and encountered a dangerous guardian."
+    "eng": "You entered a deserted lab and encountered a dangerous guardian.",
+    "tc": ""
   },
   "310302": {
     "id": "310302",
-    "eng": "You killed the guardian and now you are considering which way to go."
+    "eng": "You killed the guardian and now you are considering which way to go.",
+    "tc": ""
   },
   "310303": {
     "id": "310303",
-    "eng": "You are killed."
+    "eng": "You are killed.",
+    "tc": ""
   },
   "310304": {
     "id": "310304",
-    "eng": "You found a few resources in the warehouse."
+    "eng": "You found a few resources in the warehouse.",
+    "tc": ""
   },
   "310305": {
     "id": "310305",
-    "eng": "You found a broken tube in the energy room."
+    "eng": "You found a broken tube in the energy room.",
+    "tc": ""
   },
   "310306": {
     "id": "310306",
-    "eng": "You repaired the tube."
+    "eng": "You repaired the tube.",
+    "tc": ""
   },
   "310307": {
     "id": "310307",
-    "eng": "You got a lot of energy."
+    "eng": "You got a lot of energy.",
+    "tc": ""
   },
   "310308": {
     "id": "310308",
-    "eng": "You got a little energy."
+    "eng": "You got a little energy.",
+    "tc": ""
   },
   "310309": {
     "id": "310309",
-    "eng": "You came to the cave in the village and found a colony of bats"
+    "eng": "You came to the cave in the village and found a colony of bats",
+    "tc": ""
   },
   "310310": {
     "id": "310310",
-    "eng": "You shooed away the bats and entered the cave."
+    "eng": "You shooed away the bats and entered the cave.",
+    "tc": ""
   },
   "310311": {
     "id": "310311",
-    "eng": "You trash killed by the bats??? Are you kidding me???"
+    "eng": "You trash killed by the bats??? Are you kidding me???",
+    "tc": ""
   },
   "310312": {
     "id": "310312",
-    "eng": "In the depths of the cave, you saw a guard standing in front of a door. You need to show it something."
+    "eng": "In the depths of the cave, you saw a guard standing in front of a door. You need to show it something.",
+    "tc": ""
   },
   "310313": {
     "id": "310313",
-    "eng": "You showed it the Elder's Staff and the guard took you into the room behind the door."
+    "eng": "You showed it the Elder's Staff and the guard took you into the room behind the door.",
+    "tc": ""
   },
   "310314": {
     "id": "310314",
-    "eng": "In the room, you saw the Energy Gemstone which is sustaining the entire base of the village. You can feel the immense power contained within this stone, and now you are faced with a choice."
+    "eng": "In the room, you saw the Energy Gemstone which is sustaining the entire base of the village. You can feel the immense power contained within this stone, and now you are faced with a choice.",
+    "tc": ""
   },
   "310315": {
     "id": "310315",
-    "eng": "You followed your heart and took the Energy Gemstone directly."
+    "eng": "You followed your heart and took the Energy Gemstone directly.",
+    "tc": ""
   },
   "310316": {
     "id": "310316",
-    "eng": "You resisted the temptation and decided to help the village by recharging the stone."
+    "eng": "You resisted the temptation and decided to help the village by recharging the stone.",
+    "tc": ""
   },
   "310317": {
     "id": "310317",
-    "eng": "After removing the Energy Gemstone from its base, it instantly lost its luster and became dim. Before you had time to ponder, the entire cavern began to shake, emitting a tremendous noise. You hastily grabbed the stone and fled from the area."
+    "eng": "After removing the Energy Gemstone from its base, it instantly lost its luster and became dim. Before you had time to ponder, the entire cavern began to shake, emitting a tremendous noise. You hastily grabbed the stone and fled from the area.",
+    "tc": ""
   },
   "310318": {
     "id": "310318",
-    "eng": "With your help, the village regained its vitality."
+    "eng": "With your help, the village regained its vitality.",
+    "tc": ""
   },
   "310319": {
     "id": "310319",
-    "eng": "You had nothing to show it."
+    "eng": "You had nothing to show it.",
+    "tc": ""
   },
   "310320": {
     "id": "310320",
-    "eng": "You are killed by the guard."
+    "eng": "You are killed by the guard.",
+    "tc": ""
   },
   "310321": {
     "id": "310321",
-    "eng": "After defeating the guard, you entered the room behind the door and there, you discovered a gemstone imbued with immense power."
+    "eng": "After defeating the guard, you entered the room behind the door and there, you discovered a gemstone imbued with immense power.",
+    "tc": ""
   },
   "310322": {
     "id": "310322",
-    "eng": "You took the gemstone without hesitation."
+    "eng": "You took the gemstone without hesitation.",
+    "tc": ""
   },
   "310323": {
     "id": "310323",
-    "eng": "After removing the gemstone from its base, it instantly lost its luster and became dim. Before you had time to ponder, the entire cavern began to shake, emitting a tremendous noise. You hastily grabbed the stone and fled from the area."
+    "eng": "After removing the gemstone from its base, it instantly lost its luster and became dim. Before you had time to ponder, the entire cavern began to shake, emitting a tremendous noise. You hastily grabbed the stone and fled from the area.",
+    "tc": ""
   },
   "310324": {
     "id": "310324",
-    "eng": "At the entrance of a waterside ruin, you encountered a group of land sharks and engaged them in combat."
+    "eng": "At the entrance of a waterside ruin, you encountered a group of land sharks and engaged them in combat.",
+    "tc": ""
   },
   "310325": {
     "id": "310325",
-    "eng": "You killed the sharks and now you should decide which way to go."
+    "eng": "You killed the sharks and now you should decide which way to go.",
+    "tc": ""
   },
   "310326": {
     "id": "310326",
-    "eng": "You entered the storage room of the ruin."
+    "eng": "You entered the storage room of the ruin.",
+    "tc": ""
   },
   "310327": {
     "id": "310327",
-    "eng": "You came across an old robot and engaged it in battle."
+    "eng": "You came across an old robot and engaged it in battle.",
+    "tc": ""
   },
   "310328": {
     "id": "310328",
-    "eng": "You defeated the robot and gained some energy from it."
+    "eng": "You defeated the robot and gained some energy from it.",
+    "tc": ""
   },
   "310329": {
     "id": "310329",
-    "eng": "You are killed by the robot!"
+    "eng": "You are killed by the robot!",
+    "tc": ""
   },
   "310330": {
     "id": "310330",
-    "eng": "You arrived at the waterside dock where boats are moored."
+    "eng": "You arrived at the waterside dock where boats are moored.",
+    "tc": ""
   },
   "310331": {
     "id": "310331",
-    "eng": "You found some supplies and a good place for fishing."
+    "eng": "You found some supplies and a good place for fishing.",
+    "tc": ""
   },
   "310332": {
     "id": "310332",
-    "eng": "Maybe you want to fish here?"
+    "eng": "Maybe you want to fish here?",
+    "tc": ""
   },
   "310333": {
     "id": "310333",
-    "eng": "You don’t want to waste your food."
+    "eng": "You don’t want to waste your food.",
+    "tc": ""
   },
   "310334": {
     "id": "310334",
-    "eng": "You used some food as bait and caught a lot of fish."
+    "eng": "You used some food as bait and caught a lot of fish.",
+    "tc": ""
   },
   "310335": {
     "id": "310335",
-    "eng": "You used a significant amount of food as bait and…"
+    "eng": "You used a significant amount of food as bait and…",
+    "tc": ""
   },
   "310336": {
     "id": "310336",
-    "eng": "You killed the big land shark and gained the Tooth of Megalodon!"
+    "eng": "You killed the big land shark and gained the Tooth of Megalodon!",
+    "tc": ""
   },
   "310337": {
     "id": "310337",
-    "eng": "You are killed by the big land shark!"
+    "eng": "You are killed by the big land shark!",
+    "tc": ""
   },
   "310338": {
     "id": "310338",
-    "eng": "You are killed by the land sharks!"
+    "eng": "You are killed by the land sharks!",
+    "tc": ""
   },
   "310339": {
     "id": "310339",
-    "eng": "A big land shark!"
+    "eng": "A big land shark!",
+    "tc": ""
   },
   "310340": {
     "id": "310340",
-    "eng": "It is said that within this pyramid lies a supreme treasure, yet most people are lost in the labyrinth of the pyramid before they can find it."
+    "eng": "It is said that within this pyramid lies a supreme treasure, yet most people are lost in the labyrinth of the pyramid before they can find it.",
+    "tc": ""
   },
   "310341": {
     "id": "310341",
-    "eng": "You entered the pyramid. Soon, you encountered a fork in the road."
+    "eng": "You entered the pyramid. Soon, you encountered a fork in the road.",
+    "tc": ""
   },
   "310342": {
     "id": "310342",
-    "eng": "You turned left. Soon, you encountered another fork."
+    "eng": "You turned left. Soon, you encountered another fork.",
+    "tc": ""
   },
   "310343": {
     "id": "310343",
-    "eng": "You turned right. Soon, you encountered another fork."
+    "eng": "You turned right. Soon, you encountered another fork.",
+    "tc": ""
   },
   "310344": {
     "id": "310344",
-    "eng": "You turned right and you found that you backed to the entry."
+    "eng": "You turned right and you found that you backed to the entry.",
+    "tc": ""
   },
   "310345": {
     "id": "310345",
-    "eng": "You turned left again. Soon, you encountered another fork."
+    "eng": "You turned left again. Soon, you encountered another fork.",
+    "tc": ""
   },
   "310346": {
     "id": "310346",
-    "eng": "You turned right again. Soon, you encountered another fork."
+    "eng": "You turned right again. Soon, you encountered another fork.",
+    "tc": ""
   },
   "310347": {
     "id": "310347",
-    "eng": "You turned right and you found that you backed to the entry."
+    "eng": "You turned right and you found that you backed to the entry.",
+    "tc": ""
   },
   "310348": {
     "id": "310348",
-    "eng": "You turned left and you found a mechanical pharaoh."
+    "eng": "You turned left and you found a mechanical pharaoh.",
+    "tc": ""
   },
   "310349": {
     "id": "310349",
-    "eng": "You defeated the mechanical pharaoh and got the artifact from it!"
+    "eng": "You defeated the mechanical pharaoh and got the artifact from it!",
+    "tc": ""
   },
   "310350": {
     "id": "310350",
-    "eng": "You are killed by the pharaoh!"
+    "eng": "You are killed by the pharaoh!",
+    "tc": ""
   },
   "310351": {
     "id": "310351",
-    "eng": "You turned left and you found that you backed to the entry."
+    "eng": "You turned left and you found that you backed to the entry.",
+    "tc": ""
   },
   "310352": {
     "id": "310352",
-    "eng": "You turned left and you found that you backed to the entry."
+    "eng": "You turned left and you found that you backed to the entry.",
+    "tc": ""
   },
   "310353": {
     "id": "310353",
-    "eng": "You turned right and you found a mechanical pharaoh."
+    "eng": "You turned right and you found a mechanical pharaoh.",
+    "tc": ""
   },
   "310401": {
     "id": "310401",
-    "eng": "open human-shaped cocoons"
+    "eng": "open human-shaped cocoons",
+    "tc": ""
   },
   "310402": {
     "id": "310402",
-    "eng": "enter the ancient"
+    "eng": "enter the ancient",
+    "tc": ""
   },
   "310403": {
     "id": "310403",
-    "eng": "fight"
+    "eng": "fight",
+    "tc": ""
   },
   "310404": {
     "id": "310404",
-    "eng": "make a rope and use it"
+    "eng": "make a rope and use it",
+    "tc": ""
   },
   "310405": {
     "id": "310405",
-    "eng": "use the token"
+    "eng": "use the token",
+    "tc": ""
   },
   "310406": {
     "id": "310406",
-    "eng": "to the warehouse"
+    "eng": "to the warehouse",
+    "tc": ""
   },
   "310407": {
     "id": "310407",
-    "eng": "use stones to repair the tube"
+    "eng": "use stones to repair the tube",
+    "tc": ""
   },
   "310408": {
     "id": "310408",
-    "eng": "open egg-shaped cocoons"
+    "eng": "open egg-shaped cocoons",
+    "tc": ""
   },
   "310409": {
     "id": "310409",
-    "eng": "observe around"
+    "eng": "observe around",
+    "tc": ""
   },
   "310410": {
     "id": "310410",
-    "eng": "evade"
+    "eng": "evade",
+    "tc": ""
   },
   "310411": {
     "id": "310411",
-    "eng": "jump into it"
+    "eng": "jump into it",
+    "tc": ""
   },
   "310412": {
     "id": "310412",
-    "eng": "don't use the token"
+    "eng": "don't use the token",
+    "tc": ""
   },
   "310413": {
     "id": "310413",
-    "eng": "to the energy room"
+    "eng": "to the energy room",
+    "tc": ""
   },
   "310414": {
     "id": "310414",
-    "eng": "take away the tube"
+    "eng": "take away the tube",
+    "tc": ""
   },
   "310415": {
     "id": "310415",
-    "eng": "Show the Elder's Staff"
+    "eng": "Show the Elder's Staff",
+    "tc": ""
   },
   "310416": {
     "id": "310416",
-    "eng": "Take the Energy Gemstone"
+    "eng": "Take the Energy Gemstone",
+    "tc": ""
   },
   "310417": {
     "id": "310417",
-    "eng": "To the storage of the ruin"
+    "eng": "To the storage of the ruin",
+    "tc": ""
   },
   "310418": {
     "id": "310418",
-    "eng": "I don't want to waste my food"
+    "eng": "I don't want to waste my food",
+    "tc": ""
   },
   "310419": {
     "id": "310419",
-    "eng": "Left"
+    "eng": "Left",
+    "tc": ""
   },
   "310420": {
     "id": "310420",
-    "eng": "Nothing to show"
+    "eng": "Nothing to show",
+    "tc": ""
   },
   "310421": {
     "id": "310421",
-    "eng": "Use your energy to charge the Energy Gemstone"
+    "eng": "Use your energy to charge the Energy Gemstone",
+    "tc": ""
   },
   "310422": {
     "id": "310422",
-    "eng": "To the waterside"
+    "eng": "To the waterside",
+    "tc": ""
   },
   "310423": {
     "id": "310423",
-    "eng": "Maybe use 50 food for fun?"
+    "eng": "Maybe use 50 food for fun?",
+    "tc": ""
   },
   "310424": {
     "id": "310424",
-    "eng": "Right"
+    "eng": "Right",
+    "tc": ""
   },
   "310425": {
     "id": "310425",
-    "eng": "I want to spend 100 food for a big one!"
+    "eng": "I want to spend 100 food for a big one!",
+    "tc": ""
   },
   "320001": {
     "id": "320001",
-    "eng": "Land"
+    "eng": "Land",
+    "tc": ""
   },
   "320002": {
     "id": "320002",
-    "eng": "Flat land where you can move free."
+    "eng": "Flat land where you can move free.",
+    "tc": ""
   },
   "320003": {
     "id": "320003",
-    "eng": "Resources"
+    "eng": "Resources",
+    "tc": ""
   },
   "320004": {
     "id": "320004",
-    "eng": "Event"
+    "eng": "Event",
+    "tc": ""
   },
   "320005": {
     "id": "320005",
-    "eng": "Worm Hole"
+    "eng": "Worm Hole",
+    "tc": ""
   },
   "320006": {
     "id": "320006",
-    "eng": ""
+    "eng": "",
+    "tc": ""
   },
   "320007": {
     "id": "320007",
-    "eng": ""
+    "eng": "",
+    "tc": ""
   },
   "320008": {
     "id": "320008",
-    "eng": ""
+    "eng": "",
+    "tc": ""
   },
   "320009": {
     "id": "320009",
-    "eng": ""
+    "eng": "",
+    "tc": ""
   },
   "330001": {
     "id": "330001",
-    "eng": "NPC"
+    "eng": "NPC",
+    "tc": ""
   },
   "330002": {
     "id": "330002",
-    "eng": "Ganster"
+    "eng": "Ganster",
+    "tc": ""
   },
   "330003": {
     "id": "330003",
-    "eng": "Monster"
+    "eng": "Monster",
+    "tc": ""
   },
   "401001": {
     "id": "401001",
-    "eng": "Celestial Aura"
+    "eng": "Celestial Aura",
+    "tc": ""
   },
   "401002": {
     "id": "401002",
-    "eng": "Jade Journey"
+    "eng": "Jade Journey",
+    "tc": ""
   },
   "401003": {
     "id": "401003",
-    "eng": "Last Whisper"
+    "eng": "Last Whisper",
+    "tc": ""
   },
   "401004": {
     "id": "401004",
-    "eng": "Topaz Twilight"
+    "eng": "Topaz Twilight",
+    "tc": ""
   },
   "401005": {
     "id": "401005",
-    "eng": "Dawn's Tear"
+    "eng": "Dawn's Tear",
+    "tc": ""
   },
   "401006": {
     "id": "401006",
-    "eng": "Void Iron"
+    "eng": "Void Iron",
+    "tc": ""
   },
   "401007": {
     "id": "401007",
-    "eng": "Opferritual"
+    "eng": "Opferritual",
+    "tc": ""
   },
   "401008": {
     "id": "401008",
-    "eng": "Lord Proof"
+    "eng": "Lord Proof",
+    "tc": ""
   },
   "401009": {
     "id": "401009",
-    "eng": "Key of Trust"
+    "eng": "Key of Trust",
+    "tc": ""
   },
   "401010": {
     "id": "401010",
-    "eng": "Krass Letter"
+    "eng": "Krass Letter",
+    "tc": ""
   },
   "401011": {
     "id": "401011",
-    "eng": "Krass Badge"
+    "eng": "Krass Badge",
+    "tc": ""
   },
   "401012": {
     "id": "401012",
-    "eng": "A few foods"
+    "eng": "A few foods",
+    "tc": ""
   },
   "401013": {
     "id": "401013",
-    "eng": "Many foods"
+    "eng": "Many foods",
+    "tc": ""
   },
   "401014": {
     "id": "401014",
-    "eng": "A few woods"
+    "eng": "A few woods",
+    "tc": ""
   },
   "401015": {
     "id": "401015",
-    "eng": "Many woods"
+    "eng": "Many woods",
+    "tc": ""
   },
   "401016": {
     "id": "401016",
-    "eng": "A few stones"
+    "eng": "A few stones",
+    "tc": ""
   },
   "401017": {
     "id": "401017",
-    "eng": "Many stones"
+    "eng": "Many stones",
+    "tc": ""
   },
   "401018": {
     "id": "401018",
-    "eng": "Speical token"
+    "eng": "Speical token",
+    "tc": ""
   },
   "401019": {
     "id": "401019",
-    "eng": "Food"
+    "eng": "Food",
+    "tc": ""
   },
   "401020": {
     "id": "401020",
-    "eng": "Wood"
+    "eng": "Wood",
+    "tc": ""
   },
   "401021": {
     "id": "401021",
-    "eng": "Stone"
+    "eng": "Stone",
+    "tc": ""
   },
   "401022": {
     "id": "401022",
-    "eng": "Troop"
+    "eng": "Troop",
+    "tc": ""
   },
   "401023": {
     "id": "401023",
-    "eng": "PSYC"
+    "eng": "PSYC",
+    "tc": ""
   },
   "401024": {
     "id": "401024",
-    "eng": "PIOT"
+    "eng": "PIOT",
+    "tc": ""
   },
   "401025": {
     "id": "401025",
-    "eng": "Elder's Staff"
+    "eng": "Elder's Staff",
+    "tc": ""
   },
   "402001": {
     "id": "402001",
-    "eng": "A gem with a heavenly glow."
+    "eng": "A gem with a heavenly glow.",
+    "tc": ""
   },
   "402002": {
     "id": "402002",
-    "eng": "Ancient jade for wisdom's path."
+    "eng": "Ancient jade for wisdom's path.",
+    "tc": ""
   },
   "402003": {
     "id": "402003",
-    "eng": "Artifact of whispered secrets."
+    "eng": "Artifact of whispered secrets.",
+    "tc": ""
   },
   "402004": {
     "id": "402004",
-    "eng": "Gem of the setting sun's warmth."
+    "eng": "Gem of the setting sun's warmth.",
+    "tc": ""
   },
   "402005": {
     "id": "402005",
-    "eng": "Pure diamond of a new day's hope."
+    "eng": "Pure diamond of a new day's hope.",
+    "tc": ""
   },
   "402006": {
     "id": "402006",
-    "eng": "Cosmic strength in metal form."
+    "eng": "Cosmic strength in metal form.",
+    "tc": ""
   },
   "402007": {
     "id": "402007",
-    "eng": "Tool for divine rituals."
+    "eng": "Tool for divine rituals.",
+    "tc": ""
   },
   "402008": {
     "id": "402008",
-    "eng": "Maybe you should show this to someone."
+    "eng": "Maybe you should show this to someone.",
+    "tc": ""
   },
   "402009": {
     "id": "402009",
-    "eng": "Now you are the lord."
+    "eng": "Now you are the lord.",
+    "tc": ""
   },
   "402012": {
     "id": "402012",
-    "eng": "Gain 30 foods after use it."
+    "eng": "Gain 30 foods after use it.",
+    "tc": ""
   },
   "402013": {
     "id": "402013",
-    "eng": "Gain 100 foods after use it."
+    "eng": "Gain 100 foods after use it.",
+    "tc": ""
   },
   "402014": {
     "id": "402014",
-    "eng": "Gain 30 woods after use it."
+    "eng": "Gain 30 woods after use it.",
+    "tc": ""
   },
   "402015": {
     "id": "402015",
-    "eng": "Gain 100 woods after use it."
+    "eng": "Gain 100 woods after use it.",
+    "tc": ""
   },
   "402016": {
     "id": "402016",
-    "eng": "Gain 30 stones after use it."
+    "eng": "Gain 30 stones after use it.",
+    "tc": ""
   },
   "402017": {
     "id": "402017",
-    "eng": "Gain 100 stones after use it."
+    "eng": "Gain 100 stones after use it.",
+    "tc": ""
   },
   "402018": {
     "id": "402018",
-    "eng": "Token of an ancient."
+    "eng": "Token of an ancient.",
+    "tc": ""
   },
   "402019": {
     "id": "402019",
-    "eng": "The proof given by the chief."
+    "eng": "The proof given by the chief.",
+    "tc": ""
   },
   "402020": {
     "id": "402020",
-    "eng": "One of the basic resources in this world. You may get foods from Desert Oasis."
+    "eng": "One of the basic resources in this world. You may get foods from Desert Oasis.",
+    "tc": ""
   },
   "402021": {
     "id": "402021",
-    "eng": "One of the basic resources in this world. You may get woods from Deadwood Marsh."
+    "eng": "One of the basic resources in this world. You may get woods from Deadwood Marsh.",
+    "tc": ""
   },
   "402022": {
     "id": "402022",
-    "eng": "One of the basic resources in this world. You may get stones from Desert Grotto."
+    "eng": "One of the basic resources in this world. You may get stones from Desert Grotto.",
+    "tc": ""
   },
   "402023": {
     "id": "402023",
-    "eng": "You will need this to recover your pioneers' HP. Try to recruit more through the Barrack."
+    "eng": "You will need this to recover your pioneers' HP. Try to recruit more through the Barrack.",
+    "tc": ""
   },
   "402024": {
     "id": "402024",
-    "eng": "PSYC is the basic energy for most of your actions."
+    "eng": "PSYC is the basic energy for most of your actions.",
+    "tc": ""
   },
   "402025": {
     "id": "402025",
-    "eng": "You can earn more benefits by burning PIOT, such as more treasure chests, all the items inside the chests, etc."
+    "eng": "You can earn more benefits by burning PIOT, such as more treasure chests, all the items inside the chests, etc.",
+    "tc": ""
   },
   "501001": {
     "id": "501001",
-    "eng": "ganster router"
+    "eng": "ganster router",
+    "tc": ""
   },
   "501002": {
     "id": "501002",
-    "eng": "become city master"
+    "eng": "become city master",
+    "tc": ""
   },
   "501003": {
     "id": "501003",
-    "eng": "Cultivating health and recuperating"
+    "eng": "Cultivating health and recuperating",
+    "tc": ""
   },
   "501004": {
     "id": "501004",
-    "eng": "ambush doomsdayGangBigTeam"
+    "eng": "ambush doomsdayGangBigTeam",
+    "tc": ""
   },
   "501005": {
     "id": "501005",
-    "eng": "Expel the gangsters"
+    "eng": "Expel the gangsters",
+    "tc": ""
   },
   "501006": {
     "id": "501006",
-    "eng": "Don't trust the prophetess!"
+    "eng": "Don't trust the prophetess!",
+    "tc": ""
   },
   "501007": {
     "id": "501007",
-    "eng": "kill hred"
+    "eng": "kill hred",
+    "tc": ""
   },
   "501008": {
     "id": "501008",
-    "eng": "help you kill doomsDayGangTeam"
+    "eng": "help you kill doomsDayGangTeam",
+    "tc": ""
   },
   "501009": {
     "id": "501009",
-    "eng": "Defend the city"
+    "eng": "Defend the city",
+    "tc": ""
   },
   "501010": {
     "id": "501010",
-    "eng": "become doomsdayGang spy"
+    "eng": "become doomsdayGang spy",
+    "tc": ""
   },
   "501011": {
     "id": "501011",
-    "eng": "explore ganster team"
+    "eng": "explore ganster team",
+    "tc": ""
   },
   "501012": {
     "id": "501012",
-    "eng": "defeat the rebels"
+    "eng": "defeat the rebels",
+    "tc": ""
   },
   "501013": {
     "id": "501013",
-    "eng": "explore big ganster team"
+    "eng": "explore big ganster team",
+    "tc": ""
   },
   "501014": {
     "id": "501014",
-    "eng": "defeat the main city"
+    "eng": "defeat the main city",
+    "tc": ""
   },
   "501015": {
     "id": "501015",
-    "eng": "explore ruins"
+    "eng": "explore ruins",
+    "tc": ""
   },
   "501016": {
     "id": "501016",
-    "eng": "explore treasure"
+    "eng": "explore treasure",
+    "tc": ""
   },
   "501017": {
     "id": "501017",
-    "eng": "talk with prophetess, become city master"
+    "eng": "talk with prophetess, become city master",
+    "tc": ""
   },
   "501018": {
     "id": "501018",
-    "eng": "search resource 3 times"
+    "eng": "search resource 3 times",
+    "tc": ""
   },
   "501019": {
     "id": "501019",
-    "eng": "talk to artisan"
+    "eng": "talk to artisan",
+    "tc": ""
   },
   "501020": {
     "id": "501020",
-    "eng": "fix wall and build house"
+    "eng": "fix wall and build house",
+    "tc": ""
   },
   "501021": {
     "id": "501021",
-    "eng": "go to ambush point"
+    "eng": "go to ambush point",
+    "tc": ""
   },
   "501022": {
     "id": "501022",
-    "eng": "wait doomsdayGangBigTeam come and win fight"
+    "eng": "wait doomsdayGangBigTeam come and win fight",
+    "tc": ""
   },
   "501023": {
     "id": "501023",
-    "eng": "Defeat the gangsters outside the city."
+    "eng": "Defeat the gangsters outside the city.",
+    "tc": ""
   },
   "501024": {
     "id": "501024",
-    "eng": "kill the prophetess"
+    "eng": "kill the prophetess",
+    "tc": ""
   },
   "501025": {
     "id": "501025",
-    "eng": "kill herd"
+    "eng": "kill herd",
+    "tc": ""
   },
   "501026": {
     "id": "501026",
-    "eng": "kill doomsDayGangTeam"
+    "eng": "kill doomsDayGangTeam",
+    "tc": ""
   },
   "501027": {
     "id": "501027",
-    "eng": "goahead the doomsdayGangBigTeam"
+    "eng": "goahead the doomsdayGangBigTeam",
+    "tc": ""
   },
   "501028": {
     "id": "501028",
-    "eng": "become spy"
+    "eng": "become spy",
+    "tc": ""
   },
   "501029": {
     "id": "501029",
-    "eng": "Take down the city!"
+    "eng": "Take down the city!",
+    "tc": ""
   },
   "501030": {
     "id": "501030",
-    "eng": "Report back to the prophetess."
+    "eng": "Report back to the prophetess.",
+    "tc": ""
   },
   "501031": {
     "id": "501031",
-    "eng": "Kill the lying prophetess."
+    "eng": "Kill the lying prophetess.",
+    "tc": ""
   },
   "501032": {
     "id": "501032",
-    "eng": "Defeat the gangsters and defend the city."
+    "eng": "Defeat the gangsters and defend the city.",
+    "tc": ""
   },
   "501033": {
     "id": "501033",
-    "eng": "344232424"
+    "eng": "344232424",
+    "tc": ""
   },
   "501034": {
     "id": "501034",
-    "eng": "After the Disaster"
+    "eng": "After the Disaster",
+    "tc": ""
   },
   "501035": {
     "id": "501035",
-    "eng": "Explore for Resoureces"
+    "eng": "Explore for Resoureces",
+    "tc": ""
   },
   "501036": {
     "id": "501036",
-    "eng": "Talk to the Prophetess 1"
+    "eng": "Talk to the Prophetess 1",
+    "tc": ""
   },
   "501037": {
     "id": "501037",
-    "eng": "Talk to the Prophetess 1"
+    "eng": "Talk to the Prophetess 1",
+    "tc": ""
   },
   "501038": {
     "id": "501038",
-    "eng": "Talk to the Prophetess 2"
+    "eng": "Talk to the Prophetess 2",
+    "tc": ""
   },
   "501039": {
     "id": "501039",
-    "eng": "Talk to the Prophetess 3"
+    "eng": "Talk to the Prophetess 3",
+    "tc": ""
   },
   "501040": {
     "id": "501040",
-    "eng": "Defeat the monster"
+    "eng": "Defeat the monster",
+    "tc": ""
   },
   "501041": {
     "id": "501041",
-    "eng": "Talk to the Prophetess 4"
+    "eng": "Talk to the Prophetess 4",
+    "tc": ""
   },
   "501042": {
     "id": "501042",
-    "eng": "Talk to the Prophetess 5"
+    "eng": "Talk to the Prophetess 5",
+    "tc": ""
   },
   "501043": {
     "id": "501043",
-    "eng": "Talk to someone for information"
+    "eng": "Talk to someone for information",
+    "tc": ""
   },
   "501044": {
     "id": "501044",
-    "eng": "Collect resources"
+    "eng": "Collect resources",
+    "tc": ""
   },
   "501045": {
     "id": "501045",
-    "eng": "Hunt 5 beasts"
+    "eng": "Hunt 5 beasts",
+    "tc": ""
   },
   "501046": {
     "id": "501046",
-    "eng": "Suppressing bandits"
+    "eng": "Suppressing bandits",
+    "tc": ""
   },
   "501047": {
     "id": "501047",
-    "eng": "Collect any 2 resources"
+    "eng": "Collect any 2 resources",
+    "tc": ""
   },
   "501100": {
     "id": "501100",
-    "eng": "Hunting Season"
+    "eng": "Hunting Season",
+    "tc": ""
   },
   "501101": {
     "id": "501101",
-    "eng": "Suppressing bandits"
+    "eng": "Suppressing bandits",
+    "tc": ""
   },
   "501102": {
     "id": "501102",
-    "eng": "Resource Shortage"
+    "eng": "Resource Shortage",
+    "tc": ""
   },
   "502001": {
     "id": "502001",
-    "eng": "Tinuvel the Prophetess"
+    "eng": "Tinuvel the Prophetess",
+    "tc": ""
   },
   "502002": {
     "id": "502002",
-    "eng": "0xPioneer"
+    "eng": "0xPioneer",
+    "tc": ""
   },
   "502003": {
     "id": "502003",
-    "eng": "Spy Jack"
+    "eng": "Spy Jack",
+    "tc": ""
   },
   "502004": {
     "id": "502004",
-    "eng": "Hunter John"
+    "eng": "Hunter John",
+    "tc": ""
   },
   "502005": {
     "id": "502005",
-    "eng": "Guard Keen"
+    "eng": "Guard Keen",
+    "tc": ""
   },
   "502006": {
     "id": "502006",
-    "eng": "DoomsDay Gang Team"
+    "eng": "DoomsDay Gang Team",
+    "tc": ""
   },
   "502007": {
     "id": "502007",
-    "eng": "Artisan Tom"
+    "eng": "Artisan Tom",
+    "tc": ""
   },
   "502008": {
     "id": "502008",
-    "eng": "Scavenger Unknow"
+    "eng": "Scavenger Unknow",
+    "tc": ""
   },
   "503001": {
     "id": "503001",
-    "eng": "Finally you are awake!"
+    "eng": "Finally you are awake!",
+    "tc": ""
   },
   "503002": {
     "id": "503002",
-    "eng": "You saved me? Who are you?"
+    "eng": "You saved me? Who are you?",
+    "tc": ""
   },
   "503003": {
     "id": "503003",
-    "eng": "Tinuvel, a prophetess. I've seen the vision of you leading this city to a prosperous future, and your salvation by me is the guidance of fate."
+    "eng": "Tinuvel, a prophetess. I've seen the vision of you leading this city to a prosperous future, and your salvation by me is the guidance of fate.",
+    "tc": ""
   },
   "503004": {
     "id": "503004",
-    "eng": "What the hell? I’m just a normal one who just woke up. Your words are a bit too much information for me!"
+    "eng": "What the hell? I’m just a normal one who just woke up. Your words are a bit too much information for me!",
+    "tc": ""
   },
   "503005": {
     "id": "503005",
-    "eng": "Don’t panic, I will guide you forward."
+    "eng": "Don’t panic, I will guide you forward.",
+    "tc": ""
   },
   "503006": {
     "id": "503006",
-    "eng": "What do you want me to do?"
+    "eng": "What do you want me to do?",
+    "tc": ""
   },
   "503007": {
     "id": "503007",
-    "eng": "The town’s lord was just killed by villains. It’s chaos here."
+    "eng": "The town’s lord was just killed by villains. It’s chaos here.",
+    "tc": ""
   },
   "503008": {
     "id": "503008",
-    "eng": "You’re not expecting me to fight in this state, are you?"
+    "eng": "You’re not expecting me to fight in this state, are you?",
+    "tc": ""
   },
   "503009": {
     "id": "503009",
-    "eng": "That’d be unfair. Take this."
+    "eng": "That’d be unfair. Take this.",
+    "tc": ""
   },
   "503010": {
     "id": "503010",
-    "eng": "PIOT? "
+    "eng": "PIOT? ",
+    "tc": ""
   },
   "503011": {
     "id": "503011",
-    "eng": "Whoever owns PIOT can rule the world."
+    "eng": "Whoever owns PIOT can rule the world.",
+    "tc": ""
   },
   "503012": {
     "id": "503012",
-    "eng": "Any practical use?!"
+    "eng": "Any practical use?!",
+    "tc": ""
   },
   "503013": {
     "id": "503013",
-    "eng": "Sure, PIOT can increase HEAT value, speed up actions, or get extra resources."
+    "eng": "Sure, PIOT can increase HEAT value, speed up actions, or get extra resources.",
+    "tc": ""
   },
   "503014": {
     "id": "503014",
-    "eng": "What is HEAT value?"
+    "eng": "What is HEAT value?",
+    "tc": ""
   },
   "503015": {
     "id": "503015",
-    "eng": "Let me show you how to use PIOT first, then I’ll explain HEAT value."
+    "eng": "Let me show you how to use PIOT first, then I’ll explain HEAT value.",
+    "tc": ""
   },
   "503016": {
     "id": "503016",
-    "eng": "HEAT value is tied to treasure chests. The higher it is, the more chests you can open daily, and the better rewards you get."
+    "eng": "HEAT value is tied to treasure chests. The higher it is, the more chests you can open daily, and the better rewards you get.",
+    "tc": ""
   },
   "503017": {
     "id": "503017",
-    "eng": "What’s a treasure chest?"
+    "eng": "What’s a treasure chest?",
+    "tc": ""
   },
   "503018": {
     "id": "503018",
-    "eng": "It’s how you earn in this world. All users share the rewards in the chest, so you need to get the good stuff before others."
+    "eng": "It’s how you earn in this world. All users share the rewards in the chest, so you need to get the good stuff before others.",
+    "tc": ""
   },
   "503019": {
     "id": "503019",
-    "eng": "How to open it?"
+    "eng": "How to open it?",
+    "tc": ""
   },
   "503020": {
     "id": "503020",
-    "eng": "I’ve given you a key. Try opening a chest"
+    "eng": "I’ve given you a key. Try opening a chest",
+    "tc": ""
   },
   "503021": {
     "id": "503021",
-    "eng": "What’s this?"
+    "eng": "What’s this?",
+    "tc": ""
   },
   "503022": {
     "id": "503022",
-    "eng": "It’s PSYC, the world’s spiritual energy. You need it for your actions."
+    "eng": "It’s PSYC, the world’s spiritual energy. You need it for your actions.",
+    "tc": ""
   },
   "503023": {
     "id": "503023",
-    "eng": "All actions? If it runs out, am I done for? Can I ask you for more?"
+    "eng": "All actions? If it runs out, am I done for? Can I ask you for more?",
+    "tc": ""
   },
   "503024": {
     "id": "503024",
-    "eng": "There’s no surplus. You saw that PSYC can be obtained from chests. You should do your task now. After that, you’ll get my reward."
+    "eng": "There’s no surplus. You saw that PSYC can be obtained from chests. You should do your task now. After that, you’ll get my reward.",
+    "tc": ""
   },
   "503025": {
     "id": "503025",
-    "eng": "Sounds good. What should I do now?"
+    "eng": "Sounds good. What should I do now?",
+    "tc": ""
   },
   "503026": {
     "id": "503026",
-    "eng": "See those villains? Take them out!"
+    "eng": "See those villains? Take them out!",
+    "tc": ""
   },
   "503027": {
     "id": "503027",
-    "eng": "Good job! From now on, you’re in charge of guarding the town."
+    "eng": "Good job! From now on, you’re in charge of guarding the town.",
+    "tc": ""
   },
   "503028": {
     "id": "503028",
-    "eng": "Just like that?"
+    "eng": "Just like that?",
+    "tc": ""
   },
   "503029": {
     "id": "503029",
-    "eng": "I believe in you!"
+    "eng": "I believe in you!",
+    "tc": ""
   },
   "503030": {
     "id": "503030",
-    "eng": "What’s my reward?"
+    "eng": "What’s my reward?",
+    "tc": ""
   },
   "503031": {
     "id": "503031",
-    "eng": "Your action gained EXPLORATION value. When it’s full, I’ll give you a key to open a chest for rewards."
+    "eng": "Your action gained EXPLORATION value. When it’s full, I’ll give you a key to open a chest for rewards.",
+    "tc": ""
   },
   "503032": {
     "id": "503032",
-    "eng": "So, consuming PSYC gets EXPLORATION value, consuming PIOT gets HEAT value, and both lead to opening more chests and getting better stuff?"
+    "eng": "So, consuming PSYC gets EXPLORATION value, consuming PIOT gets HEAT value, and both lead to opening more chests and getting better stuff?",
+    "tc": ""
   },
   "503033": {
     "id": "503033",
-    "eng": "Yes, getting rewards from chests is key to survival. How to increase the rewards depends on your actions."
+    "eng": "Yes, getting rewards from chests is key to survival. How to increase the rewards depends on your actions.",
+    "tc": ""
   },
   "503034": {
     "id": "503034",
-    "eng": "You have a new key now. Open a new chest and see what you get!"
+    "eng": "You have a new key now. Open a new chest and see what you get!",
+    "tc": ""
   },
   "503035": {
     "id": "503035",
-    "eng": "You’re indeed the chosen one, getting both psyc and PIOT."
+    "eng": "You’re indeed the chosen one, getting both psyc and PIOT.",
+    "tc": ""
   },
   "503036": {
     "id": "503036",
-    "eng": "Can I get better stuff?"
+    "eng": "Can I get better stuff?",
+    "tc": ""
   },
   "503037": {
     "id": "503037",
-    "eng": "If you want better stuff, check out the town. Building it improves its CIVILIZATION level."
+    "eng": "If you want better stuff, check out the town. Building it improves its CIVILIZATION level.",
+    "tc": ""
   },
   "503038": {
     "id": "503038",
-    "eng": "What’s the function of CIVILIZATION level?"
+    "eng": "What’s the function of CIVILIZATION level?",
+    "tc": ""
   },
   "503039": {
     "id": "503039",
-    "eng": "It improves the quality of rewards in the chest."
+    "eng": "It improves the quality of rewards in the chest.",
+    "tc": ""
   },
   "503040": {
     "id": "503040",
-    "eng": "So everything’s about the chest. Where does it come from?"
+    "eng": "So everything’s about the chest. Where does it come from?",
+    "tc": ""
   },
   "503041": {
     "id": "503041",
-    "eng": "Exploring this world with questions is fun. You’ll find out the truth someday."
+    "eng": "Exploring this world with questions is fun. You’ll find out the truth someday.",
+    "tc": ""
   },
   "503042": {
     "id": "503042",
-    "eng": "It seems that collecting resources can really gain EXPLORATION value."
+    "eng": "It seems that collecting resources can really gain EXPLORATION value.",
+    "tc": ""
   },
   "503043": {
     "id": "503043",
-    "eng": "Now go back and level up the building."
+    "eng": "Now go back and level up the building.",
+    "tc": ""
   },
   "503044": {
     "id": "503044",
-    "eng": "OK?"
+    "eng": "OK?",
+    "tc": ""
   },
   "503045": {
     "id": "503045",
-    "eng": "Are you going to cooperate with the gang or fight with them?"
+    "eng": "Are you going to cooperate with the gang or fight with them?",
+    "tc": ""
   },
   "503046": {
     "id": "503046",
-    "eng": "The town was ransacked by those bastards."
+    "eng": "The town was ransacked by those bastards.",
+    "tc": ""
   },
   "503047": {
     "id": "503047",
-    "eng": "You may be the one to save us and recuperate the town."
+    "eng": "You may be the one to save us and recuperate the town.",
+    "tc": ""
   },
   "503048": {
     "id": "503048",
-    "eng": "We need some material reserves. Try to EXPLORE RESOURCES FOR 3 TIMES and BRING THEM BACK TO ME."
+    "eng": "We need some material reserves. Try to EXPLORE RESOURCES FOR 3 TIMES and BRING THEM BACK TO ME.",
+    "tc": ""
   },
   "503049": {
     "id": "503049",
-    "eng": "Will you help them EXPLORE RESOURCES FOR 3 TIMES?"
+    "eng": "Will you help them EXPLORE RESOURCES FOR 3 TIMES?",
+    "tc": ""
   },
   "503050": {
     "id": "503050",
-    "eng": "The right token."
+    "eng": "The right token.",
+    "tc": ""
   },
   "503051": {
     "id": "503051",
-    "eng": "All right. You are indeed qualified TO BE THE LORD."
+    "eng": "All right. You are indeed qualified TO BE THE LORD.",
+    "tc": ""
   },
   "503052": {
     "id": "503052",
-    "eng": "Go ahead, there's a lot of things waiting for you."
+    "eng": "Go ahead, there's a lot of things waiting for you.",
+    "tc": ""
   },
   "503053": {
     "id": "503053",
-    "eng": "You've been a great help. Thank you very much."
+    "eng": "You've been a great help. Thank you very much.",
+    "tc": ""
   },
   "503054": {
     "id": "503054",
-    "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?"
+    "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?",
+    "tc": ""
   },
   "503055": {
     "id": "503055",
-    "eng": "Lucky guy, we're not going to kill you."
+    "eng": "Lucky guy, we're not going to kill you.",
+    "tc": ""
   },
   "503056": {
     "id": "503056",
-    "eng": "But you will act as our agent and TAKE OVER THE TOWN."
+    "eng": "But you will act as our agent and TAKE OVER THE TOWN.",
+    "tc": ""
   },
   "503057": {
     "id": "503057",
-    "eng": "You've been a great help. Thank you very much.2222222"
+    "eng": "You've been a great help. Thank you very much.2222222",
+    "tc": ""
   },
   "503058": {
     "id": "503058",
-    "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?"
+    "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?",
+    "tc": ""
   },
   "503059": {
     "id": "503059",
-    "eng": "You've been a great help. Thank you very much.3333333"
+    "eng": "You've been a great help. Thank you very much.3333333",
+    "tc": ""
   },
   "503060": {
     "id": "503060",
-    "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?"
+    "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?",
+    "tc": ""
   },
   "503061": {
     "id": "503061",
-    "eng": "Who am l? Where am !?"
+    "eng": "Who am l? Where am !?",
+    "tc": ""
   },
   "503062": {
     "id": "503062",
-    "eng": "You are…"
+    "eng": "You are…",
+    "tc": ""
   },
   "503063": {
     "id": "503063",
-    "eng": "How could I continue to survive in this world?"
+    "eng": "How could I continue to survive in this world?",
+    "tc": ""
   },
   "503064": {
     "id": "503064",
-    "eng": "You can…"
+    "eng": "You can…",
+    "tc": ""
   },
   "503065": {
     "id": "503065",
-    "eng": "So what should I do now?"
+    "eng": "So what should I do now?",
+    "tc": ""
   },
   "503066": {
     "id": "503066",
-    "eng": "…"
+    "eng": "…",
+    "tc": ""
   },
   "503067": {
     "id": "503067",
-    "eng": "dasa"
+    "eng": "dasa",
+    "tc": ""
   },
   "503068": {
     "id": "503068",
-    "eng": "test talk 16666"
+    "eng": "test talk 16666",
+    "tc": ""
   },
   "503069": {
     "id": "503069",
-    "eng": "7984r892893"
+    "eng": "7984r892893",
+    "tc": ""
   },
   "503070": {
     "id": "503070",
-    "eng": "p98grjwio"
+    "eng": "p98grjwio",
+    "tc": ""
   },
   "503071": {
     "id": "503071",
-    "eng": "Well done!"
+    "eng": "Well done!",
+    "tc": ""
   },
   "503072": {
     "id": "503072",
-    "eng": "You saved the city!"
+    "eng": "You saved the city!",
+    "tc": ""
   },
   "503073": {
     "id": "503073",
-    "eng": "Upgrading buildings requires resources, and there are not enough resources to level up."
+    "eng": "Upgrading buildings requires resources, and there are not enough resources to level up.",
+    "tc": ""
   },
   "503074": {
     "id": "503074",
-    "eng": "The improvement of the building level will effectively increase our income speed, and it can also improve the CIVILIZATION level. Now let’s go and collect some resources for upgrading."
+    "eng": "The improvement of the building level will effectively increase our income speed, and it can also improve the CIVILIZATION level. Now let’s go and collect some resources for upgrading.",
+    "tc": ""
   },
   "503075": {
     "id": "503075",
-    "eng": "Excuse me, did you come from the north?"
+    "eng": "Excuse me, did you come from the north?",
+    "tc": ""
   },
   "503076": {
     "id": "503076",
-    "eng": "Yes, is there anything?"
+    "eng": "Yes, is there anything?",
+    "tc": ""
   },
   "503077": {
     "id": "503077",
-    "eng": "Did you see any resources that can be mined over there?"
+    "eng": "Did you see any resources that can be mined over there?",
+    "tc": ""
   },
   "503078": {
     "id": "503078",
-    "eng": "There seems to be some at the foot of the mountain over there, you can go and see."
+    "eng": "There seems to be some at the foot of the mountain over there, you can go and see.",
+    "tc": ""
   },
   "503079": {
     "id": "503079",
-    "eng": "Wow! Thank you!"
+    "eng": "Wow! Thank you!",
+    "tc": ""
   },
   "503080": {
     "id": "503080",
-    "eng": "Upgrading buildings seems to not only improve civilization level, but also increase exploration value. This is great, you can open a new treasure chest."
+    "eng": "Upgrading buildings seems to not only improve civilization level, but also increase exploration value. This is great, you can open a new treasure chest.",
+    "tc": ""
   },
   "503081": {
     "id": "503081",
-    "eng": "I am indeed the chosen one, and someone will stuff a pillow when I am sleepy."
+    "eng": "I am indeed the chosen one, and someone will stuff a pillow when I am sleepy.",
+    "tc": ""
   },
   "503082": {
     "id": "503082",
-    "eng": "Now that the resources for building the town are available, let’s try to level up this barracks building again."
+    "eng": "Now that the resources for building the town are available, let’s try to level up this barracks building again.",
+    "tc": ""
   },
   "503083": {
     "id": "503083",
-    "eng": "With the barracks, you can recruit soldiers. In this way, if you are injured in battle, there will be soldiers to supplement you."
+    "eng": "With the barracks, you can recruit soldiers. In this way, if you are injured in battle, there will be soldiers to supplement you.",
+    "tc": ""
   },
   "503084": {
     "id": "503084",
-    "eng": "But it seems that if you want to develop the town and improve civilization, you still need to explore and collect as much as possible. Just now I saw a relic far outside the town, let’s go and explore it, maybe there will be some unexpected gains."
+    "eng": "But it seems that if you want to develop the town and improve civilization, you still need to explore and collect as much as possible. Just now I saw a relic far outside the town, let’s go and explore it, maybe there will be some unexpected gains.",
+    "tc": ""
   },
   "503085": {
     "id": "503085",
-    "eng": "The wormhole serves as a medium connecting two players, allowing them to attack each other through it. Here, we can set up a lineup for attacking other guys."
+    "eng": "The wormhole serves as a medium connecting two players, allowing them to attack each other through it. Here, we can set up a lineup for attacking other guys.",
+    "tc": ""
   },
   "503086": {
     "id": "503086",
-    "eng": "When other players attack our town via the wormhole, we can deploy characters to protect it from looting. With the defense set, I'll need to explore further. I noticed a suspicious person lurking nearby. I should check it out."
+    "eng": "When other players attack our town via the wormhole, we can deploy characters to protect it from looting. With the defense set, I'll need to explore further. I noticed a suspicious person lurking nearby. I should check it out.",
+    "tc": ""
   },
   "503087": {
     "id": "503087",
-    "eng": "Beware! It seems something is coming!"
+    "eng": "Beware! It seems something is coming!",
+    "tc": ""
   },
   "503088": {
     "id": "503088",
-    "eng": "It appears that there are two people coming over to join us."
+    "eng": "It appears that there are two people coming over to join us.",
+    "tc": ""
   },
   "503100": {
     "id": "503100",
-    "eng": "The number of prey has noticeably decreased recently."
+    "eng": "The number of prey has noticeably decreased recently.",
+    "tc": ""
   },
   "503101": {
     "id": "503101",
-    "eng": "Maybe I can help you hunt."
+    "eng": "Maybe I can help you hunt.",
+    "tc": ""
   },
   "503102": {
     "id": "503102",
-    "eng": "Really? Help me hunt FIVE wild beasts, I can pay you the reward."
+    "eng": "Really? Help me hunt FIVE wild beasts, I can pay you the reward.",
+    "tc": ""
   },
   "503103": {
     "id": "503103",
-    "eng": "There are many thieves nearby."
+    "eng": "There are many thieves nearby.",
+    "tc": ""
   },
   "503104": {
     "id": "503104",
-    "eng": "I can go and eliminate them."
+    "eng": "I can go and eliminate them.",
+    "tc": ""
   },
   "503105": {
     "id": "503105",
-    "eng": "After you kill three thieves, I will give you a reward."
+    "eng": "After you kill three thieves, I will give you a reward.",
+    "tc": ""
   },
   "503106": {
     "id": "503106",
-    "eng": "The supplies are becoming increasingly scarce now."
+    "eng": "The supplies are becoming increasingly scarce now.",
+    "tc": ""
   },
   "503107": {
     "id": "503107",
-    "eng": "How can I help you."
+    "eng": "How can I help you.",
+    "tc": ""
   },
   "503108": {
     "id": "503108",
-    "eng": "Collect any TWO resource point and I will reward you."
+    "eng": "Collect any TWO resource point and I will reward you.",
+    "tc": ""
   },
   "503109": {
     "id": "503109",
-    "eng": "Go hand in the task now"
+    "eng": "Go hand in the task now",
+    "tc": ""
   },
   "504001": {
     "id": "504001",
-    "eng": "Well…I'll try"
+    "eng": "Well…I'll try",
+    "tc": ""
   },
   "504002": {
     "id": "504002",
-    "eng": "Let me see…"
+    "eng": "Let me see…",
+    "tc": ""
   },
   "504003": {
     "id": "504003",
-    "eng": "OK"
+    "eng": "OK",
+    "tc": ""
   },
   "504004": {
     "id": "504004",
-    "eng": "OK"
+    "eng": "OK",
+    "tc": ""
   },
   "504005": {
     "id": "504005",
-    "eng": "All right"
+    "eng": "All right",
+    "tc": ""
   },
   "504006": {
     "id": "504006",
-    "eng": "What the hell?"
+    "eng": "What the hell?",
+    "tc": ""
   },
   "504007": {
     "id": "504007",
-    "eng": "OK"
+    "eng": "OK",
+    "tc": ""
   },
   "504008": {
     "id": "504008",
-    "eng": "All right"
+    "eng": "All right",
+    "tc": ""
   },
   "504009": {
     "id": "504009",
-    "eng": "Thank you!"
+    "eng": "Thank you!",
+    "tc": ""
   },
   "504010": {
     "id": "504010",
-    "eng": "OK, I'm on it"
+    "eng": "OK, I'm on it",
+    "tc": ""
   },
   "504011": {
     "id": "504011",
-    "eng": "Not now"
+    "eng": "Not now",
+    "tc": ""
   },
   "504012": {
     "id": "504012",
-    "eng": "Deal!"
+    "eng": "Deal!",
+    "tc": ""
   },
   "504013": {
     "id": "504013",
-    "eng": "Fight!"
+    "eng": "Fight!",
+    "tc": ""
   },
   "504014": {
     "id": "504014",
-    "eng": "All right"
+    "eng": "All right",
+    "tc": ""
   },
   "504015": {
     "id": "504015",
-    "eng": "I'm busy"
+    "eng": "I'm busy",
+    "tc": ""
   },
   "504016": {
     "id": "504016",
-    "eng": "The fortunate one chosen by me."
+    "eng": "The fortunate one chosen by me.",
+    "tc": ""
   },
   "504017": {
     "id": "504017",
-    "eng": "A survivor who has narrowly escaped the disaster."
+    "eng": "A survivor who has narrowly escaped the disaster.",
+    "tc": ""
   },
   "504018": {
     "id": "504018",
-    "eng": "A surviving ant of a vanished civilization."
+    "eng": "A surviving ant of a vanished civilization.",
+    "tc": ""
   },
   "504019": {
     "id": "504019",
-    "eng": "Become the executor of my will."
+    "eng": "Become the executor of my will.",
+    "tc": ""
   },
   "504020": {
     "id": "504020",
-    "eng": "Act as my eyes and hands."
+    "eng": "Act as my eyes and hands.",
+    "tc": ""
   },
   "504021": {
     "id": "504021",
-    "eng": "Just follow my guide."
+    "eng": "Just follow my guide.",
+    "tc": ""
   },
   "504022": {
     "id": "504022",
-    "eng": "Head to the city in the northeast and gather a team."
+    "eng": "Head to the city in the northeast and gather a team.",
+    "tc": ""
   },
   "504023": {
     "id": "504023",
-    "eng": "First, locate our base."
+    "eng": "First, locate our base.",
+    "tc": ""
   },
   "504024": {
     "id": "504024",
-    "eng": "Just wait…Because soon I will reshape this world."
+    "eng": "Just wait…Because soon I will reshape this world.",
+    "tc": ""
   },
   "504025": {
     "id": "504025",
-    "eng": "1"
+    "eng": "1",
+    "tc": ""
   },
   "504026": {
     "id": "504026",
-    "eng": "2"
+    "eng": "2",
+    "tc": ""
   },
   "504027": {
     "id": "504027",
-    "eng": "3333"
+    "eng": "3333",
+    "tc": ""
   },
   "601001": {
     "id": "601001",
-    "eng": "Peace and Love"
+    "eng": "Peace and Love",
+    "tc": ""
   },
   "601002": {
     "id": "601002",
-    "eng": "Fight as Beast"
+    "eng": "Fight as Beast",
+    "tc": ""
   },
   "601003": {
     "id": "601003",
-    "eng": "Smart One"
+    "eng": "Smart One",
+    "tc": ""
   },
   "601004": {
     "id": "601004",
-    "eng": "Hero"
+    "eng": "Hero",
+    "tc": ""
   },
   "601005": {
     "id": "601005",
-    "eng": "The Lord"
+    "eng": "The Lord",
+    "tc": ""
   },
   "701001": {
     "id": "701001",
-    "eng": "Collection progress:\r\n<color=#ffcc49><size=36>%s%</size></color>"
+    "eng": "Collection progress:\r\n<color=#ffcc49><size=36>%s%</size></color>",
+    "tc": ""
   },
   "701002": {
     "id": "701002",
-    "eng": "World Map"
+    "eng": "World Map",
+    "tc": ""
   },
   "701003": {
     "id": "701003",
-    "eng": "Duration: %s"
+    "eng": "Duration: %s",
+    "tc": ""
   },
   "1070011": {
     "id": "1070011",
-    "eng": "Treaty of Kadesh:\r\nCity Vision +1\r\nTroop Vision +1"
+    "eng": "Treaty of Kadesh:\r\nCity Vision +1\r\nTroop Vision +1",
+    "tc": ""
   },
   "1070012": {
     "id": "1070012",
-    "eng": "Troop Attack +20"
+    "eng": "Troop Attack +20",
+    "tc": ""
   },
   "1070013": {
     "id": "1070013",
-    "eng": "City Defence +5"
+    "eng": "City Defence +5",
+    "tc": ""
   },
   "1070014": {
     "id": "1070014",
-    "eng": "Damage on herd +20%"
+    "eng": "Damage on herd +20%",
+    "tc": ""
   },
   "1070015": {
     "id": "1070015",
-    "eng": "Troop Defence +5"
+    "eng": "Troop Defence +5",
+    "tc": ""
   },
   "1070016": {
     "id": "1070016",
-    "eng": "Troop Speed + 5%"
+    "eng": "Troop Speed + 5%",
+    "tc": ""
   },
   "1070017": {
     "id": "1070017",
-    "eng": "Domination:\r\nDamage on herd +50%"
+    "eng": "Domination:\r\nDamage on herd +50%",
+    "tc": ""
   },
   "1070018": {
     "id": "1070018",
-    "eng": "Troop Attack +15"
+    "eng": "Troop Attack +15",
+    "tc": ""
   },
   "1070019": {
     "id": "1070019",
-    "eng": "Troop Defence +5"
+    "eng": "Troop Defence +5",
+    "tc": ""
   },
   "1070020": {
     "id": "1070020",
-    "eng": "Exploration Speed +5%"
+    "eng": "Exploration Speed +5%",
+    "tc": ""
   },
   "1070021": {
     "id": "1070021",
-    "eng": "Damage on herd +20%"
+    "eng": "Damage on herd +20%",
+    "tc": ""
   },
   "1070022": {
     "id": "1070022",
-    "eng": "Damage on human +10%"
+    "eng": "Damage on human +10%",
+    "tc": ""
   },
   "1070023": {
     "id": "1070023",
-    "eng": "Destruction:\r\nDamage on human +15%"
+    "eng": "Destruction:\r\nDamage on human +15%",
+    "tc": ""
   },
   "1070024": {
     "id": "1070024",
-    "eng": "Exploration Speed +3%"
+    "eng": "Exploration Speed +3%",
+    "tc": ""
   },
   "1070025": {
     "id": "1070025",
-    "eng": "Damage on herd +20%"
+    "eng": "Damage on herd +20%",
+    "tc": ""
   },
   "1070026": {
     "id": "1070026",
-    "eng": "Troop Speed +5%"
+    "eng": "Troop Speed +5%",
+    "tc": ""
   },
   "1070027": {
     "id": "1070027",
-    "eng": "Troop Attack +20"
+    "eng": "Troop Attack +20",
+    "tc": ""
   },
   "1070028": {
     "id": "1070028",
-    "eng": "Troop Attack +30"
+    "eng": "Troop Attack +30",
+    "tc": ""
   },
   "1070029": {
     "id": "1070029",
-    "eng": "Construct Speed +5%"
+    "eng": "Construct Speed +5%",
+    "tc": ""
   },
   "1070030": {
     "id": "1070030",
-    "eng": "Exploration Speed +3%"
+    "eng": "Exploration Speed +3%",
+    "tc": ""
   },
   "1070031": {
     "id": "1070031",
-    "eng": "Extra Resource +5%"
+    "eng": "Extra Resource +5%",
+    "tc": ""
   },
   "1070032": {
     "id": "1070032",
-    "eng": "Extra Resource +5%"
+    "eng": "Extra Resource +5%",
+    "tc": ""
   },
   "1070033": {
     "id": "1070033",
-    "eng": "Troop Speed +5%"
+    "eng": "Troop Speed +5%",
+    "tc": ""
   },
   "1070034": {
     "id": "1070034",
-    "eng": "Troop Attack +10"
+    "eng": "Troop Attack +10",
+    "tc": ""
   },
   "1070035": {
     "id": "1070035",
-    "eng": "Troop Defence +5"
+    "eng": "Troop Defence +5",
+    "tc": ""
   },
   "1070036": {
     "id": "1070036",
-    "eng": "Troop Attack +10"
+    "eng": "Troop Attack +10",
+    "tc": ""
   },
   "1070037": {
     "id": "1070037",
-    "eng": "Extra Resource +5%"
+    "eng": "Extra Resource +5%",
+    "tc": ""
   },
   "1070038": {
     "id": "1070038",
-    "eng": "Troop Speed +5%"
+    "eng": "Troop Speed +5%",
+    "tc": ""
   },
   "1070039": {
     "id": "1070039",
-    "eng": "Troop Attack +5"
+    "eng": "Troop Attack +5",
+    "tc": ""
   },
   "1070040": {
     "id": "1070040",
-    "eng": "Construct Speed +5%"
+    "eng": "Construct Speed +5%",
+    "tc": ""
   },
   "1070041": {
     "id": "1070041",
-    "eng": "Troop Defence +5%"
+    "eng": "Troop Defence +5%",
+    "tc": ""
   },
   "1070042": {
     "id": "1070042",
-    "eng": "Troop Attack +20"
+    "eng": "Troop Attack +20",
+    "tc": ""
   },
   "1070043": {
     "id": "1070043",
-    "eng": "Construct Speed +5%"
+    "eng": "Construct Speed +5%",
+    "tc": ""
   },
   "1070044": {
     "id": "1070044",
-    "eng": "Extra Resource +5%"
+    "eng": "Extra Resource +5%",
+    "tc": ""
   },
   "1070045": {
     "id": "1070045",
-    "eng": "Extra Resource +5%"
+    "eng": "Extra Resource +5%",
+    "tc": ""
   },
   "1070046": {
     "id": "1070046",
-    "eng": "Exploration Speed +8%"
+    "eng": "Exploration Speed +8%",
+    "tc": ""
   },
   "1070047": {
     "id": "1070047",
-    "eng": "Exploration Speed +3%"
+    "eng": "Exploration Speed +3%",
+    "tc": ""
   },
   "1070048": {
     "id": "1070048",
-    "eng": "Construct Speed +5%"
+    "eng": "Construct Speed +5%",
+    "tc": ""
   },
   "1070049": {
     "id": "1070049",
-    "eng": "Troop Defence +10"
+    "eng": "Troop Defence +10",
+    "tc": ""
   },
   "1070050": {
     "id": "1070050",
-    "eng": "Extra Resource +5%"
+    "eng": "Extra Resource +5%",
+    "tc": ""
   },
   "1070051": {
     "id": "1070051",
-    "eng": "Extra Resource +5%"
+    "eng": "Extra Resource +5%",
+    "tc": ""
   },
   "1070052": {
     "id": "1070052",
-    "eng": "Extra Resource +5%"
+    "eng": "Extra Resource +5%",
+    "tc": ""
   },
   "1070053": {
     "id": "1070053",
-    "eng": "Troop Attack +5"
+    "eng": "Troop Attack +5",
+    "tc": ""
   },
   "1070054": {
     "id": "1070054",
-    "eng": "Exploration Speed +5%"
+    "eng": "Exploration Speed +5%",
+    "tc": ""
   },
   "1070055": {
     "id": "1070055",
-    "eng": "Troop Attack +5"
+    "eng": "Troop Attack +5",
+    "tc": ""
   },
   "1080011": {
     "id": "1080011",
-    "eng": "Skill Des"
+    "eng": "Skill Des",
+    "tc": ""
   },
   "1090051": {
     "id": "1090051",
-    "eng": "Tinuvel is a beacon of hope in this post-apocalyptic wasteland. Her visions guide the survivors towards safety and sustenance."
+    "eng": "Tinuvel is a beacon of hope in this post-apocalyptic wasteland. Her visions guide the survivors towards safety and sustenance.",
+    "tc": ""
   },
   "1090061": {
     "id": "1090061",
-    "eng": "A master of resourcefulness."
+    "eng": "A master of resourcefulness.",
+    "tc": ""
   },
   "1090071": {
     "id": "1090071",
-    "eng": "Keen, known for his unmatched speed and agility, wields dual blades with deadly precision."
+    "eng": "Keen, known for his unmatched speed and agility, wields dual blades with deadly precision.",
+    "tc": ""
   },
   "1090081": {
     "id": "1090081",
-    "eng": "His reputation was built on the smoking barrels of his twin pistols, each a tale of survival."
+    "eng": "His reputation was built on the smoking barrels of his twin pistols, each a tale of survival.",
+    "tc": ""
   },
   "1090091": {
     "id": "1090091",
-    "eng": "John, the lone hunter, tracks his prey across the barren lands. His survival skills are as sharp as the arrows in his quiver."
+    "eng": "John, the lone hunter, tracks his prey across the barren lands. His survival skills are as sharp as the arrows in his quiver.",
+    "tc": ""
   },
   "1090301": {
     "id": "1090301",
-    "eng": "An old chief, could pass away at any moment"
+    "eng": "An old chief, could pass away at any moment",
+    "tc": ""
   },
   "1090311": {
     "id": "1090311",
-    "eng": "'Wanna a couple of bullets?'"
+    "eng": "'Wanna a couple of bullets?'",
+    "tc": ""
   },
   "1090321": {
     "id": "1090321",
-    "eng": "In name a doctor, but in reality…"
+    "eng": "In name a doctor, but in reality…",
+    "tc": ""
   },
   "1090331": {
     "id": "1090331",
-    "eng": "His life is a mockery of the apocalypse."
+    "eng": "His life is a mockery of the apocalypse.",
+    "tc": ""
   },
   "1090351": {
     "id": "1090351",
-    "eng": "An unknown traveler, who perhaps has seen places abundant with resources."
+    "eng": "An unknown traveler, who perhaps has seen places abundant with resources.",
+    "tc": ""
   },
   "1090401": {
     "id": "1090401",
-    "eng": "Terrifying mutated creature"
+    "eng": "Terrifying mutated creature",
+    "tc": ""
   },
   "1090402": {
     "id": "1090402",
-    "eng": "Malicious marauding ruffian"
+    "eng": "Malicious marauding ruffian",
+    "tc": ""
   },
   "1100041": {
     "id": "1100041",
-    "eng": "A testament to a bygone civilization, their crumbling stones whispering tales of the past."
+    "eng": "A testament to a bygone civilization, their crumbling stones whispering tales of the past.",
+    "tc": ""
   },
   "1100051": {
     "id": "1100051",
-    "eng": "A treacherous labyrinth home to the elusive and deadly Sand Spiders, guarding ancient secrets beneath the desert sands."
+    "eng": "A treacherous labyrinth home to the elusive and deadly Sand Spiders, guarding ancient secrets beneath the desert sands.",
+    "tc": ""
   },
   "1100061": {
     "id": "1100061",
-    "eng": "A monumental structure pulsating with power, harnessing the elements to fuel the technological marvels of its time."
+    "eng": "A monumental structure pulsating with power, harnessing the elements to fuel the technological marvels of its time.",
+    "tc": ""
   },
   "1100071": {
     "id": "1100071",
-    "eng": "The Aquatic Ruins lie submerged in the depths, a watery grave to a once-thriving aquatic civilization, now a haunting reminder of their aquatic prowess."
+    "eng": "The Aquatic Ruins lie submerged in the depths, a watery grave to a once-thriving aquatic civilization, now a haunting reminder of their aquatic prowess.",
+    "tc": ""
   },
   "1100081": {
     "id": "1100081",
-    "eng": "The Village Undercroft is a subterranean expanse beneath a quaint village, where echoes of the surface world blend with the mysteries of the deep."
+    "eng": "The Village Undercroft is a subterranean expanse beneath a quaint village, where echoes of the surface world blend with the mysteries of the deep.",
+    "tc": ""
   },
   "1100091": {
     "id": "1100091",
-    "eng": "A symbol of mechanical ingenuity from an era lost to time."
+    "eng": "A symbol of mechanical ingenuity from an era lost to time.",
+    "tc": ""
   },
   "1100141": {
     "id": "1100141",
-    "eng": "It is a hypothetical tunnel through space-time, bridging distant points in the universe and offering a tantalizing shortcut through the cosmos."
+    "eng": "It is a hypothetical tunnel through space-time, bridging distant points in the universe and offering a tantalizing shortcut through the cosmos.",
+    "tc": ""
   },
   "null": {
     "id": null,
-    "eng": ""
+    "eng": "",
+    "tc": ""
   }
 }

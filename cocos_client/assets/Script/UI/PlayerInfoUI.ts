@@ -33,6 +33,7 @@ import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import { GAME_ENV_IS_DEBUG } from "../Const/ConstDefine";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerInfoUI")
@@ -335,6 +336,7 @@ export class PlayerInfoUI extends ViewController {
 
             // useLanMgr
             // currentShowView.getChildByName("ResetButton").getComponent(Label).string = LanMgr.getLanById("107549");
+            currentShowView.getChildByName("ResetButton").active = GAME_ENV_IS_DEBUG;
         } else if (this._selectIndex == 3) {
             // xx reversed
         }

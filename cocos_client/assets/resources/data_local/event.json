@@ -27,7 +27,7 @@
     "select": null,
     "select_txt": null,
     "select_cond": null,
-    "enemy": "gangster_2",
+    "enemy": "104008",
     "enemy_result": [
       "910103",
       "910104"
@@ -189,7 +189,7 @@
     "select": null,
     "select_txt": null,
     "select_cond": null,
-    "enemy": "gangster_2",
+    "enemy": "104009",
     "enemy_result": [
       "910110",
       "910111"
@@ -263,7 +263,7 @@
     "select": null,
     "select_txt": null,
     "select_cond": null,
-    "enemy": "gangster_2",
+    "enemy": "104010",
     "enemy_result": [
       "910113",
       "910114"
@@ -404,7 +404,7 @@
     "select": null,
     "select_txt": null,
     "select_cond": null,
-    "enemy": "gangster_2",
+    "enemy": "104011",
     "enemy_result": [
       "910205",
       "910206"
@@ -604,7 +604,7 @@
     "select": null,
     "select_txt": null,
     "select_cond": null,
-    "enemy": "gangster_2",
+    "enemy": "104012",
     "enemy_result": [
       "910213",
       "910214"
@@ -789,7 +789,7 @@
     "select": null,
     "select_txt": null,
     "select_cond": null,
-    "enemy": "gangster_2",
+    "enemy": "104013",
     "enemy_result": [
       "910302",
       "910303"
@@ -2055,7 +2055,7 @@
     "select": null,
     "select_txt": null,
     "select_cond": null,
-    "enemy": "104007",
+    "enemy": "104014",
     "enemy_result": [
       "910610",
       "910611"
