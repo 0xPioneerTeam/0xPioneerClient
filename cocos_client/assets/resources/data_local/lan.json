@@ -2974,6 +2974,101 @@
     "eng": "The Surpass Age Ⅴ",
     "tc": ""
   },
+  "810001": {
+    "id": "810001",
+    "eng": "Construct level of %s reached %s",
+    "tc": ""
+  },
+  "810002": {
+    "id": "810002",
+    "eng": "Collected resources higher than or equal to lv.%s for %s times",
+    "tc": ""
+  },
+  "810003": {
+    "id": "810003",
+    "eng": "Explored events higher than or equal to lv.%s for %s times",
+    "tc": ""
+  },
+  "810004": {
+    "id": "810004",
+    "eng": "Owned %s pioneers of %s or higher",
+    "tc": ""
+  },
+  "810005": {
+    "id": "810005",
+    "eng": "Owned %s pioneers higher than lv.%s",
+    "tc": ""
+  },
+  "810006": {
+    "id": "810006",
+    "eng": "Consumed at least %s %s",
+    "tc": ""
+  },
+  "810007": {
+    "id": "810007",
+    "eng": "Defeated monsters higher than lv.%s for %s times",
+    "tc": ""
+  },
+  "810008": {
+    "id": "810008",
+    "eng": "Heat value reached %s",
+    "tc": ""
+  },
+  "810009": {
+    "id": "810009",
+    "eng": "Defeated other players for %s times",
+    "tc": ""
+  },
+  "820001": {
+    "id": "820001",
+    "eng": "Highest available quality of teasure chest",
+    "tc": ""
+  },
+  "820002": {
+    "id": "820002",
+    "eng": "Move speed",
+    "tc": ""
+  },
+  "820003": {
+    "id": "820003",
+    "eng": "Collect speed",
+    "tc": ""
+  },
+  "820004": {
+    "id": "820004",
+    "eng": "Vision of main city and troops",
+    "tc": ""
+  },
+  "820005": {
+    "id": "820005",
+    "eng": "Recruit speed",
+    "tc": ""
+  },
+  "820006": {
+    "id": "820006",
+    "eng": "",
+    "tc": ""
+  },
+  "820007": {
+    "id": "820007",
+    "eng": "",
+    "tc": ""
+  },
+  "820008": {
+    "id": "820008",
+    "eng": "",
+    "tc": ""
+  },
+  "820009": {
+    "id": "820009",
+    "eng": "Unlock building",
+    "tc": ""
+  },
+  "820010": {
+    "id": "820010",
+    "eng": "",
+    "tc": ""
+  },
   "1070011": {
     "id": "1070011",
     "eng": "Treaty of Kadesh:\r\nCity Vision +1\r\nTroop Vision +1",
