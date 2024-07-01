@@ -2849,6 +2849,131 @@
     "eng": "Duration: %s",
     "tc": ""
   },
+  "800001": {
+    "id": "800001",
+    "eng": "The Dark Age Ⅰ",
+    "tc": ""
+  },
+  "800002": {
+    "id": "800002",
+    "eng": "The Dark Age Ⅱ",
+    "tc": ""
+  },
+  "800003": {
+    "id": "800003",
+    "eng": "The Dark Age Ⅲ",
+    "tc": ""
+  },
+  "800004": {
+    "id": "800004",
+    "eng": "The Wasteland Age Ⅰ",
+    "tc": ""
+  },
+  "800005": {
+    "id": "800005",
+    "eng": "The Wasteland Age Ⅱ",
+    "tc": ""
+  },
+  "800006": {
+    "id": "800006",
+    "eng": "The Wasteland Age Ⅲ",
+    "tc": ""
+  },
+  "800007": {
+    "id": "800007",
+    "eng": "The Steam Age Ⅰ",
+    "tc": ""
+  },
+  "800008": {
+    "id": "800008",
+    "eng": "The Steam Age Ⅱ",
+    "tc": ""
+  },
+  "800009": {
+    "id": "800009",
+    "eng": "The Steam Age Ⅲ",
+    "tc": ""
+  },
+  "800010": {
+    "id": "800010",
+    "eng": "The Steam Age Ⅳ",
+    "tc": ""
+  },
+  "800011": {
+    "id": "800011",
+    "eng": "The Machine Age Ⅰ",
+    "tc": ""
+  },
+  "800012": {
+    "id": "800012",
+    "eng": "The Machine Age Ⅱ",
+    "tc": ""
+  },
+  "800013": {
+    "id": "800013",
+    "eng": "The Machine Age Ⅲ",
+    "tc": ""
+  },
+  "800014": {
+    "id": "800014",
+    "eng": "The Machine Age Ⅳ",
+    "tc": ""
+  },
+  "800015": {
+    "id": "800015",
+    "eng": "The Machine Age Ⅴ",
+    "tc": ""
+  },
+  "800016": {
+    "id": "800016",
+    "eng": "The Rise Age Ⅰ",
+    "tc": ""
+  },
+  "800017": {
+    "id": "800017",
+    "eng": "The Rise Age Ⅱ",
+    "tc": ""
+  },
+  "800018": {
+    "id": "800018",
+    "eng": "The Rise Age Ⅲ",
+    "tc": ""
+  },
+  "800019": {
+    "id": "800019",
+    "eng": "The Rise Age Ⅳ",
+    "tc": ""
+  },
+  "800020": {
+    "id": "800020",
+    "eng": "The Rise Age Ⅴ",
+    "tc": ""
+  },
+  "800021": {
+    "id": "800021",
+    "eng": "The Surpass Age Ⅰ",
+    "tc": ""
+  },
+  "800022": {
+    "id": "800022",
+    "eng": "The Surpass Age Ⅱ",
+    "tc": ""
+  },
+  "800023": {
+    "id": "800023",
+    "eng": "The Surpass Age Ⅲ",
+    "tc": ""
+  },
+  "800024": {
+    "id": "800024",
+    "eng": "The Surpass Age Ⅳ",
+    "tc": ""
+  },
+  "800025": {
+    "id": "800025",
+    "eng": "The Surpass Age Ⅴ",
+    "tc": ""
+  },
   "1070011": {
     "id": "1070011",
     "eng": "Treaty of Kadesh:\r\nCity Vision +1\r\nTroop Vision +1",
@@ -3172,11 +3297,6 @@
   "1100141": {
     "id": "1100141",
     "eng": "It is a hypothetical tunnel through space-time, bridging distant points in the universe and offering a tantalizing shortcut through the cosmos.",
-    "tc": ""
-  },
-  "null": {
-    "id": null,
-    "eng": "",
     "tc": ""
   }
 }
