@@ -132,6 +132,11 @@ export default class ConfigConfig {
                     type: key,
                     rarityNeedCLvDatas: param,
                 };
+            } else if (key == ConfigType.WorldTreasureBoxRarityShowName) {
+                temple = {
+                    type: key,
+                    showNames: param,
+                };
             } else if (key == ConfigType.PSYCToHeatCoefficient) {
                 temple = {
                     type: key,
@@ -166,7 +171,7 @@ export default class ConfigConfig {
                 temple = {
                     type: key,
                     value: param[0],
-                }
+                };
             }
             this._config.set(key as ConfigType, temple);
         }

@@ -1,12 +1,7 @@
+import { GetPropData } from "./ConstDefine";
 import { ItemConfigType } from "./Item";
 
-export type LvlupConfigItemId = string;
-export type LvlupConfigItemCount = number;
-
-export type LvlupConfigConditionParam1 = number;
-export type LvlupConfigConditionParam2 = number;
-
-export enum LvlupConditionType {
+export enum CLvlConditionType {
     InnerBuildingLevelUpToSpecificLevel = 1,
     CollectSpecificLevelResourceToSpecificTimes = 2,
     ExploreSpecificLevelEventToSpecificTimes = 3,
@@ -18,7 +13,7 @@ export enum LvlupConditionType {
     WinOtherPlayerToSpecificTimes = 9,
 }
 
-export enum LvlupEffectType {
+export enum CLvlEffectType {
     WORLDBOXRANK = 1,
     MOVE_SPEED = 2,
     GATHER_SPEED = 3,
@@ -26,20 +21,86 @@ export enum LvlupEffectType {
     TROOP_GENERATE_SPEED = 5,
 }
 
+export interface CLvlCondition {
+    type: CLvlConditionType;
+    title: string;
+    value: number;
+
+    innerBuildingCLvl?: CLvlInnerBuildingCLvlCondition;
+    collect?: CLvlCollectCondition;
+    explore?: CLvlExploreCondition;
+    getRankPioneer?: CLvlGetRankPioneerCondition;
+    getLevelPioneer?: CLvlGetLevelPioneerCondition;
+    cost?: CLvlCostCondition;
+    kill?: CLvlKillCondition;
+    heat?: CLvlHeatCondition;
+    win?: CLvlWinCondition;
+}
+
+export interface CLvlEffect {
+    type: CLvlEffectType;
+    value: number;
+    title: string;
+}
+
+
+export interface CLvlInnerBuildingCLvlCondition {
+    buildingId: string;
+    level: number;
+}
+export interface CLvlCollectCondition {
+    level: number;
+    times: number;
+}
+export interface CLvlExploreCondition {
+    level: number;
+    times: number;
+}
+export interface CLvlGetRankPioneerCondition {
+    rank: number;
+    num: number;
+}
+export interface CLvlGetLevelPioneerCondition {
+    level: number;
+    num: number;
+}
+export interface CLvlCostCondition {
+    itemId: string;
+    num: number;
+}
+export interface CLvlKillCondition {
+    level: number;
+    num: number;
+}
+export interface CLvlHeatCondition {
+    level: number;
+}
+export interface CLvlWinCondition {
+    times: number;
+}
+
+
+
 export interface LvlupConfigData {
     id: string;
+    age: number;
+    level: number;
+    name: string;
     exp: number;
     city_feature: number;
     event_building: string[] | null;
     reward: [ItemConfigType, string, number][] | null;
-    condition: [LvlupConditionType, LvlupConfigConditionParam1, LvlupConfigConditionParam2][] | [LvlupConditionType, LvlupConfigConditionParam1][];
-    civil_effect: [LvlupEffectType, number];
-
+    condition: any[];
+    civil_effect: any[];
     psyc_limit: number;
-    p_exp: number;
-    p_rank_1: [LvlupConfigItemId, LvlupConfigItemCount][];
-    p_rank_2: [LvlupConfigItemId, LvlupConfigItemCount][];
-    p_rank_3: [LvlupConfigItemId, LvlupConfigItemCount][];
-    p_rank_4: [LvlupConfigItemId, LvlupConfigItemCount][];
-    p_rank_5: [LvlupConfigItemId, LvlupConfigItemCount][];
+}
+
+export interface CLvlModel {
+    id: string;
+    age: number;
+    level: number;
+    name: string;
+    condition: CLvlCondition[];
+    effect: CLvlEffect[];
+    rewards: GetPropData[];
 }

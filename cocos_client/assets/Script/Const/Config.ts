@@ -24,6 +24,7 @@ export enum ConfigType {
     WorldTreasureChancePerBoxExploreProgress = "410004",
     WorldTreasureChanceLimitHeatValueCoefficient = "410006",
     WorldTreasureBoxRarity = "410007",
+    WorldTreasureBoxRarityShowName = "410011",
 
     PSYCToHeatCoefficient = "410005",
 
@@ -105,6 +106,9 @@ export interface WorldTreasureChanceLimitHeatValueCoefficientParam extends Confi
 
 export interface WorldTreasureBoxRarityParam extends ConfigData {
     rarityNeedCLvDatas: number[];
+}
+export interface WorldTreasureBoxRarityShowNameParam extends ConfigData {
+    showNames: string[];
 }
 
 export interface PSYCToHeatCoefficientParam extends ConfigData {

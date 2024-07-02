@@ -2,7 +2,6 @@ import AbiConfig from "../Config/AbiConfig";
 import ArtifactConfig from "../Config/ArtifactConfig";
 import ArtifactEffectConfig from "../Config/ArtifactEffectConfig";
 import BoxInfoConfig from "../Config/BoxInfoConfig";
-import CLevelConfig from "../Config/CLevelConfig";
 import ChainConfig from "../Config/ChainConfig";
 import ConfigConfig from "../Config/ConfigConfig";
 import DropConfig from "../Config/DropConfig";
@@ -19,6 +18,7 @@ import NFTPioneerNameConfig from "../Config/NFTPioneerNameConfig";
 import NFTSkillConfig from "../Config/NFTSkillConfig";
 import NFTSkillEffectConfig from "../Config/NFTSkillEffectConfig";
 import PioneerConfig from "../Config/PioneerConfig";
+import PioneerLvlupConfig from "../Config/PioneerLvlupConfig";
 import ProtobufConfig from "../Config/ProtobufConfig";
 import TalkConfig from "../Config/TalkConfig";
 import TaskConfig from "../Config/TaskConfig";
@@ -40,6 +40,7 @@ export default class ConfigMgr {
         if (!(await ItemConfig.init())) return false;
         if (!(await LanConfig.init())) return false;
         if (!(await LvlupConfig.init())) return false;
+        if (!(await PioneerLvlupConfig.init())) return false;
         if (!(await MapBuildingConfig.init())) return false;
         if (!(await NFTPioneerConfig.init())) return false;
         if (!(await NFTPioneerNameConfig.init())) return false;
@@ -50,7 +51,6 @@ export default class ConfigMgr {
         if (!(await TaskConfig.init())) return false;
         if (!(await TaskStepConfigData.init())) return false;
         if (!(await WorldBoxConfig.init())) return false;
-        if (!(await CLevelConfig.init())) return false;
 
         // abi
         const chainIdConfig = ChainConfig.getCurrentConfigId();

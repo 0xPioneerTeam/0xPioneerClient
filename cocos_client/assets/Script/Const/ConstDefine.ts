@@ -3,9 +3,8 @@ import { ItemConfigType } from "./Item";
 
 export const GAME_JUMP_SWITCH_IS_OPEN = true;
 export const GAME_SKIP_ROOKIE = false;
-export const GAME_ENV_IS_DEBUG = false;
+export const GAME_ENV_IS_DEBUG = true;
 export const PioneerGameTest = false;
-
 
 export enum AttrType {
     HP = 0,
@@ -124,6 +123,8 @@ export const GameRankColor = [
     new Color().fromHEX(GetPropRankColor.RANK5),
 ];
 
+export const GameRankNameLanId = ["105001", "105002", "105003", "105004", "105005"];
+
 export enum MapInteractType {
     Wormhole,
     Move,
@@ -133,5 +134,5 @@ export enum MapInteractType {
     Event,
     Camp,
     CampOut,
-    Talk
+    Talk,
 }

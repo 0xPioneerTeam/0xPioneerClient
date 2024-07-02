@@ -13,6 +13,7 @@ import ItemConfig from "../Config/ItemConfig";
 import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import PioneerLvlupConfig from "../Config/PioneerLvlupConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("NTFRankUpUI")
@@ -24,7 +25,7 @@ export class NTFRankUpUI extends ViewController {
         // this.node.getChildByPath("__ViewContent/Title").getComponent(Label).string = LanMgr.getLanById("201003");
         // this.node.getChildByPath("__ViewContent/btnUse/name").getComponent(Label).string = LanMgr.getLanById("201003");
 
-        const resourceLimitMaxNum = LvlupConfig.getMaxNFTRankUpNum(this._data.rarity, this._data.rank, DataMgr.s.item.getObj());
+        const resourceLimitMaxNum = PioneerLvlupConfig.getMaxNFTRankUpNum(this._data.rarity, this._data.rank, DataMgr.s.item.getObj());
         this._maxRankUpNum = Math.min(resourceLimitMaxNum, this._data.rankLimit - this._data.rank);
         this._refreshUI();
     }
@@ -83,7 +84,7 @@ export class NTFRankUpUI extends ViewController {
         }
         let satisfyCost: boolean = true;
         this._allShowItems = [];
-        this._currentCost = LvlupConfig.getNFTRankUpCost(this._data.rarity, this._data.rank, this._data.rank + this._rankUpNum);
+        this._currentCost = PioneerLvlupConfig.getNFTRankUpCost(this._data.rarity, this._data.rank, this._data.rank + this._rankUpNum);
         for (const templeItem of this._currentCost) {
             const itemConfig = ItemConfig.getById(templeItem.itemConfigId);
             if (itemConfig == null) {

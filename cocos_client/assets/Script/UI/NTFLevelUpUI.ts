@@ -11,6 +11,7 @@ import { NotificationName } from "../Const/Notification";
 import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import PioneerLvlupConfig from "../Config/PioneerLvlupConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("NTFLevelUpUI")
@@ -22,7 +23,7 @@ export class NTFLevelUpUI extends ViewController {
         // this.node.getChildByPath("__ViewContent/Title").getComponent(Label).string = LanMgr.getLanById("201003");
         // this.node.getChildByPath("__ViewContent/btnUse/name").getComponent(Label).string = LanMgr.getLanById("201003");
 
-        const resourceLimitMaxNum = LvlupConfig.getMaxNFTLevelUpNum(this._data.level, DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.NFTExp));
+        const resourceLimitMaxNum = PioneerLvlupConfig.getMaxNFTLevelUpNum(this._data.level, DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.NFTExp));
         this._maxLevelUpNum = Math.min(resourceLimitMaxNum, this._data.levelLimit - this._data.level);
 
         this._refreshUI();
@@ -103,7 +104,7 @@ export class NTFLevelUpUI extends ViewController {
         iqView.getChildByPath("Next").getComponent(Label).string = CommonTools.getOneDecimalNum(this._data.iq + growIq).toString();
 
         // resource
-        this._currentCost = LvlupConfig.getNFTLevelUpCost(this._data.level, this._data.level + this._levelUpNum);
+        this._currentCost = PioneerLvlupConfig.getNFTLevelUpCost(this._data.level, this._data.level + this._levelUpNum);
         contentView.getChildByPath("material/Item/Num/Limit").getComponent(Label).string = DataMgr.s.item
             .getObj_item_count(ResourceCorrespondingItem.NFTExp)
             .toString();
