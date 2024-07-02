@@ -2,6 +2,7 @@ import AbiConfig from "../Config/AbiConfig";
 import ArtifactConfig from "../Config/ArtifactConfig";
 import ArtifactEffectConfig from "../Config/ArtifactEffectConfig";
 import BoxInfoConfig from "../Config/BoxInfoConfig";
+import CLevelConfig from "../Config/CLevelConfig";
 import ChainConfig from "../Config/ChainConfig";
 import ConfigConfig from "../Config/ConfigConfig";
 import DropConfig from "../Config/DropConfig";
@@ -49,6 +50,7 @@ export default class ConfigMgr {
         if (!(await TaskConfig.init())) return false;
         if (!(await TaskStepConfigData.init())) return false;
         if (!(await WorldBoxConfig.init())) return false;
+        if (!(await CLevelConfig.init())) return false;
 
         // abi
         const chainIdConfig = ChainConfig.getCurrentConfigId();

@@ -34,6 +34,7 @@ import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { GAME_ENV_IS_DEBUG } from "../Const/ConstDefine";
+import { UIName } from "../Const/ConstUIDefine";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerInfoUI")
@@ -356,28 +357,13 @@ export class PlayerInfoUI extends ViewController {
 
             rewardView.active = true;
             const content = rewardView;
-            content.getChildByName("CityVersion").active = levelConfig.city_vision != null && levelConfig.city_vision > 0;
+            content.getChildByName("CityVersion").active = false;
             // useLanMgr
             // content.getChildByPath("CityVersion/Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
-            content.getChildByPath("CityVersion/Value").getComponent(Label).string = "+" + levelConfig.city_vision;
 
-            if (levelConfig.extra_res != null && levelConfig.extra_res > 0) {
-                content.getChildByName("ResGetRateUp").active = true;
-                // useLanMgr
-                // content.getChildByPath("ResGetRateUp/Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
-                content.getChildByPath("ResGetRateUp/Value").getComponent(Label).string = "+" + levelConfig.extra_res * 100 + "%";
-            } else {
-                content.getChildByName("ResGetRateUp").active = false;
-            }
+            content.getChildByName("ResGetRateUp").active = false;
 
-            if (levelConfig.hp_max != null && levelConfig.hp_max > 0) {
-                content.getChildByName("GetHpMax").active = true;
-                // useLanMgr
-                // content.getChildByPath("GetHpMax/Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
-                content.getChildByPath("GetHpMax/Value").getComponent(Label).string = "+" + levelConfig.hp_max;
-            } else {
-                content.getChildByName("GetHpMax").active = false;
-            }
+           content.getChildByName("GetHpMax").active = false;
 
             if (levelConfig.reward != null && levelConfig.reward.length > 0) {
                 content.getChildByName("Rewards").active = true;
@@ -463,10 +449,12 @@ export class PlayerInfoUI extends ViewController {
         this._refreshUI();
         this._changeNameView.active = false;
     }
-    private onTapNextLevelShow() {
+    private async onTapNextLevelShow() {
         GameMusicPlayMgr.playTapButtonEffect();
-        this._nextLevelView.active = true;
-        this._refreshNextLevelView();
+
+        UIPanelManger.inst.pushPanel(UIName.CivilizationLevelUI);
+        // this._nextLevelView.active = true;
+        // this._refreshNextLevelView();
     }
     private onTapNextLevelClose() {
         GameMusicPlayMgr.playTapButtonEffect();

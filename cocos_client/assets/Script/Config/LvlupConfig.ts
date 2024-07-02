@@ -37,9 +37,6 @@ export default class LvlupConfig {
         for (let i = 0; i < keys.length; i++) {
             const lvlStr = keys[i];
             const conf = obj[lvlStr] as LvlupConfigData;
-            this._extras[lvlStr] = conf.extra_res;
-            this._hpmaxs[lvlStr] = conf.hp_max;
-            this._visions[lvlStr] = conf.city_vision;
 
             if (Number(lvlStr) > 1) {
                 let preLvStr = (Number(lvlStr) - 1).toString();

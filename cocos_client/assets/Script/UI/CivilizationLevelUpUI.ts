@@ -132,31 +132,16 @@ export class CivilizationLevelUpUI extends ViewController {
         // useLanMgr
         // content.getChildByPath("CityFeature/Title").getComponent(Label).string = LanMgr.getLanById("107549");
 
-        content.getChildByName("CityVersion").active = levelConfig.city_vision != null && levelConfig.city_vision > 0;
+        content.getChildByName("CityVersion").active = false;
         // useLanMgr
         // content.getChildByPath("CityVersion/Title").getComponent(Label).string = LanMgr.getLanById("107549");
 
         content.getChildByName("EventUpdate").active = levelConfig.event_building != null;
         // useLanMgr
         // content.getChildByPath("EventUpdate/Title").getComponent(Label).string = LanMgr.getLanById("107549");
+        content.getChildByName("ResGetRateUp").active = false;
 
-        if (levelConfig.extra_res != null && levelConfig.extra_res > 0) {
-            content.getChildByName("ResGetRateUp").active = true;
-            // useLanMgr
-            // content.getChildByPath("ResGetRateUp/Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
-            content.getChildByPath("ResGetRateUp/Value").getComponent(Label).string = "+" + levelConfig.extra_res * 100 + "%!";
-        } else {
-            content.getChildByName("ResGetRateUp").active = false;
-        }
-
-        if (levelConfig.hp_max != null && levelConfig.hp_max > 0) {
-            content.getChildByName("GetHpMax").active = true;
-            // useLanMgr
-            // content.getChildByPath("GetHpMax/Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
-            content.getChildByPath("GetHpMax/Value").getComponent(Label).string = "+" + levelConfig.hp_max + "!";
-        } else {
-            content.getChildByName("GetHpMax").active = false;
-        }
+        content.getChildByName("GetHpMax").active = false;
 
         if (levelConfig.reward != null && levelConfig.reward.length > 0) {
             content.getChildByName("Rewards").active = true;
