@@ -91,7 +91,11 @@ export class PioneersDataMgr {
     //-------------- change
     public replaceData(index: number, data: share.Ipioneer_data) {
         const newObj = PioneerDefine.convertNetDataToObject(data);
+        if (this._pioneers[index].actionType == MapPioneerActionType.moving) {
+            newObj.stayPos = this._pioneers[index].stayPos;
+        }
         this._pioneers[index] = newObj;
+
         return newObj;
     }
     public changeCurrentAction(pioneerId: string) {
