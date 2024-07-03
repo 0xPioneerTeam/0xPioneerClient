@@ -114,14 +114,16 @@ export class HeatTreasureUI extends Component {
             }
             endNum = worldBoxThreshold[i];
 
-            if (heatValue >= endNum) {
+            if (heatValue > endNum) {
                 angleValue += perThreshold;
-            } else if (heatValue < endNum) {
+            } else if (heatValue <= endNum) {
                 angleValue += (perThreshold * (heatValue - beginNum)) / (endNum - beginNum);
                 heatLevel = i;
-                nextLevelNeedHeat = endNum;
                 break;
             }
+        }
+        if (heatLevel + 1 < worldBoxThreshold.length) {
+            nextLevelNeedHeat = worldBoxThreshold[heatLevel + 1];
         }
         pointerView.angle = beginPointerValue + (endPointerValue - beginPointerValue) * Math.min(1, angleValue);
         // next level cost piot

@@ -1,5 +1,6 @@
 import { share } from "../Net/msg/WebsocketMsg";
 import { InnerBuildingType, UserInnerBuildInfo } from "./BuildingDefine";
+import { CLvlCondition, CLvlConditionType } from "./Lvlup";
 import { RookieStep } from "./RookieDefine";
 
 export interface ResourceModel {
@@ -50,4 +51,7 @@ export interface UserInfoObject {
     talkIds: string[];
 
     boxRefreshTimestamp: number;
+
+    CLvlRewardGetMap: Map<number, boolean>;
+    CLvlCondtion: CLvlCondition[];
 }

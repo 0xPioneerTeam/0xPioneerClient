@@ -1,5 +1,6 @@
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { GAME_SKIP_ROOKIE } from "../../Const/ConstDefine";
+import { CLvlCondition, CLvlConditionType } from "../../Const/Lvlup";
 import { NotificationName } from "../../Const/Notification";
 import { RookieStep } from "../../Const/RookieDefine";
 import { UserInfoObject } from "../../Const/UserInfoDefine";
@@ -38,7 +39,6 @@ export default class UserInfoDataMgr {
         }
         const globalData: share.Iplayer_sinfo = NetGlobalData.userInfo;
         this._data = this._convertNetDataToObject(globalData);
-        this._data.level = 20;
         this._initInterval();
     }
     private _initInterval() {}
@@ -69,6 +69,10 @@ export default class UserInfoDataMgr {
             talkIds: netData.talkIds,
 
             boxRefreshTimestamp: netData.boxRefreshTs * 1000,
+
+            //CLvl
+            CLvlRewardGetMap: new Map(),
+            CLvlCondtion: [],
         };
         if (GAME_SKIP_ROOKIE) {
             newObj.rookieStep = RookieStep.FINISH;
@@ -97,6 +101,64 @@ export default class UserInfoDataMgr {
                     continue;
                 }
                 newObj.wormholeDefenderIds.set(parseInt(key), netData.defender[key]);
+            }
+        }
+        if (netData.lvlRewards != null) {
+            for (const key in netData.lvlRewards) {
+                newObj.CLvlRewardGetMap.set(parseInt(key), netData.lvlRewards[key]);
+            }
+        }
+        if (netData.lvlupConds != null) {
+            for (const key in netData.lvlupConds) {
+                let type: CLvlConditionType = null;
+                const params = key.split("_");
+                if (params.length == 2) {
+                    type = parseInt(params[0]);
+                } else if (params.length == 1) {
+                    type = parseInt(params[0]);
+                }
+                if (type == null) {
+                    continue;
+                }
+                const temp: CLvlCondition = {
+                    type: type,
+                    title: "",
+                    value: netData.lvlupConds[key],
+                };
+                if (params.length == 2) {
+                    if (temp.type == CLvlConditionType.CollectSpecificLevelResourceToSpecificTimes) {
+                        temp.collect = {
+                            level: parseInt(params[1]),
+                            times: 0
+                        };
+                    } else if (temp.type == CLvlConditionType.ExploreSpecificLevelEventToSpecificTimes) {
+                        temp.explore = {
+                            level: parseInt(params[1]),
+                            times: 0
+                        }
+                    } else if (temp.type == CLvlConditionType.GetSpecificRankPioneerToSpecificNum) {
+                        temp.getRankPioneer = {
+                            rank: parseInt(params[1]),
+                            num: 0
+                        }
+                    } else if (temp.type == CLvlConditionType.GetSpecificLevelPioneerToSpecificNum) {
+                        temp.getLevelPioneer = {
+                            level: parseInt(params[1]),
+                            num: 0
+                        }
+                    } else if (temp.type == CLvlConditionType.CostSpecificResourceToSpecificNum) {
+                        temp.cost = {
+                            itemId: params[1],
+                            num: 0
+                        };
+                    } else if (temp.type == CLvlConditionType.KillSpecificMonsterToSpecificNum) {
+                        temp.kill = {
+                            level: parseInt(params[1]),
+                            num: 0,
+                        }
+                    }
+                }
+                newObj.CLvlCondtion.push(temp);
             }
         }
         return newObj;

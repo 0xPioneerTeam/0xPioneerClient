@@ -13,6 +13,7 @@ import { ConfigType, WorldBoxThresholdParam, WorldTreasureBoxRarityShowNameParam
 import { InnerBuildingType } from "../../Const/BuildingDefine";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
+import { NetworkMgr } from "../../Net/NetworkMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("CivilizationLevelUI")
@@ -89,6 +90,9 @@ export class CivilizationLevelUI extends ViewController {
         super.viewDidStart();
         NotificationMgr.addListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._onInnerBuildingUpgradeFinished, this);
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_HEAT, this._onUserInfoHeatChanged, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_CLVL_CONDTION_CHANGE, this._onUserInfoCLvlCondtionChanged, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_CLVL_REWARD_GET_CHANGE, this._onUserInfoCLvlRewardChanged, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onUerInfoLevelChanged, this);
     }
 
     protected viewPopAnimation(): boolean {
@@ -103,6 +107,9 @@ export class CivilizationLevelUI extends ViewController {
         super.viewDidDestroy();
         NotificationMgr.removeListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._onInnerBuildingUpgradeFinished, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_HEAT, this._onUserInfoHeatChanged, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_CLVL_CONDTION_CHANGE, this._onUserInfoCLvlCondtionChanged, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_CLVL_REWARD_GET_CHANGE, this._onUserInfoCLvlRewardChanged, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onUerInfoLevelChanged, this);
     }
 
     //----------------------------- function
@@ -283,7 +290,7 @@ export class CivilizationLevelUI extends ViewController {
             this._rewardItemContent.getComponent(Layout).updateLayout();
 
             // get reward button
-            let isGetted: boolean = false;
+            let isGetted: boolean = DataMgr.s.userInfo.data.CLvlRewardGetMap.get(this._curSelectLevel) === true;
             rewardGetButton.getComponent(Button).interactable = !isGetted && DataMgr.s.userInfo.data.level >= this._curSelectLevel;
             rewardGetButton.getComponent(Sprite).grayscale = isGetted || DataMgr.s.userInfo.data.level < this._curSelectLevel;
         } else {
@@ -297,7 +304,7 @@ export class CivilizationLevelUI extends ViewController {
         const maxTip = this.node.getChildByPath("Content/RightView/MaxTip");
         const conditionView = this.node.getChildByPath("Content/RightView/ScrollView");
 
-        const conditions = this._clevelDatas[DataMgr.s.userInfo.data.level + 1]?.condition;
+        const conditions = this._clevelDatas[DataMgr.s.userInfo.data.level - 1]?.condition;
         if (conditions == undefined) {
             maxTip.active = true;
             conditionView.active = false;
@@ -306,9 +313,8 @@ export class CivilizationLevelUI extends ViewController {
 
         maxTip.active = false;
         conditionView.active = true;
-
-        let isAllConditionFinish: boolean = false;
-
+        this._conditionItemContent.destroyAllChildren();
+        let isAllConditionFinish: boolean = true;
         for (let i = 0; i < conditions.length; i++) {
             const condition = conditions[i];
             const conditionItem = instantiate(this._conditionItem);
@@ -328,14 +334,30 @@ export class CivilizationLevelUI extends ViewController {
                 let heatLevel: number = gapNum;
                 for (let i = 0; i < gapNum; i++) {
                     let endNum: number = worldBoxThreshold[i];
-                    if (heatValue < endNum) {
+                    if (heatValue <= endNum) {
                         heatLevel = i + 1;
                         break;
                     }
                 }
                 progress = heatLevel;
             } else {
-                progress = 1;
+                for (const temp of DataMgr.s.userInfo.data.CLvlCondtion) {
+                    if (temp.type == condition.type) {
+                        if (
+                            (temp.type == CLvlConditionType.CollectSpecificLevelResourceToSpecificTimes && temp.collect.level == condition.collect.level) ||
+                            (temp.type == CLvlConditionType.ExploreSpecificLevelEventToSpecificTimes && temp.explore.level == condition.explore.level) ||
+                            (temp.type == CLvlConditionType.GetSpecificRankPioneerToSpecificNum && temp.getRankPioneer.rank == condition.getRankPioneer.rank) ||
+                            (temp.type == CLvlConditionType.GetSpecificLevelPioneerToSpecificNum &&
+                                temp.getLevelPioneer.level == condition.getLevelPioneer.level) ||
+                            (temp.type == CLvlConditionType.CostSpecificResourceToSpecificNum && temp.cost.itemId == condition.cost.itemId) ||
+                            (temp.type == CLvlConditionType.KillSpecificMonsterToSpecificNum && temp.kill.level == condition.kill.level) ||
+                            temp.type == CLvlConditionType.WinOtherPlayerToSpecificTimes
+                        ) {
+                            progress = temp.value;
+                            break;
+                        }
+                    }
+                }
             }
 
             conditionItem.getChildByPath("ProgressBar").getComponent(ProgressBar).progress = progress / condition.value;
@@ -349,6 +371,8 @@ export class CivilizationLevelUI extends ViewController {
 
                 conditionItem.getChildByPath("CommonBg/Progress/Total").getComponent(Label).string = condition.value.toString();
                 conditionItem.getChildByPath("CommonBg/Progress/Value").getComponent(Label).string = progress.toString();
+
+                isAllConditionFinish = false;
             }
         }
         this._conditionItemContent.getComponent(Layout).updateLayout();
@@ -367,10 +391,14 @@ export class CivilizationLevelUI extends ViewController {
 
     private onTapReceive() {
         GameMusicPlayMgr.playTapButtonEffect();
+        NetworkMgr.websocketMsg.player_level_reward({
+            level: this._curSelectLevel,
+        });
     }
 
     private onTapDevelop() {
         GameMusicPlayMgr.playTapButtonEffect();
+        NetworkMgr.websocketMsg.player_level_up({});
     }
 
     private async onTapClose() {
@@ -384,6 +412,16 @@ export class CivilizationLevelUI extends ViewController {
         this._refreshConditionUI();
     }
     private _onUserInfoHeatChanged() {
+        this._refreshConditionUI();
+    }
+    private _onUserInfoCLvlCondtionChanged() {
+        this._refreshConditionUI();
+    }
+    private _onUserInfoCLvlRewardChanged() {
+        this._refreshUI();
+    }
+    private _onUerInfoLevelChanged() {
+        this._refreshUI();
         this._refreshConditionUI();
     }
 }

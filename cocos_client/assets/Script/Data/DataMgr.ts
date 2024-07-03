@@ -88,6 +88,7 @@ export class DataMgr {
         const p: s2c_user.Isinfo_change = e.data;
         const localData = DataMgr.s.userInfo.data;
         DataMgr.s.userInfo.replaceData(p.info);
+        const newData = DataMgr.s.userInfo.data;
         // exp
         if (localData.exp != p.info.exp) {
             NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_EXP, { exp: p.info.exp - localData.exp });
@@ -145,6 +146,15 @@ export class DataMgr {
         // radial range
         if (localData.cityRadialRange != p.info.cityRadialRange) {
             NotificationMgr.triggerEvent(NotificationName.USERINFO_CITY_RADIAL_RANGE_CHANGE);
+        }
+
+        // CLvlCondtion
+        if (!CommonTools.arraysAreEqual(localData.CLvlCondtion, newData.CLvlCondtion)) {
+            NotificationMgr.triggerEvent(NotificationName.USERINFO_CLVL_CONDTION_CHANGE);
+        }
+        // CLvlReward
+        if (!CommonTools.mapsAreEqual(localData.CLvlRewardGetMap, newData.CLvlRewardGetMap)) {
+            NotificationMgr.triggerEvent(NotificationName.USERINFO_CLVL_REWARD_GET_CHANGE);
         }
     };
     public static player_rookie_update_res = (e: any) => {

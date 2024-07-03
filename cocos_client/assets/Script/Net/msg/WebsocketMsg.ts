@@ -135,6 +135,12 @@ export class WebsocketMsg {
     public player_piot_to_heat(d: c2s_user.Iplayer_piot_to_heat) {
         this.send_packet("player_piot_to_heat", d);
     }
+    public player_level_reward(d: c2s_user.Iplayer_level_reward) {
+        this.send_packet("player_level_reward", d)
+    }
+    public player_level_up(d: c2s_user.Iplayer_level_up) {
+        this.send_packet("player_level_up", d)
+    }
     public player_worldbox_beginner_open(d: c2s_user.Iplayer_worldbox_beginner_open) {
         this.send_packet("player_worldbox_beginner_open", d);
     }
@@ -332,6 +338,12 @@ export namespace c2s_user {
 
     export interface Iplayer_piot_to_heat {
         piotNum: number;
+    }
+    export interface Iplayer_level_reward {
+        level: number;
+    }
+    export interface Iplayer_level_up {
+
     }
     export interface Iplayer_worldbox_beginner_open {
         boxIndex: number;
@@ -697,6 +709,10 @@ export namespace share {
 
         boxRefreshTs: number;
         mapRefreshTs: number;
+
+        lvlRewards: { [key: string]: boolean };
+        // "key = type_paramb" | type
+        lvlupConds: { [key: string]: number };
     }
     export interface Ibuilding_data {
         id: string;

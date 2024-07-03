@@ -53,6 +53,9 @@ message player_sinfo {
 
     required uint32 boxRefreshTs = 50;
     required uint32 mapRefreshTs = 51;
+
+    map<string, bool> lvlRewards = 60;
+    map<string, uint32> lvlupConds = 61;
 }
 
 // self player data

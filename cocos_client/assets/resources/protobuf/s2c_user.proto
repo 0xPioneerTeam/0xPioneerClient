@@ -92,7 +92,16 @@ message player_talk_select_res {
     optional string talkId = 2;
     optional int32 selectIndex = 3;
 }
+// player: piot2heat
 message player_piot_to_heat_res {
+    required int32 res = 1;
+}
+// player: level
+message player_level_reward_res {
+    required int32 res = 1;
+    optional uint32 level = 2;
+}
+message player_level_up_res {
     required int32 res = 1;
 }
 // player: notify

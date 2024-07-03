@@ -29,7 +29,11 @@ export enum protobuf_c2s {
     // ------ player ------
     // player: talk
     player_talk_select,
+    // player: piot2heat
     player_piot_to_heat,
+    // player: level
+    player_level_reward,
+    player_level_up,
 
 
     // ------ pioneer ------
@@ -136,7 +140,11 @@ export enum protobuf_s2c {
     // ------ player ------
     // player: talk
     player_talk_select_res,
+    // player: piot2heat
     player_piot_to_heat_res,
+    // player: level
+    player_level_reward_res,
+    player_level_up_res,
     // player: notify
     player_exp_change,
     player_lvlup_change,

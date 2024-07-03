@@ -90,7 +90,6 @@ export default class CommonTools {
 
         return { x: xPrime, y: yPrime };
     }
-   
 
     //------------------------------------------- time
     public static getNextDayAMTimestamp(hour: number): number {
@@ -207,13 +206,28 @@ export default class CommonTools {
             return false;
         }
 
-        // 遍历第一个 Map 的每个键值对
         for (let [key, value] of map1) {
             if (!map2.has(key)) {
                 return false;
             }
 
             if (map2.get(key) !== value) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static arraysAreEqual(array1: any[], array2: any[]): boolean {
+        console.log("exce ar1:", array1);
+        console.log("exce ar2:", array2);
+        if (array1.length !== array2.length) {
+            return false;
+        }
+
+        for (let i = 0; i < array1.length; i++) {
+            if (!this.deepEqual(array1[i], array2[i])) {
                 return false;
             }
         }
@@ -233,6 +247,31 @@ export default class CommonTools {
             uuid += (i === 12 ? 4 : i === 16 ? (random & 3) | 8 : random).toString(16);
         }
         return uuid.substring(0, 16);
+    }
+
+    public static deepEqual(obj1: any, obj2: any): boolean {
+        if (obj1 === obj2) {
+            return true;
+        }
+
+        if (obj1 === null || obj2 === null || typeof obj1 !== "object" || typeof obj2 !== "object") {
+            return false;
+        }
+
+        const keys1 = Object.keys(obj1);
+        const keys2 = Object.keys(obj2);
+
+        if (keys1.length !== keys2.length) {
+            return false;
+        }
+
+        for (const key of keys1) {
+            if (!keys2.includes(key) || !this.deepEqual(obj1[key], obj2[key])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     //----------------------------------- COCOS

@@ -169,7 +169,7 @@ export class MapBuildingDataMgr {
         } else if (baseObj.type == MapBuildingType.wormhole) {
             const attackerMap: Map<number, string> = new Map();
             for (const key in element.attacker) {
-                if (key != "0" || element.attacker[key] == null || element.attacker[key] == "") {
+                if (element.attacker[key] == null || element.attacker[key] == "") {
                     continue;
                 }
                 attackerMap.set(parseInt(key), element.attacker[key]);
