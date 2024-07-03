@@ -143,7 +143,6 @@ export class GameMain extends ViewController {
 
     private _onRookieWormholeFightCount(data: { playerId: string; resultHp: number; delayTime: number }) {
         const { playerId, resultHp, delayTime } = data;
-        console.log("exce data:", data);
         this.scheduleOnce(() => {
             const pioneer = DataMgr.s.pioneer.getById(playerId);
             if (pioneer != undefined) {

@@ -18,7 +18,7 @@ export default class UserInfoMgr {
     public afterNewPioneerDatas: MapPioneerObject[] = [];
 
     public constructor() {
-        NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onUserInfoDidChangeLevel, this);
+        
     }
     //--------------------------------------------------
     public get afterTalkItemGetData() {
@@ -46,32 +46,5 @@ export default class UserInfoMgr {
     }
     public set afterCivilizationClosedShowPioneerDatas(pioneerDatas: MapPioneerObject[]) {
         this._afterCivilizationClosedShowPioneerDatas = pioneerDatas;
-    }
-    //-------------------------------------------------- notification
-    private _onUserInfoDidChangeLevel(data: { hpMaxChangeValue: number; showBuildingIds: string[]; items: ItemData[]; artifacts: ArtifactData[] }) {
-        if (data.items != null && data.items.length > 0) {
-            setTimeout(async () => {
-                if (UIPanelManger.inst.panelIsShow(UIName.CivilizationLevelUpUI) || UIPanelManger.inst.panelIsShow(UIName.SecretGuardGettedUI)) {
-                    this._afterCivilizationClosedShowItemDatas.push(...data.items);
-                } else {
-                    const result = await UIPanelManger.inst.pushPanel(UIName.ItemGettedUI);
-                    if (result.success) {
-                        result.node.getComponent(ItemGettedUI).showItem(data.items);
-                    }
-                }
-            });
-        }
-        if (data.artifacts != null && data.artifacts.length > 0) {
-            setTimeout(async () => {
-                if (UIPanelManger.inst.panelIsShow(UIName.CivilizationLevelUpUI) || UIPanelManger.inst.panelIsShow(UIName.SecretGuardGettedUI)) {
-                    this._afterCivilizationClosedShowArtifactDatas.push(...data.artifacts);
-                } else {
-                    const result = await UIPanelManger.inst.pushPanel(UIName.ArtifactInfoUI);
-                    if (result.success) {
-                        result.node.getComponent(ArtifactInfoUI).showItem(data.artifacts);
-                    }
-                }
-            });
-        }
     }
 }

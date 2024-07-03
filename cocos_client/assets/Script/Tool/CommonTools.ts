@@ -220,8 +220,6 @@ export default class CommonTools {
     }
 
     public static arraysAreEqual(array1: any[], array2: any[]): boolean {
-        console.log("exce ar1:", array1);
-        console.log("exce ar2:", array2);
         if (array1.length !== array2.length) {
             return false;
         }

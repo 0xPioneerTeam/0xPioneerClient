@@ -1,4 +1,4 @@
-import { _decorator, Animation, Button, Component, instantiate, Label, Layout, Node, Sprite, tween, v3 } from "cc";
+import { _decorator, Animation, Button, Component, instantiate, Label, Layout, Node, Sprite, tween, UIOpacity, v3 } from "cc";
 import { BackpackItem } from "./BackpackItem";
 import { ArtifactItem } from "./ArtifactItem";
 import ArtifactData from "../Model/ArtifactData";
@@ -29,6 +29,7 @@ export class CivilizationLevelUpUI extends ViewController {
 
     private _showBuildAnimView: Node = null;
     private _showFinishAnimView: Node = null;
+
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
@@ -66,8 +67,8 @@ export class CivilizationLevelUpUI extends ViewController {
         if (levelConfig == null) {
             return;
         }
-
         const contentView = this.node.getChildByName("Content");
+        const levelContentView = this.node.getChildByPath("LevelContent");
         // useLanMgr
         // contentView.getChildByName("Title").getComponent(Label).string = LanMgr.getLanById("107549");
         // this.node.getChildByPath("Content/RewardContent/CityVersion").getComponent(Label).string = LanMgr.getLanById("107549");
@@ -77,6 +78,10 @@ export class CivilizationLevelUpUI extends ViewController {
         // this.node.getChildByPath("Content/RewardContent/Rewards/Title").getComponent(Label).string = LanMgr.getLanById("107549");
 
         // anim
+        levelContentView.active = true;
+        levelContentView.getComponent(UIOpacity).opacity = 0;
+        levelContentView.position = v3(0, -80, 0);
+
         if (this._showBuildAnimView != null) {
             this._showBuildAnimView.destroy();
         }
@@ -110,8 +115,17 @@ export class CivilizationLevelUpUI extends ViewController {
                     .target(this._finishLightAnimView)
                     .delay(1.2)
                     .call(() => {
-                        this._finishLightAnimView.active = false;
-                        this.node.getChildByName("Content").getComponent(Button).interactable = true;
+                        tween()
+                            .target(levelContentView)
+                            .to(0.3, { position: v3(0, 0, 0) })
+                            .delay(0.5)
+                            .call(() => {
+                                this._finishLightAnimView.active = false;
+                                this.node.getChildByName("Content").getComponent(Button).interactable = true;
+                            })
+                            .start();
+
+                        tween().target(levelContentView.getComponent(UIOpacity)).to(0.3, { opacity: 255 }).start();
                     })
                     .start();
 
@@ -176,6 +190,14 @@ export class CivilizationLevelUpUI extends ViewController {
         } else {
             content.getChildByName("Rewards").active = false;
         }
+
+        const clevelItem = this.node.getChildByPath("LevelContent/Item");
+        for (let j = 1; j <= 6; j++) {
+            clevelItem.getChildByPath("Icon/icon_" + j).active = levelConfig.age == j;
+        }
+        for (let j = 1; j <= 5; j++) {
+            clevelItem.getChildByPath("level/img_" + j).active = levelConfig.level == j;
+        }
     }
 
     private async onTapClose() {
@@ -203,5 +225,9 @@ export class CivilizationLevelUpUI extends ViewController {
                 UserInfoMgr.afterCivilizationClosedShowArtifactDatas = [];
             }
         }
+    }
+    private onTapCloseLevelContent() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        this.node.getChildByPath("LevelContent").active = false;
     }
 }
