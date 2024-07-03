@@ -37,6 +37,8 @@ export class OuterBuildingController extends Component {
         NotificationMgr.addListener(NotificationName.MAP_BUILDING_REBON_CHANGE, this._refreshUI, this);
 
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAP_BUILDING, this._onRookieTapBuilding, this);
+        // lan
+        NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._refreshUI, this);
     }
 
     start() {
@@ -101,6 +103,8 @@ export class OuterBuildingController extends Component {
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_REBON_CHANGE, this._refreshUI, this);
 
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAP_BUILDING, this._onRookieTapBuilding, this);
+        // lan
+        NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this._refreshUI, this);
     }
 
     private _refreshUI() {

@@ -14,6 +14,8 @@ import CommonTools from "../Tool/CommonTools";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
 import { RookieGuide } from "../UI/RookieGuide/RookieGuide";
 import { RookieStep } from "../Const/RookieDefine";
+import { ClvlMgr } from "../Utils/Global";
+import { CLvlEffectType } from "../Const/Lvlup";
 
 export default class GameMgr {
     public rookieTaskExplainIsShow: boolean = false;
@@ -169,8 +171,21 @@ export default class GameMgr {
 
     public getAfterEffectValue(type: GameExtraEffectType, originalValue: number): number {
         const clevel: number = DataMgr.s.userInfo.data.level;
+
+        let effectValue: number = 0;
+
         const artifactEffectValue: number = DataMgr.s.artifact.getEffectValueByEffectType(type, clevel);
-        return this._getEffectResultNum(type, originalValue, artifactEffectValue);
+        effectValue += artifactEffectValue;
+
+        if (type == GameExtraEffectType.TROOP_GENERATE_TIME) {
+            const cLvlEffectValue: number = ClvlMgr.getCurrentCLvlEffectByType(CLvlEffectType.TROOP_GENERATE_SPEED).value;
+            effectValue += cLvlEffectValue;
+        } else if (type == GameExtraEffectType.CITY_ONLY_VISION_RANGE || type == GameExtraEffectType.PIONEER_ONLY_VISION_RANGE) {
+            const cLvlEffectValue: number = ClvlMgr.getCurrentCLvlEffectByType(CLvlEffectType.CITY_AND_PIONEER_VISION_RANGE).value;
+            effectValue += cLvlEffectValue;
+        }
+
+        return this._getEffectResultNum(type, originalValue, effectValue);
     }
 
     public getAfterExtraEffectPropertyByPioneer(pioneerId: string, type: GameExtraEffectType, originalValue: number): number {

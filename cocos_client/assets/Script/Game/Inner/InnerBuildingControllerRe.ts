@@ -107,6 +107,8 @@ export class InnerBuildingControllerRe extends ViewController {
         NotificationMgr.addListener(NotificationName.GAME_INNER_LATTICE_EDIT_ACTION_MOUSE_DOWN, this._onEditActionMouseDown, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_LATTICE_EDIT_ACTION_MOUSE_UP, this._onEditActionMouseUp, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_LATTICE_EDIT_ACTION_MOUSE_MOVE, this._onEditActionMouseMove, this);
+        // lan
+        NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._refreshBuilding, this);
 
         NetworkMgr.websocket.on("player_building_pos_res", this._onBuildingPosChange);
         if (this._isInitOver) {
@@ -124,6 +126,8 @@ export class InnerBuildingControllerRe extends ViewController {
         NotificationMgr.removeListener(NotificationName.GAME_INNER_LATTICE_EDIT_ACTION_MOUSE_DOWN, this._onEditActionMouseDown, this);
         NotificationMgr.removeListener(NotificationName.GAME_INNER_LATTICE_EDIT_ACTION_MOUSE_UP, this._onEditActionMouseUp, this);
         NotificationMgr.removeListener(NotificationName.GAME_INNER_LATTICE_EDIT_ACTION_MOUSE_MOVE, this._onEditActionMouseMove, this);
+        // lan
+        NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this._refreshBuilding, this);
 
         NetworkMgr.websocket.off("player_building_pos_res", this._onBuildingPosChange);
     }

@@ -42,7 +42,7 @@ export class PlayerInfoUI extends ViewController {
     private _selectIndex: number = 0;
     private _selectSettleIndex: number = 0;
     private _selectSettleViewOffsetHeight: number[] = [];
-    private _selectLang: string = "eng";
+    private _selectLang: string = "";
 
     private _tabViews: Node[] = [];
     private _tabButtons: Node[] = [];
@@ -202,13 +202,7 @@ export class PlayerInfoUI extends ViewController {
         const achievementBtn = this.node.getChildByPath("Content/tabButtons/AchievementsBtn");
         const settingBtn = this.node.getChildByPath("Content/tabButtons/SettingsBtn");
 
-        const lang = new Map();
-        // useLanMgr
-        // lang.set("eng", LanMgr.getLanById("107549"));
-        // lang.set("cn", LanMgr.getLanById("107549"));
-        lang.set("eng", "English");
-        lang.set("cn", "Chinese");
-
+        const allLangs = LanMgr.getAllLang();
         // useLanMgr
         // infoBtn.getChildByName("Label").getComponent(Label).string = LanMgr.getLanById("107549");
         // summaryBtn.getChildByName("Label").getComponent(Label).string = LanMgr.getLanById("107549");
@@ -228,8 +222,8 @@ export class PlayerInfoUI extends ViewController {
         // this._changeNameView.getChildByPath("Content/UserName").getComponent(EditBox).placeholder = LanMgr.getLanById("107549");
         // this._changeNameView.getChildByPath("Content/ConfirmButton/Label").getComponent(Label).string = LanMgr.getLanById("107549");
 
-        this._langSelectView.getChildByPath("View/Content/English").getComponent(Label).string = lang.get("eng");
-        this._langSelectView.getChildByPath("View/Content/Chinese").getComponent(Label).string = lang.get("cn");
+        this._langSelectView.getChildByPath("View/Content/English").getComponent(Label).string = allLangs.get("eng");
+        this._langSelectView.getChildByPath("View/Content/TraditionalChinese").getComponent(Label).string = allLangs.get("tc");
 
         for (let i = 0; i < this._tabButtons.length; i++) {
             this._tabButtons[i].getChildByName("BtnPageLight").active = i == this._selectIndex;
@@ -333,7 +327,7 @@ export class PlayerInfoUI extends ViewController {
             effectSlider.progress = AudioMgr.effectVolume;
             currentShowView.getChildByName("SfxProgressBar").getComponent(ProgressBar).progress = AudioMgr.effectVolume;
 
-            currentShowView.getChildByPath("LanguageMenu/LanguageBtn/Label").getComponent(Label).string = lang.get(this._selectLang);
+            currentShowView.getChildByPath("LanguageMenu/LanguageBtn/Label").getComponent(Label).string = allLangs.get(this._selectLang);
 
             // useLanMgr
             // currentShowView.getChildByName("ResetButton").getComponent(Label).string = LanMgr.getLanById("107549");
@@ -500,9 +494,8 @@ export class PlayerInfoUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         this._langSelectView.active = true;
         this.node.getChildByPath("Content/tabContents/SettingsContent/LanguageMenu/LanguageBtn/Arrow").angle = 180;
-
         this._langSelectView.getChildByPath("View/Content/English/ImgScreenSelect").active = this._selectLang == "eng";
-        this._langSelectView.getChildByPath("View/Content/Chinese/ImgScreenSelect").active = this._selectLang == "cn";
+        this._langSelectView.getChildByPath("View/Content/TraditionalChinese/ImgScreenSelect").active = this._selectLang == "tc";
     }
     private onTapLangItem(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();

@@ -108,6 +108,7 @@ export class MainUI extends ViewController {
         // this.node.getChildByPath("CommonContent/LeftNode/title").getComponent(Label).string = LanMgr.getLanById("107549");
         // this.node.getChildByPath("CommonContent/icon_treasure_box/Label").getComponent(Label).string = LanMgr.getLanById("107549");
         // this.node.getChildByPath("CommonContent/icon_artifact/Label").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this._worldBoxCountTipView.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("107549")
     }
 
     private _refreshElementShow() {

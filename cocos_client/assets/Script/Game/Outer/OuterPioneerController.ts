@@ -191,6 +191,8 @@ export class OuterPioneerController extends ViewController {
         NotificationMgr.addListener(NotificationName.MAP_FAKE_FIGHT_SHOW, this._onMapFakeFightShow, this);
         // rebon
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_REBON_CHANGE, this._refreshUI, this);
+        // lan
+        NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._refreshUI, this);
     }
 
     protected async viewDidStart() {
@@ -285,6 +287,8 @@ export class OuterPioneerController extends ViewController {
         NotificationMgr.removeListener(NotificationName.MAP_FAKE_FIGHT_SHOW, this._onMapFakeFightShow, this);
         // rebon
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_REBON_CHANGE, this._refreshUI, this);
+        // lan
+        NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this._refreshUI, this);
     }
 
     private _refreshUI() {
@@ -598,7 +602,6 @@ export class OuterPioneerController extends ViewController {
                     });
                 }
             }
-           
         }
         this._refreshUI();
 
@@ -612,7 +615,7 @@ export class OuterPioneerController extends ViewController {
         const rebornView: Node = instantiate(this.rebonPrefab);
         rebornView.setParent(decorationView);
         rebornView.setWorldPosition(GameMainHelper.instance.tiledMapGetPosWorld(pioneer.stayPos.x, pioneer.stayPos.y));
-        rebornView.getComponent(OuterRebonAndDestroyView).playAnim(data.show ?  1 : 0);
+        rebornView.getComponent(OuterRebonAndDestroyView).playAnim(data.show ? 1 : 0);
     }
     private async _onPioneerEventIdChange(data: { triggerPioneerId: string; eventBuildingId: string; eventId: string }) {
         const eventConfig = EventConfig.getById(data.eventId);

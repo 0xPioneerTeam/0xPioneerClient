@@ -181,10 +181,11 @@ export default class CLvlMgr {
         return this._data;
     }
 
-    public getCurCLvlEffect(): Map<CLvlEffectType, CLvlEffect> {
+    public getCLvlEffectByLevel(level: number): Map<CLvlEffectType, CLvlEffect> {
+        this.getData();
         const effectMap: Map<CLvlEffectType, CLvlEffect> = new Map();
         for (const data of this._data) {
-            if (parseInt(data.id) > DataMgr.s.userInfo.data.level) {
+            if (parseInt(data.id) > level) {
                 break;
             }
             for (const effect of data.effect) {
@@ -201,5 +202,10 @@ export default class CLvlMgr {
             }
         }
         return effectMap;
+    }
+
+    public getCurrentCLvlEffectByType(type: CLvlEffectType): CLvlEffect {
+        this.getData();
+        return this.getCLvlEffectByLevel(DataMgr.s.userInfo.data.level)?.get(type);
     }
 }

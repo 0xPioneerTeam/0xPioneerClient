@@ -103,7 +103,6 @@ export class CivilizationLevelUI extends ViewController {
         super.viewDidDestroy();
         NotificationMgr.removeListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._onInnerBuildingUpgradeFinished, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_HEAT, this._onUserInfoHeatChanged, this);
-
     }
 
     //----------------------------- function
@@ -138,12 +137,12 @@ export class CivilizationLevelUI extends ViewController {
         }
 
         // effect
-        const curcLevelEffect = ClvlMgr.getCurCLvlEffect();
+        const curcLevelEffect = ClvlMgr.getCLvlEffectByLevel(DataMgr.s.userInfo.data.level);
         const effectView = this.node.getChildByPath("Content/LeftView/BuffContent/ScrollView");
         const emptyView = this.node.getChildByPath("Content/LeftView/BuffContent/Empty");
 
-        const selectLevelEffect = this._clevelDatas[this._curSelectLevel - 1].effect;
-        if (selectLevelEffect.length > 0) {
+        const selectLevelEffect = ClvlMgr.getCLvlEffectByLevel(this._curSelectLevel);
+        if (selectLevelEffect.size > 0) {
             effectView.active = true;
             emptyView.active = false;
 
@@ -164,74 +163,63 @@ export class CivilizationLevelUI extends ViewController {
                     } else if (key == CLvlEffectType.CITY_AND_PIONEER_VISION_RANGE) {
                         temp.value = value.value.toString();
                     } else {
-                        temp.value = value.value * 100 + "%";
+                        temp.value = Math.floor(value.value * 100) + "%";
                     }
                     showData.push(temp);
                 });
             } else {
-                for (let i = 0; i < selectLevelEffect.length; i++) {
-                    const effect = selectLevelEffect[i];
+                selectLevelEffect.forEach((value: CLvlEffect, key: CLvlEffectType) => {
                     const temp = {
-                        title: effect.title,
+                        title: value.title,
                         valueColor: new Color().fromHEX("#8EDA61"),
                         value: "",
                     };
-                    // value
-                    if (effect.type == CLvlEffectType.WORLDBOXRANK) {
-                        temp.value = LanMgr.getLanById(worldBoxShowNames[effect.value - 1]);
-                    } else if (effect.type == CLvlEffectType.CITY_AND_PIONEER_VISION_RANGE) {
-                        temp.value = "+" + effect.value.toString();
-                    } else {
-                        temp.value = "+" + effect.value * 100 + "%";
-                    }
-
                     let curCLvlEffectValue: number = -1;
-                    curcLevelEffect.forEach((value: CLvlEffect, key: CLvlEffectType) => {
-                        if (key == effect.type) {
-                            curCLvlEffectValue = value.value;
+                    curcLevelEffect.forEach((curValue: CLvlEffect, curKey: CLvlEffectType) => {
+                        if (curKey == key) {
+                            curCLvlEffectValue = curValue.value;
                         }
                     });
-
-                    if (curCLvlEffectValue == -1 || effect.value > curCLvlEffectValue) {
-                        //cur don't have this effect
+                    if (curCLvlEffectValue == -1) {
+                        // new effect use green color
                         temp.valueColor = new Color().fromHEX("#8EDA61");
-                        if (effect.type == CLvlEffectType.WORLDBOXRANK) {
-                            temp.value = LanMgr.getLanById(worldBoxShowNames[effect.value - 1]);
-                        } else if (effect.type == CLvlEffectType.CITY_AND_PIONEER_VISION_RANGE) {
-                            temp.value = "+" + effect.value.toString();
+                    } else {
+                        const gap = value.value - curCLvlEffectValue;
+                        if (gap > 0) {
+                            temp.valueColor = new Color().fromHEX("#8EDA61");
+                        } else if (gap == 0) {
+                            temp.valueColor = new Color().fromHEX("#F3E4B1");
                         } else {
-                            temp.value = "+" + effect.value * 100 + "%";
+                            temp.valueColor = new Color().fromHEX("#FF5353");
                         }
                     }
-                    // } else if () {
-
-                    // }
-                    // for (const temp of curcLevelBuff) {
-                    //     if (temp.type == buff.type) {
-                    //         curcLevelBuffValue = temp.value;
-                    //         break;
-                    //     }
-                    // }
-                    // let color: Color = null;
-                    // let gapValue: number = -1;
-                    // if (curcLevelBuffValue == -1) {
-                    //     gapValue = buff.value;
-                    //     color = new Color().fromHEX("#8EDA61");
-                    // } else {
-                    //     gapValue = buff.value - curcLevelBuffValue;
-                    //     if (gapValue < 0) {
-                    //         color = new Color().fromHEX("#FF5353");
-                    //     } else if (gapValue == 0) {
-                    //         color = new Color().fromHEX("#F3E4B1");
-                    //     } else {
-                    //         color = new Color().fromHEX("#8EDA61");
-                    //     }
-                    // }
-
-                    // buffItem.getChildByPath("Value").getComponent(Label).string = gapValue.toString();
-                    // buffItem.getChildByPath("Value").getComponent(Label).color = color;
+                    if (value.type == CLvlEffectType.WORLDBOXRANK) {
+                        temp.value = LanMgr.getLanById(worldBoxShowNames[value.value - 1]);
+                    } else if (value.type == CLvlEffectType.CITY_AND_PIONEER_VISION_RANGE) {
+                        if (curCLvlEffectValue == -1) {
+                            temp.value = "+" + value.value.toString();
+                        } else {
+                            const gap = value.value - curCLvlEffectValue;
+                            if (gap >= 0) {
+                                temp.value = "+" + gap;
+                            } else {
+                                temp.value = gap.toString();
+                            }
+                        }
+                    } else {
+                        if (curCLvlEffectValue == -1) {
+                            temp.value = "+" + Math.floor(value.value * 100) + "%";
+                        } else {
+                            const gap = value.value - curCLvlEffectValue;
+                            if (gap >= 0) {
+                                temp.value = "+" + Math.floor(gap * 100) + "%";
+                            } else {
+                                temp.value = Math.floor(gap * 100) + "%";
+                            }
+                        }
+                    }
                     showData.push(temp);
-                }
+                });
             }
             for (let i = 0; i < showData.length; i++) {
                 const data = showData[i];
@@ -390,7 +378,6 @@ export class CivilizationLevelUI extends ViewController {
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
-
 
     //------------------------------ notify
     private _onInnerBuildingUpgradeFinished() {

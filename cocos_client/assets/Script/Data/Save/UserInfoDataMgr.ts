@@ -38,6 +38,7 @@ export default class UserInfoDataMgr {
         }
         const globalData: share.Iplayer_sinfo = NetGlobalData.userInfo;
         this._data = this._convertNetDataToObject(globalData);
+        this._data.level = 20;
         this._initInterval();
     }
     private _initInterval() {}

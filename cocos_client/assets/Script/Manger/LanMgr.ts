@@ -4,6 +4,13 @@ import { NotificationName } from "../Const/Notification";
 
 export default class LanMgr {
     private _language = "eng";
+    private _languageTitle: Map<string, string> = new Map([
+        //useLanMgr
+        // ["eng",  this.getLanById("107549")],
+        // ["ts",  this.getLanById("107549")],
+        ["eng", "English"],
+        ["tc", "traditional Chinese"],
+    ]);
     private _localLanKey: string = "local_lan";
 
     public constructor() {}
@@ -13,6 +20,9 @@ export default class LanMgr {
         return true;
     }
 
+    public getAllLang(): Map<string, string> {
+        return this._languageTitle;
+    }
     public getLang(): string {
         return this._language;
     }
