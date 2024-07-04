@@ -93,6 +93,9 @@ export class PioneersDataMgr {
         const newObj = PioneerDefine.convertNetDataToObject(data);
         if (this._pioneers[index].actionType == MapPioneerActionType.moving) {
             newObj.stayPos = this._pioneers[index].stayPos;
+            newObj.movePaths = this._pioneers[index].movePaths;
+            newObj.actionBeginTimeStamp = 0;
+            newObj.actionEndTimeStamp = 0;
         }
         this._pioneers[index] = newObj;
 

@@ -3,24 +3,11 @@ import {
     Component,
     Node,
     Animation,
-    Vec2,
-    Vec3,
-    CCInteger,
-    CCFloat,
-    TweenAction,
     tween,
-    Graphics,
-    Color,
     instantiate,
-    Sprite,
-    Quat,
-    UITransform,
-    misc,
     Label,
     ProgressBar,
-    log,
     v3,
-    color,
     Event,
 } from "cc";
 import { LanMgr } from "../../../Utils/Global";
@@ -28,11 +15,9 @@ import { MapPioneerActionType, MapPioneerMoveDirection, MapPioneerObject } from 
 import { OuterFightView } from "./OuterFightView";
 import { DataMgr } from "../../../Data/DataMgr";
 import { OuterFightResultView } from "./OuterFightResultView";
-import { NetworkMgr } from "../../../Net/NetworkMgr";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
 import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
-import { RookieStep } from "../../../Const/RookieDefine";
 const { ccclass, property } = _decorator;
 
 @ccclass("MapPioneer")
