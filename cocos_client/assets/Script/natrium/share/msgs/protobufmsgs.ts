@@ -34,6 +34,8 @@ export enum protobuf_c2s {
     // player: level
     player_level_reward,
     player_level_up,
+    // player: psyc2energy
+    player_psyc_to_energy,
 
 
     // ------ pioneer ------
@@ -145,6 +147,8 @@ export enum protobuf_s2c {
     // player: level
     player_level_reward_res,
     player_level_up_res,
+    // player: psyc2energy
+    player_psyc_to_energy_res,
     // player: notify
     player_exp_change,
     player_lvlup_change,

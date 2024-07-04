@@ -144,6 +144,9 @@ message pioneer_data {
     // repeated int32 speedadd = 22;
     // repeated int32 speedmul = 23;
 
+    required float energy = 21;
+    required float energyMax = 22;
+
     required string actionType = 24;
     required uint32 actionBeginTimeStamp = 25;
     required uint32 actionEndTimeStamp = 26;

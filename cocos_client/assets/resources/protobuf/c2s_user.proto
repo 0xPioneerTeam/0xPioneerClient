@@ -65,6 +65,11 @@ message player_level_reward {
 message player_level_up {
     
 }
+// player: psyc2energy
+message player_psyc_to_energy {
+    required string pioneerId = 1;
+    required uint32 psycNum = 2;
+}
 
 
 // ------ pioneer ------
