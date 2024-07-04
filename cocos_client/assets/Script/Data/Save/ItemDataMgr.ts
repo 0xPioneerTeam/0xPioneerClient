@@ -2,12 +2,10 @@ import ItemConfig from "../../Config/ItemConfig";
 import ItemData, { ItemType } from "../../Const/Item";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
-import { BackpackArrangeType, GetPropData, ResourceCorrespondingItem } from "../../Const/ConstDefine";
 import NetGlobalData from "./Data/NetGlobalData";
 
 export class ItemDataMgr {
     private _data: ItemData[] = [];
-    private _maxItemLength: number = 100;
 
     public loadObj() {
         this._initData();
@@ -15,10 +13,6 @@ export class ItemDataMgr {
 
     public getObj() {
         return this._data;
-    }
-
-    public getObj_item_maxLength() {
-        return this._maxItemLength;
     }
 
     public getObj_item_count(itemConfigId: string): number {
@@ -29,41 +23,6 @@ export class ItemDataMgr {
             }
         }
         return count;
-    }
-
-    public getObj_item_sort(sortType: BackpackArrangeType) {
-        const singleItems: Map<string, ItemData> = new Map();
-        for (let i = 0; i < this._data.length; i++) {
-            const item = this._data[i];
-            if (singleItems.has(item.itemConfigId)) {
-                const savedItem = singleItems.get(item.itemConfigId);
-                savedItem.count += item.count;
-                savedItem.addTimeStamp = Math.max(savedItem.addTimeStamp, item.addTimeStamp);
-                this._data.splice(i, 1);
-                i--;
-            } else {
-                singleItems.set(item.itemConfigId, item);
-            }
-        }
-
-        // sort
-        if (sortType == BackpackArrangeType.Recently) {
-            this._data.sort((a, b) => {
-                return b.addTimeStamp - a.addTimeStamp;
-            });
-        } else if (sortType == BackpackArrangeType.Rarity) {
-            //bigger in front
-            this._data.sort((a, b) => {
-                return ItemConfig.getById(b.itemConfigId).grade - ItemConfig.getById(a.itemConfigId).grade;
-            });
-        } else if (sortType == BackpackArrangeType.Type) {
-            //smaller in front
-            this._data.sort((a, b) => {
-                return ItemConfig.getById(a.itemConfigId).itemType - ItemConfig.getById(b.itemConfigId).itemType;
-            });
-        }
-
-        NotificationMgr.triggerEvent(NotificationName.ITEM_CHANGE);
     }
 
     public getObj_item_skillbook(): ItemData[] {

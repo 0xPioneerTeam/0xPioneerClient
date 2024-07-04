@@ -8,6 +8,7 @@ import p from "../Manger/PioneerMgr";
 import user from "../Manger/UserInfoMgr";
 import game from "../Manger/GameMgr";
 import clvl from "../Manger/CLvlMgr";
+import back from "../Manger/BackpackMgr";
 
 import audio from "../Basic/AudioMgr";
 import res from "../Basic/ResourcesMgr";
@@ -22,6 +23,7 @@ const UserInfoMgr = new user();
 const BattleReportsMgr = new br();
 const GameMgr = new game();
 const ClvlMgr = new clvl();
+const BackpackMgr = new back();
 
 const AudioMgr = new audio();
 const ResourcesMgr = new res();
@@ -38,8 +40,9 @@ export {
     UserInfoMgr,
     GameMgr,
     ClvlMgr,
+    BackpackMgr,
 
     // system
     AudioMgr,
-    ResourcesMgr
+    ResourcesMgr,
 };

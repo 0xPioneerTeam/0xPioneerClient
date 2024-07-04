@@ -15,10 +15,18 @@ export enum AttrChangeType {
     MUL = 2,
 }
 
+export enum BackpackCategoryType {
+    All = 0,
+    Rellc = 1,
+    Consumable = 2,
+    Special = 3,
+    Other = 4,
+}
+
 export enum BackpackArrangeType {
     Recently = "Recently",
     Rarity = "Rarity",
-    Type = "Type",
+    Type = "Type"
 }
 
 export enum ResourceCorrespondingItem {

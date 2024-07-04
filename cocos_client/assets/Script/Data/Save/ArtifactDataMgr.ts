@@ -10,7 +10,6 @@ import ConfigConfig from "../../Config/ConfigConfig";
 import { ConfigType, MapDifficultCoefficientParam } from "../../Const/Config";
 
 export class ArtifactDataMgr {
-    private _maxArtifactLength: number = 100;
     private _data: ArtifactData[];
     public constructor() {}
 
@@ -56,32 +55,6 @@ export class ArtifactDataMgr {
     }
     public getObj_by_effectIndex(effectIndex: number) {
         return this._data.find((artifact) => artifact.effectIndex == effectIndex);
-    }
-
-    public getObj_artifact_maxLength() {
-        return this._maxArtifactLength;
-    }
-    public getObj_artifact_count(artifactConfigId: string): number {
-        let count: number = 0;
-        for (const artifact of this._data) {
-            if (artifact.artifactConfigId == artifactConfigId) {
-                count += artifact.count;
-            }
-        }
-        return count;
-    }
-    public getObj_artifact_sort(sortType: BackpackArrangeType) {
-        if (sortType == BackpackArrangeType.Recently) {
-            this._data.sort((a, b) => {
-                return b.addTimeStamp - a.addTimeStamp;
-            });
-        } else if (sortType == BackpackArrangeType.Rarity) {
-            //bigger in front
-            this._data.sort((a, b) => {
-                return ArtifactConfig.getById(b.artifactConfigId).rank - ArtifactConfig.getById(a.artifactConfigId).rank;
-            });
-        }
-        NotificationMgr.triggerEvent(NotificationName.ARTIFACT_CHANGE);
     }
     public getObj_artifact_effectiveEffect(type: GameExtraEffectType, artifactStoreLevel: number): number {
         let effectNum: number = 0;
@@ -195,7 +168,6 @@ export class ArtifactDataMgr {
                 this._data.push(change);
             }
         }
-        this.getObj_artifact_sort(BackpackArrangeType.Recently);
         NotificationMgr.triggerEvent(NotificationName.ARTIFACT_CHANGE);
     }
     public changeObj_artifact_effectIndex(uniqueId: string, effectIndex: number) {
@@ -221,7 +193,6 @@ export class ArtifactDataMgr {
             item.uniqueId = netItems[key].uniqueId;
             this._data.push(item);
         }
-        this.getObj_artifact_sort(BackpackArrangeType.Recently);
     }
 
     private _checkIsInMainSlot(effecIndex: number) {
@@ -294,50 +265,4 @@ export class ArtifactDataMgr {
         }
         return effectData;
     }
-    // public getPropEffValue(buildingLv: number) {
-    //     const r = {
-    //         prop: {}, // propType => { add: 0, mul: 0}
-    //         eff: {}, // effectType => 0
-    //     };
-    //     for (let i = 0; i < this._localArtifactDatas.length; i++) {
-    //         const artifact = this._localArtifactDatas[i];
-    //         if (artifact.effectIndex < 0) {
-    //             continue;
-    //         }
-    //         const artifactConfig = ArtifactConfig.getById(artifact.artifactConfigId);
-    //         // prop
-    //         if (artifactConfig.prop.length > 0) {
-    //             for (let j = 0; j < artifactConfig.prop.length; j++) {
-    //                 const propType = artifactConfig.prop[j];
-    //                 const propValue = artifactConfig.prop_value[j];
-
-    //                 if (!r.prop[propType]) r.prop[propType] = { add: 0, mul: 0 };
-
-    //                 if (propValue[0] == AttrChangeType.ADD) {
-    //                     r.prop[propType].add += propValue[0] * artifact.count;
-    //                 } else if (propValue[0] == AttrChangeType.MUL) {
-    //                     r.prop[propType].mul += propValue[0] * artifact.count;
-    //                 }
-    //             }
-    //         }
-
-    //         // effect
-    //         if (artifactConfig.effect.length > 0) {
-    //             for (let j = 0; j < artifactConfig.effect.length; j++) {
-    //                 const effectId = artifactConfig.effect[j];
-    //                 const effConfig = ArtifactEffectConfig.getById(effectId);
-    //                 const effectType = effConfig.type;
-
-    //                 if (effConfig.unlock && effConfig.unlock > cLv) {
-    //                     continue;
-    //                 }
-
-    //                 if (!r.eff[effectType]) r.eff[effectType] = 0;
-    //                 r.eff[effectType] += effConfig.para[0] * artifact.count;
-    //             }
-    //         }
-    //     }
-
-    //     return r;
-    // }
 }

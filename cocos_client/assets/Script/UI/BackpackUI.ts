@@ -1,72 +1,94 @@
-import { _decorator, Component, Label, Node, Sprite, SpriteFrame, Vec3, Button, EventHandler, v2, Vec2, Prefab, Slider, instantiate, Layout } from 'cc';
-import { BackpackItem } from './BackpackItem';
-import { ItemMgr, LanMgr } from '../Utils/Global';
-import ViewController from '../BasicView/ViewController';
-import { UIName } from '../Const/ConstUIDefine';
-import { ItemInfoUI } from './ItemInfoUI';
-import NotificationMgr from '../Basic/NotificationMgr';
-import ItemData from '../Const/Item';
-import { NotificationName } from '../Const/Notification';
-import UIPanelManger from '../Basic/UIPanelMgr';
-import { DataMgr } from '../Data/DataMgr';
-import { BackpackArrangeType } from '../Const/ConstDefine';
-import GameMusicPlayMgr from '../Manger/GameMusicPlayMgr';
+import {
+    _decorator,
+    Component,
+    Label,
+    Node,
+    Sprite,
+    SpriteFrame,
+    Vec3,
+    Button,
+    EventHandler,
+    v2,
+    Vec2,
+    Prefab,
+    Slider,
+    instantiate,
+    Layout,
+    Burst,
+    Color,
+} from "cc";
+import { BackpackItem } from "./BackpackItem";
+import { BackpackMgr, ItemMgr, LanMgr } from "../Utils/Global";
+import ViewController from "../BasicView/ViewController";
+import { UIName } from "../Const/ConstUIDefine";
+import { ItemInfoUI } from "./ItemInfoUI";
+import NotificationMgr from "../Basic/NotificationMgr";
+import ItemData from "../Const/Item";
+import { NotificationName } from "../Const/Notification";
+import UIPanelManger from "../Basic/UIPanelMgr";
+import { DataMgr } from "../Data/DataMgr";
+import { BackpackArrangeType, BackpackCategoryType } from "../Const/ConstDefine";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import ArtifactData from "../Model/ArtifactData";
+import { ArtifactItem } from "./ArtifactItem";
+import { ArtifactInfoUI } from "./ArtifactInfoUI";
 const { ccclass, property } = _decorator;
 
-
-@ccclass('BackpackUI')
+@ccclass("BackpackUI")
 export class BackpackUI extends ViewController {
-
+    @property(Prefab)
+    private itemPrb: Prefab = null;
 
     @property(Prefab)
-    private backpackItemPrb: Prefab = null;
+    private artifactPrb: Prefab = null;
 
     private _selectSortMenuShow: boolean = false;
+    private _currentCategoryType: BackpackCategoryType = null;
     private _currentArrangeType: BackpackArrangeType = null;
-    private _itemDatas: ItemData[] = null;
+    private _currentSelectArrangeType: BackpackArrangeType = null;
+    private _data: (ItemData | ArtifactData)[] = [];
 
-    private _itemContent: Node = null;
-    private _allItemViews: Node[] = null;
+    private _backpackContent: Node = null;
+    private _categoryButtons: Node[] = [];
     private _sortMenu: Node = null;
     private _menuArrow: Node = null;
 
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
+        this._currentCategoryType = BackpackCategoryType.All;
+        this._currentArrangeType = BackpackArrangeType.Recently;
+
+        this._categoryButtons = [
+            this.node.getChildByPath("__ViewContent/BottomView/AllButton"),
+            this.node.getChildByPath("__ViewContent/BottomView/RellcButton"),
+            this.node.getChildByPath("__ViewContent/BottomView/ConsumableButton"),
+            this.node.getChildByPath("__ViewContent/BottomView/SpecialButton"),
+            this.node.getChildByPath("__ViewContent/BottomView/OtherButton"),
+        ];
+
         this._sortMenu = this.node.getChildByPath("__ViewContent/SortMenu");
         this._sortMenu.active = false;
 
-        this._menuArrow = this.node.getChildByPath("__ViewContent/Bg/SortView/Menu/Arrow");
+        this._menuArrow = this.node.getChildByPath("__ViewContent/BottomView/Menu/Arrow");
+        this._backpackContent = this.node.getChildByPath("__ViewContent/Items/ScrollView/View/Content");
 
-        this._currentArrangeType = BackpackArrangeType.Recently;
-
-        this._itemContent = this.node.getChildByPath("__ViewContent/Bg/ScrollView/View/Content");
+        // useLanMgr
+        // this.node.getChildByPath("__ViewContent/title").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this.node.getChildByPath("__ViewContent/BottomView/AllButton/Label").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this.node.getChildByPath("__ViewContent/BottomView/RellcButton/Label").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this.node.getChildByPath("__ViewContent/BottomView/ConsumableButton/Label").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this.node.getChildByPath("__ViewContent/BottomView/SpecialButton/Label").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this.node.getChildByPath("__ViewContent/BottomView/OtherButton/Label").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this._sortMenu.getChildByPath("Content/Recently").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this._sortMenu.getChildByPath("Content/Rarity").getComponent(Label).string = LanMgr.getLanById("107549");
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._refreshBackpackUI, this);
         NotificationMgr.addListener(NotificationName.ITEM_CHANGE, this._refreshBackpackUI, this);
     }
-    
+
     protected viewDidStart(): void {
         super.viewDidStart();
-
-        this._allItemViews = [];
-        for (let i = 0; i < DataMgr.s.item.getObj_item_maxLength(); i++) {
-            let itemView = instantiate(this.backpackItemPrb);
-            itemView.active = true;
-
-            const button = itemView.addComponent(Button);
-            button.transition = Button.Transition.SCALE;
-            button.zoomScale = 0.9;
-            let evthandler = new EventHandler();
-            evthandler._componentName = "BackpackUI";
-            evthandler.target = this.node;
-            evthandler.handler = "onTapItem";
-            button.clickEvents.push(evthandler);
-
-            itemView.parent = this._itemContent;
-            this._allItemViews.push(itemView);
-        }
-        this._itemContent.getComponent(Layout).updateLayout();
 
         this._refreshBackpackUI();
     }
@@ -85,30 +107,39 @@ export class BackpackUI extends ViewController {
         return this.node.getChildByPath("__ViewContent");
     }
 
-
     private async _refreshBackpackUI() {
-        if (this._allItemViews == null) {
-            return;
-        }
-        // useLanMgr
-        // this.node.getChildByPath("__ViewContent/Bg/title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/Bg/QuantityLabel").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/Bg/SortView/Title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/Bg/SortView/Menu/Sort").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/Bg/ArrangeButton/Label").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this._sortMenu.getChildByPath("Content/Recently").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this._sortMenu.getChildByPath("Content/Rarity").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this._sortMenu.getChildByPath("Content/Type").getComponent(Label).string = LanMgr.getLanById("107549");
+        this._data = BackpackMgr.getBackpack(this._currentCategoryType, this._currentArrangeType);
+        this._backpackContent.removeAllChildren();
+        for (let i = 0; i < this._data.length; i++) {
+            let itemView = null;
+            if (this._data[i] instanceof ItemData) {
+                itemView = instantiate(this.itemPrb);
+                this._backpackContent.addChild(itemView);
+                itemView.getComponent(BackpackItem).refreshUI(this._data[i]);
+            } else if (this._data[i] instanceof ArtifactData) {
+                itemView = instantiate(this.artifactPrb);
+                this._backpackContent.addChild(itemView);
+                itemView.getComponent(ArtifactItem).refreshUI(this._data[i]);
+            }
 
-        const items = DataMgr.s.item.getObj_item_backpack();
-        this._itemDatas = items;
-
-        for (let i = 0; i < this._allItemViews.length; i++) {
-            const itemView = this._allItemViews[i];
-            itemView.getComponent(BackpackItem).refreshUI(i < items.length ? items[i] : null);
-            itemView.getComponent(Button).clickEvents[0].customEventData = i.toString();
+            const button = itemView.addComponent(Button);
+            button.transition = Button.Transition.SCALE;
+            button.zoomScale = 0.9;
+            let evthandler = new EventHandler();
+            evthandler._componentName = "BackpackUI";
+            evthandler.target = this.node;
+            evthandler.handler = "onTapItem";
+            evthandler.customEventData = i.toString();
+            button.clickEvents.push(evthandler);
         }
-        this.node.getChildByPath("__ViewContent/Bg/QuantityNum").getComponent(Label).string = items.length + "/" + DataMgr.s.item.getObj_item_maxLength();
+        this._backpackContent.getComponent(Layout).updateLayout();
+
+        for (let i = 0; i < this._categoryButtons.length; i++) {
+            this._categoryButtons[i].getChildByName("Common").active = i != this._currentCategoryType;
+            this._categoryButtons[i].getChildByName("Select").active = i == this._currentCategoryType;
+            this._categoryButtons[i].getChildByName("Label").getComponent(Label).color =
+                i == this._currentCategoryType ? new Color().fromHEX("#423524") : new Color().fromHEX("#7B7370");
+        }
     }
 
     private _refreshMenu() {
@@ -116,8 +147,6 @@ export class BackpackUI extends ViewController {
         this._menuArrow.angle = this._selectSortMenuShow ? 180 : 0;
         this._sortMenu.getChildByPath("Content/Recently/ImgScreenSelect").active = this._currentArrangeType == BackpackArrangeType.Recently;
         this._sortMenu.getChildByPath("Content/Rarity/ImgScreenSelect").active = this._currentArrangeType == BackpackArrangeType.Rarity;
-        this._sortMenu.getChildByPath("Content/Type/ImgScreenSelect").active = this._currentArrangeType == BackpackArrangeType.Type;
-
     }
     //------------------------------------------------------------ action
     private async onTapClose() {
@@ -130,17 +159,37 @@ export class BackpackUI extends ViewController {
     private async onTapItem(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
-        if (index < this._itemDatas.length) {
-            const itemData = this._itemDatas[index];
-            const result = await UIPanelManger.inst.pushPanel(UIName.ItemInfoUI);
-            if (result.success) {
-                result.node.getComponent(ItemInfoUI).showItem([itemData]);
+        if (index < this._data.length) {
+            const data = this._data[index];
+            if (data instanceof ItemData) {
+                const result = await UIPanelManger.inst.pushPanel(UIName.ItemInfoUI);
+                if (result.success) {
+                    result.node.getComponent(ItemInfoUI).showItem([data]);
+                }
+            } else if (data instanceof ArtifactData) {
+                const result = await UIPanelManger.inst.pushPanel(UIName.ArtifactInfoUI);
+                if (result.success) {
+                    result.node.getComponent(ArtifactInfoUI).showItem([data]);
+                }
             }
         }
     }
+
+    private onTapCategory(event: Event, customEventData: string) {
+        const categoryType = parseInt(customEventData) as BackpackCategoryType;
+        if (categoryType == this._currentCategoryType) {
+            return;
+        }
+        this._currentCategoryType = categoryType;
+        this._refreshBackpackUI();
+    }
+
     private onTapArrange() {
         GameMusicPlayMgr.playTapButtonEffect();
-        DataMgr.s.item.getObj_item_sort(this._currentArrangeType);
+        if (this._currentSelectArrangeType != null && this._currentSelectArrangeType != this._currentArrangeType) {
+            this._currentArrangeType = this._currentSelectArrangeType;
+            this._refreshBackpackUI();
+        }
     }
 
     private onTapSortMenuAction() {
@@ -154,17 +203,18 @@ export class BackpackUI extends ViewController {
         if (customEventData == this._currentArrangeType) {
             return;
         }
-        this._currentArrangeType = customEventData as BackpackArrangeType;
+        this._currentSelectArrangeType = customEventData as BackpackArrangeType;
 
-        switch (this._currentArrangeType) {
+        switch (this._currentSelectArrangeType) {
             case BackpackArrangeType.Rarity:
-                this.node.getChildByPath("__ViewContent/Bg/SortView/Menu/Sort").getComponent(Label).string = this._sortMenu.getChildByPath("Content/Rarity").getComponent(Label).string;
+                this.node.getChildByPath("__ViewContent/BottomView/Menu/Sort").getComponent(Label).string = this._sortMenu
+                    .getChildByPath("Content/Rarity")
+                    .getComponent(Label).string;
                 break;
             case BackpackArrangeType.Recently:
-                this.node.getChildByPath("__ViewContent/Bg/SortView/Menu/Sort").getComponent(Label).string = this._sortMenu.getChildByPath("Content/Recently").getComponent(Label).string;
-                break;
-            case BackpackArrangeType.Type:
-                this.node.getChildByPath("__ViewContent/Bg/SortView/Menu/Sort").getComponent(Label).string = this._sortMenu.getChildByPath("Content/Type").getComponent(Label).string;
+                this.node.getChildByPath("__ViewContent/BottomView/Menu/Sort").getComponent(Label).string = this._sortMenu
+                    .getChildByPath("Content/Recently")
+                    .getComponent(Label).string;
                 break;
         }
 
