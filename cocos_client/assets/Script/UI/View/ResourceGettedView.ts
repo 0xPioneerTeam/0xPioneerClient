@@ -13,32 +13,7 @@ const { ccclass, property } = _decorator;
 export class ResourceGettedView extends ViewController {
     //--------------------------------- public
     public showTip(items: (ItemData | string)[]) {
-        this._itemDatas = this._itemDatas.concat(items);
-        this._addItemToContent();
-    }
-
-    //--------------------------------- lifeCycle
-    private _showItem: Node = null;
-    private _allShowItems: Node[] = [];
-
-    private _itemDatas: (ItemData | string)[] = [];
-    private _isAddingItem: boolean = false;
-    private _playingNode: Node = null;
-    protected viewDidLoad(): void {
-        super.viewDidLoad();
-
-        this._showItem = this.node.getChildByPath("Content/Item");
-        this._showItem.active = false;
-    }
-
-    //--------------------------------- function
-    private _addItemToContent() {
-        if (this._isAddingItem) {
-            return;
-        }
-        if (this._itemDatas.length > 0) {
-            this._isAddingItem = true;
-            const item = this._itemDatas.shift();
+        for (const item of items) {
             const itemView = instantiate(this._showItem);
             if (item instanceof ItemData) {
                 itemView.getChildByPath("IconTip").active = true;
@@ -60,57 +35,67 @@ export class ResourceGettedView extends ViewController {
 
                 itemView.getChildByPath("TextTip/Tip").getComponent(Label).string = item;
             }
-
-            itemView.setParent(this._showItem.parent);
-            tween()
-                .target(itemView)
-                .delay(0.3)
-                .set({ active: true })
-                .call(() => {
-                    this._playShowAnim();
-                    this._isAddingItem = false;
-                    this._addItemToContent();
-                    this._showItem.parent.getComponent(Layout).updateLayout();
-                })
-                .start();
-            this._allShowItems.push(itemView);
+            this._allWaitingShowItems.push(itemView);
         }
+        this._playShowAnim();
     }
 
+    //--------------------------------- lifeCycle
+    private _showItemContent: Node = null;
+    private _showItem: Node = null;
+    private _allWaitingShowItems: Node[] = [];
+    private _showingItems: Node[] = [];
+
+    protected viewDidLoad(): void {
+        super.viewDidLoad();
+
+        this._showItemContent = this.node.getChildByPath("Content");
+        this._showItem = this._showItemContent.getChildByPath("Item");
+        this._showItem.removeFromParent();
+    }
+
+    //--------------------------------- function
     private _playShowAnim() {
-        if (this._playingNode != null) {
+        if (this._allWaitingShowItems.length <= 0 || this._showingItems.length >= 3) {
             return;
         }
-        if (this._allShowItems.length > 0 && this._allShowItems[0].active) {
-            this._playingNode = this._allShowItems.shift();
-            tween()
-                .target(this._playingNode.getComponent(UIOpacity))
-                .delay(1.5)
-                .to(0.3, { opacity: 0 })
-                .call(() => {
-                    this._playingNode.destroy();
-                    this._playingNode = null;
-                    this._showItem.parent.getComponent(Layout).updateLayout();
-                    this._playShowAnim();
-                })
-                .start();
-        }
+        const view = this._allWaitingShowItems.shift();
+        view.setParent(this._showItemContent);
+        this._showItemContent.getComponent(Layout).updateLayout();
+        this._showingItems.push(view);
+
+        tween()
+            .target(view.getComponent(UIOpacity))
+            .delay(0.3)
+            .call(() => {
+                this._playShowAnim();
+            })
+            .delay(1.2)
+            .to(0.3, { opacity: 0 })
+            .call(() => {
+                view.destroy();
+                this._showItemContent.getComponent(Layout).updateLayout();
+                this._showingItems.splice(this._showingItems.indexOf(view), 1);
+                this._playShowAnim();
+            })
+            .start();
     }
 
     //--------------------------------- action
     private onTapShowContent() {
-        if (this._playingNode != null) {
-            Tween.stopAllByTarget(this._playingNode.getComponent(UIOpacity));
-            tween()
-                .target(this._playingNode.getComponent(UIOpacity))
-                .to(0.3, { opacity: 0 })
-                .call(() => {
-                    this._playingNode.destroy();
-                    this._playingNode = null;
-                    this._showItem.parent.getComponent(Layout).updateLayout();
-                    this._playShowAnim();
-                })
-                .start();
+        if (this._showingItems.length <= 0) {
+            return;
         }
+        const view = this._showingItems.shift();
+        Tween.stopAllByTarget(view.getComponent(UIOpacity));
+        tween()
+            .target(view.getComponent(UIOpacity))
+            .to(0.3, { opacity: 0 })
+            .call(() => {
+                view.destroy();
+                this._showItemContent.getComponent(Layout).updateLayout();
+                this._playShowAnim();
+            })
+            .start();
     }
 }

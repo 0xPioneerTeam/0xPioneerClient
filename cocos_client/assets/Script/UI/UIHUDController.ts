@@ -33,7 +33,6 @@ export class UIHUDController extends ViewController {
 
     private _resourceGettedView: ResourceGettedView = null;
 
-    private _resoucesShowItems: (ItemData | string)[] = [];
     protected async viewDidLoad(): Promise<void> {
         super.viewDidLoad();
 
@@ -48,8 +47,6 @@ export class UIHUDController extends ViewController {
         NotificationMgr.addListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._innerBuildingUpgradeFinished, this);
         NotificationMgr.addListener(NotificationName.TASK_NEW_GETTED, this._onGetNewTask, this);
         NotificationMgr.addListener(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, this._onUseResourceGettedViewShowTip, this);
-
-        this._showResouceGettedView();
     }
 
     protected viewDidStart(): void {}
@@ -65,10 +62,9 @@ export class UIHUDController extends ViewController {
         NotificationMgr.removeListener(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, this._onUseResourceGettedViewShowTip, this);
     }
 
-    private _showResouceGettedView() {
-        if (this._resourceGettedView != null && this._resoucesShowItems.length > 0) {
-            this._resourceGettedView.showTip(this._resoucesShowItems);
-            this._resoucesShowItems = [];
+    private _showResouceGettedView(tips: (ItemData | string)[]) {
+        if (this._resourceGettedView != null) {
+            this._resourceGettedView.showTip(tips);
         }
     }
     //---------------------------------- notifiaction
@@ -77,8 +73,7 @@ export class UIHUDController extends ViewController {
     }
 
     private async _resourceGetted(data: { item: ItemData }) {
-        this._resoucesShowItems.push(data.item);
-        this._showResouceGettedView();
+        this._showResouceGettedView([data.item]);
     }
 
     private _innerBuildingUpgradeFinished(buildingType: InnerBuildingType) {
@@ -90,16 +85,14 @@ export class UIHUDController extends ViewController {
         if (config == null) {
             return;
         }
-        this._resoucesShowItems.push(LanMgr.replaceLanById("106004", [LanMgr.getLanById(config.name), innerBuilding.get(buildingType).buildLevel]));
-        this._showResouceGettedView();
+        this._showResouceGettedView([LanMgr.replaceLanById("106004", [LanMgr.getLanById(config.name), innerBuilding.get(buildingType).buildLevel])]);
     }
     private _onUseResourceGettedViewShowTip(tip: string) {
         if (!GameMgr.enterGameSence) {
             return;
         }
         GameMusicPlayMgr.playMapRefreshEffect();
-        this._resoucesShowItems.push(tip);
-        this._showResouceGettedView();
+        this._showResouceGettedView([tip]);
     }
 
     private _onGetNewTask() {
