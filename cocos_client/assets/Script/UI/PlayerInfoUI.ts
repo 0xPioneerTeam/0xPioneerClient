@@ -357,7 +357,7 @@ export class PlayerInfoUI extends ViewController {
 
             content.getChildByName("ResGetRateUp").active = false;
 
-           content.getChildByName("GetHpMax").active = false;
+            content.getChildByName("GetHpMax").active = false;
 
             if (levelConfig.reward != null && levelConfig.reward.length > 0) {
                 content.getChildByName("Rewards").active = true;
@@ -421,7 +421,6 @@ export class PlayerInfoUI extends ViewController {
     }
     //----------------------------------- info
     private onTapChangeNameShow() {
-        return;
         GameMusicPlayMgr.playTapButtonEffect();
         this._changeNameView.active = true;
         this._changeNameView.getChildByPath("Content/UserName").getComponent(EditBox).string = "";
@@ -439,8 +438,9 @@ export class PlayerInfoUI extends ViewController {
             UIHUDController.showCenterTip("Name cannot be empty");
             return;
         }
-        DataMgr.s.userInfo.data.name = changedName;
-        this._refreshUI();
+        NetworkMgr.websocketMsg.update_name({
+            name: changedName,
+        });
         this._changeNameView.active = false;
     }
     private async onTapNextLevelShow() {

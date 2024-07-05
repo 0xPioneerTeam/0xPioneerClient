@@ -80,6 +80,10 @@ export class WebsocketMsg {
         this.send_packet("enter_game", d);
     }
 
+    public update_name(d: c2s_user.Iupdate_name): void {
+        this.send_packet("update_name", d);
+    }
+
     public player_pioneer_change_show(d: c2s_user.Iplayer_pioneer_change_show) {
         this.send_packet("player_pioneer_change_show", d);
     }
@@ -251,6 +255,10 @@ export namespace c2s_user {
     }
 
     export interface Ienter_game {}
+
+    export interface Iupdate_name {
+        name: string;
+    }
 
     export interface Icreate_pioneer {
         type: string;
@@ -440,6 +448,10 @@ export namespace s2c_user {
 
         /** enter_game_res data */
         data?: share.Iplayer_data | null;
+    }
+    export interface Iupdate_name_res {
+        res: number;
+        name: string;
     }
     export interface Isinfo_change {
         info: share.Iplayer_sinfo;

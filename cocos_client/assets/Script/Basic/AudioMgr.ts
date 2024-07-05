@@ -53,6 +53,12 @@ export default class AudioMgr {
         this._musicSource.loop = loop;
         this._musicSource.play();
     }
+    public musicPlaying() {
+        return this._musicSource.playing;
+    }
+    public resumeMusic() {
+        this._musicSource.play();
+    }
     public stopMusic() {
         this._musicSource.stop();
     }

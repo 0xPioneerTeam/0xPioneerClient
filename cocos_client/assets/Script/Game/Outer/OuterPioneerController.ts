@@ -193,6 +193,35 @@ export class OuterPioneerController extends ViewController {
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_REBON_CHANGE, this._refreshUI, this);
         // lan
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._refreshUI, this);
+
+        let lastTime = new Date().getTime();
+        setInterval(() => {
+            const newTime = new Date().getTime();
+            const gap = newTime - lastTime;
+            lastTime = newTime;
+            const allPioneers = DataMgr.s.pioneer.getAll(true);
+            for (var i = 0; i < allPioneers.length; i++) {
+                let pioneer = allPioneers[i];
+                if (this._movingPioneerIds.indexOf(pioneer.id) == -1 || !this._pioneerMap.has(pioneer.id)) {
+                    continue;
+                }
+                let usedSpeed = pioneer.speed;
+                // for (const logic of pioneer.logics) {
+                //     if (logic.moveSpeed > 0) {
+                //         usedSpeed = logic.moveSpeed;
+                //     }
+                // }
+                // artifact move speed
+                if (pioneer.type == MapPioneerType.player) {
+                    usedSpeed = GameMgr.getAfterEffectValue(GameExtraEffectType.MOVE_SPEED, usedSpeed);
+                    if (PioneerGameTest) {
+                        usedSpeed = 600;
+                    }
+                }
+                let pioneermap = this._pioneerMap.get(pioneer.id);
+                this._updateMoveStep(usedSpeed, gap / 1000, pioneer, pioneermap);
+            }
+        }, 1000 / 60);
     }
 
     protected async viewDidStart() {
@@ -231,29 +260,6 @@ export class OuterPioneerController extends ViewController {
 
     protected viewUpdate(dt: number): void {
         super.viewUpdate(dt);
-
-        const allPioneers = DataMgr.s.pioneer.getAll(true);
-        for (var i = 0; i < allPioneers.length; i++) {
-            let pioneer = allPioneers[i];
-            if (this._movingPioneerIds.indexOf(pioneer.id) == -1 || !this._pioneerMap.has(pioneer.id)) {
-                continue;
-            }
-            let usedSpeed = pioneer.speed;
-            // for (const logic of pioneer.logics) {
-            //     if (logic.moveSpeed > 0) {
-            //         usedSpeed = logic.moveSpeed;
-            //     }
-            // }
-            // artifact move speed
-            if (pioneer.type == MapPioneerType.player) {
-                usedSpeed = GameMgr.getAfterEffectValue(GameExtraEffectType.MOVE_SPEED, usedSpeed);
-                if (PioneerGameTest) {
-                    usedSpeed = 600;
-                }
-            }
-            let pioneermap = this._pioneerMap.get(pioneer.id);
-            this._updateMoveStep(usedSpeed, dt, pioneer, pioneermap);
-        }
     }
 
     protected viewDidDestroy(): void {

@@ -1,4 +1,4 @@
-import { _decorator, Asset, AssetManager, Component, Node } from "cc";
+import { _decorator, Asset, AssetManager, Component, director, DynamicAtlasManager, game, macro, Node } from "cc";
 import ViewController from "./BasicView/ViewController";
 import { AudioMgr, BattleReportsMgr, LanMgr, LocalDataLoader, ResourcesMgr } from "./Utils/Global";
 import ConfigMgr from "./Manger/ConfigMgr";
@@ -63,6 +63,9 @@ export class Main extends ViewController {
         if (result.succeed) {
             result.bundle.preloadDir("");
         }
+
+        window.addEventListener("blur", this.onBlur, false);
+        window.addEventListener("focus", this.onFocus, false);
     }
 
     protected async viewDidStart(): Promise<void> {
@@ -171,6 +174,7 @@ export class Main extends ViewController {
         // websocket
         NetworkMgr.websocket.on("onmsg", DataMgr.onmsg);
         NetworkMgr.websocket.on("enter_game_res", DataMgr.enter_game_res);
+        NetworkMgr.websocket.on("update_name_res", DataMgr.update_name_res);
 
         NetworkMgr.websocket.on("sinfo_change", DataMgr.sinfo_change);
         NetworkMgr.websocket.on("player_rookie_update_res", DataMgr.player_rookie_update_res);
@@ -314,5 +318,14 @@ export class Main extends ViewController {
                 rookieStep: d.rookieStep,
             },
         });
+    }
+
+    private blurTs;
+    private onBlur() {
+        this.blurTs = new Date().getTime();
+    }
+    private onFocus() {
+        let durTs = new Date().getTime() - this.blurTs;
+        director.tick(durTs / 1000);
     }
 }

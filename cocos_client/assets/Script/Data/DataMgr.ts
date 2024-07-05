@@ -83,6 +83,14 @@ export class DataMgr {
             }
         }
     };
+    public static update_name_res = (e: any) => {
+        const p: s2c_user.Iupdate_name_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        DataMgr.s.userInfo.data.name = p.name;
+        NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_NAME);
+    }
 
     public static sinfo_change = (e: any) => {
         const p: s2c_user.Isinfo_change = e.data;

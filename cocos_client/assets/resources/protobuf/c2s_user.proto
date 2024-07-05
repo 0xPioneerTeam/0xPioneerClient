@@ -17,6 +17,11 @@ message create_player {
 // enter game
 message enter_game { }
 
+// update name
+message update_name {
+    required string name = 1;
+}
+
 // rookie
 message player_rookie_update {
     required uint32 rookieStep = 1;
@@ -24,7 +29,6 @@ message player_rookie_update {
 message player_rookie_wormhole_fight {
     required string pioneerId = 1;
  }
-
 
 // ------ chain ------
 message get_pending { }

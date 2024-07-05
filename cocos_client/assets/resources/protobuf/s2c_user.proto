@@ -24,6 +24,11 @@ message enter_game_res {
     required int32 res = 1; // error code see {ServerErrorCode}
     optional share.player_data data = 2;
 }
+// update name
+message update_name_res {
+    required int32 res = 1;
+    required string name = 2;
+}
 
 
 // rookie

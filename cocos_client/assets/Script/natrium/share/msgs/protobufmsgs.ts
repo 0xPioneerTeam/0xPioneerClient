@@ -6,6 +6,7 @@ export enum protobuf_c2s {
     login = 1,
     create_player,
     enter_game,
+    update_name,
 
 
     // ------ rookie ------
@@ -117,6 +118,7 @@ export enum protobuf_s2c {
     login_res,
     create_player_res,
     enter_game_res,
+    update_name_res,
 
 
     // ------ rookie ------
