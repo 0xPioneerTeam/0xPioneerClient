@@ -24,6 +24,11 @@
     "eng": "You are going to spend %s PIOT, Confirm?",
     "tc": ""
   },
+  "104006": {
+    "id": "104006",
+    "eng": "You can change settings by clicking the player avatar in the top-left corner.",
+    "tc": ""
+  },
   "105001": {
     "id": "105001",
     "eng": "Common",

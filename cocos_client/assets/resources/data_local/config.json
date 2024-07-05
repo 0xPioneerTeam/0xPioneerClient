@@ -66,6 +66,53 @@
       3
     ]
   },
+  "10010": {
+    "id": "10010",
+    "**NOTES**": "energy purchase quota everyday",
+    "para": [
+      5
+    ]
+  },
+  "10011": {
+    "id": "10011",
+    "**NOTES**": "energy purchase price",
+    "para": [
+      [
+        "8005",
+        50
+      ],
+      [
+        "8005",
+        75
+      ],
+      [
+        "8005",
+        100
+      ],
+      [
+        "8005",
+        125
+      ],
+      [
+        "8005",
+        150
+      ]
+    ]
+  },
+  "10012": {
+    "id": "10012",
+    "**NOTES**": "energy purchase threshold",
+    "para": [
+      20
+    ]
+  },
+  "10013": {
+    "id": "10013",
+    "**NOTES**": "energy purchase constant",
+    "para": [
+      0.2
+    ]
+  },
   "20001": {
     "id": "20001",
     "**NOTES**": "Planar Shift condition",
@@ -140,6 +187,17 @@
     "**NOTES**": "max rank",
     "para": [
       5
+    ]
+  },
+  "210006": {
+    "id": "210006",
+    "**NOTES**": "pioneer quality - energy max",
+    "para": [
+      60,
+      80,
+      100,
+      120,
+      150
     ]
   },
   "300001": {
