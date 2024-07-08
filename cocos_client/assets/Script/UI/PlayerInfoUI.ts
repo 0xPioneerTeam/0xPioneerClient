@@ -40,6 +40,7 @@ const { ccclass, property } = _decorator;
 @ccclass("PlayerInfoUI")
 export class PlayerInfoUI extends ViewController {
     private _selectIndex: number = 0;
+    private _onlyShowSelect: boolean = false;
     private _selectSettleIndex: number = 0;
     private _selectSettleViewOffsetHeight: number[] = [];
     private _selectLang: string = "";
@@ -61,6 +62,19 @@ export class PlayerInfoUI extends ViewController {
     private _settleUseSelectItems: Node[] = [];
 
     private _langSelectView: Node = null;
+
+    public configuration(selectIndex: number, onlyShowSelect: boolean) {
+        this._selectIndex = selectIndex;
+        this._onlyShowSelect = onlyShowSelect;
+
+        if (this._onlyShowSelect) {
+            for (let i = 0; i < this._tabButtons.length; i++) {
+                this._tabButtons[i].active = this._selectIndex == i;
+            }
+        }
+
+        this._refreshUI();
+    }
 
     protected viewDidLoad(): void {
         super.viewDidLoad();
@@ -332,6 +346,9 @@ export class PlayerInfoUI extends ViewController {
             // useLanMgr
             // currentShowView.getChildByName("ResetButton").getComponent(Label).string = LanMgr.getLanById("107549");
             currentShowView.getChildByName("ResetButton").active = GAME_ENV_IS_DEBUG;
+
+            currentShowView.getChildByPath("Tip").active = this._onlyShowSelect;
+            currentShowView.getChildByPath("Tip").getComponent(Label).string = LanMgr.getLanById("104006");
         } else if (this._selectIndex == 3) {
             // xx reversed
         }

@@ -41,6 +41,7 @@ export enum UIName {
     MapActionConfrimTipUI = "abresources/prefab/ui/MapActionConfrimTipUI",
 
     CivilizationLevelUI = "abresources/prefab/ui/clevel/CivilizationLevelUI",
+    CollectWalletUI = "abresources/prefab/ui/wallet/CollectWalletUI",
 
     // bundle 2
     BuildingUpgradeUI = "abresources_2/prefab/ui/BuildingUpgradeUI",

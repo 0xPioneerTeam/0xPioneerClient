@@ -11,6 +11,10 @@ import { NetworkMgr } from "../../Net/NetworkMgr";
 import { ConfigType, LoginWhiteListParam } from "../../Const/Config";
 import { AudioMgr } from "../../Utils/Global";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
+import { UIName } from "../../Const/ConstUIDefine";
+import UIPanelManger from "../../Basic/UIPanelMgr";
+import { PlayerInfoUI } from "../PlayerInfoUI";
+import { CollectWalletUI } from "../CollectWallet/CollectWalletUI";
 const { ccclass, property } = _decorator;
 
 @ccclass("CompLogin")
@@ -20,6 +24,8 @@ export class LoginUI extends ViewController {
 
     protected viewDidLoad(): void {
         super.viewDidLoad();
+
+        this.node.getChildByPath("AlertView").active = true;
     }
     protected viewDidStart(): void {
         super.viewDidStart();
@@ -30,9 +36,7 @@ export class LoginUI extends ViewController {
         super.viewDidDestroy();
     }
 
-    //--------------------------------------- action
-    private onTapStart() {
-        GameMusicPlayMgr.playTapButtonEffect();
+    private _loginStart() {
         const chainConf = ChainConfig.getCurrentChainConfig();
         if (chainConf.api.init) {
             this.onTapStart_chain();
@@ -41,6 +45,24 @@ export class LoginUI extends ViewController {
 
         this.node.getChildByName("StartView").active = false;
         this.node.getChildByName("LoginView").active = true;
+    }
+
+    //--------------------------------------- action
+    private async onTapStart() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const lastLoginMethod = localStorage.getItem("lastLoginMethod");
+        if (lastLoginMethod != null) {
+            this._loginStart();
+            return;
+        }
+        const result = await UIPanelManger.inst.pushPanel(UIName.CollectWalletUI);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(CollectWalletUI).configuration((method: string)=> {
+            this._loginStart();
+            localStorage.setItem("lastLoginMethod", method);
+        });
     }
     private onTapStart_chain() {
         if (!DataMgr.r.inited) {
@@ -91,5 +113,25 @@ export class LoginUI extends ViewController {
                 this.node.getChildByPath("AlertView").active = false;
             })
             .start();
+    }
+    private async onTapSetting() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(UIName.PlayerInfoUI);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(PlayerInfoUI).configuration(2, true);
+    }
+
+    private async onTapConnect() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(UIName.CollectWalletUI);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(CollectWalletUI).configuration((method: string)=> {
+            this._loginStart();
+            localStorage.setItem("lastLoginMethod", method);
+        });
     }
 }
