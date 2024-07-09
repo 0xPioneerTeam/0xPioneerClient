@@ -313,6 +313,9 @@ export default class GameMainHelper {
             NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_TRIGGER_LEFT_TALK, { talkId: leftTalkIds.splice(0, 1)[0] });
         }
     }
+    public get isMapInitOver(): boolean {
+        return this._isMapInitOver;
+    }
 
     private static _instance: GameMainHelper;
     private _gameCamera: Camera;

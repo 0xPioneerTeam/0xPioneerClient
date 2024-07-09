@@ -1,4 +1,4 @@
-import { _decorator, Component, Label, log, Node, Sprite, SpriteFrame, Button, ProgressBar } from "cc";
+import { _decorator, Component, Label, log, Node, Sprite, SpriteFrame, Button, ProgressBar, NodeEventType } from "cc";
 import { LanMgr, PioneerMgr } from "../Utils/Global";
 import { MapPioneerActionType, MapPlayerPioneerObject } from "../Const/PioneerDefine";
 import { DataMgr } from "../Data/DataMgr";
@@ -45,6 +45,8 @@ export class PlayerItemUI extends Component {
         this._hpView.getChildByName("progressBar").getComponent(ProgressBar).progress = model.hp / model.hpMax;
         this._hpView.getChildByName("Value").getComponent(Label).string = model.hp.toString();
 
+        this._hpView.getChildByName("EProgressBar").getComponent(ProgressBar).progress = model.energy / model.energyMax;
+
         this._model = model;
     }
 
@@ -57,7 +59,10 @@ export class PlayerItemUI extends Component {
     private _rebirthCountView: Node = null;
     private _selectedView: Node = null;
     private _hpView: Node = null;
-    protected onLoad(): void {}
+    protected onLoad(): void {
+        this.node.getChildByPath("Hp").on(NodeEventType.MOUSE_ENTER, this.onMouseEnter, this);
+        this.node.getChildByPath("Hp").on(NodeEventType.MOUSE_LEAVE, this.onMouseLeave, this);
+    }
     start() {}
 
     protected update(dt: number): void {
@@ -76,5 +81,20 @@ export class PlayerItemUI extends Component {
         } else if (this._model.actionType == MapPioneerActionType.eventing) {
             this.node.getChildByName("EventRemind").active = currentTimestamp >= this._model.actionEndTimeStamp;
         }
+    }
+
+    //--------------------------- action
+    private onMouseEnter() {
+        if (this._model == null) {
+            return;
+        }
+        const view = this.node.getChildByPath("HpTipView");
+        view.active = true;
+        view.getChildByPath("HpValue").getComponent(Label).string = "HP" + this._model.hp + "/" + this._model.hpMax;
+        view.getChildByPath("ApValue").getComponent(Label).string = "AP" + this._model.energy + "/" + this._model.energyMax;
+    }
+    private onMouseLeave() {
+        const view = this.node.getChildByPath("HpTipView");
+        view.active = false;
     }
 }

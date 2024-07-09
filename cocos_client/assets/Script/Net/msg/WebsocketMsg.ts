@@ -800,6 +800,9 @@ export namespace share {
 
         speed: number;
 
+        energy: number;
+        energyMax: number;
+
         actionType: string;
         actionBeginTimeStamp: number;
         actionEndTimeStamp: number;

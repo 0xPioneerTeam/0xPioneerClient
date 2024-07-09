@@ -153,6 +153,8 @@ export interface MapPioneerData {
     attack: number;
     defend: number;
     speed: number;
+    energy: number;
+    energyMax: number;
 
     movePaths: MapPosStruct[];
 
@@ -248,11 +250,13 @@ export default class PioneerDefine {
             type: temple.type as MapPioneerType,
             animType: config.animType,
             name: config.name,
-            hp: temple.hp,
+            hp: CommonTools.getOneDecimalNum(temple.hp),
             hpMax: CommonTools.getOneDecimalNum(temple.hpMax),
             attack: CommonTools.getOneDecimalNum(temple.attack),
             defend: CommonTools.getOneDecimalNum(temple.defend),
             speed: CommonTools.getOneDecimalNum(temple.speed),
+            energy: temple.energy,
+            energyMax: temple.energyMax,
             stayPos: v2(temple.stayPos.x, temple.stayPos.y),
             movePaths: [],
             actionType: temple.actionType as MapPioneerActionType,
