@@ -1167,13 +1167,13 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 100,
-      "height": 100
+      "width": 510,
+      "height": 450
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
       "x": 0.5,
-      "y": 0.5
+      "y": 0.6
     },
     "_id": ""
   },
@@ -1190,8 +1190,6 @@
       "__id__": 0
     },
     "fileId": "9aRzkcjwRJMYbmVe7/TefY",
-    "instance": null,
-    "targetOverrides": null,
     "nestedPrefabInstanceRoots": [
       {
         "__id__": 51
