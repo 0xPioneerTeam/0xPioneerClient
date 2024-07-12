@@ -1,4 +1,4 @@
-import { _decorator, Color, Details, instantiate, math, Node, Prefab, UITransform, v2, v3, Vec2, Vec3 } from "cc";
+import { _decorator, Color, Details, instantiate, math, Node, pingPong, Prefab, UITransform, v2, v3, Vec2, Vec3 } from "cc";
 import { TilePos } from "../TiledMap/TileTool";
 import { OuterFightView } from "./View/OuterFightView";
 import { OuterOtherPioneerView } from "./View/OuterOtherPioneerView";
@@ -191,6 +191,8 @@ export class OuterPioneerController extends ViewController {
         NotificationMgr.addListener(NotificationName.MAP_FAKE_FIGHT_SHOW, this._onMapFakeFightShow, this);
         // rebon
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_REBON_CHANGE, this._refreshUI, this);
+        // energy
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._onPioneerEnergyChanged, this);
         // lan
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._refreshUI, this);
 
@@ -293,6 +295,8 @@ export class OuterPioneerController extends ViewController {
         NotificationMgr.removeListener(NotificationName.MAP_FAKE_FIGHT_SHOW, this._onMapFakeFightShow, this);
         // rebon
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_REBON_CHANGE, this._refreshUI, this);
+        // energy
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._onPioneerEnergyChanged, this);
         // lan
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this._refreshUI, this);
     }
@@ -805,5 +809,15 @@ export class OuterPioneerController extends ViewController {
         this.scheduleOnce(() => {
             fightView.destroy();
         }, 5);
+    }
+
+    private _onPioneerEnergyChanged(data: { pioneerId: string }) {
+        const pioneer = DataMgr.s.pioneer.getById(data.pioneerId);
+        if (pioneer == undefined) {
+            return;
+        }
+        if (pioneer.energy <= 0) {
+            GameMgr.showBuyEnergyTip(pioneer.id);
+        }
     }
 }

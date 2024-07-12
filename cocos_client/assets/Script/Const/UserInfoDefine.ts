@@ -54,4 +54,6 @@ export interface UserInfoObject {
 
     CLvlRewardGetMap: Map<number, boolean>;
     CLvlCondtion: CLvlCondition[];
+
+    buyEnergyLimitTimes: number;
 }

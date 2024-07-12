@@ -3,7 +3,7 @@ import NotificationMgr from "../Basic/NotificationMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import MapBuildingConfig from "../Config/MapBuildingConfig";
 import { InnerBuildingType } from "../Const/BuildingDefine";
-import { GameExtraEffectType, MapMemberTargetType } from "../Const/ConstDefine";
+import { GAME_ENV_IS_DEBUG, GameExtraEffectType, MapMemberTargetType } from "../Const/ConstDefine";
 import ItemData from "../Const/Item";
 import { MapBuildingObject } from "../Const/MapBuilding";
 import { NotificationName } from "../Const/Notification";
@@ -14,13 +14,82 @@ import CommonTools from "../Tool/CommonTools";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
 import { RookieGuide } from "../UI/RookieGuide/RookieGuide";
 import { RookieStep } from "../Const/RookieDefine";
-import { ClvlMgr } from "../Utils/Global";
+import { ClvlMgr, LanMgr } from "../Utils/Global";
 import { CLvlEffectType } from "../Const/Lvlup";
+import ConfigConfig from "../Config/ConfigConfig";
+import { BuyEnergyCoefficientParam, BuyEnergyLimitParam, BuyEnergyPriceParam, BuyEnergyThresParam, ConfigType } from "../Const/Config";
+import ItemConfig from "../Config/ItemConfig";
+import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
+import { HUDName, UIName } from "../Const/ConstUIDefine";
+import { AlterView } from "../UI/View/AlterView";
+import { NetworkMgr } from "../Net/NetworkMgr";
+import { UIHUDController } from "../UI/UIHUDController";
 
 export default class GameMgr {
     public rookieTaskExplainIsShow: boolean = false;
 
     public enterGameSence: boolean = false;
+
+    public async showBuyEnergyTip(pioneerId: string) {
+        const pioneer = DataMgr.s.pioneer.getById(pioneerId) as MapPlayerPioneerObject;
+        const nft = DataMgr.s.nftPioneer.getNFTById(pioneer?.NFTId);
+        if (pioneer == undefined || nft == null) {
+            return;
+        }
+        const buyLimit = (ConfigConfig.getConfig(ConfigType.BuyEnergyLimit) as BuyEnergyLimitParam).limit;
+        const buyPrices = (ConfigConfig.getConfig(ConfigType.BuyEnergyPrice) as BuyEnergyPriceParam).prices;
+        const buyThres = (ConfigConfig.getConfig(ConfigType.BuyEnergyThres) as BuyEnergyThresParam).thresholds;
+        const buyCoefficient = (ConfigConfig.getConfig(ConfigType.BuyEnergyCoefficient) as BuyEnergyCoefficientParam).coefficient;
+
+        if (GAME_ENV_IS_DEBUG) {
+            if (buyThres >= buyPrices[0] / buyCoefficient) {
+                NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "CHECK THE ENERGY CONFIG");
+                return;
+            }
+        }
+
+        const itemId: string = buyPrices[nft.rank - 1][0];
+        const itemConfig = ItemConfig.getById(itemId);
+        if (itemConfig == null) {
+            return;
+        }
+
+        const price = buyPrices[nft.rank - 1][1] - Math.min(buyThres, pioneer.energy) * buyCoefficient;
+
+        const result = await UIPanelManger.inst.pushPanel(HUDName.Alter, UIPanelLayerType.HUD);
+        if (!result.success) {
+            return;
+        }
+        result.node
+            .getComponent(AlterView)
+            .showTip(
+                LanMgr.replaceLanById("1100201", [
+                    LanMgr.getLanById(pioneer.name),
+                    price,
+                    LanMgr.getLanById(itemConfig.itemName),
+                    pioneer.energyMax - pioneer.energy,
+                    buyLimit - DataMgr.s.userInfo.data.buyEnergyLimitTimes,
+                ]),
+                () => {
+                    if (DataMgr.s.userInfo.data.buyEnergyLimitTimes >= buyLimit) {
+                        // buy limit
+                        UIHUDController.showCenterTip(LanMgr.getLanById("1100202"));
+                        return;
+                    }
+
+                    if (price > DataMgr.s.item.getObj_item_count(itemId)) {
+                        // insufficient resource
+                        UIHUDController.showCenterTip(LanMgr.replaceLanById("1100203", [LanMgr.getLanById(itemConfig.itemName)]));
+                        return;
+                    }
+
+                    NetworkMgr.websocketMsg.player_psyc_to_energy({
+                        pioneerId: pioneerId,
+                        psycNum: price,
+                    });
+                }
+            );
+    }
 
     public getResourceBuildingRewardAndQuotaMax(building: MapBuildingObject): { reward: ItemData; quotaMax: number } {
         const config = MapBuildingConfig.getById(building.id);

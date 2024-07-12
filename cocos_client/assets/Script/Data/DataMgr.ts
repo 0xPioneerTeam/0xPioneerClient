@@ -465,7 +465,7 @@ export class DataMgr {
                     }
                     // energy
                     if (oldData.energy != newData.energy || oldData.energyMax != oldData.energyMax) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ENERGY_CHANGED);
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ENERGY_CHANGED, { pioneerId: newData.id });
                     }
                     // map reborn
                     if (oldData.rebornTime != newData.rebornTime) {
