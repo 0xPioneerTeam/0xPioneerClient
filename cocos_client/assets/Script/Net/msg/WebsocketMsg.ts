@@ -83,6 +83,9 @@ export class WebsocketMsg {
     public update_name(d: c2s_user.Iupdate_name): void {
         this.send_packet("update_name", d);
     }
+    public player_psyc_to_energy(d: c2s_user.Iplayer_psyc_to_energy) {
+        this.send_packet("player_psyc_to_energy", d);
+    }
 
     public player_pioneer_change_show(d: c2s_user.Iplayer_pioneer_change_show) {
         this.send_packet("player_pioneer_change_show", d);
@@ -258,6 +261,10 @@ export namespace c2s_user {
 
     export interface Iupdate_name {
         name: string;
+    }
+    export interface Iplayer_psyc_to_energy {
+        pioneerId: string;
+        psycNum: number;   
     }
 
     export interface Icreate_pioneer {
@@ -725,6 +732,8 @@ export namespace share {
         lvlRewards: { [key: string]: boolean };
         // "key = type_paramb" | type
         lvlupConds: { [key: string]: number };
+
+        buyEnergyLimitTimes: number;
     }
     export interface Ibuilding_data {
         id: string;

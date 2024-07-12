@@ -73,6 +73,8 @@ export default class UserInfoDataMgr {
             //CLvl
             CLvlRewardGetMap: new Map(),
             CLvlCondtion: [],
+
+            buyEnergyLimitTimes: netData.buyEnergyLimitTimes,
         };
         if (GAME_SKIP_ROOKIE) {
             newObj.rookieStep = RookieStep.FINISH;
