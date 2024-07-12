@@ -137,18 +137,6 @@ def mainLogic():
     for prefab in prefabs:
         refSprites = searchSpriteFromPrefab(prefab)
         
-        if ".anim" in prefab:
-            # 动画文件
-            in_prefab = False
-            for temp in refSprites:
-                if temp in refMap and len(refMap[temp]) >= 1:
-                    print("uuid:", temp)
-                    print("path:", refMap[temp])
-                    in_prefab = True
-                    break
-            if in_prefab:
-                print(f"file:{prefab}")
-                continue
         ######## 处理目录
         start = prefab.find('assets\\') + len('assets\\')  # start = 19
         # 找到最后一个 '/' 的位置并计算 end 索引
@@ -165,6 +153,10 @@ def mainLogic():
                 if path == extracted_path:
                     exsit = True
                     break
+                
+            if not exsit and ".anim" in prefab:
+                if refSprite in refMap and len(refMap[refSprite]) >= 1:
+                    exit = True
 
             if not exsit:
                 refMap[refSprite].append(extracted_path)
