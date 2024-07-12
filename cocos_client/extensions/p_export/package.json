@@ -1,6 +1,6 @@
 {
     "package_version": 2,
-    "version": "1.0.0",
+    "version": "1.0.3",
     "name": "p_export",
     "description": "i18n:p_export.description",
     "main": "./dist/main.js",
