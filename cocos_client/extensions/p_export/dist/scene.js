@@ -71,111 +71,12 @@ async function GetPickedNode() {
         return nodeData;
     }
 }
+class Vec2 {
+}
 class Vec3 {
-    constructor() {
-        Object.defineProperty(this, "x", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "y", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "z", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-    }
 }
 class JsonItem {
-    constructor() {
-        Object.defineProperty(this, "url", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "name", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "type", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "show", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "block", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "posmode", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "positions", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "rotation", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "scale", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-        Object.defineProperty(this, "children", {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: void 0
-        });
-    }
 }
-// function GetWorldPosArray(node: cc.Node): Pos2[] {
-//     var pos = new Pos2();
-//     pos.x = node.worldPosition.x;
-//     pos.y = node.worldPosition.y;
-//     var outpos: Pos2[] = [];
-//     //test multi pos
-//     node.children.forEach((child: cc.Node) => {
-//         if (child.name.indexOf("Node") == 0) {
-//             var cpos = new Pos2();
-//             cpos.x = child.worldPosition.x;
-//             cpos.y = child.worldPosition.y;
-//             outpos.push(cpos);
-//         }
-//     });
-//     if (outpos.length == 0) {
-//         outpos.push(pos);
-//     }
-//     return outpos;
-// }
 //Export,need comp MapTag,orelse block=false;
 async function tranINodeData(node) {
     let iNode;
@@ -201,7 +102,6 @@ async function tranINodeData(node) {
     item.positions = iNode.position.value;
     item.rotation = iNode.rotation.value;
     item.scale = iNode.scale.value;
-    console.log(iNode);
     item.children = [];
     if (item.url == '') { // not other prefab check child  
         for (let i = 0; i < iNode.children.length; i++) {
@@ -211,6 +111,25 @@ async function tranINodeData(node) {
                 item.children.push(subdata);
             }
         }
+    }
+    else {
+        iNode.__comps__.forEach(async (comp) => {
+            if (comp.type == "MapTag") {
+                if (comp.value.hasOwnProperty("block")) {
+                    item.block = Boolean(comp.value['block']);
+                }
+                if (item.block && comp.value.hasOwnProperty("blockData")) {
+                    item.blockData = [];
+                    comp.value['blockData'].value.forEach((element) => {
+                        var vec2 = new Vec2();
+                        vec2.x = element.value.x;
+                        vec2.y = element.value.y;
+                        item.blockData.push(vec2);
+                    });
+                    console.log("[ExportInfo]blockData=", item.blockData);
+                }
+            }
+        });
     }
     return item;
 }

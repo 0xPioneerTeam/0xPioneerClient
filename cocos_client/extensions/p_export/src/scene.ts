@@ -55,6 +55,11 @@ async function GetPickedNode(): Promise<INode> {
     }
 }
 
+class Vec2 {
+    x: number;
+    y: number;
+}
+
 class Vec3 {
     x: number;
     y: number;
@@ -67,6 +72,7 @@ class JsonItem {
     type: string;
     show: boolean;
     block: boolean;
+    blockData:Vec2[];
     posmode: string;
     positions: Vec3;
     rotation: Vec3;
@@ -105,6 +111,24 @@ async function tranINodeData(node: any) {
                 item.children.push(subdata);
             }
         }
+    }else{
+        iNode.__comps__.forEach(async (comp) => {
+            if (comp.type == "MapTag") {
+                if(comp.value.hasOwnProperty("block")){
+                    item.block = Boolean(comp.value['block']);
+                }
+                if(item.block && comp.value.hasOwnProperty("blockData")){
+                    item.blockData = [];
+                    comp.value['blockData'].value.forEach((element:any) => {
+                        var vec2 = new Vec2();
+                        vec2.x = element.value.x;
+                        vec2.y = element.value.y;
+                        item.blockData.push(vec2);
+                    });
+                    console.log("[ExportInfo]blockData=", item.blockData);
+                }
+            }
+        });
     }
     return item;
 }
