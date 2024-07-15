@@ -11,7 +11,9 @@ exports.methods = {
  * @en Hooks triggered after extension loading is complete
  */
 function load() {
-    console.warn("[ExportInfo]Export Function Ver=0.01");
+    Editor.Profile.getConfig("p_export").then(v => {
+        console.warn("[ExportInfo]Export:" + v.__version__);
+    });
 }
 exports.load = load;
 /**
