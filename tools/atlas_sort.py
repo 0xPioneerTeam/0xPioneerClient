@@ -171,22 +171,22 @@ def mainLogic():
             continue
         if uuid not in refMap:
             os.remove(imageURL)
-        else:
-            if len(refMap[uuid]) == 1:
-                # 只有1处引用
-                moveFile(imageURL, os.path.join(new_image_dir, refMap[uuid][0]))
-            if len(refMap[uuid]) > 1:
-                result_path = ""
-                for path in refMap[uuid]:
-                    result_path = result_path + "&" + path.split('\\')[-1]
+        # else:
+        #     if len(refMap[uuid]) == 1:
+        #         # 只有1处引用
+        #         moveFile(imageURL, os.path.join(new_image_dir, refMap[uuid][0]))
+        #     if len(refMap[uuid]) > 1:
+        #         result_path = ""
+        #         for path in refMap[uuid]:
+        #             result_path = result_path + "&" + path.split('\\')[-1]
                     
-                if len(result_path) > 50:
-                    result_path = result_path[:50]
+        #         if len(result_path) > 50:
+        #             result_path = result_path[:50]
             
-                moveFile(imageURL, os.path.join(new_image_dir, "common\\" + result_path))
+        #         moveFile(imageURL, os.path.join(new_image_dir, "common\\" + result_path))
     
     # 清空空文件夹
-    deleteEmptyDir(projectPath)
+    # deleteEmptyDir(projectPath)
 
     # 添加图集文件
     # addPacFile(projectPath)
