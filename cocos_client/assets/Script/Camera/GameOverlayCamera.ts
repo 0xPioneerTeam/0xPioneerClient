@@ -3,6 +3,7 @@ import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
 import { OuterTiledMapActionController } from "../Game/Outer/OuterTiledMapActionController";
+import { MapPioneer } from "../Game/Outer/View/MapPioneer";
 const { ccclass, property } = _decorator;
 
 @ccclass("GameOverlayCamera")
@@ -10,6 +11,7 @@ export class GameOverlayCamera extends Component {
     start() {
         NotificationMgr.addListener(NotificationName.GAME_CAMERA_POSITION_CHANGED, this._onGameCameraPositionChange, this);
         NotificationMgr.addListener(NotificationName.GAME_CAMERA_ZOOM_CHANGED, this._onGameCameraZoomChange, this);
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_BEGIN_MOVE, this._onMapPioneerBeginMove, this);
     }
 
     private _outScene: Node = null;
@@ -26,6 +28,10 @@ export class GameOverlayCamera extends Component {
         ) {
             return;
         }
+        this._checkMapMemberShow();
+    }
+
+    private _checkMapMemberShow() {
         this._lastCameraPosition = GameMainHelper.instance.gameCameraWorldPosition.clone();
         this._lastCameraorthoHeight = GameMainHelper.instance.gameCameraOrthoHeight;
         if (!this._outScene) {
@@ -43,7 +49,8 @@ export class GameOverlayCamera extends Component {
             let uitransform = child.getComponent(UITransform);
             if (uitransform) {
                 uitransform.getComputeAABB(worldBox);
-                if (geometry.intersect.aabbFrustum(worldBox, frustum)) {
+                
+                if (geometry.intersect.aabbFrustum(worldBox, frustum) || child.getComponent(MapPioneer)?.isMoving()) {
                     child.active = true;
                 } else {
                     child.active = false;
@@ -58,5 +65,8 @@ export class GameOverlayCamera extends Component {
     }
     private _onGameCameraZoomChange() {
         this.node.getComponent(Camera).orthoHeight = GameMainHelper.instance.gameCameraOrthoHeight;
+    }
+    private _onMapPioneerBeginMove() {
+        this._checkMapMemberShow();
     }
 }

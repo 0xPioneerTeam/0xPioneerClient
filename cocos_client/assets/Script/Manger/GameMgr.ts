@@ -54,7 +54,7 @@ export default class GameMgr {
             return;
         }
 
-        const price = buyPrices[nft.rank - 1][1] - Math.min(buyThres, pioneer.energy) * buyCoefficient;
+        const price = buyPrices[nft.rank - 1][1] - Math.floor(Math.min(buyThres, pioneer.energy) * buyCoefficient);
 
         const result = await UIPanelManger.inst.pushPanel(HUDName.Alter, UIPanelLayerType.HUD);
         if (!result.success) {

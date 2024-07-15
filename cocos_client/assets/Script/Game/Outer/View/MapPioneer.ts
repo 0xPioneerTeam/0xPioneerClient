@@ -260,7 +260,7 @@ export class MapPioneer extends Component {
                 for (const child of showWalkView.children) {
                     const animation: Animation = child.getComponent(Animation);
                     if (animation != null) {
-                        animation.getState(animation.defaultClip.name).speed = animation.defaultClip.speed * 2;
+                        animation.getState(animation.defaultClip.name).speed = animation.defaultClip?.speed * 2;
                     }
                 }
             }
@@ -268,6 +268,13 @@ export class MapPioneer extends Component {
     }
     public setEventWaitedCallback(callback: () => void) {
         this._eventWaitedCallback = callback;
+    }
+
+    public isMoving() {
+        if (this._model == null) {
+            return false;
+        }
+        return this._model.actionType == MapPioneerActionType.moving;
     }
 
     public playGetResourceAnim(resourceId: string, num: number, callback: () => void) {
