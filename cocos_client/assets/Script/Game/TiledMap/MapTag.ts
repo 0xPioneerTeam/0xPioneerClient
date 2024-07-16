@@ -1,16 +1,5 @@
-import { Vec2 } from 'cc';
-import { Sprite } from 'cc';
-import { _decorator, CCBoolean, Component, Node } from 'cc';
+import { _decorator, CCBoolean, Component, instantiate, Node, Prefab, UITransform, v3, Vec2 } from 'cc';
 import { DEV } from 'cc/env';
-import { ResourcesMgr } from '../../Utils/Global';
-import { BundleName } from '../../Basic/ResourcesMgr';
-import { SpriteFrame } from 'cc';
-import { UITransform } from 'cc';
-import { loader } from 'cc';
-import { assetManager } from 'cc';
-import { Prefab } from 'cc';
-import { instantiate } from 'cc';
-import { v3 } from 'cc';
 const { ccclass, property } = _decorator;
 
 
@@ -45,8 +34,8 @@ export class MapTag extends Component {
                     return;
                 }
                 //  to update size 30*30
-                let tilewidth = 7744;
-                let tileheight = 5792;
+                let tilewidth = 3904;
+                let tileheight = 2912;
                 let tileNodeWidth = 128;
                 let tileNodeHeight = 128;
                 let blockUITrans = blockNode.getComponent(UITransform);

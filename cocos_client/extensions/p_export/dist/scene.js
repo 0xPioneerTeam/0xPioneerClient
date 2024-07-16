@@ -95,7 +95,9 @@ async function tranINodeData(node) {
         item.url = '';
     }
     else {
-        item.url = await Editor.Message.request('asset-db', 'query-url', pbuuid);
+        let assetInfo = await Editor.Message.request('asset-db', 'query-asset-info', pbuuid);
+        item.url = assetInfo.name;
+        console.log(assetInfo);
     }
     item.name = String(iNode.name.value);
     item.show = Boolean(iNode.active.value);
@@ -126,7 +128,7 @@ async function tranINodeData(node) {
                         vec2.y = element.value.y;
                         item.blockData.push(vec2);
                     });
-                    console.log("[ExportInfo]blockData=", item.blockData);
+                    // console.log("[ExportInfo]blockData=", item.blockData);
                 }
             }
         });
