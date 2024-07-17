@@ -593,66 +593,6 @@ export class DataMgr {
         }
         GameMusicPlayMgr.playExploreEffect();
     };
-    public static player_event_select_res = (e: any) => {
-        const p: s2c_user.Iplayer_event_select_res = e.data;
-        if (p.res !== 1) {
-            return;
-        }
-        const eventConfig = EventConfig.getById(p.eventId);
-        if (eventConfig.type == 4) {
-            // reward change
-            if (eventConfig.cost == null) {
-                return;
-            }
-            let showTip: string = "";
-            for (const temple of eventConfig.cost) {
-                const type: ItemConfigType = temple[0];
-                const id: string = temple[1];
-                const num: number = temple[2];
-                if (type == ItemConfigType.Item) {
-                    const itemConf = ItemConfig.getById(id);
-                    if (itemConf == null) {
-                        continue;
-                    }
-                    showTip += LanMgr.replaceLanById("207008", [num, LanMgr.getLanById(itemConf.itemName)]) + "\n";
-                }
-            }
-            UIHUDController.showCenterTip(showTip);
-        } else if (eventConfig.type == 5) {
-            // attributes change
-            if (eventConfig.change != null) {
-                let showTip: string = "";
-                for (const tempChange of eventConfig.change) {
-                    const isPlayer: boolean = tempChange[0] == "-1";
-                    // 1-hp 2-attack
-                    const changedType: MapPioneerEventAttributesChangeType = tempChange[1];
-                    if (isPlayer) {
-                        if (changedType == 1) {
-                            showTip += LanMgr.getLanById("207001") + "\n";
-                        } else {
-                            showTip += LanMgr.getLanById("207002") + "\n";
-                        }
-                    } else {
-                        const pioneerInfo = DataMgr.s.pioneer.getById(tempChange[0]);
-                        if (pioneerInfo == null) {
-                            if (changedType == 1) {
-                                showTip += LanMgr.getLanById("207003") + "\n";
-                            } else {
-                                showTip += LanMgr.getLanById("207004") + "\n";
-                            }
-                        } else {
-                            if (changedType == 1) {
-                                showTip += LanMgr.replaceLanById("207005", [pioneerInfo.name]) + "\n";
-                            } else {
-                                showTip += LanMgr.replaceLanById("207006", [pioneerInfo.name]) + "\n";
-                            }
-                        }
-                    }
-                }
-                UIHUDController.showCenterTip(showTip);
-            }
-        }
-    };
     public static player_wormhole_set_attacker_res = (e: any) => {
         const p = e.data;
         if (p.res !== 1) {

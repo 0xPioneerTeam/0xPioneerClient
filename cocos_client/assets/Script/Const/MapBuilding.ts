@@ -51,6 +51,8 @@ export interface MapBuildingBaseData {
     winprogress: number;
 
     eventId: string;
+    eventIndex: number;
+    eventSubId: string;
     eventPioneerIds: string[];
     eventPioneerDatas: Map<string, MapPioneerObject>;
 

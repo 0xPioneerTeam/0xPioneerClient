@@ -896,6 +896,8 @@ export namespace share {
         explorePioneerIds: string[];
 
         eventId: string;
+        eventIndex: number;
+        eventSubId: string;
         eventPioneerIds: string[];
         eventPioneerDatas: { [key: string]: share.Ipioneer_data };
 
