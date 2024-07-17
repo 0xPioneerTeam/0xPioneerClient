@@ -211,7 +211,6 @@ message player_event_start_res {
 }
 message player_event_select_res {
     required int32 res = 1;
-    optional string eventId = 2;
 }
 // pioneer: notify
 message sinfo_change {

@@ -352,26 +352,28 @@ message mapbuilding_info_data {
     repeated string explorePioneerIds = 14;
 
     optional string eventId = 15;
-    repeated string eventPioneerIds = 16;
-    map<string,pioneer_data> eventPioneerDatas = 17;
+    required uint32 eventIndex = 16;
+    required string eventSubId = 17;
+    repeated string eventPioneerIds = 18;
+    map<string,pioneer_data> eventPioneerDatas = 19;
 
-    optional uint32 progress = 18;
-    required uint32 exp = 19;
+    optional uint32 progress = 20;
+    required uint32 exp = 21;
     
 
-    optional float hpMax = 20;
-    optional float hp = 21;
-    optional float attack = 22;
-    optional uint32 winprogress = 23;
+    optional float hpMax = 22;
+    optional float hp = 23;
+    optional float attack = 24;
+    optional uint32 winprogress = 25;
 
     
-    optional uint32 wormholdCountdownTime = 24;
-    map<string,string> attacker = 25;
+    optional uint32 wormholdCountdownTime = 26;
+    map<string,string> attacker = 27;
 
-    optional uint32 tavernCountdownTime = 26;
+    optional uint32 tavernCountdownTime = 28;
 
-    optional uint32 dieTime = 27;
-    optional uint32 rebornTime = 28;
+    optional uint32 dieTime = 29;
+    optional uint32 rebornTime = 30;
 }
 
 message map_info_data {

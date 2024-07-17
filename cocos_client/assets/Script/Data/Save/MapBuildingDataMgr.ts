@@ -139,6 +139,8 @@ export class MapBuildingDataMgr {
             quota: element.quota,
 
             eventId: element.eventId,
+            eventIndex: element.eventIndex,
+            eventSubId: element.eventSubId,
             eventPioneerIds: element.eventPioneerIds == null ? [] : element.eventPioneerIds,
             eventPioneerDatas: new Map(),
 
