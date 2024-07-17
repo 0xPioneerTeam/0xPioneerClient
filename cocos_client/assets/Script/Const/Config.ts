@@ -7,6 +7,12 @@ export enum ConfigType {
     LoginWhiteList = "10002",
     OneStepCostEnergy = "10004",
     MainCityEnergyTipThreshold = "10005",
+
+    BuyEnergyLimit = "10010",
+    BuyEnergyPrice = "10011",
+    BuyEnergyThres = "10012",
+    BuyEnergyCoefficient = "10013",
+
     BattleReportMaxKeepDays = "110000",
     BattleReportMaxKeepRecords = "110002",
 
@@ -136,4 +142,20 @@ export interface SelectFromThreeGetAllCostCoefficientParam extends ConfigData {
 
 export interface PerNumSelectBoxParam extends ConfigData {
     value: number;
+}
+
+export interface BuyEnergyLimitParam extends ConfigData {
+    limit: number;
+}
+
+export interface BuyEnergyPriceParam extends ConfigData {
+    prices: number[];
+}
+
+export interface BuyEnergyThresParam extends ConfigData {
+    thresholds: number;
+}
+
+export interface BuyEnergyCoefficientParam extends ConfigData {
+    coefficient: number;
 }

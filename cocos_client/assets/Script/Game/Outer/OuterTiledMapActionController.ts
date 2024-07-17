@@ -519,8 +519,8 @@ export class OuterTiledMapActionController extends ViewController {
             if (stayBuilding.type == MapBuildingType.wormhole) {
                 // if (DataMgr.s.userInfo.data.rookieStep == RookieStep.FINISH) {
                 //     UIHUDController.showCenterTip("Wormhole is updating, close temporarily");
-                    // UIHUDController.showCenterTip(LanMgr.getLanById("203005"));
-                    // return;
+                // UIHUDController.showCenterTip(LanMgr.getLanById("203005"));
+                // return;
                 // }
                 const tempWormhole = stayBuilding as MapBuildingWormholeObject;
                 if (tempWormhole.wormholdCountdownTime > new Date().getTime()) {
@@ -648,10 +648,10 @@ export class OuterTiledMapActionController extends ViewController {
                     return;
                 }
                 if (costEnergy > 0) {
-                    let ownEnergy: number = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Energy);
+                    let ownEnergy: number = currentActionPioneer.energy;
                     if (ownEnergy < costEnergy) {
                         outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
-                        UIHUDController.showCenterTip(LanMgr.getLanById("106002"));
+                        GameMgr.showBuyEnergyTip(currentActionPioneer.id);
                         return;
                     }
                 }

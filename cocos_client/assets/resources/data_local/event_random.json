@@ -1,0 +1,64 @@
+[
+  {
+    "id": "1",
+    "name": "910016",
+    "level": 1,
+    "narrator": "900076",
+    "sub_event": [
+      [
+        1,
+        2
+      ],
+      7,
+      9
+    ],
+    "prefab": "Tree_Group"
+  },
+  {
+    "id": "2",
+    "name": "910017",
+    "level": 2,
+    "narrator": "900077",
+    "sub_event": [
+      [
+        3,
+        4
+      ],
+      8,
+      9
+    ],
+    "prefab": "Pyramid_Group"
+  },
+  {
+    "id": "3",
+    "name": "910018",
+    "level": 3,
+    "narrator": "900078",
+    "sub_event": [
+      [
+        5,
+        6
+      ],
+      7,
+      11,
+      15
+    ],
+    "prefab": "Aquatic_Relics_Group"
+  },
+  {
+    "id": "4",
+    "name": "910019",
+    "level": 4,
+    "narrator": "900079",
+    "sub_event": [
+      [
+        5,
+        6
+      ],
+      7,
+      14,
+      9
+    ],
+    "prefab": "Transfer_Matrix_Group"
+  }
+]

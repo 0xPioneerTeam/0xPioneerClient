@@ -64,6 +64,26 @@ export default class ConfigConfig {
                     type: key,
                     threshold: param[0],
                 };
+            } else if (key == ConfigType.BuyEnergyLimit) {
+                temple = {
+                    type: key,
+                    limit: param[0],
+                }
+            } else if (key == ConfigType.BuyEnergyPrice) {
+                temple = {
+                    type: key,
+                    prices: param,
+                }
+            } else if (key == ConfigType.BuyEnergyThres) {
+                temple = {
+                    type: key,
+                    thresholds: param[0],
+                }
+            } else if (key == ConfigType.BuyEnergyCoefficient) {
+                temple = {
+                    type: key,
+                    coefficient: param[0],
+                }
             } else if (key == ConfigType.BattleReportMaxKeepDays) {
                 temple = {
                     type: key,
