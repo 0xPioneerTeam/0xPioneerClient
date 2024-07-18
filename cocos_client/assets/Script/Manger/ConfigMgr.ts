@@ -14,6 +14,7 @@ import LanConfig from "../Config/LanConfig";
 import LvlupConfig from "../Config/LvlupConfig";
 import MapBuildingConfig from "../Config/MapBuildingConfig";
 import NewEventConfig from "../Config/NewEventConfig";
+import NewSubEventConfig from "../Config/NewSubEventConfig";
 import NFTPioneerConfig from "../Config/NFTPioneerConfig";
 import NFTPioneerNameConfig from "../Config/NFTPioneerNameConfig";
 import NFTSkillConfig from "../Config/NFTSkillConfig";
@@ -37,6 +38,7 @@ export default class ConfigMgr {
         if (!(await EvaluationConfig.init())) return false;
         if (!(await EventConfig.init())) return false;
         if (!(await NewEventConfig.init())) return false;
+        if (!(await NewSubEventConfig.init())) return false;
         if (!(await InnerBuildingConfig.init())) return false;
         if (!(await InnerBuildingLvlUpConfig.init())) return false;
         if (!(await ItemConfig.init())) return false;

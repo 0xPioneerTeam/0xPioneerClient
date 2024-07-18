@@ -53,6 +53,7 @@ export interface MapBuildingBaseData {
     eventId: string;
     eventIndex: number;
     eventSubId: string;
+    eventWaitFightEnemyId: string;
     eventPioneerIds: string[];
     eventPioneerDatas: Map<string, MapPioneerObject>;
 

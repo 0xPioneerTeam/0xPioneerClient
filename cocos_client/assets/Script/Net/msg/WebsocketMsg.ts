@@ -114,6 +114,9 @@ export class WebsocketMsg {
     public player_event_start(d: c2s_user.Iplayer_event_start) {
         this.send_packet("player_event_start", d);
     }
+    public player_event_generate_enemy(d: c2s_user.Iplayer_event_generate_enemy) {
+        this.send_packet("player_event_generate_enemy", d);
+    }
     public player_event_select(d: c2s_user.Iplayer_event_select) {
         this.send_packet("player_event_select", d);
     }
@@ -319,10 +322,15 @@ export namespace c2s_user {
         pioneerId: string;
         buildingId: string;
     }
+    export interface Iplayer_event_generate_enemy {
+        pioneerId: string;
+        buildingId: string;
+        selectIdx: number;
+    }
     export interface Iplayer_event_select {
         pioneerId: string;
         buildingId: string;
-        selectIdx?: number;
+        selectIdx: number;
     }
     export interface Iplayer_fight_start {
         attackerId: string;
@@ -898,6 +906,7 @@ export namespace share {
         eventId: string;
         eventIndex: number;
         eventSubId: string;
+        eventWaitFightEnemyId: string;
         eventPioneerIds: string[];
         eventPioneerDatas: { [key: string]: share.Ipioneer_data };
 

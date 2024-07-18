@@ -43,6 +43,9 @@ export enum UIName {
     CivilizationLevelUI = "abresources/prefab/ui/clevel/CivilizationLevelUI",
     CollectWalletUI = "abresources/prefab/ui/wallet/CollectWalletUI",
 
+    NewEventUI = "abresources/prefab/ui/event/NewEventUI",
+    NewEventBattleUI = "abresources/prefab/ui/event/NewEventBattleUI",
+
     // bundle 2
     BuildingUpgradeUI = "abresources_2/prefab/ui/BuildingUpgradeUI",
     RecruitUI = "abresources_2/prefab/ui/RecruitUI",

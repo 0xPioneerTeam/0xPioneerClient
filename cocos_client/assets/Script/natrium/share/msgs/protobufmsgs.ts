@@ -173,6 +173,7 @@ export enum protobuf_s2c {
     player_fight_start_res,
     // pioneer: event
     player_event_start_res,
+    player_event_generate_enemy_res,
     player_event_select_res,
     // pioneer: notify
     sinfo_change,

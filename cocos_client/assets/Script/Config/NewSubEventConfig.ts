@@ -1,12 +1,12 @@
 import { resources } from "cc";
-import { NewEventConfigData } from "../Const/NewEventDefine";
+import { NewSubEventConfigData } from "../Const/NewEventDefine";
 
-export default class NewEventConfig {
-    private static _confs: NewEventConfigData[] = [];
+export default class NewSubEventConfig {
+    private static _confs: NewSubEventConfigData[] = [];
 
     public static async init(): Promise<boolean> {
         const obj: any = await new Promise((resolve) => {
-            resources.load("data_local/event_random", (err: Error, data: any) => {
+            resources.load("data_local/event_sub", (err: Error, data: any) => {
                 if (err) {
                     resolve(null);
                     return;
@@ -19,7 +19,7 @@ export default class NewEventConfig {
         return true;
     }
 
-    public static getById(id: string): NewEventConfigData | undefined {
+    public static getById(id: string): NewSubEventConfigData | undefined {
         return this._confs.find((item)=> {
             return item.id === id;
         });
