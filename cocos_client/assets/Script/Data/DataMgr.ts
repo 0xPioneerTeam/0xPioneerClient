@@ -39,6 +39,7 @@ import { ResourceCorrespondingItem } from "../Const/ConstDefine";
 import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Const/RookieDefine";
 import { ArtifactInfoUI } from "../UI/ArtifactInfoUI";
 import { load } from "protobufjs";
+import { NewEventUI } from "../UI/Event/NewEventUI";
 
 export class DataMgr {
     public static r: RunData;
@@ -408,42 +409,42 @@ export class DataMgr {
                             // player rebirth
                             GameMusicPlayMgr.playPioneerRebonEffect();
                         }
-                        if (oldData.actionType == MapPioneerActionType.eventStarting && newData.actionType == MapPioneerActionType.eventing) {
-                            // event
-                            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
-                                triggerPioneerId: newData.id,
-                                eventBuildingId: newData.actionBuildingId,
-                                eventId: newData.actionEventId,
-                            });
-                            const stepEndData: EVENT_STEPEND_DATA = {
-                                pioneerId: newData.id,
-                                buildingId: newData.actionBuildingId,
-                                eventId: newData.actionEventId,
-                                hasNextStep:
-                                    newData.actionEventId != "-1" &&
-                                    newData.actionEventId != "-2" &&
-                                    newData.actionEventId != "" &&
-                                    newData.actionEventId != null,
-                            };
-                            NotificationMgr.triggerEvent(NotificationName.EVENT_STEPEND, stepEndData);
-                        }
+                        // if (oldData.actionType == MapPioneerActionType.eventStarting && newData.actionType == MapPioneerActionType.eventing) {
+                        //     // event
+                        //     NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
+                        //         triggerPioneerId: newData.id,
+                        //         eventBuildingId: newData.actionBuildingId,
+                        //         eventId: newData.actionEventId,
+                        //     });
+                        //     const stepEndData: EVENT_STEPEND_DATA = {
+                        //         pioneerId: newData.id,
+                        //         buildingId: newData.actionBuildingId,
+                        //         eventId: newData.actionEventId,
+                        //         hasNextStep:
+                        //             newData.actionEventId != "-1" &&
+                        //             newData.actionEventId != "-2" &&
+                        //             newData.actionEventId != "" &&
+                        //             newData.actionEventId != null,
+                        //     };
+                        //     NotificationMgr.triggerEvent(NotificationName.EVENT_STEPEND, stepEndData);
+                        // }
                     }
                     // event
-                    if (newData.actionType == MapPioneerActionType.eventing && oldData.actionEventId != newData.actionEventId) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
-                            triggerPioneerId: newData.id,
-                            eventBuildingId: newData.actionBuildingId,
-                            eventId: newData.actionEventId,
-                        });
-                        const stepEndData: EVENT_STEPEND_DATA = {
-                            pioneerId: newData.id,
-                            buildingId: newData.actionBuildingId,
-                            eventId: newData.actionEventId,
-                            hasNextStep:
-                                newData.actionEventId != "-1" && newData.actionEventId != "-2" && newData.actionEventId != "" && newData.actionEventId != null,
-                        };
-                        NotificationMgr.triggerEvent(NotificationName.EVENT_STEPEND, stepEndData);
-                    }
+                    // if (newData.actionType == MapPioneerActionType.eventing && oldData.actionEventId != newData.actionEventId) {
+                    //     NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
+                    //         triggerPioneerId: newData.id,
+                    //         eventBuildingId: newData.actionBuildingId,
+                    //         eventId: newData.actionEventId,
+                    //     });
+                    //     const stepEndData: EVENT_STEPEND_DATA = {
+                    //         pioneerId: newData.id,
+                    //         buildingId: newData.actionBuildingId,
+                    //         eventId: newData.actionEventId,
+                    //         hasNextStep:
+                    //             newData.actionEventId != "-1" && newData.actionEventId != "-2" && newData.actionEventId != "" && newData.actionEventId != null,
+                    //     };
+                    //     NotificationMgr.triggerEvent(NotificationName.EVENT_STEPEND, stepEndData);
+                    // }
                     // fight
                     if (oldData.fightData == null && newData.fightData != null) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_BEGIN, { id: newData.id });
@@ -494,7 +495,7 @@ export class DataMgr {
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106010"));
     };
 
-    public static mapbuilding_change = (e: any) => {
+    public static mapbuilding_change = async(e: any) => {
         const p: s2c_user.Imappbuilding_change = e.data;
         const localDatas = DataMgr.s.mapBuilding.getObj_building();
         for (const temple of p.mapbuildings) {
@@ -534,6 +535,15 @@ export class DataMgr {
 
                     if (oldData.rebornTime != newData.rebornTime) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_REBON_CHANGE);
+                    }
+                    console.log("exce old:" + oldData.eventSubId)
+                    if (oldData.eventSubId != newData.eventSubId && newData.eventSubId != null && newData.eventPioneerIds.length > 0) {
+                        console.log("exce step1");
+                        const result = await UIPanelManger.inst.pushPanel(UIName.NewEventUI);
+                        if (result.success) {
+                            console.log("exce step2");
+                            result.node.getComponent(NewEventUI).configuration(newData.eventPioneerIds[0], newData);
+                        }
                     }
                     break;
                 }

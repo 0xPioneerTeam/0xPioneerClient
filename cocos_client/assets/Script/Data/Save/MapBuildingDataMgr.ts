@@ -141,6 +141,7 @@ export class MapBuildingDataMgr {
             eventId: element.eventId,
             eventIndex: element.eventIndex,
             eventSubId: element.eventSubId,
+            eventWaitFightEnemyId: element.eventWaitFightEnemyId,
             eventPioneerIds: element.eventPioneerIds == null ? [] : element.eventPioneerIds,
             eventPioneerDatas: new Map(),
 

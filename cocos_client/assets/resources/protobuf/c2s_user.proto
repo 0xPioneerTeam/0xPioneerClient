@@ -150,10 +150,15 @@ message player_event_start {
     required string pioneerId = 1;
     required string buildingId = 2;
 }
+message player_event_generate_enemy {
+    required string pioneerId = 1;
+    required string buildingId = 2;
+    required uint32 selectIdx = 3;
+}
 message player_event_select {
     required string pioneerId = 1;
     required string buildingId = 2;
-    optional uint32 selectIdx = 3;
+    required uint32 selectIdx = 3;
 }
 
 
