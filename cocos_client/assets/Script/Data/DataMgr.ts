@@ -40,6 +40,7 @@ import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Con
 import { ArtifactInfoUI } from "../UI/ArtifactInfoUI";
 import { load } from "protobufjs";
 import { NewEventUI } from "../UI/Event/NewEventUI";
+import { NewEventBattleUI } from "../UI/Event/NewEventBattleUI";
 
 export class DataMgr {
     public static r: RunData;
@@ -91,7 +92,7 @@ export class DataMgr {
         }
         DataMgr.s.userInfo.data.name = p.name;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_NAME);
-    }
+    };
 
     public static sinfo_change = (e: any) => {
         const p: s2c_user.Isinfo_change = e.data;
@@ -495,7 +496,7 @@ export class DataMgr {
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106010"));
     };
 
-    public static mapbuilding_change = async(e: any) => {
+    public static mapbuilding_change = async (e: any) => {
         const p: s2c_user.Imappbuilding_change = e.data;
         const localDatas = DataMgr.s.mapBuilding.getObj_building();
         for (const temple of p.mapbuildings) {
@@ -536,15 +537,21 @@ export class DataMgr {
                     if (oldData.rebornTime != newData.rebornTime) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_REBON_CHANGE);
                     }
-                    console.log("exce old:" + oldData.eventSubId)
-                    if (oldData.eventSubId != newData.eventSubId && newData.eventSubId != null && newData.eventPioneerIds.length > 0) {
-                        console.log("exce step1");
-                        const result = await UIPanelManger.inst.pushPanel(UIName.NewEventUI);
-                        if (result.success) {
-                            console.log("exce step2");
-                            result.node.getComponent(NewEventUI).configuration(newData.eventPioneerIds[0], newData);
+                    if (newData.eventPioneerIds.length > 0) {
+                        if ((oldData.eventSubId != newData.eventSubId && newData.eventSubId != null) || newData.eventIndex > oldData.eventIndex) {
+                            const result = await UIPanelManger.inst.pushPanel(UIName.NewEventUI);
+                            if (result.success) {
+                                result.node.getComponent(NewEventUI).configuration(newData.eventPioneerIds[0], newData);
+                            }
+                        }
+                        if (oldData.eventWaitFightEnemyId != newData.eventWaitFightEnemyId && newData.eventWaitFightEnemyId != null) {
+                            const result = await UIPanelManger.inst.pushPanel(UIName.NewEventBattleUI);
+                            if (result.success) {
+                                result.node.getComponent(NewEventBattleUI).configuration(newData.eventPioneerIds[0], newData)
+                            }
                         }
                     }
+
                     break;
                 }
             }

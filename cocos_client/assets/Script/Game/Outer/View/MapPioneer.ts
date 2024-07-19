@@ -188,16 +188,10 @@ export class MapPioneer extends Component {
                     }
                     break;
 
-                case MapPioneerActionType.eventStarting:
-                    {
-                        this._contentView.active = true;
-                        idleView.active = true;
-                    }
-                    break;
-
                 case MapPioneerActionType.eventing:
                     {
                         this._contentView.active = true;
+                        this._eventingView.active = true;
                         idleView.active = true;
                     }
                     break;
@@ -393,10 +387,10 @@ export class MapPioneer extends Component {
         }
 
         // event tip
-        if (this._model != null && (this._model.actionType == MapPioneerActionType.eventStarting || this._model.actionType == MapPioneerActionType.eventing)) {
-            this._eventWaitedView.active = currentTimeStamp >= this._model.actionEndTimeStamp;
-            this._eventingView.active = currentTimeStamp < this._model.actionEndTimeStamp;
-        }
+        // if (this._model != null && (this._model.actionType == MapPioneerActionType.eventStarting || this._model.actionType == MapPioneerActionType.eventing)) {
+        //     this._eventWaitedView.active = currentTimeStamp >= this._model.actionEndTimeStamp;
+        //     this._eventingView.active = currentTimeStamp < this._model.actionEndTimeStamp;
+        // }
     }
 
     //----------------- event

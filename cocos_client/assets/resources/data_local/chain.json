@@ -1,5 +1,5 @@
 {
-    "currentConfigId": "23456",
+    "currentConfigId": "111112",
     "configs": {
         "42161": {
             "chainId": "42161",
@@ -103,8 +103,8 @@
             "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
             "abi": "deployresult_scrollTestnet",
             "api": {
-                "ws_host": "ws://api.0xpioneerdapp.com/wss",
-                "http_host": "http://api.0xpioneerdapp.com/api",
+                "ws_host": "ws://16.163.109.112:5091",
+                "http_host": "http://16.163.109.112:9080",
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
             }

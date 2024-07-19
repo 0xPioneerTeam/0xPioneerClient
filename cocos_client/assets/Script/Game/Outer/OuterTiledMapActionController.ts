@@ -531,9 +531,7 @@ export class OuterTiledMapActionController extends ViewController {
             } else if (stayBuilding.type == MapBuildingType.event) {
                 if (
                     currentActionPioneer.actionBuildingId != null &&
-                    currentActionPioneer.actionBuildingId != "" &&
-                    currentActionPioneer.actionBuildingId != stayBuilding.id
-                ) {
+                    currentActionPioneer.actionBuildingId != "") {
                     return;
                 }
             } else {

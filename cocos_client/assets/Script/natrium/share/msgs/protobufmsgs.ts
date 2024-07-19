@@ -56,7 +56,9 @@ export enum protobuf_c2s {
     player_fight_start,
     // pioneer: event
     player_event_start,
+    player_event_generate_enemy,
     player_event_select,
+    player_event_exit,
 
 
     // ------ mapbuilding ------
@@ -175,6 +177,7 @@ export enum protobuf_s2c {
     player_event_start_res,
     player_event_generate_enemy_res,
     player_event_select_res,
+    player_event_exit_res,
     // pioneer: notify
     sinfo_change,
     pioneer_change,
