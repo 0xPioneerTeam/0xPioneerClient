@@ -30,6 +30,29 @@ message update_name_res {
     required string name = 2;
 }
 
+// move
+message player_goto {
+    required uint32 instid = 1; // map instance id (player/monster/other obj...)
+    required share.player_mov_info goto = 2; // goto move info
+}
+// stop move
+message player_stop {
+    required uint32 instid = 1; // map instance id (player/monster/other obj...)
+    required share.pos2d pos = 2; // stop position
+}
+// stop and goto home
+message player_stophome {
+    required uint32 instid = 1; // map instance id (player/monster/other obj...)
+    required share.pos2d pos = 2; // stop position
+}
+// change map
+message changemap_res {
+    required int32 res = 1; // error code see {ServerErrorCode}
+    optional uint32 tomapid = 2; // target map id
+    optional uint32 selfInstid = 3; // new map instance id, bind it with player
+    optional share.pos2d pos = 4; // position
+}
+
 
 // rookie
 message player_rookie_finish_res {
@@ -89,6 +112,13 @@ message get_user_settlement_info_res {
     map<string, share.settlement_data> data = 2;
 }
 
+
+// ------ map ------
+// map: getinfo
+message get_map_info_res {
+    required int32 res = 1;
+    repeated share.map_info_data info = 2;
+}
 
 // ------ player ------
 // player: talk

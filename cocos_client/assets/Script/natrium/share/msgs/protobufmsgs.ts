@@ -9,6 +9,15 @@ export enum protobuf_c2s {
     update_name,
 
 
+    goto,
+    stop,
+    stophome,
+    changemap_begin,
+    changemap_end,
+
+    // ------ map ------
+    get_map_info,
+
     // ------ rookie ------
     player_rookie_update,
     player_rookie_wormhole_fight,
@@ -120,6 +129,12 @@ export enum protobuf_s2c {
     enter_game_res,
     update_name_res,
 
+    player_goto,
+    changemap_res,
+    player_stophome,
+
+    // ------ mapw ------
+    get_map_info_res,
 
     // ------ rookie ------
     player_rookie_update_res,

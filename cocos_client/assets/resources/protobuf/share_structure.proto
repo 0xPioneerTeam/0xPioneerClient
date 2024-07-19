@@ -16,6 +16,18 @@ message user_data {
     required uint64 lastlogintm = 4; // last login time, unix time stamp in ms
 }
 
+// move info
+message player_mov_info {
+    repeated share.mov_path_node path = 1; // mov path
+}
+
+// mov info path node
+message mov_path_node {
+    required int32 x = 1; // x in pixel
+    required int32 y = 2; // y in pixel
+    required float cost = 3; // time cost rate
+}
+
 // ----------------------------------------------------------------------------
 
 // player simple info
@@ -27,8 +39,9 @@ message player_sinfo {
     required uint32 level = 5;
     required uint32 exp = 6;
     required pos2d pos = 7;
+    required string slotId = 8;
     
-    repeated string talkIds = 8;
+    repeated string talkIds = 9;
 
     required bool beginfin = 10;
     repeated string beginBoxes = 11;
@@ -56,8 +69,6 @@ message player_sinfo {
 
     map<string, bool> lvlRewards = 60;
     map<string, uint32> lvlupConds = 61;
-
-    required uint32 buyEnergyLimitTimes = 62;
 }
 
 // self player data
@@ -68,12 +79,13 @@ message player_data {
 // player info 
 message player_info {
     required player_sinfo sinfo = 1; // player simple info
-    repeated building_data buildings = 2;
+    // repeated building_data buildings = 2;
+    map<string, building_data> buildings = 2;
     optional storehouse_data storehouse = 3;
     optional artifact_data artifact = 4;
     optional usermap_data usermap = 5;
     optional nfts_data nfts = 6;
-    optional mapbuilding_data mapbuilding = 7;
+    required map_info_data mapbuilding = 7;
     repeated task_data tasks = 8;
     repeated pos2d shadows = 9;
 }
@@ -123,58 +135,119 @@ message pioneer_data {
     required uint32 faction = 4;
     required string type = 5;
     required pos2d stayPos = 6;
+    required string slotId = 7;
 
-    required float hp = 7;
+    required float hp = 8;
 
-    required float hpMax = 8;
-    // required uint32 hpMaxbase = 9;
-    // repeated int32 hpMaxadd = 10;
-    // repeated int32 hpMaxmul = 11;
+    required float hpMax = 9;
+    // required uint32 hpMaxbase = 10;
+    // repeated int32 hpMaxadd = 11;
+    // repeated int32 hpMaxmul = 12;
     
-    required float attack = 12;
-    // required uint32 attackbase = 13;
-    // repeated int32 attackadd = 14;
-    // repeated int32 attackmul = 15;
+    required float attack = 13;
+    // required uint32 attackbase = 14;
+    // repeated int32 attackadd = 15;
+    // repeated int32 attackmul = 16;
 
-    required float defend = 16;
-    // required uint32 defendbase = 17;
-    // repeated int32 defendadd = 18;
-    // repeated int32 defendmul = 19;
+    required float defend = 17;
+    // required uint32 defendbase = 18;
+    // repeated int32 defendadd = 19;
+    // repeated int32 defendmul = 20;
 
-    required float speed = 20;
-    // required uint32 speedbase = 21;
-    // repeated int32 speedadd = 22;
-    // repeated int32 speedmul = 23;
+    required float speed = 21;
+    // required uint32 speedbase = 22;
+    // repeated int32 speedadd = 23;
+    // repeated int32 speedmul = 24;
 
-    required float energy = 21;
-    required float energyMax = 22;
+    required float energy = 25;
+    required float energyMax = 26;
 
-    required string actionType = 24;
-    required uint32 actionBeginTimeStamp = 25;
-    required uint32 actionEndTimeStamp = 26;
-    optional string actionEventId = 27;
-    optional string actionBuildingId = 28;
+    required string actionType = 27;
+    required uint32 actionBeginTimeStamp = 28;
+    required uint32 actionEndTimeStamp = 29;
+    optional string actionEventId = 30;
+    optional string actionBuildingId = 31;
 
-    repeated fight_res actionFightRes = 29;
-    optional string actionFightId = 30;
-    optional uint32 actionFightWinner = 31;
-    optional uint32 actionFightHp = 32;
+    repeated fight_res actionFightRes = 32;
+    optional string actionFightId = 33;
+    optional uint32 actionFightWinner = 34;
+    optional uint32 actionFightHp = 35;
 
-    required uint32 eventStatus = 33;
+    required uint32 eventStatus = 36;
     
-    required uint32 winProgress = 34;
-    required uint32 winExp = 35;
+    required uint32 winProgress = 37;
+    required uint32 winExp = 38;
     
-    optional string NFTInitLinkId = 36;
-    optional int32 rebirthStartTime = 37;
-    optional int32 rebirthEndTime = 38;
-    optional string killerId = 39;
-    optional string NFTId = 40;
-    optional string talkId = 41;
-    optional user_map_member_status talkCountStruct = 42;
+    optional string NFTInitLinkId = 39;
+    optional int32 rebirthStartTime = 40;
+    optional int32 rebirthEndTime = 41;
+    optional string killerId = 42;
+    optional string NFTId = 43;
+    optional string talkId = 44;
+    optional user_map_member_status talkCountStruct = 45;
 
-    optional uint32 dieTime = 43;
-    optional uint32 rebornTime = 44;
+    optional uint32 dieTime = 46;
+    optional uint32 rebornTime = 47;
+}
+message map_pioneer_data {
+    required string id = 1;
+    required bool show = 2;
+    required uint32 level = 3;
+    required uint32 faction = 4;
+    required string type = 5;
+    required pos2d stayPos = 6;
+
+    required float hp = 8;
+
+    required float hpMax = 9;
+    // required uint32 hpMaxbase = 10;
+    // repeated int32 hpMaxadd = 11;
+    // repeated int32 hpMaxmul = 12;
+    
+    required float attack = 13;
+    // required uint32 attackbase = 14;
+    // repeated int32 attackadd = 15;
+    // repeated int32 attackmul = 16;
+
+    required float defend = 17;
+    // required uint32 defendbase = 18;
+    // repeated int32 defendadd = 19;
+    // repeated int32 defendmul = 20;
+
+    required float speed = 21;
+    // required uint32 speedbase = 22;
+    // repeated int32 speedadd = 23;
+    // repeated int32 speedmul = 24;
+
+    // required float energy = 25;
+    // required float energyMax = 26;
+
+    required string actionType = 27;
+    required uint32 actionBeginTimeStamp = 28;
+    required uint32 actionEndTimeStamp = 29;
+    optional string actionEventId = 30;
+    optional string actionBuildingId = 31;
+
+    repeated fight_res actionFightRes = 32;
+    optional string actionFightId = 33;
+    optional uint32 actionFightWinner = 34;
+    optional uint32 actionFightHp = 35;
+
+    required uint32 eventStatus = 36;
+    
+    required uint32 winProgress = 37;
+    required uint32 winExp = 38;
+    
+    // optional string NFTInitLinkId = 39;
+    optional int32 rebirthStartTime = 40;
+    optional int32 rebirthEndTime = 41;
+    optional string killerId = 42;
+    // optional string NFTId = 43;
+    optional string talkId = 44;
+    optional user_map_member_status talkCountStruct = 45;
+
+    optional uint32 dieTime = 46;
+    optional uint32 rebornTime = 47;
 }
 message fight_res {
     required string attackerId = 1;
@@ -299,6 +372,37 @@ message mapbuilding_info_data {
 
     optional uint32 dieTime = 27;
     optional uint32 rebornTime = 28;
+}
+
+message map_info_data {
+    required string slotId = 1;
+    required string templateConfigId = 2;
+    required uint32 mapSlotType = 3;
+    // repeated map_building_info_data buildings = 4;
+    map<string, map_building_info_data> buildings = 4;
+    map<string, map_pioneer_data> pioneers = 5;
+}
+
+message map_building_info_data {
+    required string id = 1;
+    required string name = 2;
+    required uint32 type = 3;
+    required uint32 level = 4;
+    required bool show = 5;
+    required uint32 faction = 6;
+
+    repeated string defendPioneerIds = 7;
+
+    optional building_resource resources = 8;
+    optional uint32 quota = 9;
+
+    optional string event = 10;
+
+    optional uint32 progress = 11;
+    required uint32 exp = 12;
+    
+    optional float attack = 13;
+    optional uint32 winprogress = 14;
 }
 
 message building_resource {

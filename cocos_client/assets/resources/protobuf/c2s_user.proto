@@ -22,6 +22,29 @@ message update_name {
     required string name = 1;
 }
 
+// move in map, go to position
+message goto {
+    required share.player_mov_info goto = 1; // goto info
+}
+// stop in map
+message stop {
+    required share.pos2d pos = 1; // stop positoin
+}
+// stop and goto home
+message stophome {
+
+}
+
+// start change map, when tirgger map transport point
+// send this message and start loading new map info
+message changemap_begin {
+}
+
+// after new map loading finish, send change map end msg
+message changemap_end {
+    required uint32 tomapid = 1; // target map id
+}
+
 // rookie
 message player_rookie_update {
     required uint32 rookieStep = 1;
@@ -50,6 +73,11 @@ message check_unused_tx_status {
 message get_battle_report { }
 message get_user_settlement_info { }
 
+// ------ map ------
+// mapinfo: getinfo
+message get_map_info {
+    repeated string slotIds = 1;
+}
 
 // ------ player ------
 // player: talk
