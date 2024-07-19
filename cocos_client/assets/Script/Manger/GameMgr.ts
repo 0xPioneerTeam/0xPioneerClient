@@ -30,6 +30,8 @@ export default class GameMgr {
 
     public enterGameSence: boolean = false;
 
+    public lastEventSelectFightIdx: number = -1;
+
     public async showBuyEnergyTip(pioneerId: string) {
         const pioneer = DataMgr.s.pioneer.getById(pioneerId) as MapPlayerPioneerObject;
         const nft = DataMgr.s.nftPioneer.getNFTById(pioneer?.NFTId);

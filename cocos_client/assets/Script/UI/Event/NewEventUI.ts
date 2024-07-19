@@ -1,8 +1,8 @@
-import { _decorator, Button, Component, instantiate, Label, Layout, Node } from "cc";
+import { _decorator, Button, Component, instantiate, Label, Layout, Node, UITransform } from "cc";
 import ViewController from "../../BasicView/ViewController";
 import { MapNewEventType, NewSubEventConfigData } from "../../Const/NewEventDefine";
 import NewSubEventConfig from "../../Config/NewSubEventConfig";
-import { LanMgr } from "../../Utils/Global";
+import { GameMgr, LanMgr } from "../../Utils/Global";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { HUDName, UIName } from "../../Const/ConstUIDefine";
@@ -10,7 +10,7 @@ import { AlterView } from "../View/AlterView";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import { MapBuildingObject } from "../../Const/MapBuilding";
 import NewEventConfig from "../../Config/NewEventConfig";
-import { NewEventBattleUI } from "./NewEventBattleUI";
+import CommonTools from "../../Tool/CommonTools";
 const { ccclass, property } = _decorator;
 
 @ccclass("NewEventUI")
@@ -29,13 +29,15 @@ export class NewEventUI extends ViewController {
 
         const eventConfig = NewEventConfig.getById(building.eventId);
         if (this._pioneerId == null || this._building == null || this._subEventConfig == null || eventConfig == null) {
-
-            console.log("exce stepover");
             UIPanelManger.inst.popPanel(this.node);
             return;
         }
-        console.log("exce step3");
         this.node.getChildByPath("__ViewContent/Title").getComponent(Label).string = LanMgr.getLanById(this._subEventConfig.name);
+
+        this.node.getChildByPath("__ViewContent/ImgBg").getComponent(UITransform).width = this._subEventConfig.illu_type == 1 ? 374 : 960;
+        for (const child of this.node.getChildByPath("__ViewContent/ImgBg/ImageMask").children) {
+            child.active = parseInt(child.name) === this._subEventConfig.illu;
+        }
 
         this.node.getChildByPath("__ViewContent/ImgBg/Index").getComponent(Label).string = (building.eventIndex + 1) + "/" + eventConfig.sub_event.length;
 
@@ -109,6 +111,11 @@ export class NewEventUI extends ViewController {
         result.node.getComponent(AlterView).showTip("Are you sure to exit this event?", async () => {
             await this.playExitAnimation();
             UIPanelManger.inst.popPanel(this.node);
+
+            NetworkMgr.websocketMsg.player_event_exit({
+                buildingId: this._building.id,
+                pioneerId: this._pioneerId,
+            });
         });
     }
 
@@ -140,14 +147,7 @@ export class NewEventUI extends ViewController {
                 pioneerId: this._pioneerId,
                 selectIdx: index,
             });
-
-            // const result = await UIPanelManger.inst.pushPanel(UIName.NewEventBattleUI);
-            // if (!result.success) {
-            //     return;
-            // }
-            // result.node
-            //     .getComponent(NewEventBattleUI)
-            //     .configuration(this._pioneerId, this._building, index, this._building.eventSubSelectEnemyId, this._building.eventSubSelectEnemyHpRate);
+            GameMgr.lastEventSelectFightIdx = index;
         } else {
             NetworkMgr.websocketMsg.player_event_select({
                 buildingId: this._building.id,

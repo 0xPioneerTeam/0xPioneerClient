@@ -120,6 +120,9 @@ export class WebsocketMsg {
     public player_event_select(d: c2s_user.Iplayer_event_select) {
         this.send_packet("player_event_select", d);
     }
+    public player_event_exit(d: c2s_user.Iplayer_event_exit) {
+        this.send_packet("player_event_exit", d);
+    }
 
     public player_fight_start(d: c2s_user.Iplayer_fight_start) {
         this.send_packet("player_fight_start", d);
@@ -331,6 +334,10 @@ export namespace c2s_user {
         pioneerId: string;
         buildingId: string;
         selectIdx: number;
+    }
+    export interface Iplayer_event_exit {
+        pioneerId: string;
+        buildingId: string;
     }
     export interface Iplayer_fight_start {
         attackerId: string;
