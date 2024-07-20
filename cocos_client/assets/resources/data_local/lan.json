@@ -1,3418 +1,3892 @@
 {
-    "104001": {
-        "id": "104001",
-        "eng": "No qualification",
-        "tc": ""
-    },
-    "104002": {
-        "id": "104002",
-        "eng": "Server not responding…Please try again later",
-        "tc": ""
-    },
-    "104003": {
-        "id": "104003",
-        "eng": "Please launch the wallet first",
-        "tc": ""
-    },
-    "104004": {
-        "id": "104004",
-        "eng": "Please follow the instruction",
-        "tc": ""
-    },
-    "104005": {
-        "id": "104005",
-        "eng": "You are going to spend %s PIOT, Confirm?",
-        "tc": ""
-    },
-    "104006": {
-        "id": "104006",
-        "eng": "You can change settings by clicking the player avatar in the top-left corner.",
-        "tc": ""
-    },
-    "105001": {
-        "id": "105001",
-        "eng": "Common",
-        "tc": ""
-    },
-    "105002": {
-        "id": "105002",
-        "eng": "Rare",
-        "tc": ""
-    },
-    "105003": {
-        "id": "105003",
-        "eng": "Legend",
-        "tc": ""
-    },
-    "105004": {
-        "id": "105004",
-        "eng": "Relic the Mythic",
-        "tc": ""
-    },
-    "105005": {
-        "id": "105005",
-        "eng": "Relic the Genesis",
-        "tc": ""
-    },
-    "105101": {
-        "id": "105101",
-        "eng": "Common Box",
-        "tc": ""
-    },
-    "105102": {
-        "id": "105102",
-        "eng": "Rare Box",
-        "tc": ""
-    },
-    "105103": {
-        "id": "105103",
-        "eng": "Legend Box",
-        "tc": ""
-    },
-    "105104": {
-        "id": "105104",
-        "eng": "Box the Mythic",
-        "tc": ""
-    },
-    "105105": {
-        "id": "105105",
-        "eng": "Box the Genesis",
-        "tc": ""
-    },
-    "106001": {
-        "id": "106001",
-        "eng": "%s is dead, please wait for the rebirth…",
-        "tc": ""
-    },
-    "106002": {
-        "id": "106002",
-        "eng": "Insufficient energy for move…",
-        "tc": ""
-    },
-    "106003": {
-        "id": "106003",
-        "eng": "%s + %s",
-        "tc": ""
-    },
-    "106004": {
-        "id": "106004",
-        "eng": "%s Lv%s completed!",
-        "tc": ""
-    },
-    "106005": {
-        "id": "106005",
-        "eng": "Let %s learn %s, confirm?",
-        "tc": ""
-    },
-    "106006": {
-        "id": "106006",
-        "eng": "Let %s LOSS %s, and NO skill book returned, confirm?",
-        "tc": ""
-    },
-    "106007": {
-        "id": "106007",
-        "eng": "Worm Hole Battle has finished.",
-        "tc": ""
-    },
-    "106008": {
-        "id": "106008",
-        "eng": "The rewards from the World Treasure Chest are affected by civilization level, heat value, and exploration value.\r\n\r\n- Civilization Level: Higher levels increase the quality of chests and daily opening limits, and the chance to find rare items.\r\n\r\n- Heat Value: Earned through PSYC and PIOT consumption, it raises the odds of getting head rewards from chests.\r\n\r\n- Exploration Value: Gained by exploring, gathering, building, and warring, it grants opportunities to open the World Treasure Chest.",
-        "tc": ""
-    },
-    "106009": {
-        "id": "106009",
-        "eng": "New enemies are coming…",
-        "tc": ""
-    },
-    "106010": {
-        "id": "106010",
-        "eng": "New things are discovered nearby…",
-        "tc": ""
-    },
-    "106011": {
-        "id": "106011",
-        "eng": "%s has respawned.",
-        "tc": ""
-    },
-    "106012": {
-        "id": "106012",
-        "eng": "%s has recovered HP.",
-        "tc": ""
-    },
-    "106013": {
-        "id": "106013",
-        "eng": "Civilization EXP + %s",
-        "tc": ""
-    },
-    "106014": {
-        "id": "106014",
-        "eng": "Treasure chest progress + %s",
-        "tc": ""
-    },
-    "106015": {
-        "id": "106015",
-        "eng": "Map and Teasure chest refresh countdown: ",
-        "tc": ""
-    },
-    "107001": {
-        "id": "107001",
-        "eng": "Eye of Pharaoh",
-        "tc": ""
-    },
-    "107002": {
-        "id": "107002",
-        "eng": "Bane of Behemoth",
-        "tc": ""
-    },
-    "107003": {
-        "id": "107003",
-        "eng": "Tooth of Megalodon",
-        "tc": ""
-    },
-    "107004": {
-        "id": "107004",
-        "eng": "Crystal Skull",
-        "tc": ""
-    },
-    "107005": {
-        "id": "107005",
-        "eng": "Stinger of Sand King",
-        "tc": ""
-    },
-    "107006": {
-        "id": "107006",
-        "eng": "Golden Spear",
-        "tc": ""
-    },
-    "107007": {
-        "id": "107007",
-        "eng": "Antiquity Rune",
-        "tc": ""
-    },
-    "107008": {
-        "id": "107008",
-        "eng": "Iridescent Crystal",
-        "tc": ""
-    },
-    "107009": {
-        "id": "107009",
-        "eng": "Dull Gemstone",
-        "tc": ""
-    },
-    "107010": {
-        "id": "107010",
-        "eng": "Ancient Axe",
-        "tc": ""
-    },
-    "107011": {
-        "id": "107011",
-        "eng": "Divine Compass",
-        "tc": ""
-    },
-    "107012": {
-        "id": "107012",
-        "eng": "Tables of Decalogue",
-        "tc": ""
-    },
-    "107013": {
-        "id": "107013",
-        "eng": "Jade Hook",
-        "tc": ""
-    },
-    "107014": {
-        "id": "107014",
-        "eng": "Celestial Globe",
-        "tc": ""
-    },
-    "107015": {
-        "id": "107015",
-        "eng": "Time's Hourglass",
-        "tc": ""
-    },
-    "107016": {
-        "id": "107016",
-        "eng": "Ouroboros Emblem",
-        "tc": ""
-    },
-    "107017": {
-        "id": "107017",
-        "eng": "Nirvana Lotus",
-        "tc": ""
-    },
-    "107018": {
-        "id": "107018",
-        "eng": "Glazed Bead",
-        "tc": ""
-    },
-    "107019": {
-        "id": "107019",
-        "eng": "Golden Scarab",
-        "tc": ""
-    },
-    "107020": {
-        "id": "107020",
-        "eng": "Thorn Crown",
-        "tc": ""
-    },
-    "107021": {
-        "id": "107021",
-        "eng": "Brass Sextant",
-        "tc": ""
-    },
-    "107022": {
-        "id": "107022",
-        "eng": "Flintlock Pistol",
-        "tc": ""
-    },
-    "107023": {
-        "id": "107023",
-        "eng": "Jiuzhou Cauldron",
-        "tc": ""
-    },
-    "107024": {
-        "id": "107024",
-        "eng": "Ancient Trumpet",
-        "tc": ""
-    },
-    "107025": {
-        "id": "107025",
-        "eng": "Mechanical Core",
-        "tc": ""
-    },
-    "107026": {
-        "id": "107026",
-        "eng": "Psychic Meteor",
-        "tc": ""
-    },
-    "107027": {
-        "id": "107027",
-        "eng": "Tengu Fan",
-        "tc": ""
-    },
-    "107028": {
-        "id": "107028",
-        "eng": "Binoculars",
-        "tc": ""
-    },
-    "107029": {
-        "id": "107029",
-        "eng": "Twin Fish Jade",
-        "tc": ""
-    },
-    "107030": {
-        "id": "107030",
-        "eng": "Crystal Lens",
-        "tc": ""
-    },
-    "107031": {
-        "id": "107031",
-        "eng": "Dharma Mace",
-        "tc": ""
-    },
-    "107032": {
-        "id": "107032",
-        "eng": "Ra's Crown",
-        "tc": ""
-    },
-    "107033": {
-        "id": "107033",
-        "eng": "Ancient Jar",
-        "tc": ""
-    },
-    "107034": {
-        "id": "107034",
-        "eng": "Torch",
-        "tc": ""
-    },
-    "107035": {
-        "id": "107035",
-        "eng": "Horseshoe",
-        "tc": ""
-    },
-    "107036": {
-        "id": "107036",
-        "eng": "Wooden Wheel",
-        "tc": ""
-    },
-    "107037": {
-        "id": "107037",
-        "eng": "Damaged Gear",
-        "tc": ""
-    },
-    "107549": {
-        "id": "107549",
-        "eng": "text for English version",
-        "tc": ""
-    },
-    "108001": {
-        "id": "108001",
-        "eng": "Skill Name",
-        "tc": ""
-    },
-    "109001": {
-        "id": "109001",
-        "eng": "0xPioneer",
-        "tc": ""
-    },
-    "109002": {
-        "id": "109002",
-        "eng": "Dual Blades Keen",
-        "tc": ""
-    },
-    "109003": {
-        "id": "109003",
-        "eng": "Dual Guns Jack",
-        "tc": ""
-    },
-    "109004": {
-        "id": "109004",
-        "eng": "Rebels Camus",
-        "tc": ""
-    },
-    "109005": {
-        "id": "109005",
-        "eng": "Tinuvel the Prophetess",
-        "tc": ""
-    },
-    "109006": {
-        "id": "109006",
-        "eng": "Artisan Tom",
-        "tc": ""
-    },
-    "109007": {
-        "id": "109007",
-        "eng": "Guard Keen",
-        "tc": ""
-    },
-    "109008": {
-        "id": "109008",
-        "eng": "Spy Jack",
-        "tc": ""
-    },
-    "109009": {
-        "id": "109009",
-        "eng": "Hunter John",
-        "tc": ""
-    },
-    "109010": {
-        "id": "109010",
-        "eng": "Gang Team",
-        "tc": ""
-    },
-    "109011": {
-        "id": "109011",
-        "eng": "Rebels Camus",
-        "tc": ""
-    },
-    "109012": {
-        "id": "109012",
-        "eng": "DoomsDay Gang Team",
-        "tc": ""
-    },
-    "109013": {
-        "id": "109013",
-        "eng": "Boar",
-        "tc": ""
-    },
-    "109014": {
-        "id": "109014",
-        "eng": "Lion",
-        "tc": ""
-    },
-    "109015": {
-        "id": "109015",
-        "eng": "Buffalo",
-        "tc": ""
-    },
-    "109016": {
-        "id": "109016",
-        "eng": "Sand Spider",
-        "tc": ""
-    },
-    "109017": {
-        "id": "109017",
-        "eng": "Scorpion",
-        "tc": ""
-    },
-    "109018": {
-        "id": "109018",
-        "eng": "Spider Queen",
-        "tc": ""
-    },
-    "109019": {
-        "id": "109019",
-        "eng": "Double-headed Snake",
-        "tc": ""
-    },
-    "109020": {
-        "id": "109020",
-        "eng": "Three-headed Snake",
-        "tc": ""
-    },
-    "109021": {
-        "id": "109021",
-        "eng": "Terrestrial Shark",
-        "tc": ""
-    },
-    "109022": {
-        "id": "109022",
-        "eng": "Death Worm ",
-        "tc": ""
-    },
-    "109023": {
-        "id": "109023",
-        "eng": "bats",
-        "tc": ""
-    },
-    "109024": {
-        "id": "109024",
-        "eng": "guard",
-        "tc": ""
-    },
-    "109025": {
-        "id": "109025",
-        "eng": "sand king",
-        "tc": ""
-    },
-    "109026": {
-        "id": "109026",
-        "eng": "land sharks",
-        "tc": ""
-    },
-    "109027": {
-        "id": "109027",
-        "eng": "old bot",
-        "tc": ""
-    },
-    "109028": {
-        "id": "109028",
-        "eng": "big land shark",
-        "tc": ""
-    },
-    "109029": {
-        "id": "109029",
-        "eng": "Pharaoh",
-        "tc": ""
-    },
-    "109030": {
-        "id": "109030",
-        "eng": "Village Chief",
-        "tc": ""
-    },
-    "109031": {
-        "id": "109031",
-        "eng": "Rabbit Mad",
-        "tc": ""
-    },
-    "109032": {
-        "id": "109032",
-        "eng": "Doc Nervall",
-        "tc": ""
-    },
-    "109033": {
-        "id": "109033",
-        "eng": "Scavenger",
-        "tc": ""
-    },
-    "109034": {
-        "id": "109034",
-        "eng": "Monster King",
-        "tc": ""
-    },
-    "109035": {
-        "id": "109035",
-        "eng": "Scavenger Unknow",
-        "tc": ""
-    },
-    "109036": {
-        "id": "109036",
-        "eng": "Space-time Raiders",
-        "tc": ""
-    },
-    "110001": {
-        "id": "110001",
-        "eng": "Desert Grotto",
-        "tc": ""
-    },
-    "110002": {
-        "id": "110002",
-        "eng": "Deadwood Marsh",
-        "tc": ""
-    },
-    "110003": {
-        "id": "110003",
-        "eng": "Desert Oasis",
-        "tc": ""
-    },
-    "110004": {
-        "id": "110004",
-        "eng": "Ancient Ruins",
-        "tc": ""
-    },
-    "110005": {
-        "id": "110005",
-        "eng": "Sand Spider Cavern",
-        "tc": ""
-    },
-    "110006": {
-        "id": "110006",
-        "eng": "Energy Tower",
-        "tc": ""
-    },
-    "110007": {
-        "id": "110007",
-        "eng": "Aquatic Ruins",
-        "tc": ""
-    },
-    "110008": {
-        "id": "110008",
-        "eng": "Village Undercroft",
-        "tc": ""
-    },
-    "110009": {
-        "id": "110009",
-        "eng": "Mechanical Pyramid",
-        "tc": ""
-    },
-    "110010": {
-        "id": "110010",
-        "eng": "Main City",
-        "tc": ""
-    },
-    "110011": {
-        "id": "110011",
-        "eng": "Treasure",
-        "tc": ""
-    },
-    "110012": {
-        "id": "110012",
-        "eng": "Ambush",
-        "tc": ""
-    },
-    "110013": {
-        "id": "110013",
-        "eng": "Ruin",
-        "tc": ""
-    },
-    "110014": {
-        "id": "110014",
-        "eng": "Worm Hole",
-        "tc": ""
-    },
-    "110015": {
-        "id": "110015",
-        "eng": "Worm Hole",
-        "tc": ""
-    },
-    "117001": {
-        "id": "117001",
-        "eng": "Also known as Eye of Ramesses, it symbolizes Egypt's prosperity and peace, blessed by divine power",
-        "tc": ""
-    },
-    "117002": {
-        "id": "117002",
-        "eng": "With this weapon, people brought an end to the era of the giant beasts' rule.",
-        "tc": ""
-    },
-    "117003": {
-        "id": "117003",
-        "eng": "The terrifying teeth of the giant land shark, with their sharp serrated edges, can easily slice through the flesh and skin of their prey.",
-        "tc": ""
-    },
-    "117004": {
-        "id": "117004",
-        "eng": "The crystal skull imbued with mysterious powers, said to allow communication with the spirits.",
-        "tc": ""
-    },
-    "117005": {
-        "id": "117005",
-        "eng": "The stinger of the desert giant scorpion, capable of killing its prey by piercing through them, even without the venom.",
-        "tc": ""
-    },
-    "117006": {
-        "id": "117006",
-        "eng": "The divine spear that once pierced the body of a saint, also known as the Spear of Destiny.",
-        "tc": ""
-    },
-    "117007": {
-        "id": "117007",
-        "eng": "The stone inscribed with mystical writings, containing unknown forces within.",
-        "tc": ""
-    },
-    "117008": {
-        "id": "117008",
-        "eng": "The crystal cluster that emits a dazzling light, rejuvenating the wearer's energy.",
-        "tc": ""
-    },
-    "117009": {
-        "id": "117009",
-        "eng": "The energy gemstone that has lost its original power.",
-        "tc": ""
-    },
-    "117010": {
-        "id": "117010",
-        "eng": "An old axe, used to belong to someone.",
-        "tc": ""
-    },
-    "117011": {
-        "id": "117011",
-        "eng": "Not just for navigation but a diviner of one's deepest truths and desires.",
-        "tc": ""
-    },
-    "117012": {
-        "id": "117012",
-        "eng": "Ancient stone tablets inscribed with the Ten Commandments, symbolizing divine law and moral guidance.",
-        "tc": ""
-    },
-    "117013": {
-        "id": "117013",
-        "eng": "A delicately carved jade artifact, often used as a ceremonial tool in ancient Chinese rituals.",
-        "tc": ""
-    },
-    "117014": {
-        "id": "117014",
-        "eng": "A model of the celestial sphere, representing the heavens and used for astronomical navigation and study.",
-        "tc": ""
-    },
-    "117015": {
-        "id": "117015",
-        "eng": "A timekeeping device with flowing sand, a metaphor for the relentless passage of time.",
-        "tc": ""
-    },
-    "117016": {
-        "id": "117016",
-        "eng": "A symbol of infinity and self-renewal, depicting a serpent eating its own tail.",
-        "tc": ""
-    },
-    "117017": {
-        "id": "117017",
-        "eng": "A lotus flower representing purity and enlightenment, often associated with Buddhist concepts of spiritual awakening.",
-        "tc": ""
-    },
-    "117018": {
-        "id": "117018",
-        "eng": "A small, colorful bead with a glossy finish, used in jewelry and as a status symbol in ancient cultures.",
-        "tc": ""
-    },
-    "117019": {
-        "id": "117019",
-        "eng": "A golden representation of the scarab beetle, revered in ancient Egypt as a symbol of rebirth and transformation.",
-        "tc": ""
-    },
-    "117020": {
-        "id": "117020",
-        "eng": "A crown adorned with thorns, symbolizing sacrifice and suffering, often associated with religious martyrdom.",
-        "tc": ""
-    },
-    "117021": {
-        "id": "117021",
-        "eng": "A navigational instrument used to measure the angular distance between celestial bodies and the horizon.",
-        "tc": ""
-    },
-    "117022": {
-        "id": "117022",
-        "eng": "An early firearm with a flint ignition mechanism, a symbol of the technological advancements of the early modern period.",
-        "tc": ""
-    },
-    "117023": {
-        "id": "117023",
-        "eng": "A mythical cauldron from Chinese legend, said to have the power to unify the nine provinces and bring peace.",
-        "tc": ""
-    },
-    "117024": {
-        "id": "117024",
-        "eng": "A wind instrument from antiquity, used in both warfare for signaling and in ceremonies for its resonant sound.",
-        "tc": ""
-    },
-    "117025": {
-        "id": "117025",
-        "eng": "The central component of a mechanical device, often intricate and complex, symbolizing the ingenuity of engineering.",
-        "tc": ""
-    },
-    "117026": {
-        "id": "117026",
-        "eng": "A meteorite believed to possess mystical powers, associated with psychic phenomena and cosmic energy.",
-        "tc": ""
-    },
-    "117027": {
-        "id": "117027",
-        "eng": "A fan associated with the Tengu, a mythical creature from Japanese folklore, known for its sharp wit and martial prowess.",
-        "tc": ""
-    },
-    "117028": {
-        "id": "117028",
-        "eng": "Optical instruments for observing distant objects, enhancing the viewer's perspective and understanding of the world.",
-        "tc": ""
-    },
-    "117029": {
-        "id": "117029",
-        "eng": "A jade carving depicting two fish, often symbolizing harmony, abundance, and the unity of yin and yang.",
-        "tc": ""
-    },
-    "117030": {
-        "id": "117030",
-        "eng": "A lens made of crystal, prized for its clarity and used in early optical devices for magnification and illumination.",
-        "tc": ""
-    },
-    "117031": {
-        "id": "117031",
-        "eng": "A ceremonial mace used in religious rituals to ward off evil spirits and protect the faithful.",
-        "tc": ""
-    },
-    "117032": {
-        "id": "117032",
-        "eng": "The crown of a sovereign, often adorned with sun motifs, representing the ruler's divine right and power.",
-        "tc": ""
-    },
-    "117033": {
-        "id": "117033",
-        "eng": "A vessel from a bygone era, crafted with simple yet enduring techniques, reflecting the daily life of ancient civilizations.",
-        "tc": ""
-    },
-    "117034": {
-        "id": "117034",
-        "eng": "A handheld source of light, often used in ancient times for navigation and signaling in the darkness.",
-        "tc": ""
-    },
-    "117035": {
-        "id": "117035",
-        "eng": "A U-shaped piece of metal attached to a horse's hoof, believed to bring good luck and protect against evil.",
-        "tc": ""
-    },
-    "117036": {
-        "id": "117036",
-        "eng": "A simple wheel made of wood, a fundamental component of early transportation and machinery.",
-        "tc": ""
-    },
-    "117037": {
-        "id": "117037",
-        "eng": "A gear with visible wear or breakage, a reminder of the passage of time and the inevitability of decay.",
-        "tc": ""
-    },
-    "120001": {
-        "id": "120001",
-        "eng": "City Hall",
-        "tc": ""
-    },
-    "120002": {
-        "id": "120002",
-        "eng": "Barracks",
-        "tc": ""
-    },
-    "120003": {
-        "id": "120003",
-        "eng": "House",
-        "tc": ""
-    },
-    "120004": {
-        "id": "120004",
-        "eng": "Energy Station",
-        "tc": ""
-    },
-    "120005": {
-        "id": "120005",
-        "eng": "Babel Tower",
-        "tc": ""
-    },
-    "121001": {
-        "id": "121001",
-        "eng": "More buildings are able to be constructed",
-        "tc": ""
-    },
-    "121002": {
-        "id": "121002",
-        "eng": "Faster recruitment pace",
-        "tc": ""
-    },
-    "121003": {
-        "id": "121003",
-        "eng": "More citizens are able to be contained",
-        "tc": ""
-    },
-    "121004": {
-        "id": "121004",
-        "eng": "Accelerated energy production efficiency",
-        "tc": ""
-    },
-    "121005": {
-        "id": "121005",
-        "eng": "More Relics are able to be acitved",
-        "tc": ""
-    },
-    "122001": {
-        "id": "122001",
-        "eng": "staff effect description",
-        "tc": ""
-    },
-    "200001": {
-        "id": "200001",
-        "eng": "Boot ends",
-        "tc": ""
-    },
-    "200002": {
-        "id": "200002",
-        "eng": "Please explore more to get it",
-        "tc": ""
-    },
-    "200003": {
-        "id": "200003",
-        "eng": "Big Team Coming: %s",
-        "tc": ""
-    },
-    "200004": {
-        "id": "200004",
-        "eng": "Relic Choice",
-        "tc": ""
-    },
-    "201001": {
-        "id": "201001",
-        "eng": "The building is being upgraded, please wait.",
-        "tc": ""
-    },
-    "201002": {
-        "id": "201002",
-        "eng": "Recruiting…Please wait…",
-        "tc": ""
-    },
-    "201003": {
-        "id": "201003",
-        "eng": "The building is being upgraded, please wait.",
-        "tc": ""
-    },
-    "201004": {
-        "id": "201004",
-        "eng": "Insufficient resources for building upgrades",
-        "tc": ""
-    },
-    "201005": {
-        "id": "201005",
-        "eng": "Unlock",
-        "tc": ""
-    },
-    "201006": {
-        "id": "201006",
-        "eng": "Upgrade",
-        "tc": ""
-    },
-    "202001": {
-        "id": "202001",
-        "eng": "task hide: %s s",
-        "tc": ""
-    },
-    "202002": {
-        "id": "202002",
-        "eng": "prepare task... %s s",
-        "tc": ""
-    },
-    "202003": {
-        "id": "202003",
-        "eng": "All %s Tasks",
-        "tc": ""
-    },
-    "202004": {
-        "id": "202004",
-        "eng": "New Task Taken",
-        "tc": ""
-    },
-    "203001": {
-        "id": "203001",
-        "eng": "cann't move to block",
-        "tc": ""
-    },
-    "203002": {
-        "id": "203002",
-        "eng": "pioneer is busy",
-        "tc": ""
-    },
-    "203003": {
-        "id": "203003",
-        "eng": "pioneer is dead",
-        "tc": ""
-    },
-    "203004": {
-        "id": "203004",
-        "eng": "pioneer is defending",
-        "tc": ""
-    },
-    "203005": {
-        "id": "203005",
-        "eng": "pioneer is processing an event",
-        "tc": ""
-    },
-    "204001": {
-        "id": "204001",
-        "eng": "HP",
-        "tc": ""
-    },
-    "204002": {
-        "id": "204002",
-        "eng": "ATK",
-        "tc": ""
-    },
-    "204003": {
-        "id": "204003",
-        "eng": "Get",
-        "tc": ""
-    },
-    "204004": {
-        "id": "204004",
-        "eng": "Get",
-        "tc": ""
-    },
-    "205001": {
-        "id": "205001",
-        "eng": "Get",
-        "tc": ""
-    },
-    "205002": {
-        "id": "205002",
-        "eng": "Use",
-        "tc": ""
-    },
-    "206001": {
-        "id": "206001",
-        "eng": "Dual Guns Jack",
-        "tc": ""
-    },
-    "206002": {
-        "id": "206002",
-        "eng": "Dual Blades Keen",
-        "tc": ""
-    },
-    "206003": {
-        "id": "206003",
-        "eng": "Rebels Camus",
-        "tc": ""
-    },
-    "206004": {
-        "id": "206004",
-        "eng": "Gunman as Graceful as a Gazelle",
-        "tc": ""
-    },
-    "206005": {
-        "id": "206005",
-        "eng": "Warrior as Wild as the Wind",
-        "tc": ""
-    },
-    "206006": {
-        "id": "206006",
-        "eng": "Berserker as Fearless as a Beast",
-        "tc": ""
-    },
-    "207001": {
-        "id": "207001",
-        "eng": "Your HP has changed",
-        "tc": ""
-    },
-    "207002": {
-        "id": "207002",
-        "eng": "Your Attack has changed",
-        "tc": ""
-    },
-    "207003": {
-        "id": "207003",
-        "eng": "Enemy's HP has changed",
-        "tc": ""
-    },
-    "207004": {
-        "id": "207004",
-        "eng": "Enemy's Attack has changed",
-        "tc": ""
-    },
-    "207005": {
-        "id": "207005",
-        "eng": "%s's HP has changed",
-        "tc": ""
-    },
-    "207006": {
-        "id": "207006",
-        "eng": "%s's Attack has changed",
-        "tc": ""
-    },
-    "207007": {
-        "id": "207007",
-        "eng": "you need AT LEAST %s ",
-        "tc": ""
-    },
-    "207008": {
-        "id": "207008",
-        "eng": "You lost %s %s",
-        "tc": ""
-    },
-    "207009": {
-        "id": "207009",
-        "eng": "You obtained %s %s",
-        "tc": ""
-    },
-    "207010": {
-        "id": "207010",
-        "eng": "Event Ended",
-        "tc": ""
-    },
-    "310101": {
-        "id": "310101",
-        "eng": "You found and entered a cave.",
-        "tc": ""
-    },
-    "310102": {
-        "id": "310102",
-        "eng": "You encounter a small swarm of sand spiders and fight them.",
-        "tc": ""
-    },
-    "310103": {
-        "id": "310103",
-        "eng": "You killed the spiders, and found some spider cocoons with different shapes.",
-        "tc": ""
-    },
-    "310104": {
-        "id": "310104",
-        "eng": "You are killed by the spiders!",
-        "tc": ""
-    },
-    "310105": {
-        "id": "310105",
-        "eng": "You opened the human-shaped cocoons and you found some humans who are not dead yet.",
-        "tc": ""
-    },
-    "310106": {
-        "id": "310106",
-        "eng": "You opened the egg-shaped cocoons and...",
-        "tc": ""
-    },
-    "310107": {
-        "id": "310107",
-        "eng": "Those who were saved by you decided to join you!",
-        "tc": ""
-    },
-    "310108": {
-        "id": "310108",
-        "eng": "And they also gave you some resources.",
-        "tc": ""
-    },
-    "310109": {
-        "id": "310109",
-        "eng": "Surprise! Another swarm of sand spiders!",
-        "tc": ""
-    },
-    "310110": {
-        "id": "310110",
-        "eng": "You killed the spiders, and found some resources.",
-        "tc": ""
-    },
-    "310111": {
-        "id": "310111",
-        "eng": "You are killed by the spiders!",
-        "tc": ""
-    },
-    "310112": {
-        "id": "310112",
-        "eng": "You continued deeper into the cave and eventually discovered the spider queen.",
-        "tc": ""
-    },
-    "310113": {
-        "id": "310113",
-        "eng": "You killed the spider queen and obtained her treasure.",
-        "tc": ""
-    },
-    "310114": {
-        "id": "310114",
-        "eng": "You are killed by the spider queen!",
-        "tc": ""
-    },
-    "310201": {
-        "id": "310201",
-        "eng": "You found an ancient.",
-        "tc": ""
-    },
-    "310202": {
-        "id": "310202",
-        "eng": "You entered the ancient.",
-        "tc": ""
-    },
-    "310203": {
-        "id": "310203",
-        "eng": "You saw a guardian.",
-        "tc": ""
-    },
-    "310204": {
-        "id": "310204",
-        "eng": "You fight with the guardian.",
-        "tc": ""
-    },
-    "310205": {
-        "id": "310205",
-        "eng": "You killed the guardian and got a special token.",
-        "tc": ""
-    },
-    "310206": {
-        "id": "310206",
-        "eng": "You are killed by the guardian.",
-        "tc": ""
-    },
-    "310207": {
-        "id": "310207",
-        "eng": "You evaded.",
-        "tc": ""
-    },
-    "310208": {
-        "id": "310208",
-        "eng": "You reached the door to the last room.",
-        "tc": ""
-    },
-    "310209": {
-        "id": "310209",
-        "eng": "You found a secret entry and you are considering how to get into it.",
-        "tc": ""
-    },
-    "310210": {
-        "id": "310210",
-        "eng": "You made a rope and used it to get into the ancient.",
-        "tc": ""
-    },
-    "310211": {
-        "id": "310211",
-        "eng": "You jumped into the ancient and lost a little HP.",
-        "tc": ""
-    },
-    "310212": {
-        "id": "310212",
-        "eng": "You got into the ancient and found a mecha-mon waiting for you.",
-        "tc": ""
-    },
-    "310213": {
-        "id": "310213",
-        "eng": "You destroyed the mecha-mon and got a special token.",
-        "tc": ""
-    },
-    "310214": {
-        "id": "310214",
-        "eng": "You are killed.",
-        "tc": ""
-    },
-    "310215": {
-        "id": "310215",
-        "eng": "You entered the last room.",
-        "tc": ""
-    },
-    "310216": {
-        "id": "310216",
-        "eng": "Do you want to use the token to open the big box?",
-        "tc": ""
-    },
-    "310217": {
-        "id": "310217",
-        "eng": "You opened the big treasure box and gain a lot!",
-        "tc": ""
-    },
-    "310218": {
-        "id": "310218",
-        "eng": "You could not obtain the big reward, so you took away a few resources.",
-        "tc": ""
-    },
-    "310301": {
-        "id": "310301",
-        "eng": "You entered a deserted lab and encountered a dangerous guardian.",
-        "tc": ""
-    },
-    "310302": {
-        "id": "310302",
-        "eng": "You killed the guardian and now you are considering which way to go.",
-        "tc": ""
-    },
-    "310303": {
-        "id": "310303",
-        "eng": "You are killed.",
-        "tc": ""
-    },
-    "310304": {
-        "id": "310304",
-        "eng": "You found a few resources in the warehouse.",
-        "tc": ""
-    },
-    "310305": {
-        "id": "310305",
-        "eng": "You found a broken tube in the energy room.",
-        "tc": ""
-    },
-    "310306": {
-        "id": "310306",
-        "eng": "You repaired the tube.",
-        "tc": ""
-    },
-    "310307": {
-        "id": "310307",
-        "eng": "You got a lot of energy.",
-        "tc": ""
-    },
-    "310308": {
-        "id": "310308",
-        "eng": "You got a little energy.",
-        "tc": ""
-    },
-    "310309": {
-        "id": "310309",
-        "eng": "You came to the cave in the village and found a colony of bats",
-        "tc": ""
-    },
-    "310310": {
-        "id": "310310",
-        "eng": "You shooed away the bats and entered the cave.",
-        "tc": ""
-    },
-    "310311": {
-        "id": "310311",
-        "eng": "You trash killed by the bats??? Are you kidding me???",
-        "tc": ""
-    },
-    "310312": {
-        "id": "310312",
-        "eng": "In the depths of the cave, you saw a guard standing in front of a door. You need to show it something.",
-        "tc": ""
-    },
-    "310313": {
-        "id": "310313",
-        "eng": "You showed it the Elder's Staff and the guard took you into the room behind the door.",
-        "tc": ""
-    },
-    "310314": {
-        "id": "310314",
-        "eng": "In the room, you saw the Energy Gemstone which is sustaining the entire base of the village. You can feel the immense power contained within this stone, and now you are faced with a choice.",
-        "tc": ""
-    },
-    "310315": {
-        "id": "310315",
-        "eng": "You followed your heart and took the Energy Gemstone directly.",
-        "tc": ""
-    },
-    "310316": {
-        "id": "310316",
-        "eng": "You resisted the temptation and decided to help the village by recharging the stone.",
-        "tc": ""
-    },
-    "310317": {
-        "id": "310317",
-        "eng": "After removing the Energy Gemstone from its base, it instantly lost its luster and became dim. Before you had time to ponder, the entire cavern began to shake, emitting a tremendous noise. You hastily grabbed the stone and fled from the area.",
-        "tc": ""
-    },
-    "310318": {
-        "id": "310318",
-        "eng": "With your help, the village regained its vitality.",
-        "tc": ""
-    },
-    "310319": {
-        "id": "310319",
-        "eng": "You had nothing to show it.",
-        "tc": ""
-    },
-    "310320": {
-        "id": "310320",
-        "eng": "You are killed by the guard.",
-        "tc": ""
-    },
-    "310321": {
-        "id": "310321",
-        "eng": "After defeating the guard, you entered the room behind the door and there, you discovered a gemstone imbued with immense power.",
-        "tc": ""
-    },
-    "310322": {
-        "id": "310322",
-        "eng": "You took the gemstone without hesitation.",
-        "tc": ""
-    },
-    "310323": {
-        "id": "310323",
-        "eng": "After removing the gemstone from its base, it instantly lost its luster and became dim. Before you had time to ponder, the entire cavern began to shake, emitting a tremendous noise. You hastily grabbed the stone and fled from the area.",
-        "tc": ""
-    },
-    "310324": {
-        "id": "310324",
-        "eng": "At the entrance of a waterside ruin, you encountered a group of land sharks and engaged them in combat.",
-        "tc": ""
-    },
-    "310325": {
-        "id": "310325",
-        "eng": "You killed the sharks and now you should decide which way to go.",
-        "tc": ""
-    },
-    "310326": {
-        "id": "310326",
-        "eng": "You entered the storage room of the ruin.",
-        "tc": ""
-    },
-    "310327": {
-        "id": "310327",
-        "eng": "You came across an old robot and engaged it in battle.",
-        "tc": ""
-    },
-    "310328": {
-        "id": "310328",
-        "eng": "You defeated the robot and gained some energy from it.",
-        "tc": ""
-    },
-    "310329": {
-        "id": "310329",
-        "eng": "You are killed by the robot!",
-        "tc": ""
-    },
-    "310330": {
-        "id": "310330",
-        "eng": "You arrived at the waterside dock where boats are moored.",
-        "tc": ""
-    },
-    "310331": {
-        "id": "310331",
-        "eng": "You found some supplies and a good place for fishing.",
-        "tc": ""
-    },
-    "310332": {
-        "id": "310332",
-        "eng": "Maybe you want to fish here?",
-        "tc": ""
-    },
-    "310333": {
-        "id": "310333",
-        "eng": "You don’t want to waste your food.",
-        "tc": ""
-    },
-    "310334": {
-        "id": "310334",
-        "eng": "You used some food as bait and caught a lot of fish.",
-        "tc": ""
-    },
-    "310335": {
-        "id": "310335",
-        "eng": "You used a significant amount of food as bait and…",
-        "tc": ""
-    },
-    "310336": {
-        "id": "310336",
-        "eng": "You killed the big land shark and gained the Tooth of Megalodon!",
-        "tc": ""
-    },
-    "310337": {
-        "id": "310337",
-        "eng": "You are killed by the big land shark!",
-        "tc": ""
-    },
-    "310338": {
-        "id": "310338",
-        "eng": "You are killed by the land sharks!",
-        "tc": ""
-    },
-    "310339": {
-        "id": "310339",
-        "eng": "A big land shark!",
-        "tc": ""
-    },
-    "310340": {
-        "id": "310340",
-        "eng": "It is said that within this pyramid lies a supreme treasure, yet most people are lost in the labyrinth of the pyramid before they can find it.",
-        "tc": ""
-    },
-    "310341": {
-        "id": "310341",
-        "eng": "You entered the pyramid. Soon, you encountered a fork in the road.",
-        "tc": ""
-    },
-    "310342": {
-        "id": "310342",
-        "eng": "You turned left. Soon, you encountered another fork.",
-        "tc": ""
-    },
-    "310343": {
-        "id": "310343",
-        "eng": "You turned right. Soon, you encountered another fork.",
-        "tc": ""
-    },
-    "310344": {
-        "id": "310344",
-        "eng": "You turned right and you found that you backed to the entry.",
-        "tc": ""
-    },
-    "310345": {
-        "id": "310345",
-        "eng": "You turned left again. Soon, you encountered another fork.",
-        "tc": ""
-    },
-    "310346": {
-        "id": "310346",
-        "eng": "You turned right again. Soon, you encountered another fork.",
-        "tc": ""
-    },
-    "310347": {
-        "id": "310347",
-        "eng": "You turned right and you found that you backed to the entry.",
-        "tc": ""
-    },
-    "310348": {
-        "id": "310348",
-        "eng": "You turned left and you found a mechanical pharaoh.",
-        "tc": ""
-    },
-    "310349": {
-        "id": "310349",
-        "eng": "You defeated the mechanical pharaoh and got the artifact from it!",
-        "tc": ""
-    },
-    "310350": {
-        "id": "310350",
-        "eng": "You are killed by the pharaoh!",
-        "tc": ""
-    },
-    "310351": {
-        "id": "310351",
-        "eng": "You turned left and you found that you backed to the entry.",
-        "tc": ""
-    },
-    "310352": {
-        "id": "310352",
-        "eng": "You turned left and you found that you backed to the entry.",
-        "tc": ""
-    },
-    "310353": {
-        "id": "310353",
-        "eng": "You turned right and you found a mechanical pharaoh.",
-        "tc": ""
-    },
-    "310401": {
-        "id": "310401",
-        "eng": "open human-shaped cocoons",
-        "tc": ""
-    },
-    "310402": {
-        "id": "310402",
-        "eng": "enter the ancient",
-        "tc": ""
-    },
-    "310403": {
-        "id": "310403",
-        "eng": "fight",
-        "tc": ""
-    },
-    "310404": {
-        "id": "310404",
-        "eng": "make a rope and use it",
-        "tc": ""
-    },
-    "310405": {
-        "id": "310405",
-        "eng": "use the token",
-        "tc": ""
-    },
-    "310406": {
-        "id": "310406",
-        "eng": "to the warehouse",
-        "tc": ""
-    },
-    "310407": {
-        "id": "310407",
-        "eng": "use stones to repair the tube",
-        "tc": ""
-    },
-    "310408": {
-        "id": "310408",
-        "eng": "open egg-shaped cocoons",
-        "tc": ""
-    },
-    "310409": {
-        "id": "310409",
-        "eng": "observe around",
-        "tc": ""
-    },
-    "310410": {
-        "id": "310410",
-        "eng": "evade",
-        "tc": ""
-    },
-    "310411": {
-        "id": "310411",
-        "eng": "jump into it",
-        "tc": ""
-    },
-    "310412": {
-        "id": "310412",
-        "eng": "don't use the token",
-        "tc": ""
-    },
-    "310413": {
-        "id": "310413",
-        "eng": "to the energy room",
-        "tc": ""
-    },
-    "310414": {
-        "id": "310414",
-        "eng": "take away the tube",
-        "tc": ""
-    },
-    "310415": {
-        "id": "310415",
-        "eng": "Show the Elder's Staff",
-        "tc": ""
-    },
-    "310416": {
-        "id": "310416",
-        "eng": "Take the Energy Gemstone",
-        "tc": ""
-    },
-    "310417": {
-        "id": "310417",
-        "eng": "To the storage of the ruin",
-        "tc": ""
-    },
-    "310418": {
-        "id": "310418",
-        "eng": "I don't want to waste my food",
-        "tc": ""
-    },
-    "310419": {
-        "id": "310419",
-        "eng": "Left",
-        "tc": ""
-    },
-    "310420": {
-        "id": "310420",
-        "eng": "Nothing to show",
-        "tc": ""
-    },
-    "310421": {
-        "id": "310421",
-        "eng": "Use your energy to charge the Energy Gemstone",
-        "tc": ""
-    },
-    "310422": {
-        "id": "310422",
-        "eng": "To the waterside",
-        "tc": ""
-    },
-    "310423": {
-        "id": "310423",
-        "eng": "Maybe use 50 food for fun?",
-        "tc": ""
-    },
-    "310424": {
-        "id": "310424",
-        "eng": "Right",
-        "tc": ""
-    },
-    "310425": {
-        "id": "310425",
-        "eng": "I want to spend 100 food for a big one!",
-        "tc": ""
-    },
-    "320001": {
-        "id": "320001",
-        "eng": "Land",
-        "tc": ""
-    },
-    "320002": {
-        "id": "320002",
-        "eng": "Flat land where you can move free.",
-        "tc": ""
-    },
-    "320003": {
-        "id": "320003",
-        "eng": "Resources",
-        "tc": ""
-    },
-    "320004": {
-        "id": "320004",
-        "eng": "Event",
-        "tc": ""
-    },
-    "320005": {
-        "id": "320005",
-        "eng": "Worm Hole",
-        "tc": ""
-    },
-    "320006": {
-        "id": "320006",
-        "eng": "",
-        "tc": ""
-    },
-    "320007": {
-        "id": "320007",
-        "eng": "",
-        "tc": ""
-    },
-    "320008": {
-        "id": "320008",
-        "eng": "",
-        "tc": ""
-    },
-    "320009": {
-        "id": "320009",
-        "eng": "",
-        "tc": ""
-    },
-    "330001": {
-        "id": "330001",
-        "eng": "NPC",
-        "tc": ""
-    },
-    "330002": {
-        "id": "330002",
-        "eng": "Ganster",
-        "tc": ""
-    },
-    "330003": {
-        "id": "330003",
-        "eng": "Monster",
-        "tc": ""
-    },
-    "401001": {
-        "id": "401001",
-        "eng": "Celestial Aura",
-        "tc": ""
-    },
-    "401002": {
-        "id": "401002",
-        "eng": "Jade Journey",
-        "tc": ""
-    },
-    "401003": {
-        "id": "401003",
-        "eng": "Last Whisper",
-        "tc": ""
-    },
-    "401004": {
-        "id": "401004",
-        "eng": "Topaz Twilight",
-        "tc": ""
-    },
-    "401005": {
-        "id": "401005",
-        "eng": "Dawn's Tear",
-        "tc": ""
-    },
-    "401006": {
-        "id": "401006",
-        "eng": "Void Iron",
-        "tc": ""
-    },
-    "401007": {
-        "id": "401007",
-        "eng": "Opferritual",
-        "tc": ""
-    },
-    "401008": {
-        "id": "401008",
-        "eng": "Lord Proof",
-        "tc": ""
-    },
-    "401009": {
-        "id": "401009",
-        "eng": "Key of Trust",
-        "tc": ""
-    },
-    "401010": {
-        "id": "401010",
-        "eng": "Krass Letter",
-        "tc": ""
-    },
-    "401011": {
-        "id": "401011",
-        "eng": "Krass Badge",
-        "tc": ""
-    },
-    "401012": {
-        "id": "401012",
-        "eng": "A few foods",
-        "tc": ""
-    },
-    "401013": {
-        "id": "401013",
-        "eng": "Many foods",
-        "tc": ""
-    },
-    "401014": {
-        "id": "401014",
-        "eng": "A few woods",
-        "tc": ""
-    },
-    "401015": {
-        "id": "401015",
-        "eng": "Many woods",
-        "tc": ""
-    },
-    "401016": {
-        "id": "401016",
-        "eng": "A few stones",
-        "tc": ""
-    },
-    "401017": {
-        "id": "401017",
-        "eng": "Many stones",
-        "tc": ""
-    },
-    "401018": {
-        "id": "401018",
-        "eng": "Speical token",
-        "tc": ""
-    },
-    "401019": {
-        "id": "401019",
-        "eng": "Food",
-        "tc": ""
-    },
-    "401020": {
-        "id": "401020",
-        "eng": "Wood",
-        "tc": ""
-    },
-    "401021": {
-        "id": "401021",
-        "eng": "Stone",
-        "tc": ""
-    },
-    "401022": {
-        "id": "401022",
-        "eng": "Troop",
-        "tc": ""
-    },
-    "401023": {
-        "id": "401023",
-        "eng": "PSYC",
-        "tc": ""
-    },
-    "401024": {
-        "id": "401024",
-        "eng": "PIOT",
-        "tc": ""
-    },
-    "401025": {
-        "id": "401025",
-        "eng": "Elder's Staff",
-        "tc": ""
-    },
-    "402001": {
-        "id": "402001",
-        "eng": "A gem with a heavenly glow.",
-        "tc": ""
-    },
-    "402002": {
-        "id": "402002",
-        "eng": "Ancient jade for wisdom's path.",
-        "tc": ""
-    },
-    "402003": {
-        "id": "402003",
-        "eng": "Artifact of whispered secrets.",
-        "tc": ""
-    },
-    "402004": {
-        "id": "402004",
-        "eng": "Gem of the setting sun's warmth.",
-        "tc": ""
-    },
-    "402005": {
-        "id": "402005",
-        "eng": "Pure diamond of a new day's hope.",
-        "tc": ""
-    },
-    "402006": {
-        "id": "402006",
-        "eng": "Cosmic strength in metal form.",
-        "tc": ""
-    },
-    "402007": {
-        "id": "402007",
-        "eng": "Tool for divine rituals.",
-        "tc": ""
-    },
-    "402008": {
-        "id": "402008",
-        "eng": "Maybe you should show this to someone.",
-        "tc": ""
-    },
-    "402009": {
-        "id": "402009",
-        "eng": "Now you are the lord.",
-        "tc": ""
-    },
-    "402012": {
-        "id": "402012",
-        "eng": "Gain 30 foods after use it.",
-        "tc": ""
-    },
-    "402013": {
-        "id": "402013",
-        "eng": "Gain 100 foods after use it.",
-        "tc": ""
-    },
-    "402014": {
-        "id": "402014",
-        "eng": "Gain 30 woods after use it.",
-        "tc": ""
-    },
-    "402015": {
-        "id": "402015",
-        "eng": "Gain 100 woods after use it.",
-        "tc": ""
-    },
-    "402016": {
-        "id": "402016",
-        "eng": "Gain 30 stones after use it.",
-        "tc": ""
-    },
-    "402017": {
-        "id": "402017",
-        "eng": "Gain 100 stones after use it.",
-        "tc": ""
-    },
-    "402018": {
-        "id": "402018",
-        "eng": "Token of an ancient.",
-        "tc": ""
-    },
-    "402019": {
-        "id": "402019",
-        "eng": "The proof given by the chief.",
-        "tc": ""
-    },
-    "402020": {
-        "id": "402020",
-        "eng": "One of the basic resources in this world. You may get foods from Desert Oasis.",
-        "tc": ""
-    },
-    "402021": {
-        "id": "402021",
-        "eng": "One of the basic resources in this world. You may get woods from Deadwood Marsh.",
-        "tc": ""
-    },
-    "402022": {
-        "id": "402022",
-        "eng": "One of the basic resources in this world. You may get stones from Desert Grotto.",
-        "tc": ""
-    },
-    "402023": {
-        "id": "402023",
-        "eng": "You will need this to recover your pioneers' HP. Try to recruit more through the Barrack.",
-        "tc": ""
-    },
-    "402024": {
-        "id": "402024",
-        "eng": "PSYC is the basic energy for most of your actions.",
-        "tc": ""
-    },
-    "402025": {
-        "id": "402025",
-        "eng": "You can earn more benefits by burning PIOT, such as more treasure chests, all the items inside the chests, etc.",
-        "tc": ""
-    },
-    "501001": {
-        "id": "501001",
-        "eng": "ganster router",
-        "tc": ""
-    },
-    "501002": {
-        "id": "501002",
-        "eng": "become city master",
-        "tc": ""
-    },
-    "501003": {
-        "id": "501003",
-        "eng": "Cultivating health and recuperating",
-        "tc": ""
-    },
-    "501004": {
-        "id": "501004",
-        "eng": "ambush doomsdayGangBigTeam",
-        "tc": ""
-    },
-    "501005": {
-        "id": "501005",
-        "eng": "Expel the gangsters",
-        "tc": ""
-    },
-    "501006": {
-        "id": "501006",
-        "eng": "Don't trust the prophetess!",
-        "tc": ""
-    },
-    "501007": {
-        "id": "501007",
-        "eng": "kill hred",
-        "tc": ""
-    },
-    "501008": {
-        "id": "501008",
-        "eng": "help you kill doomsDayGangTeam",
-        "tc": ""
-    },
-    "501009": {
-        "id": "501009",
-        "eng": "Defend the city",
-        "tc": ""
-    },
-    "501010": {
-        "id": "501010",
-        "eng": "become doomsdayGang spy",
-        "tc": ""
-    },
-    "501011": {
-        "id": "501011",
-        "eng": "explore ganster team",
-        "tc": ""
-    },
-    "501012": {
-        "id": "501012",
-        "eng": "defeat the rebels",
-        "tc": ""
-    },
-    "501013": {
-        "id": "501013",
-        "eng": "explore big ganster team",
-        "tc": ""
-    },
-    "501014": {
-        "id": "501014",
-        "eng": "defeat the main city",
-        "tc": ""
-    },
-    "501015": {
-        "id": "501015",
-        "eng": "explore ruins",
-        "tc": ""
-    },
-    "501016": {
-        "id": "501016",
-        "eng": "explore treasure",
-        "tc": ""
-    },
-    "501017": {
-        "id": "501017",
-        "eng": "talk with prophetess, become city master",
-        "tc": ""
-    },
-    "501018": {
-        "id": "501018",
-        "eng": "search resource 3 times",
-        "tc": ""
-    },
-    "501019": {
-        "id": "501019",
-        "eng": "talk to artisan",
-        "tc": ""
-    },
-    "501020": {
-        "id": "501020",
-        "eng": "fix wall and build house",
-        "tc": ""
-    },
-    "501021": {
-        "id": "501021",
-        "eng": "go to ambush point",
-        "tc": ""
-    },
-    "501022": {
-        "id": "501022",
-        "eng": "wait doomsdayGangBigTeam come and win fight",
-        "tc": ""
-    },
-    "501023": {
-        "id": "501023",
-        "eng": "Defeat the gangsters outside the city.",
-        "tc": ""
-    },
-    "501024": {
-        "id": "501024",
-        "eng": "kill the prophetess",
-        "tc": ""
-    },
-    "501025": {
-        "id": "501025",
-        "eng": "kill herd",
-        "tc": ""
-    },
-    "501026": {
-        "id": "501026",
-        "eng": "kill doomsDayGangTeam",
-        "tc": ""
-    },
-    "501027": {
-        "id": "501027",
-        "eng": "goahead the doomsdayGangBigTeam",
-        "tc": ""
-    },
-    "501028": {
-        "id": "501028",
-        "eng": "become spy",
-        "tc": ""
-    },
-    "501029": {
-        "id": "501029",
-        "eng": "Take down the city!",
-        "tc": ""
-    },
-    "501030": {
-        "id": "501030",
-        "eng": "Report back to the prophetess.",
-        "tc": ""
-    },
-    "501031": {
-        "id": "501031",
-        "eng": "Kill the lying prophetess.",
-        "tc": ""
-    },
-    "501032": {
-        "id": "501032",
-        "eng": "Defeat the gangsters and defend the city.",
-        "tc": ""
-    },
-    "501033": {
-        "id": "501033",
-        "eng": "344232424",
-        "tc": ""
-    },
-    "501034": {
-        "id": "501034",
-        "eng": "After the Disaster",
-        "tc": ""
-    },
-    "501035": {
-        "id": "501035",
-        "eng": "Explore for Resoureces",
-        "tc": ""
-    },
-    "501036": {
-        "id": "501036",
-        "eng": "Talk to the Prophetess 1",
-        "tc": ""
-    },
-    "501037": {
-        "id": "501037",
-        "eng": "Talk to the Prophetess 1",
-        "tc": ""
-    },
-    "501038": {
-        "id": "501038",
-        "eng": "Talk to the Prophetess 2",
-        "tc": ""
-    },
-    "501039": {
-        "id": "501039",
-        "eng": "Talk to the Prophetess 3",
-        "tc": ""
-    },
-    "501040": {
-        "id": "501040",
-        "eng": "Defeat the monster",
-        "tc": ""
-    },
-    "501041": {
-        "id": "501041",
-        "eng": "Talk to the Prophetess 4",
-        "tc": ""
-    },
-    "501042": {
-        "id": "501042",
-        "eng": "Talk to the Prophetess 5",
-        "tc": ""
-    },
-    "501043": {
-        "id": "501043",
-        "eng": "Talk to someone for information",
-        "tc": ""
-    },
-    "501044": {
-        "id": "501044",
-        "eng": "Collect resources",
-        "tc": ""
-    },
-    "501045": {
-        "id": "501045",
-        "eng": "Hunt 5 beasts",
-        "tc": ""
-    },
-    "501046": {
-        "id": "501046",
-        "eng": "Suppressing bandits",
-        "tc": ""
-    },
-    "501047": {
-        "id": "501047",
-        "eng": "Collect any 2 resources",
-        "tc": ""
-    },
-    "501100": {
-        "id": "501100",
-        "eng": "Hunting Season",
-        "tc": ""
-    },
-    "501101": {
-        "id": "501101",
-        "eng": "Suppressing bandits",
-        "tc": ""
-    },
-    "501102": {
-        "id": "501102",
-        "eng": "Resource Shortage",
-        "tc": ""
-    },
-    "502001": {
-        "id": "502001",
-        "eng": "Tinuvel the Prophetess",
-        "tc": ""
-    },
-    "502002": {
-        "id": "502002",
-        "eng": "0xPioneer",
-        "tc": ""
-    },
-    "502003": {
-        "id": "502003",
-        "eng": "Spy Jack",
-        "tc": ""
-    },
-    "502004": {
-        "id": "502004",
-        "eng": "Hunter John",
-        "tc": ""
-    },
-    "502005": {
-        "id": "502005",
-        "eng": "Guard Keen",
-        "tc": ""
-    },
-    "502006": {
-        "id": "502006",
-        "eng": "DoomsDay Gang Team",
-        "tc": ""
-    },
-    "502007": {
-        "id": "502007",
-        "eng": "Artisan Tom",
-        "tc": ""
-    },
-    "502008": {
-        "id": "502008",
-        "eng": "Scavenger Unknow",
-        "tc": ""
-    },
-    "503001": {
-        "id": "503001",
-        "eng": "Finally you are awake!",
-        "tc": ""
-    },
-    "503002": {
-        "id": "503002",
-        "eng": "You saved me? Who are you?",
-        "tc": ""
-    },
-    "503003": {
-        "id": "503003",
-        "eng": "Tinuvel, a prophetess. I've seen the vision of you leading this city to a prosperous future, and your salvation by me is the guidance of fate.",
-        "tc": ""
-    },
-    "503004": {
-        "id": "503004",
-        "eng": "What the hell? I’m just a normal one who just woke up. Your words are a bit too much information for me!",
-        "tc": ""
-    },
-    "503005": {
-        "id": "503005",
-        "eng": "Don’t panic, I will guide you forward.",
-        "tc": ""
-    },
-    "503006": {
-        "id": "503006",
-        "eng": "What do you want me to do?",
-        "tc": ""
-    },
-    "503007": {
-        "id": "503007",
-        "eng": "The town’s lord was just killed by villains. It’s chaos here.",
-        "tc": ""
-    },
-    "503008": {
-        "id": "503008",
-        "eng": "You’re not expecting me to fight in this state, are you?",
-        "tc": ""
-    },
-    "503009": {
-        "id": "503009",
-        "eng": "That’d be unfair. Take this.",
-        "tc": ""
-    },
-    "503010": {
-        "id": "503010",
-        "eng": "PIOT? ",
-        "tc": ""
-    },
-    "503011": {
-        "id": "503011",
-        "eng": "Whoever owns PIOT can rule the world.",
-        "tc": ""
-    },
-    "503012": {
-        "id": "503012",
-        "eng": "Any practical use?!",
-        "tc": ""
-    },
-    "503013": {
-        "id": "503013",
-        "eng": "Sure, PIOT can increase HEAT value, speed up actions, or get extra resources.",
-        "tc": ""
-    },
-    "503014": {
-        "id": "503014",
-        "eng": "What is HEAT value?",
-        "tc": ""
-    },
-    "503015": {
-        "id": "503015",
-        "eng": "Let me show you how to use PIOT first, then I’ll explain HEAT value.",
-        "tc": ""
-    },
-    "503016": {
-        "id": "503016",
-        "eng": "HEAT value is tied to treasure chests. The higher it is, the more chests you can open daily, and the better rewards you get.",
-        "tc": ""
-    },
-    "503017": {
-        "id": "503017",
-        "eng": "What’s a treasure chest?",
-        "tc": ""
-    },
-    "503018": {
-        "id": "503018",
-        "eng": "It’s how you earn in this world. All users share the rewards in the chest, so you need to get the good stuff before others.",
-        "tc": ""
-    },
-    "503019": {
-        "id": "503019",
-        "eng": "How to open it?",
-        "tc": ""
-    },
-    "503020": {
-        "id": "503020",
-        "eng": "I’ve given you a key. Try opening a chest",
-        "tc": ""
-    },
-    "503021": {
-        "id": "503021",
-        "eng": "What’s this?",
-        "tc": ""
-    },
-    "503022": {
-        "id": "503022",
-        "eng": "It’s PSYC, the world’s spiritual energy. You need it for your actions.",
-        "tc": ""
-    },
-    "503023": {
-        "id": "503023",
-        "eng": "All actions? If it runs out, am I done for? Can I ask you for more?",
-        "tc": ""
-    },
-    "503024": {
-        "id": "503024",
-        "eng": "There’s no surplus. You saw that PSYC can be obtained from chests. You should do your task now. After that, you’ll get my reward.",
-        "tc": ""
-    },
-    "503025": {
-        "id": "503025",
-        "eng": "Sounds good. What should I do now?",
-        "tc": ""
-    },
-    "503026": {
-        "id": "503026",
-        "eng": "See those villains? Take them out!",
-        "tc": ""
-    },
-    "503027": {
-        "id": "503027",
-        "eng": "Good job! From now on, you’re in charge of guarding the town.",
-        "tc": ""
-    },
-    "503028": {
-        "id": "503028",
-        "eng": "Just like that?",
-        "tc": ""
-    },
-    "503029": {
-        "id": "503029",
-        "eng": "I believe in you!",
-        "tc": ""
-    },
-    "503030": {
-        "id": "503030",
-        "eng": "What’s my reward?",
-        "tc": ""
-    },
-    "503031": {
-        "id": "503031",
-        "eng": "Your action gained EXPLORATION value. When it’s full, I’ll give you a key to open a chest for rewards.",
-        "tc": ""
-    },
-    "503032": {
-        "id": "503032",
-        "eng": "So, consuming PSYC gets EXPLORATION value, consuming PIOT gets HEAT value, and both lead to opening more chests and getting better stuff?",
-        "tc": ""
-    },
-    "503033": {
-        "id": "503033",
-        "eng": "Yes, getting rewards from chests is key to survival. How to increase the rewards depends on your actions.",
-        "tc": ""
-    },
-    "503034": {
-        "id": "503034",
-        "eng": "You have a new key now. Open a new chest and see what you get!",
-        "tc": ""
-    },
-    "503035": {
-        "id": "503035",
-        "eng": "You’re indeed the chosen one, getting both psyc and PIOT.",
-        "tc": ""
-    },
-    "503036": {
-        "id": "503036",
-        "eng": "Can I get better stuff?",
-        "tc": ""
-    },
-    "503037": {
-        "id": "503037",
-        "eng": "If you want better stuff, check out the town. Building it improves its CIVILIZATION level.",
-        "tc": ""
-    },
-    "503038": {
-        "id": "503038",
-        "eng": "What’s the function of CIVILIZATION level?",
-        "tc": ""
-    },
-    "503039": {
-        "id": "503039",
-        "eng": "It improves the quality of rewards in the chest.",
-        "tc": ""
-    },
-    "503040": {
-        "id": "503040",
-        "eng": "So everything’s about the chest. Where does it come from?",
-        "tc": ""
-    },
-    "503041": {
-        "id": "503041",
-        "eng": "Exploring this world with questions is fun. You’ll find out the truth someday.",
-        "tc": ""
-    },
-    "503042": {
-        "id": "503042",
-        "eng": "It seems that collecting resources can really gain EXPLORATION value.",
-        "tc": ""
-    },
-    "503043": {
-        "id": "503043",
-        "eng": "Now go back and level up the building.",
-        "tc": ""
-    },
-    "503044": {
-        "id": "503044",
-        "eng": "OK?",
-        "tc": ""
-    },
-    "503045": {
-        "id": "503045",
-        "eng": "Are you going to cooperate with the gang or fight with them?",
-        "tc": ""
-    },
-    "503046": {
-        "id": "503046",
-        "eng": "The town was ransacked by those bastards.",
-        "tc": ""
-    },
-    "503047": {
-        "id": "503047",
-        "eng": "You may be the one to save us and recuperate the town.",
-        "tc": ""
-    },
-    "503048": {
-        "id": "503048",
-        "eng": "We need some material reserves. Try to EXPLORE RESOURCES FOR 3 TIMES and BRING THEM BACK TO ME.",
-        "tc": ""
-    },
-    "503049": {
-        "id": "503049",
-        "eng": "Will you help them EXPLORE RESOURCES FOR 3 TIMES?",
-        "tc": ""
-    },
-    "503050": {
-        "id": "503050",
-        "eng": "The right token.",
-        "tc": ""
-    },
-    "503051": {
-        "id": "503051",
-        "eng": "All right. You are indeed qualified TO BE THE LORD.",
-        "tc": ""
-    },
-    "503052": {
-        "id": "503052",
-        "eng": "Go ahead, there's a lot of things waiting for you.",
-        "tc": ""
-    },
-    "503053": {
-        "id": "503053",
-        "eng": "You've been a great help. Thank you very much.",
-        "tc": ""
-    },
-    "503054": {
-        "id": "503054",
-        "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?",
-        "tc": ""
-    },
-    "503055": {
-        "id": "503055",
-        "eng": "Lucky guy, we're not going to kill you.",
-        "tc": ""
-    },
-    "503056": {
-        "id": "503056",
-        "eng": "But you will act as our agent and TAKE OVER THE TOWN.",
-        "tc": ""
-    },
-    "503057": {
-        "id": "503057",
-        "eng": "You've been a great help. Thank you very much.2222222",
-        "tc": ""
-    },
-    "503058": {
-        "id": "503058",
-        "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?",
-        "tc": ""
-    },
-    "503059": {
-        "id": "503059",
-        "eng": "You've been a great help. Thank you very much.3333333",
-        "tc": ""
-    },
-    "503060": {
-        "id": "503060",
-        "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?",
-        "tc": ""
-    },
-    "503061": {
-        "id": "503061",
-        "eng": "Who am l? Where am !?",
-        "tc": ""
-    },
-    "503062": {
-        "id": "503062",
-        "eng": "You are…",
-        "tc": ""
-    },
-    "503063": {
-        "id": "503063",
-        "eng": "How could I continue to survive in this world?",
-        "tc": ""
-    },
-    "503064": {
-        "id": "503064",
-        "eng": "You can…",
-        "tc": ""
-    },
-    "503065": {
-        "id": "503065",
-        "eng": "So what should I do now?",
-        "tc": ""
-    },
-    "503066": {
-        "id": "503066",
-        "eng": "…",
-        "tc": ""
-    },
-    "503067": {
-        "id": "503067",
-        "eng": "dasa",
-        "tc": ""
-    },
-    "503068": {
-        "id": "503068",
-        "eng": "test talk 16666",
-        "tc": ""
-    },
-    "503069": {
-        "id": "503069",
-        "eng": "7984r892893",
-        "tc": ""
-    },
-    "503070": {
-        "id": "503070",
-        "eng": "p98grjwio",
-        "tc": ""
-    },
-    "503071": {
-        "id": "503071",
-        "eng": "Well done!",
-        "tc": ""
-    },
-    "503072": {
-        "id": "503072",
-        "eng": "You saved the city!",
-        "tc": ""
-    },
-    "503073": {
-        "id": "503073",
-        "eng": "Upgrading buildings requires resources, and there are not enough resources to level up.",
-        "tc": ""
-    },
-    "503074": {
-        "id": "503074",
-        "eng": "The improvement of the building level will effectively increase our income speed, and it can also improve the CIVILIZATION level. Now let’s go and collect some resources for upgrading.",
-        "tc": ""
-    },
-    "503075": {
-        "id": "503075",
-        "eng": "Excuse me, did you come from the north?",
-        "tc": ""
-    },
-    "503076": {
-        "id": "503076",
-        "eng": "Yes, is there anything?",
-        "tc": ""
-    },
-    "503077": {
-        "id": "503077",
-        "eng": "Did you see any resources that can be mined over there?",
-        "tc": ""
-    },
-    "503078": {
-        "id": "503078",
-        "eng": "There seems to be some at the foot of the mountain over there, you can go and see.",
-        "tc": ""
-    },
-    "503079": {
-        "id": "503079",
-        "eng": "Wow! Thank you!",
-        "tc": ""
-    },
-    "503080": {
-        "id": "503080",
-        "eng": "Upgrading buildings seems to not only improve civilization level, but also increase exploration value. This is great, you can open a new treasure chest.",
-        "tc": ""
-    },
-    "503081": {
-        "id": "503081",
-        "eng": "I am indeed the chosen one, and someone will stuff a pillow when I am sleepy.",
-        "tc": ""
-    },
-    "503082": {
-        "id": "503082",
-        "eng": "Now that the resources for building the town are available, let’s try to level up this barracks building again.",
-        "tc": ""
-    },
-    "503083": {
-        "id": "503083",
-        "eng": "With the barracks, you can recruit soldiers. In this way, if you are injured in battle, there will be soldiers to supplement you.",
-        "tc": ""
-    },
-    "503084": {
-        "id": "503084",
-        "eng": "But it seems that if you want to develop the town and improve civilization, you still need to explore and collect as much as possible. Just now I saw a relic far outside the town, let’s go and explore it, maybe there will be some unexpected gains.",
-        "tc": ""
-    },
-    "503085": {
-        "id": "503085",
-        "eng": "The wormhole serves as a medium connecting two players, allowing them to attack each other through it. Here, we can set up a lineup for attacking other guys.",
-        "tc": ""
-    },
-    "503086": {
-        "id": "503086",
-        "eng": "When other players attack our town via the wormhole, we can deploy characters to protect it from looting. With the defense set, I'll need to explore further. I noticed a suspicious person lurking nearby. I should check it out.",
-        "tc": ""
-    },
-    "503087": {
-        "id": "503087",
-        "eng": "Beware! It seems something is coming!",
-        "tc": ""
-    },
-    "503088": {
-        "id": "503088",
-        "eng": "It appears that there are two people coming over to join us.",
-        "tc": ""
-    },
-    "503100": {
-        "id": "503100",
-        "eng": "The number of prey has noticeably decreased recently.",
-        "tc": ""
-    },
-    "503101": {
-        "id": "503101",
-        "eng": "Maybe I can help you hunt.",
-        "tc": ""
-    },
-    "503102": {
-        "id": "503102",
-        "eng": "Really? Help me hunt FIVE wild beasts, I can pay you the reward.",
-        "tc": ""
-    },
-    "503103": {
-        "id": "503103",
-        "eng": "There are many thieves nearby.",
-        "tc": ""
-    },
-    "503104": {
-        "id": "503104",
-        "eng": "I can go and eliminate them.",
-        "tc": ""
-    },
-    "503105": {
-        "id": "503105",
-        "eng": "After you kill three thieves, I will give you a reward.",
-        "tc": ""
-    },
-    "503106": {
-        "id": "503106",
-        "eng": "The supplies are becoming increasingly scarce now.",
-        "tc": ""
-    },
-    "503107": {
-        "id": "503107",
-        "eng": "How can I help you.",
-        "tc": ""
-    },
-    "503108": {
-        "id": "503108",
-        "eng": "Collect any TWO resource point and I will reward you.",
-        "tc": ""
-    },
-    "503109": {
-        "id": "503109",
-        "eng": "Go hand in the task now",
-        "tc": ""
-    },
-    "504001": {
-        "id": "504001",
-        "eng": "Well…I'll try",
-        "tc": ""
-    },
-    "504002": {
-        "id": "504002",
-        "eng": "Let me see…",
-        "tc": ""
-    },
-    "504003": {
-        "id": "504003",
-        "eng": "OK",
-        "tc": ""
-    },
-    "504004": {
-        "id": "504004",
-        "eng": "OK",
-        "tc": ""
-    },
-    "504005": {
-        "id": "504005",
-        "eng": "All right",
-        "tc": ""
-    },
-    "504006": {
-        "id": "504006",
-        "eng": "What the hell?",
-        "tc": ""
-    },
-    "504007": {
-        "id": "504007",
-        "eng": "OK",
-        "tc": ""
-    },
-    "504008": {
-        "id": "504008",
-        "eng": "All right",
-        "tc": ""
-    },
-    "504009": {
-        "id": "504009",
-        "eng": "Thank you!",
-        "tc": ""
-    },
-    "504010": {
-        "id": "504010",
-        "eng": "OK, I'm on it",
-        "tc": ""
-    },
-    "504011": {
-        "id": "504011",
-        "eng": "Not now",
-        "tc": ""
-    },
-    "504012": {
-        "id": "504012",
-        "eng": "Deal!",
-        "tc": ""
-    },
-    "504013": {
-        "id": "504013",
-        "eng": "Fight!",
-        "tc": ""
-    },
-    "504014": {
-        "id": "504014",
-        "eng": "All right",
-        "tc": ""
-    },
-    "504015": {
-        "id": "504015",
-        "eng": "I'm busy",
-        "tc": ""
-    },
-    "504016": {
-        "id": "504016",
-        "eng": "The fortunate one chosen by me.",
-        "tc": ""
-    },
-    "504017": {
-        "id": "504017",
-        "eng": "A survivor who has narrowly escaped the disaster.",
-        "tc": ""
-    },
-    "504018": {
-        "id": "504018",
-        "eng": "A surviving ant of a vanished civilization.",
-        "tc": ""
-    },
-    "504019": {
-        "id": "504019",
-        "eng": "Become the executor of my will.",
-        "tc": ""
-    },
-    "504020": {
-        "id": "504020",
-        "eng": "Act as my eyes and hands.",
-        "tc": ""
-    },
-    "504021": {
-        "id": "504021",
-        "eng": "Just follow my guide.",
-        "tc": ""
-    },
-    "504022": {
-        "id": "504022",
-        "eng": "Head to the city in the northeast and gather a team.",
-        "tc": ""
-    },
-    "504023": {
-        "id": "504023",
-        "eng": "First, locate our base.",
-        "tc": ""
-    },
-    "504024": {
-        "id": "504024",
-        "eng": "Just wait…Because soon I will reshape this world.",
-        "tc": ""
-    },
-    "504025": {
-        "id": "504025",
-        "eng": "1",
-        "tc": ""
-    },
-    "504026": {
-        "id": "504026",
-        "eng": "2",
-        "tc": ""
-    },
-    "504027": {
-        "id": "504027",
-        "eng": "3333",
-        "tc": ""
-    },
-    "601001": {
-        "id": "601001",
-        "eng": "Peace and Love",
-        "tc": ""
-    },
-    "601002": {
-        "id": "601002",
-        "eng": "Fight as Beast",
-        "tc": ""
-    },
-    "601003": {
-        "id": "601003",
-        "eng": "Smart One",
-        "tc": ""
-    },
-    "601004": {
-        "id": "601004",
-        "eng": "Hero",
-        "tc": ""
-    },
-    "601005": {
-        "id": "601005",
-        "eng": "The Lord",
-        "tc": ""
-    },
-    "701001": {
-        "id": "701001",
-        "eng": "Collection progress:\r\n<color=#ffcc49><size=36>%s%</size></color>",
-        "tc": ""
-    },
-    "701002": {
-        "id": "701002",
-        "eng": "World Map",
-        "tc": ""
-    },
-    "701003": {
-        "id": "701003",
-        "eng": "Duration: %s",
-        "tc": ""
-    },
-    "800001": {
-        "id": "800001",
-        "eng": "The Dark Age Ⅰ",
-        "tc": ""
-    },
-    "800002": {
-        "id": "800002",
-        "eng": "The Dark Age Ⅱ",
-        "tc": ""
-    },
-    "800003": {
-        "id": "800003",
-        "eng": "The Dark Age Ⅲ",
-        "tc": ""
-    },
-    "800004": {
-        "id": "800004",
-        "eng": "The Wasteland Age Ⅰ",
-        "tc": ""
-    },
-    "800005": {
-        "id": "800005",
-        "eng": "The Wasteland Age Ⅱ",
-        "tc": ""
-    },
-    "800006": {
-        "id": "800006",
-        "eng": "The Wasteland Age Ⅲ",
-        "tc": ""
-    },
-    "800007": {
-        "id": "800007",
-        "eng": "The Steam Age Ⅰ",
-        "tc": ""
-    },
-    "800008": {
-        "id": "800008",
-        "eng": "The Steam Age Ⅱ",
-        "tc": ""
-    },
-    "800009": {
-        "id": "800009",
-        "eng": "The Steam Age Ⅲ",
-        "tc": ""
-    },
-    "800010": {
-        "id": "800010",
-        "eng": "The Steam Age Ⅳ",
-        "tc": ""
-    },
-    "800011": {
-        "id": "800011",
-        "eng": "The Machine Age Ⅰ",
-        "tc": ""
-    },
-    "800012": {
-        "id": "800012",
-        "eng": "The Machine Age Ⅱ",
-        "tc": ""
-    },
-    "800013": {
-        "id": "800013",
-        "eng": "The Machine Age Ⅲ",
-        "tc": ""
-    },
-    "800014": {
-        "id": "800014",
-        "eng": "The Machine Age Ⅳ",
-        "tc": ""
-    },
-    "800015": {
-        "id": "800015",
-        "eng": "The Machine Age Ⅴ",
-        "tc": ""
-    },
-    "800016": {
-        "id": "800016",
-        "eng": "The Rise Age Ⅰ",
-        "tc": ""
-    },
-    "800017": {
-        "id": "800017",
-        "eng": "The Rise Age Ⅱ",
-        "tc": ""
-    },
-    "800018": {
-        "id": "800018",
-        "eng": "The Rise Age Ⅲ",
-        "tc": ""
-    },
-    "800019": {
-        "id": "800019",
-        "eng": "The Rise Age Ⅳ",
-        "tc": ""
-    },
-    "800020": {
-        "id": "800020",
-        "eng": "The Rise Age Ⅴ",
-        "tc": ""
-    },
-    "800021": {
-        "id": "800021",
-        "eng": "The Surpass Age Ⅰ",
-        "tc": ""
-    },
-    "800022": {
-        "id": "800022",
-        "eng": "The Surpass Age Ⅱ",
-        "tc": ""
-    },
-    "800023": {
-        "id": "800023",
-        "eng": "The Surpass Age Ⅲ",
-        "tc": ""
-    },
-    "800024": {
-        "id": "800024",
-        "eng": "The Surpass Age Ⅳ",
-        "tc": ""
-    },
-    "800025": {
-        "id": "800025",
-        "eng": "The Surpass Age Ⅴ",
-        "tc": ""
-    },
-    "810001": {
-        "id": "810001",
-        "eng": "Construct level of %s reached %s",
-        "tc": ""
-    },
-    "810002": {
-        "id": "810002",
-        "eng": "Collected resources higher than or equal to lv.%s for %s times",
-        "tc": ""
-    },
-    "810003": {
-        "id": "810003",
-        "eng": "Explored events higher than or equal to lv.%s for %s times",
-        "tc": ""
-    },
-    "810004": {
-        "id": "810004",
-        "eng": "Owned %s pioneers of %s or higher",
-        "tc": ""
-    },
-    "810005": {
-        "id": "810005",
-        "eng": "Owned %s pioneers higher than lv.%s",
-        "tc": ""
-    },
-    "810006": {
-        "id": "810006",
-        "eng": "Consumed at least %s %s",
-        "tc": ""
-    },
-    "810007": {
-        "id": "810007",
-        "eng": "Defeated monsters higher than lv.%s for %s times",
-        "tc": ""
-    },
-    "810008": {
-        "id": "810008",
-        "eng": "Heat value reached %s",
-        "tc": ""
-    },
-    "810009": {
-        "id": "810009",
-        "eng": "Defeated other players for %s times",
-        "tc": ""
-    },
-    "820001": {
-        "id": "820001",
-        "eng": "Highest available quality of teasure chest",
-        "tc": ""
-    },
-    "820002": {
-        "id": "820002",
-        "eng": "Move speed",
-        "tc": ""
-    },
-    "820003": {
-        "id": "820003",
-        "eng": "Collect speed",
-        "tc": ""
-    },
-    "820004": {
-        "id": "820004",
-        "eng": "Vision of main city and troops",
-        "tc": ""
-    },
-    "820005": {
-        "id": "820005",
-        "eng": "Recruit speed",
-        "tc": ""
-    },
-    "820006": {
-        "id": "820006",
-        "eng": "",
-        "tc": ""
-    },
-    "820007": {
-        "id": "820007",
-        "eng": "",
-        "tc": ""
-    },
-    "820008": {
-        "id": "820008",
-        "eng": "",
-        "tc": ""
-    },
-    "820009": {
-        "id": "820009",
-        "eng": "Unlock building",
-        "tc": ""
-    },
-    "820010": {
-        "id": "820010",
-        "eng": "",
-        "tc": ""
-    },
-    "1070011": {
-        "id": "1070011",
-        "eng": "Treaty of Kadesh:\r\nCity Vision +1\r\nTroop Vision +1",
-        "tc": ""
-    },
-    "1070012": {
-        "id": "1070012",
-        "eng": "Troop Attack +20",
-        "tc": ""
-    },
-    "1070013": {
-        "id": "1070013",
-        "eng": "City Defence +5",
-        "tc": ""
-    },
-    "1070014": {
-        "id": "1070014",
-        "eng": "Damage on herd +20%",
-        "tc": ""
-    },
-    "1070015": {
-        "id": "1070015",
-        "eng": "Troop Defence +5",
-        "tc": ""
-    },
-    "1070016": {
-        "id": "1070016",
-        "eng": "Troop Speed + 5%",
-        "tc": ""
-    },
-    "1070017": {
-        "id": "1070017",
-        "eng": "Domination:\r\nDamage on herd +50%",
-        "tc": ""
-    },
-    "1070018": {
-        "id": "1070018",
-        "eng": "Troop Attack +15",
-        "tc": ""
-    },
-    "1070019": {
-        "id": "1070019",
-        "eng": "Troop Defence +5",
-        "tc": ""
-    },
-    "1070020": {
-        "id": "1070020",
-        "eng": "Exploration Speed +5%",
-        "tc": ""
-    },
-    "1070021": {
-        "id": "1070021",
-        "eng": "Damage on herd +20%",
-        "tc": ""
-    },
-    "1070022": {
-        "id": "1070022",
-        "eng": "Damage on human +10%",
-        "tc": ""
-    },
-    "1070023": {
-        "id": "1070023",
-        "eng": "Destruction:\r\nDamage on human +15%",
-        "tc": ""
-    },
-    "1070024": {
-        "id": "1070024",
-        "eng": "Exploration Speed +3%",
-        "tc": ""
-    },
-    "1070025": {
-        "id": "1070025",
-        "eng": "Damage on herd +20%",
-        "tc": ""
-    },
-    "1070026": {
-        "id": "1070026",
-        "eng": "Troop Speed +5%",
-        "tc": ""
-    },
-    "1070027": {
-        "id": "1070027",
-        "eng": "Troop Attack +20",
-        "tc": ""
-    },
-    "1070028": {
-        "id": "1070028",
-        "eng": "Troop Attack +30",
-        "tc": ""
-    },
-    "1070029": {
-        "id": "1070029",
-        "eng": "Construct Speed +5%",
-        "tc": ""
-    },
-    "1070030": {
-        "id": "1070030",
-        "eng": "Exploration Speed +3%",
-        "tc": ""
-    },
-    "1070031": {
-        "id": "1070031",
-        "eng": "Extra Resource +5%",
-        "tc": ""
-    },
-    "1070032": {
-        "id": "1070032",
-        "eng": "Extra Resource +5%",
-        "tc": ""
-    },
-    "1070033": {
-        "id": "1070033",
-        "eng": "Troop Speed +5%",
-        "tc": ""
-    },
-    "1070034": {
-        "id": "1070034",
-        "eng": "Troop Attack +10",
-        "tc": ""
-    },
-    "1070035": {
-        "id": "1070035",
-        "eng": "Troop Defence +5",
-        "tc": ""
-    },
-    "1070036": {
-        "id": "1070036",
-        "eng": "Troop Attack +10",
-        "tc": ""
-    },
-    "1070037": {
-        "id": "1070037",
-        "eng": "Extra Resource +5%",
-        "tc": ""
-    },
-    "1070038": {
-        "id": "1070038",
-        "eng": "Troop Speed +5%",
-        "tc": ""
-    },
-    "1070039": {
-        "id": "1070039",
-        "eng": "Troop Attack +5",
-        "tc": ""
-    },
-    "1070040": {
-        "id": "1070040",
-        "eng": "Construct Speed +5%",
-        "tc": ""
-    },
-    "1070041": {
-        "id": "1070041",
-        "eng": "Troop Defence +5%",
-        "tc": ""
-    },
-    "1070042": {
-        "id": "1070042",
-        "eng": "Troop Attack +20",
-        "tc": ""
-    },
-    "1070043": {
-        "id": "1070043",
-        "eng": "Construct Speed +5%",
-        "tc": ""
-    },
-    "1070044": {
-        "id": "1070044",
-        "eng": "Extra Resource +5%",
-        "tc": ""
-    },
-    "1070045": {
-        "id": "1070045",
-        "eng": "Extra Resource +5%",
-        "tc": ""
-    },
-    "1070046": {
-        "id": "1070046",
-        "eng": "Exploration Speed +8%",
-        "tc": ""
-    },
-    "1070047": {
-        "id": "1070047",
-        "eng": "Exploration Speed +3%",
-        "tc": ""
-    },
-    "1070048": {
-        "id": "1070048",
-        "eng": "Construct Speed +5%",
-        "tc": ""
-    },
-    "1070049": {
-        "id": "1070049",
-        "eng": "Troop Defence +10",
-        "tc": ""
-    },
-    "1070050": {
-        "id": "1070050",
-        "eng": "Extra Resource +5%",
-        "tc": ""
-    },
-    "1070051": {
-        "id": "1070051",
-        "eng": "Extra Resource +5%",
-        "tc": ""
-    },
-    "1070052": {
-        "id": "1070052",
-        "eng": "Extra Resource +5%",
-        "tc": ""
-    },
-    "1070053": {
-        "id": "1070053",
-        "eng": "Troop Attack +5",
-        "tc": ""
-    },
-    "1070054": {
-        "id": "1070054",
-        "eng": "Exploration Speed +5%",
-        "tc": ""
-    },
-    "1070055": {
-        "id": "1070055",
-        "eng": "Troop Attack +5",
-        "tc": ""
-    },
-    "1080011": {
-        "id": "1080011",
-        "eng": "Skill Des",
-        "tc": ""
-    },
-    "1090051": {
-        "id": "1090051",
-        "eng": "Tinuvel is a beacon of hope in this post-apocalyptic wasteland. Her visions guide the survivors towards safety and sustenance.",
-        "tc": ""
-    },
-    "1090061": {
-        "id": "1090061",
-        "eng": "A master of resourcefulness.",
-        "tc": ""
-    },
-    "1090071": {
-        "id": "1090071",
-        "eng": "Keen, known for his unmatched speed and agility, wields dual blades with deadly precision.",
-        "tc": ""
-    },
-    "1090081": {
-        "id": "1090081",
-        "eng": "His reputation was built on the smoking barrels of his twin pistols, each a tale of survival.",
-        "tc": ""
-    },
-    "1090091": {
-        "id": "1090091",
-        "eng": "John, the lone hunter, tracks his prey across the barren lands. His survival skills are as sharp as the arrows in his quiver.",
-        "tc": ""
-    },
-    "1090301": {
-        "id": "1090301",
-        "eng": "An old chief, could pass away at any moment",
-        "tc": ""
-    },
-    "1090311": {
-        "id": "1090311",
-        "eng": "'Wanna a couple of bullets?'",
-        "tc": ""
-    },
-    "1090321": {
-        "id": "1090321",
-        "eng": "In name a doctor, but in reality…",
-        "tc": ""
-    },
-    "1090331": {
-        "id": "1090331",
-        "eng": "His life is a mockery of the apocalypse.",
-        "tc": ""
-    },
-    "1090351": {
-        "id": "1090351",
-        "eng": "An unknown traveler, who perhaps has seen places abundant with resources.",
-        "tc": ""
-    },
-    "1090401": {
-        "id": "1090401",
-        "eng": "Terrifying mutated creature",
-        "tc": ""
-    },
-    "1090402": {
-        "id": "1090402",
-        "eng": "Malicious marauding ruffian",
-        "tc": ""
-    },
-    "1100041": {
-        "id": "1100041",
-        "eng": "A testament to a bygone civilization, their crumbling stones whispering tales of the past.",
-        "tc": ""
-    },
-    "1100051": {
-        "id": "1100051",
-        "eng": "A treacherous labyrinth home to the elusive and deadly Sand Spiders, guarding ancient secrets beneath the desert sands.",
-        "tc": ""
-    },
-    "1100061": {
-        "id": "1100061",
-        "eng": "A monumental structure pulsating with power, harnessing the elements to fuel the technological marvels of its time.",
-        "tc": ""
-    },
-    "1100071": {
-        "id": "1100071",
-        "eng": "The Aquatic Ruins lie submerged in the depths, a watery grave to a once-thriving aquatic civilization, now a haunting reminder of their aquatic prowess.",
-        "tc": ""
-    },
-    "1100081": {
-        "id": "1100081",
-        "eng": "The Village Undercroft is a subterranean expanse beneath a quaint village, where echoes of the surface world blend with the mysteries of the deep.",
-        "tc": ""
-    },
-    "1100091": {
-        "id": "1100091",
-        "eng": "A symbol of mechanical ingenuity from an era lost to time.",
-        "tc": ""
-    },
-    "1100141": {
-        "id": "1100141",
-        "eng": "It is a hypothetical tunnel through space-time, bridging distant points in the universe and offering a tantalizing shortcut through the cosmos.",
-        "tc": ""
-    },
-
-    "1100201": {
-        "id": "1100201",
-        "eng": "%s character's physical strength is insufficient. Is it necessary to use %s amount of %s to replenish %s physical strength of the character? The remaining number of purchases today is %s.",
-        "tc": ""
-    },
-    "1100202": {
-        "id": "1100202",
-        "eng": "The number of purchases of energy for the day has reached the upper limit, and the number of purchases will be restored tomorrow.",
-        "tc": ""
-    },
-    "1100203": {
-        "id": "1100203",
-        "eng": "insufficient %s",
-        "tc": ""
-    }
+  "104001": {
+    "id": "104001",
+    "eng": "No qualification",
+    "tc": "沒有資格"
+  },
+  "104002": {
+    "id": "104002",
+    "eng": "Server not responding…Please try again later",
+    "tc": "伺服器沒有回應…請稍後再試"
+  },
+  "104003": {
+    "id": "104003",
+    "eng": "Please launch the wallet first",
+    "tc": "請先啟動錢包"
+  },
+  "104004": {
+    "id": "104004",
+    "eng": "Please follow the instruction",
+    "tc": "請遵循指示"
+  },
+  "104005": {
+    "id": "104005",
+    "eng": "You are going to spend %s PIOT, Confirm?",
+    "tc": "你即將花費 %s PIOT，確認嗎？"
+  },
+  "104006": {
+    "id": "104006",
+    "eng": "You can change settings by clicking the player avatar in the top-left corner.",
+    "tc": "你可以通過點擊左上角的玩家頭像來更改設置。"
+  },
+  "105001": {
+    "id": "105001",
+    "eng": "Common",
+    "tc": "普通"
+  },
+  "105002": {
+    "id": "105002",
+    "eng": "Rare",
+    "tc": "稀有"
+  },
+  "105003": {
+    "id": "105003",
+    "eng": "Legend",
+    "tc": "傳奇"
+  },
+  "105004": {
+    "id": "105004",
+    "eng": "Relic the Mythic",
+    "tc": "神話遺物"
+  },
+  "105005": {
+    "id": "105005",
+    "eng": "Relic the Genesis",
+    "tc": "創世紀遺物"
+  },
+  "105101": {
+    "id": "105101",
+    "eng": "Common Box",
+    "tc": "普通箱"
+  },
+  "105102": {
+    "id": "105102",
+    "eng": "Rare Box",
+    "tc": "稀有箱"
+  },
+  "105103": {
+    "id": "105103",
+    "eng": "Legend Box",
+    "tc": "傳奇箱"
+  },
+  "105104": {
+    "id": "105104",
+    "eng": "Box the Mythic",
+    "tc": "神話箱"
+  },
+  "105105": {
+    "id": "105105",
+    "eng": "Box the Genesis",
+    "tc": "創世紀箱"
+  },
+  "106001": {
+    "id": "106001",
+    "eng": "%s is dead, please wait for the rebirth…",
+    "tc": "%s 已經死亡，請等待重生…"
+  },
+  "106002": {
+    "id": "106002",
+    "eng": "Insufficient energy for move…",
+    "tc": "能量不足無法移動…"
+  },
+  "106003": {
+    "id": "106003",
+    "eng": "%s + %s",
+    "tc": "%s + %s"
+  },
+  "106004": {
+    "id": "106004",
+    "eng": "%s Lv%s completed!",
+    "tc": "%s Lv%s 完成！"
+  },
+  "106005": {
+    "id": "106005",
+    "eng": "Let %s learn %s, confirm?",
+    "tc": "讓 %s 學習 %s，確認嗎？"
+  },
+  "106006": {
+    "id": "106006",
+    "eng": "Let %s LOSS %s, and NO skill book returned, confirm?",
+    "tc": "讓 %s 失去 %s，並且沒有技能書返回，確認嗎？"
+  },
+  "106007": {
+    "id": "106007",
+    "eng": "Worm Hole Battle has finished.",
+    "tc": "蟲洞戰爭已經結束。"
+  },
+  "106008": {
+    "id": "106008",
+    "eng": "The rewards from the World Treasure Chest are affected by civilization level, heat value, and exploration value.\r\n\r\n- Civilization Level: Higher levels increase the quality of chests and daily opening limits, and the chance to find rare items.\r\n\r\n- Heat Value: Earned through PSYC and PIOT consumption, it raises the odds of getting head rewards from chests.\r\n\r\n- Exploration Value: Gained by exploring, gathering, building, and warring, it grants opportunities to open the World Treasure Chest.",
+    "tc": "世界寶藏箱的獎勵受到文明等級、熱值和探索值的影響。\r\n\r\n文明等級：等級越高，寶箱的質量和每日開箱限制增加，並且有更高機會找到稀有物品。\r\n\r\n熱值：通過 PSYC 和 PIOT 消費獲得，它提高了從寶箱中獲得頭獎的機率。\r\n\r\n探索值：通過探索、收集、建造和戰爭獲得，它賦予你開啟世界寶藏箱的機會。"
+  },
+  "106009": {
+    "id": "106009",
+    "eng": "New enemies are coming…",
+    "tc": "新敵人即將到來…"
+  },
+  "106010": {
+    "id": "106010",
+    "eng": "New things are discovered nearby…",
+    "tc": "附近發現了新事物…"
+  },
+  "106011": {
+    "id": "106011",
+    "eng": "%s has respawned.",
+    "tc": "%s 已經重生。"
+  },
+  "106012": {
+    "id": "106012",
+    "eng": "%s has recovered HP.",
+    "tc": "%s 恢復了 HP。"
+  },
+  "106013": {
+    "id": "106013",
+    "eng": "Civilization EXP + %s",
+    "tc": "文明經驗值 + %s"
+  },
+  "106014": {
+    "id": "106014",
+    "eng": "Treasure chest progress + %s",
+    "tc": "寶藏箱進度 + %s"
+  },
+  "106015": {
+    "id": "106015",
+    "eng": "Map and Teasure chest refresh countdown: ",
+    "tc": "地圖和寶藏箱刷新倒數計時："
+  },
+  "107001": {
+    "id": "107001",
+    "eng": "Eye of Pharaoh",
+    "tc": "法老的隱眼"
+  },
+  "107002": {
+    "id": "107002",
+    "eng": "Bane of Behemoth",
+    "tc": "巨獸的災禍"
+  },
+  "107003": {
+    "id": "107003",
+    "eng": "Tooth of Megalodon",
+    "tc": "巨齒鯊的牙齒"
+  },
+  "107004": {
+    "id": "107004",
+    "eng": "Crystal Skull",
+    "tc": "水晶骷髏"
+  },
+  "107005": {
+    "id": "107005",
+    "eng": "Stinger of Sand King",
+    "tc": "沙王的刺針"
+  },
+  "107006": {
+    "id": "107006",
+    "eng": "Golden Spear",
+    "tc": "金屬長矛"
+  },
+  "107007": {
+    "id": "107007",
+    "eng": "Antiquity Rune",
+    "tc": "古蹟符文"
+  },
+  "107008": {
+    "id": "107008",
+    "eng": "Iridescent Crystal",
+    "tc": "彩虹水晶"
+  },
+  "107009": {
+    "id": "107009",
+    "eng": "Dull Gemstone",
+    "tc": "黯淡的寶石"
+  },
+  "107010": {
+    "id": "107010",
+    "eng": "Ancient Axe",
+    "tc": "古老的斧頭"
+  },
+  "107011": {
+    "id": "107011",
+    "eng": "Divine Compass",
+    "tc": "神聖羅盤"
+  },
+  "107012": {
+    "id": "107012",
+    "eng": "Tables of Decalogue",
+    "tc": "十誡石板"
+  },
+  "107013": {
+    "id": "107013",
+    "eng": "Jade Hook",
+    "tc": "玉如意"
+  },
+  "107014": {
+    "id": "107014",
+    "eng": "Celestial Globe",
+    "tc": "天球儀"
+  },
+  "107015": {
+    "id": "107015",
+    "eng": "Time's Hourglass",
+    "tc": "時光沙漏"
+  },
+  "107016": {
+    "id": "107016",
+    "eng": "Ouroboros Emblem",
+    "tc": "我羅羅斯徽章"
+  },
+  "107017": {
+    "id": "107017",
+    "eng": "Nirvana Lotus",
+    "tc": "涅槃蓮花"
+  },
+  "107018": {
+    "id": "107018",
+    "eng": "Glazed Bead",
+    "tc": "琉璃珠"
+  },
+  "107019": {
+    "id": "107019",
+    "eng": "Golden Scarab",
+    "tc": "金色聖甲蟲"
+  },
+  "107020": {
+    "id": "107020",
+    "eng": "Thorn Crown",
+    "tc": "棘冠"
+  },
+  "107021": {
+    "id": "107021",
+    "eng": "Brass Sextant",
+    "tc": "黃銅六分儀"
+  },
+  "107022": {
+    "id": "107022",
+    "eng": "Flintlock Pistol",
+    "tc": "火石槍"
+  },
+  "107023": {
+    "id": "107023",
+    "eng": "Jiuzhou Cauldron",
+    "tc": "九州鼎"
+  },
+  "107024": {
+    "id": "107024",
+    "eng": "Ancient Trumpet",
+    "tc": "古號角"
+  },
+  "107025": {
+    "id": "107025",
+    "eng": "Mechanical Core",
+    "tc": "機械核心"
+  },
+  "107026": {
+    "id": "107026",
+    "eng": "Psychic Meteor",
+    "tc": "精神流星"
+  },
+  "107027": {
+    "id": "107027",
+    "eng": "Tengu Fan",
+    "tc": "天狗扇"
+  },
+  "107028": {
+    "id": "107028",
+    "eng": "Binoculars",
+    "tc": "雙筒望遠鏡"
+  },
+  "107029": {
+    "id": "107029",
+    "eng": "Twin Fish Jade",
+    "tc": "雙魚玉"
+  },
+  "107030": {
+    "id": "107030",
+    "eng": "Crystal Lens",
+    "tc": "水晶鏡片"
+  },
+  "107031": {
+    "id": "107031",
+    "eng": "Dharma Mace",
+    "tc": "法杵"
+  },
+  "107032": {
+    "id": "107032",
+    "eng": "Ra's Crown",
+    "tc": "拉神的王冠"
+  },
+  "107033": {
+    "id": "107033",
+    "eng": "Ancient Jar",
+    "tc": "古代罐子"
+  },
+  "107034": {
+    "id": "107034",
+    "eng": "Torch",
+    "tc": "火把"
+  },
+  "107035": {
+    "id": "107035",
+    "eng": "Horseshoe",
+    "tc": "馬蹄鐵"
+  },
+  "107036": {
+    "id": "107036",
+    "eng": "Wooden Wheel",
+    "tc": "木製輪子"
+  },
+  "107037": {
+    "id": "107037",
+    "eng": "Damaged Gear",
+    "tc": "損壞的齒輪"
+  },
+  "107549": {
+    "id": "107549",
+    "eng": "text for English version",
+    "tc": "英文版文本"
+  },
+  "108001": {
+    "id": "108001",
+    "eng": "Skill Name",
+    "tc": "技能名稱"
+  },
+  "109001": {
+    "id": "109001",
+    "eng": "0xPioneer",
+    "tc": "0xPioneer"
+  },
+  "109002": {
+    "id": "109002",
+    "eng": "Dual Blades Keen",
+    "tc": "雙刃銳利"
+  },
+  "109003": {
+    "id": "109003",
+    "eng": "Dual Guns Jack",
+    "tc": "雙槍傑克"
+  },
+  "109004": {
+    "id": "109004",
+    "eng": "Rebels Camus",
+    "tc": "叛逆者卡穆斯"
+  },
+  "109005": {
+    "id": "109005",
+    "eng": "Tinuvel the Prophetess",
+    "tc": "先知汀烏韋爾"
+  },
+  "109006": {
+    "id": "109006",
+    "eng": "Artisan Tom",
+    "tc": "工匠湯姆"
+  },
+  "109007": {
+    "id": "109007",
+    "eng": "Guard Keen",
+    "tc": "守衛銳利"
+  },
+  "109008": {
+    "id": "109008",
+    "eng": "Spy Jack",
+    "tc": "間諜傑克"
+  },
+  "109009": {
+    "id": "109009",
+    "eng": "Hunter John",
+    "tc": "獵人約翰"
+  },
+  "109010": {
+    "id": "109010",
+    "eng": "Gang Team",
+    "tc": "幫派團隊"
+  },
+  "109011": {
+    "id": "109011",
+    "eng": "Rebels Camus",
+    "tc": "叛亞卡穆斯"
+  },
+  "109012": {
+    "id": "109012",
+    "eng": "DoomsDay Gang Team",
+    "tc": "末日幫派團隊"
+  },
+  "109013": {
+    "id": "109013",
+    "eng": "Boar",
+    "tc": "野豬"
+  },
+  "109014": {
+    "id": "109014",
+    "eng": "Lion",
+    "tc": "獅子"
+  },
+  "109015": {
+    "id": "109015",
+    "eng": "Buffalo",
+    "tc": "水牛"
+  },
+  "109016": {
+    "id": "109016",
+    "eng": "Sand Spider",
+    "tc": "沙蜘蛛"
+  },
+  "109017": {
+    "id": "109017",
+    "eng": "Scorpion",
+    "tc": "蠍子"
+  },
+  "109018": {
+    "id": "109018",
+    "eng": "Spider Queen",
+    "tc": "蜘蛛女王"
+  },
+  "109019": {
+    "id": "109019",
+    "eng": "Double-headed Snake",
+    "tc": "雙頭蛇"
+  },
+  "109020": {
+    "id": "109020",
+    "eng": "Three-headed Snake",
+    "tc": "三頭蛇"
+  },
+  "109021": {
+    "id": "109021",
+    "eng": "Terrestrial Shark",
+    "tc": "陸地鯊魚"
+  },
+  "109022": {
+    "id": "109022",
+    "eng": "Death Worm ",
+    "tc": "死亡蠕蟲"
+  },
+  "109023": {
+    "id": "109023",
+    "eng": "bats",
+    "tc": "蝙蝠"
+  },
+  "109024": {
+    "id": "109024",
+    "eng": "guard",
+    "tc": "守衛"
+  },
+  "109025": {
+    "id": "109025",
+    "eng": "sand king",
+    "tc": "沙之王"
+  },
+  "109026": {
+    "id": "109026",
+    "eng": "land sharks",
+    "tc": "陸地鯊魚"
+  },
+  "109027": {
+    "id": "109027",
+    "eng": "old bot",
+    "tc": "老機器人"
+  },
+  "109028": {
+    "id": "109028",
+    "eng": "big land shark",
+    "tc": "大陸地鯊魚"
+  },
+  "109029": {
+    "id": "109029",
+    "eng": "Pharaoh",
+    "tc": "法老"
+  },
+  "109030": {
+    "id": "109030",
+    "eng": "Village Chief",
+    "tc": "村長"
+  },
+  "109031": {
+    "id": "109031",
+    "eng": "Rabbit Mad",
+    "tc": "瘋狂兔子"
+  },
+  "109032": {
+    "id": "109032",
+    "eng": "Doc Nervall",
+    "tc": "神經病奈瓦爾"
+  },
+  "109033": {
+    "id": "109033",
+    "eng": "Scavenger",
+    "tc": "拾荒者"
+  },
+  "109034": {
+    "id": "109034",
+    "eng": "Monster King",
+    "tc": "怪物之王"
+  },
+  "109035": {
+    "id": "109035",
+    "eng": "Scavenger Unknow",
+    "tc": "未知拾荒者"
+  },
+  "109036": {
+    "id": "109036",
+    "eng": "Space-time Raiders",
+    "tc": "時空掠奪者"
+  },
+  "110001": {
+    "id": "110001",
+    "eng": "Desert Grotto",
+    "tc": "沙漠石窟"
+  },
+  "110002": {
+    "id": "110002",
+    "eng": "Deadwood Marsh",
+    "tc": "枯木沼澤"
+  },
+  "110003": {
+    "id": "110003",
+    "eng": "Desert Oasis",
+    "tc": "沙漠綠洲"
+  },
+  "110004": {
+    "id": "110004",
+    "eng": "Ancient Ruins",
+    "tc": "古代遺跡"
+  },
+  "110005": {
+    "id": "110005",
+    "eng": "Sand Spider Cavern",
+    "tc": "沙蜘蛛洞穴"
+  },
+  "110006": {
+    "id": "110006",
+    "eng": "Energy Tower",
+    "tc": "能量塔"
+  },
+  "110007": {
+    "id": "110007",
+    "eng": "Aquatic Ruins",
+    "tc": "水下遺跡"
+  },
+  "110008": {
+    "id": "110008",
+    "eng": "Village Undercroft",
+    "tc": "村莊地下室"
+  },
+  "110009": {
+    "id": "110009",
+    "eng": "Mechanical Pyramid",
+    "tc": "機械金字塔"
+  },
+  "110010": {
+    "id": "110010",
+    "eng": "Main City",
+    "tc": "主城"
+  },
+  "110011": {
+    "id": "110011",
+    "eng": "Treasure",
+    "tc": "寶藏"
+  },
+  "110012": {
+    "id": "110012",
+    "eng": "Ambush",
+    "tc": "伏擊"
+  },
+  "110013": {
+    "id": "110013",
+    "eng": "Ruin",
+    "tc": "廢墟"
+  },
+  "110014": {
+    "id": "110014",
+    "eng": "Worm Hole",
+    "tc": "蟲洞"
+  },
+  "110015": {
+    "id": "110015",
+    "eng": "Worm Hole",
+    "tc": "蟲洞"
+  },
+  "117001": {
+    "id": "117001",
+    "eng": "Also known as Eye of Ramesses, it symbolizes Egypt's prosperity and peace, blessed by divine power",
+    "tc": "也被稱為拉美西斯之眼，它象徵著埃及的繁榮與和平，受到神聖力量的祝福"
+  },
+  "117002": {
+    "id": "117002",
+    "eng": "With this weapon, people brought an end to the era of the giant beasts' rule.",
+    "tc": "有了這種武器，人們結束了巨獸統治的時代。"
+  },
+  "117003": {
+    "id": "117003",
+    "eng": "The terrifying teeth of the giant land shark, with their sharp serrated edges, can easily slice through the flesh and skin of their prey.",
+    "tc": "巨陸鯊可怕的牙齒，鋒利的鋸齒邊緣，可以輕易地切開獵物的肉和皮膚。"
+  },
+  "117004": {
+    "id": "117004",
+    "eng": "The crystal skull imbued with mysterious powers, said to allow communication with the spirits.",
+    "tc": "充滿神秘力量的水晶骷髏，據說可以與靈魂交流。"
+  },
+  "117005": {
+    "id": "117005",
+    "eng": "The stinger of the desert giant scorpion, capable of killing its prey by piercing through them, even without the venom.",
+    "tc": "沙漠巨蠍的刺針，能夠穿透獵物，即使沒有毒素也能致命。"
+  },
+  "117006": {
+    "id": "117006",
+    "eng": "The divine spear that once pierced the body of a saint, also known as the Spear of Destiny.",
+    "tc": "曾經穿透聖人身體的神聖長矛，也被稱為命運之矛。"
+  },
+  "117007": {
+    "id": "117007",
+    "eng": "The stone inscribed with mystical writings, containing unknown forces within.",
+    "tc": "刻有神秘文字的石頭，內含未知的力量。"
+  },
+  "117008": {
+    "id": "117008",
+    "eng": "The crystal cluster that emits a dazzling light, rejuvenating the wearer's energy.",
+    "tc": "發出耀眼光芒的水晶簇，恢復佩戴者的能量。"
+  },
+  "117009": {
+    "id": "117009",
+    "eng": "The energy gemstone that has lost its original power.",
+    "tc": "失去原始力量的能量寶石。"
+  },
+  "117010": {
+    "id": "117010",
+    "eng": "An old axe, used to belong to someone.",
+    "tc": "一把古老的斧頭，曾經屬於某人。"
+  },
+  "117011": {
+    "id": "117011",
+    "eng": "Not just for navigation but a diviner of one's deepest truths and desires.",
+    "tc": "不僅用於導航，還是一個占卜者最深真理和渴望的工具。"
+  },
+  "117012": {
+    "id": "117012",
+    "eng": "Ancient stone tablets inscribed with the Ten Commandments, symbolizing divine law and moral guidance.",
+    "tc": "刻有十誡的古代石碑，象徵神聖法律和道德指導。"
+  },
+  "117013": {
+    "id": "117013",
+    "eng": "A delicately carved jade artifact, often used as a ceremonial tool in ancient Chinese rituals.",
+    "tc": "精細雕刻的玉藝術品，常在古代中國的儀式中作為儀式工具使用。"
+  },
+  "117014": {
+    "id": "117014",
+    "eng": "A model of the celestial sphere, representing the heavens and used for astronomical navigation and study.",
+    "tc": "代表天體的模型，用於天文導航和研究。"
+  },
+  "117015": {
+    "id": "117015",
+    "eng": "A timekeeping device with flowing sand, a metaphor for the relentless passage of time.",
+    "tc": "一個流沙計時器，是無情時間流逝的隱喻。"
+  },
+  "117016": {
+    "id": "117016",
+    "eng": "A symbol of infinity and self-renewal, depicting a serpent eating its own tail.",
+    "tc": "無限和自我更新的象徵，描繪一條吞食自己尾巴的蛇。"
+  },
+  "117017": {
+    "id": "117017",
+    "eng": "A lotus flower representing purity and enlightenment, often associated with Buddhist concepts of spiritual awakening.",
+    "tc": "代表純淨和啟蒙的蓮花，常與佛教精神覺醒的概念相關聯。"
+  },
+  "117018": {
+    "id": "117018",
+    "eng": "A small, colorful bead with a glossy finish, used in jewelry and as a status symbol in ancient cultures.",
+    "tc": "一個小而多彩的珠子，有光澤的外表，用於珠寶和古代文化中的地位象徵。"
+  },
+  "117019": {
+    "id": "117019",
+    "eng": "A golden representation of the scarab beetle, revered in ancient Egypt as a symbol of rebirth and transformation.",
+    "tc": "金色的聖甲蟲形象，被古代埃及人崇敬為重生和轉變的象徵。"
+  },
+  "117020": {
+    "id": "117020",
+    "eng": "A crown adorned with thorns, symbolizing sacrifice and suffering, often associated with religious martyrdom.",
+    "tc": "帶有棘刺的王冠，象徵犧牲和痛苦，常與宗教殉道者相關聯。"
+  },
+  "117021": {
+    "id": "117021",
+    "eng": "A navigational instrument used to measure the angular distance between celestial bodies and the horizon.",
+    "tc": "用於測量天體與地平線之間角距的導航儀器。"
+  },
+  "117022": {
+    "id": "117022",
+    "eng": "An early firearm with a flint ignition mechanism, a symbol of the technological advancements of the early modern period.",
+    "tc": "早期火器，帶有火石點火機制，是早期現代時期技術進步的象徵。"
+  },
+  "117023": {
+    "id": "117023",
+    "eng": "A mythical cauldron from Chinese legend, said to have the power to unify the nine provinces and bring peace.",
+    "tc": "中國傳說中的神話大鍋，據說有統一天下九省並帶來和平的力量。"
+  },
+  "117024": {
+    "id": "117024",
+    "eng": "A wind instrument from antiquity, used in both warfare for signaling and in ceremonies for its resonant sound.",
+    "tc": "古代的風樂器，用於戰爭信號和儀式中，因其共鳴聲而使用。"
+  },
+  "117025": {
+    "id": "117025",
+    "eng": "The central component of a mechanical device, often intricate and complex, symbolizing the ingenuity of engineering.",
+    "tc": "機械裝置的核心部件，通常錯綜複雜，象徵工程的巧妙。"
+  },
+  "117026": {
+    "id": "117026",
+    "eng": "A meteorite believed to possess mystical powers, associated with psychic phenomena and cosmic energy.",
+    "tc": "被認為擁有神秘力量的隕石，與心理現象和宇宙能量相關聯。"
+  },
+  "117027": {
+    "id": "117027",
+    "eng": "A fan associated with the Tengu, a mythical creature from Japanese folklore, known for its sharp wit and martial prowess.",
+    "tc": "與日本民間傳說中的天狗有關的扇子，以其銳利的智慧和武術能力而聞名。"
+  },
+  "117028": {
+    "id": "117028",
+    "eng": "Optical instruments for observing distant objects, enhancing the viewer's perspective and understanding of the world.",
+    "tc": "用於觀察遙遠物體的光學儀器，增強觀察者的視角和對世界的了解。"
+  },
+  "117029": {
+    "id": "117029",
+    "eng": "A jade carving depicting two fish, often symbolizing harmony, abundance, and the unity of yin and yang.",
+    "tc": "雕刻兩條魚的玉雕，通常象徵和諧、豐盛和陰陽的統一。"
+  },
+  "117030": {
+    "id": "117030",
+    "eng": "A lens made of crystal, prized for its clarity and used in early optical devices for magnification and illumination.",
+    "tc": "用水晶製成的鏡片，因其清晰度而受到珍視，用於早期的放大和照明光學設備。"
+  },
+  "117031": {
+    "id": "117031",
+    "eng": "A ceremonial mace used in religious rituals to ward off evil spirits and protect the faithful.",
+    "tc": "用於宗教儀式以驅逐邪靈並保護信徒的儀式錘。"
+  },
+  "117032": {
+    "id": "117032",
+    "eng": "The crown of a sovereign, often adorned with sun motifs, representing the ruler's divine right and power.",
+    "tc": "一個主權者的王冠，通常裝飾有太陽圖案，代表統治者的神聖權力和力量。"
+  },
+  "117033": {
+    "id": "117033",
+    "eng": "A vessel from a bygone era, crafted with simple yet enduring techniques, reflecting the daily life of ancient civilizations.",
+    "tc": "一個古老時代的容器，用簡單而持久的技術製作，反映了古代文明的日常生活。"
+  },
+  "117034": {
+    "id": "117034",
+    "eng": "A handheld source of light, often used in ancient times for navigation and signaling in the darkness.",
+    "tc": "一個手持光源，通常用於古代導航和在黑暗中發信號。"
+  },
+  "117035": {
+    "id": "117035",
+    "eng": "A U-shaped piece of metal attached to a horse's hoof, believed to bring good luck and protect against evil.",
+    "tc": "馬蹄鐵附在馬蹄上，被認為帶來好運並保護免受邪惡。"
+  },
+  "117036": {
+    "id": "117036",
+    "eng": "A simple wheel made of wood, a fundamental component of early transportation and machinery.",
+    "tc": "一個簡單的木製輪子，是早期交通和機械的基本組件。"
+  },
+  "117037": {
+    "id": "117037",
+    "eng": "A gear with visible wear or breakage, a reminder of the passage of time and the inevitability of decay.",
+    "tc": "一個有明顯磨損或損壞的齒輪，提醒時間的流逝和衰敗的必然性。"
+  },
+  "120001": {
+    "id": "120001",
+    "eng": "City Hall",
+    "tc": "市政廳"
+  },
+  "120002": {
+    "id": "120002",
+    "eng": "Barracks",
+    "tc": "兵營"
+  },
+  "120003": {
+    "id": "120003",
+    "eng": "House",
+    "tc": "房屋"
+  },
+  "120004": {
+    "id": "120004",
+    "eng": "Energy Station",
+    "tc": "能量站"
+  },
+  "120005": {
+    "id": "120005",
+    "eng": "Babel Tower",
+    "tc": "巴別塔"
+  },
+  "121001": {
+    "id": "121001",
+    "eng": "More buildings are able to be constructed",
+    "tc": "可以建造更多的建築物"
+  },
+  "121002": {
+    "id": "121002",
+    "eng": "Faster recruitment pace",
+    "tc": "更快的招募速度"
+  },
+  "121003": {
+    "id": "121003",
+    "eng": "More citizens are able to be contained",
+    "tc": "可以容納更多的市民"
+  },
+  "121004": {
+    "id": "121004",
+    "eng": "Accelerated energy production efficiency",
+    "tc": "加速能量生產效率"
+  },
+  "121005": {
+    "id": "121005",
+    "eng": "More Relics are able to be acitved",
+    "tc": "可以激活更多的遺物"
+  },
+  "122001": {
+    "id": "122001",
+    "eng": "staff effect description",
+    "tc": "職員效果描述"
+  },
+  "200001": {
+    "id": "200001",
+    "eng": "Boot ends",
+    "tc": "靴子結束"
+  },
+  "200002": {
+    "id": "200002",
+    "eng": "Please explore more to get it",
+    "tc": "請探索更多以獲得它"
+  },
+  "200003": {
+    "id": "200003",
+    "eng": "Big Team Coming: %s",
+    "tc": "大團隊來襲：%s"
+  },
+  "200004": {
+    "id": "200004",
+    "eng": "Relic Choice",
+    "tc": "遺物選擇"
+  },
+  "201001": {
+    "id": "201001",
+    "eng": "The building is being upgraded, please wait.",
+    "tc": "建築正在升級，請稍候。"
+  },
+  "201002": {
+    "id": "201002",
+    "eng": "Recruiting…Please wait…",
+    "tc": "招募中…請稍候…"
+  },
+  "201003": {
+    "id": "201003",
+    "eng": "The building is being upgraded, please wait.",
+    "tc": "建築正在升級，請稍候。"
+  },
+  "201004": {
+    "id": "201004",
+    "eng": "Insufficient resources for building upgrades",
+    "tc": "建築升級資源不足"
+  },
+  "201005": {
+    "id": "201005",
+    "eng": "Unlock",
+    "tc": "解鎖"
+  },
+  "201006": {
+    "id": "201006",
+    "eng": "Upgrade",
+    "tc": "升級"
+  },
+  "202001": {
+    "id": "202001",
+    "eng": "task hide: %s s",
+    "tc": "任務隱藏：%s 秒"
+  },
+  "202002": {
+    "id": "202002",
+    "eng": "prepare task... %s s",
+    "tc": "準備任務... %s 秒"
+  },
+  "202003": {
+    "id": "202003",
+    "eng": "All %s Tasks",
+    "tc": "所有 %s 任務"
+  },
+  "202004": {
+    "id": "202004",
+    "eng": "New Task Taken",
+    "tc": "新任務已接取"
+  },
+  "203001": {
+    "id": "203001",
+    "eng": "cann't move to block",
+    "tc": "無法移動到區塊"
+  },
+  "203002": {
+    "id": "203002",
+    "eng": "pioneer is busy",
+    "tc": "先鋒忙著"
+  },
+  "203003": {
+    "id": "203003",
+    "eng": "pioneer is dead",
+    "tc": "先鋒已經死了"
+  },
+  "203004": {
+    "id": "203004",
+    "eng": "pioneer is defending",
+    "tc": "先鋒正在防禦"
+  },
+  "203005": {
+    "id": "203005",
+    "eng": "pioneer is processing an event",
+    "tc": "先鋒正在處理一個事件"
+  },
+  "204001": {
+    "id": "204001",
+    "eng": "HP",
+    "tc": "HP"
+  },
+  "204002": {
+    "id": "204002",
+    "eng": "ATK",
+    "tc": "ATK"
+  },
+  "204003": {
+    "id": "204003",
+    "eng": "Get",
+    "tc": "獲取"
+  },
+  "204004": {
+    "id": "204004",
+    "eng": "Get",
+    "tc": "獲取"
+  },
+  "205001": {
+    "id": "205001",
+    "eng": "Get",
+    "tc": "獲取"
+  },
+  "205002": {
+    "id": "205002",
+    "eng": "Use",
+    "tc": "使用"
+  },
+  "206001": {
+    "id": "206001",
+    "eng": "Dual Guns Jack",
+    "tc": "雙槍傑克"
+  },
+  "206002": {
+    "id": "206002",
+    "eng": "Dual Blades Keen",
+    "tc": "雙刃銳利"
+  },
+  "206003": {
+    "id": "206003",
+    "eng": "Rebels Camus",
+    "tc": "叛亞卡穆斯"
+  },
+  "206004": {
+    "id": "206004",
+    "eng": "Gunman as Graceful as a Gazelle",
+    "tc": "像瞪羚一樣優雅的槍手"
+  },
+  "206005": {
+    "id": "206005",
+    "eng": "Warrior as Wild as the Wind",
+    "tc": "像風一樣野性的戰士"
+  },
+  "206006": {
+    "id": "206006",
+    "eng": "Berserker as Fearless as a Beast",
+    "tc": "像野獸一樣無畏的狂戰士"
+  },
+  "207001": {
+    "id": "207001",
+    "eng": "Your HP has changed",
+    "tc": "你的HP已經改變"
+  },
+  "207002": {
+    "id": "207002",
+    "eng": "Your Attack has changed",
+    "tc": "你的攻擊已經改變"
+  },
+  "207003": {
+    "id": "207003",
+    "eng": "Enemy's HP has changed",
+    "tc": "敵人的HP已經改變"
+  },
+  "207004": {
+    "id": "207004",
+    "eng": "Enemy's Attack has changed",
+    "tc": "敵人的攻擊已經改變"
+  },
+  "207005": {
+    "id": "207005",
+    "eng": "%s's HP has changed",
+    "tc": "%s 的HP已經改變"
+  },
+  "207006": {
+    "id": "207006",
+    "eng": "%s's Attack has changed",
+    "tc": "%s 的攻擊已經改變"
+  },
+  "207007": {
+    "id": "207007",
+    "eng": "you need AT LEAST %s ",
+    "tc": "你至少需要 %s"
+  },
+  "207008": {
+    "id": "207008",
+    "eng": "You lost %s %s",
+    "tc": "你失去了 %s %s"
+  },
+  "207009": {
+    "id": "207009",
+    "eng": "You obtained %s %s",
+    "tc": "你獲得了 %s %s"
+  },
+  "207010": {
+    "id": "207010",
+    "eng": "Event Ended",
+    "tc": "事件結束"
+  },
+  "310101": {
+    "id": "310101",
+    "eng": "You found and entered a cave.",
+    "tc": "你發現並進入了一個洞穴。"
+  },
+  "310102": {
+    "id": "310102",
+    "eng": "You encounter a small swarm of sand spiders and fight them.",
+    "tc": "你遇到了一小群沙蜘蛛並與它們戰鬥。"
+  },
+  "310103": {
+    "id": "310103",
+    "eng": "You killed the spiders, and found some spider cocoons with different shapes.",
+    "tc": "你殺死了蜘蛛，並發現了一些不同形狀的蜘蛛繭。"
+  },
+  "310104": {
+    "id": "310104",
+    "eng": "You are killed by the spiders!",
+    "tc": "你被蜘蛛殺死了！"
+  },
+  "310105": {
+    "id": "310105",
+    "eng": "You opened the human-shaped cocoons and you found some humans who are not dead yet.",
+    "tc": "你打開了人形繭，發現了一些還沒有死的人。"
+  },
+  "310106": {
+    "id": "310106",
+    "eng": "You opened the egg-shaped cocoons and...",
+    "tc": "你打開了蛋形繭並..."
+  },
+  "310107": {
+    "id": "310107",
+    "eng": "Those who were saved by you decided to join you!",
+    "tc": "被你救出的人決定加入你！"
+  },
+  "310108": {
+    "id": "310108",
+    "eng": "And they also gave you some resources.",
+    "tc": "他們還給了你一些資源。"
+  },
+  "310109": {
+    "id": "310109",
+    "eng": "Surprise! Another swarm of sand spiders!",
+    "tc": "驚喜！另一群沙蜘蛛！"
+  },
+  "310110": {
+    "id": "310110",
+    "eng": "You killed the spiders, and found some resources.",
+    "tc": "你殺死了蜘蛛，並發現了一些資源。"
+  },
+  "310111": {
+    "id": "310111",
+    "eng": "You are killed by the spiders!",
+    "tc": "你被蜘蛛殺死了！"
+  },
+  "310112": {
+    "id": "310112",
+    "eng": "You continued deeper into the cave and eventually discovered the spider queen.",
+    "tc": "你繼續深入洞穴，最終發現了蜘蛛女王。"
+  },
+  "310113": {
+    "id": "310113",
+    "eng": "You killed the spider queen and obtained her treasure.",
+    "tc": "你殺死了蜘蛛女王並獲得了她的寶藏。"
+  },
+  "310114": {
+    "id": "310114",
+    "eng": "You are killed by the spider queen!",
+    "tc": "你被蜘蛛女王殺死了！"
+  },
+  "310201": {
+    "id": "310201",
+    "eng": "You found an ancient.",
+    "tc": "你發現了一個古老的存在。"
+  },
+  "310202": {
+    "id": "310202",
+    "eng": "You entered the ancient.",
+    "tc": "你進入了古老的地方。"
+  },
+  "310203": {
+    "id": "310203",
+    "eng": "You saw a guardian.",
+    "tc": "你看到了一個守護者。"
+  },
+  "310204": {
+    "id": "310204",
+    "eng": "You fight with the guardian.",
+    "tc": "你與守護者戰鬥。"
+  },
+  "310205": {
+    "id": "310205",
+    "eng": "You killed the guardian and got a special token.",
+    "tc": "你殺死了守護者並獲得了一個特殊代幣。"
+  },
+  "310206": {
+    "id": "310206",
+    "eng": "You are killed by the guardian.",
+    "tc": "你被守護者殺死了。"
+  },
+  "310207": {
+    "id": "310207",
+    "eng": "You evaded.",
+    "tc": "你迴避了。"
+  },
+  "310208": {
+    "id": "310208",
+    "eng": "You reached the door to the last room.",
+    "tc": "你到達了最後房間的門。"
+  },
+  "310209": {
+    "id": "310209",
+    "eng": "You found a secret entry and you are considering how to get into it.",
+    "tc": "你發現了一個秘密入口，正在考慮如何進入。"
+  },
+  "310210": {
+    "id": "310210",
+    "eng": "You made a rope and used it to get into the ancient.",
+    "tc": "你做了一根繩子並用它進入了古老的地方。"
+  },
+  "310211": {
+    "id": "310211",
+    "eng": "You jumped into the ancient and lost a little HP.",
+    "tc": "你跳進了古老的地方並失去了一些HP。"
+  },
+  "310212": {
+    "id": "310212",
+    "eng": "You got into the ancient and found a mecha-mon waiting for you.",
+    "tc": "你進入了古老的地方並發現了一個機甲怪物在等你。"
+  },
+  "310213": {
+    "id": "310213",
+    "eng": "You destroyed the mecha-mon and got a special token.",
+    "tc": "你摧毀了機甲怪物並獲得了一個特殊代幣。"
+  },
+  "310214": {
+    "id": "310214",
+    "eng": "You are killed.",
+    "tc": "你被殺死了。"
+  },
+  "310215": {
+    "id": "310215",
+    "eng": "You entered the last room.",
+    "tc": "你進入了最後的房間。"
+  },
+  "310216": {
+    "id": "310216",
+    "eng": "Do you want to use the token to open the big box?",
+    "tc": "你想用代幣打開大箱子嗎？"
+  },
+  "310217": {
+    "id": "310217",
+    "eng": "You opened the big treasure box and gain a lot!",
+    "tc": "你打開了大寶藏箱並獲得了很多！"
+  },
+  "310218": {
+    "id": "310218",
+    "eng": "You could not obtain the big reward, so you took away a few resources.",
+    "tc": "你沒能獲得大獎，所以拿走了一些資源。"
+  },
+  "310301": {
+    "id": "310301",
+    "eng": "You entered a deserted lab and encountered a dangerous guardian.",
+    "tc": "你進入了一個荒蕪的實驗室並遇到了一個危險的守護者。"
+  },
+  "310302": {
+    "id": "310302",
+    "eng": "You killed the guardian and now you are considering which way to go.",
+    "tc": "你殺死了守護者，現在你在考慮該走哪條路。"
+  },
+  "310303": {
+    "id": "310303",
+    "eng": "You are killed.",
+    "tc": "你被殺死了。"
+  },
+  "310304": {
+    "id": "310304",
+    "eng": "You found a few resources in the warehouse.",
+    "tc": "你在倉庫裡找到了一些資源。"
+  },
+  "310305": {
+    "id": "310305",
+    "eng": "You found a broken tube in the energy room.",
+    "tc": "你在能量房裡發現了一個破損的管道。"
+  },
+  "310306": {
+    "id": "310306",
+    "eng": "You repaired the tube.",
+    "tc": "你修好了管道。"
+  },
+  "310307": {
+    "id": "310307",
+    "eng": "You got a lot of energy.",
+    "tc": "你獲得了大量的能量。"
+  },
+  "310308": {
+    "id": "310308",
+    "eng": "You got a little energy.",
+    "tc": "你獲得了一些能量。"
+  },
+  "310309": {
+    "id": "310309",
+    "eng": "You came to the cave in the village and found a colony of bats",
+    "tc": "你來到了村莊的洞穴並發現了一個蝙蝠群落"
+  },
+  "310310": {
+    "id": "310310",
+    "eng": "You shooed away the bats and entered the cave.",
+    "tc": "你趕走了蝙蝠並進入了洞穴。"
+  },
+  "310311": {
+    "id": "310311",
+    "eng": "You trash killed by the bats??? Are you kidding me???",
+    "tc": ""
+  },
+  "310312": {
+    "id": "310312",
+    "eng": "In the depths of the cave, you saw a guard standing in front of a door. You need to show it something.",
+    "tc": "你在洞穴深處看到一個守衛站在門前。你需要向它展示些什麼。"
+  },
+  "310313": {
+    "id": "310313",
+    "eng": "You showed it the Elder's Staff and the guard took you into the room behind the door.",
+    "tc": "你向它展示了長者的法杖，守衛把你帶進了門後的房間。"
+  },
+  "310314": {
+    "id": "310314",
+    "eng": "In the room, you saw the Energy Gemstone which is sustaining the entire base of the village. You can feel the immense power contained within this stone, and now you are faced with a choice.",
+    "tc": "在房間裡，你看到了維持整個村莊基地的能源寶石。你可以感受到這塊石頭內蘊含的巨大力量，現在你面臨一個選擇。"
+  },
+  "310315": {
+    "id": "310315",
+    "eng": "You followed your heart and took the Energy Gemstone directly.",
+    "tc": "你跟隨你的心，直接拿走了能源寶石。"
+  },
+  "310316": {
+    "id": "310316",
+    "eng": "You resisted the temptation and decided to help the village by recharging the stone.",
+    "tc": "你抵擋住了誘惑，決定通過充電來幫助村莊。"
+  },
+  "310317": {
+    "id": "310317",
+    "eng": "After removing the Energy Gemstone from its base, it instantly lost its luster and became dim. Before you had time to ponder, the entire cavern began to shake, emitting a tremendous noise. You hastily grabbed the stone and fled from the area.",
+    "tc": "當你從其基座上移開能源寶石後，它立刻失去了光澤並變得暗淡。在你還來不及思考之前，整個洞穴開始震動，發出巨大的噪音。你匆忙抓住石頭並從該地區逃離。"
+  },
+  "310318": {
+    "id": "310318",
+    "eng": "With your help, the village regained its vitality.",
+    "tc": "在你的幫助下，村莊恢復了生氣。"
+  },
+  "310319": {
+    "id": "310319",
+    "eng": "You had nothing to show it.",
+    "tc": "你沒有什麼可以展示的。"
+  },
+  "310320": {
+    "id": "310320",
+    "eng": "You are killed by the guard.",
+    "tc": "你被守衛殺死了。"
+  },
+  "310321": {
+    "id": "310321",
+    "eng": "After defeating the guard, you entered the room behind the door and there, you discovered a gemstone imbued with immense power.",
+    "tc": "在擊敗守衛後，你進入了門後的房間，在那裡，你發現了一塊充滿巨大力量的寶石。"
+  },
+  "310322": {
+    "id": "310322",
+    "eng": "You took the gemstone without hesitation.",
+    "tc": "你毫不猶豫地拿走了寶石。"
+  },
+  "310323": {
+    "id": "310323",
+    "eng": "After removing the gemstone from its base, it instantly lost its luster and became dim. Before you had time to ponder, the entire cavern began to shake, emitting a tremendous noise. You hastily grabbed the stone and fled from the area.",
+    "tc": "當你從其基座上移開寶石後，它立刻失去了光澤並變得暗淡。在你還來不及思考之前，整個洞穴開始震動，發出巨大的噪音。你匆忙抓住石頭並從該地區逃離。"
+  },
+  "310324": {
+    "id": "310324",
+    "eng": "At the entrance of a waterside ruin, you encountered a group of land sharks and engaged them in combat.",
+    "tc": "暗淡。在你還來不及思考之前，整個洞穴開始震動，發出巨大的噪音。你匆忙抓住石頭並從該地區逃離。"
+  },
+  "310325": {
+    "id": "310325",
+    "eng": "You killed the sharks and now you should decide which way to go.",
+    "tc": "在一個水邊廢墟的入口，你遇到了一群陸地鯊魚並與它們戰鬥。"
+  },
+  "310326": {
+    "id": "310326",
+    "eng": "You entered the storage room of the ruin.",
+    "tc": "你殺死了鯊魚，現在你應該決定該走哪條路。"
+  },
+  "310327": {
+    "id": "310327",
+    "eng": "You came across an old robot and engaged it in battle.",
+    "tc": "你進入了廢墟的儲藏室。"
+  },
+  "310328": {
+    "id": "310328",
+    "eng": "You defeated the robot and gained some energy from it.",
+    "tc": "你遇到了一個老機器人並與它戰鬥。"
+  },
+  "310329": {
+    "id": "310329",
+    "eng": "You are killed by the robot!",
+    "tc": "你擊敗了機器人並從它那裡獲得了一些能量。"
+  },
+  "310330": {
+    "id": "310330",
+    "eng": "You arrived at the waterside dock where boats are moored.",
+    "tc": "你被機器人殺死了！"
+  },
+  "310331": {
+    "id": "310331",
+    "eng": "You found some supplies and a good place for fishing.",
+    "tc": "你到達了停泊船隻的水邊碼頭。"
+  },
+  "310332": {
+    "id": "310332",
+    "eng": "Maybe you want to fish here?",
+    "tc": "你發現了一些物資和一個好的漁場所。"
+  },
+  "310333": {
+    "id": "310333",
+    "eng": "You don’t want to waste your food.",
+    "tc": "也許你想在這裡釣魚？"
+  },
+  "310334": {
+    "id": "310334",
+    "eng": "You used some food as bait and caught a lot of fish.",
+    "tc": "你不願意浪費你的糧食。"
+  },
+  "310335": {
+    "id": "310335",
+    "eng": "You used a significant amount of food as bait and…",
+    "tc": "你用一些食物作為誘餌並捕獲了很多魚。"
+  },
+  "310336": {
+    "id": "310336",
+    "eng": "You killed the big land shark and gained the Tooth of Megalodon!",
+    "tc": "你用了大量的食物作為誘餌並..."
+  },
+  "310337": {
+    "id": "310337",
+    "eng": "You are killed by the big land shark!",
+    "tc": "你殺死了大陸地鯊魚並獲得了巨鯊的牙齒！"
+  },
+  "310338": {
+    "id": "310338",
+    "eng": "You are killed by the land sharks!",
+    "tc": "你被大陸地鯊魚殺死了！"
+  },
+  "310339": {
+    "id": "310339",
+    "eng": "A big land shark!",
+    "tc": "你被陸地鯊魚殺死了！"
+  },
+  "310340": {
+    "id": "310340",
+    "eng": "It is said that within this pyramid lies a supreme treasure, yet most people are lost in the labyrinth of the pyramid before they can find it.",
+    "tc": "一條大陸地鯊魚！"
+  },
+  "310341": {
+    "id": "310341",
+    "eng": "You entered the pyramid. Soon, you encountered a fork in the road.",
+    "tc": "據說這座金字塔內藏有一個至高無上的寶藏，但大多數人在找到它之前都迷失在金字塔的迷宮中。"
+  },
+  "310342": {
+    "id": "310342",
+    "eng": "You turned left. Soon, you encountered another fork.",
+    "tc": "你進入了金字塔。不久，你遇到了一個岔路口。"
+  },
+  "310343": {
+    "id": "310343",
+    "eng": "You turned right. Soon, you encountered another fork.",
+    "tc": "你向左转。不久，你遇到了另一個岔路口。"
+  },
+  "310344": {
+    "id": "310344",
+    "eng": "You turned right and you found that you backed to the entry.",
+    "tc": "你向右转。不久，你遇到了另一個岔路口。"
+  },
+  "310345": {
+    "id": "310345",
+    "eng": "You turned left again. Soon, you encountered another fork.",
+    "tc": "你向右转，發現你回到了入口。"
+  },
+  "310346": {
+    "id": "310346",
+    "eng": "You turned right again. Soon, you encountered another fork.",
+    "tc": "你再次向左转。不久，你遇到了另一個岔路口。"
+  },
+  "310347": {
+    "id": "310347",
+    "eng": "You turned right and you found that you backed to the entry.",
+    "tc": "你向左转，發現你回到了入口。"
+  },
+  "310348": {
+    "id": "310348",
+    "eng": "You turned left and you found a mechanical pharaoh.",
+    "tc": "你向右转，發現了一個機械法老。"
+  },
+  "310349": {
+    "id": "310349",
+    "eng": "You defeated the mechanical pharaoh and got the artifact from it!",
+    "tc": "你擊敗了機械法老並從它那裡獲得了神器！"
+  },
+  "310350": {
+    "id": "310350",
+    "eng": "You are killed by the pharaoh!",
+    "tc": "你被法老殺死了！"
+  },
+  "310351": {
+    "id": "310351",
+    "eng": "You turned left and you found that you backed to the entry.",
+    "tc": "你向左转，發現你回到了入口。"
+  },
+  "310352": {
+    "id": "310352",
+    "eng": "You turned left and you found that you backed to the entry.",
+    "tc": "你向左转，發現你回到了入口。"
+  },
+  "310353": {
+    "id": "310353",
+    "eng": "You turned right and you found a mechanical pharaoh.",
+    "tc": "你向右转，發現了一個機械法老。"
+  },
+  "310401": {
+    "id": "310401",
+    "eng": "open human-shaped cocoons",
+    "tc": "打開人形繭"
+  },
+  "310402": {
+    "id": "310402",
+    "eng": "enter the ancient",
+    "tc": "進入古老場所"
+  },
+  "310403": {
+    "id": "310403",
+    "eng": "fight",
+    "tc": "戰鬥"
+  },
+  "310404": {
+    "id": "310404",
+    "eng": "make a rope and use it",
+    "tc": "製作繩子並使用它"
+  },
+  "310405": {
+    "id": "310405",
+    "eng": "use the token",
+    "tc": "使用代幣"
+  },
+  "310406": {
+    "id": "310406",
+    "eng": "to the warehouse",
+    "tc": "前往倉庫"
+  },
+  "310407": {
+    "id": "310407",
+    "eng": "use stones to repair the tube",
+    "tc": "用石頭修補管道"
+  },
+  "310408": {
+    "id": "310408",
+    "eng": "open egg-shaped cocoons",
+    "tc": "打開蛋形繭"
+  },
+  "310409": {
+    "id": "310409",
+    "eng": "observe around",
+    "tc": "觀察周圍"
+  },
+  "310410": {
+    "id": "310410",
+    "eng": "evade",
+    "tc": "迴避"
+  },
+  "310411": {
+    "id": "310411",
+    "eng": "jump into it",
+    "tc": "跳進去"
+  },
+  "310412": {
+    "id": "310412",
+    "eng": "don't use the token",
+    "tc": "不要使用代幣"
+  },
+  "310413": {
+    "id": "310413",
+    "eng": "to the energy room",
+    "tc": "前往能量房"
+  },
+  "310414": {
+    "id": "310414",
+    "eng": "take away the tube",
+    "tc": "拿走管道"
+  },
+  "310415": {
+    "id": "310415",
+    "eng": "Show the Elder's Staff",
+    "tc": "展示長者法杖"
+  },
+  "310416": {
+    "id": "310416",
+    "eng": "Take the Energy Gemstone",
+    "tc": "拿走能源寶石"
+  },
+  "310417": {
+    "id": "310417",
+    "eng": "To the storage of the ruin",
+    "tc": "前往廢墟的儲藏室"
+  },
+  "310418": {
+    "id": "310418",
+    "eng": "I don't want to waste my food",
+    "tc": "我不想浪費我的糧食"
+  },
+  "310419": {
+    "id": "310419",
+    "eng": "Left",
+    "tc": "左邊"
+  },
+  "310420": {
+    "id": "310420",
+    "eng": "Nothing to show",
+    "tc": "沒有什麼可以展示的"
+  },
+  "310421": {
+    "id": "310421",
+    "eng": "Use your energy to charge the Energy Gemstone",
+    "tc": "用你的能源為能源寶石充電"
+  },
+  "310422": {
+    "id": "310422",
+    "eng": "To the waterside",
+    "tc": "前往水邊"
+  },
+  "310423": {
+    "id": "310423",
+    "eng": "Maybe use 50 food for fun?",
+    "tc": "也許用50食物開心一下？"
+  },
+  "310424": {
+    "id": "310424",
+    "eng": "Right",
+    "tc": "右邊"
+  },
+  "310425": {
+    "id": "310425",
+    "eng": "I want to spend 100 food for a big one!",
+    "tc": "我想用100食物換一個大的！"
+  },
+  "320001": {
+    "id": "320001",
+    "eng": "Land",
+    "tc": "陸地"
+  },
+  "320002": {
+    "id": "320002",
+    "eng": "Flat land where you can move free.",
+    "tc": "你可以自由移動的平坦土地。"
+  },
+  "320003": {
+    "id": "320003",
+    "eng": "Resources",
+    "tc": "資源"
+  },
+  "320004": {
+    "id": "320004",
+    "eng": "Event",
+    "tc": "事件"
+  },
+  "320005": {
+    "id": "320005",
+    "eng": "Worm Hole",
+    "tc": "蟲洞"
+  },
+  "320006": {
+    "id": "320006",
+    "eng": "",
+    "tc": ""
+  },
+  "320007": {
+    "id": "320007",
+    "eng": "",
+    "tc": ""
+  },
+  "320008": {
+    "id": "320008",
+    "eng": "",
+    "tc": ""
+  },
+  "320009": {
+    "id": "320009",
+    "eng": "",
+    "tc": ""
+  },
+  "330001": {
+    "id": "330001",
+    "eng": "NPC",
+    "tc": "NPC"
+  },
+  "330002": {
+    "id": "330002",
+    "eng": "Ganster",
+    "tc": "歹徒"
+  },
+  "330003": {
+    "id": "330003",
+    "eng": "Monster",
+    "tc": "怪物"
+  },
+  "401001": {
+    "id": "401001",
+    "eng": "Celestial Aura",
+    "tc": "天體光環"
+  },
+  "401002": {
+    "id": "401002",
+    "eng": "Jade Journey",
+    "tc": "玉之旅"
+  },
+  "401003": {
+    "id": "401003",
+    "eng": "Last Whisper",
+    "tc": "最後的耳語"
+  },
+  "401004": {
+    "id": "401004",
+    "eng": "Topaz Twilight",
+    "tc": "黃玉黃昏"
+  },
+  "401005": {
+    "id": "401005",
+    "eng": "Dawn's Tear",
+    "tc": "黎明之淚"
+  },
+  "401006": {
+    "id": "401006",
+    "eng": "Void Iron",
+    "tc": "虛空鐵"
+  },
+  "401007": {
+    "id": "401007",
+    "eng": "Opferritual",
+    "tc": "祭品儀式"
+  },
+  "401008": {
+    "id": "401008",
+    "eng": "Lord Proof",
+    "tc": "主之證明"
+  },
+  "401009": {
+    "id": "401009",
+    "eng": "Key of Trust",
+    "tc": "信任之鑰"
+  },
+  "401010": {
+    "id": "401010",
+    "eng": "Krass Letter",
+    "tc": "克拉斯信"
+  },
+  "401011": {
+    "id": "401011",
+    "eng": "Krass Badge",
+    "tc": "克拉斯徽章"
+  },
+  "401012": {
+    "id": "401012",
+    "eng": "A few foods",
+    "tc": "一些食物"
+  },
+  "401013": {
+    "id": "401013",
+    "eng": "Many foods",
+    "tc": "許多食物"
+  },
+  "401014": {
+    "id": "401014",
+    "eng": "A few woods",
+    "tc": "一些木材"
+  },
+  "401015": {
+    "id": "401015",
+    "eng": "Many woods",
+    "tc": "許多木材"
+  },
+  "401016": {
+    "id": "401016",
+    "eng": "A few stones",
+    "tc": "一些石頭"
+  },
+  "401017": {
+    "id": "401017",
+    "eng": "Many stones",
+    "tc": "許多石頭"
+  },
+  "401018": {
+    "id": "401018",
+    "eng": "Speical token",
+    "tc": "特殊代幣"
+  },
+  "401019": {
+    "id": "401019",
+    "eng": "Food",
+    "tc": "食物"
+  },
+  "401020": {
+    "id": "401020",
+    "eng": "Wood",
+    "tc": "木材"
+  },
+  "401021": {
+    "id": "401021",
+    "eng": "Stone",
+    "tc": "石頭"
+  },
+  "401022": {
+    "id": "401022",
+    "eng": "Troop",
+    "tc": "部隊"
+  },
+  "401023": {
+    "id": "401023",
+    "eng": "PSYC",
+    "tc": "PSYC"
+  },
+  "401024": {
+    "id": "401024",
+    "eng": "PIOT",
+    "tc": "PIOT"
+  },
+  "401025": {
+    "id": "401025",
+    "eng": "Elder's Staff",
+    "tc": "長者法杖"
+  },
+  "402001": {
+    "id": "402001",
+    "eng": "A gem with a heavenly glow.",
+    "tc": "帶有天國光輝的寶石。"
+  },
+  "402002": {
+    "id": "402002",
+    "eng": "Ancient jade for wisdom's path.",
+    "tc": "智慧之路上的古老玉。"
+  },
+  "402003": {
+    "id": "402003",
+    "eng": "Artifact of whispered secrets.",
+    "tc": "耳語秘密的神器。"
+  },
+  "402004": {
+    "id": "402004",
+    "eng": "Gem of the setting sun's warmth.",
+    "tc": "落日溫暖的寶石。"
+  },
+  "402005": {
+    "id": "402005",
+    "eng": "Pure diamond of a new day's hope.",
+    "tc": "純淨的鑽石，帶著新一天的希望。"
+  },
+  "402006": {
+    "id": "402006",
+    "eng": "Cosmic strength in metal form.",
+    "tc": "宇宙力量的金屬形式。"
+  },
+  "402007": {
+    "id": "402007",
+    "eng": "Tool for divine rituals.",
+    "tc": "神聖儀式的用具。"
+  },
+  "402008": {
+    "id": "402008",
+    "eng": "Maybe you should show this to someone.",
+    "tc": "也許你應該給某人看看這個。"
+  },
+  "402009": {
+    "id": "402009",
+    "eng": "Now you are the lord.",
+    "tc": "現在你是領主了。"
+  },
+  "402012": {
+    "id": "402012",
+    "eng": "Gain 30 foods after use it.",
+    "tc": "使用後獲得30食物。"
+  },
+  "402013": {
+    "id": "402013",
+    "eng": "Gain 100 foods after use it.",
+    "tc": "使用後獲得100食物。"
+  },
+  "402014": {
+    "id": "402014",
+    "eng": "Gain 30 woods after use it.",
+    "tc": "使用後獲得30木材。"
+  },
+  "402015": {
+    "id": "402015",
+    "eng": "Gain 100 woods after use it.",
+    "tc": "使用後獲得100木材。"
+  },
+  "402016": {
+    "id": "402016",
+    "eng": "Gain 30 stones after use it.",
+    "tc": "使用後獲得30石頭。"
+  },
+  "402017": {
+    "id": "402017",
+    "eng": "Gain 100 stones after use it.",
+    "tc": "使用後獲得100石頭。"
+  },
+  "402018": {
+    "id": "402018",
+    "eng": "Token of an ancient.",
+    "tc": "古代的代幣。"
+  },
+  "402019": {
+    "id": "402019",
+    "eng": "The proof given by the chief.",
+    "tc": "長者給出的證明。"
+  },
+  "402020": {
+    "id": "402020",
+    "eng": "One of the basic resources in this world. You may get foods from Desert Oasis.",
+    "tc": "這是這個世界的基本資源。你可以從沙漠綠洲獲得食物。"
+  },
+  "402021": {
+    "id": "402021",
+    "eng": "One of the basic resources in this world. You may get woods from Deadwood Marsh.",
+    "tc": "這是這個世界的基本資源。你可以從枯木沼澤獲得木材。"
+  },
+  "402022": {
+    "id": "402022",
+    "eng": "One of the basic resources in this world. You may get stones from Desert Grotto.",
+    "tc": "這是這個世界的基本資源。你可以從沙漠石窟獲得石頭。"
+  },
+  "402023": {
+    "id": "402023",
+    "eng": "You will need this to recover your pioneers' HP. Try to recruit more through the Barrack.",
+    "tc": "你將需要這個來恢復你的先鋒者的HP。試著通過兵營招募更多。"
+  },
+  "402024": {
+    "id": "402024",
+    "eng": "PSYC is the basic energy for most of your actions.",
+    "tc": "PSYC 是大多數你行動的基本能量。"
+  },
+  "402025": {
+    "id": "402025",
+    "eng": "You can earn more benefits by burning PIOT, such as more treasure chests, all the items inside the chests, etc.",
+    "tc": "你可以通过燃燒 PIOT，例如獲得更多的寶藏箱，寶藏箱中所有的物品等等，來獲得更多好處。"
+  },
+  "501001": {
+    "id": "501001",
+    "eng": "ganster router",
+    "tc": "歹徒路由器"
+  },
+  "501002": {
+    "id": "501002",
+    "eng": "become city master",
+    "tc": "成為城市主人"
+  },
+  "501003": {
+    "id": "501003",
+    "eng": "Cultivating health and recuperating",
+    "tc": "培養健康並恢復"
+  },
+  "501004": {
+    "id": "501004",
+    "eng": "ambush doomsdayGangBigTeam",
+    "tc": "埋伏末日幫派大團隊"
+  },
+  "501005": {
+    "id": "501005",
+    "eng": "Expel the gangsters",
+    "tc": "驅逐歹徒"
+  },
+  "501006": {
+    "id": "501006",
+    "eng": "Don't trust the prophetess!",
+    "tc": "不要相信先知！"
+  },
+  "501007": {
+    "id": "501007",
+    "eng": "kill hred",
+    "tc": "殺死赫德"
+  },
+  "501008": {
+    "id": "501008",
+    "eng": "help you kill doomsDayGangTeam",
+    "tc": "幫助你殺死末日幫派團隊"
+  },
+  "501009": {
+    "id": "501009",
+    "eng": "Defend the city",
+    "tc": "防守城市"
+  },
+  "501010": {
+    "id": "501010",
+    "eng": "become doomsdayGang spy",
+    "tc": "成為末日幫派間諜"
+  },
+  "501011": {
+    "id": "501011",
+    "eng": "explore ganster team",
+    "tc": "探索歹徒團隊"
+  },
+  "501012": {
+    "id": "501012",
+    "eng": "defeat the rebels",
+    "tc": "擊敗叛亞"
+  },
+  "501013": {
+    "id": "501013",
+    "eng": "explore big ganster team",
+    "tc": "探索大型歹徒團隊"
+  },
+  "501014": {
+    "id": "501014",
+    "eng": "defeat the main city",
+    "tc": "擊敗主城"
+  },
+  "501015": {
+    "id": "501015",
+    "eng": "explore ruins",
+    "tc": "探索廢墟"
+  },
+  "501016": {
+    "id": "501016",
+    "eng": "explore treasure",
+    "tc": "探索寶藏"
+  },
+  "501017": {
+    "id": "501017",
+    "eng": "talk with prophetess, become city master",
+    "tc": "與先知交談，成為城市主人"
+  },
+  "501018": {
+    "id": "501018",
+    "eng": "search resource 3 times",
+    "tc": "尋找資源3次"
+  },
+  "501019": {
+    "id": "501019",
+    "eng": "talk to artisan",
+    "tc": "與工匠交談"
+  },
+  "501020": {
+    "id": "501020",
+    "eng": "fix wall and build house",
+    "tc": "修理牆壁並建造房屋"
+  },
+  "501021": {
+    "id": "501021",
+    "eng": "go to ambush point",
+    "tc": "前往埋伏點"
+  },
+  "501022": {
+    "id": "501022",
+    "eng": "wait doomsdayGangBigTeam come and win fight",
+    "tc": "等待末日幫派大團隊到來並贏得戰鬥"
+  },
+  "501023": {
+    "id": "501023",
+    "eng": "Defeat the gangsters outside the city.",
+    "tc": "擊敗城外的歹徒。"
+  },
+  "501024": {
+    "id": "501024",
+    "eng": "kill the prophetess",
+    "tc": "殺死先知"
+  },
+  "501025": {
+    "id": "501025",
+    "eng": "kill herd",
+    "tc": "殺死牲畜"
+  },
+  "501026": {
+    "id": "501026",
+    "eng": "kill doomsDayGangTeam",
+    "tc": "殺死末日幫派團隊"
+  },
+  "501027": {
+    "id": "501027",
+    "eng": "goahead the doomsdayGangBigTeam",
+    "tc": "前進末日幫派大團隊"
+  },
+  "501028": {
+    "id": "501028",
+    "eng": "become spy",
+    "tc": "成為間諜"
+  },
+  "501029": {
+    "id": "501029",
+    "eng": "Take down the city!",
+    "tc": "摧毀城市！"
+  },
+  "501030": {
+    "id": "501030",
+    "eng": "Report back to the prophetess.",
+    "tc": "向先知報告回來。"
+  },
+  "501031": {
+    "id": "501031",
+    "eng": "Kill the lying prophetess.",
+    "tc": "殺死說謊的先知。"
+  },
+  "501032": {
+    "id": "501032",
+    "eng": "Defeat the gangsters and defend the city.",
+    "tc": "擊敗歹徒並防守城市。"
+  },
+  "501033": {
+    "id": "501033",
+    "eng": "344232424",
+    "tc": "344232424"
+  },
+  "501034": {
+    "id": "501034",
+    "eng": "After the Disaster",
+    "tc": "災難之後"
+  },
+  "501035": {
+    "id": "501035",
+    "eng": "Explore for Resoureces",
+    "tc": "尋找資源"
+  },
+  "501036": {
+    "id": "501036",
+    "eng": "Talk to the Prophetess 1",
+    "tc": "與先知交談1"
+  },
+  "501037": {
+    "id": "501037",
+    "eng": "Talk to the Prophetess 1",
+    "tc": "與先知交談1"
+  },
+  "501038": {
+    "id": "501038",
+    "eng": "Talk to the Prophetess 2",
+    "tc": "與先知交談2"
+  },
+  "501039": {
+    "id": "501039",
+    "eng": "Talk to the Prophetess 3",
+    "tc": "與先知交談3"
+  },
+  "501040": {
+    "id": "501040",
+    "eng": "Defeat the monster",
+    "tc": "擊敗怪物"
+  },
+  "501041": {
+    "id": "501041",
+    "eng": "Talk to the Prophetess 4",
+    "tc": "與先知交談4"
+  },
+  "501042": {
+    "id": "501042",
+    "eng": "Talk to the Prophetess 5",
+    "tc": "與先知交談5"
+  },
+  "501043": {
+    "id": "501043",
+    "eng": "Talk to someone for information",
+    "tc": "與某人交談以獲取信息"
+  },
+  "501044": {
+    "id": "501044",
+    "eng": "Collect resources",
+    "tc": "收集資源"
+  },
+  "501045": {
+    "id": "501045",
+    "eng": "Hunt 5 beasts",
+    "tc": "狩獵5隻野獸"
+  },
+  "501046": {
+    "id": "501046",
+    "eng": "Suppressing bandits",
+    "tc": "鎮壓土匪"
+  },
+  "501047": {
+    "id": "501047",
+    "eng": "Collect any 2 resources",
+    "tc": "收集任意2種資源"
+  },
+  "501100": {
+    "id": "501100",
+    "eng": "Hunting Season",
+    "tc": "狩獵季節"
+  },
+  "501101": {
+    "id": "501101",
+    "eng": "Suppressing bandits",
+    "tc": "鎮壓土匪"
+  },
+  "501102": {
+    "id": "501102",
+    "eng": "Resource Shortage",
+    "tc": "資源短缺"
+  },
+  "502001": {
+    "id": "502001",
+    "eng": "Tinuvel the Prophetess",
+    "tc": "先知汀烏韋爾"
+  },
+  "502002": {
+    "id": "502002",
+    "eng": "0xPioneer",
+    "tc": "0xPioneer"
+  },
+  "502003": {
+    "id": "502003",
+    "eng": "Spy Jack",
+    "tc": "間諜傑克"
+  },
+  "502004": {
+    "id": "502004",
+    "eng": "Hunter John",
+    "tc": "獵人約翰"
+  },
+  "502005": {
+    "id": "502005",
+    "eng": "Guard Keen",
+    "tc": "守衛銳利"
+  },
+  "502006": {
+    "id": "502006",
+    "eng": "DoomsDay Gang Team",
+    "tc": "末日幫派團隊"
+  },
+  "502007": {
+    "id": "502007",
+    "eng": "Artisan Tom",
+    "tc": "工匠湯姆"
+  },
+  "502008": {
+    "id": "502008",
+    "eng": "Scavenger Unknow",
+    "tc": "拾荒者未知"
+  },
+  "503001": {
+    "id": "503001",
+    "eng": "Finally you are awake!",
+    "tc": "你終於醒了！"
+  },
+  "503002": {
+    "id": "503002",
+    "eng": "You saved me? Who are you?",
+    "tc": "你救了我？你是誰？"
+  },
+  "503003": {
+    "id": "503003",
+    "eng": "Tinuvel, a prophetess. I've seen the vision of you leading this city to a prosperous future, and your salvation by me is the guidance of fate.",
+    "tc": "汀烏韋爾，一位先知。我看到了你領導這個城市走向繁榮未來的異象，你救我一命是命運的指引。"
+  },
+  "503004": {
+    "id": "503004",
+    "eng": "What the hell? I’m just a normal one who just woke up. Your words are a bit too much information for me!",
+    "tc": "什麼鬼？我只是一個剛醒來的普通人。你說的話有點信息量過大！"
+  },
+  "503005": {
+    "id": "503005",
+    "eng": "Don’t panic, I will guide you forward.",
+    "tc": "別慌，我會引導你前進。"
+  },
+  "503006": {
+    "id": "503006",
+    "eng": "What do you want me to do?",
+    "tc": "你想讓我做什麼？"
+  },
+  "503007": {
+    "id": "503007",
+    "eng": "The town’s lord was just killed by villains. It’s chaos here.",
+    "tc": "這個城鎮的主人剛被壞人殺了。這裡一片混亂。"
+  },
+  "503008": {
+    "id": "503008",
+    "eng": "You’re not expecting me to fight in this state, are you?",
+    "tc": "你不是指望我現在這個狀態去打架，對吧？"
+  },
+  "503009": {
+    "id": "503009",
+    "eng": "That’d be unfair. Take this.",
+    "tc": "那不公平。拿去這個。"
+  },
+  "503010": {
+    "id": "503010",
+    "eng": "PIOT? ",
+    "tc": "PIOT？"
+  },
+  "503011": {
+    "id": "503011",
+    "eng": "Whoever owns PIOT can rule the world.",
+    "tc": "擁有 PIOT 的人可以統治世界。"
+  },
+  "503012": {
+    "id": "503012",
+    "eng": "Any practical use?!",
+    "tc": "有什麼實際用途嗎？"
+  },
+  "503013": {
+    "id": "503013",
+    "eng": "Sure, PIOT can increase HEAT value, speed up actions, or get extra resources.",
+    "tc": "當然，PIOT 可以增加熱值，加快行動速度，或者獲得額外資源。"
+  },
+  "503014": {
+    "id": "503014",
+    "eng": "What is HEAT value?",
+    "tc": "什麼是熱值？"
+  },
+  "503015": {
+    "id": "503015",
+    "eng": "Let me show you how to use PIOT first, then I’ll explain HEAT value.",
+    "tc": "讓我先向你展示如何使用 PIOT，然後我會解釋熱值。"
+  },
+  "503016": {
+    "id": "503016",
+    "eng": "HEAT value is tied to treasure chests. The higher it is, the more chests you can open daily, and the better rewards you get.",
+    "tc": "熱值與寶藏箱相關。熱值越高，你每天可以打開的寶箱越多，獲得的獎勵也越好。"
+  },
+  "503017": {
+    "id": "503017",
+    "eng": "What’s a treasure chest?",
+    "tc": "什麼是寶藏箱？"
+  },
+  "503018": {
+    "id": "503018",
+    "eng": "It’s how you earn in this world. All users share the rewards in the chest, so you need to get the good stuff before others.",
+    "tc": "這是你在這個世界賺取的方式。所有用戶共享寶箱中的獎勵，所以你必須在其他人之前獲得好東西。"
+  },
+  "503019": {
+    "id": "503019",
+    "eng": "How to open it?",
+    "tc": "怎麼打開它？"
+  },
+  "503020": {
+    "id": "503020",
+    "eng": "I’ve given you a key. Try opening a chest",
+    "tc": "我給了你一把鑰匙。嘗試打開一個寶箱。"
+  },
+  "503021": {
+    "id": "503021",
+    "eng": "What’s this?",
+    "tc": "這是什麼？"
+  },
+  "503022": {
+    "id": "503022",
+    "eng": "It’s PSYC, the world’s spiritual energy. You need it for your actions.",
+    "tc": "這是 PSYC，世界上的精神能量。你需要它來進行你的行動。"
+  },
+  "503023": {
+    "id": "503023",
+    "eng": "All actions? If it runs out, am I done for? Can I ask you for more?",
+    "tc": "所有行動？如果它用完了，我是不是完了？我能向你再要一些嗎？"
+  },
+  "503024": {
+    "id": "503024",
+    "eng": "There’s no surplus. You saw that PSYC can be obtained from chests. You should do your task now. After that, you’ll get my reward.",
+    "tc": "沒有多餘的。你看到 PSYC 可以從寶箱中獲得。你現在應該去做你的任務。完成後，你會得到我的獎勵。"
+  },
+  "503025": {
+    "id": "503025",
+    "eng": "Sounds good. What should I do now?",
+    "tc": "聽起來不錯。我現在應該做什麼？"
+  },
+  "503026": {
+    "id": "503026",
+    "eng": "See those villains? Take them out!",
+    "tc": "看那些壞人？解決他們！"
+  },
+  "503027": {
+    "id": "503027",
+    "eng": "Good job! From now on, you’re in charge of guarding the town.",
+    "tc": "幹得好！從現在起，你負責守衛這個城鎮。"
+  },
+  "503028": {
+    "id": "503028",
+    "eng": "Just like that?",
+    "tc": "就這樣？"
+  },
+  "503029": {
+    "id": "503029",
+    "eng": "I believe in you!",
+    "tc": "我相信你！"
+  },
+  "503030": {
+    "id": "503030",
+    "eng": "What’s my reward?",
+    "tc": "我的獎勵是什麼？"
+  },
+  "503031": {
+    "id": "503031",
+    "eng": "Your action gained EXPLORATION value. When it’s full, I’ll give you a key to open a chest for rewards.",
+    "tc": "你的行動獲得了探索值。當它滿了，我會給你一把鑰匙來打開寶箱獲取獎勵。"
+  },
+  "503032": {
+    "id": "503032",
+    "eng": "So, consuming PSYC gets EXPLORATION value, consuming PIOT gets HEAT value, and both lead to opening more chests and getting better stuff?",
+    "tc": "所以，消耗 PSYC 獲得探索值，消耗 PIOT 獲得熱值，兩者都會導致打開更多的寶箱並獲得更好的東西？"
+  },
+  "503033": {
+    "id": "503033",
+    "eng": "Yes, getting rewards from chests is key to survival. How to increase the rewards depends on your actions.",
+    "tc": "是的，從寶箱中獲得獎勵是生存的關鍵。如何增加獎勵取決於你的行動。"
+  },
+  "503034": {
+    "id": "503034",
+    "eng": "You have a new key now. Open a new chest and see what you get!",
+    "tc": "你現在有一把新鑰匙了。打開一個新寶箱，看看你得到了什麼！"
+  },
+  "503035": {
+    "id": "503035",
+    "eng": "You’re indeed the chosen one, getting both psyc and PIOT.",
+    "tc": "你確實是被選中的人，獲得了雙重的靈魂和 PIOT。"
+  },
+  "503036": {
+    "id": "503036",
+    "eng": "Can I get better stuff?",
+    "tc": "我能獲得更好的東西嗎？"
+  },
+  "503037": {
+    "id": "503037",
+    "eng": "If you want better stuff, check out the town. Building it improves its CIVILIZATION level.",
+    "tc": "如果你想獲得更好的東西，去看看這個城鎮。建設它會提高它的文明等級。"
+  },
+  "503038": {
+    "id": "503038",
+    "eng": "What’s the function of CIVILIZATION level?",
+    "tc": "文明等級的功能是什麼？"
+  },
+  "503039": {
+    "id": "503039",
+    "eng": "It improves the quality of rewards in the chest.",
+    "tc": "它提高了寶箱中獎勵的質量。"
+  },
+  "503040": {
+    "id": "503040",
+    "eng": "So everything’s about the chest. Where does it come from?",
+    "tc": "所以一切都是關於寶箱。它從哪裡來？"
+  },
+  "503041": {
+    "id": "503041",
+    "eng": "Exploring this world with questions is fun. You’ll find out the truth someday.",
+    "tc": "探索這個世界帶著問題是有趣的。你終將有一天會發現真相。"
+  },
+  "503042": {
+    "id": "503042",
+    "eng": "It seems that collecting resources can really gain EXPLORATION value.",
+    "tc": "看來收集資源真的可以獲得探索值。"
+  },
+  "503043": {
+    "id": "503043",
+    "eng": "Now go back and level up the building.",
+    "tc": "現在回去並升級建築。"
+  },
+  "503044": {
+    "id": "503044",
+    "eng": "OK?",
+    "tc": "好的嗎？"
+  },
+  "503045": {
+    "id": "503045",
+    "eng": "Are you going to cooperate with the gang or fight with them?",
+    "tc": "你打算與幫派合作還是與他們戰鬥？"
+  },
+  "503046": {
+    "id": "503046",
+    "eng": "The town was ransacked by those bastards.",
+    "tc": "這個城鎮被那些混蛋洗劫了。"
+  },
+  "503047": {
+    "id": "503047",
+    "eng": "You may be the one to save us and recuperate the town.",
+    "tc": "你可能是我們的救星，讓城鎮恢復。"
+  },
+  "503048": {
+    "id": "503048",
+    "eng": "We need some material reserves. Try to EXPLORE RESOURCES FOR 3 TIMES and BRING THEM BACK TO ME.",
+    "tc": "我們需要一些物資儲備。試著探索資源3次，並將它們帶回給我。"
+  },
+  "503049": {
+    "id": "503049",
+    "eng": "Will you help them EXPLORE RESOURCES FOR 3 TIMES?",
+    "tc": "你會幫助他們探索資源3次嗎？"
+  },
+  "503050": {
+    "id": "503050",
+    "eng": "The right token.",
+    "tc": "正確的代幣。"
+  },
+  "503051": {
+    "id": "503051",
+    "eng": "All right. You are indeed qualified TO BE THE LORD.",
+    "tc": "好的。你確實有資格成為領主。"
+  },
+  "503052": {
+    "id": "503052",
+    "eng": "Go ahead, there's a lot of things waiting for you.",
+    "tc": "繼續前進，有很多事在等你。"
+  },
+  "503053": {
+    "id": "503053",
+    "eng": "You've been a great help. Thank you very much.",
+    "tc": "你給了我很大的幫助。非常感謝你。"
+  },
+  "503054": {
+    "id": "503054",
+    "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?",
+    "tc": "現在我們需要在城鎮裡建造房屋。你能幫我們嗎？"
+  },
+  "503055": {
+    "id": "503055",
+    "eng": "Lucky guy, we're not going to kill you.",
+    "tc": "幸運的傢伙，我們不打算殺了你。"
+  },
+  "503056": {
+    "id": "503056",
+    "eng": "But you will act as our agent and TAKE OVER THE TOWN.",
+    "tc": "但你將作為我們的代理人接管這個城鎮。"
+  },
+  "503057": {
+    "id": "503057",
+    "eng": "You've been a great help. Thank you very much.2222222",
+    "tc": "你給了我很大的幫助。非常感謝你。2222222"
+  },
+  "503058": {
+    "id": "503058",
+    "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?",
+    "tc": "現在我們需要在城鎮裡建造房屋。你能幫我們嗎？"
+  },
+  "503059": {
+    "id": "503059",
+    "eng": "You've been a great help. Thank you very much.3333333",
+    "tc": "你給了我很大的幫助。非常感謝你。3333333"
+  },
+  "503060": {
+    "id": "503060",
+    "eng": "Now we need to BUILD UP THE HOUSE in the town. Can you give us a hand?",
+    "tc": "現在我們需要在城鎮裡建造房屋。你能幫我們嗎？"
+  },
+  "503061": {
+    "id": "503061",
+    "eng": "Who am l? Where am !?",
+    "tc": "我是誰？我在哪裡？"
+  },
+  "503062": {
+    "id": "503062",
+    "eng": "You are…",
+    "tc": "你是…"
+  },
+  "503063": {
+    "id": "503063",
+    "eng": "How could I continue to survive in this world?",
+    "tc": "我該如何在這個世界中繼續生存？"
+  },
+  "503064": {
+    "id": "503064",
+    "eng": "You can…",
+    "tc": "你可以…"
+  },
+  "503065": {
+    "id": "503065",
+    "eng": "So what should I do now?",
+    "tc": "那我現在應該做什麼？"
+  },
+  "503066": {
+    "id": "503066",
+    "eng": "…",
+    "tc": "…"
+  },
+  "503067": {
+    "id": "503067",
+    "eng": "dasa",
+    "tc": "dasa"
+  },
+  "503068": {
+    "id": "503068",
+    "eng": "test talk 16666",
+    "tc": "16666"
+  },
+  "503069": {
+    "id": "503069",
+    "eng": "7984r892893",
+    "tc": "7984r892893"
+  },
+  "503070": {
+    "id": "503070",
+    "eng": "p98grjwio",
+    "tc": "p98grjwio"
+  },
+  "503071": {
+    "id": "503071",
+    "eng": "Well done!",
+    "tc": "幹得好！"
+  },
+  "503072": {
+    "id": "503072",
+    "eng": "You saved the city!",
+    "tc": "你拯救了這個城市！"
+  },
+  "503073": {
+    "id": "503073",
+    "eng": "Upgrading buildings requires resources, and there are not enough resources to level up.",
+    "tc": "升級建築需要資源，目前沒有足夠的資源進行升級。"
+  },
+  "503074": {
+    "id": "503074",
+    "eng": "The improvement of the building level will effectively increase our income speed, and it can also improve the CIVILIZATION level. Now let’s go and collect some resources for upgrading.",
+    "tc": "建築升級將有效地提高我們的收入速度，它還可以提高文明等級。現在讓我們去收集一些資源進行升級。"
+  },
+  "503075": {
+    "id": "503075",
+    "eng": "Excuse me, did you come from the north?",
+    "tc": "不好意思，你是從北方來的嗎？"
+  },
+  "503076": {
+    "id": "503076",
+    "eng": "Yes, is there anything?",
+    "tc": "是的，有什麼事嗎？"
+  },
+  "503077": {
+    "id": "503077",
+    "eng": "Did you see any resources that can be mined over there?",
+    "tc": "你在那裡看到可以開採的資源了嗎？"
+  },
+  "503078": {
+    "id": "503078",
+    "eng": "There seems to be some at the foot of the mountain over there, you can go and see.",
+    "tc": "似乎在那裡的山腳下有一些，你可以去看看。"
+  },
+  "503079": {
+    "id": "503079",
+    "eng": "Wow! Thank you!",
+    "tc": "哇！謝謝你！"
+  },
+  "503080": {
+    "id": "503080",
+    "eng": "Upgrading buildings seems to not only improve civilization level, but also increase exploration value. This is great, you can open a new treasure chest.",
+    "tc": "升級建築似乎不僅提高了文明等級，還增加了探索值。這太好了，你可以打開一個新的寶藏箱。"
+  },
+  "503081": {
+    "id": "503081",
+    "eng": "I am indeed the chosen one, and someone will stuff a pillow when I am sleepy.",
+    "tc": "我確實是被選中的人，當我困了的時候就有人給我塞枕頭。"
+  },
+  "503082": {
+    "id": "503082",
+    "eng": "Now that the resources for building the town are available, let’s try to level up this barracks building again.",
+    "tc": "現在建築城鎮的資源已經有了，讓我們再試一次升級這個兵營建築。"
+  },
+  "503083": {
+    "id": "503083",
+    "eng": "With the barracks, you can recruit soldiers. In this way, if you are injured in battle, there will be soldiers to supplement you.",
+    "tc": "有了兵營，你可以招募士兵。這樣，如果你在戰鬥中受傷，就會有士兵來補充你。"
+  },
+  "503084": {
+    "id": "503084",
+    "eng": "But it seems that if you want to develop the town and improve civilization, you still need to explore and collect as much as possible. Just now I saw a relic far outside the town, let’s go and explore it, maybe there will be some unexpected gains.",
+    "tc": "但似乎如果你想發展城鎮並提高文明，你仍然需要探索和收集盡可能多的資源。剛才我看到城鎮外有一個遺物，讓我們去探索它，也許會有一些意想不到的收穫。"
+  },
+  "503085": {
+    "id": "503085",
+    "eng": "The wormhole serves as a medium connecting two players, allowing them to attack each other through it. Here, we can set up a lineup for attacking other guys.",
+    "tc": "蟲洞是連接兩個玩家的媒介，允許他們通過它互相攻擊。在這裡，我們可以設置一個攻擊其他人的陣容。"
+  },
+  "503086": {
+    "id": "503086",
+    "eng": "When other players attack our town via the wormhole, we can deploy characters to protect it from looting. With the defense set, I'll need to explore further. I noticed a suspicious person lurking nearby. I should check it out.",
+    "tc": "當其他玩家通過蟲洞攻擊我們的城鎮時，我們可以部署角色來保護它免受掠奪。有了防禦設置，我需要進一步探索。我注意到附近有一個可疑的人在隱藏。我應該去看看。"
+  },
+  "503087": {
+    "id": "503087",
+    "eng": "Beware! It seems something is coming!",
+    "tc": "小心！似乎有東西來了！"
+  },
+  "503088": {
+    "id": "503088",
+    "eng": "It appears that there are two people coming over to join us.",
+    "tc": "看起來有兩個人過來加入我們。"
+  },
+  "503100": {
+    "id": "503100",
+    "eng": "The number of prey has noticeably decreased recently.",
+    "tc": "最近的獵物數量顯著減少。"
+  },
+  "503101": {
+    "id": "503101",
+    "eng": "Maybe I can help you hunt.",
+    "tc": "也許我可以幫你狩獵。"
+  },
+  "503102": {
+    "id": "503102",
+    "eng": "Really? Help me hunt FIVE wild beasts, I can pay you the reward.",
+    "tc": "真的嗎？幫我狩獵五隻野獸，我可以給你獎勵。"
+  },
+  "503103": {
+    "id": "503103",
+    "eng": "There are many thieves nearby.",
+    "tc": "附近有很多小偷。"
+  },
+  "503104": {
+    "id": "503104",
+    "eng": "I can go and eliminate them.",
+    "tc": "我可以去除掉他們。"
+  },
+  "503105": {
+    "id": "503105",
+    "eng": "After you kill three thieves, I will give you a reward.",
+    "tc": "在你殺死三個小偷後，我會給你獎勵。"
+  },
+  "503106": {
+    "id": "503106",
+    "eng": "The supplies are becoming increasingly scarce now.",
+    "tc": "物資現在變得越來越稀缺了。"
+  },
+  "503107": {
+    "id": "503107",
+    "eng": "How can I help you.",
+    "tc": "我該怎麼幫你。"
+  },
+  "503108": {
+    "id": "503108",
+    "eng": "Collect any TWO resource point and I will reward you.",
+    "tc": "收集任意兩個資源點，我會給你獎勵。"
+  },
+  "503109": {
+    "id": "503109",
+    "eng": "Go hand in the task now",
+    "tc": "現在交任務"
+  },
+  "504001": {
+    "id": "504001",
+    "eng": "Well…I'll try",
+    "tc": "嗯…我會試試"
+  },
+  "504002": {
+    "id": "504002",
+    "eng": "Let me see…",
+    "tc": "讓我看看…"
+  },
+  "504003": {
+    "id": "504003",
+    "eng": "OK",
+    "tc": "好的"
+  },
+  "504004": {
+    "id": "504004",
+    "eng": "OK",
+    "tc": "好的"
+  },
+  "504005": {
+    "id": "504005",
+    "eng": "All right",
+    "tc": "好的"
+  },
+  "504006": {
+    "id": "504006",
+    "eng": "What the hell?",
+    "tc": "搞什麼鬼？"
+  },
+  "504007": {
+    "id": "504007",
+    "eng": "OK",
+    "tc": "好的"
+  },
+  "504008": {
+    "id": "504008",
+    "eng": "All right",
+    "tc": "好的"
+  },
+  "504009": {
+    "id": "504009",
+    "eng": "Thank you!",
+    "tc": "謝謝你！"
+  },
+  "504010": {
+    "id": "504010",
+    "eng": "OK, I'm on it",
+    "tc": "好的，我來了"
+  },
+  "504011": {
+    "id": "504011",
+    "eng": "Not now",
+    "tc": "現在不是時候"
+  },
+  "504012": {
+    "id": "504012",
+    "eng": "Deal!",
+    "tc": "成交！"
+  },
+  "504013": {
+    "id": "504013",
+    "eng": "Fight!",
+    "tc": "戰鬥！"
+  },
+  "504014": {
+    "id": "504014",
+    "eng": "All right",
+    "tc": "好的"
+  },
+  "504015": {
+    "id": "504015",
+    "eng": "I'm busy",
+    "tc": "我很忙"
+  },
+  "504016": {
+    "id": "504016",
+    "eng": "The fortunate one chosen by me.",
+    "tc": "被我選中的幸運者。"
+  },
+  "504017": {
+    "id": "504017",
+    "eng": "A survivor who has narrowly escaped the disaster.",
+    "tc": "一個僅僅逃脫災難的倖存者。"
+  },
+  "504018": {
+    "id": "504018",
+    "eng": "A surviving ant of a vanished civilization.",
+    "tc": "一個消失文明的倖存螞蟻。"
+  },
+  "504019": {
+    "id": "504019",
+    "eng": "Become the executor of my will.",
+    "tc": "成為我意志的執行者。"
+  },
+  "504020": {
+    "id": "504020",
+    "eng": "Act as my eyes and hands.",
+    "tc": "作為我的眼睛和手。"
+  },
+  "504021": {
+    "id": "504021",
+    "eng": "Just follow my guide.",
+    "tc": "只需按照我的指導。"
+  },
+  "504022": {
+    "id": "504022",
+    "eng": "Head to the city in the northeast and gather a team.",
+    "tc": "前往東北方的城市並組建一個團隊。"
+  },
+  "504023": {
+    "id": "504023",
+    "eng": "First, locate our base.",
+    "tc": "首先，找到我們的基地。"
+  },
+  "504024": {
+    "id": "504024",
+    "eng": "Just wait…Because soon I will reshape this world.",
+    "tc": "只需等待…因為很快我將重塑這個世界。"
+  },
+  "504025": {
+    "id": "504025",
+    "eng": "1",
+    "tc": "1"
+  },
+  "504026": {
+    "id": "504026",
+    "eng": "2",
+    "tc": "2"
+  },
+  "504027": {
+    "id": "504027",
+    "eng": "3333",
+    "tc": "3333"
+  },
+  "601001": {
+    "id": "601001",
+    "eng": "Peace and Love",
+    "tc": "和平與愛"
+  },
+  "601002": {
+    "id": "601002",
+    "eng": "Fight as Beast",
+    "tc": "像野獸一樣戰鬥"
+  },
+  "601003": {
+    "id": "601003",
+    "eng": "Smart One",
+    "tc": "聰明的人"
+  },
+  "601004": {
+    "id": "601004",
+    "eng": "Hero",
+    "tc": "英雄"
+  },
+  "601005": {
+    "id": "601005",
+    "eng": "The Lord",
+    "tc": "領主"
+  },
+  "701001": {
+    "id": "701001",
+    "eng": "Collection progress:\r\n<color=#ffcc49><size=36>%s%</size></color>",
+    "tc": "收集進度：\r\n<color=#ffcc49><size=36>%s%</size></color>"
+  },
+  "701002": {
+    "id": "701002",
+    "eng": "World Map",
+    "tc": "世界地圖"
+  },
+  "701003": {
+    "id": "701003",
+    "eng": "Duration: %s",
+    "tc": "持續時間：%s"
+  },
+  "800001": {
+    "id": "800001",
+    "eng": "The Dark Age Ⅰ",
+    "tc": "黑暗時代Ⅰ"
+  },
+  "800002": {
+    "id": "800002",
+    "eng": "The Dark Age Ⅱ",
+    "tc": "黑暗時代Ⅱ"
+  },
+  "800003": {
+    "id": "800003",
+    "eng": "The Dark Age Ⅲ",
+    "tc": "黑暗時代Ⅲ"
+  },
+  "800004": {
+    "id": "800004",
+    "eng": "The Wasteland Age Ⅰ",
+    "tc": "荒原時代Ⅰ"
+  },
+  "800005": {
+    "id": "800005",
+    "eng": "The Wasteland Age Ⅱ",
+    "tc": "荒原時代Ⅱ"
+  },
+  "800006": {
+    "id": "800006",
+    "eng": "The Wasteland Age Ⅲ",
+    "tc": "荒原時代Ⅲ"
+  },
+  "800007": {
+    "id": "800007",
+    "eng": "The Steam Age Ⅰ",
+    "tc": "蒸汽時代Ⅰ"
+  },
+  "800008": {
+    "id": "800008",
+    "eng": "The Steam Age Ⅱ",
+    "tc": "蒸汽時代Ⅱ"
+  },
+  "800009": {
+    "id": "800009",
+    "eng": "The Steam Age Ⅲ",
+    "tc": "蒸汽時代Ⅲ"
+  },
+  "800010": {
+    "id": "800010",
+    "eng": "The Steam Age Ⅳ",
+    "tc": "蒸汽時代Ⅳ"
+  },
+  "800011": {
+    "id": "800011",
+    "eng": "The Machine Age Ⅰ",
+    "tc": "機器時代Ⅰ"
+  },
+  "800012": {
+    "id": "800012",
+    "eng": "The Machine Age Ⅱ",
+    "tc": "機器時代Ⅱ"
+  },
+  "800013": {
+    "id": "800013",
+    "eng": "The Machine Age Ⅲ",
+    "tc": "機器時代Ⅲ"
+  },
+  "800014": {
+    "id": "800014",
+    "eng": "The Machine Age Ⅳ",
+    "tc": "機器時代Ⅳ"
+  },
+  "800015": {
+    "id": "800015",
+    "eng": "The Machine Age Ⅴ",
+    "tc": "機器時代Ⅴ"
+  },
+  "800016": {
+    "id": "800016",
+    "eng": "The Rise Age Ⅰ",
+    "tc": "崛起時代Ⅰ"
+  },
+  "800017": {
+    "id": "800017",
+    "eng": "The Rise Age Ⅱ",
+    "tc": "崛起時代Ⅱ"
+  },
+  "800018": {
+    "id": "800018",
+    "eng": "The Rise Age Ⅲ",
+    "tc": "崛起時代Ⅲ"
+  },
+  "800019": {
+    "id": "800019",
+    "eng": "The Rise Age Ⅳ",
+    "tc": "崛起時代Ⅳ"
+  },
+  "800020": {
+    "id": "800020",
+    "eng": "The Rise Age Ⅴ",
+    "tc": "崛起時代Ⅴ"
+  },
+  "800021": {
+    "id": "800021",
+    "eng": "The Surpass Age Ⅰ",
+    "tc": "超越時代Ⅰ"
+  },
+  "800022": {
+    "id": "800022",
+    "eng": "The Surpass Age Ⅱ",
+    "tc": "超越時代Ⅱ"
+  },
+  "800023": {
+    "id": "800023",
+    "eng": "The Surpass Age Ⅲ",
+    "tc": "超越時代Ⅲ"
+  },
+  "800024": {
+    "id": "800024",
+    "eng": "The Surpass Age Ⅳ",
+    "tc": "超越時代Ⅳ"
+  },
+  "800025": {
+    "id": "800025",
+    "eng": "The Surpass Age Ⅴ",
+    "tc": "超越時代Ⅴ"
+  },
+  "810001": {
+    "id": "810001",
+    "eng": "Construct level of %s reached %s",
+    "tc": "建築物 %s 的建造等級達到了 %s"
+  },
+  "810002": {
+    "id": "810002",
+    "eng": "Collected resources higher than or equal to lv.%s for %s times",
+    "tc": "收集的資源高於或等於等級 %s 的 %s 次"
+  },
+  "810003": {
+    "id": "810003",
+    "eng": "Explored events higher than or equal to lv.%s for %s times",
+    "tc": "探索的事件高於或等於等級 %s 的 %s 次"
+  },
+  "810004": {
+    "id": "810004",
+    "eng": "Owned %s pioneers of %s or higher",
+    "tc": "擁有 %s 名 %s 或更高等級的先鋒"
+  },
+  "810005": {
+    "id": "810005",
+    "eng": "Owned %s pioneers higher than lv.%s",
+    "tc": "擁有 %s 名等級高於 %s 的先鋒"
+  },
+  "810006": {
+    "id": "810006",
+    "eng": "Consumed at least %s %s",
+    "tc": "至少消耗了 %s %s"
+  },
+  "810007": {
+    "id": "810007",
+    "eng": "Defeated monsters higher than lv.%s for %s times",
+    "tc": "擊敗了等級高於 %s 的怪物 %s 次"
+  },
+  "810008": {
+    "id": "810008",
+    "eng": "Heat value reached %s",
+    "tc": "熱值達到了 %s"
+  },
+  "810009": {
+    "id": "810009",
+    "eng": "Defeated other players for %s times",
+    "tc": "擊敗其他玩家 %s 次"
+  },
+  "820001": {
+    "id": "820001",
+    "eng": "Highest available quality of teasure chest",
+    "tc": "最高可獲得的寶藏箱質量"
+  },
+  "820002": {
+    "id": "820002",
+    "eng": "Move speed",
+    "tc": "移動速度"
+  },
+  "820003": {
+    "id": "820003",
+    "eng": "Collect speed",
+    "tc": "收集速度"
+  },
+  "820004": {
+    "id": "820004",
+    "eng": "Vision of main city and troops",
+    "tc": "主城和部隊的視野"
+  },
+  "820005": {
+    "id": "820005",
+    "eng": "Recruit speed",
+    "tc": "招募速度"
+  },
+  "820006": {
+    "id": "820006",
+    "eng": "",
+    "tc": ""
+  },
+  "820007": {
+    "id": "820007",
+    "eng": "",
+    "tc": ""
+  },
+  "820008": {
+    "id": "820008",
+    "eng": "",
+    "tc": ""
+  },
+  "820009": {
+    "id": "820009",
+    "eng": "Unlock building",
+    "tc": "解鎖建築物"
+  },
+  "820010": {
+    "id": "820010",
+    "eng": "",
+    "tc": ""
+  },
+  "900001": {
+    "id": "900001",
+    "eng": "A low growl of a wild beast echoed from the shadows, as a wild boar charged at your troops.",
+    "tc": "暗影中傳來一陣野獸的低吼，一隻野豬衝向了你的部隊。"
+  },
+  "900002": {
+    "id": "900002",
+    "eng": "A low growl of a wild beast echoed from the shadows, as a lion charged at your troops.",
+    "tc": "暗影中傳來一陣野獸的低吼，一隻獅子衝向了你的部隊。"
+  },
+  "900003": {
+    "id": "900003",
+    "eng": "A low growl of a wild beast echoed from the shadows, as a buffalo charged at your troops.",
+    "tc": "暗影中傳來一陣野獸的低吼，一隻野牛衝向了你的部隊。"
+  },
+  "900004": {
+    "id": "900004",
+    "eng": "A low growl of a wild beast echoed from the shadows, as a spider charged at your troops.",
+    "tc": "暗影中傳來一陣野獸的低吼，一隻蜘蛛衝向了你的部隊。"
+  },
+  "900005": {
+    "id": "900005",
+    "eng": "A low growl of a wild beast echoed from the shadows, as a scorpion charged at your troops.",
+    "tc": "暗影中傳來一陣野獸的低吼，一隻蠍子衝向了你的部隊。"
+  },
+  "900006": {
+    "id": "900006",
+    "eng": "A low growl of a wild beast echoed from the shadows, as a double-headed snake charged at your troops.",
+    "tc": "暗影中傳來一陣野獸的低吼，一隻雙頭蛇衝向了你的部隊。"
+  },
+  "900007": {
+    "id": "900007",
+    "eng": "A fork in the road appeared before you, and the dilapidated sign still faintly indicated the direction it led to.",
+    "tc": "眼前出現了一個岔路口，殘破的路牌上依稀還能認出通往的位置。"
+  },
+  "900008": {
+    "id": "900008",
+    "eng": "",
+    "tc": ""
+  },
+  "900009": {
+    "id": "900009",
+    "eng": "Through the misty fog, a natural hot spring emerged before you, sure to alleviate the accumulated fatigue and pain of your subordinates from the long term.",
+    "tc": "霧氣繚繞中一口天然的溫泉出現在你的面前，這一定能緩解你的部下們長期累積的疲憊和傷痛。"
+  },
+  "900010": {
+    "id": "900010",
+    "eng": "You discovered a treasure site, still incredibly precious despite the long passage of time.",
+    "tc": "你發現了一處藏寶點，儘管經歷了漫長的歲月依舊無比珍貴。"
+  },
+  "900011": {
+    "id": "900011",
+    "eng": "Your view was occupied by dense spider webs; this is a spider's nest.",
+    "tc": "你的视线被密密麻麻的蜘蛛網所佔據，這是一處蜘蛛巢穴。"
+  },
+  "900012": {
+    "id": "900012",
+    "eng": "Before you was a group of lethargic lions; your guide told you that you could avoid conflict with them by offering food.",
+    "tc": "眼前是一群懶散的獅群，你的導遊告訴你可以通過上供食物避免與它們發生衝突。"
+  },
+  "900013": {
+    "id": "900013",
+    "eng": "In the desolate grasslands, a migrating herd was moving, with many weak beasts dying from trampling.",
+    "tc": "荒蕪的草原中有一群遷徙中的獸群，不少孱弱的野獸因為踩踏而死亡。"
+  },
+  "900014": {
+    "id": "900014",
+    "eng": "Following the earth-shaking roar, you saw two giant beasts fighting for territory, both already weakened, which might be your opportunity.",
+    "tc": "跟隨著震天的巨響，你看到了兩隻正在爭奪地盤的巨獸，雙方都已虛弱不堪，這也許是你的机会。"
+  },
+  "900015": {
+    "id": "900015",
+    "eng": "An abandoned excavation site appeared in your sight, seemingly with many treasures still worth looking forward to hidden within.",
+    "tc": "一座廢棄的挖掘點出現在你的视线內，看起來應該還有不少值得期待的寶物埋藏在內。"
+  },
+  "900016": {
+    "id": "900016",
+    "eng": "Engage in battle",
+    "tc": "上前迎戰"
+  },
+  "900017": {
+    "id": "900017",
+    "eng": "Engage in battle",
+    "tc": "上前迎戰"
+  },
+  "900018": {
+    "id": "900018",
+    "eng": "Engage in battle",
+    "tc": "上前迎戰"
+  },
+  "900019": {
+    "id": "900019",
+    "eng": "Engage in battle",
+    "tc": "上前迎戰"
+  },
+  "900020": {
+    "id": "900020",
+    "eng": "Engage in battle",
+    "tc": "上前迎戰"
+  },
+  "900021": {
+    "id": "900021",
+    "eng": "Engage in battle",
+    "tc": "上前迎戰"
+  },
+  "900022": {
+    "id": "900022",
+    "eng": "Turn left",
+    "tc": "向左转"
+  },
+  "900023": {
+    "id": "900023",
+    "eng": "",
+    "tc": ""
+  },
+  "900024": {
+    "id": "900024",
+    "eng": "Soak in the spring",
+    "tc": "泡一泡"
+  },
+  "900025": {
+    "id": "900025",
+    "eng": "Take the treasure",
+    "tc": "取走寶物"
+  },
+  "900026": {
+    "id": "900026",
+    "eng": "Rescue the captured villagers",
+    "tc": "解救被捕獲的村民"
+  },
+  "900027": {
+    "id": "900027",
+    "eng": "Offer food",
+    "tc": "獻上食物"
+  },
+  "900028": {
+    "id": "900028",
+    "eng": "Pick up some carcasses as sustenance",
+    "tc": "撿走一些屍體當作食物"
+  },
+  "900029": {
+    "id": "900029",
+    "eng": "Ambush the three-headed snake",
+    "tc": "偷襲三頭蛇"
+  },
+  "900030": {
+    "id": "900030",
+    "eng": "Order the troops to excavate",
+    "tc": "發動部隊進行挖掘"
+  },
+  "900031": {
+    "id": "900031",
+    "eng": "Engage in a battle",
+    "tc": "進行一場戰鬥"
+  },
+  "900032": {
+    "id": "900032",
+    "eng": "Engage in a battle",
+    "tc": "進行一場戰鬥"
+  },
+  "900033": {
+    "id": "900033",
+    "eng": "Engage in a battle",
+    "tc": "進行一場戰鬥"
+  },
+  "900034": {
+    "id": "900034",
+    "eng": "Engage in a battle",
+    "tc": "進行一場戰鬥"
+  },
+  "900035": {
+    "id": "900035",
+    "eng": "Engage in a battle",
+    "tc": "進行一場戰鬥"
+  },
+  "900036": {
+    "id": "900036",
+    "eng": "Engage in a battle",
+    "tc": "進行一場戰鬥"
+  },
+  "900037": {
+    "id": "900037",
+    "eng": "Head to []",
+    "tc": "前往[]"
+  },
+  "900038": {
+    "id": "900038",
+    "eng": "",
+    "tc": ""
+  },
+  "900039": {
+    "id": "900039",
+    "eng": "Restore 35% of the troops' strength",
+    "tc": "恢復部隊35%的兵力"
+  },
+  "900040": {
+    "id": "900040",
+    "eng": "Obtain []",
+    "tc": "獲得[]"
+  },
+  "900041": {
+    "id": "900041",
+    "eng": "Restore 25% of the troops' strength",
+    "tc": "恢復部隊25%的兵力"
+  },
+  "900042": {
+    "id": "900042",
+    "eng": "Lose 100 food",
+    "tc": "失去100食物"
+  },
+  "900043": {
+    "id": "900043",
+    "eng": "Gain 100 food",
+    "tc": "獲得100食物"
+  },
+  "900044": {
+    "id": "900044",
+    "eng": "Challenge the three-headed snake",
+    "tc": "挑戰三頭蛇"
+  },
+  "900045": {
+    "id": "900045",
+    "eng": "Consume 5% of the troop strength to obtain a random item",
+    "tc": "消耗5%兵力，獲得一個隨機道具"
+  },
+  "900046": {
+    "id": "900046",
+    "eng": "",
+    "tc": ""
+  },
+  "900047": {
+    "id": "900047",
+    "eng": "",
+    "tc": ""
+  },
+  "900048": {
+    "id": "900048",
+    "eng": "",
+    "tc": ""
+  },
+  "900049": {
+    "id": "900049",
+    "eng": "",
+    "tc": ""
+  },
+  "900050": {
+    "id": "900050",
+    "eng": "",
+    "tc": ""
+  },
+  "900051": {
+    "id": "900051",
+    "eng": "",
+    "tc": ""
+  },
+  "900052": {
+    "id": "900052",
+    "eng": "Turn right",
+    "tc": "向向右"
+  },
+  "900053": {
+    "id": "900053",
+    "eng": "",
+    "tc": ""
+  },
+  "900054": {
+    "id": "900054",
+    "eng": "",
+    "tc": ""
+  },
+  "900055": {
+    "id": "900055",
+    "eng": "",
+    "tc": ""
+  },
+  "900056": {
+    "id": "900056",
+    "eng": "Eliminate the spiders",
+    "tc": "剿滅蜘蛛"
+  },
+  "900057": {
+    "id": "900057",
+    "eng": "Combat with force",
+    "tc": "武力戰鬥"
+  },
+  "900058": {
+    "id": "900058",
+    "eng": "Attack the lagging beasts",
+    "tc": "攻擊落後的野獸"
+  },
+  "900059": {
+    "id": "900059",
+    "eng": "Ambush the death worm",
+    "tc": "偷襲死亡蠕蟲"
+  },
+  "900060": {
+    "id": "900060",
+    "eng": "",
+    "tc": ""
+  },
+  "900061": {
+    "id": "900061",
+    "eng": "",
+    "tc": ""
+  },
+  "900062": {
+    "id": "900062",
+    "eng": "",
+    "tc": ""
+  },
+  "900063": {
+    "id": "900063",
+    "eng": "",
+    "tc": ""
+  },
+  "900064": {
+    "id": "900064",
+    "eng": "",
+    "tc": ""
+  },
+  "900065": {
+    "id": "900065",
+    "eng": "",
+    "tc": ""
+  },
+  "900066": {
+    "id": "900066",
+    "eng": "",
+    "tc": ""
+  },
+  "900067": {
+    "id": "900067",
+    "eng": "Head to []",
+    "tc": "前往[]"
+  },
+  "900068": {
+    "id": "900068",
+    "eng": "",
+    "tc": ""
+  },
+  "900069": {
+    "id": "900069",
+    "eng": "",
+    "tc": ""
+  },
+  "900070": {
+    "id": "900070",
+    "eng": "",
+    "tc": ""
+  },
+  "900071": {
+    "id": "900071",
+    "eng": "Challenge the spider queen",
+    "tc": "挑戰蜘蛛女王"
+  },
+  "900072": {
+    "id": "900072",
+    "eng": "Challenge the lion",
+    "tc": "挑戰獅子"
+  },
+  "900073": {
+    "id": "900073",
+    "eng": "Challenge the buffalo",
+    "tc": "挑戰野牛"
+  },
+  "900074": {
+    "id": "900074",
+    "eng": "Challenge the death worm",
+    "tc": "挑戰死亡蠕蟲"
+  },
+  "900075": {
+    "id": "900075",
+    "eng": "",
+    "tc": ""
+  },
+  "900076": {
+    "id": "900076",
+    "eng": "The gloomy, withered forest, home to many beasts with lower threat levels",
+    "tc": "幽暗的枯樹森林，棲息著許多威脅度較低的野獸"
+  },
+  "900077": {
+    "id": "900077",
+    "eng": "The harsh and brutal conditions of the wilderness",
+    "tc": "生存條件殘酷的蠻荒之地"
+  },
+  "900078": {
+    "id": "900078",
+    "eng": "A long-forgotten mine",
+    "tc": "一座早已被人遺忘的礦井"
+  },
+  "900079": {
+    "id": "900079",
+    "eng": "A canyon rumored to be haunted by giant beasts",
+    "tc": "傳聞有巨獸出沒的峽谷"
+  },
+  "910001": {
+    "id": "910001",
+    "eng": "",
+    "tc": ""
+  },
+  "910002": {
+    "id": "910002",
+    "eng": "",
+    "tc": ""
+  },
+  "910003": {
+    "id": "910003",
+    "eng": "",
+    "tc": ""
+  },
+  "910004": {
+    "id": "910004",
+    "eng": "boar",
+    "tc": "野豬"
+  },
+  "910005": {
+    "id": "910005",
+    "eng": "lion",
+    "tc": "獅子"
+  },
+  "910006": {
+    "id": "910006",
+    "eng": "buffalo",
+    "tc": "野牛"
+  },
+  "910007": {
+    "id": "910007",
+    "eng": "spider",
+    "tc": "蜘蛛"
+  },
+  "910008": {
+    "id": "910008",
+    "eng": "scorpion",
+    "tc": "蠍子"
+  },
+  "910009": {
+    "id": "910009",
+    "eng": "Double-headed snake",
+    "tc": "雙頭蛇"
+  },
+  "910010": {
+    "id": "910010",
+    "eng": "Fork Road",
+    "tc": "岔路口"
+  },
+  "910011": {
+    "id": "910011",
+    "eng": "Fork Road",
+    "tc": "岔路口"
+  },
+  "910012": {
+    "id": "910012",
+    "eng": "Hot Spring",
+    "tc": "溫泉"
+  },
+  "910013": {
+    "id": "910013",
+    "eng": "Treasure",
+    "tc": "寶藏"
+  },
+  "910014": {
+    "id": "910014",
+    "eng": "Spider Nest ",
+    "tc": "蜘蛛巢穴"
+  },
+  "910015": {
+    "id": "910015",
+    "eng": "Lion Group",
+    "tc": "獅群"
+  },
+  "910016": {
+    "id": "910016",
+    "eng": "Migratory Herds",
+    "tc": "幽暗森林"
+  },
+  "910017": {
+    "id": "910017",
+    "eng": "Battleof Monsters",
+    "tc": "荒野草場"
+  },
+  "910018": {
+    "id": "910018",
+    "eng": "Excavation Site",
+    "tc": "遺忘礦井"
+  },
+  "910019": {
+    "id": "910019",
+    "eng": "Beast Canyon",
+    "tc": "巨獸峽谷"
+  },
+  "1070011": {
+    "id": "1070011",
+    "eng": "Treaty of Kadesh:\r\nCity Vision +1\r\nTroop Vision +1",
+    "tc": "卡迭什條約：\r\n城市視野 +1\r\n部隊視野 +1"
+  },
+  "1070012": {
+    "id": "1070012",
+    "eng": "Troop Attack +20",
+    "tc": "部隊攻擊 +20"
+  },
+  "1070013": {
+    "id": "1070013",
+    "eng": "City Defence +5",
+    "tc": "城市防禦 +5"
+  },
+  "1070014": {
+    "id": "1070014",
+    "eng": "Damage on herd +20%",
+    "tc": "對牲畜的傷害 +20%"
+  },
+  "1070015": {
+    "id": "1070015",
+    "eng": "Troop Defence +5",
+    "tc": "部隊防禦 +5"
+  },
+  "1070016": {
+    "id": "1070016",
+    "eng": "Troop Speed + 5%",
+    "tc": "部隊速度 + 5%"
+  },
+  "1070017": {
+    "id": "1070017",
+    "eng": "Domination:\r\nDamage on herd +50%",
+    "tc": "統治：\r\n對牲畜的傷害 +50%"
+  },
+  "1070018": {
+    "id": "1070018",
+    "eng": "Troop Attack +15",
+    "tc": "部隊攻擊 +15"
+  },
+  "1070019": {
+    "id": "1070019",
+    "eng": "Troop Defence +5",
+    "tc": "部隊防禦 +5"
+  },
+  "1070020": {
+    "id": "1070020",
+    "eng": "Exploration Speed +5%",
+    "tc": "探索速度 +5%"
+  },
+  "1070021": {
+    "id": "1070021",
+    "eng": "Damage on herd +20%",
+    "tc": "對牲畜的傷害 +20%"
+  },
+  "1070022": {
+    "id": "1070022",
+    "eng": "Damage on human +10%",
+    "tc": "對人類的傷害 +10%"
+  },
+  "1070023": {
+    "id": "1070023",
+    "eng": "Destruction:\r\nDamage on human +15%",
+    "tc": "毀滅：\r\n對人類的傷害 +15%"
+  },
+  "1070024": {
+    "id": "1070024",
+    "eng": "Exploration Speed +3%",
+    "tc": "探索速度 +3%"
+  },
+  "1070025": {
+    "id": "1070025",
+    "eng": "Damage on herd +20%",
+    "tc": "對牲畜的傷害 +20%"
+  },
+  "1070026": {
+    "id": "1070026",
+    "eng": "Troop Speed +5%",
+    "tc": "部隊速度 +5%"
+  },
+  "1070027": {
+    "id": "1070027",
+    "eng": "Troop Attack +20",
+    "tc": "部隊攻擊 +20"
+  },
+  "1070028": {
+    "id": "1070028",
+    "eng": "Troop Attack +30",
+    "tc": "部隊攻擊 +30"
+  },
+  "1070029": {
+    "id": "1070029",
+    "eng": "Construct Speed +5%",
+    "tc": "建造速度 +5%"
+  },
+  "1070030": {
+    "id": "1070030",
+    "eng": "Exploration Speed +3%",
+    "tc": "探索速度 +3%"
+  },
+  "1070031": {
+    "id": "1070031",
+    "eng": "Extra Resource +5%",
+    "tc": "額外資源 +5%"
+  },
+  "1070032": {
+    "id": "1070032",
+    "eng": "Extra Resource +5%",
+    "tc": "額外資源 +5%"
+  },
+  "1070033": {
+    "id": "1070033",
+    "eng": "Troop Speed +5%",
+    "tc": "部隊速度 +5%"
+  },
+  "1070034": {
+    "id": "1070034",
+    "eng": "Troop Attack +10",
+    "tc": "部隊攻擊 +10"
+  },
+  "1070035": {
+    "id": "1070035",
+    "eng": "Troop Defence +5",
+    "tc": "部隊防禦 +5"
+  },
+  "1070036": {
+    "id": "1070036",
+    "eng": "Troop Attack +10",
+    "tc": "部隊攻擊 +10"
+  },
+  "1070037": {
+    "id": "1070037",
+    "eng": "Extra Resource +5%",
+    "tc": "額外資源 +5%"
+  },
+  "1070038": {
+    "id": "1070038",
+    "eng": "Troop Speed +5%",
+    "tc": "部隊速度 +5%"
+  },
+  "1070039": {
+    "id": "1070039",
+    "eng": "Troop Attack +5",
+    "tc": "部隊攻擊 +5"
+  },
+  "1070040": {
+    "id": "1070040",
+    "eng": "Construct Speed +5%",
+    "tc": "建造速度 +5%"
+  },
+  "1070041": {
+    "id": "1070041",
+    "eng": "Troop Defence +5%",
+    "tc": "部隊防禦 +5%"
+  },
+  "1070042": {
+    "id": "1070042",
+    "eng": "Troop Attack +20",
+    "tc": "部隊攻擊 +20"
+  },
+  "1070043": {
+    "id": "1070043",
+    "eng": "Construct Speed +5%",
+    "tc": "建造速度 +5%"
+  },
+  "1070044": {
+    "id": "1070044",
+    "eng": "Extra Resource +5%",
+    "tc": "額外資源 +5%"
+  },
+  "1070045": {
+    "id": "1070045",
+    "eng": "Extra Resource +5%",
+    "tc": "額外資源 +5%"
+  },
+  "1070046": {
+    "id": "1070046",
+    "eng": "Exploration Speed +8%",
+    "tc": "探索速度 +8%"
+  },
+  "1070047": {
+    "id": "1070047",
+    "eng": "Exploration Speed +3%",
+    "tc": "探索速度 +3%"
+  },
+  "1070048": {
+    "id": "1070048",
+    "eng": "Construct Speed +5%",
+    "tc": "建造速度 +5%"
+  },
+  "1070049": {
+    "id": "1070049",
+    "eng": "Troop Defence +10",
+    "tc": "部隊防禦 +10"
+  },
+  "1070050": {
+    "id": "1070050",
+    "eng": "Extra Resource +5%",
+    "tc": "額外資源 +5%"
+  },
+  "1070051": {
+    "id": "1070051",
+    "eng": "Extra Resource +5%",
+    "tc": "額外資源 +5%"
+  },
+  "1070052": {
+    "id": "1070052",
+    "eng": "Extra Resource +5%",
+    "tc": "額外資源 +5%"
+  },
+  "1070053": {
+    "id": "1070053",
+    "eng": "Troop Attack +5",
+    "tc": "部隊攻擊 +5"
+  },
+  "1070054": {
+    "id": "1070054",
+    "eng": "Exploration Speed +5%",
+    "tc": "探索速度 +5%"
+  },
+  "1070055": {
+    "id": "1070055",
+    "eng": "Troop Attack +5",
+    "tc": "部隊攻擊 +5"
+  },
+  "1080011": {
+    "id": "1080011",
+    "eng": "Skill Des",
+    "tc": "技能描述"
+  },
+  "1090051": {
+    "id": "1090051",
+    "eng": "Tinuvel is a beacon of hope in this post-apocalyptic wasteland. Her visions guide the survivors towards safety and sustenance.",
+    "tc": "汀烏韋爾是這個末日荒原中的希望燈塔。她的異象引導倖存者們朝安全和食物的方向前進。"
+  },
+  "1090061": {
+    "id": "1090061",
+    "eng": "A master of resourcefulness.",
+    "tc": "一位足智多謀的大師。"
+  },
+  "1090071": {
+    "id": "1090071",
+    "eng": "Keen, known for his unmatched speed and agility, wields dual blades with deadly precision.",
+    "tc": "銳利，以其無與倫比的速度和敏捷性聞名，雙刃揮舞得致命精確。"
+  },
+  "1090081": {
+    "id": "1090081",
+    "eng": "His reputation was built on the smoking barrels of his twin pistols, each a tale of survival.",
+    "tc": "他的名聲是建立在他雙槍冒煙的槍管上，每個都是生存的故事。"
+  },
+  "1090091": {
+    "id": "1090091",
+    "eng": "John, the lone hunter, tracks his prey across the barren lands. His survival skills are as sharp as the arrows in his quiver.",
+    "tc": "約翰，孤獨的獵人，在荒蕪的土地上追蹤他的獵物。他的求生技能和他箭囊裡的箭一樣銳利。"
+  },
+  "1090301": {
+    "id": "1090301",
+    "eng": "An old chief, could pass away at any moment",
+    "tc": "一位老村長，隨時可能去世"
+  },
+  "1090311": {
+    "id": "1090311",
+    "eng": "'Wanna a couple of bullets?'",
+    "tc": "“想要幾顆子彈嗎？”"
+  },
+  "1090321": {
+    "id": "1090321",
+    "eng": "In name a doctor, but in reality…",
+    "tc": "名義上是醫生，但實際上..."
+  },
+  "1090331": {
+    "id": "1090331",
+    "eng": "His life is a mockery of the apocalypse.",
+    "tc": "他的生命是對末日的嘲諷。"
+  },
+  "1090351": {
+    "id": "1090351",
+    "eng": "An unknown traveler, who perhaps has seen places abundant with resources.",
+    "tc": "一位未知的旅行者，也許已經看過資源豐富的地方。"
+  },
+  "1090401": {
+    "id": "1090401",
+    "eng": "Terrifying mutated creature",
+    "tc": "可怕的變異生物"
+  },
+  "1090402": {
+    "id": "1090402",
+    "eng": "Malicious marauding ruffian",
+    "tc": "惡意的掠奪者"
+  },
+  "1100041": {
+    "id": "1100041",
+    "eng": "A testament to a bygone civilization, their crumbling stones whispering tales of the past.",
+    "tc": "這是一個已經消逝的文明的見證，他們破碎的石頭低語著過去的故事。"
+  },
+  "1100051": {
+    "id": "1100051",
+    "eng": "A treacherous labyrinth home to the elusive and deadly Sand Spiders, guarding ancient secrets beneath the desert sands.",
+    "tc": "一個危險的迷宮，是難以捉摸並且致命的沙蜘蛛的家，守衛著沙漠沙下的古老秘密。"
+  },
+  "1100061": {
+    "id": "1100061",
+    "eng": "A monumental structure pulsating with power, harnessing the elements to fuel the technological marvels of its time.",
+    "tc": "一個巨大的結構，充滿力量，利用元素來驅動其時代的技術奇觀。"
+  },
+  "1100071": {
+    "id": "1100071",
+    "eng": "The Aquatic Ruins lie submerged in the depths, a watery grave to a once-thriving aquatic civilization, now a haunting reminder of their aquatic prowess.",
+    "tc": "水下遺跡沉沒在深處，是一個曾經繁榮的水上文明的水葬，現在是他們水上能力的令人毛骨悚然的提醒。"
+  },
+  "1100081": {
+    "id": "1100081",
+    "eng": "The Village Undercroft is a subterranean expanse beneath a quaint village, where echoes of the surface world blend with the mysteries of the deep.",
+    "tc": "村莊地下室是一個位於可愛村莊地下的廣闊空間，地面世界的回聲與深處的神秘混合在一起。"
+  },
+  "1100091": {
+    "id": "1100091",
+    "eng": "A symbol of mechanical ingenuity from an era lost to time.",
+    "tc": "一個象徵著失落時代機械穎悟的符號。"
+  },
+  "1100141": {
+    "id": "1100141",
+    "eng": "It is a hypothetical tunnel through space-time, bridging distant points in the universe and offering a tantalizing shortcut through the cosmos.",
+    "tc": "這是一個假想的空間時間隧道，連接宇宙中遙遠的點，提供了一個穿越宇宙的誘人捷徑。"
+  }
 }
