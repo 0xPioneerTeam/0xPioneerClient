@@ -12,9 +12,10 @@ export class GameOverlayCamera extends Component {
         NotificationMgr.addListener(NotificationName.GAME_CAMERA_POSITION_CHANGED, this._onGameCameraPositionChange, this);
         NotificationMgr.addListener(NotificationName.GAME_CAMERA_ZOOM_CHANGED, this._onGameCameraZoomChange, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_BEGIN_MOVE, this._onMapPioneerBeginMove, this);
+        this._camera = this.node.getComponent(Camera);
     }
 
-    private _outScene: Node = null;
+    private _camera: Camera = null;
     private _lastCameraPosition: Vec3 = new Vec3();
     private _lastCameraorthoHeight: number = 0;
 
@@ -34,29 +35,7 @@ export class GameOverlayCamera extends Component {
     private _checkMapMemberShow() {
         this._lastCameraPosition = GameMainHelper.instance.gameCameraWorldPosition.clone();
         this._lastCameraorthoHeight = GameMainHelper.instance.gameCameraOrthoHeight;
-        if (!this._outScene) {
-            this._outScene = find("Main/Canvas/GameContent/Game/OutScene");
-            if (!this._outScene) {
-                return;
-            }
-        }
-        const frustum = this.node.getComponent(Camera).camera.frustum;
-        const decorationView = this._outScene.getComponent(OuterTiledMapActionController).mapDecorationView();
-        // borderMask todo update active
-        let children = decorationView.children;
-        let worldBox = new geometry.AABB();
-        children.forEach((child) => {
-            let uitransform = child.getComponent(UITransform);
-            if (uitransform) {
-                uitransform.getComputeAABB(worldBox);
-                
-                if (geometry.intersect.aabbFrustum(worldBox, frustum) || child.getComponent(MapPioneer)?.isMoving()) {
-                    child.active = true;
-                } else {
-                    child.active = false;
-                }
-            }
-        });
+        GameMainHelper.instance.updateGameViewport();
     }
 
     //------------------------- notification
@@ -64,7 +43,7 @@ export class GameOverlayCamera extends Component {
         this.node.worldPosition = GameMainHelper.instance.gameCameraWorldPosition;
     }
     private _onGameCameraZoomChange() {
-        this.node.getComponent(Camera).orthoHeight = GameMainHelper.instance.gameCameraOrthoHeight;
+        this._camera.orthoHeight = GameMainHelper.instance.gameCameraOrthoHeight;
     }
     private _onMapPioneerBeginMove() {
         this._checkMapMemberShow();

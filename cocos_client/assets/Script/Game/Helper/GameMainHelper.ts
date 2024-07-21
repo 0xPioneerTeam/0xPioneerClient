@@ -1,4 +1,4 @@
-import { Camera, Node, Prefab, Size, TiledMap, Vec2, Vec3, size, tween, v2 } from "cc";
+import { Camera, Mat4, Node, Prefab, Rect, Size, TiledMap, Vec2, Vec3, find, size, tween, v2 } from "cc";
 import ConfigConfig from "../../Config/ConfigConfig";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
@@ -8,6 +8,8 @@ import { GameMgr } from "../../Utils/Global";
 import { ConfigType, MapScaleParam } from "../../Const/Config";
 import { DataMgr } from "../../Data/DataMgr";
 import { RookieStep } from "../../Const/RookieDefine";
+import { OuterTiledMapActionController } from "../Outer/OuterTiledMapActionController";
+import { OuterDecorateController } from "../Outer/OuterDecorateController";
 
 export default class GameMainHelper {
     public static get instance() {
@@ -94,6 +96,10 @@ export default class GameMainHelper {
         return this._gameCameraZoom;
     }
 
+    public get gameCamera(): Camera {
+        return this._gameCamera;
+    }
+
     //------------------------------------------ inner outer
     public changeInnerAndOuterShow() {
         this._isGameShowOuter = !this._isGameShowOuter;
@@ -106,17 +112,15 @@ export default class GameMainHelper {
     public initTiledMapHelper(map: TiledMap, tracking: Node) {
         //init tiledmap by a helper class
         this._tiledMapHelper = new TileMapHelper(map);
-        this._tiledMapHelper.Shadow_Init(0, 75);
-        this._tiledMapHelper._shadowhalftag = 73;
-        this._tiledMapHelper._shadowhalf2tag = 74;
+        this._mapNode = map.node;
+        // this._tiledMapHelper.Shadow_Init(0, 75);
+        // this._tiledMapHelper._shadowhalftag = 73;
+        // this._tiledMapHelper._shadowhalf2tag = 74;
         //set a callback here. 35 is block
         this._tiledMapHelper.Path_InitBlock(35);
-
         this._trackingView = tracking;
     }
-    public get tiledMapGetAllPos() {
-        return this._tiledMapHelper.getAllPos();
-    }
+
     public get isTiledMapHelperInited(): boolean {
         return this._tiledMapHelper != null;
     }
@@ -256,7 +260,7 @@ export default class GameMainHelper {
     }
     public tiledMapGetShadowClearedTiledPositions(): TilePos[] {
         if (!this.isTiledMapHelperInited) {
-            return [];
+        return [];
         }
         return this._tiledMapHelper.Shadow_GetClearedTiledPositons();
     }
@@ -264,7 +268,7 @@ export default class GameMainHelper {
         if (!this.isTiledMapHelperInited) {
             return;
         }
-        this._tiledMapHelper.Shadow_Update(dt);
+        // this._tiledMapHelper.Shadow_Update(dt);
     }
     public showTrackingView(worldPosition: Vec3, interactData: { stepId: string; interactBuildingId: string; interactPioneerId: string }) {
         this._trackingView.active = true;
@@ -318,6 +322,7 @@ export default class GameMainHelper {
     }
 
     private static _instance: GameMainHelper;
+    private _mapNode: Node;
     private _gameCamera: Camera;
     private _gameCameraOriginalOrthoHeight: number;
     private _gameCameraZoom: number;
@@ -334,6 +339,10 @@ export default class GameMainHelper {
     private _isEditInnerBuildingLattice: boolean = false;
 
     private _isMapInitOver: boolean = false;
+
+    private _outScene: Node = null;
+
+
     constructor() {
         this._currentTrackingInteractData = {
             stepId: "",
@@ -344,7 +353,50 @@ export default class GameMainHelper {
         NotificationMgr.addListener(NotificationName.GAME_JUMP_INNER_AND_SHOW_RELIC_TOWER, this._onGameJumpInnerAndShowRelicTower, this);
     }
 
+    updateGameViewport() {
+        if (!this._outScene) {
+            this._outScene = find("Main/Canvas/GameContent/Game/OutScene");
+            if (!this._outScene) {
+                return;
+            }
+        }
+        let gameCamera = this._gameCamera;
+        let mapNode = this._mapNode;
+        mapNode.updateWorldTransform();
+        Mat4.invert(_mat4_temp, mapNode.getWorldMatrix());
+        _vec3_temp.x = 0;
+        _vec3_temp.y = 0;
+        _vec3_temp.z = 0;
+        _vec3_temp2.x = gameCamera.camera.width;
+        _vec3_temp2.y = gameCamera.camera.height;
+        _vec3_temp2.z = 0;
+        gameCamera.camera.screenToWorld(_vec3_temp, _vec3_temp);
+        gameCamera.camera.screenToWorld(_vec3_temp2, _vec3_temp2);
+        Vec3.transformMat4(_vec3_temp, _vec3_temp, _mat4_temp);
+        Vec3.transformMat4(_vec3_temp2, _vec3_temp2, _mat4_temp);
+        Rect.fromMinMax(_rect_temp, _vec3_temp, _vec3_temp2);
+        let areaWidth = TileMapHelper.INS.pixelwidth - TileMapHelper.INS.tilewidth/2;
+        let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight/2;
+        let sx = _rect_temp.xMin/areaWidth + 0.5;
+        let sy = _rect_temp.yMin/areaHeight + 0.5;
+        let ex = _rect_temp.xMax/areaWidth + 0.5;
+        let ey = _rect_temp.yMax/areaHeight + 0.5;
+        _vec3_temp.x = Math.floor(sx);
+        _vec3_temp.y = Math.floor(sy);
+        _vec3_temp2.x = Math.floor(ex);
+        _vec3_temp2.y = Math.floor(ey);
+        Rect.fromMinMax(_rect_temp2, _vec3_temp, _vec3_temp2);
+        // console.log('mapNode info:',_rect_temp,_rect_temp2);
+        this._outScene.getComponent(OuterDecorateController).refreshUI(_rect_temp,_rect_temp2);
+        this._outScene.getComponent(OuterTiledMapActionController).refreshUI(_rect_temp,_rect_temp2);
+    }
+
     private _onGameJumpInnerAndShowRelicTower() {
         this.changeInnerAndOuterShow();
     }
 }
+const _mat4_temp = new Mat4();
+const _vec3_temp = new Vec3();
+const _vec3_temp2 = new Vec3();
+const _rect_temp = new Rect();
+const _rect_temp2 = new Rect();
