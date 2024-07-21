@@ -38,7 +38,8 @@ export default class InnerBuildingDataMgr {
         if (NetGlobalData.innerBuildings == null) {
             return;
         }
-        for (const building of NetGlobalData.innerBuildings) {
+        for (const key in NetGlobalData.innerBuildings) {
+            let building = NetGlobalData.innerBuildings[key];
             this._data.set(building.id as InnerBuildingType, this._convertNetDataToObject(building));
         }
     }

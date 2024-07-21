@@ -93,7 +93,8 @@ export class MapBuildingDataMgr {
 
     private _convertNetDataToObject(element: share.Imapbuilding_info_data): MapBuildingObject {
         const stayPos: Vec2[] = [];
-        for (const templePos of element.stayMapPositions) {
+        for (const poskey in element.stayMapPositions) {
+            let templePos = element.stayMapPositions[poskey];
             stayPos.push(new Vec2(templePos.x, templePos.y));
         }
         if (stayPos.length == 1) {

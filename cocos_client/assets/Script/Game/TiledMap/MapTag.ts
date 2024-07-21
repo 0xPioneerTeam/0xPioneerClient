@@ -1,5 +1,5 @@
 import { _decorator, CCBoolean, Component, instantiate, Node, Prefab, UITransform, v3, Vec2 } from 'cc';
-import { DEV } from 'cc/env';
+import { DEV, EDITOR } from 'cc/env';
 const { ccclass, property } = _decorator;
 
 
@@ -21,7 +21,7 @@ export class MapTag extends Component {
     @property({ visible() { return this.block }, displayName: '显示阻挡数据', type: CCBoolean })
     set blockDraw(v: boolean) {
         this._blockDraw = v;
-        if (DEV) {
+        if (DEV && EDITOR) {
             let blockNode = this.node.getChildByName('__BLOCKNODE');
             if (v) {
                 if (!blockNode) {

@@ -1,4 +1,4 @@
-import * as cc from "cc";
+import { instantiate, Intersection2D, Prefab, TiledLayer, TiledMap, v2, v3, Vec2, Vec3 } from "cc";
 
 export enum TileHexDirection {
     LeftTop = 0,
@@ -47,6 +47,26 @@ export class TilePos {
     toInfoSingleLine(): string {
         return this.worldx + "," + this.worldy + " " + this.calc_x + "," + this.calc_y + "," + this.calc_z;
     }
+
+    static _hexPoints = [[-64, 32], [-64, -32], [0, -64], [64, -32], [64, 32], [0, 64]];
+    static _hexVec6: Vec2[];
+
+    /**
+     * hex 6 point contain world point
+     * @param worldPx 
+     * @param worldPy 
+     * @returns 
+     */
+    constained(worldPx: number, worldPy: number): boolean {
+        if (!TilePos._hexVec6) {
+            TilePos._hexVec6 = [];
+            TilePos._hexPoints.forEach(v => {
+                TilePos._hexVec6.push(v2(v[0], v[1]));
+            })
+        }
+        return Intersection2D.pointInPolygon(v2(worldPx - this.worldx, worldPy - this.worldy), TilePos._hexVec6);
+    }
+
     g: number;
     h: number;
 }
@@ -57,23 +77,26 @@ export interface IDynamicBlock {
     get canMoveTo(): boolean;
 }
 
-export class MyTile extends cc.TiledTile {
-    fall: number = -1;
+export class MyTileData {
+    x: number;
+    y: number;
+    fall: number
+    grid: number = -1;
     timer: number = 0;
     owner: string = null;
-    //zhege update only call when layer change. not good.
-    // update(deltaTime: number) {
-    //     if (this.grid != this.fall && this.fall > 0) {
-    //         this.timer += deltaTime;
-    //         if (this.timer > 1.0) {
-    //             this.timer = 0;
-    //             this.grid = this.fall;
-    //         }
-    //     }
-    // }
+
+    constructor(x: number, y: number, grid: number) {
+        this.x = x;
+        this.y = y;
+        this.grid = grid;
+    }
 }
+const _vec3_temp = new Vec3();
+const _vec3_temp2 = new Vec3();
+
 export class TileMapHelper {
-    constructor(tilemap: cc.TiledMap) {
+    constructor(tilemap: TiledMap) {
+        TileMapHelper._instance = this;
         this._tilemap = tilemap;
         this.width = tilemap.getMapSize().width;
         this.height = tilemap.getMapSize().height;
@@ -85,13 +108,13 @@ export class TileMapHelper {
             this.pixelheight = this.tileheight * this.height;
         } else if (this.type == TileMapType.HEX) {
             this.pixelwidth = this.tilewidth * this.width + this.tilewidth * 0.5;
-            this.pixelheight = this.tileheight * this.height * 0.75 + this.tileheight * 0.5;
+            this.pixelheight = this.tileheight * this.height * 0.75 + this.tileheight / 4;
         }
         this.InitPos();
     }
 
-    private _tilemap: cc.TiledMap;
-    private _pos: TilePos[];
+    private _tilemap: TiledMap;
+    private _pos: { [x_yKey: string]: TilePos };
     private _calcpos2pos: { [id: string]: TilePos } = {};
     width: number;
     height: number;
@@ -99,33 +122,68 @@ export class TileMapHelper {
     tileheight: number;
     pixelwidth: number;
     pixelheight: number;
+
     type: TileMapType;
 
-    getAllPos(): TilePos[] {
-        return this._pos;
-    }
-    getPos(x: number, y: number): TilePos {
-        if (x < 0 || y < 0 || x >= this.width || y >= this.height) return null;
-        return this._pos[y * this.width + x];
-    }
-    getPosWorld(x: number, y: number): cc.Vec3 {
-        let outv = new cc.Vec3();
+    _shadowtiles: { [x_yKey: string]: MyTileData } = {};
+    _shadowtag: number;
+    _shadowcleantag: number;
+    _shadowhalftag: number;
+    _shadowhalf2tag: number;
+    _shadowLayer: TiledLayer;
+    protected _shadowBorderPfb: Prefab;
+    protected _freeShadowBorders: Node[] = [];
+    protected _usedSHadowBorders: Node[] = [];
 
-        let pos = this.getPos(x, y);
-        let iv = new cc.Vec3(pos.worldx - this.pixelwidth * 0.5, this.pixelheight * 0.5 - pos.worldy, 0);
-        // outv.x = iv.x;
-        // outv.y = iv.y;
-        // outv.x *= 0.25;
-        // outv.y *= 0.25;
-        // outv.x += this.pixelwidth*0.5
-        // outv.z = 0;
-        cc.Vec3.transformMat4(outv, iv, this._tilemap.node.worldMatrix);
+    private static _instance: TileMapHelper;
+
+    static get INS(): TileMapHelper {
+        return this._instance;
+    }
+
+    getPos(x: number, y: number): TilePos {
+        let key = x + '_' + y;
+        if (this._pos[key]) {
+            return this._pos[key];
+        } else {
+            let tilePos = new TilePos();
+            tilePos.x = x;
+            tilePos.y = y;
+            tilePos.calc_x = x;
+            tilePos.calc_y = y;
+            tilePos.calc_z = 0;
+
+            let worldx = (x + 0.5) * this.tilewidth;
+            var cross = y % 2 == 1;
+            if (cross) worldx += this.tilewidth * 0.5;
+            let worldy = (y + 0.5) * (this.tileheight * 0.75);
+            _vec3_temp2.x = worldx;
+            _vec3_temp2.y = -worldy;
+            _vec3_temp2.z = 0;
+            Vec3.transformMat4(_vec3_temp, _vec3_temp2, this._tilemap.node.worldMatrix);
+            tilePos.worldx = _vec3_temp.x;
+            tilePos.worldy = _vec3_temp.y;
+            this._pos[key] = tilePos;
+            return tilePos;
+        }
+    }
+    getPosWorld(x: number, y: number): Vec3 {
+        let key = x + '_' + y;
+        let tilepos = this._pos[key];
+        if (tilepos) {
+            return v3(tilepos.worldx, tilepos.worldy, 0);
+        }
+        let outv = new Vec3();
+        var cross = y % 2 == 1;
+        let worldx = (x + 0.5) * this.tilewidth;
+        if (cross) worldx += this.tilewidth * 0.5;
+        let worldy = (y + 0.5) * (this.tileheight * 0.75);
+        let iv = new Vec3(worldx, worldy, 0);
+        Vec3.transformMat4(outv, iv, this._tilemap.node.worldMatrix);
         return outv;
     }
     getPosByCalcPos(x: number, y: number, z: number): TilePos {
-        var index = this.getCalcPosKey(x, y, z);
-        //console.log("index=" + x + "," + y + "," + z + "=>" + index);
-        return this._calcpos2pos[index];
+        return this.getPos(x, y);
     }
     getCalcPosKey(x: number, y: number, z: number): string {
         return (x | 0).toString() + "_" + (y | 0).toString() + "_" + (z | 0).toString();
@@ -133,62 +191,42 @@ export class TileMapHelper {
     getPosKey(x: number, y: number): number {
         return (y * this.width + x) | 0;
     }
-    getPosByWorldPos(worldpos: cc.Vec3): TilePos {
+    getPosByWorldPos(worldpos: Vec3): TilePos {
         let invmat = this._tilemap.node.worldMatrix.clone().invert();
-        let outv = new cc.Vec3();
-        cc.Vec3.transformMat4(outv, worldpos, invmat);
+        Vec3.transformMat4(_vec3_temp, worldpos, invmat);
 
-        let wxfornode = outv.x + this.pixelwidth * 0.5;
-        let wyfornode = this.pixelheight * 0.5 - outv.y;
-        //console.log("wx=" + wxfornode + "," + wyfornode);
-        if (this.type == TileMapType.ORTHO) {
-            //srcx = x*this.tilewidth ~ (x+1)*this.tilewidth
-            //srcy =y ~y+1
-            let x = (wxfornode / this.tilewidth) | 0;
-            let y = (wyfornode / this.tileheight) | 0;
-            return this.getPos(wxfornode, wyfornode);
-        } else if (this.type == TileMapType.HEX) {
-            // p.worldx = (x + 0.5) * this.tilewidth;
-            // if (cross)
-            //     p.worldx += this.tilewidth * 0.5;
-            // p.worldy = (y - 0.5) * (this.tileheight * 0.75);//- this.tileheight * 0.5 * 0.75;
+        let wxfornode = _vec3_temp.x;
+        let wyfornode = -_vec3_temp.y;
 
-            //srcx = x ~ (x+1)
-            //srcx2 = x+0.5 ~ (x+1.5)
-            let x1 = (wxfornode / this.tilewidth) | 0;
-            let x2 = ((wxfornode - this.tilewidth * 0.5) / this.tilewidth) | 0;
+        let x1 = Math.floor(wxfornode / this.tilewidth);
+        let y1 = Math.floor(wyfornode / (this.tileheight * 0.75));
 
-            //srcy =  y*0.75 -0.5   -0.5 y*0.75
-
-            let y = ((wyfornode + this.tileheight * 0.75 * 1.5 - this.tileheight * 1.0) / (this.tileheight * 0.75)) | 0;
-            //5232+ya +64 /96 = 56
-            //console.log("sx=" + x1 + "-" + x2 + "," + y);
-            let poss: TilePos[] = [];
-            var pos1 = this.getPos(x1, y - 1);
-            var pos2 = this.getPos(x1, y);
-            var pos3 = this.getPos(x1, y + 1);
-            var pos4 = this.getPos(x2, y - 1);
-            var pos5 = this.getPos(x2, y);
-            var pos6 = this.getPos(x2, y + 1);
-            if (pos1 != null) poss.push(pos1);
-            if (pos2 != null) poss.push(pos2);
-            if (pos3 != null) poss.push(pos3);
-            if (pos4 != null) poss.push(pos4);
-            if (pos5 != null) poss.push(pos5);
-            if (pos6 != null) poss.push(pos6);
-            var dist = 10000;
-            var outpos: TilePos = null;
-            var wnpos = new cc.Vec3(wxfornode, wyfornode, 0);
-            for (var i = 0; i < poss.length; i++) {
-                var p = poss[i];
-                var d = cc.Vec3.distance(wnpos, new cc.Vec3(p.worldx, p.worldy, 0));
-                if (d < dist) {
-                    dist = d;
-                    outpos = p;
-                }
+        let poss: TilePos[] = [];
+        var pos1 = this.getPos(x1, y1);
+        var pos2 = this.getPos(x1, y1 - 1);
+        var pos3 = this.getPos(x1, y1 + 1);
+        var pos4 = this.getPos(x1 - 1, y1);
+        var pos5 = this.getPos(x1 - 1, y1 - 1);
+        var pos6 = this.getPos(x1 - 1, y1 + 1);
+        var pos7 = this.getPos(x1 + 1, y1);
+        var pos8 = this.getPos(x1 + 1, y1 - 1);
+        var pos9 = this.getPos(x1 + 1, y1 + 1);
+        poss.push(pos1);
+        poss.push(pos2);
+        poss.push(pos3);
+        poss.push(pos4);
+        poss.push(pos5);
+        poss.push(pos6);
+        poss.push(pos7);
+        poss.push(pos8);
+        poss.push(pos9);
+        for (var i = 0; i < poss.length; i++) {
+            var p = poss[i];
+            if (p.constained(worldpos.x, worldpos.y)) {
+                return p;
             }
-            return outpos;
         }
+        return null;
     }
     getExtAround(pos: TilePos, extlen: number): TilePos[] {
         const postions = [];
@@ -206,63 +244,27 @@ export class TileMapHelper {
         return postions;
     }
     private InitPos() {
-        this._pos = []; //TilePos[this.width * this.height];
-        for (var y = 0; y < this.height; y++) {
-            for (var x = 0; x < this.width; x++) {
-                let p = new TilePos();
-                p.x = x;
-                p.y = y;
-                if (this.type == 0) {
-                    p.calc_x = x;
-                    p.calc_y = y;
-                    p.calc_z = 0;
-                    p.worldx = (x + 0.5) * this.tilewidth;
-                    p.worldy = (y + 0.5) * this.tileheight;
-                } else if (this.type == 1) {
-                    //hex
-                    var cross = y % 2 == 1;
-                    p.worldx = (x + 0.5) * this.tilewidth;
-                    if (cross) p.worldx += this.tilewidth * 0.5;
-                    p.worldy = (y - 0.5) * (this.tileheight * 0.75) + this.tileheight * 1.0;
-
-                    p.calc_x = x - ((y / 2) | 0);
-                    p.calc_y = y;
-                    p.calc_z = 0 - p.calc_x - p.calc_y;
-                }
-                this._pos[y * this.width + x] = p;
-                this._calcpos2pos[this.getCalcPosKey(p.calc_x, p.calc_y, p.calc_z)] = p;
-            }
-        }
+        this._pos = {}; //TilePos[this.width * this.height];
     }
 
-    _shadowtiles: MyTile[];
-    _shadowtag: number;
-    _shadowcleantag: number;
-    _shadowhalftag: number;
-    _shadowhalf2tag: number;
-    _shadowLayer: cc.TiledLayer;
-    protected _shadowBorderPfb: cc.Prefab;
-    protected _freeShadowBorders: cc.Node[] = [];
-    protected _usedSHadowBorders: cc.Node[] = [];
     protected _ShadowBorder_Reset() {
-        for (; this._usedSHadowBorders.length > 0; ) {
-            let borderNode = this._usedSHadowBorders[this._usedSHadowBorders.length - 1];
-            this._shadowLayer.removeUserNode(borderNode);
-
-            this._freeShadowBorders.push(this._usedSHadowBorders.pop());
-        }
+        // for (; this._usedSHadowBorders.length > 0;) {
+        //     let borderNode = this._usedSHadowBorders[this._usedSHadowBorders.length - 1];
+        //     this._shadowLayer.removeUserNode(borderNode);
+        //     this._freeShadowBorders.push(this._usedSHadowBorders.pop());
+        // }
     }
-    protected _Fetch_ShadowBorderNode(): cc.Node {
+    protected _Fetch_ShadowBorderNode(): Node {
         let bn;
         if (this._freeShadowBorders.length > 0) {
             bn = this._freeShadowBorders.pop();
         } else {
-            bn = cc.instantiate(this._shadowBorderPfb);
+            bn = instantiate(this._shadowBorderPfb);
         }
 
         return bn;
     }
-    Shadow_Init(cleantag: number, shadowtag: number, shadowborderPfb: cc.Prefab = null, layername: string = "shadow"): void {
+    Shadow_Init(cleantag: number, shadowtag: number, shadowborderPfb: Prefab = null, layername: string = "shadow"): void {
         this._shadowcleantag = cleantag;
         this._shadowtag = shadowtag;
         var layer = this._tilemap.getLayer(layername);
@@ -270,47 +272,9 @@ export class TileMapHelper {
         this._shadowLayer = layer;
         this._shadowBorderPfb = shadowborderPfb;
 
-        this._shadowtiles = [];
-        for (var y = 0; y < this.height; y++) {
-            for (var x = 0; x < this.width; x++) {
-                var _node = new cc.Node();
-
-                let t = _node.addComponent(MyTile);
-                t.fall = -1;
-                t.x = x;
-                t.y = y;
-                _node.parent = layer.node;
-                t.grid = this._shadowtag; //75 is all black
-
-                this._shadowtiles[y * this.width + x] = t;
-            }
-        }
+        this._shadowtiles = {};
     }
-    Shadow_Update(delta: number): void {
-        var update = false;
-        let x1 = 10000;
-        let y1 = 10000;
-        let x2 = 0;
-        let y2 = 0;
-        for (var i = 0; i < this._shadowtiles.length; i++) {
-            var s = this._shadowtiles[i];
-            if (s.fall == -1) continue;
-            if (s.fall == s.grid) continue;
-            s.timer += delta;
-            if (s.timer > 1.0) {
-                if (x1 > s.x) x1 = s.x;
-                if (y1 > s.y) y1 = s.y;
-                if (x2 < s.x) x2 = s.x;
-                if (y2 < s.y) y2 = s.y;
-                s.grid = s.fall;
-                s.owner = null;
-                update = true;
-            }
-        }
-        if (update) {
-            this._tilemap.getLayer("shadow").updateViewPort(x1, y1, x2 - x1 + 1, y2 - y1 + 1);
-        }
-    }
+
     Shadow_Earse(pos: TilePos, owner: string, extlen: number = 1, fall: boolean = false): TilePos[] {
         //console.log("pos=" + pos.x + "," + pos.y + ":" + pos.worldx + "," + pos.worldy);
         //for (var z = pos.calc_z - extlen; z <= pos.calc_z + extlen; z++) {
@@ -327,7 +291,11 @@ export class TileMapHelper {
                 if (gpos != null) {
                     if (vx > gpos.x) vx = gpos.x;
                     if (vy > gpos.y) vy = gpos.y;
-                    var s = this._shadowtiles[gpos.y * this.width + gpos.x];
+                    var s = this._shadowtiles[gpos.x + '_' + gpos.y];
+                    if (s == null) {
+                        s = new MyTileData(gpos.x, gpos.y, this._shadowtag);
+                        this._shadowtiles[gpos.x + '_' + gpos] = s;
+                    }
                     // console.log("find node-" + s.x + "," + s.y + " wpos=" + gpos.worldx + "," + gpos.worldy);
                     if (!fall) {
                         if (s.grid == 0 && s.owner != null && s.owner != owner) {
@@ -362,29 +330,35 @@ export class TileMapHelper {
 
         // update user tile for border tiles
         if (this._shadowBorderPfb) {
-            this._ShadowBorder_Reset();
-            for (let i = 0; i < borderTilePostions.length; ++i) {
-                let borderPos = borderTilePostions[i];
-                let borderNode = this._Fetch_ShadowBorderNode();
-                borderNode.setWorldPosition(cc.v3(borderPos.worldx, borderPos.worldy, 0));
-                this._shadowLayer.addUserNode(borderNode);
-                this._usedSHadowBorders.push(borderNode);
+            // this._ShadowBorder_Reset();
+            // for (let i = 0; i < borderTilePostions.length; ++i) {
+            //     let borderPos = borderTilePostions[i];
+            //     let borderNode = this._Fetch_ShadowBorderNode();
+            //     borderNode.setWorldPosition(v3(borderPos.worldx, borderPos.worldy, 0));
+            //     this._shadowLayer.addUserNode(borderNode);
+            //     this._usedSHadowBorders.push(borderNode);
 
-                let bnSpr: cc.Sprite = borderNode.getComponent(cc.Sprite);
-                bnSpr.customMaterial.setProperty("dissolveThreshold", 0.5); // TO DO : calc disolve threshold by distance from player
-            }
+            //     let bnSpr: cc.Sprite = borderNode.getComponent(cc.Sprite);
+            //     bnSpr.customMaterial.setProperty("dissolveThreshold", 0.5); // TO DO : calc disolve threshold by distance from player
+            // }
         }
 
-        this._tilemap.getLayer("shadow").updateViewPort(vx, vy, extlen * 2 + 1, extlen * 2 + 1);
+        // this._tilemap.getLayer("shadow").updateViewPort(vx, vy, extlen * 2 + 1, extlen * 2 + 1);
         return newCleardPositons;
     }
 
     Shadow_IsAllBlack(x: number, y: number): boolean {
-        return this._shadowtiles[y * this.width + x].grid == this._shadowtag;
+        let key = x + '_' + y;
+        let s = this._shadowtiles[key];
+        if (s) {
+            return s.grid == this._shadowtag;
+        }
+        return false;
     }
     Shadow_GetClearedTiledPositons(): TilePos[] {
         const positions = [];
-        for (const tiles of this._shadowtiles) {
+        for (const key in this._shadowtiles) {
+            let tiles = this._shadowtiles[key];
             if (tiles.grid != this._shadowtag) {
                 positions.push(this.getPos(tiles.x, tiles.y));
             }
@@ -393,36 +367,35 @@ export class TileMapHelper {
     }
 
     Shadow_Reset() {
-        for (var i = 0; i < this._shadowtiles.length; i++) {
-            this._shadowtiles[i].grid = this._shadowtag;
-            this._shadowtiles[i].fall = -1;
+        for (const key in this._shadowtiles) {
+            this._shadowtiles[key].grid = this._shadowtag;
+            this._shadowtiles[key].fall = -1;
         }
-        this._tilemap.getLayer("shadow").updateViewPort(0, 0, this.width, this.height);
     }
 
     _blocked: boolean[] = [];
     _dynamicblock: IDynamicBlock[] = [];
     Path_InitBlock(blocktag: number = 0, other: (x: number, y: number, tag: number) => void = null) {
-        let layb = this._tilemap.getLayer("block");
-        let layd = this._tilemap.getLayer("decoration");
-        layb.node.active = false;
-        layd.node.active = false;
+        // let layb = this._tilemap.getLayer("block");
+        // let layd = this._tilemap.getLayer("decoration");
+        // layb.node.active = false;
+        // layd.node.active = false;
 
-        for (var y = 0; y < this.height; y++) {
-            for (var x = 0; x < this.width; x++) {
-                var btag = layb.tiles[y * this.height + x];
-                var btag2 = layd.tiles[y * this.height + x]; //decoration
+        // for (var y = 0; y < this.height; y++) {
+        //     for (var x = 0; x < this.width; x++) {
+        //         var btag = layb.tiles[y * this.height + x];
+        //         var btag2 = layd.tiles[y * this.height + x]; //decoration
 
-                if (btag2 != 0) {
-                    if (other != null) other(x, y, btag2);
-                }
+        //         if (btag2 != 0) {
+        //             if (other != null) other(x, y, btag2);
+        //         }
 
-                //block
-                var block = btag == blocktag;
+        //         //block
+        //         var block = btag == blocktag;
 
-                this._blocked[y * this.height + x] = block;
-            }
-        }
+        //         this._blocked[y * this.height + x] = block;
+        //     }
+        // }
     }
     Path_AddDynamicBlock(block: IDynamicBlock): void {
         if (this._dynamicblock.some((temple) => temple.TileX == block.TileX && temple.TileY == block.TileY)) {
@@ -466,7 +439,7 @@ export class TileMapHelper {
      * @param direction
      */
     Path_GetAroundByDirection(pos: TilePos, direction: TileHexDirection): TilePos | null {
-        const directionPos = cc.v3(0, 0, 0);
+        const directionPos = v3(0, 0, 0);
         if (direction == TileHexDirection.LeftTop) {
             directionPos.x = 0;
             directionPos.y = -1;
