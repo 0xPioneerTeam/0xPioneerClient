@@ -25,11 +25,11 @@ export class InnerBuildingView extends ViewController {
         this._building = building;
 
         // building
+        const innerConfig = InnerBuildingConfig.getByBuildingType(this._building.buildType);
         if (this._building.buildLevel != this._currentLevel) {
             this._currentLevel = this._building.buildLevel;
             let showedBuildingView: Node = null;
             let prefabName: string = null;
-            const innerConfig = InnerBuildingConfig.getByBuildingType(this._building.buildType);
             if (this._building.buildLevel > 0 && innerConfig != null && innerConfig.prefab != null && innerConfig.prefab.length > 0) {
                 prefabName = InnerBuildingLvlUpConfig.getBuildingLevelData(this._building.buildLevel, innerConfig.prefab);
             }
@@ -92,12 +92,37 @@ export class InnerBuildingView extends ViewController {
                 buildingSize.height += showedBuildingViewScale.y * showedBuildingView.position.y;
             }
             this._buildingSize = buildingSize;
-            this.node.getChildByPath("clickNode").getComponent(UITransform).setContentSize(buildingSize);
+            const clickNode = this.node.getChildByPath("clickNode");
+            clickNode.getComponent(UITransform).setContentSize(buildingSize);
+
+            this._canBuildView.position = v3(0, clickNode.position.y + buildingSize.height / 2, 0);
         }
 
         // info
-        this._infoView.refreshUI(this._building);
+        const levelConfig = InnerBuildingLvlUpConfig.getBuildingLevelData(this._building.buildLevel + 1, innerConfig.lvlup_cost);
 
+        let canUpgrade: boolean = false;
+        if (levelConfig != null) {
+            canUpgrade = true;
+            for (const cost of levelConfig) {
+                const type = cost[0].toString();
+                const num = cost[1];
+                if (DataMgr.s.item.getObj_item_count(type) < num) {
+                    canUpgrade = false;
+                    break;
+                }
+            }
+        }
+        this._canBuildView.active = false;
+        if (canUpgrade) {
+            if (this._building.buildLevel == 0) {
+                this._canBuildView.active = true;
+                canUpgrade = false;
+            }
+        } else {
+            this._canBuildView.active = false;
+        }
+        this._infoView.refreshUI(this._building, canUpgrade);
         // can action
         this.node.getChildByPath("clickNode").getComponent(Button).interactable = canAction;
     }
@@ -113,6 +138,7 @@ export class InnerBuildingView extends ViewController {
     private _defaultBuildingView: Node = null;
     private _showBuilding: Node = null;
     private _infoView: InnerBuildUI = null;
+    private _canBuildView: Node = null;
 
     protected _building: UserInnerBuildInfo = null;
     protected _buildingSize: Size = null;
@@ -131,6 +157,8 @@ export class InnerBuildingView extends ViewController {
 
         // info
         this._infoView = this.node.getChildByName("innerBuildUI").getComponent(InnerBuildUI);
+        this._canBuildView = this.node.getChildByPath("CanBuild");
+        this._canBuildView.active = false;
 
         this.innerBuildingLoad();
     }
