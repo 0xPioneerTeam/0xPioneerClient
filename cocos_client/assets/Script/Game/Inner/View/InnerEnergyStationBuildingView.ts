@@ -48,16 +48,6 @@ export class InnerEnergyStationBuildingView extends InnerBuildingView {
         super.viewDidDestroy();
     }
 
-    protected async innerBuildingTaped(): Promise<void> {
-        super.innerBuildingTaped();
-        if (this._building == null) {
-            return;
-        }
-        if (this._building.buildLevel > 0) {
-            
-        }
-    }
-
     //------------------------------- function
     // private _countingGenerate() {
     //     if (this._building == null) {
