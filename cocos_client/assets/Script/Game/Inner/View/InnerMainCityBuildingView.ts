@@ -68,18 +68,6 @@ export class InnerMainCityBuildingView extends InnerBuildingView {
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_BUILDING, this._onRookieTapThis, this);
     }
 
-    protected async innerBuildingTaped(): Promise<void> {
-        super.innerBuildingTaped();
-
-        if (this._building == null) {
-            return;
-        }
-        const result = await UIPanelManger.inst.pushPanel(UIName.BuildingUpgradeUI);
-        if (result.success) {
-            result.node.getComponent(BuildingUpgradeUI).refreshUI();
-        }
-    }
-
     //-------------------------------- notification
     private _onResourceChanged() {
         this.refreshUI(this._building);

@@ -35,24 +35,6 @@ export class InnerBarracksBuildingView extends InnerBuildingView {
         super.viewUpdate(dt);
     }
 
-    protected async innerBuildingTaped(): Promise<void> {
-        super.innerBuildingTaped();
-
-        if (this._building == null) {
-            return;
-        }
-        if (this._building.buildLevel > 0) {
-            if (this._building.troopIng) {
-                UIHUDController.showCenterTip(LanMgr.getLanById("201002"));
-                // UIHUDController.showCenterTip("Recruiting…Please wait…");
-                return;
-            }
-            const result = await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
-            if (result.success) {
-                result.node.getComponent(RecruitUI).refreshUI(true);
-            }
-        }
-    }
     protected innerBuildingUpdate(): void {
         super.innerBuildingUpdate();
         if (this._building == null) {

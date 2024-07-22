@@ -47,7 +47,7 @@ export enum UIName {
     NewEventBattleUI = "abresources/prefab/ui/event/NewEventBattleUI",
 
     // bundle 2
-    BuildingUpgradeUI = "abresources_2/prefab/ui/BuildingUpgradeUI",
+    NewBuildingUpgradeUI = "abresources_2/prefab/ui/NewBuildingUpgradeUI",
     RecruitUI = "abresources_2/prefab/ui/RecruitUI",
     RelicTowerUI = "abresources_2/prefab/ui/RelicTowerUI",
     RelicTowerSelectUI = "abresources_2/prefab/ui/RelicTowerSelectUI",

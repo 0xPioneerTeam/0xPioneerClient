@@ -249,8 +249,8 @@ export default class GameMgr {
         effectValue += artifactEffectValue;
 
         if (type == GameExtraEffectType.TROOP_GENERATE_TIME) {
-            const cLvlEffectValue: number = ClvlMgr.getCurrentCLvlEffectByType(CLvlEffectType.TROOP_GENERATE_SPEED).value;
-            effectValue += cLvlEffectValue;
+            const cLvlEffectValue: number = ClvlMgr.getCurrentCLvlEffectByType(CLvlEffectType.TROOP_GENERATE_SPEED)?.value;
+            effectValue += cLvlEffectValue === undefined ? 0 : cLvlEffectValue;
         } else if (type == GameExtraEffectType.CITY_ONLY_VISION_RANGE || type == GameExtraEffectType.PIONEER_ONLY_VISION_RANGE) {
             const cLvlEffectValue: number = ClvlMgr.getCurrentCLvlEffectByType(CLvlEffectType.CITY_AND_PIONEER_VISION_RANGE)?.value;
             effectValue += cLvlEffectValue === undefined ? 0 : cLvlEffectValue;
