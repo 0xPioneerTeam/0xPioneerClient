@@ -1,14 +1,10 @@
 import { Label, Node, UITransform, _decorator, v3 } from "cc";
 import { InnerBuildingView } from "./InnerBuildingView";
-import { LanMgr } from "../../../Utils/Global";
-import { UIName } from "../../../Const/ConstUIDefine";
 import { InnerBuildingType, UserInnerBuildInfo } from "../../../Const/BuildingDefine";
-import { BuildingUpgradeUI } from "../../../UI/Inner/BuildingUpgradeUI";
 import InnerBuildingLvlUpConfig from "../../../Config/InnerBuildingLvlUpConfig";
 import InnerBuildingConfig from "../../../Config/InnerBuildingConfig";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
-import UIPanelManger from "../../../Basic/UIPanelMgr";
 import { DataMgr } from "../../../Data/DataMgr";
 
 const { ccclass, property } = _decorator;
