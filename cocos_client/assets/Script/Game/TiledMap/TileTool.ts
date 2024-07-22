@@ -1,4 +1,5 @@
-import { instantiate, Intersection2D, Prefab, TiledLayer, TiledMap, v2, v3, Vec2, Vec3 } from "cc";
+import { instantiate, Intersection2D, Node, Prefab, SpriteFrame, TiledLayer, TiledMap, v2, v3, Vec2, Vec3 } from "cc";
+import { TileShadowComp } from "./TileShadowComp";
 
 export enum TileHexDirection {
     LeftTop = 0,
@@ -115,7 +116,6 @@ export class TileMapHelper {
 
     private _tilemap: TiledMap;
     private _pos: { [x_yKey: string]: TilePos };
-    private _calcpos2pos: { [id: string]: TilePos } = {};
     width: number;
     height: number;
     tilewidth: number;
@@ -126,11 +126,12 @@ export class TileMapHelper {
     type: TileMapType;
 
     _shadowtiles: { [x_yKey: string]: MyTileData } = {};
+    _shadowNodeCompsPool:TileShadowComp[] = [];
     _shadowtag: number;
     _shadowcleantag: number;
     _shadowhalftag: number;
     _shadowhalf2tag: number;
-    _shadowLayer: TiledLayer;
+    _shadowContentNode: Node;
     protected _shadowBorderPfb: Prefab;
     protected _freeShadowBorders: Node[] = [];
     protected _usedSHadowBorders: Node[] = [];
@@ -139,6 +140,30 @@ export class TileMapHelper {
 
     static get INS(): TileMapHelper {
         return this._instance;
+    }
+
+    getShadowComp(): TileShadowComp {
+        if(this._shadowNodeCompsPool.length> 0){
+            return this._shadowNodeCompsPool.shift();
+        }
+        let shadowNode = new Node('shadowNode');
+        let shadowComp = shadowNode.addComponent(TileShadowComp);
+        shadowNode.setParent(this._shadowContentNode);
+        return shadowComp;
+    }
+
+    getTileGridSpriteframeByGrid(grid:number): SpriteFrame {
+        if(!this._tilemap){
+            return null;
+        }
+        let tileLayer = this._tilemap._layers[0];
+        let gridInfo = tileLayer.texGrids.get(grid);
+        if(!gridInfo){
+            console.error("gridInfo is null, grid:", grid);
+            return null;
+        }
+        //limit tilemap not use rotated
+        return gridInfo.spriteFrame;
     }
 
     getPos(x: number, y: number): TilePos {
@@ -264,14 +289,16 @@ export class TileMapHelper {
 
         return bn;
     }
-    Shadow_Init(cleantag: number, shadowtag: number, shadowborderPfb: Prefab = null, layername: string = "shadow"): void {
+    Shadow_Init(cleantag: number, shadowtag: number): void {
         this._shadowcleantag = cleantag;
         this._shadowtag = shadowtag;
-        var layer = this._tilemap.getLayer(layername);
-        layer.node.active = true;
-        this._shadowLayer = layer;
-        this._shadowBorderPfb = shadowborderPfb;
-
+        var layerNode = this._tilemap.node.getChildByName('shadowLayer');
+        if(!layerNode){
+            layerNode = new Node('shadowLayer');
+            layerNode.setParent(this._tilemap.node);
+        }
+        layerNode.active = true;
+        this._shadowContentNode = layerNode;
         this._shadowtiles = {};
     }
 

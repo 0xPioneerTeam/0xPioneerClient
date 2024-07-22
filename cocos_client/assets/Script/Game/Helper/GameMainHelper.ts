@@ -113,9 +113,9 @@ export default class GameMainHelper {
         //init tiledmap by a helper class
         this._tiledMapHelper = new TileMapHelper(map);
         this._mapNode = map.node;
-        // this._tiledMapHelper.Shadow_Init(0, 75);
-        // this._tiledMapHelper._shadowhalftag = 73;
-        // this._tiledMapHelper._shadowhalf2tag = 74;
+        this._tiledMapHelper.Shadow_Init(0, 75);
+        this._tiledMapHelper._shadowhalftag = 73;
+        this._tiledMapHelper._shadowhalf2tag = 74;
         //set a callback here. 35 is block
         this._tiledMapHelper.Path_InitBlock(35);
         this._trackingView = tracking;

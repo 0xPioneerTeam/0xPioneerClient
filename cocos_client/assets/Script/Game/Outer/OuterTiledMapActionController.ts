@@ -461,11 +461,11 @@ export class OuterTiledMapActionController extends ViewController {
     }
 
     private _eraseMainCityShadow() {
-        // const mainCity = DataMgr.s.mapBuilding.getBuildingById("building_1");
-        // if (mainCity == null || mainCity.stayMapPositions.length != 7) {
-        //     return;
-        // }
-        // GameMainHelper.instance.tiledMapMainCityShadowErase(v2(mainCity.stayMapPositions[3].x, mainCity.stayMapPositions[3].y));
+        const mainCity = DataMgr.s.mapBuilding.getBuildingById("building_1");
+        if (mainCity == null || mainCity.stayMapPositions.length != 7) {
+            return;
+        }
+        GameMainHelper.instance.tiledMapMainCityShadowErase(v2(mainCity.stayMapPositions[3].x, mainCity.stayMapPositions[3].y));
     }
 
     private _lastPioneerStayPos: Map<string, Vec2> = new Map();
