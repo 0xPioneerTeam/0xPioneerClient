@@ -156,7 +156,7 @@ export class TileMapHelper {
             let worldx = (x + 0.5) * this.tilewidth;
             var cross = y % 2 == 1;
             if (cross) worldx += this.tilewidth * 0.5;
-            let worldy = (y + 0.5) * (this.tileheight * 0.75);
+            let worldy = y * (this.tileheight * 0.75) + 0.5 * this.tileheight;
             _vec3_temp2.x = worldx;
             _vec3_temp2.y = -worldy;
             _vec3_temp2.z = 0;
@@ -177,7 +177,7 @@ export class TileMapHelper {
         var cross = y % 2 == 1;
         let worldx = (x + 0.5) * this.tilewidth;
         if (cross) worldx += this.tilewidth * 0.5;
-        let worldy = (y + 0.5) * (this.tileheight * 0.75);
+        let worldy = - (y * (this.tileheight * 0.75) + 0.5 * this.tileheight);
         let iv = new Vec3(worldx, worldy, 0);
         Vec3.transformMat4(outv, iv, this._tilemap.node.worldMatrix);
         return outv;
