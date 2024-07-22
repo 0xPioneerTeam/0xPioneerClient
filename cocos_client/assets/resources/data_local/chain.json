@@ -13,8 +13,8 @@
             "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
             "abi": "deployresult_scrollTestnet",
             "api": {
-                "ws_host": "wss://api.0xpioneerdapp.com/wss",
-                "http_host": "https://api.0xpioneerdapp.com/api",
+                "ws_host": "ws://18.167.90.229:4091",
+                "http_host": "http://18.167.90.229:8080",
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
             }
