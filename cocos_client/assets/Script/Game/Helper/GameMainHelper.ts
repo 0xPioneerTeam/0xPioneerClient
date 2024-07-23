@@ -161,7 +161,7 @@ export default class GameMainHelper {
         if (!this.isTiledMapHelperInited) {
             return null;
         }
-        mapPos = v2(Math.min(this._tiledMapHelper.width - 1, mapPos.x), Math.min(this._tiledMapHelper.height - 1, mapPos.y));
+        mapPos = v2( mapPos.x,mapPos.y);
         return this._tiledMapHelper.Path_GetAroundByDirection(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), direction);
     }
     public tiledMapGetExtAround(mapPos: Vec2, range: number): TilePos[] {
@@ -169,6 +169,12 @@ export default class GameMainHelper {
             return [];
         }
         return this._tiledMapHelper.getExtAround(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), range - 1);
+    }
+    public tiledMapGetPosPixel(x: number, y: number): Vec3 {
+        if (!this.isTiledMapHelperInited) {
+            return null;
+        }
+        return this._tiledMapHelper.getPosPixel(x, y);
     }
     public tiledMapGetPosWorld(x: number, y: number): Vec3 {
         if (!this.isTiledMapHelperInited) {
@@ -260,7 +266,7 @@ export default class GameMainHelper {
     }
     public tiledMapGetShadowClearedTiledPositions(): TilePos[] {
         if (!this.isTiledMapHelperInited) {
-        return [];
+            return [];
         }
         return this._tiledMapHelper.Shadow_GetClearedTiledPositons();
     }

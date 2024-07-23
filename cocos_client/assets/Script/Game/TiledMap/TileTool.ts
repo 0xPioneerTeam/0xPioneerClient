@@ -36,6 +36,10 @@ export enum TileMapType {
 export class TilePos {
     x: number;
     y: number;
+
+    pixel_x:number;
+    pixel_y:number;
+
     calc_x: number;
     calc_y: number;
     calc_z: number;
@@ -178,14 +182,17 @@ export class TileMapHelper {
             tilePos.calc_y = y;
             tilePos.calc_z = 0;
 
-            let worldx = (x + 0.5) * this.tilewidth;
+            let pixelx = (x + 0.5) * this.tilewidth;
             var cross = y % 2 == 1;
-            if (cross) worldx += this.tilewidth * 0.5;
-            let worldy = y * (this.tileheight * 0.75) + 0.5 * this.tileheight;
-            _vec3_temp2.x = worldx;
-            _vec3_temp2.y = -worldy;
+            if (cross) pixelx += this.tilewidth * 0.5;
+            let pixely = y * (this.tileheight * 0.75) + 0.5 * this.tileheight;
+            _vec3_temp2.x = pixelx;
+            _vec3_temp2.y = -pixely;
             _vec3_temp2.z = 0;
             Vec3.transformMat4(_vec3_temp, _vec3_temp2, this._tilemap.node.worldMatrix);
+
+            tilePos.pixel_x = pixelx;
+            tilePos.pixel_y = -pixely;
             tilePos.worldx = _vec3_temp.x;
             tilePos.worldy = _vec3_temp.y;
             this._pos[key] = tilePos;
@@ -193,19 +200,12 @@ export class TileMapHelper {
         }
     }
     getPosWorld(x: number, y: number): Vec3 {
-        let key = x + '_' + y;
-        let tilepos = this._pos[key];
-        if (tilepos) {
-            return v3(tilepos.worldx, tilepos.worldy, 0);
-        }
-        let outv = new Vec3();
-        var cross = y % 2 == 1;
-        let worldx = (x + 0.5) * this.tilewidth;
-        if (cross) worldx += this.tilewidth * 0.5;
-        let worldy = - (y * (this.tileheight * 0.75) + 0.5 * this.tileheight);
-        let iv = new Vec3(worldx, worldy, 0);
-        Vec3.transformMat4(outv, iv, this._tilemap.node.worldMatrix);
-        return outv;
+        let tilepos = this.getPos(x,y);
+        return v3(tilepos.worldx, tilepos.worldy, 0);
+    }
+    getPosPixel(x: number, y: number): Vec3 {
+        let tilepos = this.getPos(x,y);
+        return v3(tilepos.pixel_x, tilepos.pixel_y, 0);
     }
     getPosByCalcPos(x: number, y: number, z: number): TilePos {
         return this.getPos(x, y);
