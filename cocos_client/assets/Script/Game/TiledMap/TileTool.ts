@@ -183,7 +183,7 @@ export class TileMapHelper {
             tilePos.calc_z = 0;
 
             let pixelx = (x + 0.5) * this.tilewidth;
-            var cross = y % 2 == 1;
+            var cross = Math.abs(y % 2) == 1;
             if (cross) pixelx += this.tilewidth * 0.5;
             let pixely = y * (this.tileheight * 0.75) + 0.5 * this.tileheight;
             _vec3_temp2.x = pixelx;

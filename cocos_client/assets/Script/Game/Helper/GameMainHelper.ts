@@ -382,7 +382,7 @@ export default class GameMainHelper {
         Vec3.transformMat4(_vec3_temp2, _vec3_temp2, _mat4_temp);
         Rect.fromMinMax(_rect_temp, _vec3_temp, _vec3_temp2);
         let areaWidth = TileMapHelper.INS.pixelwidth - TileMapHelper.INS.tilewidth/2;
-        let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight/2;
+        let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight/4;
         let sx = _rect_temp.xMin/areaWidth - 0.5;
         let sy = _rect_temp.yMin/areaHeight + 0.5;
         let ex = _rect_temp.xMax/areaWidth - 0.5;

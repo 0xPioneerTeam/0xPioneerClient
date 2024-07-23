@@ -71,12 +71,12 @@ export class OuterTiledMapActionController extends ViewController {
         let index = 1;
         var items: Node[] = [];
         for (const children of this._decorationView.children) {
-            if(children.active){
+            if (children.active) {
                 items.push(children);
             }
         }
         items = items.sort((a, b) => {
-            return a.position.y - b.position.y;
+            return b.position.y - a.position.y;
         });
         for (const item of items) {
             item.setSiblingIndex(index);
@@ -224,6 +224,7 @@ export class OuterTiledMapActionController extends ViewController {
                         const pos = event.getLocation();
                         const wpos = GameMainHelper.instance.getGameCameraScreenToWorld(v3(pos.x, pos.y, 0));
                         var tp = GameMainHelper.instance.tiledMapGetTiledPosByWorldPos(wpos);
+                        console.log(tp, pos, wpos);
                         if (tp != null) {
                             if (!GameMainHelper.instance.tiledMapIsAllBlackShadow(tp.x, tp.y)) {
                                 // check building first, because of building is block
@@ -380,12 +381,18 @@ export class OuterTiledMapActionController extends ViewController {
 
         let gridNode1 = instantiate(this.gridFogPrefab);
         gridNode1.layer = this.node.layer;
+        gridNode1.setPosition(v3(64, -64, 0))
         mapView.addChild(gridNode1);
 
         let gridNode2 = instantiate(this.gridFogPrefab);
         gridNode2.layer = this.node.layer;
-        gridNode2.setPosition(v3(1000, -500, 0));
+        gridNode2.setPosition(v3(192, -64, 0));
         mapView.addChild(gridNode2);
+
+        let gridNode3 = instantiate(this.gridFogPrefab);
+        gridNode3.layer = this.node.layer;
+        gridNode3.setPosition(v3(128, -160, 0));
+        mapView.addChild(gridNode3);
 
         // this._fogItem = instantiate(this.gridFogPrefab);
         // this._fogItem.layer = this.node.layer;
@@ -418,7 +425,7 @@ export class OuterTiledMapActionController extends ViewController {
         // mapView.getChildByPath("BorderMask").setSiblingIndex(999);
 
         let mapInfo = _tilemap._mapInfo;
-        let layerInfo = mapInfo.getLayers()[0];
+        let layerInfos = mapInfo.getLayers();
         let tilesets = _tilemap._tilesets;
         let textures = _tilemap._textures;
         let texGrids = _tilemap._texGrids;
@@ -440,6 +447,7 @@ export class OuterTiledMapActionController extends ViewController {
                 mapView.addChild(child);
                 child.setSiblingIndex(0);
                 let tempinfo = {} as any;
+                let layerInfo = layerInfos[i % layerInfos.length];
                 for (let key in layerInfo) {
                     tempinfo[key] = layerInfo[key];
                 }
@@ -809,34 +817,52 @@ export class OuterTiledMapActionController extends ViewController {
     refreshUI(rect: Rect, rect2: Rect) {
         let layers = this._tileLayers;
         let areaWidth = TileMapHelper.INS.pixelwidth - TileMapHelper.INS.tilewidth / 2;
-        let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight / 2;
-        let index = 0;
+        let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight / 4;
         let stx = rect2.xMin;
         let sty = rect2.yMin;
         let endx = rect2.xMax;
         let endy = rect2.yMax;
         let containerBox = this.node._uiProps.uiTransformComp.getBoundingBox();
+        let hasSets = [];
+        let unBindPosArr = [];
+        let lastIndex = 0;
         for (let i = stx; i <= endx; i++) {
             for (let j = sty; j <= endy; j++) {
-                let layer = layers[index]
-                index++;
-                if (layer) {
-                    let pos = v3((i+0.5) * areaWidth, (j-0.5) * areaHeight, 0);
-                    layer.node.setPosition(pos);
-                    layer.node.active = true;
-                    //make content big
-                    if (!containerBox.contains(v2((i - 0.5) * areaWidth, (j - 0.5) * areaHeight)) || !containerBox.contains(v2((i + 0.5) * areaWidth, (j + 0.5) * areaHeight))) {
-                        this.node._uiProps.uiTransformComp.setContentSize(size((Math.abs(i)+1)*areaWidth*2,(Math.abs(j)+1)*areaHeight*2));
-                    }
+                let pos = v3(i* areaWidth + TileMapHelper.INS.pixelwidth/2, j* areaHeight - TileMapHelper.INS.pixelheight/2, 0);
+                //make content big
+                if (!containerBox.contains(v2(pos.x + TileMapHelper.INS.pixelwidth / 2, pos.y + TileMapHelper.INS.pixelheight / 2))
+                    || !containerBox.contains(v2(pos.x - TileMapHelper.INS.pixelwidth / 2, pos.y - TileMapHelper.INS.pixelheight / 2))) {
+                    this.node._uiProps.uiTransformComp.setContentSize(size((Math.abs(i) + 1) * areaWidth * 2, (Math.abs(j) + 1) * areaHeight * 2));
+                }
+                let layerSetIndex = layers.findIndex((layer) => {
+                    let node = layer.node;
+                    return node.active && node.position.x == pos.x && node.position.y == pos.y;
+                });
+                if (layerSetIndex != -1) {
+                    hasSets.push(layerSetIndex);
+                    lastIndex = layerSetIndex;
                 } else {
-                    console.warn('TileLayer is null!');
-                    break;
+                    unBindPosArr.push(pos);
                 }
             }
         }
-        for (let i = index; i < this._tileLayers.length; i++) {
-            let layer = this._tileLayers[i];
-            layer.node.active = false;
+        //binding layer
+        let len = layers.length;
+        for (let i = 0; i < len; i++) {
+            let layIndex = lastIndex + i + 1;
+            if (layIndex >= len) {
+                layIndex = layIndex - len;
+            }
+            let layer = layers[layIndex];
+            if (hasSets.indexOf(layIndex) != -1) {
+                continue;
+            }
+            if (unBindPosArr.length > 0) {
+                layer.node.active = true;
+                layer.node.setPosition(unBindPosArr.pop());
+            } else {
+                layer.node.active = false;
+            }
         }
     }
 

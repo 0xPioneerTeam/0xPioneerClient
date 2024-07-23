@@ -64,7 +64,7 @@ export class OuterDecorateController extends ViewController {
     async parseDecorate(decorateName: string, ax: number, ay: number) {
         let decorateData = await MapDecorateConfig.getByKey(decorateName);
         let areaWidth = TileMapHelper.INS.pixelwidth - TileMapHelper.INS.tilewidth / 2;
-        let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight / 2;
+        let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight / 4;
         let areaPx = areaWidth * ax + TileMapHelper.INS.pixelwidth / 2;
         let areaPy = areaHeight * ay - TileMapHelper.INS.pixelheight / 2;
         let areaKey = ax + "_" + ay;
