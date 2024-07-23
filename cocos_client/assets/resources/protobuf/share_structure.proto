@@ -391,18 +391,22 @@ message map_building_info_data {
     required bool show = 5;
     required uint32 faction = 6;
 
-    repeated string defendPioneerIds = 7;
+    repeated pos2d stayMapPositions = 7;
+    required uint32 stayPosType = 8;
+    required string animType = 9;
 
-    optional building_resource resources = 8;
-    optional uint32 quota = 9;
+    repeated string defendPioneerIds = 10;
 
-    optional string event = 10;
+    optional building_resource resources = 11;
+    optional uint32 quota = 12;
 
-    optional uint32 progress = 11;
-    required uint32 exp = 12;
+    optional string event = 13;
+
+    optional uint32 progress = 14;
+    required uint32 exp = 15;
     
-    optional float attack = 13;
-    optional uint32 winprogress = 14;
+    optional float attack = 16;
+    optional uint32 winprogress = 17;
 }
 
 message building_resource {
