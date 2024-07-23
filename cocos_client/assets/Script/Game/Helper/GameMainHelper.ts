@@ -161,7 +161,7 @@ export default class GameMainHelper {
         if (!this.isTiledMapHelperInited) {
             return null;
         }
-        mapPos = v2(Math.min(this._tiledMapHelper.width - 1, mapPos.x), Math.min(this._tiledMapHelper.height - 1, mapPos.y));
+        mapPos = v2( mapPos.x,mapPos.y);
         return this._tiledMapHelper.Path_GetAroundByDirection(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), direction);
     }
     public tiledMapGetExtAround(mapPos: Vec2, range: number): TilePos[] {
@@ -169,6 +169,12 @@ export default class GameMainHelper {
             return [];
         }
         return this._tiledMapHelper.getExtAround(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), range - 1);
+    }
+    public tiledMapGetPosPixel(x: number, y: number): Vec3 {
+        if (!this.isTiledMapHelperInited) {
+            return null;
+        }
+        return this._tiledMapHelper.getPosPixel(x, y);
     }
     public tiledMapGetPosWorld(x: number, y: number): Vec3 {
         if (!this.isTiledMapHelperInited) {
@@ -260,7 +266,7 @@ export default class GameMainHelper {
     }
     public tiledMapGetShadowClearedTiledPositions(): TilePos[] {
         if (!this.isTiledMapHelperInited) {
-        return [];
+            return [];
         }
         return this._tiledMapHelper.Shadow_GetClearedTiledPositons();
     }
@@ -377,14 +383,14 @@ export default class GameMainHelper {
         Rect.fromMinMax(_rect_temp, _vec3_temp, _vec3_temp2);
         let areaWidth = TileMapHelper.INS.pixelwidth - TileMapHelper.INS.tilewidth/2;
         let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight/2;
-        let sx = _rect_temp.xMin/areaWidth + 0.5;
+        let sx = _rect_temp.xMin/areaWidth - 0.5;
         let sy = _rect_temp.yMin/areaHeight + 0.5;
-        let ex = _rect_temp.xMax/areaWidth + 0.5;
-        let ey = _rect_temp.yMax/areaHeight + 0.5;
-        _vec3_temp.x = Math.floor(sx);
-        _vec3_temp.y = Math.floor(sy);
-        _vec3_temp2.x = Math.floor(ex);
-        _vec3_temp2.y = Math.floor(ey);
+        let ex = _rect_temp.xMax/areaWidth - 0.5;
+        let ey = _rect_temp.yMax/areaHeight  + 0.5;
+        _vec3_temp.x = Math.round(sx);
+        _vec3_temp.y = Math.round(sy);
+        _vec3_temp2.x = Math.round(ex);
+        _vec3_temp2.y = Math.round(ey);
         Rect.fromMinMax(_rect_temp2, _vec3_temp, _vec3_temp2);
         // console.log('mapNode info:',_rect_temp,_rect_temp2);
         this._outScene.getComponent(OuterDecorateController).refreshUI(_rect_temp,_rect_temp2);

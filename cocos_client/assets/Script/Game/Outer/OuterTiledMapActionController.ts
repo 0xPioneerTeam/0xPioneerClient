@@ -821,7 +821,7 @@ export class OuterTiledMapActionController extends ViewController {
                 let layer = layers[index]
                 index++;
                 if (layer) {
-                    let pos = v3(i * areaWidth, j * areaHeight, 0);
+                    let pos = v3((i+0.5) * areaWidth, (j-0.5) * areaHeight, 0);
                     layer.node.setPosition(pos);
                     layer.node.active = true;
                     //make content big

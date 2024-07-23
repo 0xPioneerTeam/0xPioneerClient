@@ -28,7 +28,7 @@ export class OuterMapCursorView extends Component {
             line.getComponent(UITransform).setContentSize(size(tiledUsed[index].lineWidth, 6));
             line.active = true;
             line.getComponent(Sprite).color = tiledColor;
-            line.setPosition(this.node.getComponent(UITransform).convertToNodeSpaceAR(tiledUsed[index].centerPos));
+            line.setWorldPosition(tiledUsed[index].centerPos);
             line.angle = tiledUsed[index].borderAngle;
         }
 
@@ -47,7 +47,8 @@ export class OuterMapCursorView extends Component {
                 line.getComponent(UITransform).setContentSize(size(visionUsed[usedIndex].lineWidth, 6));
                 line.active = true;
                 line.getComponent(Sprite).color = visionColor;
-                line.setPosition(this.node.getComponent(UITransform).convertToNodeSpaceAR(visionUsed[usedIndex].centerPos));
+                // line.setPosition(this.node.getComponent(UITransform).convertToNodeSpaceAR(visionUsed[usedIndex].centerPos));
+                line.setWorldPosition(tiledUsed[index].centerPos);
                 line.angle = visionUsed[usedIndex].borderAngle;
             }
         }

@@ -1,41 +1,37 @@
-import { _decorator, Color, Details, instantiate, math, Node, pingPong, Prefab, UITransform, v2, v3, Vec2, Vec3 } from "cc";
-import { TilePos } from "../TiledMap/TileTool";
-import { OuterFightView } from "./View/OuterFightView";
-import { OuterOtherPioneerView } from "./View/OuterOtherPioneerView";
-import { MapItemMonster } from "./View/MapItemMonster";
-import { MapPioneer } from "./View/MapPioneer";
-import { OuterMapCursorView } from "./View/OuterMapCursorView";
-import { GameExtraEffectType, MapMemberFactionType, MapMemberTargetType, PioneerGameTest, ResourceCorrespondingItem } from "../../Const/ConstDefine";
-import { GameMgr, ItemMgr, PioneerMgr, UserInfoMgr } from "../../Utils/Global";
-import { OuterBuildingController } from "./OuterBuildingController";
-import { UIName } from "../../Const/ConstUIDefine";
-import { DialogueUI } from "../../UI/Outer/DialogueUI";
-import { SecretGuardGettedUI } from "../../UI/Outer/SecretGuardGettedUI";
-import { EventUI } from "../../UI/Outer/EventUI";
+import { _decorator, Color, instantiate, Node, Prefab, v2, v3, Vec2, Vec3 } from "cc";
 import NotificationMgr from "../../Basic/NotificationMgr";
-import EventConfig from "../../Config/EventConfig";
-import { NotificationName } from "../../Const/Notification";
-import { OuterTiledMapActionController } from "./OuterTiledMapActionController";
-import GameMainHelper from "../Helper/GameMainHelper";
-import ViewController from "../../BasicView/ViewController";
 import UIPanelManger from "../../Basic/UIPanelMgr";
-import { DataMgr } from "../../Data/DataMgr";
+import ViewController from "../../BasicView/ViewController";
+import EventConfig from "../../Config/EventConfig";
+import { GameExtraEffectType, PioneerGameTest } from "../../Const/ConstDefine";
+import { UIName } from "../../Const/ConstUIDefine";
+import { NotificationName } from "../../Const/Notification";
 import {
     FIGHT_FINISHED_DATA,
     MapPioneerActionType,
     MapPioneerLogicObject,
-    MapPioneerLogicType,
     MapPioneerMoveDirection,
     MapPioneerObject,
-    MapPioneerType,
+    MapPioneerType
 } from "../../Const/PioneerDefine";
-import { NetworkMgr } from "../../Net/NetworkMgr";
-import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { RookieStep } from "../../Const/RookieDefine";
+import { DataMgr } from "../../Data/DataMgr";
+import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import RookieStepMgr from "../../Manger/RookieStepMgr";
 import { share } from "../../Net/msg/WebsocketMsg";
-import { ItemConfigData } from "../../Const/Item";
+import { NetworkMgr } from "../../Net/NetworkMgr";
+import { EventUI } from "../../UI/Outer/EventUI";
+import { SecretGuardGettedUI } from "../../UI/Outer/SecretGuardGettedUI";
+import { GameMgr, PioneerMgr, UserInfoMgr } from "../../Utils/Global";
+import GameMainHelper from "../Helper/GameMainHelper";
+import { TilePos } from "../TiledMap/TileTool";
+import { OuterTiledMapActionController } from "./OuterTiledMapActionController";
+import { MapItemMonster } from "./View/MapItemMonster";
+import { MapPioneer } from "./View/MapPioneer";
 import { OuterFightResultView } from "./View/OuterFightResultView";
+import { OuterFightView } from "./View/OuterFightView";
+import { OuterMapCursorView } from "./View/OuterMapCursorView";
+import { OuterOtherPioneerView } from "./View/OuterOtherPioneerView";
 import { OuterRebonAndDestroyView } from "./View/OuterRebonAndDestroyView";
 
 const { ccclass, property } = _decorator;
@@ -57,7 +53,7 @@ export class OuterPioneerController extends ViewController {
             if (view.getComponent(MapItemMonster) != null) {
                 this._actionPioneerView = instantiate(view);
                 this._actionPioneerView.setParent(view.getParent());
-                this._actionPioneerView.worldPosition = GameMainHelper.instance.tiledMapGetPosWorld(tilePos.x, tilePos.y);
+                this._actionPioneerView.setPosition(GameMainHelper.instance.tiledMapGetPosPixel(tilePos.x, tilePos.y))
 
                 this._actionPioneerView.setSiblingIndex(view.getSiblingIndex());
                 this._actionPioneerView.getComponent(MapItemMonster).shadowMode();
@@ -357,8 +353,8 @@ export class OuterPioneerController extends ViewController {
                         temple.getComponent(MapItemMonster).refreshUI(pioneer);
                     }
                     if (firstInit) {
-                        let worldPos = GameMainHelper.instance.tiledMapGetPosWorld(pioneer.stayPos.x, pioneer.stayPos.y);
-                        temple.setWorldPosition(worldPos);
+                        let pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(pioneer.stayPos.x, pioneer.stayPos.y);
+                        temple.setPosition(pixelPos);
                     }
                 }
             } else {
@@ -402,12 +398,12 @@ export class OuterPioneerController extends ViewController {
 
         let nexttile = pioneer.movePaths[0];
         pioneer.stayPos = v2(nexttile.x, nexttile.y);
-        var nextwpos = GameMainHelper.instance.tiledMapGetPosWorld(nexttile.x, nexttile.y);
-        var dist = Vec3.distance(pioneermap.worldPosition, nextwpos);
+        var nextwpos = GameMainHelper.instance.tiledMapGetPosPixel(nexttile.x, nexttile.y);
+        var dist = Vec3.distance(pioneermap.position, nextwpos);
         var add = (speed * deltaTime * this.node.scale.x) / 0.5; // calc map scale
         if (dist < add) {
             //havemove 2 target
-            pioneermap.setWorldPosition(nextwpos);
+            pioneermap.setPosition(nextwpos);
             PioneerMgr.pioneerDidMoveOneStep(pioneer.id);
             if (pioneer.id == this._actionShowPioneerId && this._actionUsedCursor != null) {
                 this._actionUsedCursor.hide();
@@ -416,12 +412,12 @@ export class OuterPioneerController extends ViewController {
             return;
         } else {
             var dir = new Vec3();
-            Vec3.subtract(dir, nextwpos, pioneermap.worldPosition);
+            Vec3.subtract(dir, nextwpos, pioneermap.position);
             dir = dir.normalize();
-            var newpos = pioneermap.worldPosition.clone();
+            var newpos = pioneermap.position.clone();
             newpos.x += dir.x * add;
             newpos.y += dir.y * add;
-            pioneermap.setWorldPosition(newpos);
+            pioneermap.setPosition(newpos);
             if (pioneer.id == this._actionShowPioneerId && this._actionUsedCursor != null) {
                 this._actionUsedCursor.move(v2(dir.x * add * 2, dir.y * add * 2));
             }
@@ -459,8 +455,8 @@ export class OuterPioneerController extends ViewController {
                 footView.getChildByPath("Pioneer").active = isShowPioneerFlag;
                 // mapBottomView.insertChild(footView, 0);
                 this.node.addChild(footView);
-                let worldPos = GameMainHelper.instance.tiledMapGetPosWorld(path[i].x, path[i].y);
-                footView.setWorldPosition(worldPos);
+                let pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(path[i].x, path[i].y);
+                footView.setPosition(pixelPos);
                 footViews.push(footView);
             } else {
                 const currentPath = path[i];
@@ -468,8 +464,8 @@ export class OuterPioneerController extends ViewController {
                 const footView = instantiate(this.footPathPrefab);
                 footView.name = "footView";
                 mapBottomView.insertChild(footView, 0);
-                let worldPos = GameMainHelper.instance.tiledMapGetPosWorld(currentPath.x, currentPath.y);
-                footView.setWorldPosition(worldPos);
+                let pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(currentPath.x, currentPath.y);
+                footView.setPosition(pixelPos);
                 footViews.push(footView);
                 if (nextPath.calc_x - currentPath.calc_x == -1 && nextPath.calc_y - currentPath.calc_y == 0 && nextPath.calc_z - currentPath.calc_z == 1) {
                     footView.angle = 90;
@@ -624,7 +620,7 @@ export class OuterPioneerController extends ViewController {
 
         const rebornView: Node = instantiate(this.rebonPrefab);
         rebornView.setParent(decorationView);
-        rebornView.setWorldPosition(GameMainHelper.instance.tiledMapGetPosWorld(pioneer.stayPos.x, pioneer.stayPos.y));
+        rebornView.setPosition(GameMainHelper.instance.tiledMapGetPosPixel(pioneer.stayPos.x, pioneer.stayPos.y));
         rebornView.getComponent(OuterRebonAndDestroyView).playAnim(data.show ? 1 : 0);
     }
     private async _onPioneerEventIdChange(data: { triggerPioneerId: string; eventBuildingId: string; eventId: string }) {

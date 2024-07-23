@@ -131,17 +131,17 @@ export class OuterBuildingController extends Component {
                 if (temple != null) {
                     temple.getComponent(OuterBuildingView).refreshUI(building);
                     if (building.stayMapPositions.length > 0) {
-                        let worldPos = null;
+                        let pixelPos = null;
                         if (building.stayMapPositions.length == 7) {
-                            worldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[3].x, building.stayMapPositions[3].y);
+                            pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(building.stayMapPositions[3].x, building.stayMapPositions[3].y);
                         } else if (building.stayMapPositions.length == 3) {
-                            const beginWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
-                            const endWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[1].x, building.stayMapPositions[1].y);
-                            worldPos = v3(beginWorldPos.x, endWorldPos.y + (beginWorldPos.y - endWorldPos.y) / 2, 0);
+                            const beginWorldPos = GameMainHelper.instance.tiledMapGetPosPixel(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
+                            const endWorldPos = GameMainHelper.instance.tiledMapGetPosPixel(building.stayMapPositions[1].x, building.stayMapPositions[1].y);
+                            pixelPos = v3(beginWorldPos.x, endWorldPos.y + (beginWorldPos.y - endWorldPos.y) / 2, 0);
                         } else {
-                            worldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
+                            pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
                         }
-                        temple.setWorldPosition(worldPos);
+                        temple.setPosition(pixelPos);
 
                         for (const pos of building.stayMapPositions) {
                             GameMainHelper.instance.tiledMapAddDynamicBlock(pos, true);
@@ -191,21 +191,21 @@ export class OuterBuildingController extends Component {
             return;
         }
         if (building.stayMapPositions.length > 0) {
-            let worldPos = null;
+            let pixelPos = null;
             if (building.stayMapPositions.length == 7) {
-                worldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[3].x, building.stayMapPositions[3].y);
+                pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(building.stayMapPositions[3].x, building.stayMapPositions[3].y);
             } else if (building.stayMapPositions.length == 3) {
-                const beginWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
-                const endWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[1].x, building.stayMapPositions[1].y);
-                worldPos = v3(beginWorldPos.x, endWorldPos.y + (beginWorldPos.y - endWorldPos.y) / 2, 0);
+                const beginWorldPos = GameMainHelper.instance.tiledMapGetPosPixel(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
+                const endWorldPos = GameMainHelper.instance.tiledMapGetPosPixel(building.stayMapPositions[1].x, building.stayMapPositions[1].y);
+                pixelPos = v3(beginWorldPos.x, endWorldPos.y + (beginWorldPos.y - endWorldPos.y) / 2, 0);
             } else {
-                worldPos = GameMainHelper.instance.tiledMapGetPosWorld(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
+                pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
             }
             const decorationView = this.node.getComponent(OuterTiledMapActionController).mapDecorationView();
 
             const rebornView: Node = instantiate(this.rebonPrefab);
             rebornView.setParent(decorationView);
-            rebornView.setWorldPosition(worldPos);
+            rebornView.setWorldPosition(pixelPos);
             rebornView.getComponent(OuterRebonAndDestroyView).playAnim(show ?  2 : 0);
         }
     }
