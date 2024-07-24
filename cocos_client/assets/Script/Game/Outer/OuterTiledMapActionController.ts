@@ -224,7 +224,7 @@ export class OuterTiledMapActionController extends ViewController {
                         const pos = event.getLocation();
                         const wpos = GameMainHelper.instance.getGameCameraScreenToWorld(v3(pos.x, pos.y, 0));
                         var tp = GameMainHelper.instance.tiledMapGetTiledPosByWorldPos(wpos);
-                        console.log(tp, pos, wpos);
+                        // console.log(tp, pos, wpos);
                         if (tp != null) {
                             if (!GameMainHelper.instance.tiledMapIsAllBlackShadow(tp.x, tp.y)) {
                                 // check building first, because of building is block

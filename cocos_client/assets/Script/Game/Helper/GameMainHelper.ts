@@ -199,12 +199,12 @@ export default class GameMainHelper {
             return { canMove: false, path: [] };
         }
         const fromPos = this._tiledMapHelper.getPos(
-            Math.min(Math.max(0, fromTilePos.x), this._tiledMapHelper.width - 1),
-            Math.min(Math.max(0, fromTilePos.y), this._tiledMapHelper.height - 1)
+            fromTilePos.x,
+            fromTilePos.y
         );
         const toPos = this._tiledMapHelper.getPos(
-            Math.min(Math.max(0, toTilePos.x), this._tiledMapHelper.width - 1),
-            Math.min(Math.max(0, toTilePos.y), this._tiledMapHelper.height - 1)
+            toTilePos.x,
+            toTilePos.y
         );
         // path
         const movePaths = this._tiledMapHelper.Path_FromTo(fromPos, toPos);
