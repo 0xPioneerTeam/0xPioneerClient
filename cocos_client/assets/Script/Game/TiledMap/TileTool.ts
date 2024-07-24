@@ -37,8 +37,8 @@ export class TilePos {
     x: number;
     y: number;
 
-    pixel_x:number;
-    pixel_y:number;
+    pixel_x: number;
+    pixel_y: number;
 
     calc_x: number;
     calc_y: number;
@@ -53,21 +53,28 @@ export class TilePos {
         return this.worldx + "," + this.worldy + " " + this.calc_x + "," + this.calc_y + "," + this.calc_z;
     }
 
-    static _hexPoints = [[-64, 32], [-64, -32], [0, -64], [64, -32], [64, 32], [0, 64]];
+    static _hexPoints = [
+        [-64, 32],
+        [-64, -32],
+        [0, -64],
+        [64, -32],
+        [64, 32],
+        [0, 64],
+    ];
     static _hexVec6: Vec2[];
 
     /**
      * hex 6 point contain world point
-     * @param worldPx 
-     * @param worldPy 
-     * @returns 
+     * @param worldPx
+     * @param worldPy
+     * @returns
      */
     constained(worldPx: number, worldPy: number): boolean {
         if (!TilePos._hexVec6) {
             TilePos._hexVec6 = [];
-            TilePos._hexPoints.forEach(v => {
+            TilePos._hexPoints.forEach((v) => {
                 TilePos._hexVec6.push(v2(v[0], v[1]));
-            })
+            });
         }
         return Intersection2D.pointInPolygon(v2(worldPx - this.worldx, worldPy - this.worldy), TilePos._hexVec6);
     }
@@ -85,7 +92,7 @@ export interface IDynamicBlock {
 export class MyTileData {
     x: number;
     y: number;
-    fall: number
+    fall: number;
     grid: number = -1;
     timer: number = 0;
     owner: string = null;
@@ -130,7 +137,7 @@ export class TileMapHelper {
     type: TileMapType;
 
     _shadowtiles: { [x_yKey: string]: MyTileData } = {};
-    _shadowNodeCompsPool:TileShadowComp[] = [];
+    _shadowNodeCompsPool: TileShadowComp[] = [];
     _shadowtag: number;
     _shadowcleantag: number;
     _shadowhalftag: number;
@@ -147,22 +154,22 @@ export class TileMapHelper {
     }
 
     getShadowComp(): TileShadowComp {
-        if(this._shadowNodeCompsPool.length> 0){
+        if (this._shadowNodeCompsPool.length > 0) {
             return this._shadowNodeCompsPool.shift();
         }
-        let shadowNode = new Node('shadowNode');
+        let shadowNode = new Node("shadowNode");
         let shadowComp = shadowNode.addComponent(TileShadowComp);
         shadowNode.setParent(this._shadowContentNode);
         return shadowComp;
     }
 
-    getTileGridSpriteframeByGrid(grid:number): SpriteFrame {
-        if(!this._tilemap){
+    getTileGridSpriteframeByGrid(grid: number): SpriteFrame {
+        if (!this._tilemap) {
             return null;
         }
         let tileLayer = this._tilemap._layers[0];
         let gridInfo = tileLayer.texGrids.get(grid);
-        if(!gridInfo){
+        if (!gridInfo) {
             console.error("gridInfo is null, grid:", grid);
             return null;
         }
@@ -171,7 +178,7 @@ export class TileMapHelper {
     }
 
     getPos(x: number, y: number): TilePos {
-        let key = x + '_' + y;
+        let key = x + "_" + y;
         if (this._pos[key]) {
             return this._pos[key];
         } else {
@@ -200,15 +207,12 @@ export class TileMapHelper {
         }
     }
     getPosWorld(x: number, y: number): Vec3 {
-        let tilepos = this.getPos(x,y);
+        let tilepos = this.getPos(x, y);
         return v3(tilepos.worldx, tilepos.worldy, 0);
     }
     getPosPixel(x: number, y: number): Vec3 {
-        let tilepos = this.getPos(x,y);
+        let tilepos = this.getPos(x, y);
         return v3(tilepos.pixel_x, tilepos.pixel_y, 0);
-    }
-    getPosByCalcPos(x: number, y: number, z: number): TilePos {
-        return this.getPos(x, y);
     }
     getCalcPosKey(x: number, y: number, z: number): string {
         return (x | 0).toString() + "_" + (y | 0).toString() + "_" + (z | 0).toString();
@@ -254,19 +258,28 @@ export class TileMapHelper {
         return null;
     }
     getExtAround(pos: TilePos, extlen: number): TilePos[] {
-        const postions = [];
-        for (var y = pos.calc_y - extlen; y <= pos.calc_y + extlen; y++) {
-            for (var x = pos.calc_x - extlen; x <= pos.calc_x + extlen; x++) {
-                var z = 0 - x - y;
-                if (z < pos.calc_z - extlen || z > pos.calc_z + extlen) continue;
-                var gpos = this.getPosByCalcPos(x, y, z);
-                //console.log("calcpos=" + x + "," + y + "," + z + "->" + gpos.x + "," + gpos.y);
-                if (gpos != null) {
-                    postions.push(gpos);
+        let result = new Set<TilePos>();
+        let queue: Array<[number, number, number]> = [[pos.x, pos.y, 0]]; // 队列初始包含中心点，第三个参数是深度
+        let visited = new Set<string>();
+        visited.add(`${pos.x},${pos.y}`);
+
+        while (queue.length > 0) {
+            let [cx, cy, depth] = queue.shift();
+
+            if (depth < extlen) {
+                let neighbors = this.Path_GetAround(this.getPos(cx, cy));
+
+                for (let tempPos of neighbors) {
+                    let key = `${tempPos.x},${tempPos.y}`;
+                    if (!visited.has(key)) {
+                        visited.add(key);
+                        queue.push([tempPos.x, tempPos.y, depth + 1]);
+                        result.add(tempPos);
+                    }
                 }
             }
         }
-        return postions;
+        return Array.from(result);
     }
     private InitPos() {
         this._pos = {}; //TilePos[this.width * this.height];
@@ -292,9 +305,9 @@ export class TileMapHelper {
     Shadow_Init(cleantag: number, shadowtag: number): void {
         this._shadowcleantag = cleantag;
         this._shadowtag = shadowtag;
-        var layerNode = this._tilemap.node.getChildByName('shadowLayer');
-        if(!layerNode){
-            layerNode = new Node('shadowLayer');
+        var layerNode = this._tilemap.node.getChildByName("shadowLayer");
+        if (!layerNode) {
+            layerNode = new Node("shadowLayer");
             layerNode.setParent(this._tilemap.node);
         }
         layerNode.active = true;
@@ -309,50 +322,50 @@ export class TileMapHelper {
         const borderTilePostions: TilePos[] = [];
         let vx = 10000;
         let vy = 10000;
-        for (var y = pos.calc_y - extlen; y <= pos.calc_y + extlen; y++) {
-            for (var x = pos.calc_x - extlen; x <= pos.calc_x + extlen; x++) {
-                var z = 0 - x - y;
-                if (z < pos.calc_z - extlen || z > pos.calc_z + extlen) continue;
-                var gpos = this.getPosByCalcPos(x, y, z);
-                // console.log("calcpos=" + x + "," + y + "," + z + "->" + gpos.x + "," + gpos.y);
-                if (gpos != null) {
-                    if (vx > gpos.x) vx = gpos.x;
-                    if (vy > gpos.y) vy = gpos.y;
-                    var s = this._shadowtiles[gpos.x + '_' + gpos.y];
-                    if (s == null) {
-                        s = new MyTileData(gpos.x, gpos.y, this._shadowtag);
-                        this._shadowtiles[gpos.x + '_' + gpos] = s;
-                    }
-                    // console.log("find node-" + s.x + "," + s.y + " wpos=" + gpos.worldx + "," + gpos.worldy);
-                    if (!fall) {
-                        if (s.grid == 0 && s.owner != null && s.owner != owner) {
-                            s.timer = 0;
-                            continue; //Strengthen other people’s vision
-                        }
-                        if (s.grid == this._shadowtag) {
-                            newCleardPositons.push(gpos);
-                        }
-                        s.grid = this._shadowcleantag;
+        // for (var y = pos.calc_y - extlen; y <= pos.calc_y + extlen; y++) {
+        //     for (var x = pos.calc_x - extlen; x <= pos.calc_x + extlen; x++) {
+        //         var z = 0 - x - y;
+        //         if (z < pos.calc_z - extlen || z > pos.calc_z + extlen) continue;
+        //         var gpos = this.getPosByCalcPos(x, y, z);
+        //         // console.log("calcpos=" + x + "," + y + "," + z + "->" + gpos.x + "," + gpos.y);
+        //         if (gpos != null) {
+        //             if (vx > gpos.x) vx = gpos.x;
+        //             if (vy > gpos.y) vy = gpos.y;
+        //             var s = this._shadowtiles[gpos.x + '_' + gpos.y];
+        //             if (s == null) {
+        //                 s = new MyTileData(gpos.x, gpos.y, this._shadowtag);
+        //                 this._shadowtiles[gpos.x + '_' + gpos] = s;
+        //             }
+        //             // console.log("find node-" + s.x + "," + s.y + " wpos=" + gpos.worldx + "," + gpos.worldy);
+        //             if (!fall) {
+        //                 if (s.grid == 0 && s.owner != null && s.owner != owner) {
+        //                     s.timer = 0;
+        //                     continue; //Strengthen other people’s vision
+        //                 }
+        //                 if (s.grid == this._shadowtag) {
+        //                     newCleardPositons.push(gpos);
+        //                 }
+        //                 s.grid = this._shadowcleantag;
 
-                        if (extlen > 1) {
-                            var border = Math.abs(pos.calc_x - x) == extlen || Math.abs(pos.calc_y - y) == extlen || Math.abs(pos.calc_z - z) == extlen;
-                            if (border) {
-                                s.grid = this._shadowhalftag;
-                                borderTilePostions.push(gpos);
-                            }
-                        }
-                        s.owner = owner;
-                        s.fall = this._shadowhalf2tag;
-                        s.timer = 0; //Fully open first, then the timing becomes semi-transparent
-                    } else {
-                        s.grid = this._shadowhalf2tag;
-                        s.fall = -1;
-                        s.timer = 0;
-                    }
-                    //s.grid = 0;//0 is full open
-                }
-            }
-        }
+        //                 if (extlen > 1) {
+        //                     var border = Math.abs(pos.calc_x - x) == extlen || Math.abs(pos.calc_y - y) == extlen || Math.abs(pos.calc_z - z) == extlen;
+        //                     if (border) {
+        //                         s.grid = this._shadowhalftag;
+        //                         borderTilePostions.push(gpos);
+        //                     }
+        //                 }
+        //                 s.owner = owner;
+        //                 s.fall = this._shadowhalf2tag;
+        //                 s.timer = 0; //Fully open first, then the timing becomes semi-transparent
+        //             } else {
+        //                 s.grid = this._shadowhalf2tag;
+        //                 s.fall = -1;
+        //                 s.timer = 0;
+        //             }
+        //             //s.grid = 0;//0 is full open
+        //         }
+        //     }
+        // }
         //}
 
         // update user tile for border tiles
@@ -364,7 +377,6 @@ export class TileMapHelper {
             //     borderNode.setWorldPosition(v3(borderPos.worldx, borderPos.worldy, 0));
             //     this._shadowLayer.addUserNode(borderNode);
             //     this._usedSHadowBorders.push(borderNode);
-
             //     let bnSpr: cc.Sprite = borderNode.getComponent(cc.Sprite);
             //     bnSpr.customMaterial.setProperty("dissolveThreshold", 0.5); // TO DO : calc disolve threshold by distance from player
             // }
@@ -375,7 +387,7 @@ export class TileMapHelper {
     }
 
     Shadow_IsAllBlack(x: number, y: number): boolean {
-        let key = x + '_' + y;
+        let key = x + "_" + y;
         let s = this._shadowtiles[key];
         if (s) {
             return s.grid == this._shadowtag;
@@ -407,19 +419,15 @@ export class TileMapHelper {
         // let layd = this._tilemap.getLayer("decoration");
         // layb.node.active = false;
         // layd.node.active = false;
-
         // for (var y = 0; y < this.height; y++) {
         //     for (var x = 0; x < this.width; x++) {
         //         var btag = layb.tiles[y * this.height + x];
         //         var btag2 = layd.tiles[y * this.height + x]; //decoration
-
         //         if (btag2 != 0) {
         //             if (other != null) other(x, y, btag2);
         //         }
-
         //         //block
         //         var block = btag == blocktag;
-
         //         this._blocked[y * this.height + x] = block;
         //     }
         // }
@@ -442,61 +450,73 @@ export class TileMapHelper {
     }
     Path_GetAround(pos: TilePos): TilePos[] {
         let around: TilePos[] = [];
-        var p0 = this.getPosByCalcPos(pos.calc_x - 1, pos.calc_y, pos.calc_z + 1);
-        if (p0 != null) around.push(p0);
-        var p1 = this.getPosByCalcPos(pos.calc_x + 1, pos.calc_y, pos.calc_z - 1);
-        if (p1 != null) around.push(p1);
-        var p2 = this.getPosByCalcPos(pos.calc_x + 1, pos.calc_y - 1, pos.calc_z);
-        if (p2 != null) around.push(p2);
-        var p3 = this.getPosByCalcPos(pos.calc_x - 1, pos.calc_y + 1, pos.calc_z);
-        if (p3 != null) around.push(p3);
-        var p4 = this.getPosByCalcPos(pos.calc_x, pos.calc_y + 1, pos.calc_z - 1);
-        if (p4 != null) around.push(p4);
-        var p5 = this.getPosByCalcPos(pos.calc_x, pos.calc_y - 1, pos.calc_z + 1);
-        if (p5 != null) around.push(p5);
+        const left = this.getPos(pos.x - 1, pos.y);
+        const right = this.getPos(pos.x + 1, pos.y);
+        let leftTop = null;
+        let rightTop = null;
+        let leftBottom = null;
+        let rightBottom = null;
+        if (pos.y % 2 == 0) {
+            leftTop = this.getPos(pos.x - 1, pos.y - 1);
+            rightTop = this.getPos(pos.x, pos.y - 1);
+            leftBottom = this.getPos(pos.x - 1, pos.y + 1);
+            rightBottom = this.getPos(pos.x, pos.y + 1);
+        } else {
+            leftTop = this.getPos(pos.x, pos.y - 1);
+            rightTop = this.getPos(pos.x + 1, pos.y - 1);
+            leftBottom = this.getPos(pos.x, pos.y + 1);
+            rightBottom = this.getPos(pos.x + 1, pos.y + 1);
+        }
+        if (left != null) {
+            around.push(left);
+        }
+        if (right != null) {
+            around.push(right);
+        }
+        if (leftTop != null) {
+            around.push(leftTop);
+        }
+        if (rightTop != null) {
+            around.push(rightTop);
+        }
+        if (leftBottom != null) {
+            around.push(leftBottom);
+        }
+        if (rightBottom != null) {
+            around.push(rightBottom);
+        }
         return around;
     }
-    /**
-     * lefttop:x:0,y:-1,z:1
-     * left:x:-1,y:0,z:1
-     * leftbottom:x:-1,y:1,z:0
-     * righttop:x:1,y:-1,z:0
-     * right:x:1,y:0,z:-1
-     * rightbottom:x:0,y:1,z:-1
-     * @param direction
-     */
     Path_GetAroundByDirection(pos: TilePos, direction: TileHexDirection): TilePos | null {
-        const directionPos = v3(0, 0, 0);
-        if (direction == TileHexDirection.LeftTop) {
-            directionPos.x = 0;
-            directionPos.y = -1;
-            directionPos.z = 1;
-        } else if (direction == TileHexDirection.Left) {
-            directionPos.x = -1;
-            directionPos.y = 0;
-            directionPos.z = 1;
-        } else if (direction == TileHexDirection.LeftBottom) {
-            directionPos.x = -1;
-            directionPos.y = 1;
-            directionPos.z = 0;
-        } else if (direction == TileHexDirection.RightTop) {
-            directionPos.x = 1;
-            directionPos.y = -1;
-            directionPos.z = 0;
+        let result = null;
+        if (direction == TileHexDirection.Left) {
+            result = this.getPos(pos.x - 1, pos.y);
         } else if (direction == TileHexDirection.Right) {
-            directionPos.x = 1;
-            directionPos.y = 0;
-            directionPos.z = -1;
-        } else if (direction == TileHexDirection.RightBottom) {
-            directionPos.x = 0;
-            directionPos.y = 1;
-            directionPos.z = -1;
+            result = this.getPos(pos.x + 1, pos.y);
+        } else {
+            if (pos.y % 2 == 0) {
+                if (direction == TileHexDirection.LeftTop) {
+                    result = this.getPos(pos.x - 1, pos.y - 1);
+                } else if (direction == TileHexDirection.RightTop) {
+                    result = this.getPos(pos.x, pos.y - 1);
+                } else if (direction == TileHexDirection.LeftBottom) {
+                    result = this.getPos(pos.x - 1, pos.y + 1);
+                } else if (direction == TileHexDirection.RightBottom) {
+                    result = this.getPos(pos.x, pos.y + 1);
+                }
+            } else {
+                if (direction == TileHexDirection.LeftTop) {
+                    result = this.getPos(pos.x, pos.y - 1);
+                } else if (direction == TileHexDirection.RightTop) {
+                    result = this.getPos(pos.x + 1, pos.y - 1);
+                } else if (direction == TileHexDirection.LeftBottom) {
+                    result = this.getPos(pos.x, pos.y + 1);
+                } else if (direction == TileHexDirection.RightBottom) {
+                    result = this.getPos(pos.x + 1, pos.y + 1);
+                }
+            }
         }
-        const p = this.getPosByCalcPos(pos.calc_x + directionPos.x, pos.calc_y + directionPos.y, pos.calc_z + directionPos.z);
-        if (p != null) {
-            return p;
-        }
-        return null;
+        return result;
     }
     Path_DistPos(a: TilePos, b: TilePos): number {
         var dx = a.calc_x - b.calc_x;
@@ -554,8 +574,11 @@ export class TileMapHelper {
         // push first point to opentable
         openPathTiles.push(currentTile);
 
-        for (var i = 0; i < limitstep; i++) // while (openPathTiles.Count != 0)
-        {
+        for (
+            var i = 0;
+            i < limitstep;
+            i++ // while (openPathTiles.Count != 0)
+        ) {
             //     sort and get lowest F
             openPathTiles.sort((a, b) => a.g + a.h - (b.g + b.h));
             currentTile = openPathTiles[0];
@@ -577,8 +600,11 @@ export class TileMapHelper {
 
             //    searach around
             var apprivateTiles = this.Path_GetAround(currentTile);
-            for (var i = 0; i < apprivateTiles.length; i++) //     foreach (Tile adjacentTile in currentTile.apprivateTiles)
-            {
+            for (
+                var i = 0;
+                i < apprivateTiles.length;
+                i++ //     foreach (Tile adjacentTile in currentTile.apprivateTiles)
+            ) {
                 var adjacentTile = apprivateTiles[i];
 
                 //block skip

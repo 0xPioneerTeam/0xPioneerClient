@@ -161,7 +161,7 @@ export default class GameMainHelper {
         if (!this.isTiledMapHelperInited) {
             return null;
         }
-        mapPos = v2( mapPos.x,mapPos.y);
+        mapPos = v2(mapPos.x, mapPos.y);
         return this._tiledMapHelper.Path_GetAroundByDirection(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), direction);
     }
     public tiledMapGetExtAround(mapPos: Vec2, range: number): TilePos[] {
@@ -198,14 +198,8 @@ export default class GameMainHelper {
         if (!this.isTiledMapHelperInited) {
             return { canMove: false, path: [] };
         }
-        const fromPos = this._tiledMapHelper.getPos(
-            fromTilePos.x,
-            fromTilePos.y
-        );
-        const toPos = this._tiledMapHelper.getPos(
-            toTilePos.x,
-            toTilePos.y
-        );
+        const fromPos = this._tiledMapHelper.getPos(fromTilePos.x, fromTilePos.y);
+        const toPos = this._tiledMapHelper.getPos(toTilePos.x, toTilePos.y);
         // path
         const movePaths = this._tiledMapHelper.Path_FromTo(fromPos, toPos);
         let canMove = true;
@@ -348,7 +342,6 @@ export default class GameMainHelper {
 
     private _outScene: Node = null;
 
-
     constructor() {
         this._currentTrackingInteractData = {
             stepId: "",
@@ -381,20 +374,20 @@ export default class GameMainHelper {
         Vec3.transformMat4(_vec3_temp, _vec3_temp, _mat4_temp);
         Vec3.transformMat4(_vec3_temp2, _vec3_temp2, _mat4_temp);
         Rect.fromMinMax(_rect_temp, _vec3_temp, _vec3_temp2);
-        let areaWidth = TileMapHelper.INS.pixelwidth - TileMapHelper.INS.tilewidth/2;
-        let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight/4;
-        let sx = _rect_temp.xMin/areaWidth - 0.5;
-        let sy = _rect_temp.yMin/areaHeight + 0.5;
-        let ex = _rect_temp.xMax/areaWidth - 0.5;
-        let ey = _rect_temp.yMax/areaHeight  + 0.5;
+        let areaWidth = TileMapHelper.INS.pixelwidth - TileMapHelper.INS.tilewidth / 2;
+        let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight / 4;
+        let sx = _rect_temp.xMin / areaWidth - 0.5;
+        let sy = _rect_temp.yMin / areaHeight + 0.5;
+        let ex = _rect_temp.xMax / areaWidth - 0.5;
+        let ey = _rect_temp.yMax / areaHeight + 0.5;
         _vec3_temp.x = Math.round(sx);
         _vec3_temp.y = Math.round(sy);
         _vec3_temp2.x = Math.round(ex);
         _vec3_temp2.y = Math.round(ey);
         Rect.fromMinMax(_rect_temp2, _vec3_temp, _vec3_temp2);
         // console.log('mapNode info:',_rect_temp,_rect_temp2);
-        this._outScene.getComponent(OuterDecorateController).refreshUI(_rect_temp,_rect_temp2);
-        this._outScene.getComponent(OuterTiledMapActionController).refreshUI(_rect_temp,_rect_temp2);
+        this._outScene.getComponent(OuterDecorateController).refreshUI(_rect_temp, _rect_temp2);
+        this._outScene.getComponent(OuterTiledMapActionController).refreshUI(_rect_temp, _rect_temp2);
     }
 
     private _onGameJumpInnerAndShowRelicTower() {
