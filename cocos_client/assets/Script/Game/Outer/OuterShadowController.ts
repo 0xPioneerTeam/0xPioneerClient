@@ -43,7 +43,7 @@ export class OuterShadowController extends ViewController {
         if(!pos1 || !pos2){
             return;
         }
-        let bigSize = 1;
+        let bigSize = 2;
         let px1 = pos1.x - bigSize;
         let px2 = pos2.x + bigSize;
         let py1 = pos1.y + bigSize;

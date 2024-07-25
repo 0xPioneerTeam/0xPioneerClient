@@ -12,7 +12,7 @@ export class TileShadowComp extends Component {
 
     private _tilex: number = 0;
     private _tiley: number = 0;
-    private _grid:number = 0;
+    private _grid: number = 0;
 
     private _spComp: Sprite;
     private _uiComp: UITransform;
@@ -33,32 +33,37 @@ export class TileShadowComp extends Component {
         let comp = this.node.getComponent(Sprite);
         if (comp) {
             this._spComp = comp;
-        }else{
+        } else {
             this._spComp = this.node.addComponent(Sprite);
         }
         let uiCom = this.node.getComponent(UITransform);
-        if(uiCom){
+        if (uiCom) {
             this._uiComp = uiCom;
-        }else{
+        } else {
             this._uiComp = this.node.addComponent(UITransform);
             this._uiComp.setContentSize(128, 256);
             this._uiComp.anchorY = 0.25;
         }
     }
 
-    public updateDrawInfo(tilex:number,tiley:number,grid:number){
+    public updateDrawInfo(tilex: number, tiley: number, grid: number) {
         this._tilex = tilex;
         this._tiley = tiley;
         this._grid = grid;
         let pos = TileMapHelper.INS.getPos(tilex, tiley);
         this.node.setPosition(pos.pixel_x, pos.pixel_y);
-        if(grid == 0){
+        if (grid == 0) {
             this._spComp.spriteFrame = null;
-        }else{
+        } else {
             this._spComp.spriteFrame = TileMapHelper.INS.getTileGridSpriteframeByGrid(grid);
             this._spComp.trim = true;
             this._spComp.type = Sprite.Type.SIMPLE;
-            this._spComp.sizeMode = Sprite.SizeMode.TRIMMED;
+            if(grid == 75){
+                this.node.setScale(1.01, 1);
+            }else{
+                this.node.setScale(1, 1);
+            }
+            this._spComp.sizeMode = Sprite.SizeMode.CUSTOM;
             this._uiComp.anchorY = 0.25;
         }
     }
