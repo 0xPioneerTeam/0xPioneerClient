@@ -44,7 +44,7 @@ export class MapTag extends Component {
                     let node = instantiate(this.blockNodePb);
                     let ui = node.getComponent(UITransform);
                     ui.setContentSize(128 / this.node.scale.x, 128 / this.node.scale.y);
-                    var cross = data.y % 2 == 1;
+                    var cross = data.y % 2 != 0;
                     var worldx = (data.x + 0.5) * tileNodeWidth - tilewidth / 2;
                     if (cross) worldx += tileNodeWidth * 0.5;
                     var worldy = tileheight / 2 - (data.y * (tileNodeHeight * 0.75) + tileNodeHeight/2);

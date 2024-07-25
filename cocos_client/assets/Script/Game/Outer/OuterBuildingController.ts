@@ -205,7 +205,7 @@ export class OuterBuildingController extends Component {
 
             const rebornView: Node = instantiate(this.rebonPrefab);
             rebornView.setParent(decorationView);
-            rebornView.setWorldPosition(pixelPos);
+            rebornView.setPosition(pixelPos);
             rebornView.getComponent(OuterRebonAndDestroyView).playAnim(show ?  2 : 0);
         }
     }

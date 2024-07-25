@@ -38,6 +38,7 @@ export class GameMain extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
         GameMainHelper.instance.setGameCamera(find("Main/Canvas/GameCamera").getComponent(Camera));
+        GameMainHelper.instance.setOutScene(this.node.getChildByPath("OutScene"));
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT, this._onRookieWormholeFightCount, this);
     }
@@ -71,6 +72,7 @@ export class GameMain extends ViewController {
     //--------------------------------------- function
     private async _refreshUI(loadingAnim: boolean = true) {
         const outerView = this.node.getChildByPath("OutScene");
+
         const isOuterShow: boolean = GameMainHelper.instance.isGameShowOuter;
         if (this._innerView == null) {
             return;

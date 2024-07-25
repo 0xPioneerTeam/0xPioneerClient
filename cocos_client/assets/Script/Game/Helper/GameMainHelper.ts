@@ -10,6 +10,7 @@ import { DataMgr } from "../../Data/DataMgr";
 import { RookieStep } from "../../Const/RookieDefine";
 import { OuterTiledMapActionController } from "../Outer/OuterTiledMapActionController";
 import { OuterDecorateController } from "../Outer/OuterDecorateController";
+import { OuterShadowController } from "../Outer/OuterShadowController";
 
 export default class GameMainHelper {
     public static get instance() {
@@ -108,14 +109,23 @@ export default class GameMainHelper {
     public get isGameShowOuter(): boolean {
         return this._isGameShowOuter;
     }
+
+    //------------------------------------------outer outScene
+    public setOutScene(scene: Node) {
+        this._outScene = scene;
+        this._shadowController = scene.getComponent(OuterShadowController);
+    }
+
+    public get shadowController(): OuterShadowController {
+        return this._shadowController;
+    }
+
+
     //------------------------------------------ tiled map
     public initTiledMapHelper(map: TiledMap, tracking: Node) {
         //init tiledmap by a helper class
         this._tiledMapHelper = new TileMapHelper(map);
         this._mapNode = map.node;
-        this._tiledMapHelper.Shadow_Init(0, 75);
-        this._tiledMapHelper._shadowhalftag = 73;
-        this._tiledMapHelper._shadowhalf2tag = 74;
         //set a callback here. 35 is block
         this._tiledMapHelper.Path_InitBlock(35);
         this._trackingView = tracking;
@@ -230,12 +240,6 @@ export default class GameMainHelper {
         }
         return { canMove: canMove, path: movePaths };
     }
-    public tiledMapIsAllBlackShadow(x: number, y: number): boolean {
-        if (!this.isTiledMapHelperInited) {
-            return false;
-        }
-        return this._tiledMapHelper.Shadow_IsAllBlack(x, y);
-    }
     public tiledMapIsBlock(mapPos: Vec2): boolean {
         if (!this.isTiledMapHelperInited) {
             return false;
@@ -249,20 +253,20 @@ export default class GameMainHelper {
         let vision: number = 6;
         vision = GameMgr.getAfterEffectValue(GameExtraEffectType.PIONEER_ONLY_VISION_RANGE, vision);
         vision = GameMgr.getAfterEffectValue(GameExtraEffectType.CITY_AND_PIONEER_VISION_RANGE, vision);
-        return this._tiledMapHelper.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), ownerId, vision, false);
+        return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), ownerId, vision, false);
     }
     public tiledMapMainCityShadowErase(mapPos: Vec2) {
         if (!this.isTiledMapHelperInited) {
             return [];
         }
         const vision: number = DataMgr.s.userInfo.data.cityRadialRange - 1;
-        return this._tiledMapHelper.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "0", vision, false);
+        return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "0", vision, false);
     }
     public tiledMapGetShadowClearedTiledPositions(): TilePos[] {
         if (!this.isTiledMapHelperInited) {
             return [];
         }
-        return this._tiledMapHelper.Shadow_GetClearedTiledPositons();
+        return this.shadowController.Shadow_GetClearedTiledPositons();
     }
     public tiledMapShadowUpdate(dt: number) {
         if (!this.isTiledMapHelperInited) {
@@ -342,6 +346,8 @@ export default class GameMainHelper {
 
     private _outScene: Node = null;
 
+    private _shadowController: OuterShadowController = null;
+
     constructor() {
         this._currentTrackingInteractData = {
             stepId: "",
@@ -354,10 +360,7 @@ export default class GameMainHelper {
 
     updateGameViewport() {
         if (!this._outScene) {
-            this._outScene = find("Main/Canvas/GameContent/Game/OutScene");
-            if (!this._outScene) {
-                return;
-            }
+            return;
         }
         let gameCamera = this._gameCamera;
         let mapNode = this._mapNode;
@@ -369,8 +372,8 @@ export default class GameMainHelper {
         _vec3_temp2.x = gameCamera.camera.width;
         _vec3_temp2.y = gameCamera.camera.height;
         _vec3_temp2.z = 0;
-        gameCamera.camera.screenToWorld(_vec3_temp, _vec3_temp);
-        gameCamera.camera.screenToWorld(_vec3_temp2, _vec3_temp2);
+        gameCamera.screenToWorld(_vec3_temp, _vec3_temp);
+        gameCamera.screenToWorld(_vec3_temp2, _vec3_temp2);
         Vec3.transformMat4(_vec3_temp, _vec3_temp, _mat4_temp);
         Vec3.transformMat4(_vec3_temp2, _vec3_temp2, _mat4_temp);
         Rect.fromMinMax(_rect_temp, _vec3_temp, _vec3_temp2);
@@ -385,9 +388,10 @@ export default class GameMainHelper {
         _vec3_temp2.x = Math.round(ex);
         _vec3_temp2.y = Math.round(ey);
         Rect.fromMinMax(_rect_temp2, _vec3_temp, _vec3_temp2);
-        // console.log('mapNode info:',_rect_temp,_rect_temp2);
+        console.log('mapNode info:',_rect_temp,_rect_temp2,this._gameCamera,this._gameCamera.camera);
         this._outScene.getComponent(OuterDecorateController).refreshUI(_rect_temp, _rect_temp2);
         this._outScene.getComponent(OuterTiledMapActionController).refreshUI(_rect_temp, _rect_temp2);
+        this._outScene.getComponent(OuterShadowController).refreshUI(_rect_temp, _rect_temp2);
     }
 
     private _onGameJumpInnerAndShowRelicTower() {

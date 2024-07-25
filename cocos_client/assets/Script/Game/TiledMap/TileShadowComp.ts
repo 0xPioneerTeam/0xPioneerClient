@@ -24,7 +24,7 @@ export class TileShadowComp extends Component {
         return this._tiley;
     }
 
-    protected start(): void {
+    protected onLoad(): void {
         let comp = this.node.getComponent(Sprite);
         if (comp) {
             this._spComp = comp;
@@ -37,6 +37,7 @@ export class TileShadowComp extends Component {
         }else{
             this._uiComp = this.node.addComponent(UITransform);
             this._uiComp.setContentSize(128, 128);
+            this._uiComp.anchorY = 1;
         }
     }
 
@@ -44,8 +45,14 @@ export class TileShadowComp extends Component {
         this._tilex = tilex;
         this._tiley = tiley;
         let pos = TileMapHelper.INS.getPos(tilex, tiley);
-        this.node.setPosition(pos.worldx, pos.worldy);
-        this._spComp.spriteFrame = TileMapHelper.INS.getTileGridSpriteframeByGrid(grid);
+        this.node.setPosition(pos.pixel_x, pos.pixel_y);
+        if(grid == 0){
+            this._spComp.spriteFrame = null;
+        }else{
+            this._spComp.spriteFrame = TileMapHelper.INS.getTileGridSpriteframeByGrid(grid);
+            this._spComp.trim = true;
+            this._uiComp.anchorY = 1;
+        }
     }
 
 }

@@ -54,6 +54,7 @@ import { AlterView } from "../../UI/View/AlterView";
 import CLog from "../../Utils/CLog";
 import { GameMgr, LanMgr, PioneerMgr } from "../../Utils/Global";
 import { PioneersDataMgr } from "../../Data/Save/PioneersDataMgr";
+import { OuterShadowController } from "./OuterShadowController";
 
 const { ccclass, property } = _decorator;
 
@@ -221,12 +222,13 @@ export class OuterTiledMapActionController extends ViewController {
                     this._fixCameraPos(pos);
                 } else {
                     if (GameMainHelper.instance.isTiledMapHelperInited) {
-                        const pos = event.getLocation();
-                        const wpos = GameMainHelper.instance.getGameCameraScreenToWorld(v3(pos.x, pos.y, 0));
+                        let pos = event.getLocation();
+                        let wpos = GameMainHelper.instance.getGameCameraScreenToWorld(v3(pos.x, pos.y, 0));
                         var tp = GameMainHelper.instance.tiledMapGetTiledPosByWorldPos(wpos);
-                        // console.log(tp, pos, wpos);
+
+                        const shadowController = this.node.getComponent(OuterShadowController);
                         if (tp != null) {
-                            if (!GameMainHelper.instance.tiledMapIsAllBlackShadow(tp.x, tp.y)) {
+                            if (!shadowController.tiledMapIsAllBlackShadow(tp.x, tp.y)) {
                                 // check building first, because of building is block
                                 const stayBuilding = DataMgr.s.mapBuilding.getShowBuildingByMapPos(v2(tp.x, tp.y));
 
@@ -313,6 +315,9 @@ export class OuterTiledMapActionController extends ViewController {
 
         GameMainHelper.instance.changeGameCameraPosition(this._showOuterCameraPosition.clone());
         GameMainHelper.instance.changeGameCameraZoom(this._showOuterCameraZoom);
+        this.scheduleOnce(() => {
+            GameMainHelper.instance.updateGameViewport();
+        }, 0.1);
     }
 
     protected viewDidDisAppear(): void {
@@ -358,6 +363,13 @@ export class OuterTiledMapActionController extends ViewController {
         this._mapBottomView.addComponent(UITransform).setContentSize(mapView.getComponent(UITransform).contentSize);
         this._mapBottomView.setSiblingIndex(this._decorationView.getSiblingIndex());
 
+        const shadowView = new Node("shadow_layer");
+        shadowView.addComponent(UITransform);
+        shadowView.layer = this.node.layer;
+        mapView.addChild(shadowView);
+        const shadowController = this.node.getComponent(OuterShadowController);
+        shadowController.Shadow_Init(shadowView);
+
         this._mapCursorView = this.node.getChildByPath("Floor/PointerCursor").getComponent(OuterMapCursorView);
         this._mapCursorView.node.removeFromParent();
         this._mapBottomView.addChild(this._mapCursorView.node);
@@ -379,20 +391,6 @@ export class OuterTiledMapActionController extends ViewController {
         trackingView.setParent(mapView);
         GameMainHelper.instance.initTiledMapHelper(_tilemap, trackingView);
 
-        let gridNode1 = instantiate(this.gridFogPrefab);
-        gridNode1.layer = this.node.layer;
-        gridNode1.setPosition(v3(64, -64, 0))
-        mapView.addChild(gridNode1);
-
-        let gridNode2 = instantiate(this.gridFogPrefab);
-        gridNode2.layer = this.node.layer;
-        gridNode2.setPosition(v3(192, -64, 0));
-        mapView.addChild(gridNode2);
-
-        let gridNode3 = instantiate(this.gridFogPrefab);
-        gridNode3.layer = this.node.layer;
-        gridNode3.setPosition(v3(128, -160, 0));
-        mapView.addChild(gridNode3);
 
         // this._fogItem = instantiate(this.gridFogPrefab);
         // this._fogItem.layer = this.node.layer;
@@ -408,7 +406,6 @@ export class OuterTiledMapActionController extends ViewController {
         // this._fogAnimOriginalPos = this._fogAnimView.node.position.clone();
 
         // this._fogAnimShapView = this._fogAnimView.node.getChildByPath("SharpMask").getComponent(OuterFogAnimShapMask);
-
         // this._boundContent = this.node.getChildByPath("Floor/BoundContent");
         // this._boundContent.setSiblingIndex(101);
 
@@ -548,8 +545,9 @@ export class OuterTiledMapActionController extends ViewController {
             GameMainHelper.instance.isTapEventWaited = false;
             return;
         }
+        const shadowController = this.node.getComponent(OuterShadowController);
         const tiledPos = GameMainHelper.instance.tiledMapGetTiledPosByWorldPos(worldpos);
-        if (GameMainHelper.instance.tiledMapIsAllBlackShadow(tiledPos.x, tiledPos.y)) {
+        if (shadowController.tiledMapIsAllBlackShadow(tiledPos.x, tiledPos.y)) {
             return;
         }
         // check is dead
@@ -828,7 +826,7 @@ export class OuterTiledMapActionController extends ViewController {
         let lastIndex = 0;
         for (let i = stx; i <= endx; i++) {
             for (let j = sty; j <= endy; j++) {
-                let pos = v3(i* areaWidth + TileMapHelper.INS.pixelwidth/2, j* areaHeight - TileMapHelper.INS.pixelheight/2, 0);
+                let pos = v3(i * areaWidth + TileMapHelper.INS.pixelwidth / 2, j * areaHeight - TileMapHelper.INS.pixelheight / 2, 0);
                 //make content big
                 if (!containerBox.contains(v2(pos.x + TileMapHelper.INS.pixelwidth / 2, pos.y + TileMapHelper.INS.pixelheight / 2))
                     || !containerBox.contains(v2(pos.x - TileMapHelper.INS.pixelwidth / 2, pos.y - TileMapHelper.INS.pixelheight / 2))) {
@@ -896,7 +894,8 @@ export class OuterTiledMapActionController extends ViewController {
             // direction around no hex or hex is shadow, direction is bound.
 
             const leftTop = GameMainHelper.instance.tiledMapGetAroundByDirection(v2(pos.x, pos.y), TileHexDirection.LeftTop);
-            if (leftTop == null || GameMainHelper.instance.tiledMapIsAllBlackShadow(leftTop.x, leftTop.y)) {
+            const shadowController = this.node.getComponent(OuterShadowController);
+            if (leftTop == null || shadowController.tiledMapIsAllBlackShadow(leftTop.x, leftTop.y)) {
                 getAllBoundLines.push({
                     startPos: v2(centerPos.x, hexViewRadius + centerPos.y),
                     endPos: v2(-hexViewRadius + centerPos.x, sinValue * hexViewRadius + centerPos.y),
@@ -905,7 +904,7 @@ export class OuterTiledMapActionController extends ViewController {
             }
 
             const left = GameMainHelper.instance.tiledMapGetAroundByDirection(v2(pos.x, pos.y), TileHexDirection.Left);
-            if (left == null || GameMainHelper.instance.tiledMapIsAllBlackShadow(left.x, left.y)) {
+            if (left == null || shadowController.tiledMapIsAllBlackShadow(left.x, left.y)) {
                 getAllBoundLines.push({
                     startPos: v2(-hexViewRadius + centerPos.x, sinValue * hexViewRadius + centerPos.y),
                     endPos: v2(-hexViewRadius + centerPos.x, -sinValue * hexViewRadius + centerPos.y),
@@ -914,7 +913,7 @@ export class OuterTiledMapActionController extends ViewController {
             }
 
             const leftBottom = GameMainHelper.instance.tiledMapGetAroundByDirection(v2(pos.x, pos.y), TileHexDirection.LeftBottom);
-            if (leftBottom == null || GameMainHelper.instance.tiledMapIsAllBlackShadow(leftBottom.x, leftBottom.y)) {
+            if (leftBottom == null || shadowController.tiledMapIsAllBlackShadow(leftBottom.x, leftBottom.y)) {
                 getAllBoundLines.push({
                     startPos: v2(-hexViewRadius + centerPos.x, -sinValue * hexViewRadius + centerPos.y),
                     endPos: v2(centerPos.x, -hexViewRadius + centerPos.y),
@@ -923,7 +922,7 @@ export class OuterTiledMapActionController extends ViewController {
             }
 
             const rightbottom = GameMainHelper.instance.tiledMapGetAroundByDirection(v2(pos.x, pos.y), TileHexDirection.RightBottom);
-            if (rightbottom == null || GameMainHelper.instance.tiledMapIsAllBlackShadow(rightbottom.x, rightbottom.y)) {
+            if (rightbottom == null || shadowController.tiledMapIsAllBlackShadow(rightbottom.x, rightbottom.y)) {
                 getAllBoundLines.push({
                     startPos: v2(centerPos.x, -hexViewRadius + centerPos.y),
                     endPos: v2(hexViewRadius + centerPos.x, -sinValue * hexViewRadius + centerPos.y),
@@ -932,7 +931,7 @@ export class OuterTiledMapActionController extends ViewController {
             }
 
             const right = GameMainHelper.instance.tiledMapGetAroundByDirection(v2(pos.x, pos.y), TileHexDirection.Right);
-            if (right == null || GameMainHelper.instance.tiledMapIsAllBlackShadow(right.x, right.y)) {
+            if (right == null || shadowController.tiledMapIsAllBlackShadow(right.x, right.y)) {
                 getAllBoundLines.push({
                     startPos: v2(hexViewRadius + centerPos.x, -sinValue * hexViewRadius + centerPos.y),
                     endPos: v2(hexViewRadius + centerPos.x, sinValue * hexViewRadius + centerPos.y),
@@ -941,7 +940,7 @@ export class OuterTiledMapActionController extends ViewController {
             }
 
             const rightTop = GameMainHelper.instance.tiledMapGetAroundByDirection(v2(pos.x, pos.y), TileHexDirection.RightTop);
-            if (rightTop == null || GameMainHelper.instance.tiledMapIsAllBlackShadow(rightTop.x, rightTop.y)) {
+            if (rightTop == null || shadowController.tiledMapIsAllBlackShadow(rightTop.x, rightTop.y)) {
                 getAllBoundLines.push({
                     startPos: v2(hexViewRadius + centerPos.x, sinValue * hexViewRadius + centerPos.y),
                     endPos: v2(centerPos.x, hexViewRadius + centerPos.y),
