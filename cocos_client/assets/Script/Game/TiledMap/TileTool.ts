@@ -259,7 +259,7 @@ export class TileMapHelper {
 
     getExtAround(pos: TilePos, extlen: number): TilePos[] {
         let result = new Set<TilePos>();
-        let queue: Array<[number, number, number]> = [[pos.x, pos.y, 0]]; // 队列初始包含中心点，第三个参数是深度
+        let queue: Array<[number, number, number]> = [[pos.x, pos.y, 0]];
         let visited = new Set<string>();
         visited.add(`${pos.x},${pos.y}`);
 
