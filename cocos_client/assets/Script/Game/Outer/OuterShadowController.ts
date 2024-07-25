@@ -40,10 +40,14 @@ export class OuterShadowController extends ViewController {
     refreshUI(rect: Rect, rect2: Rect) {
         let pos1 = TileMapHelper.INS.getPosByPixelPos(v3(rect.xMin, rect.yMax));
         let pos2 = TileMapHelper.INS.getPosByPixelPos(v3(rect.xMax, rect.yMin));
+        pos1.x = pos1.x - 2;
+        pos2.x = pos2.x + 2;
+        pos1.y = pos1.y - 2;
+        pos2.y = pos2.y + 2;
         let updateList = [];
         console.log("refreshUI:" + pos1.x + "," + pos1.y + "->" + pos2.x + "," + pos2.y);
-        for (let x = pos1.x - 1; x <= pos2.x; x++) {
-            for (let y = pos1.y - 1; y <= pos2.y; y++) {
+        for (let x = pos1.x; x <= pos2.x; x++) {
+            for (let y = pos1.y; y <= pos2.y; y++) {
                 let x_yKey = x + '_' + y;
                 let shadowData = this._shadowtiles[x_yKey];
                 if(!shadowData){

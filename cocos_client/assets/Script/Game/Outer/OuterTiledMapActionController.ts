@@ -300,7 +300,7 @@ export class OuterTiledMapActionController extends ViewController {
             this
         );
         // local fog
-        this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions());
+        // this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions());
 
         // const allShadows = DataMgr.s.eraseShadow.getObj();
         // for (const shadow of allShadows) {
@@ -516,7 +516,7 @@ export class OuterTiledMapActionController extends ViewController {
                 //     }
                 // }
                 this._lastPioneerStayPos.set(pioneer.id, pioneer.stayPos);
-                this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions(), newCleardPositons, pioneer.stayPos);
+                // this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions(), newCleardPositons, pioneer.stayPos);
             }
         }
     }

@@ -36,8 +36,8 @@ export class TileShadowComp extends Component {
             this._uiComp = uiCom;
         }else{
             this._uiComp = this.node.addComponent(UITransform);
-            this._uiComp.setContentSize(128, 128);
-            this._uiComp.anchorY = 1;
+            this._uiComp.setContentSize(128, 256);
+            this._uiComp.anchorY = 0.25;
         }
     }
 
@@ -51,7 +51,7 @@ export class TileShadowComp extends Component {
         }else{
             this._spComp.spriteFrame = TileMapHelper.INS.getTileGridSpriteframeByGrid(grid);
             this._spComp.trim = true;
-            this._uiComp.anchorY = 1;
+            this._uiComp.anchorY = 0.25;
         }
     }
 

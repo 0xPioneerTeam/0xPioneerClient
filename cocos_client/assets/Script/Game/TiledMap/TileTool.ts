@@ -152,6 +152,7 @@ export class TileMapHelper {
         spriteFrame = gridInfo.spriteFrame.clone();
         spriteFrame.rotated = gridInfo._rotated!;
         spriteFrame.rect = gridInfo._rect!;
+        spriteFrame.offset = v2(gridInfo.offsetX,gridInfo.offsetY);
         this._tileGridSpriteframe[grid] = spriteFrame;
         return spriteFrame;
     }
