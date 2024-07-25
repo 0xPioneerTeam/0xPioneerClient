@@ -388,7 +388,7 @@ export default class GameMainHelper {
         _vec3_temp2.x = Math.round(ex);
         _vec3_temp2.y = Math.round(ey);
         Rect.fromMinMax(_rect_temp2, _vec3_temp, _vec3_temp2);
-        console.log('mapNode info:',_rect_temp,_rect_temp2,this._gameCamera,this._gameCamera.camera);
+        // console.log('mapNode info:',_rect_temp,_rect_temp2,this._gameCamera,this._gameCamera.camera);
         this._outScene.getComponent(OuterDecorateController).refreshUI(_rect_temp, _rect_temp2);
         this._outScene.getComponent(OuterTiledMapActionController).refreshUI(_rect_temp, _rect_temp2);
         this._outScene.getComponent(OuterShadowController).refreshUI(_rect_temp, _rect_temp2);
