@@ -140,7 +140,7 @@ export class TileMapHelper {
             return null;
         }
         let spriteFrame = this._tileGridSpriteframe[grid];
-        if(spriteFrame){
+        if (spriteFrame) {
             return spriteFrame;
         }
         let tileLayer = this._tilemap._layers[0];
@@ -152,6 +152,7 @@ export class TileMapHelper {
         spriteFrame = gridInfo.spriteFrame.clone();
         spriteFrame.rotated = gridInfo._rotated!;
         spriteFrame.rect = gridInfo._rect!;
+        spriteFrame.offset = v2(gridInfo.offsetX, gridInfo.offsetY);
         this._tileGridSpriteframe[grid] = spriteFrame;
         return spriteFrame;
     }

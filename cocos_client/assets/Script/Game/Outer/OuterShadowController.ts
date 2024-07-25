@@ -17,7 +17,6 @@ export class MyTileData {
     grid: number = -1;
     timer: number = 0;
     owner: string = null;
-    drawComp: TileShadowComp = null;
 
     constructor(x: number, y: number, grid: number) {
         this.x = x;
@@ -30,65 +29,77 @@ export class MyTileData {
 export class OuterShadowController extends ViewController {
 
     _shadowtiles: { [x_yKey: string]: MyTileData } = {};
+    _shadowUseComp: { [x_yKey: string]: TileShadowComp } = {};
     _shadowNodeCompsPool: TileShadowComp[] = [];
     _shadowtag: number;
     _shadowcleantag: number;
     _shadowhalftag: number;
     _shadowhalf2tag: number;
-    _shadowContentNode: Node;
+    _shadowContentNodes: Node[];
 
     refreshUI(rect: Rect, rect2: Rect) {
-        let pos1 = TileMapHelper.INS.getPosByPixelPos(v3(rect.xMin, rect.yMax));
-        let pos2 = TileMapHelper.INS.getPosByPixelPos(v3(rect.xMax, rect.yMin));
-        let updateList = [];
-        console.log("refreshUI:" + pos1.x + "," + pos1.y + "->" + pos2.x + "," + pos2.y);
-        for (let x = pos1.x - 1; x <= pos2.x; x++) {
-            for (let y = pos1.y - 1; y <= pos2.y; y++) {
+        let pos1 = TileMapHelper.INS.getPosByPixelPos(v3(rect.xMin, rect.yMin));
+        let pos2 = TileMapHelper.INS.getPosByPixelPos(v3(rect.xMax, rect.yMax));
+        if(!pos1 || !pos2){
+            return;
+        }
+        let bigSize = 1;
+        let px1 = pos1.x - bigSize;
+        let px2 = pos2.x + bigSize;
+        let py1 = pos1.y + bigSize;
+        let py2 = pos2.y - bigSize;
+        let updateMap: { [uuid: string]: boolean } = {};
+        // console.log("refreshUI:" + pos1.x + "," + pos1.y + "->" + pos2.x + "," + pos2.y);
+        for (let x = px1; x <= px2; x++) {
+            for (let y = py2; y <= py1; y++) {
                 let x_yKey = x + '_' + y;
                 let shadowData = this._shadowtiles[x_yKey];
-                if(!shadowData){
+                if (!shadowData) {
                     shadowData = new MyTileData(x, y, this._shadowtag);
                     this._shadowtiles[x_yKey] = shadowData;
                 }
-                let drawComp = shadowData.drawComp;
-                if(!drawComp){
+                if (shadowData.grid == 0) {
+                    //empty tileTag
+                    continue;
+                }
+                let drawComp = this._shadowUseComp[x_yKey];
+                if (!drawComp) {
                     drawComp = this.getShadowComp();
-                    shadowData.drawComp = drawComp;
+                    this._shadowUseComp[x_yKey] = drawComp;
                 }
                 drawComp.updateDrawInfo(x, y, shadowData.grid);
-                updateList.push(drawComp.node.uuid);
+                updateMap[drawComp.node.uuid] = true;
             }
         }
-        let nodes = this._shadowContentNode.children;
-        for (let i = 0; i < nodes.length; i++) {
+        let nodes = [];
+        for (let i = 0; i < this._shadowContentNodes.length; i++) {
+            let children = this._shadowContentNodes[i].children;
+            if (children.length == 0) {
+                continue;
+            }
+            nodes = nodes.concat(children);
+        }
+        for (let i = nodes.length - 1; i >= 0; i--) {
             let node = nodes[i];
-            if (node.active && updateList.indexOf(node.uuid) == -1) {
-                node.active = false;
+            if (!updateMap[node.uuid]) {
                 let comp = node.getComponent(TileShadowComp);
-                let x_yKey = comp.tilex + '_' + comp.tiley;
-                let shadowData = this._shadowtiles[x_yKey];
-                if(shadowData){
-                    shadowData.drawComp = null;
-                }
                 this.pushShadowComp(comp);
             }
         }
     }
 
-    Shadow_Init(view: Node): void {
+    Shadow_Init(views: Node[]): void {
         this._shadowcleantag = 0;
         this._shadowtag = 75;
         this._shadowhalftag = 73;
         this._shadowhalf2tag = 74;
         this._shadowtiles = {};
-        this._shadowContentNode = view;
+        this._shadowContentNodes = views;
         this._shadowNodeCompsPool = [];
         for (let i = 0; i < 100; i++) {
             let shadowNode = new Node("shadowNode");
-            shadowNode.layer = view.layer;
+            shadowNode.layer = views[0].layer;
             let shadowComp = shadowNode.addComponent(TileShadowComp);
-            shadowNode.active = false;
-            shadowNode.setParent(this._shadowContentNode);
             this._shadowNodeCompsPool.push(shadowComp);
         }
     }
@@ -97,21 +108,52 @@ export class OuterShadowController extends ViewController {
         let shadowComp;
         if (this._shadowNodeCompsPool.length > 0) {
             shadowComp = this._shadowNodeCompsPool.shift();
-            shadowComp.node.active = true;
-        }else{
+            let len = this._shadowContentNodes.length;
+            for (let i = 0; i < len; i++) {
+                if (i == len - 1) {
+                    shadowComp.node.setParent(this._shadowContentNodes[i]);
+                    break;
+                }
+                if (this._shadowContentNodes[i].children.length > 200) {
+                    continue;
+                }
+                shadowComp.node.setParent(this._shadowContentNodes[i]);
+                break;
+            }
+        } else {
             let shadowNode = new Node("shadowNode");
-            shadowNode.layer = this._shadowContentNode.layer;
+            shadowNode.layer = this._shadowContentNodes[0].layer;
             shadowComp = shadowNode.addComponent(TileShadowComp);
-            shadowNode.setParent(this._shadowContentNode);
+            let len = this._shadowContentNodes.length;
+            for (let i = 0; i < len; i++) {
+                if (i == len - 1) {
+                    shadowComp.node.setParent(this._shadowContentNodes[i]);
+                    break;
+                }
+                if (this._shadowContentNodes[i].children.length > 200) {
+                    continue;
+                }
+                shadowComp.node.setParent(this._shadowContentNodes[i]);
+                break;
+            }
         }
         return shadowComp;
     }
 
     pushShadowComp(shadowComp: TileShadowComp) {
+        shadowComp.node.removeFromParent();
+        let x_yKey = shadowComp.tilex + '_' + shadowComp.tiley;
+        delete this._shadowUseComp[x_yKey];
         this._shadowNodeCompsPool.push(shadowComp);
     }
 
+    _historyEarses: string[] = []
     Shadow_Earse(pos: TilePos, owner: string, extlen: number = 1, fall: boolean = false): TilePos[] {
+        let key = pos.x + '_' + pos.y + '_' + owner + '_' + extlen + '_' + fall;
+        if (this._historyEarses.indexOf(key) != -1) {
+            return [];
+        }
+        this._historyEarses.push(key);
         //console.log("pos=" + pos.x + "," + pos.y + ":" + pos.worldx + "," + pos.worldy);
         //for (var z = pos.calc_z - extlen; z <= pos.calc_z + extlen; z++) {
         const newCleardPositons: TilePos[] = [];
@@ -128,7 +170,7 @@ export class OuterShadowController extends ViewController {
                     var s = this._shadowtiles[gpos.x + '_' + gpos.y];
                     if (s == null) {
                         s = new MyTileData(gpos.x, gpos.y, this._shadowtag);
-                        this._shadowtiles[gpos.x + '_' + gpos] = s;
+                        this._shadowtiles[gpos.x + '_' + gpos.y] = s;
                     }
                     // console.log("find node-" + s.x + "," + s.y + " wpos=" + gpos.worldx + "," + gpos.worldy);
                     if (!fall) {

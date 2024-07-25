@@ -12,9 +12,14 @@ export class TileShadowComp extends Component {
 
     private _tilex: number = 0;
     private _tiley: number = 0;
+    private _grid:number = 0;
 
     private _spComp: Sprite;
     private _uiComp: UITransform;
+
+    public get grid(): number {
+        return this._grid;
+    }
 
     public get tilex(): number {
         return this._tilex;
@@ -36,14 +41,15 @@ export class TileShadowComp extends Component {
             this._uiComp = uiCom;
         }else{
             this._uiComp = this.node.addComponent(UITransform);
-            this._uiComp.setContentSize(128, 128);
-            this._uiComp.anchorY = 1;
+            this._uiComp.setContentSize(128, 256);
+            this._uiComp.anchorY = 0.25;
         }
     }
 
     public updateDrawInfo(tilex:number,tiley:number,grid:number){
         this._tilex = tilex;
         this._tiley = tiley;
+        this._grid = grid;
         let pos = TileMapHelper.INS.getPos(tilex, tiley);
         this.node.setPosition(pos.pixel_x, pos.pixel_y);
         if(grid == 0){
@@ -51,7 +57,9 @@ export class TileShadowComp extends Component {
         }else{
             this._spComp.spriteFrame = TileMapHelper.INS.getTileGridSpriteframeByGrid(grid);
             this._spComp.trim = true;
-            this._uiComp.anchorY = 1;
+            this._spComp.type = Sprite.Type.SIMPLE;
+            this._spComp.sizeMode = Sprite.SizeMode.TRIMMED;
+            this._uiComp.anchorY = 0.25;
         }
     }
 

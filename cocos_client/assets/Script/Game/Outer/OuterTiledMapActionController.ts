@@ -300,7 +300,7 @@ export class OuterTiledMapActionController extends ViewController {
             this
         );
         // local fog
-        this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions());
+        // this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions());
 
         // const allShadows = DataMgr.s.eraseShadow.getObj();
         // for (const shadow of allShadows) {
@@ -363,12 +363,16 @@ export class OuterTiledMapActionController extends ViewController {
         this._mapBottomView.addComponent(UITransform).setContentSize(mapView.getComponent(UITransform).contentSize);
         this._mapBottomView.setSiblingIndex(this._decorationView.getSiblingIndex());
 
-        const shadowView = new Node("shadow_layer");
-        shadowView.addComponent(UITransform);
-        shadowView.layer = this.node.layer;
-        mapView.addChild(shadowView);
+        let nodes = [];
+        for (let i = 0; i < 10; i++) {
+            const shadowView = new Node("shadow_layer");
+            shadowView.addComponent(UITransform);
+            shadowView.layer = this.node.layer;
+            mapView.addChild(shadowView);
+            nodes.push(shadowView);
+        }
         const shadowController = this.node.getComponent(OuterShadowController);
-        shadowController.Shadow_Init(shadowView);
+        shadowController.Shadow_Init(nodes);
 
         this._mapCursorView = this.node.getChildByPath("Floor/PointerCursor").getComponent(OuterMapCursorView);
         this._mapCursorView.node.removeFromParent();
@@ -516,7 +520,7 @@ export class OuterTiledMapActionController extends ViewController {
                 //     }
                 // }
                 this._lastPioneerStayPos.set(pioneer.id, pioneer.stayPos);
-                this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions(), newCleardPositons, pioneer.stayPos);
+                // this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions(), newCleardPositons, pioneer.stayPos);
             }
         }
     }
