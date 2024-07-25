@@ -467,38 +467,44 @@ export class OuterPioneerController extends ViewController {
                 let pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(currentPath.x, currentPath.y);
                 footView.setPosition(pixelPos);
                 footViews.push(footView);
-                if (nextPath.calc_x - currentPath.calc_x == -1 && nextPath.calc_y - currentPath.calc_y == 0 && nextPath.calc_z - currentPath.calc_z == 1) {
+                
+                if (nextPath.x - currentPath.x == -1 &&
+                    nextPath.y - currentPath.y == 0) {
+                    //left
                     footView.angle = 90;
-                } else if (
-                    nextPath.calc_x - currentPath.calc_x == 1 &&
-                    nextPath.calc_y - currentPath.calc_y == 0 &&
-                    nextPath.calc_z - currentPath.calc_z == -1
-                ) {
+                } else if (nextPath.x - currentPath.x == 1 && nextPath.y - currentPath.y == 0) {
+                    //right
                     footView.angle = 270;
-                } else if (
-                    nextPath.calc_x - currentPath.calc_x == 1 &&
-                    nextPath.calc_y - currentPath.calc_y == -1 &&
-                    nextPath.calc_z - currentPath.calc_z == 0
-                ) {
-                    footView.angle = 330;
-                } else if (
-                    nextPath.calc_x - currentPath.calc_x == -1 &&
-                    nextPath.calc_y - currentPath.calc_y == 1 &&
-                    nextPath.calc_z - currentPath.calc_z == 0
-                ) {
-                    footView.angle = 150;
-                } else if (
-                    nextPath.calc_x - currentPath.calc_x == 0 &&
-                    nextPath.calc_y - currentPath.calc_y == 1 &&
-                    nextPath.calc_z - currentPath.calc_z == -1
-                ) {
-                    footView.angle = 210;
-                } else if (
-                    nextPath.calc_x - currentPath.calc_x == 0 &&
-                    nextPath.calc_y - currentPath.calc_y == -1 &&
-                    nextPath.calc_z - currentPath.calc_z == 1
-                ) {
-                    footView.angle = 390;
+                } else {
+                    if (currentPath.y % 2 == 0) {
+                        if (nextPath.x - currentPath.x == -1 && nextPath.y - currentPath.y == -1) {
+                            //lefttop
+                            footView.angle = 390;
+                        } else if (nextPath.x - currentPath.x == 0 && nextPath.y - currentPath.y == -1) {
+                            //righttop
+                            footView.angle = 330;
+                        } else if (nextPath.x - currentPath.x == -1 && nextPath.y - currentPath.y == 1) {
+                            //leftbottom
+                            footView.angle = 150;
+                        } else if (nextPath.x - currentPath.x == 0 && nextPath.y - currentPath.y == 1) {
+                            //rightbottom
+                            footView.angle = 210;
+                        }
+                    } else {
+                        if (nextPath.x - currentPath.x == 0 && nextPath.y - currentPath.y == -1) {
+                            //lefttop
+                            footView.angle = 390;
+                        } else if (nextPath.x - currentPath.x == 1 && nextPath.y - currentPath.y == -1) {
+                            //righttop
+                            footView.angle = 330;
+                        } else if (nextPath.x - currentPath.x == 0 && nextPath.y - currentPath.y == 1) {
+                            //leftbottom
+                            footView.angle = 150;
+                        } else if (nextPath.x - currentPath.x == 1 && nextPath.y - currentPath.y == 1) {
+                            //rightbottom
+                            footView.angle = 210;
+                        }
+                    }
                 }
             }
         }
