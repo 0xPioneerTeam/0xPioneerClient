@@ -17,8 +17,9 @@ export class DispatchUI extends ViewController {
     private _moveSpeed: number = 0;
     private _actionCallback: (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => void = null;
 
+    private _isReturn: boolean = false;
+
     private _timeLabel: Label = null;
-    private _returnCheck: Toggle = null;
     private _energyLabel: Label = null;
     private _playerScrollView: Node = null;
     private _playerContentView: Node = null;
@@ -35,15 +36,12 @@ export class DispatchUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-        this._timeLabel = this.node.getChildByPath("ContentView/CostTime").getComponent(Label);
-        this._returnCheck = this.node.getChildByPath("ContentView/Toggle").getComponent(Toggle);
+        this._timeLabel = this.node.getChildByPath("ContentView/CostTime/Value").getComponent(Label);
         this._energyLabel = this.node.getChildByPath("ContentView/CostView/Content/Value").getComponent(Label);
         this._playerScrollView = this.node.getChildByPath("ContentView/ScrollView");
         this._playerContentView = this._playerScrollView.getChildByPath("View/Content");
         this._playerItem = this._playerContentView.getChildByPath("Item");
         this._playerItem.removeFromParent();
-
-        this._returnCheck.isChecked = false;
     }
 
     protected viewDidStart(): void {
@@ -75,9 +73,10 @@ export class DispatchUI extends ViewController {
 
     private _refreshEnergyAndTime() {
         const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / this._moveSpeed;
-        this._timeLabel.string = CommonTools.formatSeconds(perStepTime * this._step * (this._returnCheck.isChecked ? 2 : 1));
+        this._timeLabel.string = CommonTools.formatSeconds(perStepTime * this._step * (this._isReturn ? 2 : 1));
 
-        this._energyLabel.string = (this._costEnergy * (this._returnCheck.isChecked ? 2 : 1)).toString();
+        this._energyLabel.string = (this._costEnergy * (this._isReturn ? 2 : 1)).toString();
+        this._energyLabel.node.parent.getComponent(Layout).updateLayout();
     }
 
     //-------------------------- action
@@ -93,6 +92,7 @@ export class DispatchUI extends ViewController {
         UIPanelManger.inst.pushPanel(UIName.PlayerDispatchListUI);
     }
     private onReturnCheckToggle() {
+        this._isReturn = !this._isReturn;
         this._refreshEnergyAndTime();
     }
     private onTapItem(event: Event, customEvnetData: string) {
@@ -104,7 +104,7 @@ export class DispatchUI extends ViewController {
         UIPanelManger.inst.popPanel(this.node);
         if (player.energy)
         if (this._actionCallback != null) {
-            this._actionCallback(true, player.id, this._returnCheck.isChecked);
+            this._actionCallback(true, player.id, this._isReturn);
         }
     }
 }

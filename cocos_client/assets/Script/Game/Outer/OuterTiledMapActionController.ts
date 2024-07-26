@@ -627,7 +627,6 @@ export class OuterTiledMapActionController extends ViewController {
                         .getComponent(DispatchUI)
                         .configuration(step, costEnergy, speed, async (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => {
                             const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerId);
-                            console.log("exce cur:", currentActionPioneer);
                             if (confirmed && currentActionPioneer != undefined) {
                                 let sparePositions: Vec2[] = [];
                                 let stayPostions: Vec2[] = [];
@@ -667,6 +666,7 @@ export class OuterTiledMapActionController extends ViewController {
                                                         pioneerId: currentActionPioneer.id,
                                                         movePath: uploadPath,
                                                         feeTxhash: "",
+                                                        isReturn: isReturn
                                                     });
                                                 }
                                                 NetGlobalData.wormholeAttackBuildingId = stayBuilding.id;
@@ -719,6 +719,7 @@ export class OuterTiledMapActionController extends ViewController {
                                         pioneerId: currentActionPioneer.id,
                                         movePath: uploadPath,
                                         feeTxhash: "",
+                                        isReturn: isReturn
                                     });
                                 }
                             } else {

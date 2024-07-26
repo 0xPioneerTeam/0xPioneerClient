@@ -302,6 +302,7 @@ export namespace c2s_user {
         pioneerId: string;
         movePath: share.pos2d[];
         feeTxhash: string;
+        isReturn: boolean;
     }
     export interface Iplayer_talk_select {
         talkId: string;

@@ -4,6 +4,7 @@ import UIPanelManger from "../../Basic/UIPanelMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import { PlayerInfoItem } from "../View/PlayerInfoItem";
+import { UIName } from "../../Const/ConstUIDefine";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerDispatchListUI")
@@ -15,7 +16,7 @@ export class PlayerDispatchListUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-        this._playerContentView = this.node.getChildByPath("ContentView/ScrollView/View/Content");
+        this._playerContentView = this.node.getChildByPath("ContentView/Bg/ItemBg/ScrollView/View/Content");
         this._playerItem = this._playerContentView.getChildByPath("Item");
         this._playerItem.removeFromParent();
     }
@@ -53,12 +54,15 @@ export class PlayerDispatchListUI extends ViewController {
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
-    private onTapItem(event: Event, customEvnetData: string) {
+    private async onTapItem(event: Event, customEvnetData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
         const player = DataMgr.s.pioneer.getById(customEvnetData);
         if (player == undefined) {
             return;
         }
-        
+        const result = await UIPanelManger.inst.pushPanel(UIName.PlayerDispatchDetailUI);
+        if (!result.success) {
+            return;
+        }
     }
 }

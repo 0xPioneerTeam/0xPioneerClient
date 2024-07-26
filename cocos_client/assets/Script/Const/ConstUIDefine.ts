@@ -48,6 +48,7 @@ export enum UIName {
 
     DispatchUI = "abresources/prefab/ui/dispatch/DispatchUI",
     PlayerDispatchListUI = "abresources/prefab/ui/dispatch/PlayerDispatchListUI",
+    PlayerDispatchDetailUI = "abresources/prefab/ui/dispatch/PlayerDispatchDetailUI",
 
     // bundle 2
     NewBuildingUpgradeUI = "abresources_2/prefab/ui/NewBuildingUpgradeUI",
