@@ -119,6 +119,7 @@ message player_move {
     required string pioneerId = 1;
     repeated share.pos2d movePath = 2; 
     required string feeTxhash = 3;
+    required bool isReturn = 4;
 }
 // pioneer: gather
 message player_gather_start {

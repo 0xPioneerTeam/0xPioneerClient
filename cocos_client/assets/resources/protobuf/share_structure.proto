@@ -69,6 +69,8 @@ message player_sinfo {
 
     map<string, bool> lvlRewards = 60;
     map<string, uint32> lvlupConds = 61;
+
+    required uint32 buyEnergyLimitTimes = 62;
 }
 
 // self player data

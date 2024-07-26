@@ -48,13 +48,12 @@ import { RookieStep } from "../../Const/RookieDefine";
 import NetGlobalData from "../../Data/Save/Data/NetGlobalData";
 import { share } from "../../Net/msg/WebsocketMsg";
 import { NetworkMgr } from "../../Net/NetworkMgr";
-import { MapActionConfrimTipUI } from "../../UI/MapActionConfrimTipUI";
 import { UIHUDController } from "../../UI/UIHUDController";
 import { AlterView } from "../../UI/View/AlterView";
 import CLog from "../../Utils/CLog";
 import { GameMgr, LanMgr, PioneerMgr } from "../../Utils/Global";
-import { PioneersDataMgr } from "../../Data/Save/PioneersDataMgr";
 import { OuterShadowController } from "./OuterShadowController";
+import { DispatchUI } from "../../UI/Dispatch/DispatchUI";
 
 const { ccclass, property } = _decorator;
 
@@ -715,11 +714,11 @@ export class OuterTiledMapActionController extends ViewController {
                         return;
                     }
                 }
-                const result = await UIPanelManger.inst.pushPanel(UIName.MapActionConfrimTipUI);
+                const result = await UIPanelManger.inst.pushPanel(UIName.DispatchUI);
                 if (result.success) {
                     result.node
-                        .getComponent(MapActionConfrimTipUI)
-                        .configuration(taregtPos, targetName, movePaths.length, costEnergy, currentActionPioneer.speed, async (confirmed: boolean) => {
+                        .getComponent(DispatchUI)
+                        .configuration(taregtPos, targetName, movePaths.length, costEnergy, currentActionPioneer.speed, async (confirmed: boolean, isReturn: boolean) => {
                             if (confirmed) {
                                 if (actionType == MapInteractType.Wormhole) {
                                     if (stayBuilding == null) {

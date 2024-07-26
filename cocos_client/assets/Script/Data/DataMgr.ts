@@ -7,7 +7,6 @@ import {
     MINING_FINISHED_DATA,
     MapNpcPioneerObject,
     MapPioneerActionType,
-    MapPioneerEventAttributesChangeType,
     MapPioneerType,
     MapPlayerPioneerObject,
 } from "../Const/PioneerDefine";
@@ -20,15 +19,12 @@ import { GameMgr, LanMgr, PioneerMgr } from "../Utils/Global";
 import NetGlobalData from "./Save/Data/NetGlobalData";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import ArtifactData from "../Model/ArtifactData";
-import { UIHUDController } from "../UI/UIHUDController";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { UIName } from "../Const/ConstUIDefine";
 import { TreasureGettedUI } from "../UI/TreasureGettedUI";
 import CommonTools from "../Tool/CommonTools";
 import ItemConfig from "../Config/ItemConfig";
 import { ItemGettedUI } from "../UI/ItemGettedUI";
-import EventConfig from "../Config/EventConfig";
-import { EVENT_STEPEND_DATA } from "../Const/Event";
 import { TilePos } from "../Game/TiledMap/TileTool";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
 import TalkConfig from "../Config/TalkConfig";
@@ -38,7 +34,6 @@ import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { ResourceCorrespondingItem } from "../Const/ConstDefine";
 import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Const/RookieDefine";
 import { ArtifactInfoUI } from "../UI/ArtifactInfoUI";
-import { load } from "protobufjs";
 import { NewEventUI } from "../UI/Event/NewEventUI";
 import { NewEventBattleUI } from "../UI/Event/NewEventBattleUI";
 

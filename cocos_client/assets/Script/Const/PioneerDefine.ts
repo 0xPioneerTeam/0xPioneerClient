@@ -273,6 +273,7 @@ export default class PioneerDefine {
             rebornTime: temple.rebornTime == null ? 0 : temple.rebornTime * 1000,
         };
         if (obj.type == MapPioneerType.player) {
+            console.log("exce temp: " + JSON.stringify(temple));
             let playerObj: MapPlayerPioneerObject;
             playerObj = {
                 ...obj,
