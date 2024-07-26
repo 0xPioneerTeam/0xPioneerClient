@@ -197,7 +197,7 @@ export class OuterPioneerController extends ViewController {
             const newTime = new Date().getTime();
             const gap = newTime - lastTime;
             lastTime = newTime;
-            const allPioneers = DataMgr.s.pioneer.getAll(true);
+            const allPioneers = DataMgr.s.pioneer.getAll();
             for (var i = 0; i < allPioneers.length; i++) {
                 let pioneer = allPioneers[i];
                 if (this._movingPioneerIds.indexOf(pioneer.id) == -1 || !this._pioneerMap.has(pioneer.id)) {
@@ -226,34 +226,35 @@ export class OuterPioneerController extends ViewController {
         super.viewDidStart();
         this._refreshUI();
         // checkRookie
-        this.scheduleOnce(async () => {
-            const actionPioneer = DataMgr.s.pioneer.getCurrentPlayer();
-            if (actionPioneer != null) {
-                // game camera pos
-                const currentWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(actionPioneer.stayPos.x, actionPioneer.stayPos.y);
-                GameMainHelper.instance.changeGameCameraWorldPosition(currentWorldPos);
-                // game camera zoom
-                const localOuterMapScale = localStorage.getItem("local_outer_map_scale");
-                if (localOuterMapScale != null) {
-                    GameMainHelper.instance.changeGameCameraZoom(parseFloat(localOuterMapScale));
-                }
-            }
-            if (DataMgr.s.userInfo.data.rookieStep == RookieStep.WAKE_UP) {
-                if (actionPioneer != null) {
-                    this.scheduleOnce(() => {
-                        GameMainHelper.instance.tiledMapShadowErase(actionPioneer.stayPos);
-                    }, 0.2);
-                    GameMainHelper.instance.changeGameCameraZoom(0.5);
-                    // dead
-                    actionPioneer.actionType = MapPioneerActionType.dead;
-                    if (this._pioneerMap.has(actionPioneer.id)) {
-                        this._pioneerMap.get(actionPioneer.id).getComponent(MapPioneer).refreshUI(actionPioneer);
-                    }
-                }
-            }
-            await RookieStepMgr.instance().init();
-            GameMainHelper.instance.mapInitOver();
-        });
+        // this.scheduleOnce(async () => {
+        //     const actionPioneer = DataMgr.s.pioneer.getCurrentPlayer();
+        //     if (actionPioneer != null) {
+        //         // game camera pos
+        //         const currentWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(actionPioneer.stayPos.x, actionPioneer.stayPos.y);
+        //         GameMainHelper.instance.changeGameCameraWorldPosition(currentWorldPos);
+        //         // game camera zoom
+        //         const localOuterMapScale = localStorage.getItem("local_outer_map_scale");
+        //         if (localOuterMapScale != null) {
+        //             GameMainHelper.instance.changeGameCameraZoom(parseFloat(localOuterMapScale));
+        //         }
+        //     }
+        //     if (DataMgr.s.userInfo.data.rookieStep == RookieStep.WAKE_UP) {
+        //         if (actionPioneer != null) {
+        //             this.scheduleOnce(() => {
+        //                 GameMainHelper.instance.tiledMapShadowErase(actionPioneer.stayPos);
+        //             }, 0.2);
+        //             GameMainHelper.instance.changeGameCameraZoom(0.5);
+        //             // dead
+        //             actionPioneer.actionType = MapPioneerActionType.dead;
+        //             if (this._pioneerMap.has(actionPioneer.id)) {
+        //                 this._pioneerMap.get(actionPioneer.id).getComponent(MapPioneer).refreshUI(actionPioneer);
+        //             }
+        //         }
+        //     }
+        //     await RookieStepMgr.instance().init();
+        //     GameMainHelper.instance.mapInitOver();
+        // });
+        GameMainHelper.instance.mapInitOver();
     }
 
     protected viewUpdate(dt: number): void {
@@ -307,9 +308,7 @@ export class OuterPioneerController extends ViewController {
         for (const pioneer of allPioneers) {
             let canShow: boolean = pioneer.show;
             if (pioneer.type == MapPioneerType.player) {
-                if (pioneer.actionType == MapPioneerActionType.inCity) {
-                    canShow = false;
-                } 
+                canShow = pioneer.actionType != MapPioneerActionType.inCity;
             }
             if (canShow) {
                 let firstInit: boolean = false;
@@ -418,6 +417,7 @@ export class OuterPioneerController extends ViewController {
             } else if (dir.x != 0) {
                 curMoveDirection = dir.x > 0 ? MapPioneerMoveDirection.right : MapPioneerMoveDirection.left;
             }
+
             if (curMoveDirection != pioneer.moveDirection) {
                 pioneer.moveDirection = curMoveDirection;
                 if (pioneermap.getComponent(OuterOtherPioneerView) != null) {
@@ -540,7 +540,7 @@ export class OuterPioneerController extends ViewController {
     //---------- pioneer
     private _onPioneerActionChanged(data: { id: string }) {
         const pioneer = DataMgr.s.pioneer.getById(data.id);
-        if (pioneer != undefined && pioneer.show) {
+        if (pioneer != undefined && pioneer.type == MapPioneerType.player) {
             if (pioneer.actionType == MapPioneerActionType.moving) {
                 this._movingPioneerIds.push(data.id);
             } else {

@@ -22,6 +22,7 @@ import UIPanelManger from "../Basic/UIPanelMgr";
 import { UIName } from "../Const/ConstUIDefine";
 import { TavernUI } from "../UI/Outer/TavernUI";
 import PioneerConfig from "../Config/PioneerConfig";
+import { GameMgr } from "../Utils/Global";
 
 export default class PioneerMgr {
     public initData() {
@@ -90,8 +91,12 @@ export default class PioneerMgr {
             this._movingTargetDataMap.set(pioneerId, { target: target, id: id });
         }
     }
+    public addActionOverReturnPioneer(pioneerId: string) {
+        this._actionOverReturnPioneerIds.push(pioneerId);
+    }   
 
     private _movingTargetDataMap: Map<string, { target: MapMemberTargetType; id: string }> = new Map();
+    private _actionOverReturnPioneerIds: string[] = [];
     public constructor() {}
 
     private async _moveMeeted(pioneerId: string, interactDirectly: boolean) {
@@ -166,6 +171,12 @@ export default class PioneerMgr {
                     }, interactDelayTime);
                 }
             } else {
+                const aciontPioneerIsRetrunIndex = this._actionOverReturnPioneerIds.indexOf(pioneerId);
+                if (aciontPioneerIsRetrunIndex != -1) {
+                    this._actionOverReturnPioneerIds.splice(aciontPioneerIsRetrunIndex, 1);
+                    pioneerDataMgr.changeActionType(pioneerId, MapPioneerActionType.inCity);
+                    pioneerDataMgr.changePos(pioneerId, GameMgr.getMainCityGatePos());
+                }
             }
         } else {
             // building

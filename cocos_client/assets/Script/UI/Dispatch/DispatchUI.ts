@@ -20,6 +20,7 @@ export class DispatchUI extends ViewController {
     private _isReturn: boolean = false;
 
     private _timeLabel: Label = null;
+    private _returnSwitchButton: Node = null;
     private _energyLabel: Label = null;
     private _playerScrollView: Node = null;
     private _playerContentView: Node = null;
@@ -37,6 +38,7 @@ export class DispatchUI extends ViewController {
         super.viewDidLoad();
 
         this._timeLabel = this.node.getChildByPath("ContentView/CostTime/Value").getComponent(Label);
+        this._returnSwitchButton = this.node.getChildByPath("ContentView/ReturnSwitchButton");
         this._energyLabel = this.node.getChildByPath("ContentView/CostView/Content/Value").getComponent(Label);
         this._playerScrollView = this.node.getChildByPath("ContentView/ScrollView");
         this._playerContentView = this._playerScrollView.getChildByPath("View/Content");
@@ -73,9 +75,12 @@ export class DispatchUI extends ViewController {
 
     private _refreshEnergyAndTime() {
         const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / this._moveSpeed;
-        this._timeLabel.string = CommonTools.formatSeconds(perStepTime * this._step * (this._isReturn ? 2 : 1));
+        this._timeLabel.string = CommonTools.formatSeconds(perStepTime * this._step * (this._isReturn ? 1 : 1));
+    
+        this._returnSwitchButton.getChildByPath("Return").active = this._isReturn;
+        this._returnSwitchButton.getChildByPath("OneWay").active = !this._isReturn;
 
-        this._energyLabel.string = (this._costEnergy * (this._isReturn ? 2 : 1)).toString();
+        this._energyLabel.string = (this._costEnergy * (this._isReturn ? 1 : 1)).toString();
         this._energyLabel.node.parent.getComponent(Layout).updateLayout();
     }
 
@@ -102,7 +107,6 @@ export class DispatchUI extends ViewController {
             return;
         }
         UIPanelManger.inst.popPanel(this.node);
-        if (player.energy)
         if (this._actionCallback != null) {
             this._actionCallback(true, player.id, this._isReturn);
         }

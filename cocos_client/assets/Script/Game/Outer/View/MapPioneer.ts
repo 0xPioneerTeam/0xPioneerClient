@@ -201,6 +201,22 @@ export class MapPioneer extends Component {
                         this._contentView.active = false;
                     }
                     break;
+                
+                case MapPioneerActionType.inCity: 
+                    {
+                        this._contentView.active = false;
+                    }
+                    break;
+
+                case MapPioneerActionType.staying:
+                    {
+                        this._contentView.active = true;
+                        idleView.active = true;
+                        this._idleCountTime = 0;
+                        if (this._currnetIdleAnim != null) {
+                            this._currnetIdleAnim.play();
+                        }
+                    }
 
                 default:
                     break;

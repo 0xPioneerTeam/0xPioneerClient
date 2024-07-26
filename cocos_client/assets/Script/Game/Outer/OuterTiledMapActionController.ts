@@ -483,7 +483,7 @@ export class OuterTiledMapActionController extends ViewController {
         }
         // GameMainHelper.instance.tiledMapShadowUpdate(delta);
         //clean pioneer view
-        const selfPioneers = await DataMgr.s.pioneer.getAllPlayers(true);
+        const selfPioneers = await DataMgr.s.pioneer.getAllPlayers();
         let eraseShadowWorldPos = DataMgr.s.eraseShadow.getObj();
         for (const pioneer of selfPioneers) {
             let isExsit: boolean = false;
@@ -609,8 +609,15 @@ export class OuterTiledMapActionController extends ViewController {
 
         // move targetPos
         const taregtPos: Vec2 = v2(tiledPos.x, tiledPos.y);
-        const step = 10;
+        const mainCityGatePos = GameMgr.getMainCityGatePos();
+        let step = 10;
         const speed = 200;
+        if (mainCityGatePos != null) {
+            const tempMovePath = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(mainCityGatePos, taregtPos);
+            if (tempMovePath.canMove) {
+                step = tempMovePath.path.length;
+            }
+        }
         // show action panel
         await this._actionView.show(
             stayBuilding,
@@ -628,6 +635,16 @@ export class OuterTiledMapActionController extends ViewController {
                         .configuration(step, costEnergy, speed, async (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => {
                             const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerId);
                             if (confirmed && currentActionPioneer != undefined) {
+                                if (isReturn) {
+                                    // save return data
+                                    PioneerMgr.addActionOverReturnPioneer(currentActionPioneer.id);
+                                }
+                                let beginPos: Vec2 = null;
+                                if (currentActionPioneer.actionType == MapPioneerActionType.inCity) {
+                                    beginPos = mainCityGatePos;
+                                } else {
+                                    beginPos = currentActionPioneer.stayPos;
+                                }
                                 let sparePositions: Vec2[] = [];
                                 let stayPostions: Vec2[] = [];
                                 if (stayBuilding != null) {
@@ -638,7 +655,7 @@ export class OuterTiledMapActionController extends ViewController {
                                         stayPostions = [stayPioneer.stayPos];
                                     }
                                 }
-                                const movePaths = GameMgr.findTargetLeastMovePath(currentActionPioneer.stayPos, taregtPos, sparePositions, stayPositons);
+                                const movePaths = GameMgr.findTargetLeastMovePath(beginPos, taregtPos, sparePositions, stayPositons);
                                 if (actionType == MapInteractType.Wormhole) {
                                     if (stayBuilding == null) {
                                         return;

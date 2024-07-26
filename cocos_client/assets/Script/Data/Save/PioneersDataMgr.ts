@@ -27,19 +27,11 @@ export class PioneersDataMgr {
         this._initData();
     }
     //-------------- get
-    public getAll(forceShow: boolean = false): MapPioneerObject[] {
-        if (forceShow) {
-            return this._pioneers.filter((p) => p.show == true);
-        } else {
-            return this._pioneers;
-        }
+    public getAll(): MapPioneerObject[] {
+        return this._pioneers;
     }
-    public getAllPlayers(forceShow: boolean = false): MapPlayerPioneerObject[] {
-        if (forceShow) {
-            return this._pioneers.filter((p) => p.show == true && p.type == MapPioneerType.player) as MapPlayerPioneerObject[];
-        } else {
-            return this._pioneers.filter((p) => p.type == MapPioneerType.player) as MapPlayerPioneerObject[];
-        }
+    public getAllPlayers(): MapPlayerPioneerObject[] {
+        return this._pioneers.filter((p) => p.type == MapPioneerType.player) as MapPlayerPioneerObject[];
     }
     public getAllNpcs(forceShow: boolean = false): MapNpcPioneerObject[] {
         if (forceShow) {
@@ -109,6 +101,11 @@ export class PioneersDataMgr {
         if (findPioneer == undefined) return;
         findPioneer.actionType = type;
         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: pioneerId });
+    }
+    public changePos(pioneerId: string, pos: Vec2) {
+        const findPioneer = this.getById(pioneerId);
+        if (findPioneer == undefined) return;
+        findPioneer.stayPos = pos;
     }
     public changeTalk(pioneerId: string, talkId: string) {
         const pioneer = this.getById(pioneerId);

@@ -1,8 +1,8 @@
-import { Vec2 } from "cc";
+import { macro, v2, Vec2 } from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import MapBuildingConfig from "../Config/MapBuildingConfig";
-import { InnerBuildingType } from "../Const/BuildingDefine";
+import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
 import { GAME_ENV_IS_DEBUG, GameExtraEffectType, MapMemberTargetType } from "../Const/ConstDefine";
 import ItemData from "../Const/Item";
 import { MapBuildingObject } from "../Const/MapBuilding";
@@ -181,8 +181,24 @@ export default class GameMgr {
         }
     }
 
+    //-----------------------------------------------------------------
+    // move
+    public getMainCityGatePos(): Vec2 {
+        const buildings = DataMgr.s.mapBuilding.getObj_building();
+        const mainCity = buildings.find((item)=> {
+            return item.type == MapBuildingType.city;
+        });
+        if (mainCity == undefined || mainCity.stayMapPositions.length != 7) {
+            return null;
+        }
+        const centerPos = mainCity.stayMapPositions[3];
+        return v2(centerPos.x, centerPos.y + 2);
+    }
     public findTargetLeastMovePath(beginPos: Vec2, targetPos: Vec2, sparePositions: Vec2[], stayPostions: Vec2[]): TilePos[] {
         let movePaths: TilePos[] = [];
+        if (beginPos == null || targetPos == null) {
+            return movePaths;
+        }
         if (sparePositions.length > 0) {
             // building: find least move path
             let minMovePath = null;
@@ -210,6 +226,8 @@ export default class GameMgr {
         }
         return movePaths;
     }
+
+    //-----------------------------------------------------------------
 
     //--------------------------- effect
     public getEffectShowText(type: GameExtraEffectType, value: number): string {

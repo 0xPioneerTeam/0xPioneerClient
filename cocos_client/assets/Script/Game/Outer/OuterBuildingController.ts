@@ -68,6 +68,22 @@ export class OuterBuildingController extends Component {
 
         this._refreshUI();
 
+
+        this.scheduleOnce(async () => {
+            const mainCity = allBuildings.find((item)=> {
+                return item.type == MapBuildingType.city;
+            });
+            if (mainCity != undefined && mainCity.stayMapPositions.length == 7) {
+                const centerPos = mainCity.stayMapPositions[3];
+                const currentWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(centerPos.x, centerPos.y);
+                GameMainHelper.instance.changeGameCameraWorldPosition(currentWorldPos);
+                // game camera zoom
+                const localOuterMapScale = localStorage.getItem("local_outer_map_scale");
+                if (localOuterMapScale != null) {
+                    GameMainHelper.instance.changeGameCameraZoom(parseFloat(localOuterMapScale));
+                }
+            }
+        });
         // // decorations
         // const decorates = BuildingMgr.getAllDecorate();
         // for (const decorate of decorates) {

@@ -189,7 +189,7 @@ export class MainUI extends ViewController {
             taskButton.active = true;
         }
 
-        pioneerListView.active = GameMainHelper.instance.isGameShowOuter && (DataMgr.s.pioneer.getAllPlayers(true).length > 1 || GAME_ENV_IS_DEBUG);
+        pioneerListView.active = GameMainHelper.instance.isGameShowOuter && (DataMgr.s.pioneer.getAllPlayers().length > 1 || GAME_ENV_IS_DEBUG);
 
         if (!GameMainHelper.instance.isGameShowOuter && UIPanelManger.inst.panelIsShow(UIName.TaskListUI)) {
             UIPanelManger.inst.popPanelByName(UIName.TaskListUI);
@@ -268,24 +268,6 @@ export class MainUI extends ViewController {
     private async onTapSetDefender() {
         GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.pushPanel(UIName.DefenderSetUI);
-    }
-    private async onTapTest() {
-        GameMusicPlayMgr.playTapButtonEffect();
-        const pioneerIds: string[] = ["pioneer_1", "pioneer_2", "pioneer_3"];
-        for (let i = 0; i < pioneerIds.length; i++) {
-            if (DataMgr.s.pioneer.getById(pioneerIds[i], true) == undefined) {
-                continue;
-            }
-            pioneerIds.splice(i, 1);
-            i--;
-        }
-        if (pioneerIds.length > 0) {
-            const randomId = CommonTools.getRandomItem(pioneerIds);
-            NetworkMgr.websocketMsg.player_pioneer_change_show({
-                pioneerId: randomId,
-                show: true,
-            });
-        }
     }
     private onTapRefreshMap() {
         GameMusicPlayMgr.playTapButtonEffect();

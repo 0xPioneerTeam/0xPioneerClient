@@ -58,7 +58,7 @@ export class DefenderSelectUI extends ViewController {
 
         this._datas = [];
         this._pioneerIds = [];
-        const playerDatas = DataMgr.s.pioneer.getAllPlayers(true);
+        const playerDatas = DataMgr.s.pioneer.getAllPlayers();
         for (let i = 0; i < playerDatas.length; i++) {
             let used: boolean = false;
             DataMgr.s.userInfo.data.wormholeDefenderIds.forEach((value: string, key: number) => {
