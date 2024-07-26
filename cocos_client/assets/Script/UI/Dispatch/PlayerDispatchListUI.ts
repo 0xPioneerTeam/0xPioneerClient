@@ -5,11 +5,15 @@ import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import { PlayerInfoItem } from "../View/PlayerInfoItem";
 import { UIName } from "../../Const/ConstUIDefine";
+import { PlayerDispatchDetailUI } from "./PlayerDispatchDetailUI";
+import { MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerDispatchListUI")
 export class PlayerDispatchListUI extends ViewController {
     
+    private _showPlayers: MapPlayerPioneerObject[] = [];
+
     private _playerContentView: Node = null;
     private _playerItem: Node = null;
 
@@ -36,6 +40,7 @@ export class PlayerDispatchListUI extends ViewController {
     }
 
     private _refreshUI() {
+        this._showPlayers = [];
         const players = DataMgr.s.pioneer.getAllPlayers();
         for (const player of players) {
             if (player.NFTId == null) {
@@ -44,7 +49,9 @@ export class PlayerDispatchListUI extends ViewController {
             const view = instantiate(this._playerItem);
             view.setParent(this._playerContentView);
             view.getComponent(PlayerInfoItem).refreshUI(player);
-            view.getComponent(Button).clickEvents[0].customEventData = player.id;
+            view.getComponent(Button).clickEvents[0].customEventData = this._showPlayers.length.toString();
+
+            this._showPlayers.push(player);
         }
        this._playerContentView.getComponent(Layout).updateLayout();
     }
@@ -56,13 +63,14 @@ export class PlayerDispatchListUI extends ViewController {
     }
     private async onTapItem(event: Event, customEvnetData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
-        const player = DataMgr.s.pioneer.getById(customEvnetData);
-        if (player == undefined) {
+        const index = parseInt(customEvnetData);
+        if (index < 0 || index > this._showPlayers.length - 1) {
             return;
         }
         const result = await UIPanelManger.inst.pushPanel(UIName.PlayerDispatchDetailUI);
         if (!result.success) {
             return;
         }
+        result.node.getComponent(PlayerDispatchDetailUI).configuration(this._showPlayers, index);
     }
 }
