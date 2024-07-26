@@ -42,14 +42,17 @@ export enum MapPioneerActionType {
     wakeup = "wakeup",
     idle = "idle",
     defend = "defend",
+    exploring = "exploring",
+    eventStarting = "eventStarting",
+    addingtroops = "addingtroops",
+    wormhole = "wormhole",
+
+    inCity = "inCity",
     moving = "moving",
     mining = "mining",
     fighting = "fighting",
-    exploring = "exploring",
-    eventStarting = "eventStarting",
     eventing = "eventing",
-    addingtroops = "addingtroops",
-    wormhole = "wormhole",
+    staying = "staying",
 }
 
 export enum MapPioneerType {

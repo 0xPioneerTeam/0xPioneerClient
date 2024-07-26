@@ -305,7 +305,13 @@ export class OuterPioneerController extends ViewController {
         const allPioneers = DataMgr.s.pioneer.getAll();
         let changed: boolean = false;
         for (const pioneer of allPioneers) {
-            if (pioneer.show) {
+            let canShow: boolean = pioneer.show;
+            if (pioneer.type == MapPioneerType.player) {
+                if (pioneer.actionType == MapPioneerActionType.inCity) {
+                    canShow = false;
+                } 
+            }
+            if (canShow) {
                 let firstInit: boolean = false;
                 let temple = null;
                 if (this._pioneerMap.has(pioneer.id)) {
@@ -329,22 +335,6 @@ export class OuterPioneerController extends ViewController {
                 if (temple != null) {
                     if (pioneer.type == MapPioneerType.player) {
                         temple.getComponent(MapPioneer).refreshUI(pioneer);
-                        temple.getComponent(MapPioneer).setEventWaitedCallback(async () => {
-                            GameMainHelper.instance.isTapEventWaited = true;
-                            const allBuildings = DataMgr.s.mapBuilding.getObj_building();
-                            for (const building of allBuildings) {
-                                if (building.eventId == pioneer.actionEventId) {
-                                    const currentEvent = EventConfig.getById(building.eventId);
-                                    if (currentEvent != null) {
-                                        const result = await UIPanelManger.inst.pushPanel(UIName.BrachEventUI);
-                                        if (result.success) {
-                                            result.node.getComponent(EventUI).eventUIShow(pioneer.id, building.id, currentEvent);
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-                        });
                     } else if (pioneer.type == MapPioneerType.npc) {
                         temple.getComponent(OuterOtherPioneerView).refreshUI(pioneer);
                     } else if (pioneer.type == MapPioneerType.gangster) {
@@ -699,7 +689,7 @@ export class OuterPioneerController extends ViewController {
             },
             true
         );
-        const intervalId = setInterval(() => {
+        const intervalId = (setInterval(() => {
             if (fightDatas.length <= 0) {
                 if (this._fightDataMap.has(attackerData.id)) {
                     const temp = this._fightDataMap.get(attackerData.id);
@@ -728,7 +718,7 @@ export class OuterPioneerController extends ViewController {
                 },
                 true
             );
-        }, 1000);
+        }, 1000)) as unknown as number;
         this._fightDataMap.set(attackerData.id, {
             isWin: isWin,
             attackerId: attackerData.id,

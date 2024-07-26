@@ -528,10 +528,6 @@ export class OuterTiledMapActionController extends ViewController {
         if (DataMgr.s.userInfo.data.rookieStep != RookieStep.FINISH) {
             this["_actionViewActioned"] = false;
         }
-        const currentActionPioneer = DataMgr.s.pioneer.getCurrentPlayer();
-        if (currentActionPioneer == null) {
-            return;
-        }
         const outPioneerController = this.node.getComponent(OuterPioneerController);
         if (this["_actionViewActioned"] == true) {
             this["_actionViewActioned"] = false;
@@ -540,29 +536,14 @@ export class OuterTiledMapActionController extends ViewController {
         if (this._actionView.isShow) {
             this._actionView.hide();
             this._mapActionCursorView.hide();
-            outPioneerController.hideMovingPioneerAction();
-            outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
+            // outPioneerController.hideMovingPioneerAction();
+            // outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
             return;
         }
-        if (GameMainHelper.instance.isTapEventWaited) {
-            GameMainHelper.instance.isTapEventWaited = false;
-            return;
-        }
+        
         const shadowController = this.node.getComponent(OuterShadowController);
         const tiledPos = GameMainHelper.instance.tiledMapGetTiledPosByWorldPos(worldpos);
         if (shadowController.tiledMapIsAllBlackShadow(tiledPos.x, tiledPos.y)) {
-            return;
-        }
-        // check is dead
-        if (currentActionPioneer.actionType == MapPioneerActionType.dead) {
-            // useLanMgr
-            UIHUDController.showCenterTip(LanMgr.getLanById("203003"));
-            // UIHUDController.showCenterTip("pioneer is dead");
-            return;
-        }
-        // check is busy
-        if (DataMgr.s.pioneer.getCurrentActionIsBusy()) {
-            // UIHUDController.showCenterTip(LanMgr.getLanById("203002"));
             return;
         }
 
@@ -589,22 +570,9 @@ export class OuterTiledMapActionController extends ViewController {
                     // UIHUDController.showCenterTip(LanMgr.getLanById("203005"));
                     return;
                 }
-            } else if (stayBuilding.type == MapBuildingType.event) {
-                if (
-                    currentActionPioneer.actionBuildingId != null &&
-                    currentActionPioneer.actionBuildingId != "") {
-                    return;
-                }
-            } else {
-                if (currentActionPioneer.actionType == MapPioneerActionType.wormhole || currentActionPioneer.actionType == MapPioneerActionType.eventing) {
-                    return;
-                }
             }
             stayPositons = stayBuilding.stayMapPositions;
         } else {
-            if (currentActionPioneer.actionType == MapPioneerActionType.wormhole || currentActionPioneer.actionType == MapPioneerActionType.eventing) {
-                return;
-            }
             isBlock = GameMainHelper.instance.tiledMapIsBlock(v2(tiledPos.x, tiledPos.y));
             if (isBlock) {
                 UIHUDController.showCenterTip(LanMgr.getLanById("203001"));
@@ -612,7 +580,7 @@ export class OuterTiledMapActionController extends ViewController {
             }
             const pioneers = DataMgr.s.pioneer.getByStayPos(v2(tiledPos.x, tiledPos.y), true);
             for (const tempPioneer of pioneers) {
-                if (tempPioneer.id != currentActionPioneer.id) {
+                if (tempPioneer.type != MapPioneerType.player) {
                     stayPioneer = tempPioneer;
                     break;
                 }
@@ -640,86 +608,38 @@ export class OuterTiledMapActionController extends ViewController {
         }
 
         // move targetPos
-        let taregtPos: Vec2 = v2(tiledPos.x, tiledPos.y);
-        let sparePositions: Vec2[] = [];
-        let targetStayPositions: Vec2[] = [];
-        if (stayBuilding != null) {
-            sparePositions = stayBuilding.stayMapPositions;
-            targetStayPositions = stayBuilding.stayMapPositions;
-        } else if (stayPioneer != null) {
-            if (stayPioneer.type == MapPioneerType.player || stayPioneer.type == MapPioneerType.npc) {
-                targetStayPositions = [stayPioneer.stayPos];
-            }
-        }
-
-        const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
-        let movePaths: TilePos[] = [];
-        if (rookieStep == RookieStep.WORMHOLE_ATTACK) {
-            movePaths = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(
-                currentActionPioneer.stayPos,
-                v2(stayBuilding.stayMapPositions[0].x, stayBuilding.stayMapPositions[0].y + 2),
-                targetStayPositions
-            ).path;
-        } else {
-            if (sparePositions.length > 0) {
-                // building: find least move path
-                let minMovePath = null;
-                for (const templePos of sparePositions) {
-                    const templePath = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(currentActionPioneer.stayPos, templePos, targetStayPositions);
-                    if (templePath.canMove) {
-                        if (minMovePath == null) {
-                            minMovePath = templePath.path;
-                        } else {
-                            if (minMovePath.length > templePath.path.length) {
-                                minMovePath = templePath.path;
-                            }
-                        }
-                    }
-                }
-                if (minMovePath != null) {
-                    movePaths = minMovePath;
-                }
-            } else {
-                // pioneer or land
-                const toPosMoveData = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(currentActionPioneer.stayPos, taregtPos, targetStayPositions);
-                if (toPosMoveData.canMove) {
-                    movePaths = toPosMoveData.path;
-                }
-            }
-        }
-        // show move path
-        outPioneerController.showPioneerFootStep(currentActionPioneer.id, movePaths);
-
-        this["_actionViewFootStepPioneerId"] = currentActionPioneer.id;
+        const taregtPos: Vec2 = v2(tiledPos.x, tiledPos.y);
+        const step = 10;
+        const speed = 200;
         // show action panel
         await this._actionView.show(
-            currentActionPioneer.id,
             stayBuilding,
             stayPioneer,
             taregtPos,
             targetWorldPos,
-            movePaths.length,
+            step,
             async (actionType: MapInteractType, targetName: string, costEnergy: number) => {
                 this["_actionViewActioned"] = true;
                 this._mouseDown = false;
-                if (actionType == null && targetName == null && costEnergy == null) {
-                    outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
-                    return;
-                }
-                if (costEnergy > 0) {
-                    let ownEnergy: number = currentActionPioneer.energy;
-                    if (ownEnergy < costEnergy) {
-                        outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
-                        GameMgr.showBuyEnergyTip(currentActionPioneer.id);
-                        return;
-                    }
-                }
                 const result = await UIPanelManger.inst.pushPanel(UIName.DispatchUI);
                 if (result.success) {
                     result.node
                         .getComponent(DispatchUI)
-                        .configuration(taregtPos, targetName, movePaths.length, costEnergy, currentActionPioneer.speed, async (confirmed: boolean, isReturn: boolean) => {
-                            if (confirmed) {
+                        .configuration(step, costEnergy, speed, async (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => {
+                            const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerId);
+                            console.log("exce cur:", currentActionPioneer);
+                            if (confirmed && currentActionPioneer != undefined) {
+                                let sparePositions: Vec2[] = [];
+                                let stayPostions: Vec2[] = [];
+                                if (stayBuilding != null) {
+                                    sparePositions = stayBuilding.stayMapPositions;
+                                    stayPostions = stayBuilding.stayMapPositions;
+                                } else if (stayPioneer != null) {
+                                    if (stayPioneer.type == MapPioneerType.player || stayPioneer.type == MapPioneerType.npc) {
+                                        stayPostions = [stayPioneer.stayPos];
+                                    }
+                                }
+                                const movePaths = GameMgr.findTargetLeastMovePath(currentActionPioneer.stayPos, taregtPos, sparePositions, stayPositons);
                                 if (actionType == MapInteractType.Wormhole) {
                                     if (stayBuilding == null) {
                                         return;
@@ -758,12 +678,11 @@ export class OuterTiledMapActionController extends ViewController {
                                             }
                                         },
                                         () => {
-                                            outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
+                                            // outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
                                         }
                                     );
                                     return;
                                 }
-
                                 if (actionType == MapInteractType.CampOut) {
                                     for (const temple of DataMgr.s.mapBuilding.getWormholeBuildings()) {
                                         const wormObj = temple as MapBuildingWormholeObject;
@@ -803,10 +722,10 @@ export class OuterTiledMapActionController extends ViewController {
                                     });
                                 }
                             } else {
-                                outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
+                                // outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
                             }
                             this._mapActionCursorView.hide();
-                            outPioneerController.hideMovingPioneerAction();
+                            // outPioneerController.hideMovingPioneerAction();
                         });
                 }
             }
@@ -1115,9 +1034,6 @@ export class OuterTiledMapActionController extends ViewController {
         this._eraseMainCityShadow();
     }
     private _onHideActionView() {
-        if (this["_actionViewFootStepPioneerId"] == null) {
-            return;
-        }
         if (this["_actionViewActioned"] == true) {
             this["_actionViewActioned"] = false;
             return;
@@ -1125,10 +1041,6 @@ export class OuterTiledMapActionController extends ViewController {
         if (this._actionView.isShow) {
             this._actionView.hide();
             this._mapActionCursorView.hide();
-            const outPioneerController = this.node.getComponent(OuterPioneerController);
-            outPioneerController.hideMovingPioneerAction();
-            outPioneerController.clearPioneerFootStep(this["_actionViewFootStepPioneerId"]);
-            this["_actionViewFootStepPioneerId"] = null;
         }
     }
 }

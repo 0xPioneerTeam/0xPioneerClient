@@ -24,6 +24,7 @@ import { HUDName, UIName } from "../Const/ConstUIDefine";
 import { AlterView } from "../UI/View/AlterView";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import { UIHUDController } from "../UI/UIHUDController";
+import { TilePos } from "../Game/TiledMap/TileTool";
 
 export default class GameMgr {
     public rookieTaskExplainIsShow: boolean = false;
@@ -178,6 +179,36 @@ export default class GameMgr {
                 interactPioneerId: interactPioneerId,
             });
         }
+    }
+
+    public findTargetLeastMovePath(beginPos: Vec2, targetPos: Vec2, sparePositions: Vec2[], stayPostions: Vec2[]): TilePos[] {
+        let movePaths: TilePos[] = [];
+        if (sparePositions.length > 0) {
+            // building: find least move path
+            let minMovePath = null;
+            for (const templePos of sparePositions) {
+                const templePath = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(beginPos, templePos, stayPostions);
+                if (templePath.canMove) {
+                    if (minMovePath == null) {
+                        minMovePath = templePath.path;
+                    } else {
+                        if (minMovePath.length > templePath.path.length) {
+                            minMovePath = templePath.path;
+                        }
+                    }
+                }
+            }
+            if (minMovePath != null) {
+                movePaths = minMovePath;
+            }
+        } else {
+            // pioneer or land
+            const toPosMoveData = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(beginPos, targetPos, stayPostions);
+            if (toPosMoveData.canMove) {
+                movePaths = toPosMoveData.path;
+            }
+        }
+        return movePaths;
     }
 
     //--------------------------- effect

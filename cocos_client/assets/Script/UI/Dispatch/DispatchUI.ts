@@ -15,7 +15,7 @@ export class DispatchUI extends ViewController {
     private _step: number = 0;
     private _costEnergy: number = 0;
     private _moveSpeed: number = 0;
-    private _actionCallback: (confirmed: boolean, isReturn: boolean) => void = null;
+    private _actionCallback: (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => void = null;
 
     private _timeLabel: Label = null;
     private _returnCheck: Toggle = null;
@@ -24,7 +24,7 @@ export class DispatchUI extends ViewController {
     private _playerContentView: Node = null;
     private _playerItem: Node = null;
 
-    public configuration(targetPos: Vec2, targetName: string, step: number, costEnergy, moveSpeed: number, actionCallback: (confirmed: boolean, isReturn: boolean) => void) {
+    public configuration(step: number, costEnergy, moveSpeed: number, actionCallback: (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => void) {
         this._step = step;
         this._costEnergy = costEnergy;
         this._moveSpeed = moveSpeed;
@@ -85,7 +85,7 @@ export class DispatchUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
         if (this._actionCallback != null) {
-            this._actionCallback(false, false);
+            this._actionCallback(false, null, false);
         }
     }
     private onTapList() {
@@ -104,7 +104,7 @@ export class DispatchUI extends ViewController {
         UIPanelManger.inst.popPanel(this.node);
         if (player.energy)
         if (this._actionCallback != null) {
-            this._actionCallback(true, this._returnCheck.isChecked);
+            this._actionCallback(true, player.id, this._returnCheck.isChecked);
         }
     }
 }

@@ -260,9 +260,6 @@ export class MapPioneer extends Component {
             }
         }
     }
-    public setEventWaitedCallback(callback: () => void) {
-        this._eventWaitedCallback = callback;
-    }
 
     public isMoving() {
         if (this._model == null) {
@@ -300,8 +297,6 @@ export class MapPioneer extends Component {
 
         this._playingView.push(animView);
     }
-    private _eventWaitedCallback: () => void = null;
-
     private _playingView: Node[] = [];
     private _resourceAnimView: Node = null;
 
@@ -391,14 +386,6 @@ export class MapPioneer extends Component {
         //     this._eventWaitedView.active = currentTimeStamp >= this._model.actionEndTimeStamp;
         //     this._eventingView.active = currentTimeStamp < this._model.actionEndTimeStamp;
         // }
-    }
-
-    //----------------- event
-    private onTapEventWaited(event: Event) {
-        GameMusicPlayMgr.playTapButtonEffect();
-        if (this._eventWaitedCallback != null) {
-            this._eventWaitedCallback();
-        }
     }
 
     //----------------- notificaiton

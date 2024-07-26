@@ -25,7 +25,6 @@ export class ResOprView extends Component {
     private _actionItemContent: Node = null;
 
     public async show(
-        actionPioneerId: string,
         interactBuilding: MapBuildingObject,
         interactPioneer: MapPioneerObject,
         targetPos: Vec2,
@@ -149,12 +148,12 @@ export class ResOprView extends Component {
             } else if (interactBuilding.type == MapBuildingType.wormhole) {
                 const wormholeObj = interactBuilding as MapBuildingWormholeObject;
                 let playerIsInWormhole: boolean = false;
-                for (let [key, value] of wormholeObj.attacker) {
-                    if (value == actionPioneerId) {
-                        playerIsInWormhole = true;
-                        break;
-                    }
-                }
+                // for (let [key, value] of wormholeObj.attacker) {
+                //     if (value == actionPioneerId) {
+                //         playerIsInWormhole = true;
+                //         break;
+                //     }
+                // }
 
                 actionTypes.push(MapInteractType.Wormhole);
                 if (playerIsInWormhole) {
