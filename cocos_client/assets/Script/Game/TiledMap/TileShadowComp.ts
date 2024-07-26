@@ -36,13 +36,16 @@ export class TileShadowComp extends Component {
         } else {
             this._spComp = this.node.addComponent(Sprite);
         }
+        this._spComp.trim = true;
+        this._spComp.type = Sprite.Type.SIMPLE;
+        this._spComp.sizeMode = Sprite.SizeMode.TRIMMED;
         let uiCom = this.node.getComponent(UITransform);
         if (uiCom) {
             this._uiComp = uiCom;
         } else {
             this._uiComp = this.node.addComponent(UITransform);
-            this._uiComp.setContentSize(128, 256);
-            this._uiComp.anchorY = 0.25;
+            this._uiComp.setContentSize(128, 128);
+            this._uiComp.anchorY = 0.5;
         }
     }
 
@@ -56,15 +59,12 @@ export class TileShadowComp extends Component {
             this._spComp.spriteFrame = null;
         } else {
             this._spComp.spriteFrame = TileMapHelper.INS.getTileGridSpriteframeByGrid(grid);
-            this._spComp.trim = true;
-            this._spComp.type = Sprite.Type.SIMPLE;
             if(grid == 75){
                 this.node.setScale(1.01, 1);
             }else{
                 this.node.setScale(1, 1);
             }
-            this._spComp.sizeMode = Sprite.SizeMode.CUSTOM;
-            this._uiComp.anchorY = 0.25;
+            this._uiComp.anchorY = 0.5;
         }
     }
 

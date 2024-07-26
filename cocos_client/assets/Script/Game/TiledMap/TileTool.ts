@@ -1,4 +1,4 @@
-import { instantiate, Intersection2D, Node, Prefab, SpriteFrame, TiledLayer, TiledMap, v2, v3, Vec2, Vec3 } from "cc";
+import { instantiate, Intersection2D, Node, Prefab, size, SpriteFrame, TiledLayer, TiledMap, v2, v3, Vec2, Vec3 } from "cc";
 import { TileShadowComp } from "./TileShadowComp";
 import { Rect } from "cc";
 
@@ -151,8 +151,13 @@ export class TileMapHelper {
         }
         spriteFrame = gridInfo.spriteFrame.clone();
         spriteFrame.rotated = gridInfo._rotated!;
-        spriteFrame.rect = gridInfo._rect!;
-        spriteFrame.offset = v2(gridInfo.offsetX, gridInfo.offsetY);
+        let rect = gridInfo._rect!.clone();
+        if(rect.height == 256 && rect.width == 128){
+            rect.y = rect.y + 128;
+            rect.height = 128;
+        }
+        spriteFrame.rect = rect;
+        spriteFrame.originalSize = size(128,128);
         this._tileGridSpriteframe[grid] = spriteFrame;
         return spriteFrame;
     }
