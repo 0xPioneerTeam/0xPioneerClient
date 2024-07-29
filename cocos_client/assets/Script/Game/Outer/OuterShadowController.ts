@@ -43,13 +43,13 @@ export class OuterShadowController extends ViewController {
         if(!pos1 || !pos2){
             return;
         }
+        // console.log("refreshUI:" + pos1.x + "," + pos1.y + "->" + pos2.x + "," + pos2.y);
         let bigSize = 2;
         let px1 = pos1.x - bigSize;
         let px2 = pos2.x + bigSize;
         let py1 = pos1.y + bigSize;
         let py2 = pos2.y - bigSize;
         let updateMap: { [uuid: string]: boolean } = {};
-        // console.log("refreshUI:" + pos1.x + "," + pos1.y + "->" + pos2.x + "," + pos2.y);
         for (let x = px1; x <= px2; x++) {
             for (let y = py2; y <= py1; y++) {
                 let x_yKey = x + '_' + y;

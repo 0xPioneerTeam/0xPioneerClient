@@ -236,9 +236,6 @@ export class TileMapHelper {
     }
 
     getPosByPixelPos(pixel: Vec3): TilePos {
-        let worldMatrix = this._tilemap.node.worldMatrix;
-        Vec3.transformMat4(_vec3_temp, pixel, worldMatrix);
-
         let wxfornode = pixel.x;
         let wyfornode = -pixel.y;
 
@@ -257,7 +254,7 @@ export class TileMapHelper {
         poss.push(this.getPos(x1 + 1, y1 + 1));
         for (let i = 0; i < poss.length; i++) {
             let p = poss[i];
-            if (p.constained(_vec3_temp.x, _vec3_temp.y)) {
+            if (p.constained(pixel.x, pixel.y)) {
                 return p;
             }
         }
