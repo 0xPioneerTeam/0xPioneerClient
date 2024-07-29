@@ -91,9 +91,18 @@ export default class PioneerMgr {
             this._movingTargetDataMap.set(pioneerId, { target: target, id: id });
         }
     }
+    //----------------------- return action
+    public doActionOverRetrun(pioneerId: string) {
+        const index = this._actionOverReturnPioneerIds.indexOf(pioneerId);
+        if (index != -1) {
+            this._actionOverReturnPioneerIds.splice(index, 1);
+            DataMgr.s.pioneer.changeActionType(pioneerId, MapPioneerActionType.inCity);
+            DataMgr.s.pioneer.changePos(pioneerId, GameMgr.getMainCityGatePos());
+        }
+    }
     public addActionOverReturnPioneer(pioneerId: string) {
         this._actionOverReturnPioneerIds.push(pioneerId);
-    }   
+    }
 
     private _movingTargetDataMap: Map<string, { target: MapMemberTargetType; id: string }> = new Map();
     private _actionOverReturnPioneerIds: string[] = [];
@@ -138,7 +147,7 @@ export default class PioneerMgr {
             }
             let interactPioneer: MapPioneerObject = null;
             for (const stayPioneer of stayPioneers) {
-                if (movingTargetData != null &&  stayPioneer.id == movingTargetData.id) {
+                if (movingTargetData != null && stayPioneer.id == movingTargetData.id) {
                     interactPioneer = stayPioneer;
                     break;
                 }
@@ -171,12 +180,7 @@ export default class PioneerMgr {
                     }, interactDelayTime);
                 }
             } else {
-                const aciontPioneerIsRetrunIndex = this._actionOverReturnPioneerIds.indexOf(pioneerId);
-                if (aciontPioneerIsRetrunIndex != -1) {
-                    this._actionOverReturnPioneerIds.splice(aciontPioneerIsRetrunIndex, 1);
-                    pioneerDataMgr.changeActionType(pioneerId, MapPioneerActionType.inCity);
-                    pioneerDataMgr.changePos(pioneerId, GameMgr.getMainCityGatePos());
-                }
+                this.doActionOverRetrun(pioneerId);
             }
         } else {
             // building
@@ -281,7 +285,14 @@ export default class PioneerMgr {
             } else if (stayBuilding.type == MapBuildingType.resource) {
                 if (pioneer.type == MapPioneerType.player && pioneer.faction != MapMemberFactionType.enemy) {
                     setTimeout(() => {
-                        NetworkMgr.websocketMsg.player_gather_start({ pioneerId: pioneerId, resourceBuildingId: stayBuilding.id });
+                        const isRetrun: boolean = this._actionOverReturnPioneerIds.indexOf(pioneerId) != -1;
+                        console.log("exce isR: " + isRetrun);
+                        NetworkMgr.websocketMsg.player_gather_start({
+                            pioneerId: pioneerId,
+                            resourceBuildingId: stayBuilding.id,
+                            feeTxhash: "",
+                            isReturn: isRetrun,
+                        });
                     }, interactDelayTime);
                 } else {
                 }

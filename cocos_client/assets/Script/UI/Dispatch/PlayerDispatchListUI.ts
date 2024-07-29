@@ -7,11 +7,12 @@ import { PlayerInfoItem } from "../View/PlayerInfoItem";
 import { UIName } from "../../Const/ConstUIDefine";
 import { PlayerDispatchDetailUI } from "./PlayerDispatchDetailUI";
 import { MapPlayerPioneerObject } from "../../Const/PioneerDefine";
+import NotificationMgr from "../../Basic/NotificationMgr";
+import { NotificationName } from "../../Const/Notification";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerDispatchListUI")
 export class PlayerDispatchListUI extends ViewController {
-    
     private _showPlayers: MapPlayerPioneerObject[] = [];
 
     private _playerContentView: Node = null;
@@ -29,6 +30,14 @@ export class PlayerDispatchListUI extends ViewController {
         super.viewDidStart();
 
         this._refreshUI();
+
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
+    }
+
+    protected viewDidDestroy(): void {
+        super.viewDidDestroy();
+
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
     }
 
     protected viewPopAnimation(): boolean {
@@ -40,6 +49,8 @@ export class PlayerDispatchListUI extends ViewController {
     }
 
     private _refreshUI() {
+        this._playerContentView.removeAllChildren();
+
         this._showPlayers = [];
         const players = DataMgr.s.pioneer.getAllPlayers();
         for (const player of players) {
@@ -53,7 +64,7 @@ export class PlayerDispatchListUI extends ViewController {
 
             this._showPlayers.push(player);
         }
-       this._playerContentView.getComponent(Layout).updateLayout();
+        this._playerContentView.getComponent(Layout).updateLayout();
     }
     //-------------------------- action
     private async onTapClose() {
@@ -72,5 +83,10 @@ export class PlayerDispatchListUI extends ViewController {
             return;
         }
         result.node.getComponent(PlayerDispatchDetailUI).configuration(this._showPlayers, index);
+    }
+
+    //------------------------ notification
+    private _onPioneerHpChange() {
+        this._refreshUI();
     }
 }

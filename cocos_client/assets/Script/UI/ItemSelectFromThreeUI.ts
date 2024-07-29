@@ -19,22 +19,19 @@ import {
     Color,
     pingPong,
 } from "cc";
-import { GameRankColor, GetPropRankColor, ResourceCorrespondingItem } from "../Const/ConstDefine";
+import { GameRankColor, ResourceCorrespondingItem } from "../Const/ConstDefine";
 import { ArtifactItem } from "./ArtifactItem";
-import { ArtifactMgr, ItemMgr, LanMgr } from "../Utils/Global";
+import { LanMgr } from "../Utils/Global";
 import ArtifactData from "../Model/ArtifactData";
 import ViewController from "../BasicView/ViewController";
 import { HUDName, UIName } from "../Const/ConstUIDefine";
-import { ArtifactInfoUI } from "./ArtifactInfoUI";
 import { UIHUDController } from "./UIHUDController";
 import ArtifactConfig from "../Config/ArtifactConfig";
 import ArtifactEffectConfig from "../Config/ArtifactEffectConfig";
-import DropConfig from "../Config/DropConfig";
-import { DropConfigData } from "../Const/Drop";
 import ItemData, { ItemConfigType } from "../Const/Item";
 import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
-import { s2c_user, share } from "../Net/msg/WebsocketMsg";
+import { share } from "../Net/msg/WebsocketMsg";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import ItemConfig from "../Config/ItemConfig";
