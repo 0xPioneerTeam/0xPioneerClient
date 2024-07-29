@@ -170,10 +170,10 @@ export class TileMapHelper {
             let tilePos = new TilePos();
             tilePos.x = x;
             tilePos.y = y;
-            
-            tilePos.calc_x = x - Math.floor(y / 2);
+
+            tilePos.calc_x = x - Math.trunc(y / 2);
             tilePos.calc_y = y;
-            tilePos.calc_z = tilePos.calc_x - tilePos.calc_y;
+            tilePos.calc_z = 0 - tilePos.calc_x - tilePos.calc_y;
 
             let pixelx = (x + 0.5) * this.tilewidth;
             var cross = y % 2 != 0;

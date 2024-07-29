@@ -163,7 +163,10 @@ export class OuterShadowController extends ViewController {
         for (var y = pos.y - extlen; y <= pos.y + extlen; y++) {
             for (var x = pos.x - extlen; x <= pos.x + extlen; x++) {
                 var gpos = TileMapHelper.INS.getPos(x, y);
-                // console.log("calcpos=" + x + "," + y + "," + z + "->" + gpos.x + "," + gpos.y);
+                var len = TileMapHelper.INS.Path_DistPos(pos, gpos);
+                if (len > extlen) {
+                    continue;
+                }
                 if (gpos != null) {
                     if (vx > gpos.x) vx = gpos.x;
                     if (vy > gpos.y) vy = gpos.y;
@@ -228,7 +231,7 @@ export class OuterShadowController extends ViewController {
         if (s) {
             return s.grid == this._shadowtag;
         }
-        return false;
+        return true;
     }
 
     Shadow_GetClearedTiledPositons(): TilePos[] {
