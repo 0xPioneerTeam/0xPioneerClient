@@ -77,38 +77,61 @@ export class NFTInfoUI extends ViewController {
 
         const content = this.node.getChildByPath("__ViewContent");
         // name
-        content.getChildByPath("Name/Name").getComponent(Label).string = data.name;
-
+        content.getChildByPath("Shadow/Name").getComponent(Label).string =
+          data.name;
+        content
+          .getChildByPath("Title")
+          .getComponent(Label).string = `Pioneer - ${data.name}`;
         // role
-        content.getChildByPath("Shadow/Role").getComponent(Sprite).spriteFrame = await ItemMgr.getNFTIcon(data.skin);
+        content.getChildByPath("Shadow/Role").getComponent(Sprite).spriteFrame =
+          await ItemMgr.getNFTIcon(data.skin);
 
         // base property
         // userlanMgr
         // content.getChildByPath("BaseProperty/Attack/Title").getComponent(Label).string = LanMgr.getLanById("201003");
-        content.getChildByPath("BaseProperty/Attack/Value").getComponent(Label).string = data.attack.toString();
+        content
+          .getChildByPath("BaseProperty/Attack/Value")
+          .getComponent(Label).string = data.attack.toString();
 
         // userlanMgr
         // content.getChildByPath("BaseProperty/Defense/Title").getComponent(Label).string = LanMgr.getLanById("201003");
-        content.getChildByPath("BaseProperty/Defense/Value").getComponent(Label).string = data.defense.toString();
+        content
+          .getChildByPath("BaseProperty/Defense/Value")
+          .getComponent(Label).string = data.defense.toString();
 
         // userlanMgr
         // content.getChildByPath("BaseProperty/Hp/Title").getComponent(Label).string = LanMgr.getLanById("201003");
-        content.getChildByPath("BaseProperty/Hp/Value").getComponent(Label).string = data.hp.toString();
+        content
+          .getChildByPath("BaseProperty/Hp/Value")
+          .getComponent(Label).string = data.hp.toString();
 
         // userlanMgr
         // content.getChildByPath("BaseProperty/Speed/Title").getComponent(Label).string = LanMgr.getLanById("201003");
-        content.getChildByPath("BaseProperty/Speed/Value").getComponent(Label).string = data.speed.toString();
+        content
+          .getChildByPath("BaseProperty/Speed/Value")
+          .getComponent(Label).string = data.speed.toString();
 
         // userlanMgr
         // content.getChildByPath("BaseProperty/Int/Title").getComponent(Label).string = LanMgr.getLanById("201003");
-        content.getChildByPath("BaseProperty/Int/Value").getComponent(Label).string = data.iq.toString();
+        content
+          .getChildByPath("BaseProperty/Int/Value")
+          .getComponent(Label).string = data.iq.toString();
+
+        // user fight power
+        content.getChildByPath("Name/fight_power").getComponent(Label).string =
+          (
+            Math.floor(
+              (75 * data.attack + 12 * data.hp + 100 * data.defense) * 10
+            ) / 10
+          ).toString();
 
         // level
         content.getChildByPath("Level/Label").getComponent(Label).string = "Lv." + data.level;
         content.getChildByPath("Level/Btn").active = data.level < data.levelLimit;
         content.getChildByPath("Level/Max").active = data.level >= data.levelLimit;
         // rank
-        content.getChildByPath("Rank/Label").getComponent(Label).string = "Rank. " + data.rank;
+        content.getChildByPath("Rank/Label").getComponent(Label).string =
+          "Rank." + data.rank;
         content.getChildByPath("Rank/Btn").active = data.rank < data.rankLimit;
         content.getChildByPath("Rank/Max").active = data.rank >= data.rankLimit;
 
