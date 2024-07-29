@@ -152,12 +152,12 @@ export class TileMapHelper {
         spriteFrame = gridInfo.spriteFrame.clone();
         spriteFrame.rotated = gridInfo._rotated!;
         let rect = gridInfo._rect!.clone();
-        if(rect.height == 256 && rect.width == 128){
+        if (rect.height == 256 && rect.width == 128) {
             rect.y = rect.y + 128;
             rect.height = 128;
         }
         spriteFrame.rect = rect;
-        spriteFrame.originalSize = size(128,128);
+        spriteFrame.originalSize = size(128, 128);
         this._tileGridSpriteframe[grid] = spriteFrame;
         return spriteFrame;
     }
@@ -170,9 +170,10 @@ export class TileMapHelper {
             let tilePos = new TilePos();
             tilePos.x = x;
             tilePos.y = y;
-            tilePos.calc_x = x;
+            
+            tilePos.calc_x = x - Math.floor(y / 2);
             tilePos.calc_y = y;
-            tilePos.calc_z = 0;
+            tilePos.calc_z = tilePos.calc_x - tilePos.calc_y;
 
             let pixelx = (x + 0.5) * this.tilewidth;
             var cross = y % 2 != 0;
