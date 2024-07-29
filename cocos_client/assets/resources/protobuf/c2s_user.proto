@@ -102,6 +102,11 @@ message player_psyc_to_energy {
     required string pioneerId = 1;
     required uint32 psycNum = 2;
 }
+// player: troop2hp
+message player_troop_to_hp {
+    required string pioneerId = 1;
+    required uint32 troopNum = 2;
+}
 
 
 // ------ pioneer ------
@@ -126,6 +131,7 @@ message player_gather_start {
     required string pioneerId = 1;
     required string resourceBuildingId = 2;
     required string feeTxhash = 3;
+    required bool isReturn = 4;
 }
 // pioneer: explore
 message player_explore_start {
@@ -145,6 +151,7 @@ message player_explore_gangster_start {
 message player_fight_start {
     required string attackerId = 1;
     required string defenderId = 2;
+    required bool isReturn = 4;
 }
 // pioneer: event
 message player_event_start {

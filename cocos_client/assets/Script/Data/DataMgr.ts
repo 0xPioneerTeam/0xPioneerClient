@@ -391,6 +391,7 @@ export class DataMgr {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: newData.id });
                         if (oldData.actionType == MapPioneerActionType.mining && oldData.actionBuildingId != null) {
                             // mining over
+                            PioneerMgr.doActionOverRetrun(newData.id);
                             const resourceData = GameMgr.getResourceBuildingRewardAndQuotaMax(DataMgr.s.mapBuilding.getBuildingById(oldData.actionBuildingId));
                             if (resourceData != null) {
                                 NotificationMgr.triggerEvent(NotificationName.MINING_FINISHED, {
@@ -451,7 +452,7 @@ export class DataMgr {
                     }
                     // hp
                     if (oldData.hp != newData.hp || oldData.hpMax != newData.hpMax) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED, { pioneerId: newData.id });
                         if (oldData.actionType != MapPioneerActionType.dead && newData.hp > oldData.hp && newData.hpMax == oldData.hpMax) {
                             //re heal
                             NotificationMgr.triggerEvent(

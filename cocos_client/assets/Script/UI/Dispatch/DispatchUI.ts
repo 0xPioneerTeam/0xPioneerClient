@@ -8,6 +8,9 @@ import { MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 import GameMainHelper from "../../Game/Helper/GameMainHelper";
 import CommonTools from "../../Tool/CommonTools";
 import { UIName } from "../../Const/ConstUIDefine";
+import NotificationMgr from "../../Basic/NotificationMgr";
+import { NotificationName } from "../../Const/Notification";
+import { LanMgr } from "../../Utils/Global";
 const { ccclass, property } = _decorator;
 
 @ccclass("DispatchUI")
@@ -26,7 +29,12 @@ export class DispatchUI extends ViewController {
     private _playerContentView: Node = null;
     private _playerItem: Node = null;
 
-    public configuration(step: number, costEnergy, moveSpeed: number, actionCallback: (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => void) {
+    public configuration(
+        step: number,
+        costEnergy,
+        moveSpeed: number,
+        actionCallback: (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => void
+    ) {
         this._step = step;
         this._costEnergy = costEnergy;
         this._moveSpeed = moveSpeed;
@@ -48,11 +56,20 @@ export class DispatchUI extends ViewController {
 
     protected viewDidStart(): void {
         super.viewDidStart();
+
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
+    }
+
+    protected viewDidDestroy(): void {
+        super.viewDidDestroy();
+
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
     }
 
     private _refreshUI() {
-        
         this._refreshEnergyAndTime();
+
+        this._playerContentView.removeAllChildren();
 
         const players = DataMgr.s.pioneer.getAllPlayers();
         let playerCount = 0;
@@ -76,7 +93,7 @@ export class DispatchUI extends ViewController {
     private _refreshEnergyAndTime() {
         const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / this._moveSpeed;
         this._timeLabel.string = CommonTools.formatSeconds(perStepTime * this._step * (this._isReturn ? 1 : 1));
-    
+
         this._returnSwitchButton.getChildByPath("Return").active = this._isReturn;
         this._returnSwitchButton.getChildByPath("OneWay").active = !this._isReturn;
 
@@ -106,9 +123,24 @@ export class DispatchUI extends ViewController {
         if (player == undefined) {
             return;
         }
+        if (player.hp <= 0) {
+            // NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106009"));
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient troops");
+            return;
+        }
+        if (player.energy < this._costEnergy) {
+            // NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106009"));
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient troops");
+            return;
+        }
         UIPanelManger.inst.popPanel(this.node);
         if (this._actionCallback != null) {
             this._actionCallback(true, player.id, this._isReturn);
         }
+    }
+
+    //----------------------------------------------- notification
+    private _onPioneerHpChange() {
+        this._refreshUI();
     }
 }

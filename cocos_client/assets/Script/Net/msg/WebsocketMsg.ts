@@ -96,6 +96,9 @@ export class WebsocketMsg {
     public get_mapbuilding_info(d: c2s_user.Iget_mapbuilding_info) {
         this.send_packet("get_mapbuilding_info", d);
     }
+    public player_troop_to_hp(d: c2s_user.Iplayer_troop_to_hp) {
+        this.send_packet("player_troop_to_hp", d);
+    }
     public player_move(d: c2s_user.Iplayer_move) {
         this.send_packet("player_move", d);
     }
@@ -298,6 +301,10 @@ export namespace c2s_user {
     export interface Iget_mapbuilding_info {
         mapbuildingIds: string[];
     }
+    export interface Iplayer_troop_to_hp {
+        pioneerId: string;
+        troopNum: number;
+    }
     export interface Iplayer_move {
         pioneerId: string;
         movePath: share.pos2d[];
@@ -312,6 +319,8 @@ export namespace c2s_user {
     export interface Iplayer_gather_start {
         pioneerId: string;
         resourceBuildingId: string;
+        feeTxhash: string;
+        isReturn: boolean;
     }
 
     export interface Iplayer_explore_start {

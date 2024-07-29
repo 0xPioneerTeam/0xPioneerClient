@@ -144,6 +144,11 @@ message player_psyc_to_energy_res {
     required int32 res = 1;
     optional string pioneerId = 2;
 }
+// player: troop2hp
+message player_troop_to_hp_res {
+    required int32 res = 1;
+    optional string pioneerId = 2;
+}
 // player: notify
 message player_exp_change {
     required int32 addExp = 1; // exp change value

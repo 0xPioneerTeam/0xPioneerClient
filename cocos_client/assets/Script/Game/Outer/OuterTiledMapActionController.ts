@@ -639,23 +639,18 @@ export class OuterTiledMapActionController extends ViewController {
                                     // save return data
                                     PioneerMgr.addActionOverReturnPioneer(currentActionPioneer.id);
                                 }
-                                let beginPos: Vec2 = null;
-                                if (currentActionPioneer.actionType == MapPioneerActionType.inCity) {
-                                    beginPos = mainCityGatePos;
-                                } else {
-                                    beginPos = currentActionPioneer.stayPos;
-                                }
+                                let beginPos: Vec2 = currentActionPioneer.stayPos;
                                 let sparePositions: Vec2[] = [];
-                                let stayPostions: Vec2[] = [];
+                                let targetStayPostions: Vec2[] = [];
                                 if (stayBuilding != null) {
                                     sparePositions = stayBuilding.stayMapPositions;
-                                    stayPostions = stayBuilding.stayMapPositions;
+                                    targetStayPostions = stayBuilding.stayMapPositions;
                                 } else if (stayPioneer != null) {
                                     if (stayPioneer.type == MapPioneerType.player || stayPioneer.type == MapPioneerType.npc) {
-                                        stayPostions = [stayPioneer.stayPos];
+                                        targetStayPostions = [stayPioneer.stayPos];
                                     }
                                 }
-                                const movePaths = GameMgr.findTargetLeastMovePath(beginPos, taregtPos, sparePositions, stayPositons);
+                                const movePaths = GameMgr.findTargetLeastMovePath(beginPos, taregtPos, sparePositions, targetStayPostions);
                                 if (actionType == MapInteractType.Wormhole) {
                                     if (stayBuilding == null) {
                                         return;

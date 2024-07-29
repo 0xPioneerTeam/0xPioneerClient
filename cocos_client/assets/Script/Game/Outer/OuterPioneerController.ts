@@ -309,9 +309,6 @@ export class OuterPioneerController extends ViewController {
             let canShow: boolean = pioneer.show;
             if (pioneer.type == MapPioneerType.player) {
                 canShow = pioneer.actionType != MapPioneerActionType.inCity;
-                if (pioneer.actionType == MapPioneerActionType.inCity) {
-                    pioneer.stayPos = GameMgr.getMainCityGatePos();
-                }
             }
             if (canShow) {
                 let firstInit: boolean = false;
