@@ -70,14 +70,14 @@ export class TilePos {
      * @param worldPy
      * @returns
      */
-    constained(worldPx: number, worldPy: number): boolean {
+    constained(pixelx: number, pixely: number): boolean {
         if (!TilePos._hexVec6) {
             TilePos._hexVec6 = [];
             TilePos._hexPoints.forEach((v) => {
                 TilePos._hexVec6.push(v2(v[0], v[1]));
             });
         }
-        return Intersection2D.pointInPolygon(v2(worldPx - this.worldx, worldPy - this.worldy), TilePos._hexVec6);
+        return Intersection2D.pointInPolygon(v2(pixelx - this.pixel_x, pixely - this.pixel_y), TilePos._hexVec6);
     }
 
     g: number;
@@ -228,7 +228,7 @@ export class TileMapHelper {
         poss.push(this.getPos(x1 + 1, y1 + 1));
         for (let i = 0; i < poss.length; i++) {
             let p = poss[i];
-            if (p.constained(worldpos.x, worldpos.y)) {
+            if (p.constained(_vec3_temp.x, _vec3_temp.y)) {
                 return p;
             }
         }
