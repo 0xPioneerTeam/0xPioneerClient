@@ -157,6 +157,7 @@ message player_fight_start {
 message player_event_start {
     required string pioneerId = 1;
     required string buildingId = 2;
+    required bool isReturn = 4;
 }
 message player_event_generate_enemy {
     required string pioneerId = 1;

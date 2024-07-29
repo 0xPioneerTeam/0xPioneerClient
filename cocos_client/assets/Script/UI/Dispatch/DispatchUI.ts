@@ -10,7 +10,7 @@ import CommonTools from "../../Tool/CommonTools";
 import { UIName } from "../../Const/ConstUIDefine";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
-import { LanMgr } from "../../Utils/Global";
+import { GameMgr, LanMgr } from "../../Utils/Global";
 const { ccclass, property } = _decorator;
 
 @ccclass("DispatchUI")
@@ -58,12 +58,14 @@ export class DispatchUI extends ViewController {
         super.viewDidStart();
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._onPioneerEnergyChange, this);
     }
 
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
 
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._onPioneerEnergyChange, this);
     }
 
     private _refreshUI() {
@@ -129,8 +131,7 @@ export class DispatchUI extends ViewController {
             return;
         }
         if (player.energy < this._costEnergy) {
-            // NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106009"));
-            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient troops");
+            GameMgr.showBuyEnergyTip(player.id);
             return;
         }
         UIPanelManger.inst.popPanel(this.node);
@@ -141,6 +142,9 @@ export class DispatchUI extends ViewController {
 
     //----------------------------------------------- notification
     private _onPioneerHpChange() {
+        this._refreshUI();
+    }
+    private _onPioneerEnergyChange() {
         this._refreshUI();
     }
 }

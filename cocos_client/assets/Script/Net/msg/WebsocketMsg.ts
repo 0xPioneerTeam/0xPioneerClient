@@ -334,6 +334,7 @@ export namespace c2s_user {
     export interface Iplayer_event_start {
         pioneerId: string;
         buildingId: string;
+        isReturn: boolean;
     }
     export interface Iplayer_event_generate_enemy {
         pioneerId: string;

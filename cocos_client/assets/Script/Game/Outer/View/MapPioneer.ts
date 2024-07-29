@@ -1,15 +1,4 @@
-import {
-    _decorator,
-    Component,
-    Node,
-    Animation,
-    tween,
-    instantiate,
-    Label,
-    ProgressBar,
-    v3,
-    Event,
-} from "cc";
+import { _decorator, Component, Node, Animation, tween, instantiate, Label, ProgressBar, v3, Event } from "cc";
 import { LanMgr } from "../../../Utils/Global";
 import { MapPioneerActionType, MapPioneerMoveDirection, MapPioneerObject } from "../../../Const/PioneerDefine";
 import { OuterFightView } from "./OuterFightView";
@@ -18,6 +7,7 @@ import { OuterFightResultView } from "./OuterFightResultView";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
 import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
+import PioneerConfig from "../../../Config/PioneerConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("MapPioneer")
@@ -201,22 +191,21 @@ export class MapPioneer extends Component {
                         this._contentView.active = false;
                     }
                     break;
-                
-                case MapPioneerActionType.inCity: 
+
+                case MapPioneerActionType.inCity:
                     {
                         this._contentView.active = false;
                     }
                     break;
 
-                case MapPioneerActionType.staying:
-                    {
-                        this._contentView.active = true;
-                        idleView.active = true;
-                        this._idleCountTime = 0;
-                        if (this._currnetIdleAnim != null) {
-                            this._currnetIdleAnim.play();
-                        }
+                case MapPioneerActionType.staying: {
+                    this._contentView.active = true;
+                    idleView.active = true;
+                    this._idleCountTime = 0;
+                    if (this._currnetIdleAnim != null) {
+                        this._currnetIdleAnim.play();
                     }
+                }
 
                 default:
                     break;
@@ -233,10 +222,23 @@ export class MapPioneer extends Component {
                     }
                     let defender: MapPioneerObject = null;
                     const fightDatas = this._model.fightData.slice();
-                    if (fightDatas[0].attackerId == attacker.id) {
-                        defender = DataMgr.s.pioneer.getById(fightDatas[0].defenderId);
+                    if (this._model.actionType == MapPioneerActionType.eventing) {
+                        const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
+                        if (fightDatas[0].attackerId == attacker.id) {
+                            if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(fightDatas[0].defenderId)) {
+                                defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].defenderId);
+                            }
+                        } else {
+                            if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(fightDatas[0].attackerId)) {
+                                defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].attackerId);
+                            }
+                        }
                     } else {
-                        defender = DataMgr.s.pioneer.getById(fightDatas[0].attackerId);
+                        if (fightDatas[0].attackerId == attacker.id) {
+                            defender = DataMgr.s.pioneer.getById(fightDatas[0].defenderId);
+                        } else {
+                            defender = DataMgr.s.pioneer.getById(fightDatas[0].attackerId);
+                        }
                     }
                     if (defender != null) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, {

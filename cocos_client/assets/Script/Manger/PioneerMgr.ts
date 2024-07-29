@@ -115,12 +115,16 @@ export default class PioneerMgr {
             return;
         }
         const movingTargetData = this._movingTargetDataMap.get(pioneer.id);
+        const pioneerStayAroundPos = GameMainHelper.instance.tiledMapGetExtAround(pioneer.stayPos, 2);
         let stayBuilding: MapBuildingObject = null;
         if (movingTargetData != null && movingTargetData.target == MapMemberTargetType.building) {
-            const templeBuildings = DataMgr.s.mapBuilding.getShowBuildingsNearMapPos(pioneer.stayPos, 2);
-            if (templeBuildings.length > 0) {
-                // use first find building
-                stayBuilding = templeBuildings[0];
+            for (const aroundPos of pioneerStayAroundPos) {
+                const building = DataMgr.s.mapBuilding.getShowBuildingByMapPos(v2(aroundPos.x, aroundPos.y));
+                if (building == null || building.id != movingTargetData.id) {
+                    continue;
+                }
+                stayBuilding = building;
+                break;
             }
             this._movingTargetDataMap.delete(pioneer.id);
         } else {
@@ -188,6 +192,7 @@ export default class PioneerMgr {
             if (GameMainHelper.instance.currentTrackingInteractData().interactBuildingId == stayBuilding.id) {
                 GameMainHelper.instance.hideTrackingView();
             }
+            const isRetrun: boolean = this._actionOverReturnPioneerIds.indexOf(pioneerId) != -1;
             if (stayBuilding.type == MapBuildingType.city) {
                 // now only deal with fake fight
                 if (pioneer.id == "wormhole_token") {
@@ -285,8 +290,6 @@ export default class PioneerMgr {
             } else if (stayBuilding.type == MapBuildingType.resource) {
                 if (pioneer.type == MapPioneerType.player && pioneer.faction != MapMemberFactionType.enemy) {
                     setTimeout(() => {
-                        const isRetrun: boolean = this._actionOverReturnPioneerIds.indexOf(pioneerId) != -1;
-                        console.log("exce isR: " + isRetrun);
                         NetworkMgr.websocketMsg.player_gather_start({
                             pioneerId: pioneerId,
                             resourceBuildingId: stayBuilding.id,
@@ -306,7 +309,7 @@ export default class PioneerMgr {
                         });
                     } else {
                         setTimeout(() => {
-                            NetworkMgr.websocketMsg.player_event_start({ pioneerId: pioneer.id, buildingId: stayBuilding.id });
+                            NetworkMgr.websocketMsg.player_event_start({ pioneerId: pioneer.id, buildingId: stayBuilding.id, isReturn: isRetrun });
                         }, interactDelayTime);
                     }
                 } else {
