@@ -547,7 +547,6 @@ export class DataMgr {
                             }
                         }
                     }
-
                     break;
                 }
             }

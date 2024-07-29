@@ -137,7 +137,7 @@ message pioneer_data {
     required uint32 faction = 4;
     required string type = 5;
     required pos2d stayPos = 6;
-    required string slotId = 7;
+    optional string slotId = 7;
 
     required float hp = 8;
 
@@ -161,8 +161,8 @@ message pioneer_data {
     // repeated int32 speedadd = 23;
     // repeated int32 speedmul = 24;
 
-    required float energy = 25;
-    required float energyMax = 26;
+    optional float energy = 25;
+    optional float energyMax = 26;
 
     required string actionType = 27;
     required uint32 actionBeginTimeStamp = 28;

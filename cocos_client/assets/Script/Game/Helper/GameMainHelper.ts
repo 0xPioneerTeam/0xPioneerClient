@@ -160,13 +160,6 @@ export default class GameMainHelper {
             canMoveTo: false,
         });
     }
-    public tiledMapGetAround(mapPos: Vec2): TilePos[] {
-        if (!this.isTiledMapHelperInited) {
-            return [];
-        }
-        mapPos = v2(Math.min(this._tiledMapHelper.width - 1, mapPos.x), Math.min(this._tiledMapHelper.height - 1, mapPos.y));
-        return this._tiledMapHelper.Path_GetAround(this._tiledMapHelper.getPos(mapPos.x, mapPos.y));
-    }
     public tiledMapGetAroundByDirection(mapPos: Vec2, direction: TileHexDirection): TilePos {
         if (!this.isTiledMapHelperInited) {
             return null;

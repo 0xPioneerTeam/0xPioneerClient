@@ -62,18 +62,6 @@ export class MapBuildingDataMgr {
             return buiding.type === MapBuildingType.wormhole;
         });
     }
-    public getShowBuildingsNearMapPos(mapPos: Vec2, range: number) {
-        return this._building_data.filter((buiding) => {
-            if (buiding.show) {
-                for (const pos of buiding.stayMapPositions) {
-                    if (Math.abs(pos.x - mapPos.x) < range && Math.abs(pos.y - mapPos.y) < range) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
-    }
     public getShowBuildingByMapPos(mapPos: Vec2): MapBuildingObject | null {
         const findDatas = this._building_data.filter((buiding) => {
             if (buiding.show) {
