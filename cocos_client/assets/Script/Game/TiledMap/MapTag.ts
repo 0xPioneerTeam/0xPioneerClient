@@ -68,6 +68,8 @@ export class MapTag extends Component {
         return this._blockDraw;
     }
 
+    private _bindingShadowNodes: Node[];
+
     start() {
         if (!EDITOR) {
             let children = this.node.children;
@@ -75,6 +77,7 @@ export class MapTag extends Component {
             if (!uitrans) {
                 this.node.addComponent(UITransform);
             }
+            this._bindingShadowNodes = [];
             let shadowNode = GameMainHelper.instance.shadowBuildNode;
             let shadowUITrans = shadowNode.getComponent(UITransform);
             for (let i = children.length - 1; i >= 0; i--) {
@@ -85,6 +88,7 @@ export class MapTag extends Component {
                     node.removeFromParent();
                     node.setPosition(shadowUITrans.convertToNodeSpaceAR(worldPostion));
                     shadowNode.addChild(node);
+                    this._bindingShadowNodes.push(node);
                 }
             }
         }
@@ -92,6 +96,25 @@ export class MapTag extends Component {
 
     update(deltaTime: number) {
 
+    }
+
+    protected onDisable(): void {
+        if(this._bindingShadowNodes){
+            this._bindingShadowNodes.forEach(node => {
+                node.removeFromParent();
+            });
+        }
+    }
+
+    protected onEnable(): void {
+        if(this._bindingShadowNodes){
+            let shadowNode = GameMainHelper.instance.shadowBuildNode;
+            this._bindingShadowNodes.forEach(node => {
+                if(node.parent == null){
+                    shadowNode.addChild(node);
+                }
+            });
+        }
     }
 }
 
