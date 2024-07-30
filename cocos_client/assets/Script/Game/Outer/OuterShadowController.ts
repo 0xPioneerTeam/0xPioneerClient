@@ -1,4 +1,4 @@
-import { game, Rect } from "cc";
+import { director, game, Rect } from "cc";
 import ViewController from "../../BasicView/ViewController";
 import { _decorator, Color, Details, instantiate, math, Node, pingPong, Prefab, UITransform, v2, v3, Vec2, Vec3 } from "cc";
 import { TileShadowComp } from "../TiledMap/TileShadowComp";
@@ -154,13 +154,13 @@ export class OuterShadowController extends ViewController {
     protected viewUpdate(dt: number): void {
         super.viewUpdate(dt);
 
-        let datanow = game.totalTime;
+        let datanow = director.getTotalFrames();
         for (let key in this._shadowNodeUpdateMap) {
             let comp = this._shadowNodeUpdateMap[key];
             let x_yKey = comp.tilex + '_' + comp.tiley;
             let shadowData = this._shadowtiles[x_yKey];
             if (shadowData && shadowData.fall && shadowData.grid != shadowData.fall) {
-                if (datanow - shadowData.timer > 2000) {
+                if (datanow - shadowData.timer > 120) {
                     shadowData.grid = shadowData.fall;
                 }
                 comp.updateDrawInfo(comp.tilex, comp.tiley, shadowData.grid);
@@ -171,7 +171,7 @@ export class OuterShadowController extends ViewController {
     _historyEarsesMap: Map<string, { tiles: MyTileData[], lastuse: number }> = new Map();
 
     Shadow_Earse(pos: TilePos, owner: string, extlen: number = 1): TilePos[] {
-        let datanow = game.totalTime;
+        let datanow = director.getTotalFrames();
         let key = pos.x + '_' + pos.y + '_' + owner + '_' + extlen;
         if (this._historyEarsesMap.has(key)) {
             let data = this._historyEarsesMap.get(key);
@@ -231,7 +231,7 @@ export class OuterShadowController extends ViewController {
             for (let i = 0; i < keys.length; i++) {
                 const eleKey = keys[i];
                 let data = this._historyEarsesMap.get(eleKey);
-                if (data.lastuse < datanow - 1000 * 60 * 5) {
+                if (data.lastuse < datanow - 60*60*5) {
                     this._historyEarsesMap.delete(eleKey);
                 }
             }

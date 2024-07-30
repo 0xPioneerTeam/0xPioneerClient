@@ -83,7 +83,7 @@ export class MapTag extends Component {
             for (let i = children.length - 1; i >= 0; i--) {
                 const node = children[i];
                 let sp = node.getComponent(Sprite);
-                if (sp && sp.spriteFrame && sp.spriteFrame.name == "Shadow") {
+                if (sp && sp.spriteFrame && (sp.spriteFrame.name == "Shadow" || sp.spriteFrame.name == "Pond_01_Tex")){
                     let worldPostion = uitrans.convertToWorldSpaceAR(node.position);
                     node.removeFromParent();
                     node.setPosition(shadowUITrans.convertToNodeSpaceAR(worldPostion));
