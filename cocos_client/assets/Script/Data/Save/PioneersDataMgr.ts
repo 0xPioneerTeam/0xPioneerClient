@@ -176,6 +176,9 @@ export class PioneersDataMgr {
         for (const key in netPioneers) {
             this._pioneers.push(PioneerDefine.convertNetDataToObject(netPioneers[key]));
         }
+        for (const key in NetGlobalData.mapBuildings.pioneers) {
+            this._pioneers.push(PioneerDefine.convertNetDataToObject(NetGlobalData.mapBuildings.pioneers[key]));
+        }
         // default player id is "0"
         this._currentActionPioneerId = "pioneer_0";
 

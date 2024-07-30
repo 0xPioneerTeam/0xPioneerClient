@@ -152,10 +152,10 @@ export class WebsocketMsg {
         this.send_packet("player_piot_to_heat", d);
     }
     public player_level_reward(d: c2s_user.Iplayer_level_reward) {
-        this.send_packet("player_level_reward", d)
+        this.send_packet("player_level_reward", d);
     }
     public player_level_up(d: c2s_user.Iplayer_level_up) {
-        this.send_packet("player_level_up", d)
+        this.send_packet("player_level_up", d);
     }
     public player_worldbox_beginner_open(d: c2s_user.Iplayer_worldbox_beginner_open) {
         this.send_packet("player_worldbox_beginner_open", d);
@@ -273,7 +273,7 @@ export namespace c2s_user {
     }
     export interface Iplayer_psyc_to_energy {
         pioneerId: string;
-        psycNum: number;   
+        psycNum: number;
     }
 
     export interface Icreate_pioneer {
@@ -353,6 +353,7 @@ export namespace c2s_user {
     export interface Iplayer_fight_start {
         attackerId: string;
         defenderId: string;
+        isReturn: boolean;
     }
     export interface Iplayer_item_use {
         itemId: string;
@@ -383,9 +384,7 @@ export namespace c2s_user {
     export interface Iplayer_level_reward {
         level: number;
     }
-    export interface Iplayer_level_up {
-
-    }
+    export interface Iplayer_level_up {}
     export interface Iplayer_worldbox_beginner_open {
         boxIndex: number;
     }
@@ -789,7 +788,7 @@ export namespace share {
         artifact?: Iartifact_data;
         usermap?: Iusermap_data;
         nfts?: Infts_data;
-        mapbuilding?: Imapbuilding_data;
+        mapbuilding?: Imap_info_data;
         tasks?: Itask_data[];
         shadows?: pos2d[];
     }
@@ -898,9 +897,10 @@ export namespace share {
         id: string;
         isOriginal: boolean;
     }
-
-    export interface Imapbuilding_data {
+    export interface Imap_info_data {
+        slotId: string;
         buildings: { [key: string]: Imapbuilding_info_data };
+        pioneers: { [key: string]: Ipioneer_data };
     }
     export interface Imapbuilding_info_data {
         id: string;
@@ -942,7 +942,6 @@ export namespace share {
         dieTime?: number;
         rebornTime?: number;
     }
-
     export interface Iartifact_three_confs {
         confs: Iartifact_three_conf[];
     }

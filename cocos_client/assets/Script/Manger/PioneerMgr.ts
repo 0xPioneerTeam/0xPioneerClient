@@ -79,10 +79,12 @@ export default class PioneerMgr {
         if (!canFight) {
             return;
         }
+        const isReturn = this._actionOverReturnPioneerIds.indexOf(attacker.id) != -1;
         if (attacker.type == MapPioneerType.player) {
             NetworkMgr.websocketMsg.player_fight_start({
                 attackerId: attacker.id,
                 defenderId: pioneerDefender.id,
+                isReturn: isReturn
             });
         }
     }
