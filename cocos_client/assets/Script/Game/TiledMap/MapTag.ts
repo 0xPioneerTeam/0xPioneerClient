@@ -1,5 +1,6 @@
-import { _decorator, CCBoolean, Component, instantiate, Node, Prefab, UITransform, v3, Vec2 } from 'cc';
+import { _decorator, CCBoolean, Component, instantiate, Node, Prefab, Sprite, UITransform, v3, Vec2 } from 'cc';
 import { DEV, EDITOR } from 'cc/env';
+import GameMainHelper from '../Helper/GameMainHelper';
 const { ccclass, property } = _decorator;
 
 
@@ -47,7 +48,7 @@ export class MapTag extends Component {
                     var cross = data.y % 2 != 0;
                     var worldx = (data.x + 0.5) * tileNodeWidth - tilewidth / 2;
                     if (cross) worldx += tileNodeWidth * 0.5;
-                    var worldy = tileheight / 2 - (data.y * (tileNodeHeight * 0.75) + tileNodeHeight/2);
+                    var worldy = tileheight / 2 - (data.y * (tileNodeHeight * 0.75) + tileNodeHeight / 2);
                     let vv2 = nodeTrans.convertToWorldSpaceAR(v3(worldx, worldy, 0));
                     let vv = blockUITrans.convertToNodeSpaceAR(vv2);
                     node.setPosition(vv);
@@ -68,7 +69,25 @@ export class MapTag extends Component {
     }
 
     start() {
-
+        if (!EDITOR) {
+            let children = this.node.children;
+            let uitrans = this.node.getComponent(UITransform);
+            if (!uitrans) {
+                this.node.addComponent(UITransform);
+            }
+            let shadowNode = GameMainHelper.instance.shadowBuildNode;
+            let shadowUITrans = shadowNode.getComponent(UITransform);
+            for (let i = children.length - 1; i >= 0; i--) {
+                const node = children[i];
+                let sp = node.getComponent(Sprite);
+                if (sp && sp.spriteFrame && sp.spriteFrame.name == "Shadow") {
+                    let worldPostion = uitrans.convertToWorldSpaceAR(node.position);
+                    node.removeFromParent();
+                    node.setPosition(shadowUITrans.convertToNodeSpaceAR(worldPostion));
+                    shadowNode.addChild(node);
+                }
+            }
+        }
     }
 
     update(deltaTime: number) {

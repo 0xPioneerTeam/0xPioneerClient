@@ -301,12 +301,11 @@ export class OuterTiledMapActionController extends ViewController {
         // local fog
         // this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions());
 
-        // const allShadows = DataMgr.s.eraseShadow.getObj();
-        // for (const shadow of allShadows) {
-        //     GameMainHelper.instance.tiledMapShadowErase(shadow);
-        // }
-
-        // this._eraseMainCityShadow();
+        const allShadows = DataMgr.s.eraseShadow.getObj();
+        for (const shadow of allShadows) {
+            GameMainHelper.instance.tiledMapShadowErase(shadow);
+        }
+        this._eraseMainCityShadow();
     }
 
     protected viewDidAppear(): void {

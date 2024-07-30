@@ -1,4 +1,4 @@
-import { Rect } from "cc";
+import { game, Rect } from "cc";
 import ViewController from "../../BasicView/ViewController";
 import { _decorator, Color, Details, instantiate, math, Node, pingPong, Prefab, UITransform, v2, v3, Vec2, Vec3 } from "cc";
 import { TileShadowComp } from "../TiledMap/TileShadowComp";
@@ -31,6 +31,7 @@ export class OuterShadowController extends ViewController {
     _shadowtiles: { [x_yKey: string]: MyTileData } = {};
     _shadowUseComp: { [x_yKey: string]: TileShadowComp } = {};
     _shadowNodeCompsPool: TileShadowComp[] = [];
+    _shadowNodeUpdateMap: { [uuid: string]: TileShadowComp } = {};
     _shadowtag: number;
     _shadowcleantag: number;
     _shadowhalftag: number;
@@ -38,9 +39,12 @@ export class OuterShadowController extends ViewController {
     _shadowContentNodes: Node[];
 
     refreshUI(rect: Rect, rect2: Rect) {
+        if (!this._shadowContentNodes) {
+            return;
+        }
         let pos1 = TileMapHelper.INS.getPosByPixelPos(v3(rect.xMin, rect.yMin));
         let pos2 = TileMapHelper.INS.getPosByPixelPos(v3(rect.xMax, rect.yMax));
-        if(!pos1 || !pos2){
+        if (!pos1 || !pos2) {
             return;
         }
         // console.log("refreshUI:" + pos1.x + "," + pos1.y + "->" + pos2.x + "," + pos2.y);
@@ -49,7 +53,7 @@ export class OuterShadowController extends ViewController {
         let px2 = pos2.x + bigSize;
         let py1 = pos1.y + bigSize;
         let py2 = pos2.y - bigSize;
-        let updateMap: { [uuid: string]: boolean } = {};
+        this._shadowNodeUpdateMap = {};
         for (let x = px1; x <= px2; x++) {
             for (let y = py2; y <= py1; y++) {
                 let x_yKey = x + '_' + y;
@@ -68,7 +72,7 @@ export class OuterShadowController extends ViewController {
                     this._shadowUseComp[x_yKey] = drawComp;
                 }
                 drawComp.updateDrawInfo(x, y, shadowData.grid);
-                updateMap[drawComp.node.uuid] = true;
+                this._shadowNodeUpdateMap[drawComp.node.uuid] = drawComp;
             }
         }
         let nodes = [];
@@ -81,7 +85,7 @@ export class OuterShadowController extends ViewController {
         }
         for (let i = nodes.length - 1; i >= 0; i--) {
             let node = nodes[i];
-            if (!updateMap[node.uuid]) {
+            if (!this._shadowNodeUpdateMap[node.uuid]) {
                 let comp = node.getComponent(TileShadowComp);
                 this.pushShadowComp(comp);
             }
@@ -89,7 +93,7 @@ export class OuterShadowController extends ViewController {
     }
 
     Shadow_Init(views: Node[]): void {
-        this._shadowcleantag = 0;
+        this._shadowcleantag = 80;
         this._shadowtag = 75;
         this._shadowhalftag = 73;
         this._shadowhalf2tag = 74;
@@ -147,19 +151,43 @@ export class OuterShadowController extends ViewController {
         this._shadowNodeCompsPool.push(shadowComp);
     }
 
-    _historyEarses: string[] = []
-    Shadow_Earse(pos: TilePos, owner: string, extlen: number = 1, fall: boolean = false): TilePos[] {
-        let key = pos.x + '_' + pos.y + '_' + owner + '_' + extlen + '_' + fall;
-        if (this._historyEarses.indexOf(key) != -1) {
+    protected viewUpdate(dt: number): void {
+        super.viewUpdate(dt);
+
+        let datanow = game.totalTime;
+        for (let key in this._shadowNodeUpdateMap) {
+            let comp = this._shadowNodeUpdateMap[key];
+            let x_yKey = comp.tilex + '_' + comp.tiley;
+            let shadowData = this._shadowtiles[x_yKey];
+            if (shadowData && shadowData.fall && shadowData.grid != shadowData.fall) {
+                if (datanow - shadowData.timer > 2000) {
+                    shadowData.grid = shadowData.fall;
+                }
+                comp.updateDrawInfo(comp.tilex, comp.tiley, shadowData.grid);
+            }
+        }
+    }
+
+    _historyEarsesMap: Map<string, { tiles: MyTileData[], lastuse: number }> = new Map();
+
+    Shadow_Earse(pos: TilePos, owner: string, extlen: number = 1): TilePos[] {
+        let datanow = game.totalTime;
+        let key = pos.x + '_' + pos.y + '_' + owner + '_' + extlen;
+        if (this._historyEarsesMap.has(key)) {
+            let data = this._historyEarsesMap.get(key);
+            data.lastuse = datanow;
+            data.tiles.forEach(t => {
+                t.timer = datanow;
+            });
             return [];
         }
-        this._historyEarses.push(key);
         //console.log("pos=" + pos.x + "," + pos.y + ":" + pos.worldx + "," + pos.worldy);
         //for (var z = pos.calc_z - extlen; z <= pos.calc_z + extlen; z++) {
         const newCleardPositons: TilePos[] = [];
         const borderTilePostions: TilePos[] = [];
         let vx = 10000;
         let vy = 10000;
+        let shadowDatas = [];
         for (var y = pos.y - extlen; y <= pos.y + extlen; y++) {
             for (var x = pos.x - extlen; x <= pos.x + extlen; x++) {
                 var gpos = TileMapHelper.INS.getPos(x, y);
@@ -175,37 +203,39 @@ export class OuterShadowController extends ViewController {
                         s = new MyTileData(gpos.x, gpos.y, this._shadowtag);
                         this._shadowtiles[gpos.x + '_' + gpos.y] = s;
                     }
-                    // console.log("find node-" + s.x + "," + s.y + " wpos=" + gpos.worldx + "," + gpos.worldy);
-                    if (!fall) {
-                        if (s.grid == 0 && s.owner != null && s.owner != owner) {
-                            s.timer = 0;
-                            continue; //Strengthen other people’s vision
-                        }
-                        if (s.grid == this._shadowtag) {
-                            newCleardPositons.push(gpos);
-                        }
-                        s.grid = this._shadowcleantag;
-
-                        if (extlen > 1) {
-                            var border = Math.abs(pos.x - x) == extlen || Math.abs(pos.y - y) == extlen;
-                            if (border) {
-                                s.grid = this._shadowhalftag;
-                                borderTilePostions.push(gpos);
-                            }
-                        }
-                        s.owner = owner;
-                        s.fall = this._shadowhalf2tag;
-                        s.timer = 0; //Fully open first, then the timing becomes semi-transparent
-                    } else {
-                        s.grid = this._shadowhalf2tag;
-                        s.fall = -1;
-                        s.timer = 0;
+                    shadowDatas.push(s);
+                    if (s.grid == this._shadowcleantag && s.owner != null && s.owner != owner) {
+                        s.timer = datanow;
+                        continue;
                     }
-                    //s.grid = 0;//0 is full open
+                    if (s.grid == this._shadowtag) {
+                        newCleardPositons.push(gpos);
+                    }
+                    s.grid = this._shadowcleantag;
+                    if (extlen > 1) {
+                        var border = len == extlen;
+                        if (border) {
+                            s.grid = this._shadowhalftag;
+                            borderTilePostions.push(gpos);
+                        }
+                    }
+                    s.owner = owner;
+                    s.fall = this._shadowhalf2tag;
+                    s.timer = datanow; //Fully open first, then the timing becomes semi-transparent
                 }
             }
         }
-
+        this._historyEarsesMap.set(key, { tiles: shadowDatas, lastuse: datanow });
+        if (this._historyEarsesMap.size > 100) {
+            let keys = Array.from(this._historyEarsesMap.keys());
+            for (let i = 0; i < keys.length; i++) {
+                const eleKey = keys[i];
+                let data = this._historyEarsesMap.get(eleKey);
+                if (data.lastuse < datanow - 1000 * 60 * 5) {
+                    this._historyEarsesMap.delete(eleKey);
+                }
+            }
+        }
         // update user tile for border tiles
         // if (this._shadowBorderPfb) {
         // this._ShadowBorder_Reset();

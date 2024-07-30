@@ -1,4 +1,4 @@
-import { Camera, Mat4, Node, Prefab, Rect, Size, TiledMap, Vec2, Vec3, find, size, tween, v2 } from "cc";
+import { Camera, Mat4, Node, Prefab, Rect, Size, TiledMap, UITransform, Vec2, Vec3, find, size, tween, v2 } from "cc";
 import ConfigConfig from "../../Config/ConfigConfig";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
@@ -126,6 +126,11 @@ export default class GameMainHelper {
         //init tiledmap by a helper class
         this._tiledMapHelper = new TileMapHelper(map);
         this._mapNode = map.node;
+        this._shadowBuildNode = this._mapNode.getChildByName("deco_shadow");
+        let uitrans = this._shadowBuildNode.getComponent(UITransform);
+        if(!uitrans){
+            this._shadowBuildNode.addComponent(UITransform);
+        }
         //set a callback here. 35 is block
         this._tiledMapHelper.Path_InitBlock(35);
         this._trackingView = tracking;
@@ -246,14 +251,14 @@ export default class GameMainHelper {
         let vision: number = 6;
         vision = GameMgr.getAfterEffectValue(GameExtraEffectType.PIONEER_ONLY_VISION_RANGE, vision);
         vision = GameMgr.getAfterEffectValue(GameExtraEffectType.CITY_AND_PIONEER_VISION_RANGE, vision);
-        return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), ownerId, vision, false);
+        return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), ownerId, vision);
     }
     public tiledMapMainCityShadowErase(mapPos: Vec2) {
         if (!this.isTiledMapHelperInited) {
             return [];
         }
         const vision: number = DataMgr.s.userInfo.data.cityRadialRange - 1;
-        return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "0", vision, false);
+        return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "0", vision);
     }
     public tiledMapGetShadowClearedTiledPositions(): TilePos[] {
         if (!this.isTiledMapHelperInited) {
@@ -311,8 +316,13 @@ export default class GameMainHelper {
         return this._isMapInitOver;
     }
 
+    public get shadowBuildNode(): Node {
+        return this._shadowBuildNode;
+    }
+
     private static _instance: GameMainHelper;
     private _mapNode: Node;
+    private _shadowBuildNode:Node;
     private _gameCamera: Camera;
     private _gameCameraOriginalOrthoHeight: number;
     private _gameCameraZoom: number;
