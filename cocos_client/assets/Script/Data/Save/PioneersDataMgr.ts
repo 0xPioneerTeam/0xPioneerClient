@@ -171,10 +171,14 @@ export class PioneersDataMgr {
         for (const key in netPioneers) {
             const pioneer = PioneerDefine.convertNetDataToObject(netPioneers[key]);
             this._selfPioneerUnqueIds.push(pioneer.uniqueId);
+            if (pioneer.id == "pioneer_0") {
+                this._currentActionUniqueId = pioneer.uniqueId;
+            }
             this._pioneers.push(pioneer);
         }
         for (const key in NetGlobalData.mapBuildings.pioneers) {
             this._pioneers.push(PioneerDefine.convertNetDataToObject(NetGlobalData.mapBuildings.pioneers[key]));
         }
+
     }
 }

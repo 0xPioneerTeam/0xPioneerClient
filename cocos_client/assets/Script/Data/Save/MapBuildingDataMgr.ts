@@ -11,12 +11,17 @@ import CommonTools from "../../Tool/CommonTools";
 
 export class MapBuildingDataMgr {
     private _building_data: MapBuildingObject[];
+    private _selfMainCityUniqueId: string = null;
     private _decorateInfoMap: Map<string, string>;
     public constructor() {}
 
+    public getSelfMainCityUniqueId() {
+        return this._selfMainCityUniqueId;
+    }
     public getDecorateInfo() {
         return this._decorateInfoMap;
     }
+    // ----------------------------------------------
     public replaceData(index: number, data: share.Imapbuilding_info_data) {
         const newObj = this._convertNetDataToObject(data);
         this._building_data[index] = newObj;
@@ -43,8 +48,11 @@ export class MapBuildingDataMgr {
         }
         const mapBuilings = NetGlobalData.mapBuildings.buildings;
         for (const key in mapBuilings) {
-            const element: share.Imapbuilding_info_data = mapBuilings[key];
-            this._building_data.push(this._convertNetDataToObject(element));
+            const element = this._convertNetDataToObject(mapBuilings[key]);
+            if (element.type == MapBuildingType.city) {
+                this._selfMainCityUniqueId = element.uniqueId;
+            }
+            this._building_data.push(element);
         }
 
         this._decorateInfoMap = new Map();
@@ -57,17 +65,17 @@ export class MapBuildingDataMgr {
     public getObj_building() {
         return this._building_data;
     }
-    public getBuildingById(buidingId: string): MapBuildingObject | null {
+    public getBuildingById(uniqueId: string): MapBuildingObject | null {
         const findDatas = this._building_data.filter((buiding) => {
-            return buiding.id === buidingId;
+            return buiding.uniqueId === uniqueId;
         });
         if (findDatas.length > 0) {
             return findDatas[0];
         }
         return null;
     }
-    public fillBuildingStayPos(buildingId: string, newPosions: Vec2[]) {
-        const findBuilding = this.getBuildingById(buildingId);
+    public fillBuildingStayPos(uniqueId: string, newPosions: Vec2[]) {
+        const findBuilding = this.getBuildingById(uniqueId);
         if (findBuilding == null) return;
 
         findBuilding.stayMapPositions = newPosions;

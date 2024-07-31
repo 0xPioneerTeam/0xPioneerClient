@@ -465,7 +465,7 @@ export class OuterTiledMapActionController extends ViewController {
     }
 
     private _eraseMainCityShadow() {
-        const mainCity = DataMgr.s.mapBuilding.getBuildingById("building_1");
+        const mainCity = DataMgr.s.mapBuilding.getBuildingById(DataMgr.s.mapBuilding.getSelfMainCityUniqueId());
         if (mainCity == null || mainCity.stayMapPositions.length != 7) {
             return;
         }

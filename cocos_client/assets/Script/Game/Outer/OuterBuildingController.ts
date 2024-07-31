@@ -66,7 +66,7 @@ export class OuterBuildingController extends Component {
                     newPos.push(GameMainHelper.instance.tiledMapGetAroundByDirection(originalPos, TileHexDirection.LeftBottom));
                     newPos.push(GameMainHelper.instance.tiledMapGetAroundByDirection(originalPos, TileHexDirection.RightBottom));
                 }
-                DataMgr.s.mapBuilding.fillBuildingStayPos(building.id, newPos);
+                DataMgr.s.mapBuilding.fillBuildingStayPos(building.uniqueId, newPos);
             }
         }
 
@@ -154,14 +154,14 @@ export class OuterBuildingController extends Component {
         for (const building of allBuildings) {
             if (building.show) {
                 let temple = null;
-                if (this._buildingMap.has(building.id)) {
-                    temple = this._buildingMap.get(building.id).node;
+                if (this._buildingMap.has(building.uniqueId)) {
+                    temple = this._buildingMap.get(building.uniqueId).node;
                 } else {
                     // new
                     temple = instantiate(this.buildingPrefab);
-                    temple.name = "MAP_" + building.id;
+                    temple.name = "MAP_" + building.uniqueId;
                     temple.setParent(decorationView);
-                    this._buildingMap.set(building.id, { node: temple, stayPositons: building.stayMapPositions });
+                    this._buildingMap.set(building.uniqueId, { node: temple, stayPositons: building.stayMapPositions });
 
                     changed = true;
                 }
@@ -186,13 +186,13 @@ export class OuterBuildingController extends Component {
                     }
                 }
             } else {
-                if (this._buildingMap.has(building.id)) {
-                    const data = this._buildingMap.get(building.id);
+                if (this._buildingMap.has(building.uniqueId)) {
+                    const data = this._buildingMap.get(building.uniqueId);
                     data.node.destroy();
                     for (const pos of data.stayPositons) {
                         GameMainHelper.instance.tiledMapRemoveDynamicBlock(pos);
                     }
-                    this._buildingMap.delete(building.id);
+                    this._buildingMap.delete(building.uniqueId);
                 }
             }
         }
@@ -200,7 +200,7 @@ export class OuterBuildingController extends Component {
         this._buildingMap.forEach((value: { node: Node; stayPositons: Vec2[] }, key: string) => {
             let isExsit: boolean = false;
             for (const building of allBuildings) {
-                if (building.id == key) {
+                if (building.uniqueId == key) {
                     isExsit = true;
                     break;
                 }
