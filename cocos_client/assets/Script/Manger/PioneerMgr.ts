@@ -122,7 +122,7 @@ export default class PioneerMgr {
         if (movingTargetData != null && movingTargetData.target == MapMemberTargetType.building) {
             for (const aroundPos of pioneerStayAroundPos) {
                 const building = DataMgr.s.mapBuilding.getShowBuildingByMapPos(v2(aroundPos.x, aroundPos.y));
-                if (building == null || building.id != movingTargetData.id) {
+                if (building == null || building.uniqueId != movingTargetData.id) {
                     continue;
                 }
                 stayBuilding = building;
@@ -193,9 +193,10 @@ export default class PioneerMgr {
         } else {
             // building
             // need changed. use manger to deal with pioneer and building
-            if (GameMainHelper.instance.currentTrackingInteractData().interactBuildingId == stayBuilding.id) {
-                GameMainHelper.instance.hideTrackingView();
-            }
+            // wait change
+            // if (GameMainHelper.instance.currentTrackingInteractData().interactBuildingId == stayBuilding.id) {
+            //     GameMainHelper.instance.hideTrackingView();
+            // }
             const isRetrun: boolean = this._actionOverReturnPioneerIds.indexOf(uniqueId) != -1;
             if (stayBuilding.type == MapBuildingType.city) {
                 // now only deal with fake fight
@@ -227,7 +228,7 @@ export default class PioneerMgr {
                     setTimeout(() => {
                         NetworkMgr.websocketMsg.player_explore_start({
                             pioneerId: uniqueId,
-                            buildingId: stayBuilding.id,
+                            buildingId: stayBuilding.uniqueId,
                         });
                     }, interactDelayTime);
                 } else {
@@ -238,34 +239,34 @@ export default class PioneerMgr {
                 }
             } else if (stayBuilding.type == MapBuildingType.stronghold) {
                 // 0-idle 1-fight 2-defend
-                let tempAction: number = 0;
-                if (pioneer.type == MapPioneerType.player && pioneer.faction == MapMemberFactionType.friend) {
-                    if (stayBuilding.faction != MapMemberFactionType.enemy) {
-                        // defend
-                        // wait TODO
-                        tempAction = 2;
-                    } else {
-                        tempAction = 1;
-                    }
-                } else {
-                    if (pioneer.id == "gangster_3" && stayBuilding.id == "building_4") {
-                        if (stayBuilding.faction != MapMemberFactionType.friend || stayBuilding.defendPioneerIds.length <= 0) {
-                            tempAction = 0;
-                            // DataMgr.s.mapBuilding.hideBuilding(stayBuilding.id, pioneer.id);
-                        } else {
-                            // wait TODO
-                            tempAction = 1;
-                        }
-                    } else {
-                        tempAction = 0;
-                    }
-                }
-                if (tempAction == 0) {
-                } else if (tempAction == 1) {
-                    // TODO
-                    // fight stronghold building
-                } else if (tempAction == 2) {
-                }
+                // let tempAction: number = 0;
+                // if (pioneer.type == MapPioneerType.player && pioneer.faction == MapMemberFactionType.friend) {
+                //     if (stayBuilding.faction != MapMemberFactionType.enemy) {
+                //         // defend
+                //         // wait TODO
+                //         tempAction = 2;
+                //     } else {
+                //         tempAction = 1;
+                //     }
+                // } else {
+                //     if (pioneer.id == "gangster_3" && stayBuilding.id == "building_4") {
+                //         if (stayBuilding.faction != MapMemberFactionType.friend || stayBuilding.defendPioneerIds.length <= 0) {
+                //             tempAction = 0;
+                //             // DataMgr.s.mapBuilding.hideBuilding(stayBuilding.id, pioneer.id);
+                //         } else {
+                //             // wait TODO
+                //             tempAction = 1;
+                //         }
+                //     } else {
+                //         tempAction = 0;
+                //     }
+                // }
+                // if (tempAction == 0) {
+                // } else if (tempAction == 1) {
+                //     // TODO
+                //     // fight stronghold building
+                // } else if (tempAction == 2) {
+                // }
             } else if (stayBuilding.type == MapBuildingType.wormhole) {
                 const wormholeObj = stayBuilding as MapBuildingWormholeObject;
                 if (pioneer.type == MapPioneerType.player) {
@@ -280,7 +281,7 @@ export default class PioneerMgr {
                         if (emptyIndex >= 0) {
                             setTimeout(() => {
                                 NetworkMgr.websocketMsg.player_wormhole_set_attacker({
-                                    buildingId: stayBuilding.id,
+                                    buildingId: stayBuilding.uniqueId,
                                     pioneerId: uniqueId,
                                     index: emptyIndex,
                                 });
@@ -296,7 +297,7 @@ export default class PioneerMgr {
                     setTimeout(() => {
                         NetworkMgr.websocketMsg.player_gather_start({
                             pioneerId: uniqueId,
-                            resourceBuildingId: stayBuilding.id,
+                            resourceBuildingId: stayBuilding.uniqueId,
                             feeTxhash: "",
                             isReturn: isRetrun,
                         });
@@ -313,7 +314,7 @@ export default class PioneerMgr {
                         });
                     } else {
                         setTimeout(() => {
-                            NetworkMgr.websocketMsg.player_event_start({ pioneerId: uniqueId, buildingId: stayBuilding.id, isReturn: isRetrun });
+                            NetworkMgr.websocketMsg.player_event_start({ pioneerId: uniqueId, buildingId: stayBuilding.uniqueId, isReturn: isRetrun });
                         }, interactDelayTime);
                     }
                 } else {

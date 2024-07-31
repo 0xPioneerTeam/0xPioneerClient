@@ -343,43 +343,44 @@ message mapbuilding_info_data {
     required uint32 level = 4;
     required bool show = 5;
     required uint32 faction = 6;
+    optional string uniqueId = 7;
 
-    repeated pos2d stayMapPositions = 7;
-    required uint32 stayPosType = 8;
-    optional string animType = 9;
+    repeated pos2d stayMapPositions = 8;
+    required uint32 stayPosType = 9;
+    optional string animType = 10;
 
-    repeated string defendPioneerIds = 10;
+    repeated string defendPioneerIds = 11;
 
-    repeated string gatherPioneerIds = 11;
-    optional building_resource resources = 12;
-    optional uint32 quota = 13;
+    repeated string gatherPioneerIds = 12;
+    optional building_resource resources = 13;
+    optional uint32 quota = 14;
 
-    repeated string explorePioneerIds = 14;
+    repeated string explorePioneerIds = 15;
 
-    optional string eventId = 15;
-    optional uint32 eventIndex = 16;
-    optional string eventSubId = 17;
-    optional string eventWaitFightEnemyId = 18;
-    repeated string eventPioneerIds = 19;
-    map<string,pioneer_data> eventPioneerDatas = 20;
+    optional string eventId = 16;
+    optional uint32 eventIndex = 17;
+    optional string eventSubId = 18;
+    optional string eventWaitFightEnemyId = 19;
+    repeated string eventPioneerIds = 20;
+    map<string,pioneer_data> eventPioneerDatas = 21;
 
-    optional uint32 progress = 21;
-    required uint32 exp = 22;
+    optional uint32 progress = 22;
+    required uint32 exp = 23;
     
 
-    optional float hpMax = 23;
-    optional float hp = 24;
-    optional float attack = 25;
-    optional uint32 winprogress = 26;
+    optional float hpMax = 24;
+    optional float hp = 25;
+    optional float attack = 26;
+    optional uint32 winprogress = 27;
 
     
-    optional uint32 wormholdCountdownTime = 27;
-    map<string,string> attacker = 28;
+    optional uint32 wormholdCountdownTime = 28;
+    map<string,string> attacker = 29;
 
-    optional uint32 tavernCountdownTime = 29;
+    optional uint32 tavernCountdownTime = 30;
 
-    optional uint32 dieTime = 30;
-    optional uint32 rebornTime = 31;
+    optional uint32 dieTime = 31;
+    optional uint32 rebornTime = 32;
 }
 
 message map_info_data {

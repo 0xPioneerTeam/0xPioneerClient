@@ -522,10 +522,10 @@ export class DataMgr {
                     const oldData = localDatas[i];
                     const newData = DataMgr.s.mapBuilding.replaceData(i, temple);
                     if (oldData.show != newData.show) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_SHOW_CHANGE, { id: newData.id, show: newData.show });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_SHOW_CHANGE, { uniqueId: newData.uniqueId, show: newData.show });
                     }
                     if (oldData.faction != newData.faction) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_FACTION_CHANGE, { id: newData.id });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_FACTION_CHANGE, { uniqueId: newData.uniqueId });
                     }
                     if (oldData.type == MapBuildingType.wormhole && newData.type == MapBuildingType.wormhole) {
                         const oldWorm = oldData as MapBuildingWormholeObject;

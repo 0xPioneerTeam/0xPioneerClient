@@ -15,20 +15,20 @@ const { ccclass, property } = _decorator;
 
 @ccclass("NewEventUI")
 export class NewEventUI extends ViewController {
-    private _pioneerId: string = null;
+    private _pioneerUniqueId: string = null;
     private _building: MapBuildingObject = null;
     private _subEventConfig: NewSubEventConfigData = null;
 
     private _selectContent: Node = null;
     private _selectItem: Node = null;
 
-    public configuration(pioneerId: string, building: MapBuildingObject) {
-        this._pioneerId = pioneerId;
+    public configuration(uniqueId: string, building: MapBuildingObject) {
+        this._pioneerUniqueId = uniqueId;
         this._building = building;
         this._subEventConfig = NewSubEventConfig.getById(building.eventSubId);
 
         const eventConfig = NewEventConfig.getById(building.eventId);
-        if (this._pioneerId == null || this._building == null || this._subEventConfig == null || eventConfig == null) {
+        if (this._pioneerUniqueId == null || this._building == null || this._subEventConfig == null || eventConfig == null) {
             UIPanelManger.inst.popPanel(this.node);
             return;
         }
@@ -113,8 +113,8 @@ export class NewEventUI extends ViewController {
             UIPanelManger.inst.popPanel(this.node);
 
             NetworkMgr.websocketMsg.player_event_exit({
-                buildingId: this._building.id,
-                pioneerId: this._pioneerId,
+                buildingId: this._building.uniqueId,
+                pioneerId: this._pioneerUniqueId,
             });
         });
     }
@@ -143,15 +143,15 @@ export class NewEventUI extends ViewController {
         ) {
             // fight
             NetworkMgr.websocketMsg.player_event_generate_enemy({
-                buildingId: this._building.id,
-                pioneerId: this._pioneerId,
+                buildingId: this._building.uniqueId,
+                pioneerId: this._pioneerUniqueId,
                 selectIdx: index,
             });
             GameMgr.lastEventSelectFightIdx = index;
         } else {
             NetworkMgr.websocketMsg.player_event_select({
-                buildingId: this._building.id,
-                pioneerId: this._pioneerId,
+                buildingId: this._building.uniqueId,
+                pioneerId: this._pioneerUniqueId,
                 selectIdx: index,
             });
         }

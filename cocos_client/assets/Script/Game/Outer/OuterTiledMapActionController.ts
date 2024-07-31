@@ -634,7 +634,7 @@ export class OuterTiledMapActionController extends ViewController {
                                         alterString,
                                         () => {
                                             if (currentActionPioneer.actionType != MapPioneerActionType.wormhole) {
-                                                PioneerMgr.setMovingTarget(currentActionPioneer.uniqueId, MapMemberTargetType.building, stayBuilding.id);
+                                                PioneerMgr.setMovingTarget(currentActionPioneer.uniqueId, MapMemberTargetType.building, stayBuilding.uniqueId);
                                                 if (movePaths.length <= 0) {
                                                     DataMgr.s.pioneer.beginMove(currentActionPioneer.uniqueId, []);
                                                 } else {
@@ -649,11 +649,11 @@ export class OuterTiledMapActionController extends ViewController {
                                                         isReturn: isReturn,
                                                     });
                                                 }
-                                                NetGlobalData.wormholeAttackBuildingId = stayBuilding.id;
+                                                NetGlobalData.wormholeAttackBuildingId = stayBuilding.uniqueId;
                                             } else {
                                                 // attack wormhole countdonw
                                                 NetworkMgr.websocketMsg.player_wormhole_fight_start({
-                                                    buildingId: stayBuilding.id,
+                                                    buildingId: stayBuilding.uniqueId,
                                                 });
                                             }
                                         },
@@ -670,7 +670,7 @@ export class OuterTiledMapActionController extends ViewController {
                                             if (value == currentActionPioneer.uniqueId) {
                                                 NetworkMgr.websocketMsg.player_wormhole_set_attacker({
                                                     pioneerId: "",
-                                                    buildingId: wormObj.id,
+                                                    buildingId: wormObj.uniqueId,
                                                     index: key,
                                                 });
                                             }
@@ -682,7 +682,7 @@ export class OuterTiledMapActionController extends ViewController {
                                 if (actionType != MapInteractType.Move) {
                                     // move can't trigger interact
                                     if (stayBuilding != null) {
-                                        PioneerMgr.setMovingTarget(currentActionPioneer.uniqueId, MapMemberTargetType.building, stayBuilding.id);
+                                        PioneerMgr.setMovingTarget(currentActionPioneer.uniqueId, MapMemberTargetType.building, stayBuilding.uniqueId);
                                     }
                                     if (stayPioneer != null) {
                                         PioneerMgr.setMovingTarget(currentActionPioneer.uniqueId, MapMemberTargetType.pioneer, stayPioneer.uniqueId);

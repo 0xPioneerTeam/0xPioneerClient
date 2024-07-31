@@ -227,11 +227,11 @@ export class OuterBuildingView extends ViewController {
             collectIcon.active = true;
             if (building.gatherPioneerIds != null && building.gatherPioneerIds.length > 0) {
                 exploreView.active = true;
-                exploreView.getChildByPath("Icon/pioneer_default").active = building.gatherPioneerIds[0] == "pioneer_0";
-                exploreView.getChildByPath("Icon/secretGuard").active = building.gatherPioneerIds[0] == "pioneer_1";
-                exploreView.getChildByPath("Icon/doomsdayGangSpy").active = building.gatherPioneerIds[0] == "pioneer_2";
-                exploreView.getChildByPath("Icon/rebels").active = building.gatherPioneerIds[0] == "pioneer_3";
 
+                for (const child of exploreView.getChildByPath("Icon").children) {
+                    child.active = building.gatherPioneerIds[0].indexOf(child.name) != -1;
+                }
+                
                 const currentTimeStamp: number = new Date().getTime();
                 const tempPioneer = DataMgr.s.pioneer.getById(building.gatherPioneerIds[0]);
                 exploreView.getChildByPath("Label").getComponent(Label).string = CommonTools.formatSeconds(
@@ -240,18 +240,16 @@ export class OuterBuildingView extends ViewController {
 
                 collectView.active = true;
                 for (const child of collectView.children) {
-                    child.active = child.name == building.gatherPioneerIds[0];
+                    child.active = building.gatherPioneerIds[0].indexOf(child.name) != -1;
                 }
             }
         } else if (building.type == MapBuildingType.event) {
             exploreIcon.active = true;
             if (building.eventPioneerIds != null && building.eventPioneerIds.length > 0) {
                 exploreView.active = true;
-                exploreView.getChildByPath("Icon/pioneer_default").active = building.eventPioneerIds[0] == "pioneer_0";
-                exploreView.getChildByPath("Icon/secretGuard").active = building.eventPioneerIds[0] == "pioneer_1";
-                exploreView.getChildByPath("Icon/doomsdayGangSpy").active = building.eventPioneerIds[0] == "pioneer_2";
-                exploreView.getChildByPath("Icon/rebels").active = building.eventPioneerIds[0] == "pioneer_3";
-                exploreView.getChildByPath("Label").getComponent(Label).string = "Exploring";
+                for (const child of exploreView.getChildByPath("Icon").children) {
+                    child.active = building.eventPioneerIds[0].indexOf(child.name) != -1;
+                }
             }
         } else if (building.type == MapBuildingType.tavern) {
             exploreIcon.active = true;

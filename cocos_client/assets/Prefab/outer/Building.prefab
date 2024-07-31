@@ -206,7 +206,8 @@
     "fileId": "9aRzkcjwRJMYbmVe7/TefY",
     "instance": {
       "__id__": 5
-    }
+    },
+    "targetOverrides": null
   },
   {
     "__type__": "cc.PrefabInstance",
@@ -10260,7 +10261,7 @@
         "__id__": 1009
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 1022
@@ -16949,7 +16950,7 @@
         "__id__": 1320
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 1330
@@ -17191,7 +17192,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "pioneer_default",
+    "_name": "pioneer_0",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -17327,7 +17328,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "secretGuard",
+    "_name": "pioneer_1",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -17463,7 +17464,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "doomsdayGangSpy",
+    "_name": "pioneer_2",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -17599,7 +17600,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "rebels",
+    "_name": "pioneer_3",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {

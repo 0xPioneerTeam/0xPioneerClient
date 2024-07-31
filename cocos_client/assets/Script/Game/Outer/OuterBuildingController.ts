@@ -220,10 +220,10 @@ export class OuterBuildingController extends Component {
     }
 
     //------------------------------------------------- notification
-    private _onBuildingShowChange(data: { id: string; show: boolean }) {
-        const { id, show } = data;
+    private _onBuildingShowChange(data: { uniqueId: string; show: boolean }) {
+        const { uniqueId, show } = data;
         this._refreshUI();
-        const building = DataMgr.s.mapBuilding.getBuildingById(id);
+        const building = DataMgr.s.mapBuilding.getBuildingById(uniqueId);
         if (building == null || (building.type != MapBuildingType.event && building.type != MapBuildingType.resource)) {
             return;
         }

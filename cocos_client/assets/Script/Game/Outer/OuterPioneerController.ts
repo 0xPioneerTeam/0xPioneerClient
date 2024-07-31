@@ -33,6 +33,7 @@ import { OuterFightView } from "./View/OuterFightView";
 import { OuterMapCursorView } from "./View/OuterMapCursorView";
 import { OuterOtherPioneerView } from "./View/OuterOtherPioneerView";
 import { OuterRebonAndDestroyView } from "./View/OuterRebonAndDestroyView";
+import PioneerConfig from "../../Config/PioneerConfig";
 
 const { ccclass, property } = _decorator;
 
@@ -618,11 +619,11 @@ export class OuterPioneerController extends ViewController {
     private _onShowFightAnim(data: {
         fightDatas: share.Ifight_res[];
         isWin: boolean;
-        attackerData: { id: string; name: string; hp: number; hpmax: number };
+        attackerData: { uniqueId: string; name: string; hp: number; hpmax: number };
         defenderData: { id: string; name: string; hp: number; hpmax: number };
     }) {
         const { fightDatas, isWin, attackerData, defenderData } = data;
-        const attackerView = this._pioneerMap.get(attackerData.id);
+        const attackerView = this._pioneerMap.get(attackerData.uniqueId);
         if (attackerView == null) {
             return;
         }
@@ -645,14 +646,14 @@ export class OuterPioneerController extends ViewController {
         );
         const intervalId = setInterval(() => {
             if (fightDatas.length <= 0) {
-                if (this._fightDataMap.has(attackerData.id)) {
-                    const temp = this._fightDataMap.get(attackerData.id);
+                if (this._fightDataMap.has(attackerData.uniqueId)) {
+                    const temp = this._fightDataMap.get(attackerData.uniqueId);
                     clearInterval(temp.intervalId);
                 }
                 return;
             }
             const tempFightData = fightDatas.shift();
-            if (tempFightData.attackerId == attackerData.id) {
+            if (tempFightData.attackerId == attackerData.uniqueId) {
                 // attacker action
                 defenderData.hp -= tempFightData.hp;
             } else {
@@ -674,9 +675,9 @@ export class OuterPioneerController extends ViewController {
                 true
             );
         }, 1000) as unknown as number;
-        this._fightDataMap.set(attackerData.id, {
+        this._fightDataMap.set(attackerData.uniqueId, {
             isWin: isWin,
-            attackerId: attackerData.id,
+            attackerId: attackerData.uniqueId,
             attackerHp: attackerData.hp,
             attackerHpmax: attackerData.hpmax,
 
@@ -715,7 +716,7 @@ export class OuterPioneerController extends ViewController {
         resultView.getComponent(OuterFightResultView).showResult(fightData.isWin, () => {
             resultView.destroy();
             const attackPioneer = DataMgr.s.pioneer.getById(fightData.attackerId);
-            const defendPioneer = DataMgr.s.pioneer.getById(fightData.defenderId);
+            const defendPioneer = PioneerConfig.getById(fightData.defenderId);
             if (attackPioneer != null && defendPioneer != null) {
                 NotificationMgr.triggerEvent(NotificationName.FIGHT_FINISHED, {
                     attacker: {

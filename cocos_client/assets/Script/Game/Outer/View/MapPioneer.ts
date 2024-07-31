@@ -216,15 +216,15 @@ export class MapPioneer extends Component {
                     let attacker = this._model;
                     if (this._model.actionType == MapPioneerActionType.eventing && this._model.actionBuildingId != null) {
                         const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
-                        if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(this._model.id)) {
-                            attacker = currentBuilding.eventPioneerDatas.get(this._model.id);
+                        if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(this._model.uniqueId)) {
+                            attacker = currentBuilding.eventPioneerDatas.get(this._model.uniqueId);
                         }
                     }
                     let defender: MapPioneerObject = null;
                     const fightDatas = this._model.fightData.slice();
                     if (this._model.actionType == MapPioneerActionType.eventing) {
                         const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
-                        if (fightDatas[0].attackerId == attacker.id) {
+                        if (fightDatas[0].attackerId == attacker.uniqueId) {
                             if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(fightDatas[0].defenderId)) {
                                 defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].defenderId);
                             }
@@ -241,10 +241,11 @@ export class MapPioneer extends Component {
                         }
                     }
                     if (defender != null) {
+                        // attacker is self, defender is enemy
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, {
                             fightDatas: this._model.fightData.slice(),
                             isWin: this._model.fightResultWin,
-                            attackerData: { id: attacker.id, name: attacker.name, hp: attacker.hp, hpmax: attacker.hpMax },
+                            attackerData: { uniqueId: attacker.uniqueId, name: attacker.name, hp: attacker.hp, hpmax: attacker.hpMax },
                             defenderData: { id: defender.id, name: defender.name, hp: defender.hp, hpmax: defender.hpMax },
                         });
                     }
