@@ -1,6 +1,6 @@
-import { _decorator, Color, Details, geometry, instantiate, math, Node, pingPong, Prefab, Rect, UITransform, v2, v3, Vec2, Vec3 } from "cc";
+import { _decorator, Color, Details, geometry, instantiate, math, Node, pingPong, Prefab, Rect, Slider, UITransform, v2, v3, Vec2, Vec3 } from "cc";
 import ViewController from "../../BasicView/ViewController";
-import { ResourcesMgr } from "../../Utils/Global";
+import { GameMgr, ResourcesMgr } from "../../Utils/Global";
 import { BundleName } from "../../Basic/ResourcesMgr";
 import MapDecorateConfig from "../../Config/MapDecorateConfig";
 import { OuterTiledMapActionController } from "./OuterTiledMapActionController";
@@ -23,7 +23,7 @@ export class OuterDecorateController extends ViewController {
         super.viewDidLoad();
     }
 
-    refreshUI(rect: Rect, rect2: Rect) {
+    async refreshUI(rect: Rect, rect2: Rect) {
         let stx = rect2.xMin;
         let sty = rect2.yMin;
         let endx = rect2.xMax;
@@ -43,8 +43,8 @@ export class OuterDecorateController extends ViewController {
                     continue;
                 }
                 if (!this._decorateAreaMap.has(areaKey)) {
-                    console.log("exce create: " + areaKey);
-                    this.parseDecorate(decorateInfoMap.get(areaKey), i, j);
+                    this._decorateAreaMap.set(areaKey, []);
+                    await this.parseDecorate(decorateInfoMap.get(areaKey), i, j);
                 }
                 if (i == stx || i == endx || j == sty || j == endy) {
                     let nodes = this._decorateAreaMap.get(areaKey);
@@ -80,9 +80,7 @@ export class OuterDecorateController extends ViewController {
         }
         DataMgr.s.mapBuilding.requestMapInfo(slotIds);
         if (slotIds.length > 0) {
-            NetworkMgr.websocketMsg.get_map_info({
-                slotIds: slotIds,
-            });
+            GameMgr.addMapInfoRequests(slotIds);
         }
     }
 
@@ -93,7 +91,6 @@ export class OuterDecorateController extends ViewController {
         let areaPx = areaWidth * ax + TileMapHelper.INS.pixelwidth / 2;
         let areaPy = areaHeight * ay - TileMapHelper.INS.pixelheight / 2;
         let areaKey = ax + "_" + -ay;
-        this._decorateAreaMap.set(areaKey, []);
         for (let i = 0; i < decorateData.children.length; i++) {
             const decorateItem = decorateData.children[i];
             this._creatDecorate(decorateItem.url).then((node: Node) => {

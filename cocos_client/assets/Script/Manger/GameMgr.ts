@@ -27,6 +27,37 @@ import { UIHUDController } from "../UI/UIHUDController";
 import { TilePos } from "../Game/TiledMap/TileTool";
 
 export default class GameMgr {
+
+    private _mapInfoRequestQueue: string[] = [];
+    private _mapInfoProgress: Set<string> = new Set();
+    public addMapInfoRequests(mapSlotIds: string[]) {
+        mapSlotIds.forEach(param => {
+            if (!this._mapInfoProgress.has(param)) {
+                this._mapInfoRequestQueue.push(param);
+            } 
+        });
+        this._mapInfoInProgressQueue();
+    }
+    public removeMapInfoRequests(mapSlotIds: string[]) {
+        mapSlotIds.forEach(param => this._mapInfoProgress.delete(param));
+        if (this._mapInfoRequestQueue.length > 0) {
+            this._mapInfoInProgressQueue();
+        }
+    }
+    private _mapInfoInProgressQueue() {
+        if (this._mapInfoRequestQueue.length === 0) {
+            return;
+        }
+        // once max limit is 3
+        const params = this._mapInfoRequestQueue.splice(0, 3);
+        params.forEach(param => this._mapInfoProgress.add(param));
+
+        NetworkMgr.websocketMsg.get_map_info({
+            slotIds: params
+        });
+    }
+    
+
     public rookieTaskExplainIsShow: boolean = false;
 
     public enterGameSence: boolean = false;

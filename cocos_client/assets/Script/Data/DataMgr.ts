@@ -379,6 +379,7 @@ export class DataMgr {
         }
         let buildingChanged: boolean = false;
         let pioneerChanged: boolean = false;
+        const slotIds: string[] = [];
         for (const info of p.info) {
             for (const key in info.buildings) {
                 if (Object.prototype.hasOwnProperty.call(info.buildings, key)) {
@@ -394,8 +395,10 @@ export class DataMgr {
                     pioneerChanged = true;
                 }
             }
+            slotIds.push(info.slotId);
             DataMgr.s.mapBuilding.setDecorateInfo(info.slotId, info.templateConfigId);
         }
+        GameMgr.removeMapInfoRequests(slotIds);
         if (buildingChanged) {
             NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_NEED_REFRESH);
         }
