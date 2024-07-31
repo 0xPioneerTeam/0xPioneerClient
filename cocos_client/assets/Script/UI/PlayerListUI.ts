@@ -68,7 +68,7 @@ export class PlayerListUI extends Component {
 
     private _refreshPlayerList() {
         this._pioneers = [];
-        for (const temple of DataMgr.s.pioneer.getAllPlayers()) {
+        for (const temple of DataMgr.s.pioneer.getAllSelfPlayers()) {
             const building = DataMgr.s.mapBuilding.getBuildingById(temple.actionBuildingId);
             if (temple.actionType == MapPioneerActionType.eventing && building != null && building.eventPioneerDatas.has(temple.id)) {
                 // eventing use building data
@@ -113,7 +113,7 @@ export class PlayerListUI extends Component {
                     const currentWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(currentMapPos.x, currentMapPos.y);
                     GameMainHelper.instance.changeGameCameraWorldPosition(currentWorldPos, true);
                 }
-                DataMgr.s.pioneer.changeCurrentAction(this._pioneers[index].id);
+                DataMgr.s.pioneer.changeCurrentAction(this._pioneers[index].uniqueId);
                 this._refreshPlayerList();
                 NotificationMgr.triggerEvent(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE);
             }

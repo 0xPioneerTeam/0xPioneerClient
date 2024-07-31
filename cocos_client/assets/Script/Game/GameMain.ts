@@ -145,13 +145,14 @@ export class GameMain extends ViewController {
 
     private _onRookieWormholeFightCount(data: { playerId: string; resultHp: number; delayTime: number }) {
         const { playerId, resultHp, delayTime } = data;
-        this.scheduleOnce(() => {
-            const pioneer = DataMgr.s.pioneer.getById(playerId);
-            if (pioneer != undefined) {
-                pioneer.hp = resultHp;
-                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
-            }
-            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { id: playerId });
-        }, delayTime);
+        // wait change
+        // this.scheduleOnce(() => {
+        //     const pioneer = DataMgr.s.pioneer.getById(playerId);
+        //     if (pioneer != undefined) {
+        //         pioneer.hp = resultHp;
+        //         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
+        //     }
+        //     NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { id: playerId });
+        // }, delayTime);
     }
 }

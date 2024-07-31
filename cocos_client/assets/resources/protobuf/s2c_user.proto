@@ -114,10 +114,22 @@ message get_user_settlement_info_res {
 
 
 // ------ map ------
-// map: getinfo
+// get map data
 message get_map_info_res {
     required int32 res = 1;
     repeated share.map_info_data info = 2;
+}
+// enter zone
+message player_enterzone {
+    repeated playerinzoneinfo infos = 1; // in zone player info
+}
+message playerinzoneinfo {
+    required uint32 instid = 1; // map instance id (player/monster/other obj...)
+    required uint32 playerid = 2; // player id
+    required string pioneerId = 3;
+    required uint32 ver = 4;  // avatar version, +1 each time avatar/showinfo is changed
+    required share.pos2d pos = 5; // position
+    optional share.player_mov_info goto = 6; // current moving info
 }
 
 // ------ player ------

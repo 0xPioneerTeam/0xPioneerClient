@@ -1,4 +1,4 @@
-import { _decorator, Color, instantiate, Node, Prefab, v2, v3, Vec2, Vec3 } from "cc";
+import { _decorator, Color, dynamicAtlasManager, instantiate, Node, Prefab, v2, v3, Vec2, Vec3 } from "cc";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import UIPanelManger from "../../Basic/UIPanelMgr";
 import ViewController from "../../BasicView/ViewController";
@@ -12,7 +12,7 @@ import {
     MapPioneerLogicObject,
     MapPioneerMoveDirection,
     MapPioneerObject,
-    MapPioneerType
+    MapPioneerType,
 } from "../../Const/PioneerDefine";
 import { RookieStep } from "../../Const/RookieDefine";
 import { DataMgr } from "../../Data/DataMgr";
@@ -41,46 +41,6 @@ export class OuterPioneerController extends ViewController {
     @property(Prefab)
     private onlyFightPrefab: Prefab = null;
 
-    public showMovingPioneerAction(tilePos: TilePos, movingPioneerId: string, usedCursor: OuterMapCursorView) {
-        this._actionShowPioneerId = movingPioneerId;
-        this._actionUsedCursor = usedCursor;
-        if (this._actionPioneerView != null) {
-            this._actionPioneerView.destroy();
-            this._actionPioneerView = null;
-        }
-        if (this._pioneerMap.has(movingPioneerId)) {
-            const view = this._pioneerMap.get(movingPioneerId);
-            if (view.getComponent(MapItemMonster) != null) {
-                this._actionPioneerView = instantiate(view);
-                this._actionPioneerView.setParent(view.getParent());
-                this._actionPioneerView.setPosition(GameMainHelper.instance.tiledMapGetPosPixel(tilePos.x, tilePos.y))
-
-                this._actionPioneerView.setSiblingIndex(view.getSiblingIndex());
-                this._actionPioneerView.getComponent(MapItemMonster).shadowMode();
-            }
-            const pioneer: MapPioneerObject = DataMgr.s.pioneer.getById(movingPioneerId);
-            if (pioneer != null) {
-                const path = [];
-                let stepLogic: MapPioneerLogicObject = null;
-                // for (const logic of pioneer.logics) {
-                //     if (logic.type == MapPioneerLogicType.stepmove) {
-                //         stepLogic = logic;
-                //         break;
-                //     }
-                // }
-                if (stepLogic != null) {
-                    let nextTilePos = tilePos;
-                    for (let i = 0; i < 15; i++) {
-                        nextTilePos = GameMainHelper.instance.tiledMapGetAroundByDirection(v2(nextTilePos.x, nextTilePos.y), stepLogic.stepMove.direction);
-                        path.push(nextTilePos);
-                    }
-                }
-                if (path.length > 0) {
-                    this._actionPioneerFootStepViews = this._addFootSteps(path, false);
-                }
-            }
-        }
-    }
     public hideMovingPioneerAction() {
         if (this._actionPioneerView != null) {
             this._actionPioneerView.destroy();
@@ -165,6 +125,7 @@ export class OuterPioneerController extends ViewController {
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_BEGIN_EYES, this._onRookieGuideBeginEyes, this);
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_THIRD_EYES, this._onRookieGuideThirdEyes, this);
 
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_NEED_REFRESH, this._refreshUI, this);
         // talk
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_TALK_CHANGED, this._refreshUI, this);
         // action
@@ -185,8 +146,6 @@ export class OuterPioneerController extends ViewController {
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, this._onShowFightAnim, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_FIGHT_END, this._onFightEnd, this);
         NotificationMgr.addListener(NotificationName.MAP_FAKE_FIGHT_SHOW, this._onMapFakeFightShow, this);
-        // rebon
-        NotificationMgr.addListener(NotificationName.MAP_PIONEER_REBON_CHANGE, this._refreshUI, this);
         // energy
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._onPioneerEnergyChanged, this);
         // lan
@@ -200,7 +159,7 @@ export class OuterPioneerController extends ViewController {
             const allPioneers = DataMgr.s.pioneer.getAll();
             for (var i = 0; i < allPioneers.length; i++) {
                 let pioneer = allPioneers[i];
-                if (this._movingPioneerIds.indexOf(pioneer.id) == -1 || !this._pioneerMap.has(pioneer.id)) {
+                if (this._movingPioneerIds.indexOf(pioneer.uniqueId) == -1 || !this._pioneerMap.has(pioneer.uniqueId)) {
                     continue;
                 }
                 let usedSpeed = pioneer.speed;
@@ -216,7 +175,7 @@ export class OuterPioneerController extends ViewController {
                         usedSpeed = 600;
                     }
                 }
-                let pioneermap = this._pioneerMap.get(pioneer.id);
+                let pioneermap = this._pioneerMap.get(pioneer.uniqueId);
                 this._updateMoveStep(usedSpeed, gap / 1000, pioneer, pioneermap);
             }
         }, 1000 / 60);
@@ -269,6 +228,7 @@ export class OuterPioneerController extends ViewController {
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_BEGIN_EYES, this._onRookieGuideBeginEyes, this);
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_THIRD_EYES, this._onRookieGuideThirdEyes, this);
 
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_NEED_REFRESH, this._refreshUI, this);
         // talk
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_TALK_CHANGED, this._refreshUI, this);
         // action
@@ -290,8 +250,6 @@ export class OuterPioneerController extends ViewController {
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, this._onShowFightAnim, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_FIGHT_END, this._onFightEnd, this);
         NotificationMgr.removeListener(NotificationName.MAP_FAKE_FIGHT_SHOW, this._onMapFakeFightShow, this);
-        // rebon
-        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_REBON_CHANGE, this._refreshUI, this);
         // energy
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._onPioneerEnergyChanged, this);
         // lan
@@ -313,8 +271,8 @@ export class OuterPioneerController extends ViewController {
             if (canShow) {
                 let firstInit: boolean = false;
                 let temple = null;
-                if (this._pioneerMap.has(pioneer.id)) {
-                    temple = this._pioneerMap.get(pioneer.id);
+                if (this._pioneerMap.has(pioneer.uniqueId)) {
+                    temple = this._pioneerMap.get(pioneer.uniqueId);
                 } else {
                     // new
                     if (pioneer.type == MapPioneerType.player) {
@@ -324,10 +282,10 @@ export class OuterPioneerController extends ViewController {
                     } else if (pioneer.type == MapPioneerType.hred) {
                         temple = instantiate(this.battleSmall);
                     }
-                    temple.name = "MAP_" + pioneer.id;
+                    temple.name = "MAP_" + pioneer.uniqueId;
                     temple.setParent(decorationView);
                     firstInit = true;
-                    this._pioneerMap.set(pioneer.id, temple);
+                    this._pioneerMap.set(pioneer.uniqueId, temple);
 
                     changed = true;
                 }
@@ -347,9 +305,9 @@ export class OuterPioneerController extends ViewController {
                     }
                 }
             } else {
-                if (this._pioneerMap.has(pioneer.id)) {
-                    this._pioneerMap.get(pioneer.id).destroy();
-                    this._pioneerMap.delete(pioneer.id);
+                if (this._pioneerMap.has(pioneer.uniqueId)) {
+                    this._pioneerMap.get(pioneer.uniqueId).destroy();
+                    this._pioneerMap.delete(pioneer.uniqueId);
                 }
             }
         }
@@ -358,7 +316,7 @@ export class OuterPioneerController extends ViewController {
         this._pioneerMap.forEach((value: Node, key: string) => {
             let isExsit: boolean = false;
             for (const pioneer of allPioneers) {
-                if (pioneer.id == key) {
+                if (pioneer.uniqueId == key) {
                     isExsit = true;
                     break;
                 }
@@ -393,8 +351,8 @@ export class OuterPioneerController extends ViewController {
         if (dist < add) {
             //havemove 2 target
             pioneermap.setPosition(nextwpos);
-            PioneerMgr.pioneerDidMoveOneStep(pioneer.id);
-            if (pioneer.id == this._actionShowPioneerId && this._actionUsedCursor != null) {
+            PioneerMgr.pioneerDidMoveOneStep(pioneer.uniqueId);
+            if (pioneer.uniqueId == this._actionShowPioneerId && this._actionUsedCursor != null) {
                 this._actionUsedCursor.hide();
                 this._actionUsedCursor.show([pioneer.stayPos], Color.WHITE);
             }
@@ -407,7 +365,7 @@ export class OuterPioneerController extends ViewController {
             newpos.x += dir.x * add;
             newpos.y += dir.y * add;
             pioneermap.setPosition(newpos);
-            if (pioneer.id == this._actionShowPioneerId && this._actionUsedCursor != null) {
+            if (pioneer.uniqueId == this._actionShowPioneerId && this._actionUsedCursor != null) {
                 this._actionUsedCursor.move(v2(dir.x * add * 2, dir.y * add * 2));
             }
             //pioneer move direction
@@ -457,9 +415,8 @@ export class OuterPioneerController extends ViewController {
                 let pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(currentPath.x, currentPath.y);
                 footView.setPosition(pixelPos);
                 footViews.push(footView);
-                
-                if (nextPath.x - currentPath.x == -1 &&
-                    nextPath.y - currentPath.y == 0) {
+
+                if (nextPath.x - currentPath.x == -1 && nextPath.y - currentPath.y == 0) {
                     //left
                     footView.angle = 90;
                 } else if (nextPath.x - currentPath.x == 1 && nextPath.y - currentPath.y == 0) {
@@ -509,64 +466,62 @@ export class OuterPioneerController extends ViewController {
         this.getComponent(OuterTiledMapActionController)._clickOnMap(view.worldPosition);
     }
     private _onRookieGuideBeginEyes() {
-        const actionPioneer = DataMgr.s.pioneer.getCurrentPlayer();
-        if (actionPioneer != null) {
-            actionPioneer.actionType = MapPioneerActionType.wakeup;
-            let view: MapPioneer = null;
-            if (this._pioneerMap.has(actionPioneer.id)) {
-                view = this._pioneerMap.get(actionPioneer.id).getComponent(MapPioneer);
-            }
-            view.refreshUI(actionPioneer);
-            this.scheduleOnce(async () => {
-                actionPioneer.actionType = MapPioneerActionType.idle;
-                view.refreshUI(actionPioneer);
-                UIPanelManger.inst.popPanelByName(UIName.RookieGuide);
+        // const actionPioneer = DataMgr.s.pioneer.getCurrentPlayer();
+        // if (actionPioneer != null) {
+        //     actionPioneer.actionType = MapPioneerActionType.wakeup;
+        //     let view: MapPioneer = null;
+        //     if (this._pioneerMap.has(actionPioneer.id)) {
+        //         view = this._pioneerMap.get(actionPioneer.id).getComponent(MapPioneer);
+        //     }
+        //     view.refreshUI(actionPioneer);
+        //     this.scheduleOnce(async () => {
+        //         actionPioneer.actionType = MapPioneerActionType.idle;
+        //         view.refreshUI(actionPioneer);
+        //         UIPanelManger.inst.popPanelByName(UIName.RookieGuide);
 
-                NetworkMgr.websocketMsg.player_rookie_update({
-                    rookieStep: RookieStep.NPC_TALK_1,
-                });
-                // const result = await UIPanelManger.inst.pushPanel(UIName.DialogueUI);
-                // if (result.success) {
-                //     result.node.getComponent(DialogueUI).dialogShow(TalkConfig.getById("talk14"), () => {
-                //     });
-                // }
-            }, 6.8);
-        }
+        //         NetworkMgr.websocketMsg.player_rookie_update({
+        //             rookieStep: RookieStep.NPC_TALK_1,
+        //         });
+        //         // const result = await UIPanelManger.inst.pushPanel(UIName.DialogueUI);
+        //         // if (result.success) {
+        //         //     result.node.getComponent(DialogueUI).dialogShow(TalkConfig.getById("talk14"), () => {
+        //         //     });
+        //         // }
+        //     }, 6.8);
+        // }
     }
     private _onRookieGuideThirdEyes() {
         GameMusicPlayMgr.playGameMusic();
         GameMainHelper.instance.changeGameCameraZoom(1, true);
     }
     //---------- pioneer
-    private _onPioneerActionChanged(data: { id: string }) {
-        const pioneer = DataMgr.s.pioneer.getById(data.id);
-        if (pioneer != undefined && pioneer.type == MapPioneerType.player) {
-            if (pioneer.actionType == MapPioneerActionType.moving) {
-                this._movingPioneerIds.push(data.id);
-            } else {
-                const index = this._movingPioneerIds.indexOf(data.id);
-                if (index >= 0) {
-                    this._movingPioneerIds.splice(index, 1);
-                }
-                if (this._footPathMap.has(data.id)) {
-                    for (const footView of this._footPathMap.get(data.id)) {
-                        footView.destroy();
-                    }
-                    this._footPathMap.delete(data.id);
-                }
+    private _onPioneerActionChanged(data: { uniqueId: string }) {
+        const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
+        if (pioneer == undefined || pioneer.type != MapPioneerType.player) {
+            return;
+        }
+        if (pioneer.actionType == MapPioneerActionType.moving) {
+            this._movingPioneerIds.push(pioneer.uniqueId);
+        } else {
+            const index = this._movingPioneerIds.indexOf(pioneer.uniqueId);
+            if (index >= 0) {
+                this._movingPioneerIds.splice(index, 1);
             }
-            this._refreshUI();
+            if (this._footPathMap.has(pioneer.uniqueId)) {
+                for (const footView of this._footPathMap.get(pioneer.uniqueId)) {
+                    footView.destroy();
+                }
+                this._footPathMap.delete(pioneer.uniqueId);
+            }
         }
+        this._refreshUI();
     }
-    private _onPioneerStayPositionChanged(data: { id: string }) {
-        const pioneer = DataMgr.s.pioneer.getById(data.id);
-        if (pioneer == undefined) {
+    private _onPioneerStayPositionChanged(data: { uniqueId: string }) {
+        const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
+        if (!this._pioneerMap.has(pioneer.uniqueId)) {
             return;
         }
-        if (!this._pioneerMap.has(data.id)) {
-            return;
-        }
-        const view = this._pioneerMap.get(data.id);
+        const view = this._pioneerMap.get(pioneer.uniqueId);
         view.worldPosition = GameMainHelper.instance.tiledMapGetPosWorld(pioneer.stayPos.x, pioneer.stayPos.y);
     }
     private _onPioneerHpChanged(): void {
@@ -575,51 +530,50 @@ export class OuterPioneerController extends ViewController {
         //     actionView.getComponent(MapPioneer).playGetResourceAnim(ResourceCorrespondingItem.Troop, data.gainValue, null);
         // }
     }
-    private _onPioneerShowChanged(data: { id: string; show: boolean }): void {
-        if (data.show) {
-            if (data.id == "pioneer_1" || data.id == "pioneer_2" || data.id == "pioneer_3") {
-                // get secret guard
+    private _onPioneerShowChanged(data: { uniqueId: string; show: boolean }): void {
+        // if (data.show) {
+        //     if (data.id == "pioneer_1" || data.id == "pioneer_2" || data.id == "pioneer_3") {
+        //         // get secret guard
 
-                const pioneer = DataMgr.s.pioneer.getById(data.id);
-                if (pioneer != undefined) {
-                    if (this["_LAST_NEW_TIME"] == null) {
-                        this["_LAST_NEW_TIME"] = new Date().getTime();
-                    } else {
-                        const currentTimeStamp = new Date().getTime();
-                        if (currentTimeStamp - this["_LAST_NEW_TIME"] <= 2000) {
-                            UserInfoMgr.afterNewPioneerDatas.push(pioneer);
-                            return;
-                        }
-                    }
+        //         const pioneer = DataMgr.s.pioneer.getById(data.id);
+        //         if (pioneer != undefined) {
+        //             if (this["_LAST_NEW_TIME"] == null) {
+        //                 this["_LAST_NEW_TIME"] = new Date().getTime();
+        //             } else {
+        //                 const currentTimeStamp = new Date().getTime();
+        //                 if (currentTimeStamp - this["_LAST_NEW_TIME"] <= 2000) {
+        //                     UserInfoMgr.afterNewPioneerDatas.push(pioneer);
+        //                     return;
+        //                 }
+        //             }
 
-                    setTimeout(async () => {
-                        if (UIPanelManger.inst.panelIsShow(UIName.CivilizationLevelUpUI)) {
-                            UserInfoMgr.afterCivilizationClosedShowPioneerDatas.push(pioneer);
-                        } else {
-                            const result = await UIPanelManger.inst.pushPanel(UIName.SecretGuardGettedUI);
-                            if (result.success) {
-                                result.node.getComponent(SecretGuardGettedUI).dialogShow(pioneer.animType);
-                            }
-                        }
-                    });
-                }
-            }
-        }
+        //             setTimeout(async () => {
+        //                 if (UIPanelManger.inst.panelIsShow(UIName.CivilizationLevelUpUI)) {
+        //                     UserInfoMgr.afterCivilizationClosedShowPioneerDatas.push(pioneer);
+        //                 } else {
+        //                     const result = await UIPanelManger.inst.pushPanel(UIName.SecretGuardGettedUI);
+        //                     if (result.success) {
+        //                         result.node.getComponent(SecretGuardGettedUI).dialogShow(pioneer.animType);
+        //                     }
+        //                 }
+        //             });
+        //         }
+        //     }
+        // }
         this._refreshUI();
 
-        const pioneer = DataMgr.s.pioneer.getById(data.id);
+        const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
         if (pioneer == null || pioneer.type != MapPioneerType.hred) {
             return;
         }
         // hred
         const decorationView = this.node.getComponent(OuterTiledMapActionController).mapDecorationView();
-
         const rebornView: Node = instantiate(this.rebonPrefab);
         rebornView.setParent(decorationView);
         rebornView.setPosition(GameMainHelper.instance.tiledMapGetPosPixel(pioneer.stayPos.x, pioneer.stayPos.y));
         rebornView.getComponent(OuterRebonAndDestroyView).playAnim(data.show ? 1 : 0);
     }
-    private async _onPioneerEventIdChange(data: { triggerPioneerId: string; eventBuildingId: string; eventId: string }) {
+    private async _onPioneerEventIdChange(data: { uniqueId: string; eventBuildingId: string; eventId: string }) {
         const eventConfig = EventConfig.getById(data.eventId);
         if (eventConfig == undefined) {
             return;
@@ -629,11 +583,11 @@ export class OuterPioneerController extends ViewController {
         if (!result.success) {
             return;
         }
-        result.node.getComponent(EventUI).eventUIShow(data.triggerPioneerId, data.eventBuildingId, eventConfig);
+        result.node.getComponent(EventUI).eventUIShow(data.uniqueId, data.eventBuildingId, eventConfig);
     }
-    private _onPioneerBeginMove(data: { id: string; showMovePath: boolean }): void {
-        const pioneer = DataMgr.s.pioneer.getById(data.id);
-        if (this._actionShowPioneerId == data.id) {
+    private _onPioneerBeginMove(data: { uniqueId: string; showMovePath: boolean }): void {
+        const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
+        if (this._actionShowPioneerId == data.uniqueId) {
             if (this._actionPioneerFootStepViews != null) {
                 for (const view of this._actionPioneerFootStepViews) {
                     view.destroy();
@@ -650,9 +604,9 @@ export class OuterPioneerController extends ViewController {
             // }
         }
     }
-    private _onPlayerPioneerDidMoveOneStep(data: { id: string }): void {
-        if (this._footPathMap.get(data.id)) {
-            const footViews = this._footPathMap.get(data.id);
+    private _onPlayerPioneerDidMoveOneStep(data: { uniqueId: string }): void {
+        if (this._footPathMap.get(data.uniqueId)) {
+            const footViews = this._footPathMap.get(data.uniqueId);
             if (footViews.length > 0) {
                 const footView = footViews.shift();
                 footView.destroy();
@@ -689,7 +643,7 @@ export class OuterPioneerController extends ViewController {
             },
             true
         );
-        const intervalId = (setInterval(() => {
+        const intervalId = setInterval(() => {
             if (fightDatas.length <= 0) {
                 if (this._fightDataMap.has(attackerData.id)) {
                     const temp = this._fightDataMap.get(attackerData.id);
@@ -703,6 +657,7 @@ export class OuterPioneerController extends ViewController {
                 defenderData.hp -= tempFightData.hp;
             } else {
                 attackerData.hp -= tempFightData.hp;
+                // wait change
                 NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
             }
             fightView.refreshUI(
@@ -718,7 +673,7 @@ export class OuterPioneerController extends ViewController {
                 },
                 true
             );
-        }, 1000)) as unknown as number;
+        }, 1000) as unknown as number;
         this._fightDataMap.set(attackerData.id, {
             isWin: isWin,
             attackerId: attackerData.id,
@@ -732,11 +687,11 @@ export class OuterPioneerController extends ViewController {
             intervalId: intervalId,
         });
     }
-    private _onFightEnd(data: { id: string }) {
-        if (!this._fightDataMap.has(data.id)) {
+    private _onFightEnd(data: { uniqueId: string }) {
+        if (!this._fightDataMap.has(data.uniqueId)) {
             return;
         }
-        const fightData = this._fightDataMap.get(data.id);
+        const fightData = this._fightDataMap.get(data.uniqueId);
         clearInterval(fightData.intervalId);
 
         const resultView = instantiate(this.fightResultPrefab);
@@ -748,12 +703,12 @@ export class OuterPioneerController extends ViewController {
         if (fightData.isWin) {
             GameMusicPlayMgr.playFightWinEffect();
 
-            const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
-            if (rookieStep == RookieStep.ENEMY_FIGHT && fightData.defenderId == "gangster_1") {
-                NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_FIGHT_ENEMY_WIN);
-            } else if (rookieStep == RookieStep.LOCAL_SYSTEM_TALK_32) {
-                NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_FIGHT_ENEMY_WIN);
-            }
+            // const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
+            // if (rookieStep == RookieStep.ENEMY_FIGHT && fightData.defenderId == "gangster_1") {
+            //     NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_FIGHT_ENEMY_WIN);
+            // } else if (rookieStep == RookieStep.LOCAL_SYSTEM_TALK_32) {
+            //     NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_FIGHT_ENEMY_WIN);
+            // }
         } else {
             GameMusicPlayMgr.playFightFailEffect();
         }
@@ -784,7 +739,7 @@ export class OuterPioneerController extends ViewController {
                 } as FIGHT_FINISHED_DATA);
             }
         });
-        this._fightDataMap.delete(data.id);
+        this._fightDataMap.delete(data.uniqueId);
     }
     private _onMapFakeFightShow(data: { stayPositions: Vec2[] }) {
         const fightView = instantiate(this.onlyFightPrefab);
@@ -803,12 +758,13 @@ export class OuterPioneerController extends ViewController {
         }, 5);
     }
 
-    private _onPioneerEnergyChanged(data: { pioneerId: string }) {
-        const pioneer = DataMgr.s.pioneer.getById(data.pioneerId);
+    private _onPioneerEnergyChanged(data: { uniqueId: string }) {
+        const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
         if (pioneer == undefined) {
             return;
         }
         if (pioneer.energy <= 0) {
+            // wait change
             GameMgr.showBuyEnergyTip(pioneer.id);
         }
     }

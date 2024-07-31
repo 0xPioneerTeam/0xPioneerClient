@@ -87,6 +87,9 @@ export class WebsocketMsg {
         this.send_packet("player_psyc_to_energy", d);
     }
 
+    public get_map_info(d: c2s_user.Iget_map_info) {
+        this.send_packet("get_map_info", d);
+    }
     public player_pioneer_change_show(d: c2s_user.Iplayer_pioneer_change_show) {
         this.send_packet("player_pioneer_change_show", d);
     }
@@ -274,6 +277,10 @@ export namespace c2s_user {
     export interface Iplayer_psyc_to_energy {
         pioneerId: string;
         psycNum: number;
+    }
+
+    export interface Iget_map_info {
+        slotIds: string[];
     }
 
     export interface Icreate_pioneer {
@@ -516,14 +523,12 @@ export namespace s2c_user {
         res: number;
         data?: share.Ipioneer_info | null;
     }
+    export interface Iget_map_info_res {
+        res: number;
+        info: share.Imap_info_data[];
+    }
     export interface Ipioneer_change {
         pioneers: share.Ipioneer_data[];
-    }
-    export interface Ipioneer_reborn_res {
-        res: number;
-        pioneerId: string;
-        rebirthStartTime: number;
-        rebirthEndTime: number;
     }
     export interface Inft_change {
         nfts: share.Infts_info_data[];
@@ -818,6 +823,7 @@ export namespace share {
         pioneer: { [key: string]: Ipioneer_data };
     }
     export interface Ipioneer_data {
+        uniqueId: string;
         id: string;
         show: boolean;
         level: number;
@@ -899,10 +905,12 @@ export namespace share {
     }
     export interface Imap_info_data {
         slotId: string;
+        templateConfigId: string;
         buildings: { [key: string]: Imapbuilding_info_data };
         pioneers: { [key: string]: Ipioneer_data };
     }
     export interface Imapbuilding_info_data {
+        uniqueId: string;
         id: string;
         name: string;
         type: number;

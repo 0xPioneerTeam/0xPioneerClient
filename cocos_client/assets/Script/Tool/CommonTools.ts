@@ -1,4 +1,4 @@
-import { Layers, Node } from "cc";
+import { Layers, Node, v2, Vec2 } from "cc";
 
 export default class CommonTools {
     public static getOneDecimalNum(num: number): number {
@@ -270,6 +270,31 @@ export default class CommonTools {
         }
 
         return true;
+    }
+
+    //----------------------------------- MAP
+    public static convertMapWorldPosToSlotId(pos: Vec2): string | null {
+        const bigMapSize: number = 5;
+
+        const bigX: number = Math.floor(pos.x / bigMapSize);
+        const bigY: number = Math.floor(pos.y / bigMapSize);
+
+        const smallX: number = pos.x % bigMapSize;
+        const smallY: number = pos.y % bigMapSize;
+
+        return `${bigX}_${bigY}_${smallX}_${smallY}`;
+    }
+    public static convertSlotIdToMapWorldPos(slotId: string): Vec2 | null {
+        const slotIndexs = slotId.split("_");
+        if (slotIndexs.length != 4) {
+            return null;
+        }
+        const bigMapSize: number = 5;
+        const bigX: number = parseInt(slotIndexs[0]);
+        const bigY: number = parseInt(slotIndexs[1]);
+        const smallX: number = parseInt(slotIndexs[2]);
+        const smallY: number = parseInt(slotIndexs[3]);
+        return v2(bigX * bigMapSize + smallX, bigY * bigMapSize + smallY);
     }
 
     //----------------------------------- COCOS

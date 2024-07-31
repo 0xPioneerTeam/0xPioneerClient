@@ -33,6 +33,7 @@ export class OuterBuildingController extends Component {
     private _buildingMap: Map<string, { node: Node; stayPositons: Vec2[] }> = new Map();
 
     protected onLoad() {
+        NotificationMgr.addListener(NotificationName.MAP_BUILDING_NEED_REFRESH, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.MAP_BUILDING_SHOW_CHANGE, this._onBuildingShowChange, this);
         NotificationMgr.addListener(NotificationName.MAP_BUILDING_WORMHOLE_ATTACKER_CHANGE, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.MAP_BUILDING_WORMHOLE_ATTACK_COUNT_DONW_TIME_CHANGE, this._refreshUI, this);
@@ -115,6 +116,7 @@ export class OuterBuildingController extends Component {
     update(deltaTime: number) { }
 
     protected onDestroy(): void {
+        NotificationMgr.removeListener(NotificationName.MAP_BUILDING_NEED_REFRESH, this._refreshUI, this);
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_SHOW_CHANGE, this._onBuildingShowChange, this);
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_WORMHOLE_ATTACKER_CHANGE, this._refreshUI, this);
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_WORMHOLE_ATTACK_COUNT_DONW_TIME_CHANGE, this._refreshUI, this);

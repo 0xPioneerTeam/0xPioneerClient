@@ -247,10 +247,10 @@ export class PlayerDispatchDetailUI extends ViewController {
         }
     }
 
-    private _onPioneerHpChange(data: { pioneerId: string }) {
+    private _onPioneerHpChange(data: { uniqueId: string }) {
         for (let i = 0; i < this._infos.length; i++) {
-            if (this._infos[i].id == data.pioneerId) {
-                this._infos[i] = DataMgr.s.pioneer.getById(data.pioneerId) as MapPlayerPioneerObject;
+            if (this._infos[i].uniqueId == data.uniqueId) {
+                this._infos[i] = DataMgr.s.pioneer.getById(data.uniqueId) as MapPlayerPioneerObject;
                 this._addTroopNum = 0;
                 this._refreshUI();
                 break;

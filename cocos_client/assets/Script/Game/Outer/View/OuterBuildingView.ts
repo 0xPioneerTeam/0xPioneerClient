@@ -100,20 +100,20 @@ export class OuterBuildingView extends ViewController {
                 this._showArtifactAni = tempShowAni;
             }
         } else if (building.type == MapBuildingType.explore) {
-            exploreIcon.active = true;
-            if (building.explorePioneerIds != null && building.explorePioneerIds.length > 0) {
-                exploreView.active = true;
-                exploreView.getChildByPath("Icon/pioneer_default").active = building.explorePioneerIds[0] == "pioneer_0";
-                exploreView.getChildByPath("Icon/secretGuard").active = building.explorePioneerIds[0] == "pioneer_1";
-                exploreView.getChildByPath("Icon/doomsdayGangSpy").active = building.explorePioneerIds[0] == "pioneer_2";
-                exploreView.getChildByPath("Icon/rebels").active = building.explorePioneerIds[0] == "pioneer_3";
+            // exploreIcon.active = true;
+            // if (building.explorePioneerIds != null && building.explorePioneerIds.length > 0) {
+            //     exploreView.active = true;
+            //     exploreView.getChildByPath("Icon/pioneer_default").active = building.explorePioneerIds[0] == "pioneer_0";
+            //     exploreView.getChildByPath("Icon/secretGuard").active = building.explorePioneerIds[0] == "pioneer_1";
+            //     exploreView.getChildByPath("Icon/doomsdayGangSpy").active = building.explorePioneerIds[0] == "pioneer_2";
+            //     exploreView.getChildByPath("Icon/rebels").active = building.explorePioneerIds[0] == "pioneer_3";
 
-                const currentTimeStamp: number = new Date().getTime();
-                const tempPioneer = DataMgr.s.pioneer.getById(building.explorePioneerIds[0]);
-                exploreView.getChildByPath("Label").getComponent(Label).string = CommonTools.formatSeconds(
-                    (tempPioneer.actionEndTimeStamp - currentTimeStamp) / 1000
-                );
-            }
+            //     const currentTimeStamp: number = new Date().getTime();
+            //     const tempPioneer = DataMgr.s.pioneer.getById(building.explorePioneerIds[0]);
+            //     exploreView.getChildByPath("Label").getComponent(Label).string = CommonTools.formatSeconds(
+            //         (tempPioneer.actionEndTimeStamp - currentTimeStamp) / 1000
+            //     );
+            // }
         } else if (building.type == MapBuildingType.stronghold) {
             strongholdIcon.active = true;
             strongholdView.active = true;

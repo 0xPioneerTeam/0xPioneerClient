@@ -212,6 +212,7 @@ export class OuterShadowController extends ViewController {
                                     border = false;
                                 }
                             }
+
                         }
                     }
                     s.grid = border?this._shadowhalftag:this._shadowcleantag;

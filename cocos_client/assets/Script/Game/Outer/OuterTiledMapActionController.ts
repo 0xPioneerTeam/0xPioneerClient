@@ -18,16 +18,12 @@ import {
     size,
     v2,
     v3,
-    view
+    view,
 } from "cc";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import ViewController from "../../BasicView/ViewController";
 import Config from "../../Const/Config";
-import {
-    ECursorType,
-    MapInteractType,
-    MapMemberTargetType
-} from "../../Const/ConstDefine";
+import { ECursorType, MapInteractType, MapMemberTargetType } from "../../Const/ConstDefine";
 import { NotificationName } from "../../Const/Notification";
 import { DataMgr } from "../../Data/DataMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
@@ -56,8 +52,6 @@ import { OuterShadowController } from "./OuterShadowController";
 import { DispatchUI } from "../../UI/Dispatch/DispatchUI";
 
 const { ccclass, property } = _decorator;
-
-
 
 @ccclass("OuterTiledMapActionController")
 export class OuterTiledMapActionController extends ViewController {
@@ -150,6 +144,8 @@ export class OuterTiledMapActionController extends ViewController {
         NotificationMgr.addListener(NotificationName.USERINFO_CITY_RADIAL_RANGE_CHANGE, this._onCityRadialRangeChange, this);
         NotificationMgr.addListener(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE, this._onHideActionView, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onHideActionView, this);
+
+        NotificationMgr.addListener(NotificationName.MAP_PLAYER_PIONEER_DID_MOVE_STEP, this._onPioneerDidMoveStep, this);
     }
     protected viewDidStart(): void {
         super.viewDidStart();
@@ -306,6 +302,7 @@ export class OuterTiledMapActionController extends ViewController {
             GameMainHelper.instance.tiledMapShadowErase(shadow);
         }
         this._eraseMainCityShadow();
+        GameMainHelper.instance.updateGameViewport();
     }
 
     protected viewDidAppear(): void {
@@ -328,7 +325,7 @@ export class OuterTiledMapActionController extends ViewController {
     protected viewUpdate(dt: number): void {
         super.viewUpdate(dt);
 
-        this._updateTiledmap(dt);
+        // this._updateTiledmap(dt);
     }
 
     protected viewDidDestroy(): void {
@@ -337,6 +334,7 @@ export class OuterTiledMapActionController extends ViewController {
         NotificationMgr.removeListener(NotificationName.USERINFO_CITY_RADIAL_RANGE_CHANGE, this._onCityRadialRangeChange, this);
         NotificationMgr.removeListener(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE, this._onHideActionView, this);
         NotificationMgr.removeListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onHideActionView, this);
+        NotificationMgr.removeListener(NotificationName.MAP_PLAYER_PIONEER_DID_MOVE_STEP, this._onPioneerDidMoveStep, this);
     }
     //------------------------------------
     private _initTileMap(): void {
@@ -393,11 +391,10 @@ export class OuterTiledMapActionController extends ViewController {
         trackingView.setParent(mapView);
         GameMainHelper.instance.initTiledMapHelper(_tilemap, trackingView);
 
-
-        // this._fogItem = instantiate(this.gridFogPrefab);
-        // this._fogItem.layer = this.node.layer;
-        // // this._fogItem.scale = v3(1.8, 1.8, 1);
-        // this._fogItem.active = false;
+        this._fogItem = instantiate(this.gridFogPrefab);
+        this._fogItem.layer = this.node.layer;
+        // this._fogItem.scale = v3(1.8, 1.8, 1);
+        this._fogItem.active = false;
 
         // this._fogView = this.node.getChildByPath("Floor/Fog").getComponent(OuterFogMask);
         // this._fogView.node.setSiblingIndex(99);
@@ -431,11 +428,11 @@ export class OuterTiledMapActionController extends ViewController {
         this._tileLayers = [];
         let contentSize = mapView.getComponent(UITransform).contentSize;
         for (let i = 1; i <= 12; i++) {
-            let nodeName = 'layer' + i;
+            let nodeName = "layer" + i;
             let layer: TiledLayer;
-            let child: Node = mapView.getChildByName('layer' + i);
+            let child: Node = mapView.getChildByName("layer" + i);
             if (!child) {
-                child = (new Node()) as unknown as any;
+                child = new Node() as unknown as any;
                 child.name = nodeName;
                 child.layer = mapView.layer;
                 let uitransform = child.getComponent(UITransform);
@@ -450,8 +447,8 @@ export class OuterTiledMapActionController extends ViewController {
                 for (let key in layerInfo) {
                     tempinfo[key] = layerInfo[key];
                 }
-                tempinfo['name'] = nodeName;
-                let px = (TileMapHelper.INS.pixelwidth - this._tilemap._tileSize.width / 2) * (i - 1)
+                tempinfo["name"] = nodeName;
+                let px = (TileMapHelper.INS.pixelwidth - this._tilemap._tileSize.width / 2) * (i - 1);
                 child.setPosition(v3(px, 0, 0));
                 layer = child.getComponent(TiledLayer);
                 if (!layer) {
@@ -476,52 +473,55 @@ export class OuterTiledMapActionController extends ViewController {
     }
 
     private _lastPioneerStayPos: Map<string, Vec2> = new Map();
-    private async _updateTiledmap(delta: number) {
-        if (!GameMainHelper.instance.isTiledMapHelperInited) {
-            return;
-        }
-        // GameMainHelper.instance.tiledMapShadowUpdate(delta);
-        //clean pioneer view
-        const selfPioneers = await DataMgr.s.pioneer.getAllPlayers();
-        let eraseShadowWorldPos = DataMgr.s.eraseShadow.getObj();
-        for (const pioneer of selfPioneers) {
-            let isExsit: boolean = false;
-            for (const localErase of eraseShadowWorldPos) {
-                if (pioneer.stayPos.x === localErase.x && pioneer.stayPos.y === localErase.y) {
-                    isExsit = true;
-                    break;
-                }
-            }
-            const newCleardPositons = GameMainHelper.instance.tiledMapShadowErase(pioneer.stayPos, pioneer.id);
-            this._eraseMainCityShadow();
-            if (!isExsit) {
-                // this._localEraseShadowWorldPos.push(pioneer.stayPos);
-                // if (Config.canSaveLocalData) {
-                //     localStorage.setItem(this._localEraseDataKey, JSON.stringify(this._localEraseShadowWorldPos));
-                // }
-                DataMgr.s.eraseShadow.addObj(v2(pioneer.stayPos.x, pioneer.stayPos.y));
-            }
-            // has new, deal with fog
-            if (!this._lastPioneerStayPos.has(pioneer.id)) {
-                this._lastPioneerStayPos.set(pioneer.id, pioneer.stayPos);
-            }
-            const lastStayPos = this._lastPioneerStayPos.get(pioneer.id);
-            if (lastStayPos.x != pioneer.stayPos.x || lastStayPos.y != pioneer.stayPos.y) {
-                // let currentMoveDirection = null;
-                // const direction = [TileHexDirection.Left, TileHexDirection.LeftBottom, TileHexDirection.LeftTop, TileHexDirection.Right, TileHexDirection.RightBottom, TileHexDirection.RightTop];
-                // for (const d of direction) {
-                //     const around = GameMainHelper.instance.tiledMapGetAroundByDirection(this._tiledhelper.getPos(lastStayPos.x, lastStayPos.y), d);
-                //     if (around.x == pioneer.stayPos.x &&
-                //         around.y == pioneer.stayPos.y) {
-                //         currentMoveDirection = d;
-                //         break;
-                //     }
-                // }
-                this._lastPioneerStayPos.set(pioneer.id, pioneer.stayPos);
-                // this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions(), newCleardPositons, pioneer.stayPos);
-            }
-        }
-    }
+    // private async _updateTiledmap(delta: number) {
+    //     if (!GameMainHelper.instance.isTiledMapHelperInited) {
+    //         return;
+    //     }
+    //     // GameMainHelper.instance.tiledMapShadowUpdate(delta);
+    //     //clean pioneer view
+    //     const selfPioneers = await DataMgr.s.pioneer.getAllSelfPlayers();
+    //     let eraseShadowWorldPos = DataMgr.s.eraseShadow.getObj();
+    //     for (const pioneer of selfPioneers) {
+    //         let isExsit: boolean = false;
+    //         for (const localErase of eraseShadowWorldPos) {
+    //             if (pioneer.stayPos.x === localErase.x && pioneer.stayPos.y === localErase.y) {
+    //                 isExsit = true;
+    //                 break;
+    //             }
+    //         }
+    //         const newCleardPositons = GameMainHelper.instance.tiledMapShadowErase(pioneer.stayPos, pioneer.id);
+    //         if (newCleardPositons.length > 0) {
+    //             GameMainHelper.instance.updateGameViewport();
+    //         }
+    //         this._eraseMainCityShadow();
+    //         if (!isExsit) {
+    //             // this._localEraseShadowWorldPos.push(pioneer.stayPos);
+    //             // if (Config.canSaveLocalData) {
+    //             //     localStorage.setItem(this._localEraseDataKey, JSON.stringify(this._localEraseShadowWorldPos));
+    //             // }
+    //             DataMgr.s.eraseShadow.addObj(v2(pioneer.stayPos.x, pioneer.stayPos.y));
+    //         }
+    //         // has new, deal with fog
+    //         if (!this._lastPioneerStayPos.has(pioneer.id)) {
+    //             this._lastPioneerStayPos.set(pioneer.id, pioneer.stayPos);
+    //         }
+    //         const lastStayPos = this._lastPioneerStayPos.get(pioneer.id);
+    //         if (lastStayPos.x != pioneer.stayPos.x || lastStayPos.y != pioneer.stayPos.y) {
+    //             // let currentMoveDirection = null;
+    //             // const direction = [TileHexDirection.Left, TileHexDirection.LeftBottom, TileHexDirection.LeftTop, TileHexDirection.Right, TileHexDirection.RightBottom, TileHexDirection.RightTop];
+    //             // for (const d of direction) {
+    //             //     const around = GameMainHelper.instance.tiledMapGetAroundByDirection(this._tiledhelper.getPos(lastStayPos.x, lastStayPos.y), d);
+    //             //     if (around.x == pioneer.stayPos.x &&
+    //             //         around.y == pioneer.stayPos.y) {
+    //             //         currentMoveDirection = d;
+    //             //         break;
+    //             //     }
+    //             // }
+    //             this._lastPioneerStayPos.set(pioneer.id, pioneer.stayPos);
+    //             // this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions(), newCleardPositons, pioneer.stayPos);
+    //         }
+    //     }
+    // }
 
     public async _clickOnMap(worldpos: Vec3) {
         if (DataMgr.s.userInfo.data.rookieStep != RookieStep.FINISH) {
@@ -539,7 +539,7 @@ export class OuterTiledMapActionController extends ViewController {
             // outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
             return;
         }
-        
+
         const shadowController = this.node.getComponent(OuterShadowController);
         const tiledPos = GameMainHelper.instance.tiledMapGetTiledPosByWorldPos(worldpos);
         if (shadowController.tiledMapIsAllBlackShadow(tiledPos.x, tiledPos.y)) {
@@ -631,12 +631,12 @@ export class OuterTiledMapActionController extends ViewController {
                 if (result.success) {
                     result.node
                         .getComponent(DispatchUI)
-                        .configuration(step, costEnergy, speed, async (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => {
-                            const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerId);
+                        .configuration(step, costEnergy, speed, async (confirmed: boolean, actionPioneerUnqueId: string, isReturn: boolean) => {
+                            const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerUnqueId);
                             if (confirmed && currentActionPioneer != undefined) {
                                 if (isReturn) {
                                     // save return data
-                                    PioneerMgr.addActionOverReturnPioneer(currentActionPioneer.id);
+                                    PioneerMgr.addActionOverReturnPioneer(currentActionPioneer.uniqueId);
                                 }
                                 let beginPos: Vec2 = currentActionPioneer.stayPos;
                                 let sparePositions: Vec2[] = [];
@@ -665,19 +665,19 @@ export class OuterTiledMapActionController extends ViewController {
                                         alterString,
                                         () => {
                                             if (currentActionPioneer.actionType != MapPioneerActionType.wormhole) {
-                                                PioneerMgr.setMovingTarget(currentActionPioneer.id, MapMemberTargetType.building, stayBuilding.id);
+                                                PioneerMgr.setMovingTarget(currentActionPioneer.uniqueId, MapMemberTargetType.building, stayBuilding.id);
                                                 if (movePaths.length <= 0) {
-                                                    DataMgr.s.pioneer.beginMove(currentActionPioneer.id, []);
+                                                    DataMgr.s.pioneer.beginMove(currentActionPioneer.uniqueId, []);
                                                 } else {
                                                     const uploadPath: share.pos2d[] = [];
                                                     for (const path of movePaths) {
                                                         uploadPath.push({ x: path.x, y: path.y });
                                                     }
                                                     NetworkMgr.websocketMsg.player_move({
-                                                        pioneerId: currentActionPioneer.id,
+                                                        pioneerId: currentActionPioneer.uniqueId,
                                                         movePath: uploadPath,
                                                         feeTxhash: "",
-                                                        isReturn: isReturn
+                                                        isReturn: isReturn,
                                                     });
                                                 }
                                                 NetGlobalData.wormholeAttackBuildingId = stayBuilding.id;
@@ -698,7 +698,7 @@ export class OuterTiledMapActionController extends ViewController {
                                     for (const temple of DataMgr.s.mapBuilding.getWormholeBuildings()) {
                                         const wormObj = temple as MapBuildingWormholeObject;
                                         wormObj.attacker.forEach((value: string, key: number) => {
-                                            if (value == currentActionPioneer.id) {
+                                            if (value == currentActionPioneer.uniqueId) {
                                                 NetworkMgr.websocketMsg.player_wormhole_set_attacker({
                                                     pioneerId: "",
                                                     buildingId: wormObj.id,
@@ -713,24 +713,24 @@ export class OuterTiledMapActionController extends ViewController {
                                 if (actionType != MapInteractType.Move) {
                                     // move can't trigger interact
                                     if (stayBuilding != null) {
-                                        PioneerMgr.setMovingTarget(currentActionPioneer.id, MapMemberTargetType.building, stayBuilding.id);
+                                        PioneerMgr.setMovingTarget(currentActionPioneer.uniqueId, MapMemberTargetType.building, stayBuilding.id);
                                     }
                                     if (stayPioneer != null) {
-                                        PioneerMgr.setMovingTarget(currentActionPioneer.id, MapMemberTargetType.pioneer, stayPioneer.id);
+                                        PioneerMgr.setMovingTarget(currentActionPioneer.uniqueId, MapMemberTargetType.pioneer, stayPioneer.uniqueId);
                                     }
                                 }
                                 if (movePaths.length <= 0) {
-                                    DataMgr.s.pioneer.beginMove(currentActionPioneer.id, []);
+                                    DataMgr.s.pioneer.beginMove(currentActionPioneer.uniqueId, []);
                                 } else {
                                     const uploadPath: share.pos2d[] = [];
                                     for (const path of movePaths) {
                                         uploadPath.push({ x: path.x, y: path.y });
                                     }
                                     NetworkMgr.websocketMsg.player_move({
-                                        pioneerId: currentActionPioneer.id,
+                                        pioneerId: currentActionPioneer.uniqueId,
                                         movePath: uploadPath,
                                         feeTxhash: "",
-                                        isReturn: isReturn
+                                        isReturn: isReturn,
                                     });
                                 }
                             } else {
@@ -760,8 +760,10 @@ export class OuterTiledMapActionController extends ViewController {
             for (let j = sty; j <= endy; j++) {
                 let pos = v3(i * areaWidth + TileMapHelper.INS.pixelwidth / 2, j * areaHeight - TileMapHelper.INS.pixelheight / 2, 0);
                 //make content big
-                if (!containerBox.contains(v2(pos.x + TileMapHelper.INS.pixelwidth / 2, pos.y + TileMapHelper.INS.pixelheight / 2))
-                    || !containerBox.contains(v2(pos.x - TileMapHelper.INS.pixelwidth / 2, pos.y - TileMapHelper.INS.pixelheight / 2))) {
+                if (
+                    !containerBox.contains(v2(pos.x + TileMapHelper.INS.pixelwidth / 2, pos.y + TileMapHelper.INS.pixelheight / 2)) ||
+                    !containerBox.contains(v2(pos.x - TileMapHelper.INS.pixelwidth / 2, pos.y - TileMapHelper.INS.pixelheight / 2))
+                ) {
                     this.node._uiProps.uiTransformComp.setContentSize(size((Math.abs(i) + 1) * areaWidth * 2, (Math.abs(j) + 1) * areaHeight * 2));
                 }
                 let layerSetIndex = layers.findIndex((layer) => {
@@ -883,13 +885,13 @@ export class OuterTiledMapActionController extends ViewController {
                 getAllBoundPos.push(centerPos);
             }
         }
-        for (const line of getAllBoundLines) {
-            const inFogStartPos = this._fogView.node.getComponent(UITransform).convertToNodeSpaceAR(v3(line.startPos.x, line.startPos.y, 0));
-            line.startPos = v2(Math.floor(inFogStartPos.x), Math.floor(inFogStartPos.y));
+        // for (const line of getAllBoundLines) {
+        //     const inFogStartPos = this._fogView.node.getComponent(UITransform).convertToNodeSpaceAR(v3(line.startPos.x, line.startPos.y, 0));
+        //     line.startPos = v2(Math.floor(inFogStartPos.x), Math.floor(inFogStartPos.y));
 
-            const inFogEndPos = this._fogView.node.getComponent(UITransform).convertToNodeSpaceAR(v3(line.endPos.x, line.endPos.y, 0));
-            line.endPos = v2(Math.floor(inFogEndPos.x), Math.floor(inFogEndPos.y));
-        }
+        //     const inFogEndPos = this._fogView.node.getComponent(UITransform).convertToNodeSpaceAR(v3(line.endPos.x, line.endPos.y, 0));
+        //     line.endPos = v2(Math.floor(inFogEndPos.x), Math.floor(inFogEndPos.y));
+        // }
 
         if (this._fogAnimDatas.length <= 0 && !this._fogAnimPlaying && newCleardPositons == null) {
             // no anim
@@ -1054,5 +1056,12 @@ export class OuterTiledMapActionController extends ViewController {
             this._actionView.hide();
             this._mapActionCursorView.hide();
         }
+    }
+    private _onPioneerDidMoveStep(data: { uniqueId: string }) {
+        const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
+        if (pioneer == undefined) {
+            return;
+        }
+        GameMainHelper.instance.tiledMapShadowErase(pioneer.stayPos, pioneer.uniqueId);
     }
 }

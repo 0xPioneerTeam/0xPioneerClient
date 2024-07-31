@@ -142,6 +142,7 @@ export interface MapPioneerFightStuct {
 }
 
 export interface MapPioneerData {
+    uniqueId: string;
     id: string;
     show: boolean;
     level: number;
@@ -246,6 +247,7 @@ export default class PioneerDefine {
         }
         const currentTime = new Date().getTime();
         let obj = {
+            uniqueId: temple.uniqueId,
             id: temple.id,
             show: temple.show,
             level: temple.level,

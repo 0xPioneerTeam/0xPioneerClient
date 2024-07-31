@@ -128,7 +128,7 @@ export default class RookieStepMgr {
             });
             const wormholePioneer = DataMgr.s.pioneer.getById("wormhole_token");
             wormholePioneer.show = false;
-            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { id: wormholePioneer.id, show: wormholePioneer.show });
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: wormholePioneer.id, show: wormholePioneer.show });
         } else if (rookieStep == RookieStep.SYSTEM_TALK_33 && data.talkId == "talk33") {
             // FINISH
             NetworkMgr.websocketMsg.player_rookie_update({
@@ -220,7 +220,7 @@ export default class RookieStepMgr {
                 const wormholePioneerConfig = PioneerConfig.getById("wormhole_token");
                 wormholePioneer.stayPos = wormholePioneerConfig != null ? v2(wormholePioneerConfig.pos[0].x, wormholePioneerConfig.pos[0].y) : v2(28, 17);
                 wormholePioneer.show = true;
-                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { id: wormholePioneer.id, show: wormholePioneer.show });
+                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: wormholePioneer.id, show: wormholePioneer.show });
 
                 DataMgr.s.userInfo.data.rookieStep = RookieStep.LOCAL_SYSTEM_TALK_32;
                 NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
@@ -454,13 +454,13 @@ export default class RookieStepMgr {
                 rookieStep: RookieStep.TASK_SHOW_TAP_2,
             });
         } else if (rookieStep == RookieStep.LOCAL_SYSTEM_TALK_32) {
-            const pioneer = DataMgr.s.pioneer.getCurrentPlayer();
-            if (pioneer != null) {
-                pioneer.actionType = MapPioneerActionType.idle;
-                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: pioneer.id });
-            }
-            DataMgr.s.userInfo.data.rookieStep = RookieStep.SYSTEM_TALK_33;
-            NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
+            // const pioneer = DataMgr.s.pioneer.getCurrentPlayer();
+            // if (pioneer != null) {
+            //     pioneer.actionType = MapPioneerActionType.idle;
+            //     // NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: pioneer.id });
+            // }
+            // DataMgr.s.userInfo.data.rookieStep = RookieStep.SYSTEM_TALK_33;
+            // NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
         }
     }
     private _onRookieCollectResource() {

@@ -40,7 +40,7 @@ export class PlayerItemUI extends Component {
             busy.active = true;
         }
         //selected
-        this._selectedView.active = DataMgr.s.pioneer.getCurrentPlayer().id == model.id;
+        this._selectedView.active = DataMgr.s.pioneer.getCurrentPlayer().uniqueId == model.uniqueId;
         //hp
         this._hpView.getChildByName("progressBar").getComponent(ProgressBar).progress = model.hp / model.hpMax;
         this._hpView.getChildByName("Value").getComponent(Label).string = model.hp.toString();

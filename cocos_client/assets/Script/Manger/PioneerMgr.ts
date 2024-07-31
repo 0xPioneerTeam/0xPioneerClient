@@ -28,10 +28,10 @@ export default class PioneerMgr {
     public initData() {
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_MOVE_MEETTED, this._onPioneerMoveMeeted, this);
     }
-    public pioneerDidMoveOneStep(pioneerId: string) {
-        const findPioneer = DataMgr.s.pioneer.getById(pioneerId);
+    public pioneerDidMoveOneStep(uniqueId: string) {
+        const findPioneer = DataMgr.s.pioneer.getById(uniqueId);
         if (findPioneer != undefined) {
-            DataMgr.s.pioneer.didMoveStep(pioneerId);
+            DataMgr.s.pioneer.didMoveStep(uniqueId);
         }
     }
     public showFakeWormholeFight(attackerPlayerName: string) {
@@ -45,7 +45,7 @@ export default class PioneerMgr {
         wormholePioneer.stayPos = wormholePioneerConfig != null ? v2(wormholePioneerConfig.pos[0].x, wormholePioneerConfig.pos[0].y) : v2(28, 17);
         wormholePioneer.name = attackerPlayerName;
         wormholePioneer.show = true;
-        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { id: wormholePioneer.id, show: wormholePioneer.show });
+        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: wormholePioneer.id, show: wormholePioneer.show });
 
         const moveData = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(wormholePioneer.stayPos, mainCity.stayMapPositions[0]);
         if (!moveData.canMove) {
@@ -88,18 +88,18 @@ export default class PioneerMgr {
             });
         }
     }
-    public setMovingTarget(pioneerId: string, target: MapMemberTargetType, id: string) {
-        if (pioneerId != null && id != null) {
-            this._movingTargetDataMap.set(pioneerId, { target: target, id: id });
+    public setMovingTarget(uniqueId: string, target: MapMemberTargetType, id: string) {
+        if (uniqueId != null && id != null) {
+            this._movingTargetDataMap.set(uniqueId, { target: target, id: id });
         }
     }
     //----------------------- return action
-    public doActionOverRetrun(pioneerId: string) {
-        const index = this._actionOverReturnPioneerIds.indexOf(pioneerId);
+    public doActionOverRetrun(uniqueId: string) {
+        const index = this._actionOverReturnPioneerIds.indexOf(uniqueId);
         if (index != -1) {
             this._actionOverReturnPioneerIds.splice(index, 1);
-            DataMgr.s.pioneer.changeActionType(pioneerId, MapPioneerActionType.inCity);
-            DataMgr.s.pioneer.changePos(pioneerId, GameMgr.getMainCityGatePos());
+            DataMgr.s.pioneer.changeActionType(uniqueId, MapPioneerActionType.inCity);
+            DataMgr.s.pioneer.changePos(uniqueId, GameMgr.getMainCityGatePos());
         }
     }
     public addActionOverReturnPioneer(pioneerId: string) {
@@ -110,13 +110,13 @@ export default class PioneerMgr {
     private _actionOverReturnPioneerIds: string[] = [];
     public constructor() {}
 
-    private async _moveMeeted(pioneerId: string, interactDirectly: boolean) {
+    private async _moveMeeted(uniqueId: string, interactDirectly: boolean) {
         const pioneerDataMgr: PioneersDataMgr = DataMgr.s.pioneer;
-        const pioneer: MapPioneerObject = pioneerDataMgr.getById(pioneerId);
+        const pioneer: MapPioneerObject = pioneerDataMgr.getById(uniqueId);
         if (pioneer == undefined) {
             return;
         }
-        const movingTargetData = this._movingTargetDataMap.get(pioneer.id);
+        const movingTargetData = this._movingTargetDataMap.get(pioneer.uniqueId);
         const pioneerStayAroundPos = GameMainHelper.instance.tiledMapGetExtAround(pioneer.stayPos, 2);
         let stayBuilding: MapBuildingObject = null;
         if (movingTargetData != null && movingTargetData.target == MapMemberTargetType.building) {
@@ -128,7 +128,7 @@ export default class PioneerMgr {
                 stayBuilding = building;
                 break;
             }
-            this._movingTargetDataMap.delete(pioneer.id);
+            this._movingTargetDataMap.delete(pioneer.uniqueId);
         } else {
             stayBuilding = DataMgr.s.mapBuilding.getShowBuildingByMapPos(pioneer.stayPos);
         }
@@ -140,6 +140,7 @@ export default class PioneerMgr {
 
         if (stayBuilding == null) {
             if (pioneer.id == "wormhole_token") {
+                // wait change
                 // fake wormhole enemy cannot meet pioneer
                 return;
             }
@@ -147,36 +148,37 @@ export default class PioneerMgr {
             if (movingTargetData != null && movingTargetData.target == MapMemberTargetType.pioneer) {
                 // if target pioneer is moving, than try get it from near position;
                 stayPioneers = pioneerDataMgr.getByNearPos(pioneer.stayPos, 2, true);
-                this._movingTargetDataMap.delete(pioneer.id);
+                this._movingTargetDataMap.delete(pioneer.uniqueId);
             } else {
                 stayPioneers = pioneerDataMgr.getByStayPos(pioneer.stayPos, true);
             }
             let interactPioneer: MapPioneerObject = null;
             for (const stayPioneer of stayPioneers) {
-                if (movingTargetData != null && stayPioneer.id == movingTargetData.id) {
+                if (movingTargetData != null && stayPioneer.uniqueId == movingTargetData.id) {
                     interactPioneer = stayPioneer;
                     break;
                 }
             }
             if (interactPioneer != null) {
-                if (GameMainHelper.instance.currentTrackingInteractData().interactPioneerId == interactPioneer.id) {
-                    GameMainHelper.instance.hideTrackingView();
-                }
+                // wait change
+                // if (GameMainHelper.instance.currentTrackingInteractData().interactPioneerId == interactPioneer.id) {
+                //     GameMainHelper.instance.hideTrackingView();
+                // }
                 // meet pioneer
                 if (pioneer.faction == MapMemberFactionType.friend && interactPioneer.faction == MapMemberFactionType.friend) {
                     if (interactPioneer.type == MapPioneerType.npc) {
                         // get task
                         setTimeout(() => {
                             NetworkMgr.websocketMsg.player_explore_npc_start({
-                                pioneerId: pioneerId,
-                                npcId: interactPioneer.id,
+                                pioneerId: uniqueId,
+                                npcId: interactPioneer.uniqueId,
                             });
                         }, interactDelayTime);
                     } else if (interactPioneer.type == MapPioneerType.gangster) {
                         // old logic: get more hp
                         // wait TODO
                     } else {
-                        pioneerDataMgr.changeActionType(pioneerId, MapPioneerActionType.idle);
+                        pioneerDataMgr.changeActionType(uniqueId, MapPioneerActionType.idle);
                     }
                 } else if (pioneer.faction == MapMemberFactionType.enemy && interactPioneer.faction == MapMemberFactionType.enemy) {
                 } else {
@@ -186,7 +188,7 @@ export default class PioneerMgr {
                     }, interactDelayTime);
                 }
             } else {
-                this.doActionOverRetrun(pioneerId);
+                this.doActionOverRetrun(uniqueId);
             }
         } else {
             // building
@@ -194,12 +196,12 @@ export default class PioneerMgr {
             if (GameMainHelper.instance.currentTrackingInteractData().interactBuildingId == stayBuilding.id) {
                 GameMainHelper.instance.hideTrackingView();
             }
-            const isRetrun: boolean = this._actionOverReturnPioneerIds.indexOf(pioneerId) != -1;
+            const isRetrun: boolean = this._actionOverReturnPioneerIds.indexOf(uniqueId) != -1;
             if (stayBuilding.type == MapBuildingType.city) {
                 // now only deal with fake fight
                 if (pioneer.id == "wormhole_token") {
                     pioneer.show = false;
-                    NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { id: pioneer.id, show: pioneer.show });
+                    NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: uniqueId, show: pioneer.show });
                     NotificationMgr.triggerEvent(NotificationName.MAP_FAKE_FIGHT_SHOW, { stayPositions: stayBuilding.stayMapPositions });
                 }
                 // TODO
@@ -224,7 +226,7 @@ export default class PioneerMgr {
                 if (pioneer.type == MapPioneerType.player && pioneer.faction == MapMemberFactionType.friend) {
                     setTimeout(() => {
                         NetworkMgr.websocketMsg.player_explore_start({
-                            pioneerId: pioneerId,
+                            pioneerId: uniqueId,
                             buildingId: stayBuilding.id,
                         });
                     }, interactDelayTime);
@@ -279,13 +281,13 @@ export default class PioneerMgr {
                             setTimeout(() => {
                                 NetworkMgr.websocketMsg.player_wormhole_set_attacker({
                                     buildingId: stayBuilding.id,
-                                    pioneerId: pioneerId,
+                                    pioneerId: uniqueId,
                                     index: emptyIndex,
                                 });
                             }, interactDelayTime);
                         }
                     } else {
-                        pioneerDataMgr.changeActionType(pioneerId, MapPioneerActionType.idle);
+                        pioneerDataMgr.changeActionType(uniqueId, MapPioneerActionType.idle);
                     }
                 } else {
                 }
@@ -293,7 +295,7 @@ export default class PioneerMgr {
                 if (pioneer.type == MapPioneerType.player && pioneer.faction != MapMemberFactionType.enemy) {
                     setTimeout(() => {
                         NetworkMgr.websocketMsg.player_gather_start({
-                            pioneerId: pioneerId,
+                            pioneerId: uniqueId,
                             resourceBuildingId: stayBuilding.id,
                             feeTxhash: "",
                             isReturn: isRetrun,
@@ -305,13 +307,13 @@ export default class PioneerMgr {
                 if (pioneer.type == MapPioneerType.player) {
                     if (pioneer.actionType == MapPioneerActionType.eventing && pioneer.actionBuildingId != null) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
-                            triggerPioneerId: pioneer.id,
+                            uniqueId: pioneer.uniqueId,
                             eventBuildingId: pioneer.actionBuildingId,
                             eventId: pioneer.actionEventId,
                         });
                     } else {
                         setTimeout(() => {
-                            NetworkMgr.websocketMsg.player_event_start({ pioneerId: pioneer.id, buildingId: stayBuilding.id, isReturn: isRetrun });
+                            NetworkMgr.websocketMsg.player_event_start({ pioneerId: uniqueId, buildingId: stayBuilding.id, isReturn: isRetrun });
                         }, interactDelayTime);
                     }
                 } else {
@@ -332,8 +334,8 @@ export default class PioneerMgr {
     }
 
     //------------------------------- notification
-    private _onPioneerMoveMeeted(data: { pioneerId: string; interactDirectly: boolean }) {
-        this._moveMeeted(data.pioneerId, data.interactDirectly);
+    private _onPioneerMoveMeeted(data: { uniqueId: string; interactDirectly: boolean }) {
+        this._moveMeeted(data.uniqueId, data.interactDirectly);
     }
     // private _onPioneerLogicMove(data: { id: string; logic: MapPioneerLogicObject }) {
     //     const pioneer = DataMgr.s.pioneer.getById(data.id);

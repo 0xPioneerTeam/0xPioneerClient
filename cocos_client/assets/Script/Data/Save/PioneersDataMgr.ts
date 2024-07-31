@@ -20,7 +20,8 @@ import NetGlobalData from "./Data/NetGlobalData";
 
 export class PioneersDataMgr {
     private _pioneers: MapPioneerObject[] = [];
-    private _currentActionPioneerId: string = null;
+    private _currentActionUniqueId: string = null;
+    private _selfPioneerUnqueIds: string[] = [];
     public constructor() {}
     //-------------------------------- public
     public loadObj() {
@@ -30,21 +31,22 @@ export class PioneersDataMgr {
     public getAll(): MapPioneerObject[] {
         return this._pioneers;
     }
-    public getAllPlayers(): MapPlayerPioneerObject[] {
-        return this._pioneers.filter((p) => p.type == MapPioneerType.player) as MapPlayerPioneerObject[];
+    public getAllSelfPlayers(): MapPlayerPioneerObject[] {
+        return this._pioneers.filter((p) => p.type == MapPioneerType.player && this._selfPioneerUnqueIds.indexOf(p.uniqueId) != -1) as MapPlayerPioneerObject[];
     }
     public getAllNpcs(forceShow: boolean = false): MapNpcPioneerObject[] {
+        // wait change
         if (forceShow) {
             return this._pioneers.filter((p) => p.show == true && p.type == MapPioneerType.npc) as MapNpcPioneerObject[];
         } else {
             return this._pioneers.filter((p) => p.type == MapPioneerType.npc) as MapNpcPioneerObject[];
         }
     }
-    public getById(pioneerId: string, forceShow: boolean = false): MapPioneerObject | undefined {
+    public getById(uniqueId: string, forceShow: boolean = false): MapPioneerObject | undefined {
         if (forceShow) {
-            return this._pioneers.find((p) => p.show && p.id == pioneerId);
+            return this._pioneers.find((p) => p.show && p.uniqueId == uniqueId);
         } else {
-            return this._pioneers.find((p) => p.id == pioneerId);
+            return this._pioneers.find((p) => p.uniqueId == uniqueId);
         }
     }
     public getByStayPos(stayPos: Vec2, forceShow: boolean = false): MapPioneerObject[] {
@@ -66,21 +68,15 @@ export class PioneersDataMgr {
             return false;
         });
     }
-    public getCurrentActionIsBusy(): boolean {
-        let busy: boolean = false;
-        const findPioneer = this._pioneers.find((pioneer) => pioneer.id === this._currentActionPioneerId);
-        if (findPioneer != undefined) {
-            busy =
-                findPioneer.actionType != MapPioneerActionType.idle &&
-                findPioneer.actionType != MapPioneerActionType.eventing &&
-                findPioneer.actionType != MapPioneerActionType.wormhole;
-        }
-        return busy;
-    }
     public getCurrentPlayer(): MapPlayerPioneerObject | undefined {
-        return this._pioneers.find((p) => p.id === this._currentActionPioneerId && p.type === MapPioneerType.player) as MapPlayerPioneerObject;
+        return this._pioneers.find((p) => p.uniqueId === this._currentActionUniqueId && p.type === MapPioneerType.player) as MapPlayerPioneerObject;
     }
     //-------------- change
+    public addData(data: share.Ipioneer_data) {
+        const newObj = PioneerDefine.convertNetDataToObject(data);
+        this._pioneers.push(newObj);
+        return newObj;
+    }
     public replaceData(index: number, data: share.Ipioneer_data) {
         const newObj = PioneerDefine.convertNetDataToObject(data);
         if (this._pioneers[index].actionType == MapPioneerActionType.moving) {
@@ -93,22 +89,22 @@ export class PioneersDataMgr {
 
         return newObj;
     }
-    public changeCurrentAction(pioneerId: string) {
-        this._currentActionPioneerId = pioneerId;
+    public changeCurrentAction(uniqueId: string) {
+        this._currentActionUniqueId = uniqueId;
     }
-    public changeActionType(pioneerId: string, type: MapPioneerActionType) {
-        const findPioneer = this.getById(pioneerId);
+    public changeActionType(uniqueId: string, type: MapPioneerActionType) {
+        const findPioneer = this.getById(uniqueId);
         if (findPioneer == undefined) return;
         findPioneer.actionType = type;
-        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: pioneerId });
+        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: uniqueId });
     }
-    public changePos(pioneerId: string, pos: Vec2) {
-        const findPioneer = this.getById(pioneerId);
+    public changePos(uniqueId: string, pos: Vec2) {
+        const findPioneer = this.getById(uniqueId);
         if (findPioneer == undefined) return;
         findPioneer.stayPos = pos;
     }
-    public changeTalk(pioneerId: string, talkId: string) {
-        const pioneer = this.getById(pioneerId);
+    public changeTalk(uniqueId: string, talkId: string) {
+        const pioneer = this.getById(uniqueId);
         if (pioneer == undefined) {
             return;
         }
@@ -118,18 +114,18 @@ export class PioneersDataMgr {
                 return;
             }
             npcObj.talkId = talkId;
-            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_TALK_CHANGED, { id: pioneerId, talkId: npcObj.talkId });
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_TALK_CHANGED, { uniqueId: uniqueId, talkId: npcObj.talkId });
         }
     }
 
     // move
-    public beginMove(pioneerId: string, movePaths: TilePos[], forceShowMovePath: boolean = false) {
-        const findPioneer = this.getById(pioneerId);
+    public beginMove(uniqueId: string, movePaths: TilePos[], forceShowMovePath: boolean = false) {
+        const findPioneer = this.getById(uniqueId);
         if (findPioneer != undefined) {
             if (movePaths.length > 0) {
                 findPioneer.movePaths = movePaths;
 
-                this.changeActionType(pioneerId, MapPioneerActionType.moving);
+                this.changeActionType(uniqueId, MapPioneerActionType.moving);
                 let showMovePath: boolean = false;
                 if (forceShowMovePath) {
                     showMovePath = true;
@@ -138,18 +134,17 @@ export class PioneersDataMgr {
                         showMovePath = true;
                     }
                 }
-                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_BEGIN_MOVE, { id: pioneerId, showMovePath: showMovePath });
+                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_BEGIN_MOVE, { uniqueId: uniqueId, showMovePath: showMovePath });
             } else {
-                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_MOVE_MEETTED, { pioneerId: findPioneer.id, interactDirectly: true });
+                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_MOVE_MEETTED, { uniqueId: uniqueId, interactDirectly: true });
             }
         }
     }
-    public didMoveStep(pioneerId: string) {
-        const findPioneer = this.getById(pioneerId);
+    public didMoveStep(uniqueId: string) {
+        const findPioneer = this.getById(uniqueId);
         if (findPioneer != undefined) {
             if (findPioneer.movePaths.length > 0) {
                 findPioneer.movePaths.shift();
-
                 // old logic: enemy step trigger
                 // now donn't trigger step meet 5-29
                 // if (findPioneer.type != MapPioneerType.player && findPioneer.faction == MapMemberFactionType.enemy) {
@@ -158,11 +153,11 @@ export class PioneersDataMgr {
             }
             if (findPioneer.movePaths.length == 0) {
                 // move over trigger
-                this.changeActionType(pioneerId, MapPioneerActionType.idle);
-                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_MOVE_MEETTED, { pioneerId: findPioneer.id, interactDirectly: false });
+                this.changeActionType(uniqueId, MapPioneerActionType.idle);
+                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_MOVE_MEETTED, { uniqueId: uniqueId, interactDirectly: false });
             }
             if (findPioneer.type == MapPioneerType.player) {
-                NotificationMgr.triggerEvent(NotificationName.MAP_PLAYER_PIONEER_DID_MOVE_STEP, { id: pioneerId });
+                NotificationMgr.triggerEvent(NotificationName.MAP_PLAYER_PIONEER_DID_MOVE_STEP, { uniqueId: uniqueId });
             }
         }
     }
@@ -174,77 +169,12 @@ export class PioneersDataMgr {
         this._pioneers = [];
         const netPioneers = NetGlobalData.usermap.pioneer;
         for (const key in netPioneers) {
-            this._pioneers.push(PioneerDefine.convertNetDataToObject(netPioneers[key]));
+            const pioneer = PioneerDefine.convertNetDataToObject(netPioneers[key]);
+            this._selfPioneerUnqueIds.push(pioneer.uniqueId);
+            this._pioneers.push(pioneer);
         }
         for (const key in NetGlobalData.mapBuildings.pioneers) {
             this._pioneers.push(PioneerDefine.convertNetDataToObject(NetGlobalData.mapBuildings.pioneers[key]));
         }
-        // default player id is "0"
-        this._currentActionPioneerId = "pioneer_0";
-
-        this._initInterval();
-        this._addListeners();
     }
-
-    private _initInterval() {
-        // wait TODO
-        // now donnot have auto move logic 5-29
-        // setInterval(() => {
-        //     for (const pioneer of this._pioneers) {
-        //         if (pioneer.show) {
-        //             if (pioneer.actionType == MapPioneerActionType.idle) {
-        //                 // xx wait player cannot do logic
-        //                 if (pioneer.type != MapPioneerType.player && pioneer.logics.length > 0) {
-        //                     const logic = pioneer.logics[0];
-        //                     let logicMove: boolean = false;
-        //                     if (logic.type == MapPioneerLogicType.stepmove) {
-        //                         if (logic.repeat > 0 || logic.repeat == -1) {
-        //                             if (logic.currentCd > 0) {
-        //                                 //move cd count
-        //                                 logic.currentCd -= 1;
-        //                             }
-        //                             if (logic.currentCd == 0) {
-        //                                 logicMove = true;
-        //                                 logic.currentCd = logic.stepMove.cd;
-        //                                 if (logic.repeat > 0) {
-        //                                     logic.repeat -= 1;
-        //                                 }
-        //                             }
-        //                             if (logic.repeat == 0) {
-        //                                 pioneer.logics.splice(0, 1);
-        //                             }
-        //                         }
-        //                     } else if (logic.type == MapPioneerLogicType.targetmove) {
-        //                         logicMove = true;
-        //                         pioneer.logics.splice(0, 1);
-        //                     } else if (logic.type == MapPioneerLogicType.patrol) {
-        //                         if (logic.repeat > 0 || logic.repeat == -1) {
-        //                             if (logic.currentCd > 0) {
-        //                                 logic.currentCd -= 1;
-        //                             }
-        //                             if (logic.currentCd == 0) {
-        //                                 logic.currentCd = CommonTools.getRandomInt(logic.patrol.intervalRange[0], logic.patrol.intervalRange[1]);
-        //                                 logicMove = true;
-        //                                 if (logic.repeat > 0) {
-        //                                     logic.repeat -= 1;
-        //                                 }
-        //                                 if (logic.repeat == 0) {
-        //                                     pioneer.logics.splice(0, 1);
-        //                                 }
-        //                             }
-        //                         }
-        //                     } else if (logic.type == MapPioneerLogicType.hide) {
-        //                         // this.changeShow(pioneer.id, false);
-        //                         pioneer.logics.splice(0, 1);
-        //                     }
-        //                     if (logicMove) {
-        //                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_LOGIC_MOVE, { id: pioneer.id, logic: logic });
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }, 1000);
-    }
-    private _addListeners() {}
 }

@@ -52,7 +52,7 @@ export class PlayerDispatchListUI extends ViewController {
         this._playerContentView.removeAllChildren();
 
         this._showPlayers = [];
-        const players = DataMgr.s.pioneer.getAllPlayers();
+        const players = DataMgr.s.pioneer.getAllSelfPlayers();
         for (const player of players) {
             if (player.NFTId == null) {
                 continue;

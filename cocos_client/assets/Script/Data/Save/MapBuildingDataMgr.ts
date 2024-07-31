@@ -1,24 +1,41 @@
 import { Vec2, v2 } from "cc";
 import { BuildingStayPosType, MapBuildingType } from "../../Const/BuildingDefine";
 import { MapBuildingBaseObject, MapBuildingMainCityObject, MapBuildingObject, MapBuildingWormholeObject } from "../../Const/MapBuilding";
-import NotificationMgr from "../../Basic/NotificationMgr";
-import { NotificationName } from "../../Const/Notification";
 import CLog from "../../Utils/CLog";
 import NetGlobalData from "./Data/NetGlobalData";
 import { share } from "../../Net/msg/WebsocketMsg";
 import GameMainHelper from "../../Game/Helper/GameMainHelper";
 import { TileHexDirection } from "../../Game/TiledMap/TileTool";
 import PioneerDefine from "../../Const/PioneerDefine";
+import CommonTools from "../../Tool/CommonTools";
 
 export class MapBuildingDataMgr {
     private _building_data: MapBuildingObject[];
+    private _decorateInfoMap: Map<string, string>;
     public constructor() {}
 
+    public getDecorateInfo() {
+        return this._decorateInfoMap;
+    }
     public replaceData(index: number, data: share.Imapbuilding_info_data) {
         const newObj = this._convertNetDataToObject(data);
         this._building_data[index] = newObj;
         return newObj;
     }
+    public addData(data: share.Imapbuilding_info_data) {
+        const newObj = this._convertNetDataToObject(data);
+        this._building_data.push(newObj);
+        return newObj;
+    }
+    public setDecorateInfo(slotId: string, templateConfigId: string) {
+        if (slotId == null || templateConfigId == null) {
+            return;
+        }
+        const mapWorldPos = CommonTools.convertSlotIdToMapWorldPos(slotId);
+        const configId = templateConfigId.split("_")[1];
+        this._decorateInfoMap.set(mapWorldPos.x + "_" + mapWorldPos.y, "outinfo_" + configId);
+    }
+
     public async loadObj() {
         this._building_data = [];
         if (NetGlobalData.mapBuildings == null) {
@@ -29,6 +46,9 @@ export class MapBuildingDataMgr {
             const element: share.Imapbuilding_info_data = mapBuilings[key];
             this._building_data.push(this._convertNetDataToObject(element));
         }
+
+        this._decorateInfoMap = new Map();
+        this.setDecorateInfo(NetGlobalData.mapBuildings.slotId, NetGlobalData.mapBuildings.templateConfigId);
         this._initInterval();
         CLog.debug("MapBuildingDataMgr: loadObj/building_data, ", this._building_data);
     }
@@ -110,6 +130,7 @@ export class MapBuildingDataMgr {
             }
         }
         const baseObj: MapBuildingBaseObject = {
+            uniqueId: element.uniqueId,
             id: element.id,
             name: element.name,
             type: element.type,

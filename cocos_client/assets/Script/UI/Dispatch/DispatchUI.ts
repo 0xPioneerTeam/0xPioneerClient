@@ -18,7 +18,7 @@ export class DispatchUI extends ViewController {
     private _step: number = 0;
     private _costEnergy: number = 0;
     private _moveSpeed: number = 0;
-    private _actionCallback: (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => void = null;
+    private _actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, isReturn: boolean) => void = null;
 
     private _isReturn: boolean = false;
 
@@ -33,7 +33,7 @@ export class DispatchUI extends ViewController {
         step: number,
         costEnergy,
         moveSpeed: number,
-        actionCallback: (confirmed: boolean, actionPioneerId: string, isReturn: boolean) => void
+        actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, isReturn: boolean) => void
     ) {
         this._step = step;
         this._costEnergy = costEnergy;
@@ -73,7 +73,7 @@ export class DispatchUI extends ViewController {
 
         this._playerContentView.removeAllChildren();
 
-        const players = DataMgr.s.pioneer.getAllPlayers();
+        const players = DataMgr.s.pioneer.getAllSelfPlayers();
         let playerCount = 0;
         for (const player of players) {
             if (player.NFTId == null) {
@@ -82,7 +82,7 @@ export class DispatchUI extends ViewController {
             const view = instantiate(this._playerItem);
             view.setParent(this._playerContentView);
             view.getComponent(PlayerInfoItem).refreshUI(player);
-            view.getComponent(Button).clickEvents[0].customEventData = player.id;
+            view.getComponent(Button).clickEvents[0].customEventData = player.uniqueId;
             playerCount += 1;
         }
         this._playerScrollView.getComponent(UITransform).width =
@@ -130,13 +130,13 @@ export class DispatchUI extends ViewController {
             NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient troops");
             return;
         }
-        if (player.energy < this._costEnergy) {
-            GameMgr.showBuyEnergyTip(player.id);
-            return;
-        }
+        // if (player.energy < this._costEnergy) {
+        //     GameMgr.showBuyEnergyTip(player.id);
+        //     return;
+        // }
         UIPanelManger.inst.popPanel(this.node);
         if (this._actionCallback != null) {
-            this._actionCallback(true, player.id, this._isReturn);
+            this._actionCallback(true, player.uniqueId, this._isReturn);
         }
     }
 

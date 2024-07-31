@@ -70,10 +70,10 @@ export class MainUI extends ViewController {
         this._onInnerOuterChanged();
         this.changeLang();
 
-        const bigGanster = DataMgr.s.pioneer.getById("gangster_3");
-        if (bigGanster != null && bigGanster.show) {
-            this.checkCanShowGansterComingTip(bigGanster.id);
-        }
+        // const bigGanster = DataMgr.s.pioneer.getById("gangster_3");
+        // if (bigGanster != null && bigGanster.show) {
+        //     this.checkCanShowGansterComingTip(bigGanster.id);
+        // }
 
         this.backpackBtn.node.on(
             Button.EventType.CLICK,
@@ -189,7 +189,7 @@ export class MainUI extends ViewController {
             taskButton.active = true;
         }
 
-        pioneerListView.active = GameMainHelper.instance.isGameShowOuter && (DataMgr.s.pioneer.getAllPlayers().length > 1 || GAME_ENV_IS_DEBUG);
+        pioneerListView.active = GameMainHelper.instance.isGameShowOuter && (DataMgr.s.pioneer.getAllSelfPlayers().length > 1 || GAME_ENV_IS_DEBUG);
 
         if (!GameMainHelper.instance.isGameShowOuter && UIPanelManger.inst.panelIsShow(UIName.TaskListUI)) {
             UIPanelManger.inst.popPanelByName(UIName.TaskListUI);

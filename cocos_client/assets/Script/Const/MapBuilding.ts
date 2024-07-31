@@ -37,6 +37,7 @@ export interface StayMapPosition {
 
 // building
 export interface MapBuildingBaseData {
+    uniqueId: string;
     id: string;
     name: string;
     type: MapBuildingType;

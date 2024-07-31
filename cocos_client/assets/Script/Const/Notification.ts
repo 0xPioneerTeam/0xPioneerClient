@@ -96,6 +96,7 @@ export enum NotificationName {
     TASK_NEW_GETTED,
     TASK_LIST,
     //------------------------------------ map building
+    MAP_BUILDING_NEED_REFRESH,
     MAP_BUILDING_SHOW_CHANGE,
     MAP_BUILDING_FACTION_CHANGE,
     MAP_BUILDING_WORMHOLE_ATTACKER_CHANGE,
@@ -105,6 +106,7 @@ export enum NotificationName {
     MAP_BUILDING_REBON_CHANGE,
 
     //---------------------- map pioneer
+    MAP_PIONEER_NEED_REFRESH,
     MAP_FAKE_FIGHT_SHOW,
     MAP_PIONEER_EVENTID_CHANGE,
 
@@ -124,7 +126,6 @@ export enum NotificationName {
     MAP_PIONEER_HP_CHANGED,
     MAP_PIONEER_ENERGY_CHANGED,
 
-    MAP_PIONEER_REBON_CHANGE,
     MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT,
     //---------------------- nft
     NFT_LEVEL_UP,

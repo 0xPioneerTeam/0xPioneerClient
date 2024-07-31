@@ -407,14 +407,14 @@ export class MapPioneer extends Component {
     }
 
     //----------------- notificaiton
-    private _onFightBegin(data: { id: string }) {
+    private _onFightBegin(data: { uniqueId: string }) {
         if (this._model == null) {
             return;
         }
-        if (this._model.id != data.id) {
+        if (this._model.uniqueId != data.uniqueId) {
             return;
         }
-        this._model = DataMgr.s.pioneer.getById(data.id);
+        this._model = DataMgr.s.pioneer.getById(data.uniqueId);
         this.refreshUI(this._model);
     }
 }

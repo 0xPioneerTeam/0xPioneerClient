@@ -139,57 +139,59 @@ message pioneer_data {
     required pos2d stayPos = 6;
     optional string slotId = 7;
 
-    required float hp = 8;
+    required string uniqueId = 8;
 
-    required float hpMax = 9;
+    required float hp = 9;
+
+    required float hpMax = 20;
     // required uint32 hpMaxbase = 10;
     // repeated int32 hpMaxadd = 11;
     // repeated int32 hpMaxmul = 12;
     
-    required float attack = 13;
+    required float attack = 30;
     // required uint32 attackbase = 14;
     // repeated int32 attackadd = 15;
     // repeated int32 attackmul = 16;
 
-    required float defend = 17;
+    required float defend = 40;
     // required uint32 defendbase = 18;
     // repeated int32 defendadd = 19;
     // repeated int32 defendmul = 20;
 
-    required float speed = 21;
+    required float speed = 50;
     // required uint32 speedbase = 22;
     // repeated int32 speedadd = 23;
     // repeated int32 speedmul = 24;
 
-    optional float energy = 25;
-    optional float energyMax = 26;
+    optional float energy = 61;
+    optional float energyMax = 62;
 
-    required string actionType = 27;
-    required uint32 actionBeginTimeStamp = 28;
-    required uint32 actionEndTimeStamp = 29;
-    optional string actionEventId = 30;
-    optional string actionBuildingId = 31;
+    required string actionType = 63;
+    required uint32 actionBeginTimeStamp = 64;
+    required uint32 actionEndTimeStamp = 65;
+    optional string actionEventId = 66;
+    optional string actionBuildingId = 67;
 
-    repeated fight_res actionFightRes = 32;
-    optional string actionFightId = 33;
-    optional uint32 actionFightWinner = 34;
-    optional uint32 actionFightHp = 35;
+    repeated fight_res actionFightRes = 70;
+    optional string actionFightId = 71;
+    optional uint32 actionFightWinner = 72;
+    optional uint32 actionFightHp = 73;
 
-    required uint32 eventStatus = 36;
+    required uint32 eventStatus = 74;
     
-    required uint32 winProgress = 37;
-    required uint32 winExp = 38;
+    required uint32 winProgress = 75;
+    required uint32 winExp = 76;
     
-    optional string NFTInitLinkId = 39;
-    optional int32 rebirthStartTime = 40;
-    optional int32 rebirthEndTime = 41;
-    optional string killerId = 42;
-    optional string NFTId = 43;
-    optional string talkId = 44;
-    optional user_map_member_status talkCountStruct = 45;
+    optional string NFTInitLinkId = 80;
+    optional int32 rebirthStartTime = 81;
+    optional int32 rebirthEndTime = 82;
+    optional string killerId = 83;
+    optional string NFTId = 84;
+    optional string talkId = 85;
+    optional user_map_member_status talkCountStruct = 86;
 
-    optional uint32 dieTime = 46;
-    optional uint32 rebornTime = 47;
+    optional uint32 dieTime = 90;
+    optional uint32 rebornTime = 91;
 }
 message map_pioneer_data {
     required string id = 1;
@@ -198,6 +200,7 @@ message map_pioneer_data {
     required uint32 faction = 4;
     required string type = 5;
     required pos2d stayPos = 6;
+    optional string uniqueId = 7;
 
     required float hp = 8;
 
@@ -383,7 +386,6 @@ message map_info_data {
     required string slotId = 1;
     required string templateConfigId = 2;
     required uint32 mapSlotType = 3;
-    // repeated map_building_info_data buildings = 4;
     map<string, map_building_info_data> buildings = 4;
     map<string, map_pioneer_data> pioneers = 5;
 }
@@ -396,22 +398,23 @@ message map_building_info_data {
     required bool show = 5;
     required uint32 faction = 6;
 
-    repeated pos2d stayMapPositions = 7;
-    required uint32 stayPosType = 8;
-    required string animType = 9;
+    optional string uniqueId = 7;
+    repeated pos2d stayMapPositions = 8;
+    required uint32 stayPosType = 9;
+    required string animType = 10;
 
-    repeated string defendPioneerIds = 10;
+    repeated string defendPioneerIds = 11;
 
-    optional building_resource resources = 11;
-    optional uint32 quota = 12;
+    optional building_resource resources = 12;
+    optional uint32 quota = 13;
 
-    optional string event = 13;
+    optional string event = 14;
 
-    optional uint32 progress = 14;
-    required uint32 exp = 15;
+    optional uint32 progress = 15;
+    required uint32 exp = 16;
     
-    optional float attack = 16;
-    optional uint32 winprogress = 17;
+    optional float attack = 17;
+    optional uint32 winprogress = 18;
 }
 
 message building_resource {

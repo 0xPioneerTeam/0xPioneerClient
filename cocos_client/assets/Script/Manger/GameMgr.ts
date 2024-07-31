@@ -33,8 +33,8 @@ export default class GameMgr {
 
     public lastEventSelectFightIdx: number = -1;
 
-    public async showBuyEnergyTip(pioneerId: string) {
-        const pioneer = DataMgr.s.pioneer.getById(pioneerId) as MapPlayerPioneerObject;
+    public async showBuyEnergyTip(uniqueId: string) {
+        const pioneer = DataMgr.s.pioneer.getById(uniqueId) as MapPlayerPioneerObject;
         const nft = DataMgr.s.nftPioneer.getNFTById(pioneer?.NFTId);
         if (pioneer == undefined || nft == null) {
             return;
@@ -87,7 +87,7 @@ export default class GameMgr {
                     }
 
                     NetworkMgr.websocketMsg.player_psyc_to_energy({
-                        pioneerId: pioneerId,
+                        pioneerId: uniqueId,
                         psycNum: price,
                     });
                 }
@@ -141,6 +141,7 @@ export default class GameMgr {
         } else if (condition.type == TaskConditionType.Kill) {
             let targetPioneer: MapPioneerObject = null;
             if (condition.kill.enemyIds.length > 0) {
+                //wait change 
                 targetPioneer = DataMgr.s.pioneer.getById(condition.kill.enemyIds[CommonTools.getRandomInt(0, condition.kill.enemyIds.length - 1)]);
             }
             if (targetPioneer != null) {
@@ -308,7 +309,7 @@ export default class GameMgr {
         return this._getEffectResultNum(type, originalValue, effectValue);
     }
 
-    public getAfterExtraEffectPropertyByPioneer(pioneerId: string, type: GameExtraEffectType, originalValue: number): number {
+    public getAfterExtraEffectPropertyByPioneer(uniqueId: string, type: GameExtraEffectType, originalValue: number): number {
         // artifact effect
         let artifactChangeRate: number = DataMgr.s.artifact.getObj_artifact_effectiveEffect(
             type,
@@ -317,7 +318,7 @@ export default class GameMgr {
 
         // nft
         let nftChangeRate: number = 0;
-        const pioneer = DataMgr.s.pioneer.getById(pioneerId) as MapPlayerPioneerObject;
+        const pioneer = DataMgr.s.pioneer.getById(uniqueId) as MapPlayerPioneerObject;
         if (!!pioneer && pioneer.NFTId != null) {
             nftChangeRate = DataMgr.s.nftPioneer.getNFTEffectById(pioneer.NFTId, type);
         }

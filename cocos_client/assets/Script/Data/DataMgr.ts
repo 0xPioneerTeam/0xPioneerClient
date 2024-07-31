@@ -7,6 +7,7 @@ import {
     MINING_FINISHED_DATA,
     MapNpcPioneerObject,
     MapPioneerActionType,
+    MapPioneerEventAttributesChangeType,
     MapPioneerType,
     MapPlayerPioneerObject,
 } from "../Const/PioneerDefine";
@@ -183,23 +184,24 @@ export class DataMgr {
         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
     };
     public static player_rookie_wormhole_fight_res = (e: any) => {
-        const p: s2c_user.Iplayer_rookie_wormhole_fight_res = e.data;
-        if (p.res !== 1) {
-            return;
-        }
-        const player = DataMgr.s.pioneer.getById(p.pioneerId) as MapPlayerPioneerObject;
-        if (player == undefined) {
-            return;
-        }
-        player.actionType = MapPioneerActionType.fighting;
-        player.fightData = p.fightRes;
-        player.fightResultWin = true;
-        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: player.id });
-        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT, {
-            playerId: player.id,
-            resultHp: p.hp,
-            delayTime: p.fightRes.length + 1,
-        });
+        // wait change
+        // const p: s2c_user.Iplayer_rookie_wormhole_fight_res = e.data;
+        // if (p.res !== 1) {
+        //     return;
+        // }
+        // const player = DataMgr.s.pioneer.getById(p.pioneerId) as MapPlayerPioneerObject;
+        // if (player == undefined) {
+        //     return;
+        // }
+        // player.actionType = MapPioneerActionType.fighting;
+        // player.fightData = p.fightRes;
+        // player.fightResultWin = true;
+        // NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: player.id });
+        // NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT, {
+        //     playerId: player.id,
+        //     resultHp: p.hp,
+        //     delayTime: p.fightRes.length + 1,
+        // });
     };
     //------------------------------------- item
     public static storhouse_change = async (e: any) => {
@@ -370,33 +372,65 @@ export class DataMgr {
     //------------------------------------- storehouse
 
     //------------------------------------- map
+    public static get_map_info_res = (e: any) => {
+        const p: s2c_user.Iget_map_info_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        let buildingChanged: boolean = false;
+        let pioneerChanged: boolean = false;
+        for (const info of p.info) {
+            for (const key in info.buildings) {
+                if (Object.prototype.hasOwnProperty.call(info.buildings, key)) {
+                    const element = info.buildings[key];
+                    DataMgr.s.mapBuilding.addData(element);
+                    buildingChanged = true;
+                }
+            }
+            for (const key in info.pioneers) {
+                if (Object.prototype.hasOwnProperty.call(info.pioneers, key)) {
+                    const element = info.pioneers[key];
+                    DataMgr.s.pioneer.addData(element);
+                    pioneerChanged = true;
+                }
+            }
+            DataMgr.s.mapBuilding.setDecorateInfo(info.slotId, info.templateConfigId);
+        }
+        if (buildingChanged) {
+            NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_NEED_REFRESH);
+        }
+        if (pioneerChanged) {
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
+        }
+        GameMainHelper.instance.updateGameViewport();
+    };
     public static pioneer_change = (e: any) => {
         const p: s2c_user.Ipioneer_change = e.data;
         const localDatas = DataMgr.s.pioneer.getAll();
         for (const temple of p.pioneers) {
             for (let i = 0; i < localDatas.length; i++) {
-                if (temple.id == localDatas[i].id) {
+                if (temple.uniqueId == localDatas[i].uniqueId) {
                     const oldData = localDatas[i];
                     const newData = DataMgr.s.pioneer.replaceData(i, temple);
                     // show
                     if (oldData.show != newData.show) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { id: newData.id, show: newData.show });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: newData.uniqueId, show: newData.show });
                     }
                     // faction
                     if (oldData.faction != newData.faction) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FACTION_CHANGED, { id: newData.id, show: newData.show });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FACTION_CHANGED, { uniqueId: newData.uniqueId, show: newData.show });
                     }
                     // action type
                     if (oldData.actionType != newData.actionType || oldData.actionEndTimeStamp != newData.actionEndTimeStamp) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: newData.id });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: newData.uniqueId });
                         if (oldData.actionType == MapPioneerActionType.mining && oldData.actionBuildingId != null) {
                             // mining over
-                            PioneerMgr.doActionOverRetrun(newData.id);
+                            PioneerMgr.doActionOverRetrun(newData.uniqueId);
                             const resourceData = GameMgr.getResourceBuildingRewardAndQuotaMax(DataMgr.s.mapBuilding.getBuildingById(oldData.actionBuildingId));
                             if (resourceData != null) {
                                 NotificationMgr.triggerEvent(NotificationName.MINING_FINISHED, {
                                     buildingId: oldData.actionBuildingId,
-                                    pioneerId: oldData.id,
+                                    pioneerId: oldData.uniqueId,
                                     duration: 5000,
                                     rewards: [{ id: resourceData.reward.itemConfigId, num: resourceData.reward.count }],
                                 } as MINING_FINISHED_DATA);
@@ -444,15 +478,15 @@ export class DataMgr {
                     // }
                     // fight
                     if (oldData.fightData == null && newData.fightData != null) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_BEGIN, { id: newData.id });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_BEGIN, { uniqueId: newData.uniqueId });
                     }
                     // staypos
                     if (oldData.stayPos.x != newData.stayPos.x || oldData.stayPos.y != newData.stayPos.y) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_STAY_POSITION_CHANGE, { id: newData.id });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_STAY_POSITION_CHANGE, { uniqueId: newData.uniqueId });
                     }
                     // hp
                     if (oldData.hp != newData.hp || oldData.hpMax != newData.hpMax) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED, { pioneerId: newData.id });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED, { uniqueId: newData.uniqueId });
                         if (oldData.actionType != MapPioneerActionType.dead && newData.hp > oldData.hp && newData.hpMax == oldData.hpMax) {
                             //re heal
                             NotificationMgr.triggerEvent(
@@ -463,27 +497,12 @@ export class DataMgr {
                     }
                     // energy
                     if (oldData.energy != newData.energy || oldData.energyMax != oldData.energyMax) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ENERGY_CHANGED, { pioneerId: newData.id });
-                    }
-                    // map reborn
-                    if (oldData.rebornTime != newData.rebornTime) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_REBON_CHANGE);
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ENERGY_CHANGED, { uniqueId: newData.uniqueId });
                     }
                     break;
                 }
             }
         }
-    };
-    public static pioneer_reborn_res = (e: any) => {
-        const p: s2c_user.Ipioneer_reborn_res = e.data;
-        if (p.res !== 1) {
-            return;
-        }
-        const pioneer = DataMgr.s.pioneer.getById(p.pioneerId);
-        if (pioneer == undefined) {
-            return;
-        }
-        NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.replaceLanById("106011", [LanMgr.getLanById(pioneer.name)]));
     };
     public static mappioneer_reborn_change = (e: any) => {
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106009"));
@@ -497,7 +516,7 @@ export class DataMgr {
         const localDatas = DataMgr.s.mapBuilding.getObj_building();
         for (const temple of p.mapbuildings) {
             for (let i = 0; i < localDatas.length; i++) {
-                if (temple.id == localDatas[i].id) {
+                if (temple.uniqueId == localDatas[i].uniqueId) {
                     const oldData = localDatas[i];
                     const newData = DataMgr.s.mapBuilding.replaceData(i, temple);
                     if (oldData.show != newData.show) {
@@ -543,7 +562,7 @@ export class DataMgr {
                         if (oldData.eventWaitFightEnemyId != newData.eventWaitFightEnemyId && newData.eventWaitFightEnemyId != null) {
                             const result = await UIPanelManger.inst.pushPanel(UIName.NewEventBattleUI);
                             if (result.success) {
-                                result.node.getComponent(NewEventBattleUI).configuration(newData.eventPioneerIds[0], newData)
+                                result.node.getComponent(NewEventBattleUI).configuration(newData.eventPioneerIds[0], newData);
                             }
                         }
                     }
@@ -553,21 +572,22 @@ export class DataMgr {
         }
     };
     public static player_explore_npc_start_res = async (e: any) => {
-        const p: s2c_user.Iplayer_explore_npc_start_res = e.data;
-        if (p.res !== 1) {
-            return;
-        }
-        const npcObj = DataMgr.s.pioneer.getById(p.npcId) as MapNpcPioneerObject;
-        if (!!npcObj && npcObj.talkId != null) {
-            const talkData = TalkConfig.getById(npcObj.talkId);
-            if (talkData == null) {
-                return;
-            }
-            const result = await UIPanelManger.inst.pushPanel(UIName.DialogueUI);
-            if (result.success) {
-                result.node.getComponent(DialogueUI).dialogShow(talkData, null);
-            }
-        }
+        // wait change
+        // const p: s2c_user.Iplayer_explore_npc_start_res = e.data;
+        // if (p.res !== 1) {
+        //     return;
+        // }
+        // const npcObj = DataMgr.s.pioneer.getById(p.npcId) as MapNpcPioneerObject;
+        // if (!!npcObj && npcObj.talkId != null) {
+        //     const talkData = TalkConfig.getById(npcObj.talkId);
+        //     if (talkData == null) {
+        //         return;
+        //     }
+        //     const result = await UIPanelManger.inst.pushPanel(UIName.DialogueUI);
+        //     if (result.success) {
+        //         result.node.getComponent(DialogueUI).dialogShow(talkData, null);
+        //     }
+        // }
     };
     public static player_move_res = (e: any) => {
         const p: s2c_user.Iplayer_move_res = e.data;
@@ -615,11 +635,12 @@ export class DataMgr {
 
     public static player_fight_end = (e: any) => {
         const p: s2c_user.Iplayer_fight_end = e.data;
-        const pioneer = DataMgr.s.pioneer.getById(p.pioneerId);
+        const uniqueId: string = p.pioneerId;
+        const pioneer = DataMgr.s.pioneer.getById(uniqueId);
         if (pioneer == undefined) {
             return;
         }
-        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { id: p.pioneerId });
+        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { uniqueId: uniqueId });
     };
 
     //------------------------------------- nft
