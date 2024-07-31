@@ -229,8 +229,6 @@ export default class GameMgr {
         return movePaths;
     }
 
-    //-----------------------------------------------------------------
-
     //--------------------------- effect
     public getEffectShowText(type: GameExtraEffectType, value: number): string {
         value = CommonTools.getOneDecimalNum(value);
@@ -372,5 +370,4 @@ export default class GameMgr {
         return originalValue;
     }
 
-    public constructor() {}
 }
