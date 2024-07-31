@@ -51,7 +51,7 @@ export class MapBuildingDataMgr {
             let total = director.getTotalFrames();
             slotIds.forEach((slotId) => {
                 if (this._requestHistory.has(slotId)) {
-                    if (total - this._requestHistory.get(slotId) > 300) {
+                    if (total - this._requestHistory.get(slotId) > 30000) {
                         needs.push(slotId);
                     }
                 } else {
