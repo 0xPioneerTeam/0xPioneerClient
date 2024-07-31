@@ -244,7 +244,7 @@ export default class GameMainHelper {
         }
         return this._tiledMapHelper.Path_IsBlock(mapPos.x, mapPos.y);
     }
-    public tiledMapShadowErase(mapPos: Vec2, ownerId: string = "0"): TilePos[] {
+    public tiledMapShadowErase(mapPos: Vec2, ownerId: string = "0"){
         if (!this.isTiledMapHelperInited) {
             return [];
         }
