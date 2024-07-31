@@ -17,7 +17,7 @@ export class MapBuildingDataMgr {
     private _selfMainCityUniqueId: string = null;
     private _decorateInfoMap: Map<string, string>;
     private _requestHistory: Map<string, number> = new Map();
-    public constructor() {}
+    public constructor() { }
 
     public getSelfMainCityUniqueId() {
         return this._selfMainCityUniqueId;
@@ -49,20 +49,30 @@ export class MapBuildingDataMgr {
         if (slotIds.length > 0) {
             let needs = [];
             let total = director.getTotalFrames();
-            slotIds.forEach((slotId) => {   
-                if(this._requestHistory.has(slotId)){
-                    if(total - this._requestHistory.get(slotId) > 300){
+            slotIds.forEach((slotId) => {
+                if (this._requestHistory.has(slotId)) {
+                    if (total - this._requestHistory.get(slotId) > 300) {
                         needs.push(slotId);
                     }
-                }else{
+                } else {
                     needs.push(slotId);
                     this._requestHistory.set(slotId, total);
                 }
             })
-            if(needs.length > 0){
-                NetworkMgr.websocketMsg.get_map_info({
-                    slotIds: needs,
-                });
+            let needlen = needs.length;
+            if (needlen > 0) {
+                let rslen = Math.ceil(needlen / 3);
+                for (let i = 0; i < rslen; i++) {
+                    if (i == rslen - 1) {
+                        NetworkMgr.websocketMsg.get_map_info({
+                            slotIds: needs.slice(i * 3, needlen),
+                        });
+                    }else{
+                        NetworkMgr.websocketMsg.get_map_info({
+                            slotIds: needs.slice(i * 3, i * 3 + 3),
+                        });
+                    }
+                }
             }
         }
     }
@@ -231,5 +241,5 @@ export class MapBuildingDataMgr {
             return baseObj;
         }
     }
-    private _initInterval() {}
+    private _initInterval() { }
 }

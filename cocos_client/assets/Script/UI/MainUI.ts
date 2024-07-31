@@ -201,15 +201,6 @@ export class MainUI extends ViewController {
         const view = this.node.getChildByPath("CommonContent/NewSettlementTipView");
         view.active = newSettle != null && newSettle.length > 0 && newSettle.indexOf("|") != -1;
     }
-    private _refreshInnerOuterChange() {
-        let isEnemy: boolean = false;
-        const building = DataMgr.s.mapBuilding.getBuildingById("building_1");
-
-        if (building != null && building.faction == MapMemberFactionType.enemy) {
-            isEnemy = true;
-        }
-        this.node.getChildByPath("CommonContent/InnerOutChangeBtnBg").active = !isEnemy;
-    }
     private checkCanShowGansterComingTip(pioneerId: string) {
         if (pioneerId == "gangster_3") {
             this._gangsterComingTipView.active = true;

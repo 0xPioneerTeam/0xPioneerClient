@@ -27,6 +27,7 @@ import { UIHUDController } from "../UI/UIHUDController";
 import { TilePos } from "../Game/TiledMap/TileTool";
 
 export default class GameMgr {
+
     public rookieTaskExplainIsShow: boolean = false;
 
     public enterGameSence: boolean = false;
