@@ -144,8 +144,6 @@ export class OuterTiledMapActionController extends ViewController {
         NotificationMgr.addListener(NotificationName.USERINFO_CITY_RADIAL_RANGE_CHANGE, this._onCityRadialRangeChange, this);
         NotificationMgr.addListener(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE, this._onHideActionView, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onHideActionView, this);
-
-        NotificationMgr.addListener(NotificationName.MAP_PLAYER_PIONEER_DID_MOVE_STEP, this._onPioneerDidMoveStep, this);
     }
     protected viewDidStart(): void {
         super.viewDidStart();
@@ -325,7 +323,7 @@ export class OuterTiledMapActionController extends ViewController {
     protected viewUpdate(dt: number): void {
         super.viewUpdate(dt);
 
-        // this._updateTiledmap(dt);
+        this._updateTiledmap(dt);
     }
 
     protected viewDidDestroy(): void {
@@ -334,7 +332,6 @@ export class OuterTiledMapActionController extends ViewController {
         NotificationMgr.removeListener(NotificationName.USERINFO_CITY_RADIAL_RANGE_CHANGE, this._onCityRadialRangeChange, this);
         NotificationMgr.removeListener(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE, this._onHideActionView, this);
         NotificationMgr.removeListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onHideActionView, this);
-        NotificationMgr.removeListener(NotificationName.MAP_PLAYER_PIONEER_DID_MOVE_STEP, this._onPioneerDidMoveStep, this);
     }
     //------------------------------------
     private _initTileMap(): void {
@@ -472,56 +469,28 @@ export class OuterTiledMapActionController extends ViewController {
         GameMainHelper.instance.tiledMapMainCityShadowErase(v2(mainCity.stayMapPositions[3].x, mainCity.stayMapPositions[3].y));
     }
 
-    private _lastPioneerStayPos: Map<string, Vec2> = new Map();
-    // private async _updateTiledmap(delta: number) {
-    //     if (!GameMainHelper.instance.isTiledMapHelperInited) {
-    //         return;
-    //     }
-    //     // GameMainHelper.instance.tiledMapShadowUpdate(delta);
-    //     //clean pioneer view
-    //     const selfPioneers = await DataMgr.s.pioneer.getAllSelfPlayers();
-    //     let eraseShadowWorldPos = DataMgr.s.eraseShadow.getObj();
-    //     for (const pioneer of selfPioneers) {
-    //         let isExsit: boolean = false;
-    //         for (const localErase of eraseShadowWorldPos) {
-    //             if (pioneer.stayPos.x === localErase.x && pioneer.stayPos.y === localErase.y) {
-    //                 isExsit = true;
-    //                 break;
-    //             }
-    //         }
-    //         const newCleardPositons = GameMainHelper.instance.tiledMapShadowErase(pioneer.stayPos, pioneer.id);
-    //         if (newCleardPositons.length > 0) {
-    //             GameMainHelper.instance.updateGameViewport();
-    //         }
-    //         this._eraseMainCityShadow();
-    //         if (!isExsit) {
-    //             // this._localEraseShadowWorldPos.push(pioneer.stayPos);
-    //             // if (Config.canSaveLocalData) {
-    //             //     localStorage.setItem(this._localEraseDataKey, JSON.stringify(this._localEraseShadowWorldPos));
-    //             // }
-    //             DataMgr.s.eraseShadow.addObj(v2(pioneer.stayPos.x, pioneer.stayPos.y));
-    //         }
-    //         // has new, deal with fog
-    //         if (!this._lastPioneerStayPos.has(pioneer.id)) {
-    //             this._lastPioneerStayPos.set(pioneer.id, pioneer.stayPos);
-    //         }
-    //         const lastStayPos = this._lastPioneerStayPos.get(pioneer.id);
-    //         if (lastStayPos.x != pioneer.stayPos.x || lastStayPos.y != pioneer.stayPos.y) {
-    //             // let currentMoveDirection = null;
-    //             // const direction = [TileHexDirection.Left, TileHexDirection.LeftBottom, TileHexDirection.LeftTop, TileHexDirection.Right, TileHexDirection.RightBottom, TileHexDirection.RightTop];
-    //             // for (const d of direction) {
-    //             //     const around = GameMainHelper.instance.tiledMapGetAroundByDirection(this._tiledhelper.getPos(lastStayPos.x, lastStayPos.y), d);
-    //             //     if (around.x == pioneer.stayPos.x &&
-    //             //         around.y == pioneer.stayPos.y) {
-    //             //         currentMoveDirection = d;
-    //             //         break;
-    //             //     }
-    //             // }
-    //             this._lastPioneerStayPos.set(pioneer.id, pioneer.stayPos);
-    //             // this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions(), newCleardPositons, pioneer.stayPos);
-    //         }
-    //     }
-    // }
+    private async _updateTiledmap(delta: number) {
+        if (!GameMainHelper.instance.isTiledMapHelperInited) {
+            return;
+        }
+        //clean pioneer view
+        const selfPioneers = DataMgr.s.pioneer.getAllSelfPlayers();
+        let eraseShadowWorldPos = DataMgr.s.eraseShadow.getObj();
+        for (const pioneer of selfPioneers) {
+            let isExsit: boolean = false;
+            for (const localErase of eraseShadowWorldPos) {
+                if (pioneer.stayPos.x === localErase.x && pioneer.stayPos.y === localErase.y) {
+                    isExsit = true;
+                    break;
+                }
+            }
+            GameMainHelper.instance.tiledMapShadowErase(pioneer.stayPos, pioneer.id);
+            this._eraseMainCityShadow();
+            if (!isExsit) {
+                DataMgr.s.eraseShadow.addObj(v2(pioneer.stayPos.x, pioneer.stayPos.y));
+            }
+        }
+    }
 
     public async _clickOnMap(worldpos: Vec3) {
         if (DataMgr.s.userInfo.data.rookieStep != RookieStep.FINISH) {
@@ -1057,11 +1026,5 @@ export class OuterTiledMapActionController extends ViewController {
             this._mapActionCursorView.hide();
         }
     }
-    private _onPioneerDidMoveStep(data: { uniqueId: string }) {
-        const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
-        if (pioneer == undefined) {
-            return;
-        }
-        GameMainHelper.instance.tiledMapShadowErase(pioneer.stayPos, pioneer.uniqueId);
-    }
+    
 }
