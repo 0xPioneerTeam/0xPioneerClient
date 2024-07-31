@@ -78,6 +78,7 @@ export class OuterDecorateController extends ViewController {
             }
             slotIds.push(CommonTools.convertMapWorldPosToSlotId(info));
         }
+        DataMgr.s.mapBuilding.requestMapInfo(slotIds);
         if (slotIds.length > 0) {
             NetworkMgr.websocketMsg.get_map_info({
                 slotIds: slotIds,

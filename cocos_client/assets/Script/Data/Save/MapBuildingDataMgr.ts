@@ -8,11 +8,15 @@ import GameMainHelper from "../../Game/Helper/GameMainHelper";
 import { TileHexDirection } from "../../Game/TiledMap/TileTool";
 import PioneerDefine from "../../Const/PioneerDefine";
 import CommonTools from "../../Tool/CommonTools";
+import { NetworkMgr } from "../../Net/NetworkMgr";
+import { director } from "cc";
 
 export class MapBuildingDataMgr {
+
     private _building_data: MapBuildingObject[];
     private _selfMainCityUniqueId: string = null;
     private _decorateInfoMap: Map<string, string>;
+    private _requestHistory: Map<string, number> = new Map();
     public constructor() {}
 
     public getSelfMainCityUniqueId() {
@@ -39,6 +43,26 @@ export class MapBuildingDataMgr {
         const mapWorldPos = CommonTools.convertSlotIdToMapWorldPos(slotId);
         const configId = templateConfigId.split("_")[1];
         this._decorateInfoMap.set(mapWorldPos.x + "_" + mapWorldPos.y, "outinfo_" + configId);
+    }
+
+    requestMapInfo(slotIds: any[]) {
+        if (slotIds.length > 0) {
+            let needs = [];
+            let total = director.getTotalFrames();
+            slotIds.forEach((slotId) => {   
+                if(this._requestHistory.has(slotId)){
+                    if(total - this._requestHistory.get(slotId) > 300){
+                        needs.push(slotId);
+                    }
+                }else{
+                    needs.push(slotId);
+                    this._requestHistory.set(slotId, total);
+                }
+            })
+            NetworkMgr.websocketMsg.get_map_info({
+                slotIds: needs,
+            });
+        }
     }
 
     public async loadObj() {
