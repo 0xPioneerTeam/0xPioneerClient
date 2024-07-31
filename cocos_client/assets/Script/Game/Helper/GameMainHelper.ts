@@ -11,6 +11,7 @@ import { RookieStep } from "../../Const/RookieDefine";
 import { OuterTiledMapActionController } from "../Outer/OuterTiledMapActionController";
 import { OuterDecorateController } from "../Outer/OuterDecorateController";
 import { OuterShadowController } from "../Outer/OuterShadowController";
+import { OuterBuildingController } from "../Outer/OuterBuildingController";
 
 export default class GameMainHelper {
     public static get instance() {
@@ -386,6 +387,7 @@ export default class GameMainHelper {
         this._outScene.getComponent(OuterDecorateController).refreshUI(_rect_temp, _rect_temp2);
         this._outScene.getComponent(OuterTiledMapActionController).refreshUI(_rect_temp, _rect_temp2);
         this._outScene.getComponent(OuterShadowController).refreshUI(_rect_temp, _rect_temp2);
+        this._outScene.getComponent(OuterBuildingController).refreshUI(_rect_temp, _rect_temp2);
     }
 
     private _onGameJumpInnerAndShowRelicTower() {

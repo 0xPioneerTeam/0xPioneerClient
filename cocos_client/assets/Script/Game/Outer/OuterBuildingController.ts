@@ -8,8 +8,11 @@ import { NotificationName } from "../../Const/Notification";
 import { DataMgr } from "../../Data/DataMgr";
 import { BuildingStayPosType, MapBuildingType } from "../../Const/BuildingDefine";
 import { OuterRebonAndDestroyView } from "./View/OuterRebonAndDestroyView";
+import { Rect } from "cc";
+import { v2 } from "cc";
 
 const { ccclass, property } = _decorator;
+const _rect_temp = new Rect();
 
 @ccclass("OuterBuildingController")
 export class OuterBuildingController extends Component {
@@ -70,7 +73,7 @@ export class OuterBuildingController extends Component {
 
 
         this.scheduleOnce(async () => {
-            const mainCity = allBuildings.find((item)=> {
+            const mainCity = allBuildings.find((item) => {
                 return item.type == MapBuildingType.city;
             });
             if (mainCity != undefined && mainCity.stayMapPositions.length == 7) {
@@ -109,7 +112,7 @@ export class OuterBuildingController extends Component {
         // this._refreshDecorationUI();
     }
 
-    update(deltaTime: number) {}
+    update(deltaTime: number) { }
 
     protected onDestroy(): void {
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_SHOW_CHANGE, this._onBuildingShowChange, this);
@@ -121,6 +124,22 @@ export class OuterBuildingController extends Component {
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAP_BUILDING, this._onRookieTapBuilding, this);
         // lan
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this._refreshUI, this);
+    }
+
+
+    refreshUI(rect: Rect, rect2: Rect) {
+        _rect_temp.x = rect.x - 100;
+        _rect_temp.y = rect.y - 100;
+        _rect_temp.width = rect.width + 200;
+        _rect_temp.height = rect.height + 200;
+        this._buildingMap.forEach((value, key) => {
+            const node = value.node;
+            if (_rect_temp.contains(v2(node.position.x, node.position.y))) {
+                node.active = true;
+            } else {
+                node.active = false;
+            }
+        })
     }
 
     private _refreshUI() {
@@ -222,7 +241,7 @@ export class OuterBuildingController extends Component {
             const rebornView: Node = instantiate(this.rebonPrefab);
             rebornView.setParent(decorationView);
             rebornView.setPosition(pixelPos);
-            rebornView.getComponent(OuterRebonAndDestroyView).playAnim(show ?  2 : 0);
+            rebornView.getComponent(OuterRebonAndDestroyView).playAnim(show ? 2 : 0);
         }
     }
 
