@@ -50,6 +50,9 @@ export class TileShadowComp extends Component {
     }
 
     public updateDrawInfo(tilex: number, tiley: number, grid: number) {
+        if (this._tilex == tilex && this._tiley == tiley && this._grid == grid) {
+            return;
+        } 
         this._tilex = tilex;
         this._tiley = tiley;
         this._grid = grid;
@@ -59,9 +62,9 @@ export class TileShadowComp extends Component {
             this._spComp.spriteFrame = null;
         } else {
             this._spComp.spriteFrame = TileMapHelper.INS.getTileGridSpriteframeByGrid(grid);
-            if(grid == 75){
+            if (grid == 75) {
                 this.node.setScale(1.01, 1);
-            }else{
+            } else {
                 this.node.setScale(1, 1);
             }
             this._uiComp.anchorY = 0.5;
