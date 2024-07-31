@@ -59,9 +59,11 @@ export class MapBuildingDataMgr {
                     this._requestHistory.set(slotId, total);
                 }
             })
-            NetworkMgr.websocketMsg.get_map_info({
-                slotIds: needs,
-            });
+            if(needs.length > 0){
+                NetworkMgr.websocketMsg.get_map_info({
+                    slotIds: needs,
+                });
+            }
         }
     }
 
