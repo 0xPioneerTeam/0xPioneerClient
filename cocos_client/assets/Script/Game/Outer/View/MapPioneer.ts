@@ -234,7 +234,7 @@ export class MapPioneer extends Component {
                             }
                         }
                     } else {
-                        if (fightDatas[0].attackerId == attacker.id) {
+                        if (fightDatas[0].attackerId == attacker.uniqueId) {
                             defender = DataMgr.s.pioneer.getById(fightDatas[0].defenderId);
                         } else {
                             defender = DataMgr.s.pioneer.getById(fightDatas[0].attackerId);
@@ -246,7 +246,7 @@ export class MapPioneer extends Component {
                             fightDatas: this._model.fightData.slice(),
                             isWin: this._model.fightResultWin,
                             attackerData: { uniqueId: attacker.uniqueId, name: attacker.name, hp: attacker.hp, hpmax: attacker.hpMax },
-                            defenderData: { id: defender.id, name: defender.name, hp: defender.hp, hpmax: defender.hpMax },
+                            defenderData: { uniqueId: defender.uniqueId, id: defender.id, name: defender.name, hp: defender.hp, hpmax: defender.hpMax },
                         });
                     }
                 }

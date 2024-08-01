@@ -108,7 +108,6 @@ export enum NotificationName {
     //---------------------- map pioneer
     MAP_PIONEER_NEED_REFRESH,
     MAP_FAKE_FIGHT_SHOW,
-    MAP_PIONEER_EVENTID_CHANGE,
 
     MAP_PIONEER_FIGHT_BEGIN,
     MAP_PIONEER_FIGHT_END,

@@ -165,6 +165,7 @@ export interface MapPioneerData {
     actionType: MapPioneerActionType;
     actionBeginTimeStamp: number;
     actionEndTimeStamp: number;
+    actionEndReturn: boolean;
 
     logics: MapPioneerLogicData[];
 
@@ -267,6 +268,7 @@ export default class PioneerDefine {
             actionType: temple.actionType as MapPioneerActionType,
             actionBeginTimeStamp: currentTime,
             actionEndTimeStamp: currentTime + (temple.actionEndTimeStamp - temple.actionBeginTimeStamp) * 1000,
+            actionEndReturn: temple.actionEndReturn,
             logics: [],
             winProgress: temple.winProgress,
             winExp: temple.winExp,

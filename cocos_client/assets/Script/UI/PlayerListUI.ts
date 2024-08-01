@@ -33,7 +33,6 @@ export class PlayerListUI extends Component {
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_SHOW_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._refreshPlayerList, this);
-        NotificationMgr.addListener(NotificationName.MAP_PIONEER_EVENTID_CHANGE, this._refreshPlayerList, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._refreshPlayerList, this);
 
@@ -51,7 +50,6 @@ export class PlayerListUI extends Component {
 
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_SHOW_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._refreshPlayerList, this);
-        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_EVENTID_CHANGE, this._refreshPlayerList, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._refreshPlayerList, this);
 

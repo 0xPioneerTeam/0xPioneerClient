@@ -1,21 +1,15 @@
 import { Vec2, v2 } from "cc";
-import PioneerConfig from "../../Config/PioneerConfig";
-import { TileHexDirection, TilePos } from "../../Game/TiledMap/TileTool";
-import { GetPropData, MapMemberFactionType, MapMemberTargetType } from "../../Const/ConstDefine";
+import { TilePos } from "../../Game/TiledMap/TileTool";
 import PioneerDefine, {
     MapNpcPioneerObject,
     MapPioneerActionType,
-    MapPioneerLogicType,
     MapPioneerObject,
     MapPioneerType,
     MapPlayerPioneerObject,
 } from "../../Const/PioneerDefine";
 import { NotificationName } from "../../Const/Notification";
 import NotificationMgr from "../../Basic/NotificationMgr";
-import { Ichange_pioneer_type, s2c_user, share } from "../../Net/msg/WebsocketMsg";
-import CommonTools from "../../Tool/CommonTools";
-import { PioneerFactionAction, TaskFactionAction, TaskNpcGetNewTalkAction, TaskShowHideAction, TaskShowHideStatus } from "../../Const/TaskDefine";
-import { NFTPioneerObject } from "../../Const/NFTPioneerDefine";
+import { share } from "../../Net/msg/WebsocketMsg";
 import NetGlobalData from "./Data/NetGlobalData";
 
 export class PioneersDataMgr {

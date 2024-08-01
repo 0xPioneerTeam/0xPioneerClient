@@ -846,6 +846,7 @@ export namespace share {
         actionType: string;
         actionBeginTimeStamp: number;
         actionEndTimeStamp: number;
+        actionEndReturn?: boolean;
 
         winProgress?: number;
         winExp: number;

@@ -102,6 +102,7 @@ export class OuterPioneerController extends ViewController {
             attackerId: string;
             attackerHp: number;
             attackerHpmax: number;
+            defenderUniqueId: string;
             defenderId: string;
             defenderHp: number;
             defenderHpmax: number;
@@ -132,8 +133,6 @@ export class OuterPioneerController extends ViewController {
         // action
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionChanged, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_STAY_POSITION_CHANGE, this._onPioneerStayPositionChanged, this);
-        // event
-        NotificationMgr.addListener(NotificationName.MAP_PIONEER_EVENTID_CHANGE, this._onPioneerEventIdChange, this);
         // hp
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChanged, this);
         // show
@@ -235,8 +234,6 @@ export class OuterPioneerController extends ViewController {
         // action
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionChanged, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_STAY_POSITION_CHANGE, this._onPioneerStayPositionChanged, this);
-        // event
-        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_EVENTID_CHANGE, this._onPioneerEventIdChange, this);
         // hp
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChanged, this);
         // show
@@ -574,18 +571,6 @@ export class OuterPioneerController extends ViewController {
         rebornView.setPosition(GameMainHelper.instance.tiledMapGetPosPixel(pioneer.stayPos.x, pioneer.stayPos.y));
         rebornView.getComponent(OuterRebonAndDestroyView).playAnim(data.show ? 1 : 0);
     }
-    private async _onPioneerEventIdChange(data: { uniqueId: string; eventBuildingId: string; eventId: string }) {
-        const eventConfig = EventConfig.getById(data.eventId);
-        if (eventConfig == undefined) {
-            return;
-        }
-        this._refreshUI();
-        const result = await UIPanelManger.inst.pushPanel(UIName.BrachEventUI);
-        if (!result.success) {
-            return;
-        }
-        result.node.getComponent(EventUI).eventUIShow(data.uniqueId, data.eventBuildingId, eventConfig);
-    }
     private _onPioneerBeginMove(data: { uniqueId: string; showMovePath: boolean }): void {
         const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
         if (this._actionShowPioneerId == data.uniqueId) {
@@ -620,7 +605,7 @@ export class OuterPioneerController extends ViewController {
         fightDatas: share.Ifight_res[];
         isWin: boolean;
         attackerData: { uniqueId: string; name: string; hp: number; hpmax: number };
-        defenderData: { id: string; name: string; hp: number; hpmax: number };
+        defenderData: { uniqueId: string, id: string; name: string; hp: number; hpmax: number };
     }) {
         const { fightDatas, isWin, attackerData, defenderData } = data;
         const attackerView = this._pioneerMap.get(attackerData.uniqueId);
@@ -681,6 +666,7 @@ export class OuterPioneerController extends ViewController {
             attackerHp: attackerData.hp,
             attackerHpmax: attackerData.hpmax,
 
+            defenderUniqueId: defenderData.uniqueId,
             defenderId: defenderData.id,
             defenderHp: defenderData.hp,
             defenderHpmax: defenderData.hpmax,
@@ -716,7 +702,12 @@ export class OuterPioneerController extends ViewController {
         resultView.getComponent(OuterFightResultView).showResult(fightData.isWin, () => {
             resultView.destroy();
             const attackPioneer = DataMgr.s.pioneer.getById(fightData.attackerId);
-            const defendPioneer = PioneerConfig.getById(fightData.defenderId);
+            let defendPioneer = null;
+            if (fightData.defenderUniqueId != null) {
+                defendPioneer = DataMgr.s.pioneer.getById(fightData.defenderUniqueId);
+            } else if (fightData.defenderId != null) {
+                defendPioneer = PioneerConfig.getById(fightData.defenderId);
+            }
             if (attackPioneer != null && defendPioneer != null) {
                 NotificationMgr.triggerEvent(NotificationName.FIGHT_FINISHED, {
                     attacker: {

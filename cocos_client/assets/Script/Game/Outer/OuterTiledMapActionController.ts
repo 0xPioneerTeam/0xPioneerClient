@@ -604,7 +604,6 @@ export class OuterTiledMapActionController extends ViewController {
                             const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerUnqueId);
                             if (confirmed && currentActionPioneer != undefined) {
                                 if (isReturn) {
-                                    // save return data
                                     PioneerMgr.addActionOverReturnPioneer(currentActionPioneer.uniqueId);
                                 }
                                 let beginPos: Vec2 = currentActionPioneer.stayPos;

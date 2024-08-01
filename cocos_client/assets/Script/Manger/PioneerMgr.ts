@@ -79,12 +79,11 @@ export default class PioneerMgr {
         if (!canFight) {
             return;
         }
-        const isReturn = this._actionOverReturnPioneerIds.indexOf(attacker.id) != -1;
         if (attacker.type == MapPioneerType.player) {
             NetworkMgr.websocketMsg.player_fight_start({
-                attackerId: attacker.id,
-                defenderId: pioneerDefender.id,
-                isReturn: isReturn
+                attackerId: attacker.uniqueId,
+                defenderId: pioneerDefender.uniqueId,
+                isReturn: this._checkActionSendParamRetrun(attacker.uniqueId),
             });
         }
     }
@@ -95,19 +94,22 @@ export default class PioneerMgr {
     }
     //----------------------- return action
     public doActionOverRetrun(uniqueId: string) {
-        const index = this._actionOverReturnPioneerIds.indexOf(uniqueId);
-        if (index != -1) {
-            this._actionOverReturnPioneerIds.splice(index, 1);
+        const pioneer = DataMgr.s.pioneer.getById(uniqueId);
+        if (pioneer == undefined) {
+            return;
+        }
+        if (pioneer.actionEndReturn) {
             DataMgr.s.pioneer.changeActionType(uniqueId, MapPioneerActionType.inCity);
             DataMgr.s.pioneer.changePos(uniqueId, GameMgr.getMainCityGatePos());
         }
     }
-    public addActionOverReturnPioneer(pioneerId: string) {
-        this._actionOverReturnPioneerIds.push(pioneerId);
+
+    public addActionOverReturnPioneer(uniqueId: string) {
+        this._actionOverReturnPioneerUniqueId.push(uniqueId);
     }
 
     private _movingTargetDataMap: Map<string, { target: MapMemberTargetType; id: string }> = new Map();
-    private _actionOverReturnPioneerIds: string[] = [];
+    private _actionOverReturnPioneerUniqueId: string[] = [];
     public constructor() {}
 
     private async _moveMeeted(uniqueId: string, interactDirectly: boolean) {
@@ -188,6 +190,7 @@ export default class PioneerMgr {
                     }, interactDelayTime);
                 }
             } else {
+                // move to empty pos
                 this.doActionOverRetrun(uniqueId);
             }
         } else {
@@ -197,7 +200,6 @@ export default class PioneerMgr {
             // if (GameMainHelper.instance.currentTrackingInteractData().interactBuildingId == stayBuilding.id) {
             //     GameMainHelper.instance.hideTrackingView();
             // }
-            const isRetrun: boolean = this._actionOverReturnPioneerIds.indexOf(uniqueId) != -1;
             if (stayBuilding.type == MapBuildingType.city) {
                 // now only deal with fake fight
                 if (pioneer.id == "wormhole_token") {
@@ -299,25 +301,19 @@ export default class PioneerMgr {
                             pioneerId: uniqueId,
                             resourceBuildingId: stayBuilding.uniqueId,
                             feeTxhash: "",
-                            isReturn: isRetrun,
+                            isReturn: this._checkActionSendParamRetrun(uniqueId),
                         });
                     }, interactDelayTime);
-                } else {
                 }
             } else if (stayBuilding.type == MapBuildingType.event) {
-                if (pioneer.type == MapPioneerType.player) {
-                    if (pioneer.actionType == MapPioneerActionType.eventing && pioneer.actionBuildingId != null) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
-                            uniqueId: pioneer.uniqueId,
-                            eventBuildingId: pioneer.actionBuildingId,
-                            eventId: pioneer.actionEventId,
+                if (pioneer.type == MapPioneerType.player && pioneer.faction != MapMemberFactionType.enemy) {
+                    setTimeout(() => {
+                        NetworkMgr.websocketMsg.player_event_start({
+                            pioneerId: uniqueId,
+                            buildingId: stayBuilding.uniqueId,
+                            isReturn: this._checkActionSendParamRetrun(uniqueId),
                         });
-                    } else {
-                        setTimeout(() => {
-                            NetworkMgr.websocketMsg.player_event_start({ pioneerId: uniqueId, buildingId: stayBuilding.uniqueId, isReturn: isRetrun });
-                        }, interactDelayTime);
-                    }
-                } else {
+                    }, interactDelayTime);
                 }
             } else if (stayBuilding.type == MapBuildingType.tavern) {
                 if (pioneer.type == MapPioneerType.player) {
@@ -337,6 +333,15 @@ export default class PioneerMgr {
     //------------------------------- notification
     private _onPioneerMoveMeeted(data: { uniqueId: string; interactDirectly: boolean }) {
         this._moveMeeted(data.uniqueId, data.interactDirectly);
+    }
+
+    public _checkActionSendParamRetrun(uniqueId: string) {
+        const index = this._actionOverReturnPioneerUniqueId.indexOf(uniqueId);
+        if (index != -1) {
+            this._actionOverReturnPioneerUniqueId.splice(index, 1);
+            return true;
+        }
+        return false;
     }
     // private _onPioneerLogicMove(data: { id: string; logic: MapPioneerLogicObject }) {
     //     const pioneer = DataMgr.s.pioneer.getById(data.id);

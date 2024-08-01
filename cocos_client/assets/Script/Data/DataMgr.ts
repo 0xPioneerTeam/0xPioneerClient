@@ -32,7 +32,7 @@ import TalkConfig from "../Config/TalkConfig";
 import { DialogueUI } from "../UI/Outer/DialogueUI";
 import MapBuildingConfig from "../Config/MapBuildingConfig";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
-import { ResourceCorrespondingItem } from "../Const/ConstDefine";
+import { MapInteractType, ResourceCorrespondingItem } from "../Const/ConstDefine";
 import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Const/RookieDefine";
 import { ArtifactInfoUI } from "../UI/ArtifactInfoUI";
 import { NewEventUI } from "../UI/Event/NewEventUI";
@@ -438,46 +438,11 @@ export class DataMgr {
                                 } as MINING_FINISHED_DATA);
                             }
                         }
-                        if (oldData.type == newData.type && newData.type == MapPioneerType.player && oldData.actionType == MapPioneerActionType.dead) {
-                            // player rebirth
-                            GameMusicPlayMgr.playPioneerRebonEffect();
+                        if (oldData.actionType == MapPioneerActionType.eventing && oldData.actionBuildingId != null) {
+                            // eventing over
+                            PioneerMgr.doActionOverRetrun(newData.uniqueId);
                         }
-                        // if (oldData.actionType == MapPioneerActionType.eventStarting && newData.actionType == MapPioneerActionType.eventing) {
-                        //     // event
-                        //     NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
-                        //         triggerPioneerId: newData.id,
-                        //         eventBuildingId: newData.actionBuildingId,
-                        //         eventId: newData.actionEventId,
-                        //     });
-                        //     const stepEndData: EVENT_STEPEND_DATA = {
-                        //         pioneerId: newData.id,
-                        //         buildingId: newData.actionBuildingId,
-                        //         eventId: newData.actionEventId,
-                        //         hasNextStep:
-                        //             newData.actionEventId != "-1" &&
-                        //             newData.actionEventId != "-2" &&
-                        //             newData.actionEventId != "" &&
-                        //             newData.actionEventId != null,
-                        //     };
-                        //     NotificationMgr.triggerEvent(NotificationName.EVENT_STEPEND, stepEndData);
-                        // }
                     }
-                    // event
-                    // if (newData.actionType == MapPioneerActionType.eventing && oldData.actionEventId != newData.actionEventId) {
-                    //     NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
-                    //         triggerPioneerId: newData.id,
-                    //         eventBuildingId: newData.actionBuildingId,
-                    //         eventId: newData.actionEventId,
-                    //     });
-                    //     const stepEndData: EVENT_STEPEND_DATA = {
-                    //         pioneerId: newData.id,
-                    //         buildingId: newData.actionBuildingId,
-                    //         eventId: newData.actionEventId,
-                    //         hasNextStep:
-                    //             newData.actionEventId != "-1" && newData.actionEventId != "-2" && newData.actionEventId != "" && newData.actionEventId != null,
-                    //     };
-                    //     NotificationMgr.triggerEvent(NotificationName.EVENT_STEPEND, stepEndData);
-                    // }
                     // fight
                     if (oldData.fightData == null && newData.fightData != null) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_BEGIN, { uniqueId: newData.uniqueId });
