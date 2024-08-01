@@ -41,7 +41,7 @@ export class ResOprView extends Component {
 
         difficultView.active = false;
 
-        const buildingCofig = interactBuilding != null ? MapBuildingConfig.getById(interactBuilding.id) : null;
+        const buildingCofig = interactBuilding != null ? GameMgr.getMapBuildingConfig(interactBuilding.uniqueId) : null;
         //----------------------------------- info
         let name: string = "";
         if (interactBuilding != null) {
@@ -178,7 +178,6 @@ export class ResOprView extends Component {
         } else {
             actionTypes.push(MapInteractType.Move);
         }
-        const perStepCostEnergy = (ConfigConfig.getConfig(ConfigType.OneStepCostEnergy) as OneStepCostEnergyParam).cost;
         const buildingCost = buildingCofig != null ? buildingCofig.cost : 0;
         this._actionItemContent.destroyAllChildren();
         for (const type of actionTypes) {
@@ -230,7 +229,7 @@ export class ResOprView extends Component {
                 // title = LanMgr.getLanById("107549");
                 title = "Talk";
             }
-            const costEnergy = perStepCostEnergy * step + (type != MapInteractType.Move ? buildingCost : 0);
+            const costEnergy = GameMgr.getMapActionCostEnergy(step, interactBuilding != null ? interactBuilding.uniqueId : null);
             actionItem.getChildByPath("Title").getComponent(Label).string = title;
             actionItem.getChildByPath("CostView/CostLabel").getComponent(Label).string = "-" + costEnergy;
             actionItem.getComponent(Button).clickEvents[0].customEventData = type + "|" + costEnergy;

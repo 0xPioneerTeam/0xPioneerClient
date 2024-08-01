@@ -235,7 +235,7 @@ export class PlayerDispatchDetailUI extends ViewController {
         }
         const info = this._infos[this._showIndex];
         NetworkMgr.websocketMsg.player_troop_to_hp({
-            pioneerId: info.id,
+            pioneerId: info.uniqueId,
             troopNum: this._addTroopNum,
         });
     }

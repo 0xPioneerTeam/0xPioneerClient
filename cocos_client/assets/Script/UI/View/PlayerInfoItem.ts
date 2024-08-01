@@ -1,11 +1,14 @@
-import { _decorator, Component, Label, Layout, Node, ProgressBar } from 'cc';
-import { MapPlayerPioneerObject } from '../../Const/PioneerDefine';
-import { LanMgr } from '../../Utils/Global';
-import { DataMgr } from '../../Data/DataMgr';
+import { _decorator, Color, Component, Label, Layout, Node, ProgressBar } from "cc";
+import { MapPioneerActionType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
+import { LanMgr } from "../../Utils/Global";
+import { DataMgr } from "../../Data/DataMgr";
+import NotificationMgr from "../../Basic/NotificationMgr";
+import { NotificationName } from "../../Const/Notification";
 const { ccclass, property } = _decorator;
 
-@ccclass('PlayerInfoItem')
+@ccclass("PlayerInfoItem")
 export class PlayerInfoItem extends Component {
+    private _infoUniqueId: string = null;
 
     private _nameLabel: Label = null;
     private get nameLabel(): Label {
@@ -86,9 +89,9 @@ export class PlayerInfoItem extends Component {
         }
         return this._apLabel;
     }
-    
 
     public refreshUI(info: MapPlayerPioneerObject) {
+        this._infoUniqueId = info.uniqueId;
         const nft = DataMgr.s.nftPioneer.getNFTById(info.NFTId);
         if (nft == undefined) {
             return;
@@ -107,15 +110,42 @@ export class PlayerInfoItem extends Component {
         this.apLabel.string = info.energy + "/" + info.energyMax;
         this.fightLabel.string = (info.attack * 75 + info.hp * 12 + info.defend * 100).toString();
         this.fightLabel.node.parent.getComponent(Layout).updateLayout();
+
+        let status: string = "";
+        let statusColor: Color = null;
+        if (info.actionType == MapPioneerActionType.inCity) {
+            status = "In city";
+            statusColor = new Color().fromHEX("#8EDA61");
+        } else if (info.actionType == MapPioneerActionType.moving) {
+            status = "In move";
+            statusColor = new Color().fromHEX("#de5e5d");
+        } else if (info.actionType == MapPioneerActionType.staying) {
+            status = `(${info.stayPos.x},${info.stayPos.y})`;
+            statusColor = new Color().fromHEX("#8EDA61");
+        } else {
+            status = "In action";
+            statusColor = new Color().fromHEX("#de5e5d");
+        }
+        this.statusLabel.string = status;
+        this.statusLabel.color = statusColor;
     }
 
     start() {
-
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionTypeChanged, this);
     }
 
-    update(deltaTime: number) {
-        
+    protected onDestroy(): void {
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionTypeChanged, this);
+    }
+
+    update(deltaTime: number) {}
+
+    //--------------------- notifiaction
+    private _onPioneerActionTypeChanged(data: { uniqueId: string }) {
+        if (this._infoUniqueId == null || this._infoUniqueId != data.uniqueId) {
+            return;
+        }
+        const info = DataMgr.s.pioneer.getById(this._infoUniqueId) as MapPlayerPioneerObject;
+        this.refreshUI(info);
     }
 }
-
-

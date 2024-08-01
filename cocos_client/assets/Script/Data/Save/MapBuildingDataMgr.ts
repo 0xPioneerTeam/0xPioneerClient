@@ -12,12 +12,11 @@ import { NetworkMgr } from "../../Net/NetworkMgr";
 import { director } from "cc";
 
 export class MapBuildingDataMgr {
-
     private _building_data: MapBuildingObject[];
     private _selfMainCityUniqueId: string = null;
     private _decorateInfoMap: Map<string, string>;
     private _requestHistory: Map<string, number> = new Map();
-    public constructor() { }
+    public constructor() {}
 
     public getSelfMainCityUniqueId() {
         return this._selfMainCityUniqueId;
@@ -58,7 +57,7 @@ export class MapBuildingDataMgr {
                     needs.push(slotId);
                     this._requestHistory.set(slotId, total);
                 }
-            })
+            });
             let needlen = needs.length;
             if (needlen > 0) {
                 let rslen = Math.ceil(needlen / 3);
@@ -67,7 +66,7 @@ export class MapBuildingDataMgr {
                         NetworkMgr.websocketMsg.get_map_info({
                             slotIds: needs.slice(i * 3, needlen),
                         });
-                    }else{
+                    } else {
                         NetworkMgr.websocketMsg.get_map_info({
                             slotIds: needs.slice(i * 3, i * 3 + 3),
                         });
@@ -241,5 +240,5 @@ export class MapBuildingDataMgr {
             return baseObj;
         }
     }
-    private _initInterval() { }
+    private _initInterval() {}
 }

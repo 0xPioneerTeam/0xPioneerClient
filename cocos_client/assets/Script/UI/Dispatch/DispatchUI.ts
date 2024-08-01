@@ -4,21 +4,26 @@ import UIPanelManger from "../../Basic/UIPanelMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import { PlayerInfoItem } from "../View/PlayerInfoItem";
-import { MapPlayerPioneerObject } from "../../Const/PioneerDefine";
+import { MapPioneerActionType, MapPioneerObject, MapPioneerType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 import GameMainHelper from "../../Game/Helper/GameMainHelper";
 import CommonTools from "../../Tool/CommonTools";
 import { UIName } from "../../Const/ConstUIDefine";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import { GameMgr, LanMgr } from "../../Utils/Global";
+import { MapBuildingObject } from "../../Const/MapBuilding";
+import { TilePos } from "../../Game/TiledMap/TileTool";
 const { ccclass, property } = _decorator;
 
 @ccclass("DispatchUI")
 export class DispatchUI extends ViewController {
-    private _step: number = 0;
-    private _costEnergy: number = 0;
+    private _interactBuilding: MapBuildingObject;
+    private _interactPioneer: MapPioneerObject;
+    private _targetPos: Vec2;
+    private _tempShowCostEnergy: number = 0;
+    private _step: number;
     private _moveSpeed: number = 0;
-    private _actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, isReturn: boolean) => void = null;
+    private _actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, movePath: TilePos[], isReturn: boolean) => void = null;
 
     private _isReturn: boolean = false;
 
@@ -30,13 +35,19 @@ export class DispatchUI extends ViewController {
     private _playerItem: Node = null;
 
     public configuration(
+        interactBuilding: MapBuildingObject,
+        interactPioneer: MapPioneerObject,
+        targetPos: Vec2,
+        tempShowCostEnergy: number,
         step: number,
-        costEnergy,
         moveSpeed: number,
-        actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, isReturn: boolean) => void
+        actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, movePath: TilePos[], isReturn: boolean) => void
     ) {
+        this._interactBuilding = interactBuilding;
+        this._interactPioneer = interactPioneer;
+        this._targetPos = targetPos;
+        this._tempShowCostEnergy = tempShowCostEnergy;
         this._step = step;
-        this._costEnergy = costEnergy;
         this._moveSpeed = moveSpeed;
         this._actionCallback = actionCallback;
         this._refreshUI();
@@ -99,7 +110,7 @@ export class DispatchUI extends ViewController {
         this._returnSwitchButton.getChildByPath("Return").active = this._isReturn;
         this._returnSwitchButton.getChildByPath("OneWay").active = !this._isReturn;
 
-        this._energyLabel.string = (this._costEnergy * (this._isReturn ? 1 : 1)).toString();
+        this._energyLabel.string = (this._tempShowCostEnergy * (this._isReturn ? 1 : 1)).toString();
         this._energyLabel.node.parent.getComponent(Layout).updateLayout();
     }
 
@@ -108,7 +119,7 @@ export class DispatchUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
         if (this._actionCallback != null) {
-            this._actionCallback(false, null, false);
+            this._actionCallback(false, null, [], false);
         }
     }
     private onTapList() {
@@ -125,18 +136,35 @@ export class DispatchUI extends ViewController {
         if (player == undefined) {
             return;
         }
+        if (player.actionType != MapPioneerActionType.inCity && player.actionType != MapPioneerActionType.staying) {
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("203002"));
+            return;
+        }
         if (player.hp <= 0) {
             // NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106009"));
             NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient troops");
             return;
         }
-        // if (player.energy < this._costEnergy) {
-        //     GameMgr.showBuyEnergyTip(player.id);
-        //     return;
-        // }
+        let beginPos: Vec2 = player.stayPos;
+        let sparePositions: Vec2[] = [];
+        let targetStayPostions: Vec2[] = [];
+        if (this._interactBuilding != null) {
+            sparePositions = this._interactBuilding.stayMapPositions;
+            targetStayPostions = this._interactBuilding.stayMapPositions;
+        } else if (this._interactPioneer != null) {
+            if (this._interactPioneer.type == MapPioneerType.player || this._interactPioneer.type == MapPioneerType.npc) {
+                targetStayPostions = [this._interactPioneer.stayPos];
+            }
+        }
+        const movePath: TilePos[] = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
+        const trueCostEnergy: number = GameMgr.getMapActionCostEnergy(movePath.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
+        if (player.energy < trueCostEnergy) {
+            GameMgr.showBuyEnergyTip(player.uniqueId);
+            return;
+        }
         UIPanelManger.inst.popPanel(this.node);
         if (this._actionCallback != null) {
-            this._actionCallback(true, player.uniqueId, this._isReturn);
+            this._actionCallback(true, player.uniqueId, movePath, this._isReturn);
         }
     }
 

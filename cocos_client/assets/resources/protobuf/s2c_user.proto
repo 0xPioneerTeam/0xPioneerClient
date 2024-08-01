@@ -131,6 +131,10 @@ message playerinzoneinfo {
     required share.pos2d pos = 5; // position
     optional share.player_mov_info goto = 6; // current moving info
 }
+// leave zone
+message player_leavezone {
+    repeated uint32 playerids = 1; // leave zone player ids
+}
 
 // ------ player ------
 // player: talk

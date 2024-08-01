@@ -37,6 +37,7 @@ import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Con
 import { ArtifactInfoUI } from "../UI/ArtifactInfoUI";
 import { NewEventUI } from "../UI/Event/NewEventUI";
 import { NewEventBattleUI } from "../UI/Event/NewEventBattleUI";
+import { v2 } from "cc";
 
 export class DataMgr {
     public static r: RunData;
@@ -72,6 +73,8 @@ export class DataMgr {
                 NetGlobalData.shadows = p.data.info.shadows;
                 // load save data
                 await DataMgr.s.load(this.r.wallet.addr);
+
+                GameMgr.setSlotIdToTempleConfigData(NetGlobalData.mapBuildings.slotId, NetGlobalData.mapBuildings.templateConfigId);
 
                 NotificationMgr.triggerEvent(NotificationName.USER_LOGIN_SUCCEED);
             }
@@ -397,6 +400,7 @@ export class DataMgr {
             }
             slotIds.push(info.slotId);
             DataMgr.s.mapBuilding.setDecorateInfo(info.slotId, info.templateConfigId);
+            GameMgr.setSlotIdToTempleConfigData(info.slotId, info.templateConfigId);
         }
         if (buildingChanged) {
             NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_NEED_REFRESH);
@@ -406,6 +410,28 @@ export class DataMgr {
         }
         GameMainHelper.instance.updateGameViewport();
     };
+    public static player_enterzone = (e: any) => {
+        const p: s2c_user.Iplayer_enterzone = e.data;
+        for (const info of p.infos) {
+            const fakePioneer = DataMgr.s.pioneer.createFakeData(info.pioneerId, v2(info.pos.x, info.pos.y));
+            DataMgr.s.pioneer.addObjData(fakePioneer);
+        }
+        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
+    };
+
+    public static player_leavezone = (e: any) => {
+        const p: s2c_user.Iplayer_leavezone = e.data;
+
+        let needRefresh: boolean = false;
+        for (const id of p.playerids) {
+            DataMgr.s.pioneer.removeDataByPlayerId(id);
+            needRefresh = true;
+        }
+        if (needRefresh) {
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
+        }
+    };
+
     public static pioneer_change = (e: any) => {
         const p: s2c_user.Ipioneer_change = e.data;
         const localDatas = DataMgr.s.pioneer.getAll();
@@ -573,7 +599,7 @@ export class DataMgr {
         if (p.res !== 1) {
             return;
         }
-        const buildingConfig = MapBuildingConfig.getById(p.buildingId);
+        const buildingConfig = GameMgr.getMapBuildingConfig(p.buildingId);
         if (buildingConfig == undefined) {
             return;
         }

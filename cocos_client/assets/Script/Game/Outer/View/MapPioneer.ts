@@ -40,7 +40,7 @@ export class MapPioneer extends Component {
 
     public refreshUI(model: MapPioneerObject) {
         this._model = model;
-        this.nameLabel.string = LanMgr.getLanById(this._model.name);
+        this.nameLabel.string = this._model.animType == "fake" ? this._model.name : LanMgr.getLanById(this._model.name);
         this._actionTimeStamp = this._model.actionEndTimeStamp;
         this._actionTotalTime = this._actionTimeStamp - model.actionBeginTimeStamp;
 
@@ -56,7 +56,11 @@ export class MapPioneer extends Component {
         let roleView = null;
         for (const name of this._roleNames) {
             const templeView = this._contentView.getChildByPath("role/" + name);
-            templeView.active = name == model.animType;
+            if (model.animType == "fake") {
+                templeView.active = name == "self";
+            } else {
+                templeView.active = name == model.animType;
+            }
             if (templeView.active) {
                 roleView = templeView;
             }

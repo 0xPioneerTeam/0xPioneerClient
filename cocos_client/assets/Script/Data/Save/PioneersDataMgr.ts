@@ -1,16 +1,11 @@
 import { Vec2, v2 } from "cc";
 import { TilePos } from "../../Game/TiledMap/TileTool";
-import PioneerDefine, {
-    MapNpcPioneerObject,
-    MapPioneerActionType,
-    MapPioneerObject,
-    MapPioneerType,
-    MapPlayerPioneerObject,
-} from "../../Const/PioneerDefine";
+import PioneerDefine, { MapNpcPioneerObject, MapPioneerActionType, MapPioneerObject, MapPioneerType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 import { NotificationName } from "../../Const/Notification";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { share } from "../../Net/msg/WebsocketMsg";
 import NetGlobalData from "./Data/NetGlobalData";
+import { MapMemberFactionType } from "../../Const/ConstDefine";
 
 export class PioneersDataMgr {
     private _pioneers: MapPioneerObject[] = [];
@@ -66,10 +61,52 @@ export class PioneersDataMgr {
         return this._pioneers.find((p) => p.uniqueId === this._currentActionUniqueId && p.type === MapPioneerType.player) as MapPlayerPioneerObject;
     }
     //-------------- change
+    public createFakeData(uniqueId: string, pos: Vec2) {
+        const pioneerId: string = uniqueId.split("|")[1];
+        let obj: MapPlayerPioneerObject = {
+            uniqueId: uniqueId,
+            id: pioneerId,
+            show: true,
+            level: 1,
+            faction: MapMemberFactionType.friend,
+            type: MapPioneerType.player,
+            animType: "fake",
+            name: uniqueId,
+            hp: 0,
+            hpMax: 0,
+            attack: 0,
+            defend: 0,
+            speed: 0,
+            energy: 0,
+            energyMax: 0,
+            stayPos: pos,
+            movePaths: [],
+            actionType: MapPioneerActionType.staying,
+            actionBeginTimeStamp: 0,
+            actionEndTimeStamp: 0,
+            actionEndReturn: false,
+            logics: [],
+            winProgress: 0,
+            winExp: 0,
+            drop: [],
+            rebirthStartTime: 0,
+            rebirthEndTime: 0,
+            killerId: "",
+            NFTId: "",
+            rebornTime: 0,
+        };
+        return obj;
+    }
     public addData(data: share.Ipioneer_data) {
         const newObj = PioneerDefine.convertNetDataToObject(data);
         this._pioneers.push(newObj);
         return newObj;
+    }
+    public addObjData(data: MapPioneerObject) {
+        this._pioneers.push(data);
+    }
+    public removeDataByPlayerId(playerId: number) {
+        this._pioneers = this._pioneers.filter((obj) => obj.uniqueId.split("|")[0] != playerId.toString());
     }
     public replaceData(index: number, data: share.Ipioneer_data) {
         const newObj = PioneerDefine.convertNetDataToObject(data);
@@ -147,7 +184,7 @@ export class PioneersDataMgr {
             }
             if (findPioneer.movePaths.length == 0) {
                 // move over trigger
-                this.changeActionType(uniqueId, MapPioneerActionType.idle);
+                this.changeActionType(uniqueId, MapPioneerActionType.staying);
                 NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_MOVE_MEETTED, { uniqueId: uniqueId, interactDirectly: false });
             }
             if (findPioneer.type == MapPioneerType.player) {
@@ -173,6 +210,5 @@ export class PioneersDataMgr {
         for (const key in NetGlobalData.mapBuildings.pioneers) {
             this._pioneers.push(PioneerDefine.convertNetDataToObject(NetGlobalData.mapBuildings.pioneers[key]));
         }
-
     }
 }

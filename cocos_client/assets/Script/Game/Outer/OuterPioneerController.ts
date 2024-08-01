@@ -757,7 +757,7 @@ export class OuterPioneerController extends ViewController {
         }
         if (pioneer.energy <= 0) {
             // wait change
-            GameMgr.showBuyEnergyTip(pioneer.id);
+            GameMgr.showBuyEnergyTip(pioneer.uniqueId);
         }
     }
 }

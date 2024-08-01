@@ -58,7 +58,7 @@ export default class PioneerMgr {
         const isAttackBuilding: boolean = false;
         let canFight: boolean = true;
 
-        if (attacker.actionType != MapPioneerActionType.moving && attacker.actionType != MapPioneerActionType.idle) {
+        if (attacker.actionType != MapPioneerActionType.moving && attacker.actionType != MapPioneerActionType.staying) {
             canFight = false;
         } else {
             if (!isAttackBuilding) {

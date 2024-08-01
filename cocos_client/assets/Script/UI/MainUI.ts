@@ -20,6 +20,7 @@ import { DialogueUI } from "./Outer/DialogueUI";
 import ItemData from "../Const/Item";
 import { TreasureGettedUI } from "./TreasureGettedUI";
 import { LanMgr } from "../Utils/Global";
+import { MapPioneerActionType } from "../Const/PioneerDefine";
 
 const { ccclass, property } = _decorator;
 
@@ -53,6 +54,9 @@ export class MainUI extends ViewController {
         NotificationMgr.addListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onInnerOuterChanged, this);
 
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
+
+
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionTypeChange, this);
 
         // rookie
         NotificationMgr.addListener(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, this._onGameMainResourcePlayAnim, this);
@@ -96,6 +100,9 @@ export class MainUI extends ViewController {
         NotificationMgr.removeListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onInnerOuterChanged, this);
 
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
+
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionTypeChange, this);
+
 
         NotificationMgr.removeListener(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, this._onGameMainResourcePlayAnim, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
@@ -189,7 +196,14 @@ export class MainUI extends ViewController {
             taskButton.active = true;
         }
 
-        pioneerListView.active = GameMainHelper.instance.isGameShowOuter && (DataMgr.s.pioneer.getAllSelfPlayers().length > 1 || GAME_ENV_IS_DEBUG);
+        let hasOuterPioneer = false;
+        for (const pioneer of DataMgr.s.pioneer.getAllSelfPlayers()) {
+            if (pioneer.actionType != MapPioneerActionType.inCity) {
+                hasOuterPioneer = true;
+                break;
+            }
+        }
+        pioneerListView.active = GameMainHelper.instance.isGameShowOuter && hasOuterPioneer;
 
         if (!GameMainHelper.instance.isGameShowOuter && UIPanelManger.inst.panelIsShow(UIName.TaskListUI)) {
             UIPanelManger.inst.popPanelByName(UIName.TaskListUI);
@@ -288,6 +302,10 @@ export class MainUI extends ViewController {
             localStorage.setItem("local_newSettle", beginLevel + "|" + endLevel);
             this._refreshSettlememntTip();
         }
+    }
+
+    private _onPioneerActionTypeChange() {
+        this._refreshElementShow();
     }
 
     private _onGameMainResourcePlayAnim(data: RookieResourceAnimStruct) {

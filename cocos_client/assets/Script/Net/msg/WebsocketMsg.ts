@@ -527,6 +527,15 @@ export namespace s2c_user {
         res: number;
         info: share.Imap_info_data[];
     }
+
+    export interface Iplayer_enterzone {
+        infos: share.Iplayerinzoneinfo[];
+    }
+    export interface Iplayer_leavezone {
+        playerids: number[];
+    }
+
+
     export interface Ipioneer_change {
         pioneers: share.Ipioneer_data[];
     }
@@ -998,5 +1007,14 @@ export namespace share {
         gainEnergy: number;
         consumeEnergy: number;
         exploredEvents: number;
+    }
+
+
+    export interface Iplayerinzoneinfo {
+        instid: number;
+        playerid: number;
+        pioneerId: string;
+        ver: number;
+        pos: pos2d;
     }
 }

@@ -32,7 +32,7 @@ export class PlayerItemUI extends Component {
         busy.active = false;
         idle.active = false;
         defend.active = false;
-        if (model.actionType == MapPioneerActionType.inCity || model.actionType == MapPioneerActionType.staying || model.actionType == MapPioneerActionType.idle) {
+        if (model.actionType == MapPioneerActionType.inCity || model.actionType == MapPioneerActionType.staying) {
             idle.active = true;
         } else if (model.actionType == MapPioneerActionType.defend) {
             defend.active = true;

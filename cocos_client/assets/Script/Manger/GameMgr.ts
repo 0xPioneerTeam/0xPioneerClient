@@ -17,7 +17,7 @@ import { RookieStep } from "../Const/RookieDefine";
 import { ClvlMgr, LanMgr } from "../Utils/Global";
 import { CLvlEffectType } from "../Const/Lvlup";
 import ConfigConfig from "../Config/ConfigConfig";
-import { BuyEnergyCoefficientParam, BuyEnergyLimitParam, BuyEnergyPriceParam, BuyEnergyThresParam, ConfigType } from "../Const/Config";
+import { BuyEnergyCoefficientParam, BuyEnergyLimitParam, BuyEnergyPriceParam, BuyEnergyThresParam, ConfigType, OneStepCostEnergyParam } from "../Const/Config";
 import ItemConfig from "../Config/ItemConfig";
 import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import { HUDName, UIName } from "../Const/ConstUIDefine";
@@ -25,6 +25,8 @@ import { AlterView } from "../UI/View/AlterView";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import { UIHUDController } from "../UI/UIHUDController";
 import { TilePos } from "../Game/TiledMap/TileTool";
+import { MapTemplateConfigs } from "../Const/MapDefine";
+import BigMapConfig from "../Config/BigMapConfig";
 
 export default class GameMgr {
 
@@ -96,7 +98,7 @@ export default class GameMgr {
     }
 
     public getResourceBuildingRewardAndQuotaMax(building: MapBuildingObject): { reward: ItemData; quotaMax: number } {
-        const config = MapBuildingConfig.getById(building.id);
+        const config = this.getMapBuildingConfig(building.uniqueId);
         if (config == null) {
             return null;
         }
@@ -181,6 +183,17 @@ export default class GameMgr {
                 interactPioneerId: interactPioneerId,
             });
         }
+    }
+
+    //----------------------------------------------------------------- cost energy
+    public getMapActionCostEnergy(moveStep: number, interactBuildingId: string = null) {
+        let buildingCost: number = 0;
+        if (interactBuildingId != null) {
+            const buildingConfig = this.getMapBuildingConfig(interactBuildingId);
+            buildingCost = buildingConfig.cost;
+        }
+        const perStepCostEnergy = (ConfigConfig.getConfig(ConfigType.OneStepCostEnergy) as OneStepCostEnergyParam).cost;
+        return perStepCostEnergy * moveStep + buildingCost;
     }
 
     //-----------------------------------------------------------------
@@ -370,4 +383,27 @@ export default class GameMgr {
         return originalValue;
     }
 
+    private _slotIdToTempleConfigMap: Map<string, string> = new Map();
+    public setSlotIdToTempleConfigData(slotId: string, templeConfigId: string) {
+        if (slotId == null || templeConfigId == null) {
+            return;
+        }
+        this._slotIdToTempleConfigMap.set(slotId, templeConfigId);
+    }
+    public getMapBuildingConfig(uniqueId: string) {
+        const splits = uniqueId.split("|");
+        const slotId = splits[0];
+        const buildingId = splits[1];
+        if (!this._slotIdToTempleConfigMap.has(slotId)) {
+            return;
+        }
+        const templeConfigId = this._slotIdToTempleConfigMap.get(slotId);
+        if (!BigMapConfig.getBuildingConfigMap().has(templeConfigId)) {
+            return;
+        }
+        const allBuildingConfigs = BigMapConfig.getBuildingConfigMap().get(templeConfigId);
+        return allBuildingConfigs.find((item)=> {
+            return item.id == buildingId;
+        });
+    }
 }
