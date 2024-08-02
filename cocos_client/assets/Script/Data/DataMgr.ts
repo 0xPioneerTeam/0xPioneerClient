@@ -2,9 +2,7 @@ import NotificationMgr from "../Basic/NotificationMgr";
 import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
 import ItemData, { ItemType } from "../Const/Item";
 import { NotificationName } from "../Const/Notification";
-import {
-    MapPioneerActionType,
-} from "../Const/PioneerDefine";
+import { MapPioneerActionType } from "../Const/PioneerDefine";
 import { c2s_user, s2c_user, share } from "../Net/msg/WebsocketMsg";
 import CLog from "../Utils/CLog";
 import { RunData } from "./RunData";
@@ -392,6 +390,13 @@ export class DataMgr {
             DataMgr.s.mapBuilding.setDecorateInfo(info.slotId, info.templateConfigId);
             GameMgr.setSlotIdToTempleConfigData(info.slotId, info.templateConfigId);
         }
+        for (const key in p.user) {
+            if (Object.prototype.hasOwnProperty.call(p.user, key)) {
+                const element = p.user[key];
+                DataMgr.s.pioneer.addData(element);
+            }
+            pioneerChanged = true;
+        }
         if (buildingChanged) {
             NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_NEED_REFRESH);
         }
@@ -408,7 +413,6 @@ export class DataMgr {
         }
         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
     };
-
     public static player_leavezone = (e: any) => {
         const p: s2c_user.Iplayer_leavezone = e.data;
 
@@ -421,11 +425,25 @@ export class DataMgr {
             NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
         }
     };
+    public static pioneer_leavezone = (e: any) => {
+        const p: s2c_user.Ipioneer_leavezone = e.data;
+
+        let needRefresh: boolean = false;
+        for (const id of p.pioneerIds) {
+            DataMgr.s.pioneer.removeDataByUniqueId(id);
+            needRefresh = true;
+        }
+        if (needRefresh) {
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
+        }
+    };
 
     public static pioneer_change = (e: any) => {
         const p: s2c_user.Ipioneer_change = e.data;
+        let newPioneerDatas: share.Ipioneer_data[] = [];
         const localDatas = DataMgr.s.pioneer.getAll();
         for (const temple of p.pioneers) {
+            let exsit: boolean = false;
             for (let i = 0; i < localDatas.length; i++) {
                 if (temple.uniqueId == localDatas[i].uniqueId) {
                     const oldData = localDatas[i];
@@ -456,6 +474,7 @@ export class DataMgr {
                     }
                     // staypos
                     if (oldData.stayPos.x != newData.stayPos.x || oldData.stayPos.y != newData.stayPos.y) {
+                        console.log("exce poschange:" + newData.uniqueId);
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_STAY_POSITION_CHANGE, { uniqueId: newData.uniqueId });
                     }
                     // hp
@@ -473,10 +492,24 @@ export class DataMgr {
                     if (oldData.energy != newData.energy || oldData.energyMax != oldData.energyMax) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ENERGY_CHANGED, { uniqueId: newData.uniqueId });
                     }
+                    exsit = true;
+                    break;
+                }
+                if (exsit) {
                     break;
                 }
             }
+            if (!exsit) {
+                newPioneerDatas.push(temple);
+            }
         }
+        if (newPioneerDatas.length > 0) {
+            for (const data of newPioneerDatas) {
+                DataMgr.s.pioneer.addData(data);
+            }
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
+        }
+       
     };
     public static mappioneer_reborn_change = (e: any) => {
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106009"));

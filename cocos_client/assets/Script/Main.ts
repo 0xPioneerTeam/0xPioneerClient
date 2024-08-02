@@ -192,6 +192,7 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("get_map_info_res", DataMgr.get_map_info_res);
         NetworkMgr.websocket.on("player_enterzone", DataMgr.player_enterzone);
         NetworkMgr.websocket.on("player_leavezone", DataMgr.player_leavezone);
+        NetworkMgr.websocket.on("pioneer_leavezone", DataMgr.pioneer_leavezone);
 
         NetworkMgr.websocket.on("pioneer_change", DataMgr.pioneer_change);
         NetworkMgr.websocket.on("mapbuilding_change", DataMgr.mapbuilding_change);

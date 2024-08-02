@@ -108,6 +108,14 @@ export class PioneersDataMgr {
     public removeDataByPlayerId(playerId: number) {
         this._pioneers = this._pioneers.filter((obj) => obj.uniqueId.split("|")[0] != playerId.toString());
     }
+    public removeDataByUniqueId(uniqueId: string) {
+        for (let i = 0; i < this._pioneers.length; i++) {
+            if (this._pioneers[i].uniqueId == uniqueId) {
+                this._pioneers.splice(i, 1);
+                break;
+            }
+        }
+    }
     public replaceData(index: number, data: share.Ipioneer_data) {
         const newObj = PioneerDefine.convertNetDataToObject(data);
         if (this._pioneers[index].actionType == MapPioneerActionType.moving) {

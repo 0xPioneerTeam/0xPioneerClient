@@ -178,6 +178,7 @@ export enum protobuf_s2c {
     player_lvlup_change,
     player_enterzone,
     player_leavezone,
+    pioneer_leavezone,
 
     // ------ pioneer ------
     // pioneer: getinfo

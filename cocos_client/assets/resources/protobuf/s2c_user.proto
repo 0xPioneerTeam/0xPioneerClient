@@ -122,6 +122,7 @@ message get_new_battle_report_res {
 message get_map_info_res {
     required int32 res = 1;
     repeated share.map_info_data info = 2;
+    map<string, share.pioneer_data> user = 3;
 }
 // enter zone
 message player_enterzone {
@@ -138,6 +139,9 @@ message playerinzoneinfo {
 // leave zone
 message player_leavezone {
     repeated uint32 playerids = 1; // leave zone player ids
+}
+message pioneer_leavezone {
+    repeated string pioneerIds = 1;
 }
 
 // ------ player ------

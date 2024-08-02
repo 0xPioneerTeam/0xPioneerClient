@@ -6,13 +6,7 @@ import EventConfig from "../../Config/EventConfig";
 import { GameExtraEffectType, PioneerGameTest } from "../../Const/ConstDefine";
 import { UIName } from "../../Const/ConstUIDefine";
 import { NotificationName } from "../../Const/Notification";
-import {
-    MapPioneerActionType,
-    MapPioneerLogicObject,
-    MapPioneerMoveDirection,
-    MapPioneerObject,
-    MapPioneerType,
-} from "../../Const/PioneerDefine";
+import { MapPioneerActionType, MapPioneerLogicObject, MapPioneerMoveDirection, MapPioneerObject, MapPioneerType } from "../../Const/PioneerDefine";
 import { RookieStep } from "../../Const/RookieDefine";
 import { DataMgr } from "../../Data/DataMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
@@ -158,9 +152,12 @@ export class OuterPioneerController extends ViewController {
             const allPioneers = DataMgr.s.pioneer.getAll();
             for (var i = 0; i < allPioneers.length; i++) {
                 let pioneer = allPioneers[i];
-                if (this._movingPioneerIds.indexOf(pioneer.uniqueId) == -1 || !this._pioneerMap.has(pioneer.uniqueId)) {
+                if (pioneer.type != MapPioneerType.player) {
                     continue;
                 }
+                // if (this._movingPioneerIds.indexOf(pioneer.uniqueId) == -1 || !this._pioneerMap.has(pioneer.uniqueId)) {
+                //     continue;
+                // }
                 let usedSpeed = pioneer.speed;
                 // for (const logic of pioneer.logics) {
                 //     if (logic.moveSpeed > 0) {
@@ -168,11 +165,9 @@ export class OuterPioneerController extends ViewController {
                 //     }
                 // }
                 // artifact move speed
-                if (pioneer.type == MapPioneerType.player) {
-                    usedSpeed = GameMgr.getAfterEffectValue(GameExtraEffectType.MOVE_SPEED, usedSpeed);
-                    if (PioneerGameTest) {
-                        usedSpeed = 600;
-                    }
+                usedSpeed = GameMgr.getAfterEffectValue(GameExtraEffectType.MOVE_SPEED, usedSpeed);
+                if (PioneerGameTest) {
+                    usedSpeed = 600;
                 }
                 let pioneermap = this._pioneerMap.get(pioneer.uniqueId);
                 this._updateMoveStep(usedSpeed, gap / 1000, pioneer, pioneermap);
@@ -475,7 +470,6 @@ export class OuterPioneerController extends ViewController {
         //         actionPioneer.actionType = MapPioneerActionType.idle;
         //         view.refreshUI(actionPioneer);
         //         UIPanelManger.inst.popPanelByName(UIName.RookieGuide);
-
         //         NetworkMgr.websocketMsg.player_rookie_update({
         //             rookieStep: RookieStep.NPC_TALK_1,
         //         });
@@ -494,32 +488,27 @@ export class OuterPioneerController extends ViewController {
     //---------- pioneer
     private _onPioneerActionChanged(data: { uniqueId: string }) {
         const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
-        if (pioneer == undefined || pioneer.type != MapPioneerType.player) {
-            return;
-        }
-        if (pioneer.actionType == MapPioneerActionType.moving) {
-            this._movingPioneerIds.push(pioneer.uniqueId);
-        } else {
-            const index = this._movingPioneerIds.indexOf(pioneer.uniqueId);
-            if (index >= 0) {
-                this._movingPioneerIds.splice(index, 1);
-            }
-            if (this._footPathMap.has(pioneer.uniqueId)) {
-                for (const footView of this._footPathMap.get(pioneer.uniqueId)) {
-                    footView.destroy();
-                }
-                this._footPathMap.delete(pioneer.uniqueId);
-            }
-        }
+        // if (pioneer == undefined || pioneer.type != MapPioneerType.player) {
+        //     return;
+        // }
+        // if (pioneer.actionType == MapPioneerActionType.moving) {
+        //     this._movingPioneerIds.push(pioneer.uniqueId);
+        // } else {
+        //     const index = this._movingPioneerIds.indexOf(pioneer.uniqueId);
+        //     if (index >= 0) {
+        //         this._movingPioneerIds.splice(index, 1);
+        //     }
+        //     if (this._footPathMap.has(pioneer.uniqueId)) {
+        //         for (const footView of this._footPathMap.get(pioneer.uniqueId)) {
+        //             footView.destroy();
+        //         }
+        //         this._footPathMap.delete(pioneer.uniqueId);
+        //     }
+        // }
         this._refreshUI();
     }
     private _onPioneerStayPositionChanged(data: { uniqueId: string }) {
-        const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
-        if (!this._pioneerMap.has(pioneer.uniqueId)) {
-            return;
-        }
-        const view = this._pioneerMap.get(pioneer.uniqueId);
-        view.worldPosition = GameMainHelper.instance.tiledMapGetPosWorld(pioneer.stayPos.x, pioneer.stayPos.y);
+        this._refreshUI();
     }
     private _onPioneerHpChanged(): void {
         // const actionView = this._pioneerMap.get(data.id);
@@ -580,7 +569,7 @@ export class OuterPioneerController extends ViewController {
                 this._actionPioneerFootStepViews = null;
             }
             if (data.showMovePath && pioneer.movePaths.length > 0) {
-                this._actionPioneerFootStepViews = this._addFootSteps(pioneer.movePaths, true);
+                // this._actionPioneerFootStepViews = this._addFootSteps(pioneer.movePaths, true);
             }
         } else {
             // if (data.showMovePath && pioneer.movePaths.length > 0) {
@@ -604,7 +593,7 @@ export class OuterPioneerController extends ViewController {
         fightDatas: share.Ifight_res[];
         isWin: boolean;
         attackerData: { uniqueId: string; name: string; hp: number; hpmax: number };
-        defenderData: { uniqueId: string, id: string; name: string; hp: number; hpmax: number };
+        defenderData: { uniqueId: string; id: string; name: string; hp: number; hpmax: number };
     }) {
         const { fightDatas, isWin, attackerData, defenderData } = data;
         const attackerView = this._pioneerMap.get(attackerData.uniqueId);

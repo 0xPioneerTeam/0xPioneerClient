@@ -172,6 +172,7 @@ message pioneer_data {
     required bool actionEndReturn = 66;
     optional string actionEventId = 67;
     optional string actionBuildingId = 68;
+    repeated pos2d movePath = 69;
 
     repeated fight_res actionFightRes = 70;
     optional string actionFightId = 71;

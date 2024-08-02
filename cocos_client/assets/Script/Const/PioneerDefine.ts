@@ -197,19 +197,19 @@ export interface MapNpcPioneerData extends MapPioneerData {
 
 export interface MapPioneerObject extends MapPioneerData {
     stayPos: Vec2;
-    movePaths: TilePos[];
+    movePaths: (TilePos | Vec2)[];
     logics: MapPioneerLogicObject[];
 }
 
 export interface MapPlayerPioneerObject extends MapPlayerPioneerData {
     stayPos: Vec2;
-    movePaths: TilePos[];
+    movePaths: (TilePos | Vec2)[];
     logics: MapPioneerLogicObject[];
 }
 
 export interface MapNpcPioneerObject extends MapNpcPioneerData {
     stayPos: Vec2;
-    movePaths: TilePos[];
+    movePaths: (TilePos | Vec2)[];
     logics: MapPioneerLogicObject[];
 }
 
@@ -220,6 +220,12 @@ export default class PioneerDefine {
             return null;
         }
         const currentTime = new Date().getTime();
+        const movePath: Vec2[] = [];
+        if (temple.movePath != null) {
+            for (const path of temple.movePath) {
+                movePath.push(v2(path.x, path.y));               
+            }
+        }
         let obj = {
             uniqueId: temple.uniqueId,
             id: temple.id,
@@ -237,7 +243,7 @@ export default class PioneerDefine {
             energy: temple.energy,
             energyMax: temple.energyMax,
             stayPos: v2(temple.stayPos.x, temple.stayPos.y),
-            movePaths: [],
+            movePaths: movePath,
             actionType: temple.actionType as MapPioneerActionType,
             actionBeginTimeStamp: currentTime,
             actionEndTimeStamp: currentTime + (temple.actionEndTimeStamp - temple.actionBeginTimeStamp) * 1000,

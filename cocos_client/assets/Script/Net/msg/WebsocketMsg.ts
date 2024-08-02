@@ -532,6 +532,7 @@ export namespace s2c_user {
     export interface Iget_map_info_res {
         res: number;
         info: share.Imap_info_data[];
+        user: { [key: string]: share.Ipioneer_data };
     }
 
     export interface Iplayer_enterzone {
@@ -539,6 +540,9 @@ export namespace s2c_user {
     }
     export interface Iplayer_leavezone {
         playerids: number[];
+    }
+    export interface Ipioneer_leavezone {
+        pioneerIds: string[];
     }
 
     export interface Ipioneer_change {
@@ -866,6 +870,7 @@ export namespace share {
         actionBeginTimeStamp: number;
         actionEndTimeStamp: number;
         actionEndReturn?: boolean;
+        movePath?: pos2d[];
 
         winProgress?: number;
         winExp: number;
