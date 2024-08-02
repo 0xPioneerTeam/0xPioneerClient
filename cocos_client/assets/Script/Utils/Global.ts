@@ -1,5 +1,4 @@
 import af from "../Manger/ArtifactMgr";
-import br from "../Manger/BattleReportsMgr";
 import ev from "../Manger/EvaluationMgr";
 import im from "../Manger/ItemMgr";
 import l from "../Manger/LanMgr";
@@ -20,7 +19,6 @@ const LanMgr = new l();
 const LocalDataLoader = new locad();
 const PioneerMgr = new p();
 const UserInfoMgr = new user();
-const BattleReportsMgr = new br();
 const GameMgr = new game();
 const ClvlMgr = new clvl();
 const BackpackMgr = new back();
@@ -32,7 +30,6 @@ export {
     // game
     LocalDataLoader,
     ArtifactMgr,
-    BattleReportsMgr,
     EvaluationMgr,
     ItemMgr,
     LanMgr,

@@ -213,33 +213,6 @@ export interface MapNpcPioneerObject extends MapNpcPioneerData {
     logics: MapPioneerLogicObject[];
 }
 
-export interface FIGHT_FINISHED_DATA {
-    attacker: {
-        id: string;
-        name: string;
-        hp: number;
-        hpMax: number;
-    };
-    defender: {
-        id: string;
-        name: string;
-        hp: number;
-        hpMax: number;
-    };
-    attackerIsSelf: boolean;
-    buildingId: string;
-    position: Vec2;
-    isWin: boolean;
-    rewards: [];
-    isWormhole: boolean;
-}
-export interface MINING_FINISHED_DATA {
-    buildingId: string;
-    pioneerId: string;
-    duration: number;
-    rewards: any[];
-}
-
 export default class PioneerDefine {
     public static convertNetDataToObject(temple: share.Ipioneer_data): MapPioneerObject {
         const config = PioneerConfig.getById(temple.id);

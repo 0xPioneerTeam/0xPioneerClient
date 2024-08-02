@@ -72,6 +72,7 @@ message check_unused_tx_status {
 // ------ get data ------
 message get_battle_report { }
 message get_user_settlement_info { }
+message get_new_battle_report { }
 
 // ------ map ------
 // mapinfo: getinfo

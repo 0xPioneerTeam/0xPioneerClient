@@ -34,6 +34,7 @@ export enum protobuf_c2s {
     // ------ get data ------
     get_battle_report,
     get_user_settlement_info,
+    get_new_battle_report,
 
 
     // ------ player ------
@@ -158,7 +159,7 @@ export enum protobuf_s2c {
     // ------ get data ------
     get_battle_report_res,
     get_user_settlement_info_res,
-
+    get_new_battle_report_res,
 
     // ------ player ------
     // player: talk

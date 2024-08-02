@@ -215,6 +215,10 @@ export class WebsocketMsg {
         this.send_packet("get_user_settlement_info", d);
     }
 
+    public get_new_battle_report(d: c2s_user.Iget_new_battle_report) {
+        this.send_packet("get_new_battle_report", d);
+    }
+
     public reborn_all() {
         this.send_packet("reborn_all", {});
     }
@@ -449,6 +453,8 @@ export namespace c2s_user {
 
     export interface Iget_user_settlement_info {}
 
+    export interface Iget_new_battle_report {}
+
     export interface Isave_archives {
         archives: string;
     }
@@ -534,7 +540,6 @@ export namespace s2c_user {
     export interface Iplayer_leavezone {
         playerids: number[];
     }
-
 
     export interface Ipioneer_change {
         pioneers: share.Ipioneer_data[];
@@ -690,6 +695,11 @@ export namespace s2c_user {
     export interface Iget_user_settlement_info_res {
         res: number;
         data: { [key: string]: share.Isettlement_data };
+    }
+
+    export interface Iget_new_battle_report_res {
+        res: number;
+        data: share.Inew_battle_report_data[];
     }
 }
 
@@ -1009,12 +1019,57 @@ export namespace share {
         exploredEvents: number;
     }
 
-
     export interface Iplayerinzoneinfo {
         instid: number;
         playerid: number;
         pioneerId: string;
         ver: number;
         pos: pos2d;
+    }
+
+    export enum Inew_battle_report_type {
+        fight = 0,
+        mining,
+    }
+    export enum Inew_battle_report_fight_member_type {
+        pioneer = 0,
+        monster,
+        player,
+    }
+    export interface Inew_battle_report_fight_member_data {
+        avatar: string;
+        name: string;
+        nameUseLan: boolean;
+        hp: number;
+        hpmax: number;
+    }
+    export interface Inew_battle_report_fight_data {
+        selfIsAttacker: boolean;
+        attackerWin: boolean;
+
+        location?: pos2d;
+
+        attacker: Inew_battle_report_fight_member_data;
+        defender: Inew_battle_report_fight_member_data;
+
+        fightRes: Ifight_res[];
+
+        winItems: Iitem_data[];
+        winArtifacts: Iartifact_data[];
+    }
+    export interface Inew_battle_report_mining_data {
+        pioneerUniqueId: string;
+        location?: pos2d;
+        duration: number;
+
+        rewards: Iitem_data[];
+    }
+    export interface Inew_battle_report_data {
+        type: Inew_battle_report_type;
+        // s
+        timestamp: number;
+        unread: boolean;
+        fight?: Inew_battle_report_fight_data;
+        mining?: Inew_battle_report_mining_data;
     }
 }

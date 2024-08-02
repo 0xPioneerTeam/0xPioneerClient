@@ -7,7 +7,6 @@ import { GameExtraEffectType, PioneerGameTest } from "../../Const/ConstDefine";
 import { UIName } from "../../Const/ConstUIDefine";
 import { NotificationName } from "../../Const/Notification";
 import {
-    FIGHT_FINISHED_DATA,
     MapPioneerActionType,
     MapPioneerLogicObject,
     MapPioneerMoveDirection,
@@ -707,28 +706,6 @@ export class OuterPioneerController extends ViewController {
                 defendPioneer = DataMgr.s.pioneer.getById(fightData.defenderUniqueId);
             } else if (fightData.defenderId != null) {
                 defendPioneer = PioneerConfig.getById(fightData.defenderId);
-            }
-            if (attackPioneer != null && defendPioneer != null) {
-                NotificationMgr.triggerEvent(NotificationName.FIGHT_FINISHED, {
-                    attacker: {
-                        name: attackPioneer.name,
-                        id: attackPioneer.id,
-                        hp: fightData.attackerHp,
-                        hpMax: fightData.attackerHpmax,
-                    },
-                    defender: {
-                        name: defendPioneer.name,
-                        id: defendPioneer.id,
-                        hp: fightData.defenderHp,
-                        hpMax: fightData.defenderHpmax,
-                    },
-                    attackerIsSelf: true,
-                    buildingId: null,
-                    position: attackPioneer.stayPos,
-                    isWin: fightData.isWin,
-                    rewards: [],
-                    isWormhole: false,
-                } as FIGHT_FINISHED_DATA);
             }
         });
         this._fightDataMap.delete(data.uniqueId);

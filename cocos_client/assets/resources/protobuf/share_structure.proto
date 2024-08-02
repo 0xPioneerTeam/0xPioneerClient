@@ -467,6 +467,39 @@ message battle_report_data {
     required uint32 createdtm = 3;
 }
 
+message new_battle_report_data {
+    required uint32 type = 1;
+    required uint32 timestamp = 2;
+    required bool unread = 3;
+    optional new_battle_report_fight_data fight = 4;
+    optional new_battle_report_mining_data mining = 5;
+}
+
+message new_battle_report_fight_data {
+    required bool selfIsAttacker = 1;
+    required bool attackerWin = 2;
+    optional pos2d location = 3;
+    required new_battle_report_fight_member_data attacker = 4;
+    required new_battle_report_fight_member_data defender = 5;
+    repeated fight_res fightRes = 6;
+    repeated item_data winItems = 7;
+    repeated artifact_info_data winArtifacts = 8;
+}
+message new_battle_report_mining_data {
+    required string pioneerUniqueId = 1;
+    optional pos2d location = 2;
+    required uint32 duration = 3;
+    repeated item_data rewards = 4;
+}
+
+message new_battle_report_fight_member_data {
+    required string avatar = 1;
+    required string name = 2;
+    required bool nameUseLan = 3;
+    required float hp = 4;
+    required float hpmax = 5;
+}
+
 message task_data {
     required string taskId = 1;
     required uint32 stepIndex = 2;

@@ -1,15 +1,9 @@
 import NotificationMgr from "../Basic/NotificationMgr";
 import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
-import ItemData, { ItemConfigType, ItemType } from "../Const/Item";
+import ItemData, { ItemType } from "../Const/Item";
 import { NotificationName } from "../Const/Notification";
 import {
-    FIGHT_FINISHED_DATA,
-    MINING_FINISHED_DATA,
-    MapNpcPioneerObject,
     MapPioneerActionType,
-    MapPioneerEventAttributesChangeType,
-    MapPioneerType,
-    MapPlayerPioneerObject,
 } from "../Const/PioneerDefine";
 import { c2s_user, s2c_user, share } from "../Net/msg/WebsocketMsg";
 import CLog from "../Utils/CLog";
@@ -30,9 +24,8 @@ import { TilePos } from "../Game/TiledMap/TileTool";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
 import TalkConfig from "../Config/TalkConfig";
 import { DialogueUI } from "../UI/Outer/DialogueUI";
-import MapBuildingConfig from "../Config/MapBuildingConfig";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
-import { MapInteractType, ResourceCorrespondingItem } from "../Const/ConstDefine";
+import { ResourceCorrespondingItem } from "../Const/ConstDefine";
 import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Const/RookieDefine";
 import { ArtifactInfoUI } from "../UI/ArtifactInfoUI";
 import { NewEventUI } from "../UI/Event/NewEventUI";
@@ -49,9 +42,6 @@ export class DataMgr {
         return true;
     }
 
-    public static async save() {
-        await this.s.save();
-    }
     ///////////////// websocket
     public static onmsg = (e: any) => {
         CLog.debug("DataMgr/onmsg: e => " + JSON.stringify(e));
@@ -454,15 +444,6 @@ export class DataMgr {
                         if (oldData.actionType == MapPioneerActionType.mining && oldData.actionBuildingId != null) {
                             // mining over
                             PioneerMgr.doActionOverRetrun(newData.uniqueId);
-                            const resourceData = GameMgr.getResourceBuildingRewardAndQuotaMax(DataMgr.s.mapBuilding.getBuildingById(oldData.actionBuildingId));
-                            if (resourceData != null) {
-                                NotificationMgr.triggerEvent(NotificationName.MINING_FINISHED, {
-                                    buildingId: oldData.actionBuildingId,
-                                    pioneerId: oldData.uniqueId,
-                                    duration: 5000,
-                                    rewards: [{ id: resourceData.reward.itemConfigId, num: resourceData.reward.count }],
-                                } as MINING_FINISHED_DATA);
-                            }
                         }
                         if (oldData.actionType == MapPioneerActionType.eventing && oldData.actionBuildingId != null) {
                             // eventing over
@@ -698,28 +679,6 @@ export class DataMgr {
         if (isSelfAttack) {
             GameMusicPlayMgr.playWormholeAttackEffect();
         }
-
-        NotificationMgr.triggerEvent(NotificationName.FIGHT_FINISHED, {
-            attacker: {
-                name: selfName,
-                id: selfId,
-                avatarIcon: "icon_player_avatar",
-                hp: isSelfWin ? 100 : 0,
-                hpMax: 100,
-            },
-            defender: {
-                name: otherName,
-                id: otherId,
-                hp: isSelfWin ? 0 : 50,
-                hpMax: 50,
-            },
-            attackerIsSelf: true,
-            buildingId: null,
-            position: null,
-            isWin: isSelfWin,
-            rewards: [],
-            isWormhole: true,
-        } as FIGHT_FINISHED_DATA);
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106007"));
     };
 

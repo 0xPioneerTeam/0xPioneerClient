@@ -84,17 +84,12 @@ export enum NotificationName {
     ARTIFACT_CHANGE,
     ARTIFACT_EQUIP_DID_CHANGE,
 
-    //------------------------------------ battle report
-    FIGHT_FINISHED,
-    MINING_FINISHED,
-    EVENT_STEPEND,
-    BATTLE_REPORT_LIST_CHANGED,
-
     //---------------------- task
     TASK_CANNOTGET,
     TASK_DID_CHANGE,
     TASK_NEW_GETTED,
     TASK_LIST,
+    
     //------------------------------------ map building
     MAP_BUILDING_NEED_REFRESH,
     MAP_BUILDING_SHOW_CHANGE,

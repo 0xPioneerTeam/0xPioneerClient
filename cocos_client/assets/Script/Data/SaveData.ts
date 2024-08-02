@@ -2,7 +2,6 @@ import { ArtifactDataMgr } from "./Save/ArtifactDataMgr";
 import { EraseShadowDataMgr } from "./Save/EraseShadowDataMgr";
 import { MapBuildingDataMgr } from "./Save/MapBuildingDataMgr";
 import { PioneersDataMgr } from "./Save/PioneersDataMgr";
-import { BattleReportDataMgr } from "./Save/BattleReportDataMgr";
 import { ItemDataMgr } from "./Save/ItemDataMgr";
 import { SettlementDataMgr } from "./Save/SettlementDataMgr";
 import UserInfoDataMgr from "./Save/UserInfoDataMgr";
@@ -16,7 +15,6 @@ export class SaveData {
     private _eraseShadowDataMgr: EraseShadowDataMgr;
     private _mapBuildingDataMgr: MapBuildingDataMgr;
     private _artifactDataMgr: ArtifactDataMgr;
-    private _battleReportDataMgr: BattleReportDataMgr;
     private _itemDataMgr: ItemDataMgr;
     private _settlementDataMgr: SettlementDataMgr;
     private _userInfoDataMgr: UserInfoDataMgr;
@@ -46,10 +44,6 @@ export class SaveData {
         return this._itemDataMgr;
     }
 
-    public get battleReport() {
-        return this._battleReportDataMgr;
-    }
-
     public get settlement() {
         return this._settlementDataMgr;
     }
@@ -72,7 +66,6 @@ export class SaveData {
         this._eraseShadowDataMgr = new EraseShadowDataMgr();
         this._mapBuildingDataMgr = new MapBuildingDataMgr();
         this._artifactDataMgr = new ArtifactDataMgr();
-        this._battleReportDataMgr = new BattleReportDataMgr();
         this._itemDataMgr = new ItemDataMgr();
         this._settlementDataMgr = new SettlementDataMgr();
         this._userInfoDataMgr = new UserInfoDataMgr();
@@ -90,10 +83,5 @@ export class SaveData {
         this._mapBuildingDataMgr.loadObj();
         this._nftPioneerDataMgr.loadObj();
         this._eraseShadowDataMgr.loadObj();
-
-        await this._battleReportDataMgr.loadObj(walletAddr);
-    }
-    public async save() {
-        await this._battleReportDataMgr.saveObj();
     }
 }

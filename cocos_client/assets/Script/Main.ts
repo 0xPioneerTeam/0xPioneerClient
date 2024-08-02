@@ -1,6 +1,6 @@
 import { _decorator, Asset, AssetManager, Component, director, DynamicAtlasManager, game, macro, Node } from "cc";
 import ViewController from "./BasicView/ViewController";
-import { AudioMgr, BattleReportsMgr, LanMgr, LocalDataLoader, ResourcesMgr } from "./Utils/Global";
+import { AudioMgr, LanMgr, LocalDataLoader, ResourcesMgr } from "./Utils/Global";
 import ConfigMgr from "./Manger/ConfigMgr";
 import NotificationMgr from "./Basic/NotificationMgr";
 import { NotificationName } from "./Const/Notification";
@@ -88,8 +88,6 @@ export class Main extends ViewController {
     }
 
     private async _onUserLoginSucceed() {
-        BattleReportsMgr.init();
-
         if (GAME_ENV_IS_DEBUG) {
             UIPanelManger.inst.popPanelByName(UIName.LoginUI);
             let loadingView: LoadingUI = null;
@@ -237,6 +235,7 @@ export class Main extends ViewController {
 
         //settlement
         NetworkMgr.websocket.on("get_user_settlement_info_res", DataMgr.get_user_settlement_info_res);
+
 
         NotificationMgr.addListener(NotificationName.FAKE_ROOKIESTEP_CHANGE, this._onFakeRookieStepChange, this);
     }
