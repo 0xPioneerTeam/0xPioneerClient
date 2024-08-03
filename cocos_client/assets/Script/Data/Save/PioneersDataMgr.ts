@@ -98,11 +98,18 @@ export class PioneersDataMgr {
         return obj;
     }
     public addData(data: share.Ipioneer_data) {
+        const isExit = this._pioneers.findIndex((item) => item.uniqueId == data.uniqueId) != -1;
+        if (isExit) {
+            return;
+        } 
         const newObj = PioneerDefine.convertNetDataToObject(data);
         this._pioneers.push(newObj);
-        return newObj;
     }
     public addObjData(data: MapPioneerObject) {
+        const isExit = this._pioneers.findIndex((item) => item.uniqueId == data.uniqueId) != -1;
+        if (isExit) {
+            return;
+        }
         this._pioneers.push(data);
     }
     public removeDataByPlayerId(playerId: number) {

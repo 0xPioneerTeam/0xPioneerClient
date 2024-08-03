@@ -25,7 +25,6 @@ import { AlterView } from "../UI/View/AlterView";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import { UIHUDController } from "../UI/UIHUDController";
 import { TilePos } from "../Game/TiledMap/TileTool";
-import { MapTemplateConfigs } from "../Const/MapDefine";
 import BigMapConfig from "../Config/BigMapConfig";
 
 export default class GameMgr {

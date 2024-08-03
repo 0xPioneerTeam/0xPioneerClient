@@ -676,6 +676,18 @@ export class OuterTiledMapActionController extends ViewController {
                                         }
                                         return;
                                     }
+                                    if (stayBuilding != null) {
+                                        let slow: boolean = false;
+                                        if (actionType == MapInteractType.Collect && stayBuilding.gatherPioneerIds.length > 0) {
+                                            slow = true;
+                                        } else if (actionType == MapInteractType.Event && stayBuilding.eventPioneerIds.length > 0) {
+                                            slow = true;
+                                        }
+                                        if (slow) {
+                                            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Your troops arrived late and were already attacked first.");
+                                            return;
+                                        }
+                                    }
                                     if (actionType != MapInteractType.Move) {
                                         // move can't trigger interact
                                         if (stayBuilding != null) {
