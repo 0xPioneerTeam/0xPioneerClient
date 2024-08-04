@@ -618,35 +618,49 @@ export class OuterPioneerController extends ViewController {
             true
         );
         const intervalId = setInterval(() => {
-            if (fightDatas.length <= 0) {
-                if (this._fightDataMap.has(attackerData.uniqueId)) {
-                    const temp = this._fightDataMap.get(attackerData.uniqueId);
-                    clearInterval(temp.intervalId);
-                }
-                return;
+          if (fightDatas.length <= 0) {
+            if (this._fightDataMap.has(attackerData.uniqueId)) {
+              const temp = this._fightDataMap.get(attackerData.uniqueId);
+              clearInterval(temp.intervalId);
             }
-            const tempFightData = fightDatas.shift();
-            if (tempFightData.attackerId == attackerData.uniqueId) {
-                // attacker action
-                defenderData.hp -= tempFightData.hp;
-            } else {
-                attackerData.hp -= tempFightData.hp;
-                // wait change
-                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
-            }
-            fightView.refreshUI(
-                {
-                    name: attackerData.name,
-                    hp: attackerData.hp,
-                    hpMax: attackerData.hpmax,
-                },
-                {
-                    name: defenderData.name,
-                    hp: defenderData.hp,
-                    hpMax: defenderData.hpmax,
-                },
-                true
+            return;
+          }
+          const tempFightData = fightDatas.shift();
+          if (tempFightData.attackerId == attackerData.uniqueId) {
+            // attacker action
+            defenderData.hp -= tempFightData.hp;
+            fightView.attackAnim(
+              attackerData,
+              defenderData,
+              tempFightData.hp,
+              true
             );
+          } else {
+            attackerData.hp -= tempFightData.hp;
+            fightView.attackAnim(
+              attackerData,
+              defenderData,
+              tempFightData.hp,
+              false
+            );
+            // wait change
+            NotificationMgr.triggerEvent(
+              NotificationName.MAP_PIONEER_HP_CHANGED
+            );
+          }
+          // fightView.refreshUI(
+          //     {
+          //         name: attackerData.name,
+          //         hp: attackerData.hp,
+          //         hpMax: attackerData.hpmax,
+          //     },
+          //     {
+          //         name: defenderData.name,
+          //         hp: defenderData.hp,
+          //         hpMax: defenderData.hpmax,
+          //     },
+          //     true
+          // );
         }, 1000) as unknown as number;
         this._fightDataMap.set(attackerData.uniqueId, {
             isWin: isWin,
