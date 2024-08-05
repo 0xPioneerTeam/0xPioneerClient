@@ -1,0 +1,65 @@
+CCEffect %{
+  techniques:
+  - passes:
+    - vert: vs:vert
+      frag: fs:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+
+      rasterizerState:
+        cullMode: none
+      properties:
+        show: { value: 0.0, editor:{ tooltip: 'White or not' } }
+}%
+
+CCProgram vs %{
+  precision highp float;
+  #include <cc-global>
+
+  in vec3 a_position; // 顶点位置
+  in vec2 a_texCoord; // UV 坐标
+  in vec4 a_color;    // 顶点颜色
+
+
+  out vec2 v_uv0;     // 传递 UV 坐标
+
+
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+    pos = cc_matViewProj * pos; // 转换到裁剪空间
+    v_uv0 = a_texCoord; // 传递 UV 坐标
+
+
+    return pos; // 返回转换后的顶点位置
+  }
+}%
+
+CCProgram fs %{
+  precision highp float;
+
+
+  in vec2 v_uv0;   // 接收 UV 坐标
+  uniform Constant{
+    float show;
+  };
+uniform sampler2D u_texture;
+  #pragma builtin(local)
+  layout(set = 2, binding = 10) uniform sampler2D cc_spriteTexture; // 默认纹理
+vec4 frag () {
+    vec4 texColor = texture(cc_spriteTexture, v_uv0);
+    if(show > 0.0){
+      if (texColor.a < 0.01) discard;
+      else return vec4(1,1,1,1);
+    }
+    else{
+      if (texColor.a < 0.01) discard;
+      else return texColor * vec4(1,1,1,texColor.a);
+
+    }
+
+}
+
+
+}%
