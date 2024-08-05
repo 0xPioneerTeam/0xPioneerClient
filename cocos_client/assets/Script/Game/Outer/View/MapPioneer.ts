@@ -257,8 +257,22 @@ export class MapPioneer extends Component {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, {
                             fightDatas: this._model.fightData.slice(),
                             isWin: this._model.fightResultWin,
-                            attackerData: { uniqueId: attacker.uniqueId, name: attacker.name, hp: attacker.hp, hpmax: attacker.hpMax },
-                            defenderData: { uniqueId: defender.uniqueId, id: defender.id, name: defender.name, hp: defender.hp, hpmax: defender.hpMax },
+                            attackerData: {
+                                uniqueId: attacker.uniqueId,
+                                id: attacker.id,
+                                name: attacker.name,
+                                animType: attacker.animType,
+                                hp: attacker.hp,
+                                hpmax: attacker.hpMax,
+                            },
+                            defenderData: {
+                                uniqueId: defender.uniqueId,
+                                id: defender.id,
+                                name: defender.name,
+                                animType: defender.animType,
+                                hp: defender.hp,
+                                hpmax: defender.hpMax,
+                            },
                         });
                     }
                 }

@@ -6,7 +6,14 @@ import EventConfig from "../../Config/EventConfig";
 import { GameExtraEffectType, PioneerGameTest } from "../../Const/ConstDefine";
 import { UIName } from "../../Const/ConstUIDefine";
 import { NotificationName } from "../../Const/Notification";
-import { MapPioneerActionType, MapPioneerLogicObject, MapPioneerMoveDirection, MapPioneerObject, MapPioneerType } from "../../Const/PioneerDefine";
+import {
+    MapFightObject,
+    MapPioneerActionType,
+    MapPioneerLogicObject,
+    MapPioneerMoveDirection,
+    MapPioneerObject,
+    MapPioneerType,
+} from "../../Const/PioneerDefine";
 import { RookieStep } from "../../Const/RookieDefine";
 import { DataMgr } from "../../Data/DataMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
@@ -589,12 +596,7 @@ export class OuterPioneerController extends ViewController {
         this.node.getComponent(OuterTiledMapActionController).sortMapItemSiblingIndex();
     }
 
-    private _onShowFightAnim(data: {
-        fightDatas: share.Ifight_res[];
-        isWin: boolean;
-        attackerData: { uniqueId: string; name: string; hp: number; hpmax: number };
-        defenderData: { uniqueId: string; id: string; name: string; hp: number; hpmax: number };
-    }) {
+    private _onShowFightAnim(data: { fightDatas: share.Ifight_res[]; isWin: boolean; attackerData: MapFightObject; defenderData: MapFightObject }) {
         const { fightDatas, isWin, attackerData, defenderData } = data;
         const attackerView = this._pioneerMap.get(attackerData.uniqueId);
         if (attackerView == null) {
@@ -604,63 +606,40 @@ export class OuterPioneerController extends ViewController {
         const fightView = instantiate(this.fightPrefab).getComponent(OuterFightView);
         fightView.node.setParent(this.node);
         fightView.node.worldPosition = attackerView.worldPosition;
-        fightView.refreshUI(
-            {
-                name: attackerData.name,
-                hp: attackerData.hp,
-                hpmax: attackerData.hpmax,
-            },
-            {
-                name: defenderData.name,
-                hp: defenderData.hp,
-                hpmax: defenderData.hpmax,
-            },
-            true
-        );
+        fightView.refreshUI(attackerData, defenderData, true);
+        
         const intervalId = setInterval(() => {
-          if (fightDatas.length <= 0) {
-            if (this._fightDataMap.has(attackerData.uniqueId)) {
-              const temp = this._fightDataMap.get(attackerData.uniqueId);
-              clearInterval(temp.intervalId);
+            if (fightDatas.length <= 0) {
+                if (this._fightDataMap.has(attackerData.uniqueId)) {
+                    const temp = this._fightDataMap.get(attackerData.uniqueId);
+                    clearInterval(temp.intervalId);
+                }
+                return;
             }
-            return;
-          }
-          const tempFightData = fightDatas.shift();
-          if (tempFightData.attackerId == attackerData.uniqueId) {
-            // attacker action
-            defenderData.hp -= tempFightData.hp;
-            fightView.attackAnim(
-              attackerData,
-              defenderData,
-              tempFightData.hp,
-              true
-            );
-          } else {
-            attackerData.hp -= tempFightData.hp;
-            fightView.attackAnim(
-              attackerData,
-              defenderData,
-              tempFightData.hp,
-              false
-            );
-            // wait change
-            NotificationMgr.triggerEvent(
-              NotificationName.MAP_PIONEER_HP_CHANGED
-            );
-          }
-          // fightView.refreshUI(
-          //     {
-          //         name: attackerData.name,
-          //         hp: attackerData.hp,
-          //         hpMax: attackerData.hpmax,
-          //     },
-          //     {
-          //         name: defenderData.name,
-          //         hp: defenderData.hp,
-          //         hpMax: defenderData.hpmax,
-          //     },
-          //     true
-          // );
+            const tempFightData = fightDatas.shift();
+            if (tempFightData.attackerId == attackerData.uniqueId) {
+                // attacker action
+                defenderData.hp -= tempFightData.hp;
+                fightView.attackAnim(attackerData, defenderData, tempFightData.hp, true);
+            } else {
+                attackerData.hp -= tempFightData.hp;
+                fightView.attackAnim(attackerData, defenderData, tempFightData.hp, false);
+                // wait change
+                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
+            }
+            // fightView.refreshUI(
+            //     {
+            //         name: attackerData.name,
+            //         hp: attackerData.hp,
+            //         hpMax: attackerData.hpmax,
+            //     },
+            //     {
+            //         name: defenderData.name,
+            //         hp: defenderData.hp,
+            //         hpMax: defenderData.hpmax,
+            //     },
+            //     true
+            // );
         }, 1000) as unknown as number;
         this._fightDataMap.set(attackerData.uniqueId, {
             isWin: isWin,

@@ -893,7 +893,13 @@ export namespace share {
     }
     export interface Ifight_res {
         attackerId: string;
+        attackerName: string;
+        attackerAnimType: string;
+
         defenderId: string;
+        defenderName: string;
+        defenderAnimType: string;
+        
         hp: number;
     }
 

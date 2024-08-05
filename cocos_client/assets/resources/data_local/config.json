@@ -464,5 +464,13 @@
     "para": [
       10
     ]
+  },
+  "500001": {
+    "id": "500001",
+    "**NOTES**": "Fewer troops stationed per time(s)",
+    "para": [
+      60,
+      10
+    ]
   }
 }

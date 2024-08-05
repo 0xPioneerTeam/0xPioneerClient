@@ -213,6 +213,15 @@ export interface MapNpcPioneerObject extends MapNpcPioneerData {
     logics: MapPioneerLogicObject[];
 }
 
+export interface MapFightObject {
+    uniqueId: string;
+    id: string;
+    name: string;
+    animType: string;
+    hp: number;
+    hpmax: number;
+}
+
 export default class PioneerDefine {
     public static convertNetDataToObject(temple: share.Ipioneer_data): MapPioneerObject {
         const currentTime = new Date().getTime();
@@ -275,4 +284,6 @@ export default class PioneerDefine {
             return obj;
         }
     }
+
+
 }
