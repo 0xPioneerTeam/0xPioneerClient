@@ -51,7 +51,7 @@ export class OuterFightView extends Component {
       LanMgr.getLanById(enemyInfo.name);
     attakerView
       .getChildByPath("Hp/progressBar")
-      .getComponent(ProgressBar).progress = enemyInfo.hp / enemyInfo.hpMax;
+      .getComponent(ProgressBar).progress = enemyInfo.hp / enemyInfo.hpmax;
     attakerView.getChildByPath("Hp/Value").getComponent(Label).string =
       enemyInfo.hp.toString();
 
@@ -60,14 +60,14 @@ export class OuterFightView extends Component {
       LanMgr.getLanById(selfInfo.name);
     defenderView
       .getChildByPath("Hp/progressBar")
-      .getComponent(ProgressBar).progress = selfInfo.hp / selfInfo.hpMax;
+      .getComponent(ProgressBar).progress = selfInfo.hp / selfInfo.hpmax;
     defenderView.getChildByPath("Hp/Value").getComponent(Label).string =
       selfInfo.hp.toString();
   }
 
   public attackAnim(
-    attacker: { uniqueId: string; name: string; hp: number; hpMax: number },
-    defender: { uniqueId: string; name: string; hp: number; hpMax: number },
+    attacker: { uniqueId: string; name: string; hp: number; hpmax: number },
+    defender: { uniqueId: string; name: string; hp: number; hpmax: number },
     damage: number,
     attackerIsSelf: boolean = true
   ) {
@@ -117,12 +117,12 @@ export class OuterFightView extends Component {
             {
               name: attacker.name,
               hp: attacker.hp,
-              hpMax: attacker.hpmax,
+              hpmax: attacker.hpmax,
             },
             {
               name: defender.name,
               hp: defender.hp,
-              hpMax: defender.hpmax,
+              hpmax: defender.hpmax,
             },
             true
           );
@@ -172,12 +172,12 @@ export class OuterFightView extends Component {
             {
               name: attacker.name,
               hp: attacker.hp,
-              hpMax: attacker.hpmax,
+              hpmax: attacker.hpmax,
             },
             {
               name: defender.name,
               hp: defender.hp,
-              hpMax: defender.hpmax,
+              hpmax: defender.hpmax,
             },
             true
           );

@@ -854,6 +854,9 @@ export namespace share {
         type: string;
         stayPos: pos2d;
 
+        name: string;
+        animType: string;
+
         hpMax: number;
         hp: number;
 

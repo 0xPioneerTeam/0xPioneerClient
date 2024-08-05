@@ -26,7 +26,6 @@ import { TilePos } from "../Game/TiledMap/TileTool";
 import BigMapConfig from "../Config/BigMapConfig";
 
 export default class GameMgr {
-
     public rookieTaskExplainIsShow: boolean = false;
 
     public enterGameSence: boolean = false;
@@ -141,7 +140,7 @@ export default class GameMgr {
         } else if (condition.type == TaskConditionType.Kill) {
             let targetPioneer: MapPioneerObject = null;
             if (condition.kill.enemyIds.length > 0) {
-                //wait change 
+                //wait change
                 targetPioneer = DataMgr.s.pioneer.getById(condition.kill.enemyIds[CommonTools.getRandomInt(0, condition.kill.enemyIds.length - 1)]);
             }
             if (targetPioneer != null) {
@@ -197,7 +196,7 @@ export default class GameMgr {
     // move
     public getMainCityGatePos(): Vec2 {
         const buildings = DataMgr.s.mapBuilding.getObj_building();
-        const mainCity = buildings.find((item)=> {
+        const mainCity = buildings.find((item) => {
             return item.type == MapBuildingType.city;
         });
         if (mainCity == undefined || mainCity.stayMapPositions.length != 7) {
@@ -400,8 +399,24 @@ export default class GameMgr {
             return;
         }
         const allBuildingConfigs = BigMapConfig.getBuildingConfigMap().get(templeConfigId);
-        return allBuildingConfigs.find((item)=> {
+        return allBuildingConfigs.find((item) => {
             return item.id == buildingId;
+        });
+    }
+    public getMapPioneerConfigByExistSlotInfo(uniqueId: string) {
+        const splits = uniqueId.split("|");
+        const slotId = splits[0];
+        const pioneerId = splits[1];
+        if (!this._slotIdToTempleConfigMap.has(slotId)) {
+            return;
+        }
+        const templeConfigId = this._slotIdToTempleConfigMap.get(slotId);
+        if (!BigMapConfig.getPioneerConfigMap().has(templeConfigId)) {
+            return;
+        }
+        const allPioneerConfigs = BigMapConfig.getPioneerConfigMap().get(templeConfigId);
+        return allPioneerConfigs.find((item) => {
+            return item.id == pioneerId;
         });
     }
 }

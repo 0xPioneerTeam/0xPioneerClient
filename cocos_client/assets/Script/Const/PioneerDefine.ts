@@ -215,10 +215,6 @@ export interface MapNpcPioneerObject extends MapNpcPioneerData {
 
 export default class PioneerDefine {
     public static convertNetDataToObject(temple: share.Ipioneer_data): MapPioneerObject {
-        const config = PioneerConfig.getById(temple.id);
-        if (config == null) {
-            return null;
-        }
         const currentTime = new Date().getTime();
         const movePath: Vec2[] = [];
         if (temple.movePath != null) {
@@ -233,8 +229,8 @@ export default class PioneerDefine {
             level: temple.level,
             faction: temple.faction,
             type: temple.type as MapPioneerType,
-            animType: config.animType,
-            name: config.name,
+            animType: temple.animType,
+            name: temple.name,
             hp: CommonTools.getOneDecimalNum(temple.hp),
             hpMax: CommonTools.getOneDecimalNum(temple.hpMax),
             attack: CommonTools.getOneDecimalNum(temple.attack),

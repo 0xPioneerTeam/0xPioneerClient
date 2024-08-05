@@ -54,14 +54,11 @@ export class MapPioneer extends Component {
         let wakeUpView = null;
 
         let roleView = null;
-        const pioneerConfig = PioneerConfig.getById(this._model.id);
-        if (pioneerConfig != null) {
-            for (const name of this._roleNames) {
-                const templeView = this._contentView.getChildByPath("role/" + name);
-                templeView.active = name == pioneerConfig.animType;
-                if (templeView.active) {
-                    roleView = templeView;
-                }
+        for (const name of this._roleNames) {
+            const templeView = this._contentView.getChildByPath("role/" + name);
+            templeView.active = name == this._model.animType;
+            if (templeView.active) {
+                roleView = templeView;
             }
         }
         if (roleView == null) {
@@ -115,7 +112,7 @@ export class MapPioneer extends Component {
                 case MapPioneerActionType.dead:
                     {
                         this._contentView.active = true;
-                        console.log("exce dead: " + this._model.uniqueId)
+                        console.log("exce dead: " + this._model.uniqueId);
                         deadView.active = true;
                     }
                     break;
@@ -125,14 +122,14 @@ export class MapPioneer extends Component {
                         this._contentView.active = true;
                         wakeUpView.active = true;
                         wakeUpView.getComponent(Animation).play();
-                        console.log("exce wakeup: " + this._model.uniqueId)
+                        console.log("exce wakeup: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.defend:
                     {
                         this._contentView.active = false; // not show
-                        console.log("exce defend: " + this._model.uniqueId)
+                        console.log("exce defend: " + this._model.uniqueId);
                     }
                     break;
 
@@ -144,21 +141,21 @@ export class MapPioneer extends Component {
                         if (this._currnetIdleAnim != null) {
                             this._currnetIdleAnim.play();
                         }
-                        console.log("exce idle: " + this._model.uniqueId)
+                        console.log("exce idle: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.moving:
                     {
                         this._contentView.active = true; // show
-                        console.log("exce moving: " + this._model.uniqueId)
+                        console.log("exce moving: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.fighting:
                     {
                         this._contentView.active = false;
-                        console.log("exce fight: " + this._model.uniqueId)
+                        console.log("exce fight: " + this._model.uniqueId);
                     }
                     break;
 
@@ -168,7 +165,7 @@ export class MapPioneer extends Component {
                         // if (collectView != null) {
                         //     collectView.active = true;
                         // }
-                        console.log("exce mining: " + this._model.uniqueId)
+                        console.log("exce mining: " + this._model.uniqueId);
                     }
                     break;
 
@@ -177,7 +174,7 @@ export class MapPioneer extends Component {
                         this._contentView.active = true;
                         idleView.active = true;
                         this._addingtroopsView.active = true;
-                        console.log("exce addtr: " + this._model.uniqueId)
+                        console.log("exce addtr: " + this._model.uniqueId);
                     }
                     break;
 
@@ -194,21 +191,21 @@ export class MapPioneer extends Component {
                         this._contentView.active = true;
                         this._eventingView.active = true;
                         idleView.active = true;
-                        console.log("exce eventing: " + this._model.uniqueId)
+                        console.log("exce eventing: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.wormhole:
                     {
                         this._contentView.active = false;
-                        console.log("exce wormhole: " + this._model.uniqueId)
+                        console.log("exce wormhole: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.inCity:
                     {
                         this._contentView.active = false;
-                        console.log("exce incity: " + this._model.uniqueId)
+                        console.log("exce incity: " + this._model.uniqueId);
                     }
                     break;
 
@@ -219,7 +216,7 @@ export class MapPioneer extends Component {
                     if (this._currnetIdleAnim != null) {
                         this._currnetIdleAnim.play();
                     }
-                    console.log("exce staying: " + this._model.uniqueId)
+                    console.log("exce staying: " + this._model.uniqueId);
                 }
 
                 default:

@@ -608,12 +608,12 @@ export class OuterPioneerController extends ViewController {
             {
                 name: attackerData.name,
                 hp: attackerData.hp,
-                hpMax: attackerData.hpmax,
+                hpmax: attackerData.hpmax,
             },
             {
                 name: defenderData.name,
                 hp: defenderData.hp,
-                hpMax: defenderData.hpmax,
+                hpmax: defenderData.hpmax,
             },
             true
         );
@@ -703,13 +703,6 @@ export class OuterPioneerController extends ViewController {
         }
         resultView.getComponent(OuterFightResultView).showResult(fightData.isWin, () => {
             resultView.destroy();
-            const attackPioneer = DataMgr.s.pioneer.getById(fightData.attackerId);
-            let defendPioneer = null;
-            if (fightData.defenderUniqueId != null) {
-                defendPioneer = DataMgr.s.pioneer.getById(fightData.defenderUniqueId);
-            } else if (fightData.defenderId != null) {
-                defendPioneer = PioneerConfig.getById(fightData.defenderId);
-            }
         });
         this._fightDataMap.delete(data.uniqueId);
     }

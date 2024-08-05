@@ -141,7 +141,10 @@ message pioneer_data {
 
     required string uniqueId = 8;
 
-    required float hp = 9;
+    required string name = 9;
+    required string animType = 10;
+
+    required float hp = 11;
 
     required float hpMax = 20;
     // required uint32 hpMaxbase = 10;
@@ -204,9 +207,12 @@ message map_pioneer_data {
     required pos2d stayPos = 6;
     optional string uniqueId = 7;
 
-    required float hp = 8;
+    required string name = 8;
+    required string animType = 9;
 
-    required float hpMax = 9;
+    required float hp = 10;
+
+    required float hpMax = 11;
     // required uint32 hpMaxbase = 10;
     // repeated int32 hpMaxadd = 11;
     // repeated int32 hpMaxmul = 12;

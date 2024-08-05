@@ -101,7 +101,7 @@ export class ResOprView extends Component {
         } else if (interactPioneer != null) {
             pioneerInfo.active = true;
 
-            const pioneerConfig = PioneerConfig.getById(interactPioneer.id);
+            const pioneerConfig = GameMgr.getMapPioneerConfigByExistSlotInfo(interactPioneer.uniqueId);
             if (pioneerConfig != null) {
                 pioneerInfo.getChildByPath("Title").getComponent(Label).string = LanMgr.getLanById(pioneerConfig.des);
             }
