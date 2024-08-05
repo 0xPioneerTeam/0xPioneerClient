@@ -76,4 +76,17 @@ export default class BigMapConfig {
     public static getPioneerConfigMap() {
         return this._pioneerConfigs;
     }
+
+    public static getBuildingByMapId(mapId: string, buildingId: string) {
+        if (!this._buildingConfigs.has(mapId)) {
+            return;
+        }
+        return this._buildingConfigs.get(mapId).find((item) => item.id === buildingId);
+    }
+    public static getPioneerByMapId(mapId: string, pioneerId: string) {
+        if (!this._pioneerConfigs.has(mapId)) {
+            return;
+        }
+        return this._pioneerConfigs.get(mapId).find((item) => item.id === pioneerId);
+    }
 }

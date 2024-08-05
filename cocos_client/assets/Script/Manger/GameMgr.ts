@@ -1,18 +1,16 @@
-import { macro, v2, Vec2 } from "cc";
+import { v2, Vec2 } from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
-import MapBuildingConfig from "../Config/MapBuildingConfig";
 import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
 import { GAME_ENV_IS_DEBUG, GameExtraEffectType, MapMemberTargetType } from "../Const/ConstDefine";
 import ItemData from "../Const/Item";
 import { MapBuildingObject } from "../Const/MapBuilding";
 import { NotificationName } from "../Const/Notification";
-import { MapNpcPioneerData, MapNpcPioneerObject, MapPioneerObject, MapPlayerPioneerObject } from "../Const/PioneerDefine";
+import { MapNpcPioneerObject, MapPioneerObject, MapPlayerPioneerObject } from "../Const/PioneerDefine";
 import { TaskCondition, TaskConditionType, TaskStepObject } from "../Const/TaskDefine";
 import { DataMgr } from "../Data/DataMgr";
 import CommonTools from "../Tool/CommonTools";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
-import { RookieGuide } from "../UI/RookieGuide/RookieGuide";
 import { RookieStep } from "../Const/RookieDefine";
 import { ClvlMgr, LanMgr } from "../Utils/Global";
 import { CLvlEffectType } from "../Const/Lvlup";
@@ -20,7 +18,7 @@ import ConfigConfig from "../Config/ConfigConfig";
 import { BuyEnergyCoefficientParam, BuyEnergyLimitParam, BuyEnergyPriceParam, BuyEnergyThresParam, ConfigType, OneStepCostEnergyParam } from "../Const/Config";
 import ItemConfig from "../Config/ItemConfig";
 import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
-import { HUDName, UIName } from "../Const/ConstUIDefine";
+import { HUDName } from "../Const/ConstUIDefine";
 import { AlterView } from "../UI/View/AlterView";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import { UIHUDController } from "../UI/UIHUDController";
@@ -97,7 +95,7 @@ export default class GameMgr {
     }
 
     public getResourceBuildingRewardAndQuotaMax(building: MapBuildingObject): { reward: ItemData; quotaMax: number } {
-        const config = this.getMapBuildingConfig(building.uniqueId);
+        const config = this.getMapBuildingConfigByExistSlotInfo(building.uniqueId);
         if (config == null) {
             return null;
         }
@@ -188,7 +186,7 @@ export default class GameMgr {
     public getMapActionCostEnergy(moveStep: number, interactBuildingId: string = null) {
         let buildingCost: number = 0;
         if (interactBuildingId != null) {
-            const buildingConfig = this.getMapBuildingConfig(interactBuildingId);
+            const buildingConfig = this.getMapBuildingConfigByExistSlotInfo(interactBuildingId);
             buildingCost = buildingConfig.cost;
         }
         const perStepCostEnergy = (ConfigConfig.getConfig(ConfigType.OneStepCostEnergy) as OneStepCostEnergyParam).cost;
@@ -389,7 +387,8 @@ export default class GameMgr {
         }
         this._slotIdToTempleConfigMap.set(slotId, templeConfigId);
     }
-    public getMapBuildingConfig(uniqueId: string) {
+    // only use by get slot to templeconfig data
+    public getMapBuildingConfigByExistSlotInfo(uniqueId: string) {
         const splits = uniqueId.split("|");
         const slotId = splits[0];
         const buildingId = splits[1];

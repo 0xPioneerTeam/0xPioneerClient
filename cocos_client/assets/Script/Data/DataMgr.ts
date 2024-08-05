@@ -616,7 +616,7 @@ export class DataMgr {
         if (p.res !== 1) {
             return;
         }
-        const buildingConfig = GameMgr.getMapBuildingConfig(p.buildingId);
+        const buildingConfig = GameMgr.getMapBuildingConfigByExistSlotInfo(p.buildingId);
         if (buildingConfig == undefined) {
             return;
         }

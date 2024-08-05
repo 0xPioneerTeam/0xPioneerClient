@@ -13,7 +13,6 @@ import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 import ItemConfig from "../Config/ItemConfig";
 import LanConfig from "../Config/LanConfig";
 import LvlupConfig from "../Config/LvlupConfig";
-import MapBuildingConfig from "../Config/MapBuildingConfig";
 import NewEventConfig from "../Config/NewEventConfig";
 import NewSubEventConfig from "../Config/NewSubEventConfig";
 import NFTPioneerConfig from "../Config/NFTPioneerConfig";
@@ -46,7 +45,6 @@ export default class ConfigMgr {
         if (!(await LanConfig.init())) return false;
         if (!(await LvlupConfig.init())) return false;
         if (!(await PioneerLvlupConfig.init())) return false;
-        if (!(await MapBuildingConfig.init())) return false;
         if (!(await NFTPioneerConfig.init())) return false;
         if (!(await NFTPioneerNameConfig.init())) return false;
         if (!(await NFTSkillConfig.init())) return false;

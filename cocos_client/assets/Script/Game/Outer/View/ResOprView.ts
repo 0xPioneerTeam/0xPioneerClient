@@ -1,11 +1,8 @@
 import { _decorator, Button, Component, instantiate, Label, Layers, Layout, log, Node, Sprite, UITransform, v2, v3, Vec2, Vec3 } from "cc";
-import ConfigConfig from "../../../Config/ConfigConfig";
-import { ConfigType, OneStepCostEnergyParam } from "../../../Const/Config";
 import { MapBuildingObject, MapBuildingWormholeObject } from "../../../Const/MapBuilding";
 import { MapNpcPioneerData, MapNpcPioneerObject, MapPioneerObject, MapPioneerType } from "../../../Const/PioneerDefine";
 import { MapBuildingType } from "../../../Const/BuildingDefine";
 import { GameMgr, ItemMgr, LanMgr } from "../../../Utils/Global";
-import MapBuildingConfig from "../../../Config/MapBuildingConfig";
 import ItemConfig from "../../../Config/ItemConfig";
 import PioneerConfig from "../../../Config/PioneerConfig";
 import { GAME_JUMP_SWITCH_IS_OPEN, MapInteractType } from "../../../Const/ConstDefine";
@@ -41,7 +38,7 @@ export class ResOprView extends Component {
 
         difficultView.active = false;
 
-        const buildingCofig = interactBuilding != null ? GameMgr.getMapBuildingConfig(interactBuilding.uniqueId) : null;
+        const buildingCofig = interactBuilding != null ? GameMgr.getMapBuildingConfigByExistSlotInfo(interactBuilding.uniqueId) : null;
         //----------------------------------- info
         let name: string = "";
         if (interactBuilding != null) {
