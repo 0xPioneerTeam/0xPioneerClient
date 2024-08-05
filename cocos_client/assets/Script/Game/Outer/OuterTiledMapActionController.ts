@@ -485,11 +485,11 @@ export class OuterTiledMapActionController extends ViewController {
                 }
             }
             GameMainHelper.instance.tiledMapShadowErase(pioneer.stayPos, pioneer.id);
-            this._eraseMainCityShadow();
             if (!isExsit) {
                 DataMgr.s.eraseShadow.addObj(v2(pioneer.stayPos.x, pioneer.stayPos.y));
             }
         }
+        this._eraseMainCityShadow();
     }
 
     public async _clickOnMap(worldpos: Vec3) {
