@@ -2,3 +2,4 @@
 node_modules
 @types
 cocos_client/package-lock.json
+.DS_Store
