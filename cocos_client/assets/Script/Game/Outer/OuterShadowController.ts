@@ -16,8 +16,9 @@ export class MyTileData {
     grid: number;
     //_shadowcleantag 》》》 fall
     // all owners change fall
-    owners: {[key:string]:number} = null;
-    // frame time control change grid = fall
+    // [number,number] owner set grid totalfps and value
+    owners: { [key: string]: [number, number] } = null;
+    // grid active in map frame time control change grid = fall
     fall: number;
 
     constructor(x: number, y: number, grid: number) {
@@ -25,6 +26,47 @@ export class MyTileData {
         this.y = y;
         this.grid = grid;
         this.owners = {};
+    }
+
+    /**
+     * owner only change gridvalue shadowhalftag and shadowcleantag
+     * @param owner 
+     * @param gridValue 
+     */
+    updateGrid(owner: string, gridValue: number) {
+        let curfps = director.getTotalFrames();
+        this.owners[owner] = [curfps, gridValue];
+        this.fall = OuterShadowController.shadowhalf2tag;
+        this.grid = OuterShadowController.shadowhalftag;
+        for (let key in this.owners) {
+            let value = this.owners[key];
+            if ((value[0] > curfps - 60) && value[1] == OuterShadowController.shadowcleantag) {
+                this.grid = OuterShadowController.shadowcleantag;
+            }
+        }
+    }
+
+    refreshGrid(curfps: number) {
+        let has_border = false;
+        let has_clean = false;
+        for (let key in this.owners) {
+            let value = this.owners[key];
+            if (value[0] > curfps - 60) {
+                if (value[1] == OuterShadowController.shadowcleantag) {
+                    has_clean = true;
+                } else if (value[1] == OuterShadowController.shadowhalftag) {
+                    has_border = true;
+                }
+            }
+        }
+        if (has_clean) {
+            this.grid = OuterShadowController.shadowcleantag;
+        } else if (has_border) {
+            this.grid = OuterShadowController.shadowhalftag;
+        } else {
+            this.grid = this.fall;
+            this.owners = {};
+        }
     }
 }
 
@@ -35,10 +77,14 @@ export class OuterShadowController extends ViewController {
     _shadowUseComp: { [x_yKey: string]: TileShadowComp } = {};
     _shadowNodeCompsPool: TileShadowComp[] = [];
     _shadowNodeUpdateMap: { [uuid: string]: TileShadowComp } = {};
-    _shadowtag: number;
-    _shadowcleantag: number;
-    _shadowhalftag: number;
-    _shadowhalf2tag: number;
+    //black not see and unwalkable
+    static shadowtag: number;
+    //hidden can see map
+    static shadowcleantag: number;
+    // border
+    static shadowhalftag: number;
+    // walkable and not black
+    static shadowhalf2tag: number;
     _shadowContentNodes: Node[];
 
     refreshUI(rect: Rect, rect2: Rect) {
@@ -62,7 +108,7 @@ export class OuterShadowController extends ViewController {
                 let x_yKey = x + '_' + y;
                 let shadowData = this._shadowtiles[x_yKey];
                 if (!shadowData) {
-                    shadowData = new MyTileData(x, y, this._shadowtag);
+                    shadowData = new MyTileData(x, y, OuterShadowController.shadowtag);
                     this._shadowtiles[x_yKey] = shadowData;
                 }
                 let drawComp = this._shadowUseComp[x_yKey];
@@ -92,10 +138,10 @@ export class OuterShadowController extends ViewController {
     }
 
     Shadow_Init(views: Node[]): void {
-        this._shadowcleantag = 80;
-        this._shadowtag = 75;
-        this._shadowhalftag = 73;
-        this._shadowhalf2tag = 74;
+        OuterShadowController.shadowcleantag = 80;
+        OuterShadowController.shadowtag = 75;
+        OuterShadowController.shadowhalftag = 73;
+        OuterShadowController.shadowhalf2tag = 74;
         this._shadowtiles = {};
         this._shadowContentNodes = views;
         this._shadowNodeCompsPool = [];
@@ -152,41 +198,34 @@ export class OuterShadowController extends ViewController {
 
     protected viewUpdate(dt: number): void {
         super.viewUpdate(dt);
-        //Using frame control to prevent page minimization time calculation errors
         let datanow = director.getTotalFrames();
+        //Using frame control to prevent page minimization time calculation errors
         for (let key in this._shadowNodeUpdateMap) {
             let comp = this._shadowNodeUpdateMap[key];
             let x_yKey = comp.tilex + '_' + comp.tiley;
             let shadowData = this._shadowtiles[x_yKey];
             if (shadowData && shadowData.fall && shadowData.grid != shadowData.fall) {
-                let timeOut = true;
-                for(let onwer in shadowData.owners){
-                    if (datanow - shadowData.owners[onwer] < 60) {
-                        timeOut = false;
-                    }
-                }
-                if(timeOut){
-                    shadowData.grid = shadowData.fall;
-                    shadowData.fall = 0;
-                    shadowData.owners = {};
-                }
+                shadowData.refreshGrid(datanow);
                 comp.updateDrawInfo(comp.tilex, comp.tiley, shadowData.grid);
             }
         }
     }
 
-    _historyEarsesMap: Map<string, { tiles: MyTileData[], lastuse: number }> = new Map();
+    _historyEarsesMap: Map<string, { tiles: MyTileData[], pos_x: number, pos_y: number, extlen: number }> = new Map();
 
     Shadow_Earse(pos: TilePos, owner: string, extlen: number = 1) {
         let datanow = director.getTotalFrames();
-        let key = pos.x + '_' + pos.y + '_' + owner + '_' + extlen;
+        let key = owner;
         if (this._historyEarsesMap.has(key)) {
             let data = this._historyEarsesMap.get(key);
-            data.lastuse = datanow;
-            data.tiles.forEach(t => {
-                t.owners[owner] = datanow;
-            });
-            return;
+            if (data.pos_x == pos.x && data.pos_y == pos.y && data.extlen == extlen) {
+                data.tiles.forEach(t => {
+                    if (t.owners[owner]) {
+                        t.owners[owner][0] = datanow;
+                    }
+                });
+                return;
+            }
         }
         let shadowDatas = [];
         for (var y = pos.y - extlen; y <= pos.y + extlen; y++) {
@@ -199,39 +238,17 @@ export class OuterShadowController extends ViewController {
                 if (gpos != null) {
                     var s = this._shadowtiles[gpos.x + '_' + gpos.y];
                     if (s == null) {
-                        s = new MyTileData(gpos.x, gpos.y, this._shadowtag);
+                        s = new MyTileData(gpos.x, gpos.y, OuterShadowController.shadowtag);
                         this._shadowtiles[gpos.x + '_' + gpos.y] = s;
                     }
                     shadowDatas.push(s);
                     var border = extlen > 1 && (len == extlen);
-                    if (border) {
-                        if(s.grid == this._shadowcleantag){
-                            for(let ownerkey in s.owners){
-                                if(ownerkey != owner){
-                                    //not self
-                                    border = false;
-                                }
-                            }
-
-                        }
-                    }
-                    s.grid = border?this._shadowhalftag:this._shadowcleantag;
-                    s.owners[owner] = datanow;
-                    s.fall = this._shadowhalf2tag;
+                    let gridValue = border ? OuterShadowController.shadowhalftag : OuterShadowController.shadowcleantag;
+                    s.updateGrid(owner, gridValue);
                 }
             }
         }
-        this._historyEarsesMap.set(key, { tiles: shadowDatas, lastuse: datanow });
-        if (this._historyEarsesMap.size > 100) {
-            let keys = Array.from(this._historyEarsesMap.keys());
-            for (let i = 0; i < keys.length; i++) {
-                const eleKey = keys[i];
-                let data = this._historyEarsesMap.get(eleKey);
-                if (data.lastuse < datanow - 60*60*5) {
-                    this._historyEarsesMap.delete(eleKey);
-                }
-            }
-        }
+        this._historyEarsesMap.set(key, { tiles: shadowDatas, pos_x: pos.x, pos_y: pos.y, extlen: extlen });
     }
 
 
@@ -239,7 +256,7 @@ export class OuterShadowController extends ViewController {
         let key = x + "_" + y;
         let s = this._shadowtiles[key];
         if (s) {
-            return s.grid == this._shadowtag;
+            return s.grid == OuterShadowController.shadowtag;
         }
         return true;
     }
@@ -248,7 +265,7 @@ export class OuterShadowController extends ViewController {
         const positions = [];
         for (const key in this._shadowtiles) {
             let tiles = this._shadowtiles[key];
-            if (tiles.grid != this._shadowtag) {
+            if (tiles.grid != OuterShadowController.shadowtag) {
                 positions.push(TileMapHelper.INS.getPos(tiles.x, tiles.y));
             }
         }
@@ -257,7 +274,7 @@ export class OuterShadowController extends ViewController {
 
     Shadow_Reset() {
         for (const key in this._shadowtiles) {
-            this._shadowtiles[key].grid = this._shadowtag;
+            this._shadowtiles[key].grid = OuterShadowController.shadowtag;
             this._shadowtiles[key].fall = -1;
         }
     }

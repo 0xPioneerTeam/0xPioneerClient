@@ -259,7 +259,7 @@ export default class GameMainHelper {
             return [];
         }
         const vision: number = DataMgr.s.userInfo.data.cityRadialRange - 1;
-        return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "0", vision);
+        return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "City", vision);
     }
     public tiledMapGetShadowClearedTiledPositions(): TilePos[] {
         if (!this.isTiledMapHelperInited) {
