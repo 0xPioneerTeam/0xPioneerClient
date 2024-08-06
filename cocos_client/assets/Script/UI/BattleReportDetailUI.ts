@@ -27,49 +27,7 @@ export class BattleReportDetailUI extends ViewController {
     private battle_log: RichText = null;
 
     public refreshUI(fight: share.Inew_battle_report_fight_data) {
-        const fightDatas: share.Ifight_res[] = fight.fightRes;
-        // data: share.Ifight_res[]
-        // console.log(data);
-        // const fightDatas = data;
-        // const fightDatas = [
-        //   {
-        //     attackerId: "0_0_4_1|hred_1",
-        //     attackerName: "monster",
-        //     attackerAnimType: "monster_a_1",
-        //     defenderId: "3|pioneer_0",
-        //     defenderName: "Pioneer",
-        //     defenderAnimType: "self",
-        //     hp: 1,
-        //   },
-        //   {
-        //     attackerId: "3|pioneer_0",
-        //     attackerName: "Pioneer",
-        //     attackerAnimType: "self",
-        //     defenderId: "0_0_4_1|hred_1",
-        //     defenderName: "monster",
-        //     defenderAnimType: "monster_a_1",
-        //     hp: 43,
-        //   },
-        //   {
-        //     attackerId: "0_0_4_1|hred_1",
-        //     attackerName: "monster",
-        //     attackerAnimType: "monster_a_1",
-        //     defenderId: "3|pioneer_0",
-        //     defenderName: "Pioneer",
-        //     defenderAnimType: "self",
-        //     hp: 2,
-        //   },
-        //   {
-        //     attackerId: "3|pioneer_0",
-        //     attackerName: "Pioneer",
-        //     attackerAnimType: "self",
-        //     defenderId: "0_0_4_1|hred_1",
-        //     defenderName: "monster",
-        //     defenderAnimType: "monster_a_1",
-        //     hp: 12,
-        //   },
-        // ];
-        // this.battle_log.string = "<color=#00ff00>Pioneer</color> anticipated <color=#ff0000>Shark</color>'s attack direction and only received <color=#0fffff>55</color> points of damage.\n"
+      const fightDatas: share.Ifight_res[] = [ ...fight.fightRes ];
         this.battle_log.string = "<b><color=#0fffff>【BATTLE START】</color></b>\n";
         this.attacker_name.string = LanMgr.getLanById(fightDatas[0].attackerName);
         this.defender_name.string = LanMgr.getLanById(fightDatas[0].defenderName);
