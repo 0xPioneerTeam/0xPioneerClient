@@ -177,6 +177,9 @@ export class OuterPioneerController extends ViewController {
                     usedSpeed = 600;
                 }
                 let pioneermap = this._pioneerMap.get(pioneer.uniqueId);
+                if (pioneermap == null) {
+                    continue;
+                }
                 this._updateMoveStep(usedSpeed, gap / 1000, pioneer, pioneermap);
             }
         }, 1000 / 60);
@@ -607,7 +610,7 @@ export class OuterPioneerController extends ViewController {
         fightView.node.setParent(this.node);
         fightView.node.worldPosition = attackerView.worldPosition;
         fightView.refreshUI(attackerData, defenderData, true);
-        
+
         const intervalId = setInterval(() => {
             if (fightDatas.length <= 0) {
                 if (this._fightDataMap.has(attackerData.uniqueId)) {

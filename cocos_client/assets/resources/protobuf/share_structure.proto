@@ -71,6 +71,9 @@ message player_sinfo {
     map<string, uint32> lvlupConds = 61;
 
     required uint32 buyEnergyLimitTimes = 62;
+
+    required uint32 battlePower = 70;
+    repeated uint32 explorePlayerids = 71;
 }
 
 // self player data
@@ -399,10 +402,14 @@ message mapbuilding_info_data {
 
 message map_info_data {
     required string slotId = 1;
-    required string templateConfigId = 2;
-    required uint32 mapSlotType = 3;
-    map<string, map_building_info_data> buildings = 4;
-    map<string, map_pioneer_data> pioneers = 5;
+    required uint32 playerId = 2;
+    required string templateConfigId = 3;
+    required uint32 mapSlotType = 4;
+    map<string, map_building_info_data> buildings = 5;
+    map<string, map_pioneer_data> pioneers = 6;
+    optional string pname = 7;
+    optional uint32 level = 8;
+    optional uint32 battlePower = 9;
 }
 
 message map_building_info_data {

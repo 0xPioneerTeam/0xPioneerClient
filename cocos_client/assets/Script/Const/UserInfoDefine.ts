@@ -28,6 +28,8 @@ export interface HeatValueObject {
 export interface UserInfoObject {
     id: string;
     name: string;
+    battlePower: number;
+    explorePlayerids: number[];
     level: number;
     exp: number;
     exploreProgress: number;

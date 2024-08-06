@@ -205,6 +205,7 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("player_explore_start_res", DataMgr.player_explore_start_res);
         NetworkMgr.websocket.on("player_explore_npc_start_res", DataMgr.player_explore_npc_start_res);
         NetworkMgr.websocket.on("player_wormhole_set_attacker_res", DataMgr.player_wormhole_set_attacker_res);
+        NetworkMgr.websocket.on("player_explore_maincity_res", DataMgr.player_explore_maincity_res);
 
         NetworkMgr.websocket.on("player_fight_end", DataMgr.player_fight_end);
 

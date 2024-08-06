@@ -148,6 +148,11 @@ message player_explore_gangster_start {
     required string pioneerId = 1;
     required string gangsterId = 2;
 }
+message player_explore_maincity {
+    required string pioneerId = 1;
+    required string buildingId = 2;
+    required bool isReturn = 3;
+}
 // pioneer: fight(map)
 message player_fight_start {
     required string attackerId = 1;

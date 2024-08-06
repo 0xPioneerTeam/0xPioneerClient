@@ -1,7 +1,7 @@
 import { _decorator, Button, Component, instantiate, Label, Layers, Layout, log, Node, Sprite, UITransform, v2, v3, Vec2, Vec3 } from "cc";
-import { MapBuildingObject, MapBuildingWormholeObject } from "../../../Const/MapBuilding";
+import { MapBuildingMainCityObject, MapBuildingObject, MapBuildingWormholeObject } from "../../../Const/MapBuilding";
 import { MapNpcPioneerData, MapNpcPioneerObject, MapPioneerObject, MapPioneerType } from "../../../Const/PioneerDefine";
-import { MapBuildingType } from "../../../Const/BuildingDefine";
+import { InnerBuildingType, MapBuildingType } from "../../../Const/BuildingDefine";
 import { GameMgr, ItemMgr, LanMgr } from "../../../Utils/Global";
 import ItemConfig from "../../../Config/ItemConfig";
 import PioneerConfig from "../../../Config/PioneerConfig";
@@ -42,7 +42,9 @@ export class ResOprView extends Component {
         //----------------------------------- info
         let name: string = "";
         if (interactBuilding != null) {
-            if (interactBuilding.type == MapBuildingType.resource) {
+            if (interactBuilding.type == MapBuildingType.city) {
+                name = LanMgr.getLanById("320006");
+            } else if (interactBuilding.type == MapBuildingType.resource) {
                 name = LanMgr.getLanById("320003");
             } else if (interactBuilding.type == MapBuildingType.event) {
                 name = LanMgr.getLanById("320004");
@@ -68,16 +70,43 @@ export class ResOprView extends Component {
         // location
         infoView.getChildByPath("Top/Location").getComponent(Label).string = "(" + targetPos.x + "," + targetPos.y + ")";
 
+        const mainCityBuildingInfo = infoView.getChildByPath("MainCityInfo");
         const resourceBuildingInfo = infoView.getChildByPath("ResourceInfo");
         const otherBuildingInfo = infoView.getChildByPath("OtherBuildingInfo");
         const pioneerInfo = infoView.getChildByPath("PioneerInfo");
 
+        mainCityBuildingInfo.active = false;
         resourceBuildingInfo.active = false;
         otherBuildingInfo.active = false;
         pioneerInfo.active = false;
 
+        let mainCityIsLocked: boolean = true;
         if (interactBuilding != null) {
-            if (interactBuilding.type == MapBuildingType.resource) {
+            if (interactBuilding.type == MapBuildingType.city) {
+                mainCityBuildingInfo.active = true;
+
+                const uniqueIdSplit = interactBuilding.uniqueId.split("|");
+                if (uniqueIdSplit.length == 2) {
+                    const info = GameMgr.getMapSlotData(uniqueIdSplit[0]);
+                    if (info != undefined) {
+                        mainCityBuildingInfo.getChildByPath("Leader/Value").getComponent(Label).string = info.pname;
+                        mainCityBuildingInfo.getChildByPath("Civilization/Value").getComponent(Label).string = info.level.toString();
+        
+                        mainCityIsLocked = DataMgr.s.userInfo.data.explorePlayerids.indexOf(parseInt(info.playerId)) == -1;
+                        const lockView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Locked");
+                        const fightValueView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Title");
+                        if (mainCityIsLocked) {
+                            lockView.active = true;
+                            fightValueView.active = false;
+                        } else {
+                            lockView.active = false;
+                            fightValueView.active = true;
+                            fightValueView.getChildByPath("Value").getComponent(Label).string = info.battlePower != null ? info.battlePower.toString() : "";
+                        }
+                    }
+                }
+                
+            } else if (interactBuilding.type == MapBuildingType.resource) {
                 resourceBuildingInfo.active = true;
 
                 const resourceData = GameMgr.getResourceBuildingRewardAndQuotaMax(interactBuilding);
@@ -133,7 +162,12 @@ export class ResOprView extends Component {
         //----------------------------------- action
         const actionTypes: number[] = [];
         if (interactBuilding != null) {
-            if (interactBuilding.type == MapBuildingType.explore) {
+            if (interactBuilding.type == MapBuildingType.city) {
+                if (DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.InformationStation) > 0 && mainCityIsLocked) {
+                    actionTypes.push(MapInteractType.Detect);
+                }
+                actionTypes.push(MapInteractType.SiegeCity);
+            } else if (interactBuilding.type == MapBuildingType.explore) {
                 actionTypes.push(MapInteractType.Explore);
                 actionTypes.push(MapInteractType.Move);
             } else if (interactBuilding.type == MapBuildingType.resource) {
@@ -175,7 +209,6 @@ export class ResOprView extends Component {
         } else {
             actionTypes.push(MapInteractType.Move);
         }
-        const buildingCost = buildingCofig != null ? buildingCofig.cost : 0;
         this._actionItemContent.destroyAllChildren();
         for (const type of actionTypes) {
             const actionItem = instantiate(this._actionItem);
@@ -187,6 +220,9 @@ export class ResOprView extends Component {
             actionItem.getChildByPath("Icon/Camp").active = type == MapInteractType.Camp;
             actionItem.getChildByPath("Icon/CampOut").active = type == MapInteractType.CampOut;
             actionItem.getChildByPath("Icon/Move").active = type == MapInteractType.Move;
+            actionItem.getChildByPath("Icon/Move").active = type == MapInteractType.Move;
+            actionItem.getChildByPath("Icon/Detect").active = type == MapInteractType.Detect;
+            actionItem.getChildByPath("Icon/SiegeCity").active = type == MapInteractType.SiegeCity;
 
             let title: string = "";
             if (type == MapInteractType.Wormhole) {
@@ -225,6 +261,14 @@ export class ResOprView extends Component {
                 //useLanMgr
                 // title = LanMgr.getLanById("107549");
                 title = "Talk";
+            } else if (type == MapInteractType.Detect) {
+                //useLanMgr
+                // title = LanMgr.getLanById("107549");
+                title = "Detect";
+            } else if (type == MapInteractType.SiegeCity) {
+                //useLanMgr
+                // title = LanMgr.getLanById("107549");
+                title = "SiegeCity";
             }
             const costEnergy = GameMgr.getMapActionCostEnergy(step, interactBuilding != null ? interactBuilding.uniqueId : null);
             actionItem.getChildByPath("Title").getComponent(Label).string = title;

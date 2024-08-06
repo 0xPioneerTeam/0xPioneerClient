@@ -47,6 +47,8 @@ export default class UserInfoDataMgr {
             id: netData.playerid.toString(),
             name: netData.pname,
             level: netData.level,
+            explorePlayerids: netData.explorePlayerids,
+            battlePower: netData.battlePower,
             exp: netData.exp,
             exploreProgress: netData.treasureProgress,
             treasureDidGetRewards: netData.treasureDidGetRewards,

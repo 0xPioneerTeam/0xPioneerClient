@@ -230,6 +230,13 @@ message player_explore_gangster_start_res {
     optional string pioneerId = 2;
     optional string gangsterId = 3;
 }
+message player_explore_maincity_res {
+    required int32 res = 1;
+    optional string buildingId = 2;
+    optional string pioneerId = 3;
+    optional bool isReturn = 4;
+    optional uint32 battlePower = 5;
+}
 // pioneer: fight(map)
 message player_fight_start_res {
     required int32 res = 1;

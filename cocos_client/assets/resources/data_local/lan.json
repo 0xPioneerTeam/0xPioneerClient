@@ -814,6 +814,11 @@
     "eng": "Babel Tower",
     "tc": "巴別塔"
   },
+  "120006": {
+    "id": "120006",
+    "eng": "Information Station",
+    "tc": ""
+  },
   "121001": {
     "id": "121001",
     "eng": "More buildings are able to be constructed",
@@ -1626,7 +1631,7 @@
   },
   "320006": {
     "id": "320006",
-    "eng": "",
+    "eng": "Main City",
     "tc": ""
   },
   "320007": {

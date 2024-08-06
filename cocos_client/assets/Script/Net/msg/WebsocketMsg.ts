@@ -129,6 +129,9 @@ export class WebsocketMsg {
     public player_event_exit(d: c2s_user.Iplayer_event_exit) {
         this.send_packet("player_event_exit", d);
     }
+    public player_explore_maincity(d: c2s_user.Iplayer_explore_maincity) {
+        this.send_packet("player_explore_maincity", d);
+    }
 
     public player_fight_start(d: c2s_user.Iplayer_fight_start) {
         this.send_packet("player_fight_start", d);
@@ -361,6 +364,12 @@ export namespace c2s_user {
         pioneerId: string;
         buildingId: string;
     }
+    export interface Iplayer_explore_maincity {
+        pioneerId: string;
+        buildingId: string;
+        isReturn: boolean;
+    }
+
     export interface Iplayer_fight_start {
         attackerId: string;
         defenderId: string;
@@ -570,6 +579,13 @@ export namespace s2c_user {
         buildingId: string;
         pioneerId: string;
     }
+    export interface Iplayer_explore_maincity_res {
+        res: number;
+        pioneerId: string;
+        buildingId: string;
+        isReturn: string;
+        battlePower: number;
+    }
     export interface Iplayer_event_select_res {
         res: number;
         eventId: string;
@@ -752,6 +768,9 @@ export namespace share {
         /** player_sinfo pname */
         pname: string;
 
+        battlePower: number;
+        explorePlayerids: number[];
+
         /** player_sinfo gender */
         gender: number;
 
@@ -899,7 +918,7 @@ export namespace share {
         defenderId: string;
         defenderName: string;
         defenderAnimType: string;
-        
+
         hp: number;
     }
 
@@ -939,6 +958,10 @@ export namespace share {
     }
     export interface Imap_info_data {
         slotId: string;
+        playerId: number;
+        pname: string;
+        level: number;
+        battlePower: number;
         templateConfigId: string;
         buildings: { [key: string]: Imapbuilding_info_data };
         pioneers: { [key: string]: Ipioneer_data };

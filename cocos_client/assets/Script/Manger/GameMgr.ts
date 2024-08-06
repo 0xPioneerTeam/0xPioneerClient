@@ -1,4 +1,4 @@
-import { v2, Vec2 } from "cc";
+import { sp, v2, Vec2 } from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
@@ -379,12 +379,15 @@ export default class GameMgr {
         return originalValue;
     }
 
-    private _slotIdToTempleConfigMap: Map<string, string> = new Map();
-    public setSlotIdToTempleConfigData(slotId: string, templeConfigId: string) {
-        if (slotId == null || templeConfigId == null) {
+    private _slotIdToTempleConfigMap: Map<string, { templeConfigId: string, playerId: string, pname: string, level: number, battlePower: number } > = new Map();
+    public setSlotIdToTempleConfigData(slotId: string, data: { templeConfigId: string, playerId: string, pname: string, level: number, battlePower: number }) {
+        if (slotId == null || data == null) {
             return;
         }
-        this._slotIdToTempleConfigMap.set(slotId, templeConfigId);
+        this._slotIdToTempleConfigMap.set(slotId, data);
+    }
+    public getMapSlotData(slotId: string) {
+        return this._slotIdToTempleConfigMap.get(slotId);
     }
     // only use by get slot to templeconfig data
     public getMapBuildingConfigByExistSlotInfo(uniqueId: string) {
@@ -394,11 +397,11 @@ export default class GameMgr {
         if (!this._slotIdToTempleConfigMap.has(slotId)) {
             return;
         }
-        const templeConfigId = this._slotIdToTempleConfigMap.get(slotId);
-        if (!BigMapConfig.getBuildingConfigMap().has(templeConfigId)) {
+        const data = this._slotIdToTempleConfigMap.get(slotId);
+        if (!BigMapConfig.getBuildingConfigMap().has(data.templeConfigId)) {
             return;
         }
-        const allBuildingConfigs = BigMapConfig.getBuildingConfigMap().get(templeConfigId);
+        const allBuildingConfigs = BigMapConfig.getBuildingConfigMap().get(data.templeConfigId);
         return allBuildingConfigs.find((item) => {
             return item.id == buildingId;
         });
@@ -410,13 +413,21 @@ export default class GameMgr {
         if (!this._slotIdToTempleConfigMap.has(slotId)) {
             return;
         }
-        const templeConfigId = this._slotIdToTempleConfigMap.get(slotId);
-        if (!BigMapConfig.getPioneerConfigMap().has(templeConfigId)) {
+        const data = this._slotIdToTempleConfigMap.get(slotId);
+        if (!BigMapConfig.getPioneerConfigMap().has(data.templeConfigId)) {
             return;
         }
-        const allPioneerConfigs = BigMapConfig.getPioneerConfigMap().get(templeConfigId);
+        const allPioneerConfigs = BigMapConfig.getPioneerConfigMap().get(data.templeConfigId);
         return allPioneerConfigs.find((item) => {
             return item.id == pioneerId;
         });
+    }
+
+    public getMapBuildingSlotByUnqueId(uniqueId: string): string | null {
+        const splits = uniqueId.split("|");
+        if (splits.length == 2) {
+            return splits[0];
+        }
+        return null;
     }
 }

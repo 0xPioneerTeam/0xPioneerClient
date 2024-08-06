@@ -38,7 +38,7 @@ import { Rect } from "cc";
 import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { MapBuildingType } from "../../Const/BuildingDefine";
 import { UIName, HUDName } from "../../Const/ConstUIDefine";
-import { MapBuildingWormholeObject } from "../../Const/MapBuilding";
+import { MapBuildingMainCityObject, MapBuildingWormholeObject } from "../../Const/MapBuilding";
 import { MapPioneerActionType, MapPioneerObject, MapPioneerType } from "../../Const/PioneerDefine";
 import { RookieStep } from "../../Const/RookieDefine";
 import NetGlobalData from "../../Data/Save/Data/NetGlobalData";
@@ -462,7 +462,7 @@ export class OuterTiledMapActionController extends ViewController {
     }
 
     private _eraseMainCityShadow() {
-        const mainCity = DataMgr.s.mapBuilding.getBuildingById(DataMgr.s.mapBuilding.getSelfMainCityUniqueId());
+        const mainCity = DataMgr.s.mapBuilding.getBuildingById(DataMgr.s.mapBuilding.getSelfMainCitySlotId() + "|building_1");
         if (mainCity == null || mainCity.stayMapPositions.length != 7) {
             return;
         }
@@ -514,7 +514,6 @@ export class OuterTiledMapActionController extends ViewController {
         if (shadowController.tiledMapIsAllBlackShadow(tiledPos.x, tiledPos.y)) {
             return;
         }
-
         let stayPositons: Vec2[] = [v2(tiledPos.x, tiledPos.y)];
         // check is building first
         const stayBuilding = DataMgr.s.mapBuilding.getShowBuildingByMapPos(v2(tiledPos.x, tiledPos.y));
@@ -522,10 +521,25 @@ export class OuterTiledMapActionController extends ViewController {
         let stayPioneer = null;
         if (stayBuilding != null) {
             if (stayBuilding.type == MapBuildingType.city) {
-                GameMainHelper.instance.changeInnerAndOuterShow();
-                return;
+                let isSelf: boolean = false;
+                let slotId: string = null;
+                const uniqueIdSplit = stayBuilding.uniqueId.split("|");
+                if (uniqueIdSplit.length == 2) {
+                    slotId = uniqueIdSplit[0];
+                    if (slotId == DataMgr.s.mapBuilding.getSelfMainCitySlotId()) {
+                        isSelf = true;
+                    }
+                }
+                if (isSelf) {
+                    GameMainHelper.instance.changeInnerAndOuterShow();
+                    return;
+                }
+                const data = GameMgr.getMapSlotData(slotId);
+                if (slotId == null || data == undefined || data.playerId === "0") {
+                    NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Empty City");
+                    return;
+                }
             }
-
             if (stayBuilding.type == MapBuildingType.wormhole) {
                 // if (DataMgr.s.userInfo.data.rookieStep == RookieStep.FINISH) {
                 //     UIHUDController.showCenterTip("Wormhole is updating, close temporarily");
@@ -559,6 +573,9 @@ export class OuterTiledMapActionController extends ViewController {
         }
 
         this._mapActionCursorView.show(stayPositons, Color.WHITE);
+
+        // user tap pos
+        let taregtPos: Vec2 = v2(tiledPos.x, tiledPos.y);
         // view show worldPos
         let targetWorldPos = null;
         if (stayPositons.length == 1) {
@@ -568,15 +585,17 @@ export class OuterTiledMapActionController extends ViewController {
             const endWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(stayPositons[1].x, stayPositons[1].y);
             targetWorldPos = v3(beginWorldPos.x, endWorldPos.y + (beginWorldPos.y - endWorldPos.y) / 2, 0);
         } else if (stayPositons.length == 7) {
+            if (taregtPos.x == stayPositons[3].x && taregtPos.y == stayPositons[3].y) {
+                // tap city center pos, change target pos to city first pos
+                taregtPos = stayPositons[0];
+            }
             targetWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(stayPositons[3].x, stayPositons[3].y);
         }
         if (targetWorldPos == null) {
             CLog.error("action cann't show");
             return;
         }
-
         // move targetPos
-        const taregtPos: Vec2 = v2(tiledPos.x, tiledPos.y);
         const mainCityGatePos = GameMgr.getMainCityGatePos();
         let step = 10;
         const speed = 200;
@@ -586,6 +605,7 @@ export class OuterTiledMapActionController extends ViewController {
                 step = tempMovePath.path.length;
             }
         }
+
         // show action panel
         await this._actionView.show(
             stayBuilding,
@@ -631,7 +651,8 @@ export class OuterTiledMapActionController extends ViewController {
                                                     PioneerMgr.setMovingTarget(
                                                         currentActionPioneer.uniqueId,
                                                         MapMemberTargetType.building,
-                                                        stayBuilding.uniqueId
+                                                        stayBuilding.uniqueId,
+                                                        actionType
                                                     );
                                                     if (movePaths.length <= 0) {
                                                         DataMgr.s.pioneer.beginMove(currentActionPioneer.uniqueId, []);
@@ -684,17 +705,30 @@ export class OuterTiledMapActionController extends ViewController {
                                             slow = true;
                                         }
                                         if (slow) {
-                                            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Your troops arrived late and were already attacked first.");
+                                            NotificationMgr.triggerEvent(
+                                                NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP,
+                                                "Your troops arrived late and were already attacked first."
+                                            );
                                             return;
                                         }
                                     }
                                     if (actionType != MapInteractType.Move) {
                                         // move can't trigger interact
                                         if (stayBuilding != null) {
-                                            PioneerMgr.setMovingTarget(currentActionPioneer.uniqueId, MapMemberTargetType.building, stayBuilding.uniqueId);
+                                            PioneerMgr.setMovingTarget(
+                                                currentActionPioneer.uniqueId,
+                                                MapMemberTargetType.building,
+                                                stayBuilding.uniqueId,
+                                                actionType
+                                            );
                                         }
                                         if (stayPioneer != null) {
-                                            PioneerMgr.setMovingTarget(currentActionPioneer.uniqueId, MapMemberTargetType.pioneer, stayPioneer.uniqueId);
+                                            PioneerMgr.setMovingTarget(
+                                                currentActionPioneer.uniqueId,
+                                                MapMemberTargetType.pioneer,
+                                                stayPioneer.uniqueId,
+                                                actionType
+                                            );
                                         }
                                     }
                                     if (movePaths.length <= 0) {

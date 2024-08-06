@@ -62,7 +62,13 @@ export class DataMgr {
                 // load save data
                 await DataMgr.s.load(this.r.wallet.addr);
 
-                GameMgr.setSlotIdToTempleConfigData(NetGlobalData.mapBuildings.slotId, NetGlobalData.mapBuildings.templateConfigId);
+                GameMgr.setSlotIdToTempleConfigData(NetGlobalData.mapBuildings.slotId, {
+                    templeConfigId: p.data.info.mapbuilding.templateConfigId,
+                    playerId: p.data.info.sinfo.playerid.toString(),
+                    pname: p.data.info.sinfo.pname,
+                    level: p.data.info.sinfo.level,
+                    battlePower: p.data.info.sinfo.battlePower,
+                });
 
                 NotificationMgr.triggerEvent(NotificationName.USER_LOGIN_SUCCEED);
             }
@@ -388,7 +394,13 @@ export class DataMgr {
             }
             slotIds.push(info.slotId);
             DataMgr.s.mapBuilding.setDecorateInfo(info.slotId, info.templateConfigId);
-            GameMgr.setSlotIdToTempleConfigData(info.slotId, info.templateConfigId);
+            GameMgr.setSlotIdToTempleConfigData(info.slotId, {
+                templeConfigId: info.templateConfigId,
+                playerId: info.playerId.toString(),
+                pname: info.pname,
+                level: info.level,
+                battlePower: info.battlePower
+            });
         }
         for (const key in p.user) {
             if (Object.prototype.hasOwnProperty.call(p.user, key)) {
@@ -642,6 +654,22 @@ export class DataMgr {
         }
         GameMusicPlayMgr.playWormholeSetAttackerEffect();
     };
+    public static player_explore_maincity_res = (e: any) => {
+        const p: s2c_user.Iplayer_explore_maincity_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        const uniqueIdSplit = p.buildingId.split("|");
+        if (uniqueIdSplit.length == 2) {
+            const slotId = uniqueIdSplit[0];
+            const data = GameMgr.getMapSlotData(slotId);
+            if (data != undefined) {
+                DataMgr.s.userInfo.data.explorePlayerids.push(parseInt(data.playerId));
+                data.battlePower = p.battlePower;
+                NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Detect Succeed");
+            }
+        }
+    }
 
     public static player_fight_end = (e: any) => {
         const p: s2c_user.Iplayer_fight_end = e.data;

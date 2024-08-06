@@ -138,5 +138,33 @@
       10,
       2
     ]
+  },
+  "30006": {
+    "id": "30006",
+    "name": "120006",
+    "anim": "InformationStation",
+    "unlock": 1,
+    "maxlevel": 10,
+    "lvlup_progress": "progress",
+    "lvlup_exp": "exp",
+    "lvlup_cost": "cost_barr",
+    "lvlup_time": "lvlup_time",
+    "prefab": "prefab_house",
+    "desc": "desc_house",
+    "size": 2,
+    "staff_effect": [
+      [
+        "lvlup_time",
+        1,
+        [
+          -0.2
+        ]
+      ]
+    ],
+    "staff_des": "122001",
+    "pos": [
+      10,
+      1
+    ]
   }
 }

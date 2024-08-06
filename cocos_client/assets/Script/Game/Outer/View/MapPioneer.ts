@@ -1,13 +1,10 @@
 import { _decorator, Component, Node, Animation, tween, instantiate, Label, ProgressBar, v3, Event } from "cc";
-import { LanMgr } from "../../../Utils/Global";
 import { MapPioneerActionType, MapPioneerMoveDirection, MapPioneerObject } from "../../../Const/PioneerDefine";
 import { OuterFightView } from "./OuterFightView";
 import { DataMgr } from "../../../Data/DataMgr";
 import { OuterFightResultView } from "./OuterFightResultView";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
-import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
-import PioneerConfig from "../../../Config/PioneerConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("MapPioneer")
@@ -22,13 +19,9 @@ export class MapPioneer extends Component {
     private _lastStatus: MapPioneerActionType = null;
     private _lastActionEndTimestamp: number = null;
     private _actionTimeStamp: number = 0;
-    private _actionTotalTime: number = 0;
 
     private _fightView: OuterFightView = null;
     private _fightResultView: OuterFightResultView = null;
-    private _fightInterval: number = null;
-    private _fightAttackerOrigianlData: { id: string; name: string; hp: number; hpmax: number } = null;
-    private _fightDefenderOriginalData: { id: string; name: string; hp: number; hpmax: number } = null;
 
     private _contentView: Node = null;
     private _addingtroopsView: Node = null;
@@ -42,7 +35,6 @@ export class MapPioneer extends Component {
         this._model = model;
         this.nameLabel.string = this._model.uniqueId;
         this._actionTimeStamp = this._model.actionEndTimeStamp;
-        this._actionTotalTime = this._actionTimeStamp - model.actionBeginTimeStamp;
 
         let idleView = null;
         let leftWalkView = null;
@@ -387,6 +379,8 @@ export class MapPioneer extends Component {
 
         this._timeCountProgress = this._contentView.getChildByPath("lastTIme/progressBar").getComponent(ProgressBar);
         this._timeCountLabel = this._contentView.getChildByPath("lastTIme/time").getComponent(Label);
+        this._timeCountProgress.node.active = false;
+        this._timeCountLabel.node.active = false;
 
         this._resourceAnimView = this._contentView.getChildByName("resourceGetted");
         this._resourceAnimView.active = false;
@@ -414,17 +408,17 @@ export class MapPioneer extends Component {
         if (this._model == null) {
             return;
         }
-        const currentTimeStamp = new Date().getTime();
-        if (this._actionTimeStamp > currentTimeStamp && (this._model.fightData == null || this._model.fightData.length <= 0)) {
-            this._timeCountProgress.node.active = true;
-            this._timeCountLabel.node.active = true;
+        // const currentTimeStamp = new Date().getTime();
+        // if (this._model.actionType != MapPioneerActionType.staying && this._actionTimeStamp > currentTimeStamp && (this._model.fightData == null || this._model.fightData.length <= 0)) {
+        //     this._timeCountProgress.node.active = true;
+        //     this._timeCountLabel.node.active = true;
 
-            this._timeCountProgress.progress = (this._actionTimeStamp - currentTimeStamp) / this._actionTotalTime;
-            this._timeCountLabel.string = ((this._actionTimeStamp - currentTimeStamp) / 1000).toFixed(2) + "s";
-        } else {
-            this._timeCountProgress.node.active = false;
-            this._timeCountLabel.node.active = false;
-        }
+        //     this._timeCountProgress.progress = (this._actionTimeStamp - currentTimeStamp) / this._actionTotalTime;
+        //     this._timeCountLabel.string = ((this._actionTimeStamp - currentTimeStamp) / 1000).toFixed(2) + "s";
+        // } else {
+        //     this._timeCountProgress.node.active = false;
+        //     this._timeCountLabel.node.active = false;
+        // }
 
         // event tip
         // if (this._model != null && (this._model.actionType == MapPioneerActionType.eventStarting || this._model.actionType == MapPioneerActionType.eventing)) {
@@ -442,7 +436,6 @@ export class MapPioneer extends Component {
             return;
         }
         this._model = DataMgr.s.pioneer.getById(data.uniqueId);
-        console.log("exce fightbegfin:" + this._model.actionType);
         this.refreshUI(this._model);
     }
 }

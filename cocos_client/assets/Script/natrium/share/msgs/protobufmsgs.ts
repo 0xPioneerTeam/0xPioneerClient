@@ -64,6 +64,7 @@ export enum protobuf_c2s {
     player_explore_start,
     player_explore_npc_start,
     player_explore_gangster_start,
+    player_explore_maincity,
     // pioneer: fight(map)
     player_fight_start,
     // pioneer: event
@@ -193,6 +194,7 @@ export enum protobuf_s2c {
     player_explore_start_res,
     player_explore_npc_start_res,
     player_explore_gangster_start_res,
+    player_explore_maincity_res,
     // pioneer: fight(map)
     player_fight_start_res,
     // pioneer: event

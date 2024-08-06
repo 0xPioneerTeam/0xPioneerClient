@@ -13,6 +13,7 @@ import { NotificationName } from "../../Const/Notification";
 import { GameMgr, LanMgr } from "../../Utils/Global";
 import { MapBuildingObject } from "../../Const/MapBuilding";
 import { TilePos } from "../../Game/TiledMap/TileTool";
+import { MapBuildingType } from "../../Const/BuildingDefine";
 const { ccclass, property } = _decorator;
 
 @ccclass("DispatchUI")
@@ -149,8 +150,12 @@ export class DispatchUI extends ViewController {
         let sparePositions: Vec2[] = [];
         let targetStayPostions: Vec2[] = [];
         if (this._interactBuilding != null) {
-            sparePositions = this._interactBuilding.stayMapPositions;
-            targetStayPostions = this._interactBuilding.stayMapPositions;
+            sparePositions = this._interactBuilding.stayMapPositions.slice();
+            targetStayPostions = this._interactBuilding.stayMapPositions.slice();
+            if (this._interactBuilding.type == MapBuildingType.city && sparePositions.length == 7) {
+                // center pos cannot use to cal move path
+                sparePositions.splice(3, 1);
+            }
         } else if (this._interactPioneer != null) {
             if (this._interactPioneer.type == MapPioneerType.player || this._interactPioneer.type == MapPioneerType.npc) {
                 targetStayPostions = [this._interactPioneer.stayPos];

@@ -1,6 +1,6 @@
 import { Vec2, v2 } from "cc";
 import CommonTools from "../Tool/CommonTools";
-import { MapMemberFactionType, MapMemberTargetType } from "../Const/ConstDefine";
+import { MapInteractType, MapMemberFactionType, MapMemberTargetType } from "../Const/ConstDefine";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { MapBuildingType } from "../Const/BuildingDefine";
 import { NotificationName } from "../Const/Notification";
@@ -87,9 +87,9 @@ export default class PioneerMgr {
             });
         }
     }
-    public setMovingTarget(uniqueId: string, target: MapMemberTargetType, id: string) {
+    public setMovingTarget(uniqueId: string, target: MapMemberTargetType, id: string, interactType: MapInteractType) {
         if (uniqueId != null && id != null) {
-            this._movingTargetDataMap.set(uniqueId, { target: target, id: id });
+            this._movingTargetDataMap.set(uniqueId, { target: target, id: id, interactType: interactType });
         }
     }
     //----------------------- return action
@@ -108,7 +108,7 @@ export default class PioneerMgr {
         this._actionOverReturnPioneerUniqueId.push(uniqueId);
     }
 
-    private _movingTargetDataMap: Map<string, { target: MapMemberTargetType; id: string }> = new Map();
+    private _movingTargetDataMap: Map<string, { target: MapMemberTargetType; id: string; interactType: MapInteractType }> = new Map();
     private _actionOverReturnPioneerUniqueId: string[] = [];
     public constructor() {}
 
@@ -118,6 +118,7 @@ export default class PioneerMgr {
         if (pioneer == undefined) {
             return;
         }
+        let interactType = null;
         const movingTargetData = this._movingTargetDataMap.get(pioneer.uniqueId);
         const pioneerStayAroundPos = GameMainHelper.instance.tiledMapGetExtAround(pioneer.stayPos, 2);
         let stayBuilding: MapBuildingObject = null;
@@ -128,6 +129,7 @@ export default class PioneerMgr {
                     continue;
                 }
                 stayBuilding = building;
+                interactType = movingTargetData.interactType;
                 break;
             }
             this._movingTargetDataMap.delete(pioneer.uniqueId);
@@ -201,12 +203,30 @@ export default class PioneerMgr {
             //     GameMainHelper.instance.hideTrackingView();
             // }
             if (stayBuilding.type == MapBuildingType.city) {
-                // now only deal with fake fight
-                if (pioneer.id == "wormhole_token") {
-                    pioneer.show = false;
-                    NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: uniqueId, show: pioneer.show });
-                    NotificationMgr.triggerEvent(NotificationName.MAP_FAKE_FIGHT_SHOW, { stayPositions: stayBuilding.stayMapPositions });
+                const uniqueIdSplit = stayBuilding.uniqueId.split;
+                if (uniqueIdSplit.length == 2) {
+                    const slotId = uniqueIdSplit[0];
+                    if (slotId != DataMgr.s.mapBuilding.getSelfMainCitySlotId()) {
+                        setTimeout(() => {
+                            // detect
+                            if (interactType == MapInteractType.Detect) {
+                                NetworkMgr.websocketMsg.player_explore_maincity({
+                                    pioneerId: uniqueId,
+                                    buildingId: stayBuilding.uniqueId,
+                                    isReturn: this._checkActionSendParamRetrun(uniqueId),
+                                });
+                            } else if (interactType == MapInteractType.SiegeCity) {
+                            }
+                        }, interactDelayTime);
+                    }
                 }
+
+                // now only deal with fake fight
+                // if (pioneer.id == "wormhole_token") {
+                //     pioneer.show = false;
+                //     NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: uniqueId, show: pioneer.show });
+                //     NotificationMgr.triggerEvent(NotificationName.MAP_FAKE_FIGHT_SHOW, { stayPositions: stayBuilding.stayMapPositions });
+                // }
                 // TODO
                 // if (
                 //     (pioneer.type == MapPioneerType.player &&

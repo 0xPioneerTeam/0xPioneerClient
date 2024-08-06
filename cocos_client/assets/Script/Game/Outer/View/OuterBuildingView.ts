@@ -1,5 +1,5 @@
 import { _decorator, Animation, instantiate, inverseLerp, Label, Layout, Node, ParticleSystem2D, Prefab, UITransform, v3 } from "cc";
-import { LanMgr, ResourcesMgr } from "../../../Utils/Global";
+import { GameMgr, LanMgr, ResourcesMgr } from "../../../Utils/Global";
 import { MapBuildingType, InnerBuildingType, UserInnerBuildInfo } from "../../../Const/BuildingDefine";
 import ViewController from "../../../BasicView/ViewController";
 import NotificationMgr from "../../../Basic/NotificationMgr";
@@ -7,7 +7,7 @@ import InnerBuildingLvlUpConfig from "../../../Config/InnerBuildingLvlUpConfig";
 import InnerBuildingConfig from "../../../Config/InnerBuildingConfig";
 import { NotificationName } from "../../../Const/Notification";
 import { MapMemberFactionType } from "../../../Const/ConstDefine";
-import { MapBuildingObject, MapBuildingTavernObject, MapBuildingWormholeObject } from "../../../Const/MapBuilding";
+import { MapBuildingMainCityObject, MapBuildingObject, MapBuildingTavernObject, MapBuildingWormholeObject } from "../../../Const/MapBuilding";
 import { DataMgr } from "../../../Data/DataMgr";
 import CommonTools from "../../../Tool/CommonTools";
 import ArtifactConfig from "../../../Config/ArtifactConfig";
@@ -20,6 +20,8 @@ export class OuterBuildingView extends ViewController {
     public async refreshUI(building: MapBuildingObject) {
         this._building = building;
 
+        this._isSelfMainCity = GameMgr.getMapBuildingSlotByUnqueId(building.uniqueId) == DataMgr.s.mapBuilding.getSelfMainCitySlotId();
+
         const infoView = this.node.getChildByPath("InfoView/Content");
         this.node.getChildByPath("InfoView/Gap").getComponent(UITransform).height =
             this._viewHeightMap[this._building.animType] == null ? 120 : this._viewHeightMap[this._building.animType];
@@ -27,7 +29,15 @@ export class OuterBuildingView extends ViewController {
 
         let name: string = "";
         if (building.type == MapBuildingType.city) {
-            name = DataMgr.s.userInfo.data.name + " " + LanMgr.getLanById(building.name);
+            const uniqueIdSplit = building.uniqueId.split("|");
+            if (uniqueIdSplit.length == 2) {
+                const data = GameMgr.getMapSlotData(uniqueIdSplit[0]);
+                if (data == undefined || data.playerId == "0") {
+                    name = "empty city"
+                } else {
+                    name = data.pname + " " + LanMgr.getLanById(building.name);
+                }
+            }
         } else {
             name = LanMgr.getLanById(building.name);
         }
@@ -75,30 +85,34 @@ export class OuterBuildingView extends ViewController {
             } else {
                 infoView.getChildByPath("Level").active = false;
             }
-            let tempShowAni: string = null;
-            const effectArtifac = DataMgr.s.artifact.getObj_artifact_equiped();
-            for (const temp of effectArtifac) {
-                const config: ArtifactConfigData = ArtifactConfig.getById(temp.artifactConfigId);
-                if (config == null) {
-                    return;
+
+            if (this._isSelfMainCity) {
+                let tempShowAni: string = null;
+                const effectArtifac = DataMgr.s.artifact.getObj_artifact_equiped();
+                for (const temp of effectArtifac) {
+                    const config: ArtifactConfigData = ArtifactConfig.getById(temp.artifactConfigId);
+                    if (config == null) {
+                        return;
+                    }
+                    if (config.rank == 5) {
+                        tempShowAni = config.ani;
+                        break;
+                    }
                 }
-                if (config.rank == 5) {
-                    tempShowAni = config.ani;
-                    break;
+                if (tempShowAni != this._showArtifactAni) {
+                    if (this._artifactShowView != null) {
+                        this._artifactShowView.destroy();
+                        this._artifactShowView = null;
+                    }
+                    if (tempShowAni != null) {
+                        const prb = await ResourcesMgr.loadResource(BundleName.MainBundle, "prefab/artifactX5/Prefab/artifact/" + tempShowAni, Prefab);
+                        this._artifactShowView = instantiate(prb);
+                        infoView.getChildByPath("ArtifactShow").addChild(this._artifactShowView);
+                    }
+                    this._showArtifactAni = tempShowAni;
                 }
             }
-            if (tempShowAni != this._showArtifactAni) {
-                if (this._artifactShowView != null) {
-                    this._artifactShowView.destroy();
-                    this._artifactShowView = null;
-                }
-                if (tempShowAni != null) {
-                    const prb = await ResourcesMgr.loadResource(BundleName.MainBundle, "prefab/artifactX5/Prefab/artifact/" + tempShowAni, Prefab);
-                    this._artifactShowView = instantiate(prb);
-                    infoView.getChildByPath("ArtifactShow").addChild(this._artifactShowView);
-                }
-                this._showArtifactAni = tempShowAni;
-            }
+            
         } else if (building.type == MapBuildingType.explore) {
             // exploreIcon.active = true;
             // if (building.explorePioneerIds != null && building.explorePioneerIds.length > 0) {
@@ -291,6 +305,7 @@ export class OuterBuildingView extends ViewController {
     }
 
     private _fakeAttack: boolean = false;
+    private _isSelfMainCity: boolean = false;
 
     private _toGetEnergyTip: Node = null;
     private _toBuildBuildingTip: Node = null;
@@ -408,7 +423,7 @@ export class OuterBuildingView extends ViewController {
             return;
         }
         this._toBuildBuildingTip.active = false;
-        if (this._building != null && this._building.type == MapBuildingType.city && this._building.faction != MapMemberFactionType.enemy) {
+        if (this._isSelfMainCity && this._building != null && this._building.type == MapBuildingType.city && this._building.faction != MapMemberFactionType.enemy) {
             let canBuild: boolean = false;
             const innerBuildings = DataMgr.s.innerBuilding.data;
             innerBuildings.forEach((value: UserInnerBuildInfo, key: InnerBuildingType) => {

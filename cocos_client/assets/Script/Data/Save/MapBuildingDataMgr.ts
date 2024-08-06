@@ -13,13 +13,13 @@ import { director } from "cc";
 
 export class MapBuildingDataMgr {
     private _building_data: MapBuildingObject[];
-    private _selfMainCityUniqueId: string = null;
     private _decorateInfoMap: Map<string, string>;
     private _requestHistory: Map<string, number> = new Map();
+    private _selfMainCitySlotId: string = null;
     public constructor() {}
 
-    public getSelfMainCityUniqueId() {
-        return this._selfMainCityUniqueId;
+    public getSelfMainCitySlotId() {
+        return this._selfMainCitySlotId;
     }
     public getDecorateInfo() {
         return this._decorateInfoMap;
@@ -84,16 +84,13 @@ export class MapBuildingDataMgr {
         const mapBuilings = NetGlobalData.mapBuildings.buildings;
         for (const key in mapBuilings) {
             const element = this._convertNetDataToObject(mapBuilings[key]);
-            if (element.type == MapBuildingType.city) {
-                this._selfMainCityUniqueId = element.uniqueId;
-            }
             this._building_data.push(element);
         }
 
+        this._selfMainCitySlotId = NetGlobalData.mapBuildings.slotId;
+
         this._decorateInfoMap = new Map();
         this.setDecorateInfo(NetGlobalData.mapBuildings.slotId, NetGlobalData.mapBuildings.templateConfigId);
-        this._initInterval();
-        CLog.debug("MapBuildingDataMgr: loadObj/building_data, ", this._building_data);
     }
 
     // get obj
@@ -240,5 +237,4 @@ export class MapBuildingDataMgr {
             return baseObj;
         }
     }
-    private _initInterval() {}
 }
