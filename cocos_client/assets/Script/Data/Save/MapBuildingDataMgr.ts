@@ -202,11 +202,20 @@ export class MapBuildingDataMgr {
             winprogress: element.winprogress,
 
             rebornTime: element.rebornTime == null ? 0 : element.rebornTime * 1000,
+
+            maincityFightPioneerIds: element.maincityFightPioneerIds == null ? [] : element.maincityFightPioneerIds,
+            maincityFightPioneerDatas: new Map(),
         };
         if (element.eventPioneerDatas != null) {
             for (const key in element.eventPioneerDatas) {
                 const temple = element.eventPioneerDatas[key];
                 baseObj.eventPioneerDatas.set(key, PioneerDefine.convertNetDataToObject(temple));
+            }
+        }
+        if (element.maincityFightPioneerDatas != null) {
+            for (const key in element.maincityFightPioneerDatas) {
+                const temple = element.maincityFightPioneerDatas[key];
+                baseObj.maincityFightPioneerDatas.set(key, PioneerDefine.convertNetDataToObject(temple));
             }
         }
 

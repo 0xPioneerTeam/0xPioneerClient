@@ -398,6 +398,9 @@ message mapbuilding_info_data {
 
     optional uint32 dieTime = 31;
     optional uint32 rebornTime = 32;
+
+    repeated string maincityFightPioneerIds = 33;
+    map<string,pioneer_data> maincityFightPioneerDatas = 34;
 }
 
 message map_info_data {

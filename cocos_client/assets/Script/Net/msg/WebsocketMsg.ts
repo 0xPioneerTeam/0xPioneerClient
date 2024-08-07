@@ -132,6 +132,9 @@ export class WebsocketMsg {
     public player_explore_maincity(d: c2s_user.Iplayer_explore_maincity) {
         this.send_packet("player_explore_maincity", d);
     }
+    public player_fight_maincity(d: c2s_user.Iplayer_fight_maincity) {
+        this.send_packet("player_fight_maincity", d);
+    }
 
     public player_fight_start(d: c2s_user.Iplayer_fight_start) {
         this.send_packet("player_fight_start", d);
@@ -365,6 +368,11 @@ export namespace c2s_user {
         buildingId: string;
     }
     export interface Iplayer_explore_maincity {
+        pioneerId: string;
+        buildingId: string;
+        isReturn: boolean;
+    }
+    export interface Iplayer_fight_maincity {
         pioneerId: string;
         buildingId: string;
         isReturn: boolean;
@@ -892,6 +900,7 @@ export namespace share {
         actionBeginTimeStamp: number;
         actionEndTimeStamp: number;
         actionEndReturn?: boolean;
+        actionFightId?: string;
         movePath?: pos2d[];
 
         winProgress?: number;
@@ -1006,6 +1015,9 @@ export namespace share {
 
         dieTime?: number;
         rebornTime?: number;
+
+        maincityFightPioneerIds?: string[];
+        maincityFightPioneerDatas: { [key: string]: share.Ipioneer_data }; 
     }
     export interface Iartifact_three_confs {
         confs: Iartifact_three_conf[];

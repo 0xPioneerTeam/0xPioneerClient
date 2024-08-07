@@ -53,6 +53,7 @@ export enum MapPioneerActionType {
     fighting = "fighting",
     eventing = "eventing",
     staying = "staying",
+    maincityFighting = "maincityFighting",
 }
 
 export enum MapPioneerType {
@@ -166,6 +167,7 @@ export interface MapPioneerData {
     actionBeginTimeStamp: number;
     actionEndTimeStamp: number;
     actionEndReturn: boolean;
+    actionFightId?: string;
 
     logics: MapPioneerLogicData[];
 
@@ -253,6 +255,7 @@ export default class PioneerDefine {
             actionBeginTimeStamp: currentTime,
             actionEndTimeStamp: currentTime + (temple.actionEndTimeStamp - temple.actionBeginTimeStamp) * 1000,
             actionEndReturn: temple.actionEndReturn,
+            actionFightId: temple.actionFightId,
             logics: [],
             winProgress: temple.winProgress,
             winExp: temple.winExp,

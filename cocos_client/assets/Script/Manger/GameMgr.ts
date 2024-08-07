@@ -213,15 +213,13 @@ export default class GameMgr {
         if (sparePositions.length > 0) {
             // building: find least move path
             let minMovePath = null;
-            for (const templePos of sparePositions) {
-                const templePath = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(beginPos, templePos, stayPostions);
-                if (templePath.canMove) {
-                    if (minMovePath == null) {
+            const templePath = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(beginPos, stayPostions[0], stayPostions);
+            if (templePath.canMove) {
+                if (minMovePath == null) {
+                    minMovePath = templePath.path;
+                } else {
+                    if (minMovePath.length > templePath.path.length) {
                         minMovePath = templePath.path;
-                    } else {
-                        if (minMovePath.length > templePath.path.length) {
-                            minMovePath = templePath.path;
-                        }
                     }
                 }
             }

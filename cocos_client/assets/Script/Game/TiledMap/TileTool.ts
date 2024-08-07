@@ -309,7 +309,7 @@ export class TileMapHelper {
             }
         }
     }
-    Path_RemoveDynamicBlock(TileX: number, TileY: number,uuid:string): void {
+    Path_RemoveDynamicBlock(TileX: number, TileY: number, uuid: string): void {
         let key = TileX + '_' + TileY;
         let blockData = this._dynamicblock[key];
         if (!blockData) {
@@ -317,7 +317,7 @@ export class TileMapHelper {
         } else {
             let index = blockData.owners.indexOf(uuid);
             if (index != -1) {
-                blockData.owners.splice(index,1);
+                blockData.owners.splice(index, 1);
             }
         }
     }
@@ -510,6 +510,93 @@ export class TileMapHelper {
             path.reverse();
         }
 
+        return path;
+    }
+    /**
+     *
+     * @param from
+     * @param to
+     * @param limitstep
+     * @returns move path, if is only one pos from, cannot move to toPos
+     */
+    Path_FromTo2(to: TilePos, from: TilePos, nlimit = 2): TilePos[] {
+        var openPathTiles: TilePos[] = [];
+        var closedPathTiles: TilePos[] = [];
+
+        var currentTile = from;
+        currentTile.g = 0;
+        currentTile.h = this.Path_DistPos(from, to);
+
+        // push first point to opentable
+        openPathTiles.push(currentTile);
+
+        for (var i = 0; i < 100; i++) {// while (openPathTiles.Count != 0)
+            //     sort and get lowest F
+            openPathTiles.sort((a, b) => a.g + a.h - (b.g + b.h));
+            currentTile = openPathTiles[0];
+            //    move current from open to close
+            var ic = openPathTiles.indexOf(currentTile);
+            openPathTiles.splice(ic, 1);
+            closedPathTiles.push(currentTile);
+
+            if (currentTile == null) {
+                return [from];
+            }
+
+            var g = currentTile.g + 1;
+
+            //  if(close have target, final it.)
+            if (closedPathTiles.indexOf(to) >= 0) {
+                break;
+            }
+
+            //    searach around
+            var apprivateTiles = this.Path_GetAround(currentTile);
+            //     foreach (Tile adjacentTile in currentTile.apprivateTiles)
+            for (var i = 0; i < apprivateTiles.length; i++) {
+                var adjacentTile = apprivateTiles[i];
+
+                //block skip
+                if (g > nlimit && this.Path_IsBlock(adjacentTile.x, adjacentTile.y)) continue;
+
+                //skip closed
+                if (closedPathTiles.indexOf(adjacentTile) >= 0) {
+                    continue;
+                }
+
+                //  if new,add and calc g h
+                if (openPathTiles.indexOf(adjacentTile) < 0) {
+                    adjacentTile.g = g;
+                    adjacentTile.h = this.Path_DistPos(adjacentTile, to);
+                    openPathTiles.push(adjacentTile);
+                }
+                //    try to use low g
+                else if (adjacentTile.g + adjacentTile.h > g + adjacentTile.h) {
+                    adjacentTile.g = g;
+                }
+            }
+        }
+
+        // List<Tile> finalPathTiles = new List<Tile>();
+        let path: TilePos[] = [];
+
+        // final output
+        if (closedPathTiles.indexOf(to) >= 0) {
+            currentTile = to;
+            path.push(currentTile);
+
+            for (var i = to.g - 1; i >= 0; i--) {
+                //find and push
+                for (var j = 0; j < closedPathTiles.length; j++) {
+                    var pnode = closedPathTiles[j];
+                    if (pnode.g == i && this.Path_DistPos(pnode, currentTile) == 1) {
+                        currentTile = pnode;
+                        path.push(currentTile);
+                        break;
+                    }
+                }
+            }
+        }
         return path;
     }
 }

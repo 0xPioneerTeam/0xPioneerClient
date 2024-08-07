@@ -216,6 +216,11 @@ export default class PioneerMgr {
                                     isReturn: this._checkActionSendParamRetrun(uniqueId),
                                 });
                             } else if (interactType == MapInteractType.SiegeCity) {
+                                NetworkMgr.websocketMsg.player_fight_maincity({
+                                    pioneerId: uniqueId,
+                                    buildingId: stayBuilding.uniqueId,
+                                    isReturn: this._checkActionSendParamRetrun(uniqueId),
+                                });
                             }
                         }, interactDelayTime);
                     }

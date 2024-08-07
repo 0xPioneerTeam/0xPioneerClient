@@ -562,7 +562,8 @@ export class DataMgr {
                     if (
                         oldData.gatherPioneerIds.length != newData.gatherPioneerIds.length ||
                         oldData.eventPioneerIds.length != newData.eventPioneerIds.length ||
-                        oldData.explorePioneerIds.length != newData.explorePioneerIds.length
+                        oldData.explorePioneerIds.length != newData.explorePioneerIds.length ||
+                        oldData.maincityFightPioneerIds.length != newData.maincityFightPioneerIds.length
                     ) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_ACTION_PIONEER_CHANGE);
                     }

@@ -201,7 +201,7 @@ export default class GameMainHelper {
         const fromPos = this._tiledMapHelper.getPos(fromTilePos.x, fromTilePos.y);
         const toPos = this._tiledMapHelper.getPos(toTilePos.x, toTilePos.y);
         // path
-        const movePaths = this._tiledMapHelper.Path_FromTo(fromPos, toPos);
+        const movePaths = this._tiledMapHelper.Path_FromTo2(fromPos, toPos);
         let canMove = true;
         if (movePaths.length <= 1) {
             //only one from pos, cannot move

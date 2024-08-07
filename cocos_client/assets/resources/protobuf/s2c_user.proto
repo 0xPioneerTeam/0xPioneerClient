@@ -237,6 +237,11 @@ message player_explore_maincity_res {
     optional bool isReturn = 4;
     optional uint32 battlePower = 5;
 }
+message player_fight_maincity_res {
+    required int32 res = 1;
+    optional string pioneerId = 2;
+    optional string buildingId = 3;
+}
 // pioneer: fight(map)
 message player_fight_start_res {
     required int32 res = 1;
