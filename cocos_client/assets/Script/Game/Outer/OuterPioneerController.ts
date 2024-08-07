@@ -605,6 +605,7 @@ export class OuterPioneerController extends ViewController {
         if (attackerView == null) {
             return;
         }
+        console.log("exce data:" + JSON.stringify(data));
         GameMusicPlayMgr.playBeginFightEffect();
         const fightView = instantiate(this.fightPrefab).getComponent(OuterFightView);
         fightView.node.setParent(this.node);

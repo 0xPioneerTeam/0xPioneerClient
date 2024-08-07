@@ -6,6 +6,7 @@ import NotificationMgr from "../../Basic/NotificationMgr";
 import { share } from "../../Net/msg/WebsocketMsg";
 import NetGlobalData from "./Data/NetGlobalData";
 import { MapMemberFactionType } from "../../Const/ConstDefine";
+import PioneerConfig from "../../Config/PioneerConfig";
 
 export class PioneersDataMgr {
     private _pioneers: MapPioneerObject[] = [];
@@ -63,6 +64,7 @@ export class PioneersDataMgr {
     //-------------- change
     public createFakeData(uniqueId: string, pos: Vec2) {
         const pioneerId: string = uniqueId.split("|")[1];
+        const animType = PioneerConfig.getById(pioneerId)?.animType;
         let obj: MapPlayerPioneerObject = {
             uniqueId: uniqueId,
             id: pioneerId,
@@ -70,7 +72,7 @@ export class PioneersDataMgr {
             level: 1,
             faction: MapMemberFactionType.friend,
             type: MapPioneerType.player,
-            animType: "fake",
+            animType: animType == undefined ? "self" : animType,
             name: uniqueId,
             hp: 0,
             hpMax: 0,

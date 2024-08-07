@@ -1,6 +1,6 @@
 import { _decorator, Component, EditBox, EventTouch, Label, Node, ProgressBar, Slider, tween, v3 } from "cc";
 import ViewController from "../../BasicView/ViewController";
-import { MapPlayerPioneerObject } from "../../Const/PioneerDefine";
+import { MapPioneerActionType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import UIPanelManger from "../../Basic/UIPanelMgr";
 import { UIName } from "../../Const/ConstUIDefine";
@@ -234,6 +234,10 @@ export class PlayerDispatchDetailUI extends ViewController {
             return;
         }
         const info = this._infos[this._showIndex];
+        if (info.actionType != MapPioneerActionType.inCity) {
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Not within the city, unable to replenish troops");
+            return;
+        }
         NetworkMgr.websocketMsg.player_troop_to_hp({
             pioneerId: info.uniqueId,
             troopNum: this._addTroopNum,

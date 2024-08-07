@@ -9,6 +9,7 @@ import { DataMgr } from "../Data/DataMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { share } from "../Net/msg/WebsocketMsg";
 import { BattleReportDetailUI } from "./BattleReportDetailUI"
+import { MapCharacter } from "../Game/Outer/View/MapCharacter";
 const { ccclass, property } = _decorator;
 
 @ccclass("BattleReportListItemUI")
@@ -118,38 +119,13 @@ export class BattleReportListItemUI extends Component {
         const enemyRoleInfo = data.selfIsAttacker ? data.defender : data.attacker;
         const selfIsWin: boolean = (data.selfIsAttacker && data.attackerWin) || (!data.selfIsAttacker && !data.attackerWin);
 
-        if (enemyRoleInfo.avatar.indexOf("monster") == -1) {
-            // show right roleInfo
-            // for (const child of this.node.getChildByPath("BgAvatar").children) {
-            //     child.active = child.name == "pioneer_0";
-            // }
-            // this.node.getChildByPath("BgAvatar-001").active = true;
-            // for (const child of this.node.getChildByPath("BgAvatar-001").children) {
-            //     child.active = child.name == "pioneer_0";
-            // }
-            // this.node.getChildByPath("name-001").getComponent(Widget).left = 514.95;
-            // this.node.getChildByPath("name-001").getComponent(Widget).updateAlignment();
-            // this.node.getChildByPath("attackerOrDefenderSign-001").position = v3(13.696, 7.604);
-        } else {
-            // left avatar
-            for (const child of this.node.getChildByPath("BgAvatar").children) {
-                child.active = child.name == selfRoleInfo.avatar;
-            }
-
-            // monster not show right
-            this.node.getChildByPath("BgAvatar-001").active = false;
-
-            this.node.getChildByPath("name-001").getComponent(Widget).left = 631.868;
-            this.node.getChildByPath("name-001").getComponent(Widget).updateAlignment();
-
-            this.node.getChildByPath("attackerOrDefenderSign-001").position = v3(130.614, 7.604);
-        }
-
+        this.node.getChildByPath("BgAvatar/RoleView").getComponent(MapCharacter).refreshUI(selfRoleInfo.avatar);
         this.leftNameLabel.string = selfRoleInfo.nameUseLan ? LanMgr.getLanById(selfRoleInfo.name) : selfRoleInfo.name;
         this.leftHpBar.progress = selfRoleInfo.hp / selfRoleInfo.hpmax;
         this.leftHpText.string = `${CommonTools.getOneDecimalNum(selfRoleInfo.hp)} / ${CommonTools.getOneDecimalNum(selfRoleInfo.hpmax)}`;
         this.leftAttackerOrDefenderSign.spriteFrame = data.selfIsAttacker ? this.attackerSign : this.defenderSign;
 
+        this.node.getChildByPath("BgAvatar-001/RoleView").getComponent(MapCharacter).refreshUI(enemyRoleInfo.avatar);
         this.rightNameLabel.string = enemyRoleInfo.nameUseLan ? LanMgr.getLanById(enemyRoleInfo.name) : enemyRoleInfo.name;
         this.rightHpBar.progress = enemyRoleInfo.hp / enemyRoleInfo.hpmax;
         this.rightHpText.string = `${CommonTools.getOneDecimalNum(enemyRoleInfo.hp)} / ${CommonTools.getOneDecimalNum(enemyRoleInfo.hpmax)}`;
@@ -181,9 +157,7 @@ export class BattleReportListItemUI extends Component {
         const roleName = LanMgr.getLanById(pioneerInfo.name);
         const duration = data.duration;
 
-        for (const child of this.node.getChildByPath("BgAvatar").children) {
-            child.active = child.name == pioneerInfo.animType;
-        }
+        this.node.getChildByPath("BgAvatar/RoleView").getComponent(MapCharacter).refreshUI(pioneerInfo.animType);
         this.leftNameLabel.string = roleName;
 
         this._locationInfo = data.location != null ? v2(data.location.x, data.location.y) : null;

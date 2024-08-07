@@ -151,6 +151,12 @@ export class MapPioneer extends Component {
                     }
                     break;
 
+                case MapPioneerActionType.maincityFighting:
+                    {
+                        this._contentView.active = false;
+                        console.log("exce cityfight: " + this._model.uniqueId);
+                    }
+                    break;
                 case MapPioneerActionType.mining:
                     {
                         this._contentView.active = false;
@@ -215,19 +221,17 @@ export class MapPioneer extends Component {
                     break;
             }
 
-            if (this._model.actionType == MapPioneerActionType.fighting || this._model.actionType == MapPioneerActionType.eventing) {
+            if (this._model.actionType == MapPioneerActionType.fighting || this._model.actionType == MapPioneerActionType.eventing || this._model.actionType == MapPioneerActionType.maincityFighting) {
                 if (this._model.fightData != null && this._model.fightData.length > 0) {
                     let attacker = this._model;
+                    let defender: MapPioneerObject = null;
+                    const fightDatas = this._model.fightData.slice();
+
                     if (this._model.actionType == MapPioneerActionType.eventing && this._model.actionBuildingId != null) {
                         const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
                         if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(this._model.uniqueId)) {
                             attacker = currentBuilding.eventPioneerDatas.get(this._model.uniqueId);
                         }
-                    }
-                    let defender: MapPioneerObject = null;
-                    const fightDatas = this._model.fightData.slice();
-                    if (this._model.actionType == MapPioneerActionType.eventing) {
-                        const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
                         if (fightDatas[0].attackerId == attacker.uniqueId) {
                             if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(fightDatas[0].defenderId)) {
                                 defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].defenderId);
@@ -237,6 +241,18 @@ export class MapPioneer extends Component {
                                 defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].attackerId);
                             }
                         }
+                    } else if (this._model.actionType == MapPioneerActionType.maincityFighting && this._model.actionBuildingId != null) {
+                        const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
+                        console.log("exce cb: " + JSON.stringify(currentBuilding));
+                        if (currentBuilding != null && currentBuilding.maincityFightPioneerDatas.has(this._model.uniqueId)) {
+                            if (currentBuilding.maincityFightPioneerDatas.has(this._model.uniqueId)) {
+                                attacker = currentBuilding.maincityFightPioneerDatas.get(this._model.uniqueId);
+                            }
+                            if (currentBuilding.maincityFightPioneerDatas.has(this._model.actionFightId)) {
+                                defender = currentBuilding.maincityFightPioneerDatas.get(this._model.actionFightId);
+                            }
+                        }
+                        console.log("exce a:", attacker + ", d: ", defender);
                     } else {
                         if (fightDatas[0].attackerId == attacker.uniqueId) {
                             defender = DataMgr.s.pioneer.getById(fightDatas[0].defenderId);
@@ -244,7 +260,8 @@ export class MapPioneer extends Component {
                             defender = DataMgr.s.pioneer.getById(fightDatas[0].attackerId);
                         }
                     }
-                    if (defender != null) {
+                    
+                    if (attacker != null && defender != null) {
                         // attacker is self, defender is enemy
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, {
                             fightDatas: this._model.fightData.slice(),

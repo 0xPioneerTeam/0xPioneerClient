@@ -82,6 +82,11 @@ export class BattleReportDetailUI extends ViewController {
             //     // wait change
             // }
             // fightLogView.string += "output<br>";
+            const logHeight: number = this.battle_log.node.getComponent(UITransform).height;
+            this.battle_log.node.parent.getComponent(UITransform).height = logHeight;
+            if (logHeight > this.node.getChildByPath("__ViewContent/ScrollView").getComponent(UITransform).height) {
+                this.node.getChildByPath("__ViewContent/ScrollView").getComponent(ScrollView).scrollToBottom();
+            }
         }, 1000) as unknown as number;
     }
 

@@ -66,6 +66,9 @@ export interface MapBuildingBaseData {
 
     explorePioneerIds: string[];
     rebornTime: number;
+
+    maincityFightPioneerIds: string[];
+    maincityFightPioneerDatas: Map<string, MapPioneerObject>;
 }
 export interface MapBuildingMainCityData extends MapBuildingBaseData {
     hpMax: number;
