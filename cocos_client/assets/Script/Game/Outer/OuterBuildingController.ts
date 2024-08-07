@@ -181,7 +181,7 @@ export class OuterBuildingController extends Component {
                         temple.setPosition(pixelPos);
 
                         for (const pos of building.stayMapPositions) {
-                            GameMainHelper.instance.tiledMapAddDynamicBlock(pos, true);
+                            GameMainHelper.instance.tiledMapAddDynamicBlock(pos,building.uniqueId);
                         }
                     }
                 }
@@ -190,7 +190,7 @@ export class OuterBuildingController extends Component {
                     const data = this._buildingMap.get(building.uniqueId);
                     data.node.destroy();
                     for (const pos of data.stayPositons) {
-                        GameMainHelper.instance.tiledMapRemoveDynamicBlock(pos);
+                        GameMainHelper.instance.tiledMapRemoveDynamicBlock(pos,building.uniqueId);
                     }
                     this._buildingMap.delete(building.uniqueId);
                 }
@@ -208,7 +208,7 @@ export class OuterBuildingController extends Component {
             if (!isExsit) {
                 value.node.destroy();
                 for (const pos of value.stayPositons) {
-                    GameMainHelper.instance.tiledMapRemoveDynamicBlock(pos);
+                    GameMainHelper.instance.tiledMapRemoveDynamicBlock(pos,key);
                 }
                 this._buildingMap.delete(key);
             }

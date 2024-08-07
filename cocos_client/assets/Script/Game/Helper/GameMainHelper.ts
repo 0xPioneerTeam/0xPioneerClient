@@ -133,7 +133,6 @@ export default class GameMainHelper {
             this._shadowBuildNode.addComponent(UITransform);
         }
         //set a callback here. 35 is block
-        this._tiledMapHelper.Path_InitBlock(35);
         this._trackingView = tracking;
     }
 
@@ -146,25 +145,17 @@ export default class GameMainHelper {
         }
         return this._tiledMapHelper.tilewidth;
     }
-    public tiledMapAddDynamicBlock(mapPos: Vec2, canMoveTo: boolean = false): void {
+    public tiledMapAddDynamicBlock(mapPos: Vec2,uuid:string): void {
         if (!this.isTiledMapHelperInited) {
             return;
         }
-        this._tiledMapHelper.Path_AddDynamicBlock({
-            TileX: mapPos.x,
-            TileY: mapPos.y,
-            canMoveTo: canMoveTo,
-        });
+        this._tiledMapHelper.Path_AddDynamicBlock(mapPos.x,mapPos.y,uuid);
     }
-    public tiledMapRemoveDynamicBlock(mapPos: Vec2): void {
+    public tiledMapRemoveDynamicBlock(mapPos: Vec2,uuid:string): void {
         if (!this.isTiledMapHelperInited) {
             return;
         }
-        this._tiledMapHelper.Path_RemoveDynamicBlock({
-            TileX: mapPos.x,
-            TileY: mapPos.y,
-            canMoveTo: false,
-        });
+        this._tiledMapHelper.Path_RemoveDynamicBlock(mapPos.x,mapPos.y,uuid);
     }
     public tiledMapGetAroundByDirection(mapPos: Vec2, direction: TileHexDirection): TilePos {
         if (!this.isTiledMapHelperInited) {

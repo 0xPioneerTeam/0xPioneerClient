@@ -1,14 +1,13 @@
-import { _decorator, Color, Details, geometry, instantiate, math, Node, pingPong, Prefab, Rect, Slider, UITransform, v2, v3, Vec2, Vec3 } from "cc";
-import ViewController from "../../BasicView/ViewController";
-import { GameMgr, ResourcesMgr } from "../../Utils/Global";
+import { _decorator, instantiate, Node, Prefab, Rect, v2, Vec2 } from "cc";
 import { BundleName } from "../../Basic/ResourcesMgr";
+import ViewController from "../../BasicView/ViewController";
 import MapDecorateConfig from "../../Config/MapDecorateConfig";
-import { OuterTiledMapActionController } from "./OuterTiledMapActionController";
-import { TileMapHelper } from "../TiledMap/TileTool";
-import NetGlobalData from "../../Data/Save/Data/NetGlobalData";
-import { NetworkMgr } from "../../Net/NetworkMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import CommonTools from "../../Tool/CommonTools";
+import { ResourcesMgr } from "../../Utils/Global";
+import { TileMapHelper } from "../TiledMap/TileTool";
+import { OuterTiledMapActionController } from "./OuterTiledMapActionController";
+import GameMainHelper from "../Helper/GameMainHelper";
 
 const { ccclass, property } = _decorator;
 
@@ -98,6 +97,14 @@ export class OuterDecorateController extends ViewController {
                     node.setRotationFromEuler(decorateItem.rotation);
                     if (this._decorateAreaMap.has(areaKey)) {
                         this._decorateAreaMap.get(areaKey).push(node);
+                    }
+                }
+                if(decorateItem.block && decorateItem.blockData && decorateItem.blockData.length>0){
+                    for (let i = 0; i < decorateItem.blockData.length; i++) {
+                        const bdata = decorateItem.blockData[i];
+                        let tileX = ax * 30 + bdata.x;
+                        let tileY = -ay * 30 + bdata.y;
+                        GameMainHelper.instance.tiledMapAddDynamicBlock(v2(tileX, tileY),node.uuid);
                     }
                 }
             });

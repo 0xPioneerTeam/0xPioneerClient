@@ -85,9 +85,7 @@ export class TilePos {
 }
 
 export interface IDynamicBlock {
-    get TileX(): number;
-    get TileY(): number;
-    get canMoveTo(): boolean;
+    owners: string[],
 }
 
 const _vec3_temp = new Vec3();
@@ -297,41 +295,31 @@ export class TileMapHelper {
         return bn;
     }
 
-    _blocked: boolean[] = [];
-    _dynamicblock: IDynamicBlock[] = [];
-    Path_InitBlock(blocktag: number = 0, other: (x: number, y: number, tag: number) => void = null) {
-        // let layb = this._tilemap.getLayer("block");
-        // let layd = this._tilemap.getLayer("decoration");
-        // layb.node.active = false;
-        // layd.node.active = false;
-        // for (var y = 0; y < this.height; y++) {
-        //     for (var x = 0; x < this.width; x++) {
-        //         var btag = layb.tiles[y * this.height + x];
-        //         var btag2 = layd.tiles[y * this.height + x]; //decoration
-        //         if (btag2 != 0) {
-        //             if (other != null) other(x, y, btag2);
-        //         }
-        //         //block
-        //         var block = btag == blocktag;
-        //         this._blocked[y * this.height + x] = block;
-        //     }
-        // }
-    }
-    Path_AddDynamicBlock(block: IDynamicBlock): void {
-        if (this._dynamicblock.some((temple) => temple.TileX == block.TileX && temple.TileY == block.TileY)) {
-            return;
-        }
-        this._dynamicblock.push(block);
-    }
-    Path_RemoveDynamicBlock(block: IDynamicBlock): void {
-        for (let i = 0; i < this._dynamicblock.length; i++) {
-            if (this._dynamicblock[i].TileX == block.TileX && this._dynamicblock[i].TileY == block.TileY) {
-                this._dynamicblock.splice(i, 1);
-                break;
+    _dynamicblock: { [x_yKey: string]: IDynamicBlock } = {};
+
+    Path_AddDynamicBlock(TileX: number, TileY: number, uuid: string): void {
+        let key = TileX + '_' + TileY;
+        let blockData = this._dynamicblock[key];
+        if (!blockData) {
+            this._dynamicblock[key] = { owners: [uuid] };
+        } else {
+            let index = blockData.owners.indexOf(uuid);
+            if (index == -1) {
+                blockData.owners.push(uuid);
             }
         }
-        // cannot find blockindex
-        // var i = this._dynamicblock.indexOf(block);
+    }
+    Path_RemoveDynamicBlock(TileX: number, TileY: number,uuid:string): void {
+        let key = TileX + '_' + TileY;
+        let blockData = this._dynamicblock[key];
+        if (!blockData) {
+            this._dynamicblock[key] = { owners: [] };
+        } else {
+            let index = blockData.owners.indexOf(uuid);
+            if (index != -1) {
+                blockData.owners.splice(index,1);
+            }
+        }
     }
     Path_GetAround(pos: TilePos): TilePos[] {
         let around: TilePos[] = [];
@@ -422,18 +410,11 @@ export class TileMapHelper {
         }
         return false;
     }
-    Path_IsBlock(x: number, y: number, isTarget: boolean = false): boolean {
-        var b = this._blocked[y * this.height + x];
+    Path_IsBlock(x: number, y: number): boolean {
+        let key = x + "_" + y;
+        var b = this._dynamicblock[key];
         if (b) {
-            return b;
-        }
-        for (var i = 0; i < this._dynamicblock.length; i++) {
-            if (this._dynamicblock[i].TileX == x && this._dynamicblock[i].TileY == y) {
-                if (isTarget && this._dynamicblock[i].canMoveTo) {
-                    return false;
-                }
-                return true;
-            }
+            return b.owners.length > 0;
         }
         return false;
     }
@@ -445,7 +426,7 @@ export class TileMapHelper {
      * @returns move path, if is only one pos from, cannot move to toPos
      */
     Path_FromTo(from: TilePos, to: TilePos, limitstep = 100): TilePos[] {
-        if (this.Path_IsBlock(to.x, to.y, true)) {
+        if (this.Path_IsBlock(to.x, to.y)) {
             return [from];
         }
 
@@ -459,11 +440,7 @@ export class TileMapHelper {
         // push first point to opentable
         openPathTiles.push(currentTile);
 
-        for (
-            var i = 0;
-            i < limitstep;
-            i++ // while (openPathTiles.Count != 0)
-        ) {
+        for (var i = 0; i < limitstep; i++) {// while (openPathTiles.Count != 0)
             //     sort and get lowest F
             openPathTiles.sort((a, b) => a.g + a.h - (b.g + b.h));
             currentTile = openPathTiles[0];
@@ -485,15 +462,12 @@ export class TileMapHelper {
 
             //    searach around
             var apprivateTiles = this.Path_GetAround(currentTile);
-            for (
-                var i = 0;
-                i < apprivateTiles.length;
-                i++ //     foreach (Tile adjacentTile in currentTile.apprivateTiles)
-            ) {
+            //     foreach (Tile adjacentTile in currentTile.apprivateTiles)
+            for (var i = 0; i < apprivateTiles.length; i++) {
                 var adjacentTile = apprivateTiles[i];
 
                 //block skip
-                if (this.Path_IsBlock(adjacentTile.x, adjacentTile.y, to.x == adjacentTile.x && to.y == adjacentTile.y)) continue;
+                if (this.Path_IsBlock(adjacentTile.x, adjacentTile.y)) continue;
 
                 //skip closed
                 if (closedPathTiles.indexOf(adjacentTile) >= 0) {
