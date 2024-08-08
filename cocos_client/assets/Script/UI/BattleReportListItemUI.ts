@@ -240,7 +240,6 @@ export class BattleReportListItemUI extends Component {
     }
 
     private async onClickReport() {
-
         GameMusicPlayMgr.playTapButtonEffect();
         const result = await UIPanelManger.inst.pushPanel(UIName.BattleReportDetailUI);
         await result.node.getComponent(BattleReportDetailUI).refreshUI(this._report.fight);

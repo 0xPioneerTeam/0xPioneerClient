@@ -9,6 +9,7 @@ import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import { s2c_user, share } from "../Net/msg/WebsocketMsg";
 import { LanMgr } from "../Utils/Global";
+import { MapFightObject } from "../Const/PioneerDefine";
 
 const { ccclass, property } = _decorator;
 
@@ -27,10 +28,15 @@ export class BattleReportDetailUI extends ViewController {
     private battle_log: RichText = null;
 
     public refreshUI(fight: share.Inew_battle_report_fight_data) {
-      const fightDatas: share.Ifight_res[] = [ ...fight.fightRes ];
+        const fightDatas: share.Ifight_res[] = [...fight.fightRes];
+        const actors: Map<string, share.Inew_battle_report_fight_member_data> = new Map();
+        actors.set(fight.attacker.id, fight.attacker);
+        actors.set(fight.defender.id, fight.defender);
+        
         this.battle_log.string = "<b><color=#0fffff>【BATTLE START】</color></b>\n";
-        this.attacker_name.string = LanMgr.getLanById(fightDatas[0].attackerName);
-        this.defender_name.string = LanMgr.getLanById(fightDatas[0].defenderName);
+
+        this.attacker_name.string = LanMgr.getLanById(actors.get(fightDatas[0].attackerId).name);
+        this.defender_name.string = LanMgr.getLanById(actors.get(fightDatas[0].defenderId).name);
         let round = 1;
         this._intervalId = setInterval(() => {
             if (fightDatas.length <= 0) {
@@ -43,8 +49,8 @@ export class BattleReportDetailUI extends ViewController {
             }
 
             const tempFightData = fightDatas.shift();
-            const coloredAttackerName = this.getActorName(tempFightData.attackerId, tempFightData.attackerName);
-            const coloredDefenderName = this.getActorName(tempFightData.defenderId, tempFightData.defenderName);
+            const coloredAttackerName = this.getActorName(tempFightData.attackerId, actors.get(tempFightData.attackerId).name);
+            const coloredDefenderName = this.getActorName(tempFightData.defenderId, actors.get(tempFightData.defenderId).name);
             const coloredDamaged = `<color=#0fffff>${tempFightData.hp}</color>`;
 
             const normalText = [
@@ -90,6 +96,15 @@ export class BattleReportDetailUI extends ViewController {
         }, 1000) as unknown as number;
     }
 
+    private getActorName(actorId: string, actorName: string): string {
+        const [location, name] = actorId.split("|");
+        if (location.includes("_")) {
+            return `<b><color=#ff0000><size=20>${LanMgr.getLanById(actorName)}</size></color></b>`;
+        } else {
+            return `<b><color=#00ff00><size=20>${LanMgr.getLanById(actorName)}</size></color></b>`;
+        }
+        return "";
+    }
     //---------------------------------------------------
     // action
     public onTapClose() {
@@ -100,14 +115,5 @@ export class BattleReportDetailUI extends ViewController {
         }
         UIPanelManger.inst.popPanel(this.node);
     }
-    //------------------------------ websocket
-    private getActorName(actorId: string, actorName: string): string {
-        const [location, name] = actorId.split("|");
-        if (location.includes("_")) {
-            return `<b><color=#ff0000><size=20>${LanMgr.getLanById(actorName)}</size></color></b>`;
-        } else {
-            return `<b><color=#00ff00><size=20>${LanMgr.getLanById(actorName)}</size></color></b>`;
-        }
-        return "";
-    }
+    
 }
