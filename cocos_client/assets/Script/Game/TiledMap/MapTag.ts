@@ -1,42 +1,58 @@
-import { _decorator, CCBoolean, Component, instantiate, Node, Prefab, Sprite, UITransform, v3, Vec2 } from 'cc';
-import { DEV, EDITOR } from 'cc/env';
-import GameMainHelper from '../Helper/GameMainHelper';
+import { _decorator, CCBoolean, Component, instantiate, Node, Prefab, Sprite, UITransform, v3, Vec2 } from "cc";
+import { DEV, EDITOR } from "cc/env";
+import GameMainHelper from "../Helper/GameMainHelper";
 const { ccclass, property } = _decorator;
 
-
-
-@ccclass('MapTag')
+@ccclass("MapTag")
 export class MapTag extends Component {
     @property(CCBoolean)
     block: boolean = false;
 
-    @property({ visible() { return this.block }, displayName: '阻挡数据', type: [Vec2] })
+    @property({
+        visible() {
+            return this.block;
+        },
+        displayName: "阻挡数据",
+        type: [Vec2],
+    })
     blockData: Vec2[] = [];
 
-    @property({ visible() { return this.block }, type: Prefab })
+    @property({
+        visible() {
+            return this.block;
+        },
+        type: Prefab,
+    })
     blockNodePb: Prefab;
 
     @property(CCBoolean)
     _blockDraw: boolean;
 
-    @property({ visible() { return this.block }, displayName: '显示阻挡数据', type: CCBoolean })
+    @property({
+        visible() {
+            return this.block;
+        },
+        displayName: "显示阻挡数据",
+        type: CCBoolean,
+    })
     set blockDraw(v: boolean) {
         this._blockDraw = v;
         if (DEV && EDITOR) {
-            let blockNode = this.node.getChildByName('__BLOCKNODE');
+            let blockNode = this.node.getChildByName("__BLOCKNODE");
             if (v) {
                 if (!blockNode) {
-                    blockNode = new Node('__BLOCKNODE');
+                    blockNode = new Node("__BLOCKNODE");
                     blockNode.addComponent(UITransform);
                     this.node.addChild(blockNode);
                 }
                 if (!this.blockNodePb) {
-                    console.warn('map block show need bind: blockNodePb');
+                    console.warn("map block show need bind: blockNodePb");
                     return;
                 }
                 //  to update size 30*30
-                let tilewidth = 3904;
-                let tileheight = 2912;
+                let TileSize = 15;
+                let tilewidth = 128 * TileSize + 64; //128*30 + 64
+                let tileheight = 96 * TileSize + 32; //96*30 + 32
                 let tileNodeWidth = 128;
                 let tileNodeHeight = 128;
                 let blockUITrans = blockNode.getComponent(UITransform);
@@ -83,7 +99,7 @@ export class MapTag extends Component {
             for (let i = children.length - 1; i >= 0; i--) {
                 const node = children[i];
                 let sp = node.getComponent(Sprite);
-                if (sp && sp.spriteFrame && (sp.spriteFrame.name == "Shadow" || sp.spriteFrame.name == "Pond_01_Tex")){
+                if (sp && sp.spriteFrame && (sp.spriteFrame.name == "Shadow" || sp.spriteFrame.name == "Pond_01_Tex")) {
                     let worldPostion = uitrans.convertToWorldSpaceAR(node.position);
                     node.removeFromParent();
                     node.setPosition(shadowUITrans.convertToNodeSpaceAR(worldPostion));
@@ -94,28 +110,24 @@ export class MapTag extends Component {
         }
     }
 
-    update(deltaTime: number) {
-
-    }
+    update(deltaTime: number) {}
 
     protected onDisable(): void {
-        if(this._bindingShadowNodes){
-            this._bindingShadowNodes.forEach(node => {
+        if (this._bindingShadowNodes) {
+            this._bindingShadowNodes.forEach((node) => {
                 node.removeFromParent();
             });
         }
     }
 
     protected onEnable(): void {
-        if(this._bindingShadowNodes){
+        if (this._bindingShadowNodes) {
             let shadowNode = GameMainHelper.instance.shadowBuildNode;
-            this._bindingShadowNodes.forEach(node => {
-                if(node.parent == null){
+            this._bindingShadowNodes.forEach((node) => {
+                if (node.parent == null) {
                     shadowNode.addChild(node);
                 }
             });
         }
     }
 }
-
-
