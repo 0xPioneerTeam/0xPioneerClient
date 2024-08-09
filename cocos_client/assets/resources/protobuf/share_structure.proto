@@ -91,7 +91,7 @@ message player_info {
     optional usermap_data usermap = 5;
     optional nfts_data nfts = 6;
     required map_info_data mapbuilding = 7;
-    repeated task_data tasks = 8;
+    required task_data taskinfo = 8;
     repeated pos2d shadows = 9;
 }
 
@@ -195,8 +195,6 @@ message pioneer_data {
     optional int32 rebirthEndTime = 82;
     optional string killerId = 83;
     optional string NFTId = 84;
-    optional string talkId = 85;
-    optional user_map_member_status talkCountStruct = 86;
 
     optional uint32 dieTime = 90;
     optional uint32 rebornTime = 91;
@@ -259,22 +257,14 @@ message map_pioneer_data {
     optional int32 rebirthEndTime = 41;
     optional string killerId = 42;
     // optional string NFTId = 43;
-    optional string talkId = 44;
-    optional user_map_member_status talkCountStruct = 45;
 
     optional uint32 dieTime = 46;
     optional uint32 rebornTime = 47;
 }
 message fight_res {
     required string attackerId = 1;
-    required string attackerName = 2;
-    required string attackerAnimType = 3;
-
-    required string defenderId = 4;
-    required string defenderName = 5; 
-    required string defenderAnimType = 6;
-
-    required uint32 hp = 7;
+    required string defenderId = 2;
+    required uint32 hp = 3;
 }
 
 message user_map_member_status {
@@ -516,14 +506,20 @@ message new_battle_report_mining_data {
 }
 
 message new_battle_report_fight_member_data {
-    required string avatar = 1;
-    required string name = 2;
-    required bool nameUseLan = 3;
-    required float hp = 4;
-    required float hpmax = 5;
+    required string id = 1;
+    required string avatar = 2;
+    required string name = 3;
+    required bool nameUseLan = 4;
+    required float hp = 5;
+    required float hpmax = 6;
 }
 
 message task_data {
+    repeated task_info_data tasks = 1;
+    map<string, task_talk_data> canTalkData = 2;
+}
+
+message task_info_data {
     required string taskId = 1;
     required uint32 stepIndex = 2;
     required bool isFinished = 3;
@@ -532,6 +528,12 @@ message task_data {
     required bool isGetted = 6;
     repeated task_step_data steps = 7;
 }
+
+message task_talk_data {
+    required string npcUniqueId = 1;
+    required string talkId = 2;
+}
+
 message task_step_data {
     required string id = 1;
     required uint32 completeIndex = 2;

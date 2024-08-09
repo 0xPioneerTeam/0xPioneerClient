@@ -89,6 +89,7 @@ export enum NotificationName {
     TASK_DID_CHANGE,
     TASK_NEW_GETTED,
     TASK_LIST,
+    TASK_CAN_TALK_CHANGE,
     
     //------------------------------------ map building
     MAP_BUILDING_NEED_REFRESH,
@@ -113,7 +114,6 @@ export enum NotificationName {
     MAP_PLAYER_PIONEER_DID_MOVE_STEP,
     MAP_PIONEER_MOVE_MEETTED,
     MAP_PIONEER_SHOW_CHANGED,
-    MAP_PIONEER_TALK_CHANGED,
     MAP_PIONEER_FACTION_CHANGED,
     MAP_PIONEER_ACTIONTYPE_CHANGED,
     MAP_PIONEER_STAY_POSITION_CHANGE,

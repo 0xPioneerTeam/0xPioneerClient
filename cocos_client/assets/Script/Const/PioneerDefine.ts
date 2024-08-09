@@ -193,10 +193,6 @@ export interface MapPlayerPioneerData extends MapPioneerData {
     NFTId: string;
 }
 
-export interface MapNpcPioneerData extends MapPioneerData {
-    talkId: string;
-}
-
 export interface MapPioneerObject extends MapPioneerData {
     stayPos: Vec2;
     movePaths: (TilePos | Vec2)[];
@@ -204,12 +200,6 @@ export interface MapPioneerObject extends MapPioneerData {
 }
 
 export interface MapPlayerPioneerObject extends MapPlayerPioneerData {
-    stayPos: Vec2;
-    movePaths: (TilePos | Vec2)[];
-    logics: MapPioneerLogicObject[];
-}
-
-export interface MapNpcPioneerObject extends MapNpcPioneerData {
     stayPos: Vec2;
     movePaths: (TilePos | Vec2)[];
     logics: MapPioneerLogicObject[];
@@ -276,13 +266,6 @@ export default class PioneerDefine {
                 killerId: temple.killerId,
             };
             return playerObj;
-        } else if (obj.type == MapPioneerType.npc) {
-            let npcObj: MapNpcPioneerObject;
-            npcObj = {
-                ...obj,
-                talkId: temple.talkId,
-            };
-            return npcObj;
         } else {
             return obj;
         }

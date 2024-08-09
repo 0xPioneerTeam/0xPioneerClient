@@ -149,6 +149,10 @@ export class Main extends ViewController {
     }
 
     private async _showGameMain() {
+        if (this["__gameMainShowed"]) {
+            return;
+        }
+        this["__gameMainShowed"] = true;
         await LocalDataLoader.loadLocalDatas();
         await UIPanelManger.inst.pushPanel(UIName.MainUI);
         await this.node.getChildByPath("UI_Canvas/UI_ROOT").getComponent(UIMainRootController).checkShowRookieGuide();
@@ -225,10 +229,10 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("player_lvlup_change", DataMgr.player_lvlup_change);
 
         // task
-        NetworkMgr.websocket.on("user_task_action_getnewtalk", DataMgr.user_task_action_getnewtalk);
         NetworkMgr.websocket.on("user_task_did_change", DataMgr.user_task_did_change);
         NetworkMgr.websocket.on("get_user_task_info_res", DataMgr.get_user_task_info_res);
         NetworkMgr.websocket.on("user_task_action_talk", DataMgr.user_task_action_talk);
+        NetworkMgr.websocket.on("user_task_talk_info_change", DataMgr.user_task_talk_info_change);
 
         // box
         NetworkMgr.websocket.on("player_worldbox_beginner_open_res", DataMgr.player_worldbox_beginner_open_res);
@@ -237,7 +241,6 @@ export class Main extends ViewController {
 
         //settlement
         NetworkMgr.websocket.on("get_user_settlement_info_res", DataMgr.get_user_settlement_info_res);
-
 
         NotificationMgr.addListener(NotificationName.FAKE_ROOKIESTEP_CHANGE, this._onFakeRookieStepChange, this);
     }

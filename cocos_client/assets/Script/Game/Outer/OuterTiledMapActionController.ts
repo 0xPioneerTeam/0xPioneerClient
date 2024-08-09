@@ -742,7 +742,7 @@ export class OuterTiledMapActionController extends ViewController {
                                             pioneerId: currentActionPioneer.uniqueId,
                                             movePath: uploadPath,
                                             feeTxhash: "",
-                                            isReturn: isReturn,
+                                            isReturn: actionType == MapInteractType.Move ? isReturn : false,
                                         });
                                     }
                                 } else {

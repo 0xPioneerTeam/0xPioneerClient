@@ -6,16 +6,13 @@ import TaskConfig from "../../Config/TaskConfig";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
-import { TaskCondition, TaskConditionType, TaskStepConfigData, TaskStepObject } from "../../Const/TaskDefine";
-import { MapNpcPioneerObject, MapPioneerObject } from "../../Const/PioneerDefine";
-import CommonTools from "../../Tool/CommonTools";
+import { TaskStepObject } from "../../Const/TaskDefine";
 import GameMainHelper from "../../Game/Helper/GameMainHelper";
-import TaskStepConfig from "../../Config/TaskStepConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("TaskTrackingUI")
 export class TaskTrackingUI extends Component {
-    private _doingTask: share.Itask_data[] = [];
+    private _doingTask: share.Itask_info_data[] = [];
     private _isShow: boolean = false;
     private _showIndex: number = 0;
     private _currentTween: Tween<Node> = null;
@@ -141,7 +138,7 @@ export class TaskTrackingUI extends Component {
     }
     private onTapTask() {
         GameMusicPlayMgr.playTapButtonEffect();
-        const templeTask: share.Itask_data = this._doingTask[this._showIndex];
+        const templeTask: share.Itask_info_data = this._doingTask[this._showIndex];
         const currentStepTask: TaskStepObject = DataMgr.s.task.getTaskStep(templeTask.steps[templeTask.stepIndex].id);
         GameMgr.taskTracking(currentStepTask);
     }

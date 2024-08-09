@@ -143,6 +143,7 @@ message player_explore_start {
 message player_explore_npc_start {
     required string pioneerId = 1;
     required string npcId = 2;
+    required bool isReturn = 3;
 }
 message player_explore_gangster_start {
     required string pioneerId = 1;

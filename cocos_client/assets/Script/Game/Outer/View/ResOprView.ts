@@ -1,6 +1,6 @@
 import { _decorator, Button, Component, instantiate, Label, Layers, Layout, log, Node, Sprite, UITransform, v2, v3, Vec2, Vec3 } from "cc";
-import { MapBuildingMainCityObject, MapBuildingObject, MapBuildingWormholeObject } from "../../../Const/MapBuilding";
-import { MapNpcPioneerData, MapNpcPioneerObject, MapPioneerObject, MapPioneerType } from "../../../Const/PioneerDefine";
+import { MapBuildingObject, MapBuildingWormholeObject } from "../../../Const/MapBuilding";
+import { MapPioneerObject, MapPioneerType } from "../../../Const/PioneerDefine";
 import { InnerBuildingType, MapBuildingType } from "../../../Const/BuildingDefine";
 import { GameMgr, ItemMgr, LanMgr } from "../../../Utils/Global";
 import ItemConfig from "../../../Config/ItemConfig";
@@ -196,8 +196,8 @@ export class ResOprView extends Component {
             }
         } else if (interactPioneer != null) {
             if (interactPioneer.type == MapPioneerType.npc) {
-                const npcObj = interactPioneer as MapNpcPioneerObject;
-                if (npcObj.talkId != null) {
+                const canTalkData = DataMgr.s.task.getCanTalkData();
+                if (canTalkData[interactPioneer.id] != undefined) {
                     actionTypes.push(MapInteractType.Talk);
                 }
                 actionTypes.push(MapInteractType.Move);

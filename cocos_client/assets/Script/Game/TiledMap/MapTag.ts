@@ -12,7 +12,7 @@ export class MapTag extends Component {
         visible() {
             return this.block;
         },
-        displayName: "阻挡数据",
+        displayName: "block data",
         type: [Vec2],
     })
     blockData: Vec2[] = [];
@@ -32,7 +32,7 @@ export class MapTag extends Component {
         visible() {
             return this.block;
         },
-        displayName: "显示阻挡数据",
+        displayName: "show block data",
         type: CCBoolean,
     })
     set blockDraw(v: boolean) {
@@ -50,7 +50,7 @@ export class MapTag extends Component {
                     return;
                 }
                 //  to update size 30*30
-                let TileSize = 15;
+                let TileSize = 30;
                 let tilewidth = 128 * TileSize + 64; //128*30 + 64
                 let tileheight = 96 * TileSize + 32; //96*30 + 32
                 let tileNodeWidth = 128;

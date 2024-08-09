@@ -40,8 +40,8 @@ export class TaskListUI extends ViewController {
         }
         this._detailProgressList = [];
 
-        const finishedTasks: share.Itask_data[] = [];
-        const toDoTasks: share.Itask_data[] = [];
+        const finishedTasks: share.Itask_info_data[] = [];
+        const toDoTasks: share.Itask_info_data[] = [];
         const allGettedTasks = DataMgr.s.task.getAllGettedTasks();
         for (const task of allGettedTasks) {
             if (task.isFinished || task.isFailed) {
@@ -67,7 +67,7 @@ export class TaskListUI extends ViewController {
                 break;
             }
             actionTaskShowCount += 1;
-            const currentTask: share.Itask_data = toDoTasks[i];
+            const currentTask: share.Itask_info_data = toDoTasks[i];
             const currentStep: share.Itask_step_data = currentTask.steps[currentTask.stepIndex];
             if (currentStep == null) {
                 continue;
@@ -94,13 +94,13 @@ export class TaskListUI extends ViewController {
 
         this._detailTaskView.active = this._isDetailShow;
         if (this._isDetailShow) {
-            let showTasks: share.Itask_data[] = null;
+            let showTasks: share.Itask_info_data[] = null;
             if (this._isDetailToDoShow) {
                 showTasks = toDoTasks;
             } else {
                 showTasks = finishedTasks;
             }
-            showTasks.sort((a: share.Itask_data, b: share.Itask_data) => a.taskId.localeCompare(b.taskId));
+            showTasks.sort((a: share.Itask_info_data, b: share.Itask_info_data) => a.taskId.localeCompare(b.taskId));
             for (let i = 0; i < showTasks.length; i++) {
                 const detail = instantiate(this._detailTaskItem);
                 detail.active = true;
@@ -119,7 +119,7 @@ export class TaskListUI extends ViewController {
 
             if (this._detailSelectedIndex < showTasks.length) {
                 this._detailTaskView.getChildByName("ProgressList").active = true;
-                const currentTask: share.Itask_data = showTasks[this._detailSelectedIndex];
+                const currentTask: share.Itask_info_data = showTasks[this._detailSelectedIndex];
                 if (currentTask.isFailed) {
                     const unDoneTitleItem = instantiate(this._detailProgressUndoneTitleItem);
                     unDoneTitleItem.active = true;
@@ -216,7 +216,7 @@ export class TaskListUI extends ViewController {
 
     private _isDetailShow: boolean = false;
     private _isDetailToDoShow: boolean = true;
-    private _toDoTaskList: share.Itask_data[] = [];
+    private _toDoTaskList: share.Itask_info_data[] = [];
     private _detailSelectedIndex: number = 0;
 
     private _actionTaskList: Node[] = [];
@@ -303,7 +303,7 @@ export class TaskListUI extends ViewController {
         if (index >= this._toDoTaskList.length) {
             return;
         }
-        const templeTask: share.Itask_data = this._toDoTaskList[index];
+        const templeTask: share.Itask_info_data = this._toDoTaskList[index];
         const currentStepTask: TaskStepObject = DataMgr.s.task.getTaskStep(templeTask.steps[templeTask.stepIndex].id);
         GameMgr.taskTracking(currentStepTask);
     }

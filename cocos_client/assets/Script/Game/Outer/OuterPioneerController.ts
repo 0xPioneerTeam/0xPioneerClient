@@ -1,4 +1,4 @@
-import { _decorator, Color, dynamicAtlasManager, instantiate, Node, Prefab, v2, v3, Vec2, Vec3 } from "cc";
+import { _decorator, Color, dynamicAtlasManager, instantiate, Node, Prefab, sp, v2, v3, Vec2, Vec3 } from "cc";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import UIPanelManger from "../../Basic/UIPanelMgr";
 import ViewController from "../../BasicView/ViewController";
@@ -129,7 +129,7 @@ export class OuterPioneerController extends ViewController {
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_NEED_REFRESH, this._refreshUI, this);
         // talk
-        NotificationMgr.addListener(NotificationName.MAP_PIONEER_TALK_CHANGED, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.TASK_CAN_TALK_CHANGE, this._refreshUI, this);
         // action
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionChanged, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_STAY_POSITION_CHANGE, this._onPioneerStayPositionChanged, this);
@@ -159,7 +159,7 @@ export class OuterPioneerController extends ViewController {
             const allPioneers = DataMgr.s.pioneer.getAll();
             for (var i = 0; i < allPioneers.length; i++) {
                 let pioneer = allPioneers[i];
-                if (pioneer.type != MapPioneerType.player) {
+                if (pioneer.type != MapPioneerType.player || pioneer.actionType != MapPioneerActionType.moving) {
                     continue;
                 }
                 // if (this._movingPioneerIds.indexOf(pioneer.uniqueId) == -1 || !this._pioneerMap.has(pioneer.uniqueId)) {
@@ -234,7 +234,7 @@ export class OuterPioneerController extends ViewController {
 
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_NEED_REFRESH, this._refreshUI, this);
         // talk
-        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_TALK_CHANGED, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.TASK_CAN_TALK_CHANGE, this._refreshUI, this);
         // action
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionChanged, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_STAY_POSITION_CHANGE, this._onPioneerStayPositionChanged, this);
@@ -344,7 +344,6 @@ export class OuterPioneerController extends ViewController {
         //     pioneer.movePath.splice(0, 1);
         //     return;
         // }
-
         let nexttile = pioneer.movePaths[0];
         pioneer.stayPos = v2(nexttile.x, nexttile.y);
         var nextwpos = GameMainHelper.instance.tiledMapGetPosPixel(nexttile.x, nexttile.y);
@@ -605,7 +604,6 @@ export class OuterPioneerController extends ViewController {
         if (attackerView == null) {
             return;
         }
-        console.log("exce data:" + JSON.stringify(data));
         GameMusicPlayMgr.playBeginFightEffect();
         const fightView = instantiate(this.fightPrefab).getComponent(OuterFightView);
         fightView.node.setParent(this.node);

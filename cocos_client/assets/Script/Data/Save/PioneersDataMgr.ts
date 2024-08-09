@@ -1,6 +1,6 @@
 import { Vec2, v2 } from "cc";
 import { TilePos } from "../../Game/TiledMap/TileTool";
-import PioneerDefine, { MapNpcPioneerObject, MapPioneerActionType, MapPioneerObject, MapPioneerType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
+import PioneerDefine, { MapPioneerActionType, MapPioneerObject, MapPioneerType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 import { NotificationName } from "../../Const/Notification";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { share } from "../../Net/msg/WebsocketMsg";
@@ -24,12 +24,12 @@ export class PioneersDataMgr {
     public getAllSelfPlayers(): MapPlayerPioneerObject[] {
         return this._pioneers.filter((p) => p.type == MapPioneerType.player && this._selfPioneerUnqueIds.indexOf(p.uniqueId) != -1) as MapPlayerPioneerObject[];
     }
-    public getAllNpcs(forceShow: boolean = false): MapNpcPioneerObject[] {
+    public getAllNpcs(forceShow: boolean = false) {
         // wait change
         if (forceShow) {
-            return this._pioneers.filter((p) => p.show == true && p.type == MapPioneerType.npc) as MapNpcPioneerObject[];
+            return this._pioneers.filter((p) => p.show == true && p.type == MapPioneerType.npc);
         } else {
-            return this._pioneers.filter((p) => p.type == MapPioneerType.npc) as MapNpcPioneerObject[];
+            return this._pioneers.filter((p) => p.type == MapPioneerType.npc);
         }
     }
     public getById(uniqueId: string, forceShow: boolean = false): MapPioneerObject | undefined {
@@ -103,7 +103,7 @@ export class PioneersDataMgr {
         const isExit = this._pioneers.findIndex((item) => item.uniqueId == data.uniqueId) != -1;
         if (isExit) {
             return;
-        } 
+        }
         const newObj = PioneerDefine.convertNetDataToObject(data);
         this._pioneers.push(newObj);
     }
@@ -127,14 +127,13 @@ export class PioneersDataMgr {
     }
     public replaceData(index: number, data: share.Ipioneer_data) {
         const newObj = PioneerDefine.convertNetDataToObject(data);
-        if (this._pioneers[index].actionType == MapPioneerActionType.moving) {
+        if (newObj.actionType != MapPioneerActionType.inCity && this._pioneers[index].actionType == MapPioneerActionType.moving) {
             newObj.stayPos = this._pioneers[index].stayPos;
             newObj.movePaths = this._pioneers[index].movePaths;
             newObj.actionBeginTimeStamp = 0;
             newObj.actionEndTimeStamp = 0;
         }
         this._pioneers[index] = newObj;
-
         return newObj;
     }
     public changeCurrentAction(uniqueId: string) {
@@ -146,26 +145,6 @@ export class PioneersDataMgr {
         findPioneer.actionType = type;
         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: uniqueId });
     }
-    public changePos(uniqueId: string, pos: Vec2) {
-        const findPioneer = this.getById(uniqueId);
-        if (findPioneer == undefined) return;
-        findPioneer.stayPos = pos;
-    }
-    public changeTalk(uniqueId: string, talkId: string) {
-        const pioneer = this.getById(uniqueId);
-        if (pioneer == undefined) {
-            return;
-        }
-        const npcObj: MapNpcPioneerObject = pioneer as MapNpcPioneerObject;
-        if (!!npcObj) {
-            if (npcObj.talkId == talkId) {
-                return;
-            }
-            npcObj.talkId = talkId;
-            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_TALK_CHANGED, { uniqueId: uniqueId, talkId: npcObj.talkId });
-        }
-    }
-
     // move
     public beginMove(uniqueId: string, movePaths: TilePos[], forceShowMovePath: boolean = false) {
         const findPioneer = this.getById(uniqueId);

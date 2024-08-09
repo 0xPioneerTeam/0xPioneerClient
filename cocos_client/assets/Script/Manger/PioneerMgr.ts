@@ -92,18 +92,6 @@ export default class PioneerMgr {
             this._movingTargetDataMap.set(uniqueId, { target: target, id: id, interactType: interactType });
         }
     }
-    //----------------------- return action
-    public doActionOverRetrun(uniqueId: string) {
-        const pioneer = DataMgr.s.pioneer.getById(uniqueId);
-        if (pioneer == undefined) {
-            return;
-        }
-        if (pioneer.actionEndReturn) {
-            DataMgr.s.pioneer.changeActionType(uniqueId, MapPioneerActionType.inCity);
-            DataMgr.s.pioneer.changePos(uniqueId, GameMgr.getMainCityGatePos());
-        }
-    }
-
     public addActionOverReturnPioneer(uniqueId: string) {
         this._actionOverReturnPioneerUniqueId.push(uniqueId);
     }
@@ -176,6 +164,7 @@ export default class PioneerMgr {
                             NetworkMgr.websocketMsg.player_explore_npc_start({
                                 pioneerId: uniqueId,
                                 npcId: interactPioneer.uniqueId,
+                                isReturn: this._checkActionSendParamRetrun(uniqueId),
                             });
                         }, interactDelayTime);
                     } else if (interactPioneer.type == MapPioneerType.gangster) {
@@ -191,9 +180,6 @@ export default class PioneerMgr {
                         this.fight(pioneer, interactPioneer);
                     }, interactDelayTime);
                 }
-            } else {
-                // move to empty pos
-                this.doActionOverRetrun(uniqueId);
             }
         } else {
             // building

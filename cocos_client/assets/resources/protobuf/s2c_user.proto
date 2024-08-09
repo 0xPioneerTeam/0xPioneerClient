@@ -328,16 +328,14 @@ message get_user_task_info_res {
 }
 // task: notify
 message user_task_did_change {
-    required share.task_data task = 1;
+    required share.task_info_data task = 1;
 }
 message user_task_action_talk {
     required string talkId= 1;
 }
-message user_task_action_getnewtalk {
-    required string npcId= 1;
-    required string talkId= 2;
+message user_task_talk_info_change {
+    map<string, task_talk_data> canTalkData = 1;
 }
-
 
 // ------ item ------
 message player_item_use_res {

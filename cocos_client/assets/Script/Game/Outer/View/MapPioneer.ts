@@ -243,7 +243,6 @@ export class MapPioneer extends Component {
                         }
                     } else if (this._model.actionType == MapPioneerActionType.maincityFighting && this._model.actionBuildingId != null) {
                         const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
-                        console.log("exce cb: " + JSON.stringify(currentBuilding));
                         if (currentBuilding != null && currentBuilding.maincityFightPioneerDatas.has(this._model.uniqueId)) {
                             if (currentBuilding.maincityFightPioneerDatas.has(this._model.uniqueId)) {
                                 attacker = currentBuilding.maincityFightPioneerDatas.get(this._model.uniqueId);
@@ -252,7 +251,6 @@ export class MapPioneer extends Component {
                                 defender = currentBuilding.maincityFightPioneerDatas.get(this._model.actionFightId);
                             }
                         }
-                        console.log("exce a:", attacker + ", d: ", defender);
                     } else {
                         if (fightDatas[0].attackerId == attacker.uniqueId) {
                             defender = DataMgr.s.pioneer.getById(fightDatas[0].defenderId);

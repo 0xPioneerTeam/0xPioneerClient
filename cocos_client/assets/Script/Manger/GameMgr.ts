@@ -6,7 +6,7 @@ import { GAME_ENV_IS_DEBUG, GameExtraEffectType, MapMemberTargetType } from "../
 import ItemData from "../Const/Item";
 import { MapBuildingObject } from "../Const/MapBuilding";
 import { NotificationName } from "../Const/Notification";
-import { MapNpcPioneerObject, MapPioneerObject, MapPlayerPioneerObject } from "../Const/PioneerDefine";
+import { MapPioneerObject, MapPlayerPioneerObject } from "../Const/PioneerDefine";
 import { TaskCondition, TaskConditionType, TaskStepObject } from "../Const/TaskDefine";
 import { DataMgr } from "../Data/DataMgr";
 import CommonTools from "../Tool/CommonTools";
@@ -125,10 +125,15 @@ export default class GameMgr {
         let interactBuildingId: string = null;
         let interactPioneerId: string = null;
         if (condition.type == TaskConditionType.Talk) {
-            let targetPioneer: MapNpcPioneerObject = null;
+            let targetPioneer = null;
             const allNpcs = DataMgr.s.pioneer.getAllNpcs();
+            const canTalkData = DataMgr.s.task.getCanTalkData();
             for (const npc of allNpcs) {
-                if (npc.talkId == condition.talk.talkId) {
+                const talkData = canTalkData[npc.id];
+                if (talkData == undefined) {
+                    continue;
+                }
+                if (talkData.talkId == condition.talk.talkId) {
                     targetPioneer = npc;
                     break;
                 }

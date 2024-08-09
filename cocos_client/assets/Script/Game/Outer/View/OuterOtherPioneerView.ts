@@ -23,7 +23,8 @@ import {
 } from "cc";
 import { LanMgr } from "../../../Utils/Global";
 import { MapMemberFactionType } from "../../../Const/ConstDefine";
-import { MapNpcPioneerObject, MapPioneerActionType, MapPioneerMoveDirection, MapPioneerObject, MapPioneerType } from "../../../Const/PioneerDefine";
+import { MapPioneerActionType, MapPioneerMoveDirection, MapPioneerObject, MapPioneerType } from "../../../Const/PioneerDefine";
+import { DataMgr } from "../../../Data/DataMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -101,10 +102,8 @@ export class OuterOtherPioneerView extends Component {
         }
 
         // taskhide
-        const npcPioneer: MapNpcPioneerObject = pioneer as MapNpcPioneerObject;
-        if (!!npcPioneer) {
-            this._hasTaskView.active = npcPioneer.talkId != null && npcPioneer.talkId != "";
-        }
+        const canTalkData = DataMgr.s.task.getCanTalkData();
+        this._hasTaskView.active = canTalkData[pioneer.id] != undefined;
 
         this.node.active = pioneer.actionType != MapPioneerActionType.fighting;
 

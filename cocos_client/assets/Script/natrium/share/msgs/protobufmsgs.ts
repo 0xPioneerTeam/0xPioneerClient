@@ -231,7 +231,7 @@ export enum protobuf_s2c {
     // task: notify
     user_task_did_change,
     user_task_action_talk,
-    user_task_action_getnewtalk,
+    user_task_talk_info_change,
 
 
     // ------ item ------

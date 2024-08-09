@@ -347,6 +347,7 @@ export namespace c2s_user {
     export interface Iplayer_explore_npc_start {
         pioneerId: string;
         npcId: string;
+        isReturn: boolean;
     }
     export interface Iplayer_event_start {
         pioneerId: string;
@@ -696,12 +697,11 @@ export namespace s2c_user {
         txhash: string;
         logid: string;
     }
-    export interface Iuser_task_action_getnewtalk {
-        npcId: string;
-        talkId: string;
+    export interface Iuser_task_talk_info_change {
+        canTalkData: { [key: string]: share.Itask_talk_data };
     }
     export interface Iuser_task_did_change {
-        task: share.Itask_data;
+        task: share.Itask_info_data;
     }
     export interface Iget_user_task_info_res {
         res: number;
@@ -843,9 +843,9 @@ export namespace share {
         artifact?: Iartifact_data;
         usermap?: Iusermap_data;
         nfts?: Infts_data;
-        mapbuilding?: Imap_info_data;
-        tasks?: Itask_data[];
-        shadows?: pos2d[];
+        mapbuilding: Imap_info_data;
+        taskinfo: Itask_data;
+        shadows: pos2d[];
     }
 
     export interface Istorehouse_data {
@@ -909,7 +909,6 @@ export namespace share {
         actionBuildingId?: string;
         killerId?: string;
         NFTId?: string;
-        talkId?: string;
 
         actionFightRes: Ifight_res[];
         actionFightWinner: number;
@@ -921,13 +920,7 @@ export namespace share {
     }
     export interface Ifight_res {
         attackerId: string;
-        attackerName: string;
-        attackerAnimType: string;
-
         defenderId: string;
-        defenderName: string;
-        defenderAnimType: string;
-
         hp: number;
     }
 
@@ -1043,6 +1036,10 @@ export namespace share {
     }
 
     export interface Itask_data {
+        tasks: Itask_info_data[];
+        canTalkData: { [key: string]: Itask_talk_data };
+    }
+    export interface Itask_info_data {
         taskId: string;
         stepIndex: number;
         isFinished: boolean;
@@ -1050,6 +1047,10 @@ export namespace share {
         canGet: boolean;
         isGetted: boolean;
         steps: Itask_step_data[];
+    }
+    export interface Itask_talk_data {
+        npcUniqueId: string;
+        talkId: string;
     }
     export interface Itask_step_data {
         id: string;
@@ -1086,6 +1087,7 @@ export namespace share {
         player,
     }
     export interface Inew_battle_report_fight_member_data {
+        id: string;
         avatar: string;
         name: string;
         nameUseLan: boolean;

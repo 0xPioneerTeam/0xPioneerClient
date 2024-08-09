@@ -57,7 +57,7 @@ export class DataMgr {
                 NetGlobalData.usermap = p.data.info.usermap;
                 NetGlobalData.nfts = p.data.info.nfts;
                 NetGlobalData.mapBuildings = p.data.info.mapbuilding;
-                NetGlobalData.tasks = p.data.info.tasks;
+                NetGlobalData.taskinfo = p.data.info.taskinfo;
                 NetGlobalData.shadows = p.data.info.shadows;
                 // load save data
                 await DataMgr.s.load(this.r.wallet.addr);
@@ -399,7 +399,7 @@ export class DataMgr {
                 playerId: info.playerId.toString(),
                 pname: info.pname,
                 level: info.level,
-                battlePower: info.battlePower
+                battlePower: info.battlePower,
             });
         }
         for (const key in p.user) {
@@ -471,14 +471,6 @@ export class DataMgr {
                     // action type
                     if (oldData.actionType != newData.actionType || oldData.actionEndTimeStamp != newData.actionEndTimeStamp) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: newData.uniqueId });
-                        if (oldData.actionType == MapPioneerActionType.mining && oldData.actionBuildingId != null) {
-                            // mining over
-                            PioneerMgr.doActionOverRetrun(newData.uniqueId);
-                        }
-                        if (oldData.actionType == MapPioneerActionType.eventing && oldData.actionBuildingId != null) {
-                            // eventing over
-                            PioneerMgr.doActionOverRetrun(newData.uniqueId);
-                        }
                     }
                     // fight
                     if (oldData.fightData == null && newData.fightData != null) {
@@ -520,7 +512,6 @@ export class DataMgr {
             }
             NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
         }
-       
     };
     public static mappioneer_reborn_change = (e: any) => {
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106009"));
@@ -595,22 +586,31 @@ export class DataMgr {
         }
     };
     public static player_explore_npc_start_res = async (e: any) => {
-        // wait change
-        // const p: s2c_user.Iplayer_explore_npc_start_res = e.data;
-        // if (p.res !== 1) {
-        //     return;
-        // }
-        // const npcObj = DataMgr.s.pioneer.getById(p.npcId) as MapNpcPioneerObject;
-        // if (!!npcObj && npcObj.talkId != null) {
-        //     const talkData = TalkConfig.getById(npcObj.talkId);
-        //     if (talkData == null) {
-        //         return;
-        //     }
-        //     const result = await UIPanelManger.inst.pushPanel(UIName.DialogueUI);
-        //     if (result.success) {
-        //         result.node.getComponent(DialogueUI).dialogShow(talkData, null);
-        //     }
-        // }
+        const p: s2c_user.Iplayer_explore_npc_start_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        const idSplit = p.npcId.split("|");
+        let npcId: string = null;
+        if (idSplit.length == 2) {
+            npcId = idSplit[1];
+        }
+        if (npcId == null) {
+            return;
+        }
+        const canTalkData = DataMgr.s.task.getCanTalkData();
+        const talkData = canTalkData[npcId];
+        if (talkData == undefined) {
+            return;
+        }
+        const talkConfig = TalkConfig.getById(talkData.talkId);
+        if (talkConfig == null) {
+            return;
+        }
+        const result = await UIPanelManger.inst.pushPanel(UIName.DialogueUI);
+        if (result.success) {
+            result.node.getComponent(DialogueUI).dialogShow(talkConfig, null);
+        }
     };
     public static player_move_res = (e: any) => {
         const p: s2c_user.Iplayer_move_res = e.data;
@@ -670,7 +670,7 @@ export class DataMgr {
                 NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Detect Succeed");
             }
         }
-    }
+    };
 
     public static player_fight_end = (e: any) => {
         const p: s2c_user.Iplayer_fight_end = e.data;
@@ -929,10 +929,6 @@ export class DataMgr {
     }
 
     /////////////// task
-    public static user_task_action_getnewtalk = (e: any) => {
-        let p: s2c_user.Iuser_task_action_getnewtalk = e.data;
-        DataMgr.s.pioneer.changeTalk(p.npcId, p.talkId);
-    };
     public static user_task_did_change = (e: any) => {
         let p: s2c_user.Iuser_task_did_change = e.data;
         const runDatas = DataMgr.s.task.getAll();
@@ -949,11 +945,11 @@ export class DataMgr {
     };
     public static get_user_task_info_res = (e: any) => {
         let p: s2c_user.Iget_user_task_info_res = e.data;
-        if (p.res == 1) {
-            NetGlobalData.tasks = p.tasks;
-            DataMgr.s.task.loadObj();
-            NotificationMgr.triggerEvent(NotificationName.TASK_LIST);
-        }
+        // if (p.res == 1) {
+        //     NetGlobalData.tasks = p.tasks;
+        //     DataMgr.s.task.loadObj();
+        //     NotificationMgr.triggerEvent(NotificationName.TASK_LIST);
+        // }
     };
     public static user_task_action_talk = async (e: any) => {
         let p: s2c_user.Iuser_task_action_talk = e.data;
@@ -966,6 +962,10 @@ export class DataMgr {
             return;
         }
         result.node.getComponent(DialogueUI).dialogShow(talkConfig);
+    };
+    public static user_task_talk_info_change = (e: any) => {
+        let p: s2c_user.Iuser_task_talk_info_change = e.data;
+        DataMgr.s.task.updateCanTalkData(p.canTalkData);
     };
 
     //------------------------------------- settlement
