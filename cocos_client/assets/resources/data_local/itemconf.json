@@ -306,20 +306,10 @@
   "8007": {
     "id": "8007",
     "itemType": 0,
-    "icon": "icon_8007",
-    "itemName": "401026",
-    "itemDesc": "402026",
-    "grade": 2,
-    "gain_item": null,
-    "skill_learn": ""
-  },
-  "8008": {
-    "id": "8008",
-    "itemType": 0,
-    "icon": "item_5",
-    "itemName": "401027",
-    "itemDesc": "402027",
-    "grade": 3,
+    "icon": "",
+    "itemName": "",
+    "itemDesc": "",
+    "grade": 1,
     "gain_item": null,
     "skill_learn": ""
   }

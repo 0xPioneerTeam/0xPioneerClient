@@ -116,8 +116,8 @@
   },
   "106008": {
     "id": "106008",
-    "eng": "The rewards from the World Treasure Chest are affected by civilization level, heat value, and exploration value.\n\n- Civilization Level: Higher levels increase the quality of chests and daily opening limits, and the chance to find rare items.\n\n- Heat Value: Earned through PSYC and PIOT consumption, it raises the odds of getting head rewards from chests.\n\n- Exploration Value: Gained by exploring, gathering, building, and warring, it grants opportunities to open the World Treasure Chest.",
-    "tc": "世界寶藏箱的獎勵受到文明等級、熱值和探索值的影響。\n\n文明等級：等級越高，寶箱的質量和每日開箱限制增加，並且有更高機會找到稀有物品。\n\n熱值：通過 PSYC 和 PIOT 消費獲得，它提高了從寶箱中獲得頭獎的機率。\n\n探索值：通過探索、收集、建造和戰爭獲得，它賦予你開啟世界寶藏箱的機會。"
+    "eng": "The rewards from the World Treasure Chest are affected by civilization level, heat value, and exploration value.\r\n\r\n- Civilization Level: Higher levels increase the quality of chests and daily opening limits, and the chance to find rare items.\r\n\r\n- Heat Value: Earned through PSYC and PIOT consumption, it raises the odds of getting head rewards from chests.\r\n\r\n- Exploration Value: Gained by exploring, gathering, building, and warring, it grants opportunities to open the World Treasure Chest.",
+    "tc": "世界寶藏箱的獎勵受到文明等級、熱值和探索值的影響。\r\n\r\n文明等級：等級越高，寶箱的質量和每日開箱限制增加，並且有更高機會找到稀有物品。\r\n\r\n熱值：通過 PSYC 和 PIOT 消費獲得，它提高了從寶箱中獲得頭獎的機率。\r\n\r\n探索值：通過探索、收集、建造和戰爭獲得，它賦予你開啟世界寶藏箱的機會。"
   },
   "106009": {
     "id": "106009",
@@ -813,6 +813,11 @@
     "id": "120005",
     "eng": "Babel Tower",
     "tc": "巴別塔"
+  },
+  "120006": {
+    "id": "120006",
+    "eng": "Information Station",
+    "tc": ""
   },
   "121001": {
     "id": "121001",
@@ -1626,7 +1631,7 @@
   },
   "320006": {
     "id": "320006",
-    "eng": "",
+    "eng": "Main City",
     "tc": ""
   },
   "320007": {
@@ -1784,16 +1789,6 @@
     "eng": "Elder's Staff",
     "tc": "長者法杖"
   },
-  "401026": {
-    "id": "401026",
-    "eng": "EXP",
-    "tc": "經驗"
-  },
-  "401027": {
-    "id": "401027",
-    "eng": "Azoth",
-    "tc": "阿佐特"
-  },
   "402001": {
     "id": "402001",
     "eng": "A gem with a heavenly glow.",
@@ -1908,16 +1903,6 @@
     "id": "402025",
     "eng": "You can earn more benefits by burning PIOT, such as more treasure chests, all the items inside the chests, etc.",
     "tc": "你可以通过燃燒 PIOT，例如獲得更多的寶藏箱，寶藏箱中所有的物品等等，來獲得更多好處。"
-  },
-  "402026": {
-    "id": "402026",
-    "eng": "Pioneer upgrade props",
-    "tc": "pioneer陞級道具"
-  },
-  "402027": {
-    "id": "402027",
-    "eng": "Pioneer Advanced Props",
-    "tc": "pioneer昇階道具"
   },
   "501001": {
     "id": "501001",
@@ -2861,8 +2846,8 @@
   },
   "701001": {
     "id": "701001",
-    "eng": "Collection progress:\n<color=#ffcc49><size=36>%s%</size></color>",
-    "tc": "收集進度：\n<color=#ffcc49><size=36>%s%</size></color>"
+    "eng": "Collection progress:\r\n<color=#ffcc49><size=36>%s%</size></color>",
+    "tc": "收集進度：\r\n<color=#ffcc49><size=36>%s%</size></color>"
   },
   "701002": {
     "id": "701002",
@@ -3586,8 +3571,8 @@
   },
   "1070011": {
     "id": "1070011",
-    "eng": "Treaty of Kadesh:\nCity Vision +1\nTroop Vision +1",
-    "tc": "卡迭什條約：\n城市視野 +1\n部隊視野 +1"
+    "eng": "Treaty of Kadesh:\r\nCity Vision +1\r\nTroop Vision +1",
+    "tc": "卡迭什條約：\r\n城市視野 +1\r\n部隊視野 +1"
   },
   "1070012": {
     "id": "1070012",
@@ -3616,8 +3601,8 @@
   },
   "1070017": {
     "id": "1070017",
-    "eng": "Domination:\nDamage on herd +50%",
-    "tc": "統治：\n對牲畜的傷害 +50%"
+    "eng": "Domination:\r\nDamage on herd +50%",
+    "tc": "統治：\r\n對牲畜的傷害 +50%"
   },
   "1070018": {
     "id": "1070018",
@@ -3646,8 +3631,8 @@
   },
   "1070023": {
     "id": "1070023",
-    "eng": "Destruction:\nDamage on human +15%",
-    "tc": "毀滅：\n對人類的傷害 +15%"
+    "eng": "Destruction:\r\nDamage on human +15%",
+    "tc": "毀滅：\r\n對人類的傷害 +15%"
   },
   "1070024": {
     "id": "1070024",

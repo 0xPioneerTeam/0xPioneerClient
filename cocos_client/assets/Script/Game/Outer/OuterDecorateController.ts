@@ -8,7 +8,6 @@ import { ResourcesMgr } from "../../Utils/Global";
 import { TileMapHelper } from "../TiledMap/TileTool";
 import { OuterTiledMapActionController } from "./OuterTiledMapActionController";
 import GameMainHelper from "../Helper/GameMainHelper";
-import { TILEMAP_SIZE } from "../../Const/ConstDefine";
 
 const { ccclass, property } = _decorator;
 
@@ -103,8 +102,8 @@ export class OuterDecorateController extends ViewController {
                 if(decorateItem.block && decorateItem.blockData && decorateItem.blockData.length>0){
                     for (let i = 0; i < decorateItem.blockData.length; i++) {
                         const bdata = decorateItem.blockData[i];
-                        let tileX = ax * TILEMAP_SIZE + bdata.x;
-                        let tileY = -ay * TILEMAP_SIZE + bdata.y;
+                        let tileX = ax * 30 + bdata.x;
+                        let tileY = -ay * 30 + bdata.y;
                         GameMainHelper.instance.tiledMapAddDynamicBlock(v2(tileX, tileY),node.uuid);
                     }
                 }
