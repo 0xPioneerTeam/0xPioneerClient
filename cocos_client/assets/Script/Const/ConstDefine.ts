@@ -6,6 +6,8 @@ export const GAME_SKIP_ROOKIE = true;
 export const GAME_ENV_IS_DEBUG = true;
 export const PioneerGameTest = false;
 
+export const TILEMAP_SIZE = 16;//tileMap layer size 16*16
+
 export enum AttrType {
     HP = 0,
     ATTACK = 1,

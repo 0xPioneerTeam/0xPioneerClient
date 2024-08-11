@@ -1,30 +1,33 @@
 [
   {
     "id": "building_1",
-    "name": "110010",
-    "type": 0,
+    "name": "110002",
+    "type": 3,
     "show": 1,
-    "pos_type": 2,
+    "pos_type": 1,
     "positions": [
-      7,
-      7
+      5,
+      13
     ],
-    "node": "city",
+    "node": "swamp_jungle",
     "level": 1,
-    "progress": null,
+    "progress": 20,
     "refresh_limit": 1,
     "time": 15,
-    "resources": null,
-    "quota": null,
+    "resources": [
+      "8002",
+      100
+    ],
+    "quota": 1,
     "exp": 5,
     "event": "",
     "des": "320005",
-    "hp": 240,
-    "attack": 20,
-    "winprogress": 20,
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
     "faction": 0,
     "defendPioneerIds": [],
-    "cost": 0
+    "cost": 5
   },
   {
     "id": "building_2",
@@ -33,8 +36,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      9,
-      5
+      8,
+      14
     ],
     "node": "swamp_jungle",
     "level": 1,
@@ -58,21 +61,21 @@
   },
   {
     "id": "building_3",
-    "name": "110002",
+    "name": "110003",
     "type": 3,
     "show": 1,
     "pos_type": 1,
     "positions": [
-      1,
-      9
+      12,
+      0
     ],
-    "node": "swamp_jungle",
+    "node": "oasis",
     "level": 1,
     "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
-      "8002",
+      "8001",
       100
     ],
     "quota": 1,
@@ -93,8 +96,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      5,
-      3
+      7,
+      8
     ],
     "node": "oasis",
     "level": 1,
@@ -123,7 +126,7 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      5,
+      10,
       2
     ],
     "node": "oasis",
@@ -148,21 +151,21 @@
   },
   {
     "id": "building_6",
-    "name": "110003",
+    "name": "110001",
     "type": 3,
     "show": 1,
     "pos_type": 1,
     "positions": [
-      7,
-      10
+      9,
+      3
     ],
-    "node": "oasis",
+    "node": "sand_mineral",
     "level": 1,
     "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
-      "8001",
+      "8003",
       100
     ],
     "quota": 1,
@@ -183,8 +186,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      9,
-      6
+      7,
+      2
     ],
     "node": "sand_mineral",
     "level": 1,
@@ -214,7 +217,7 @@
     "pos_type": 1,
     "positions": [
       10,
-      6
+      8
     ],
     "node": "sand_mineral",
     "level": 1,
@@ -238,43 +241,13 @@
   },
   {
     "id": "building_9",
-    "name": "110001",
-    "type": 3,
-    "show": 1,
-    "pos_type": 1,
-    "positions": [
-      11,
-      4
-    ],
-    "node": "sand_mineral",
-    "level": 1,
-    "progress": 20,
-    "refresh_limit": 1,
-    "time": 15,
-    "resources": [
-      "8003",
-      100
-    ],
-    "quota": 1,
-    "exp": 5,
-    "event": "",
-    "des": "320005",
-    "hp": null,
-    "attack": null,
-    "winprogress": null,
-    "faction": 0,
-    "defendPioneerIds": [],
-    "cost": 5
-  },
-  {
-    "id": "building_10",
     "name": "110004",
     "type": 4,
     "show": 1,
     "pos_type": 1,
     "positions": [
       8,
-      7
+      6
     ],
     "node": "ancient_ruins",
     "level": 1,
@@ -294,14 +267,14 @@
     "cost": 5
   },
   {
-    "id": "building_11",
+    "id": "building_10",
     "name": "110005",
     "type": 4,
     "show": 1,
     "pos_type": 1,
     "positions": [
-      13,
-      3
+      8,
+      12
     ],
     "node": "spider_cave",
     "level": 1,
@@ -321,14 +294,14 @@
     "cost": 5
   },
   {
-    "id": "building_12",
+    "id": "building_11",
     "name": "110006",
     "type": 4,
     "show": 1,
     "pos_type": 1,
     "positions": [
-      7,
-      12
+      4,
+      5
     ],
     "node": "laboratory",
     "level": 3,
@@ -348,14 +321,41 @@
     "cost": 5
   },
   {
+    "id": "building_12",
+    "name": "110008",
+    "type": 4,
+    "show": 0,
+    "pos_type": 1,
+    "positions": [
+      9,
+      6
+    ],
+    "node": "Tree_Group",
+    "level": 3,
+    "progress": 30,
+    "refresh_limit": 4,
+    "time": 15,
+    "resources": null,
+    "quota": null,
+    "exp": 10,
+    "event": "910401",
+    "des": "1100081",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
     "id": "building_13",
     "name": "110009",
     "type": 4,
     "show": 0,
     "pos_type": 1,
     "positions": [
-      9,
-      7
+      8,
+      1
     ],
     "node": "Pyramid_Group",
     "level": 4,
@@ -381,8 +381,8 @@
     "show": 0,
     "pos_type": 0,
     "positions": [
-      3,
-      1
+      7,
+      9
     ],
     "node": "Aquatic_Relics_Group",
     "level": 5,
@@ -403,15 +403,96 @@
   },
   {
     "id": "building_15",
-    "name": "110014",
-    "type": 6,
-    "show": 1,
+    "name": "110013",
+    "type": 1,
+    "show": 0,
     "pos_type": 1,
     "positions": [
-      4,
+      3,
       9
     ],
-    "node": "Transfer_Matrix_Group",
+    "node": "ruin",
+    "level": 1,
+    "progress": 40,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": null,
+    "quota": null,
+    "exp": 5,
+    "event": "",
+    "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_16",
+    "name": "110011",
+    "type": 1,
+    "show": 0,
+    "pos_type": 0,
+    "positions": [
+      4,
+      8
+    ],
+    "node": "treasure",
+    "level": 1,
+    "progress": 30,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": null,
+    "quota": null,
+    "exp": 5,
+    "event": "",
+    "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_17",
+    "name": "110012",
+    "type": 2,
+    "show": 0,
+    "pos_type": 0,
+    "positions": [
+      10,
+      3
+    ],
+    "node": "ambush",
+    "level": 1,
+    "progress": null,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": null,
+    "quota": null,
+    "exp": 5,
+    "event": "",
+    "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_18",
+    "name": "110015",
+    "type": 7,
+    "show": 0,
+    "pos_type": 1,
+    "positions": [
+      9,
+      4
+    ],
+    "node": "Pyramid_Group",
     "level": 1,
     "progress": null,
     "refresh_limit": 1,
@@ -420,7 +501,7 @@
     "quota": null,
     "exp": null,
     "event": "",
-    "des": "1100141",
+    "des": "320005",
     "hp": null,
     "attack": null,
     "winprogress": null,
