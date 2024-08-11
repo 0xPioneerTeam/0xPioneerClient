@@ -19,96 +19,12 @@
     },
     "children": [
         {
-            "url": "Barrel_A.prefab",
-            "name": "Barrel_A",
-            "show": true,
-            "positions": {
-                "x": 605.086,
-                "y": 505.608,
-                "z": 0
-            },
-            "rotation": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "scale": {
-                "x": 0.6,
-                "y": 0.6,
-                "z": 1
-            },
-            "children": [],
-            "block": true,
-            "blockData": [
-                {
-                    "x": 12,
-                    "y": 2
-                }
-            ]
-        },
-        {
             "url": "Stone_A.prefab",
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": -624.783,
-                "y": 386.945,
-                "z": 0
-            },
-            "rotation": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "scale": {
-                "x": 1,
-                "y": 1,
-                "z": 1
-            },
-            "children": [],
-            "block": true,
-            "blockData": [
-                {
-                    "x": 2,
-                    "y": 3
-                }
-            ]
-        },
-        {
-            "url": "Stone_A.prefab",
-            "name": "Stone_A",
-            "show": true,
-            "positions": {
-                "x": -674.783,
-                "y": 300.469,
-                "z": 0
-            },
-            "rotation": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "scale": {
-                "x": 1,
-                "y": 1,
-                "z": 1
-            },
-            "children": [],
-            "block": true,
-            "blockData": [
-                {
-                    "x": 2,
-                    "y": 4
-                }
-            ]
-        },
-        {
-            "url": "Guidepost_01_Group.prefab",
-            "name": "Guidepost_01_Group",
-            "show": true,
-            "positions": {
-                "x": -800.708,
-                "y": -18.316,
+                "x": -714.364,
+                "y": -380.462,
                 "z": 0
             },
             "rotation": {
@@ -126,7 +42,7 @@
             "blockData": [
                 {
                     "x": 1,
-                    "y": 8
+                    "y": 11
                 }
             ]
         },
@@ -135,36 +51,8 @@
             "name": "Ornamental_01_Group",
             "show": true,
             "positions": {
-                "x": -616.668,
-                "y": -324.959,
-                "z": 0
-            },
-            "rotation": {
-                "x": 0,
-                "y": 0,
-                "z": 0
-            },
-            "scale": {
-                "x": 1,
-                "y": 1,
-                "z": 1
-            },
-            "children": [],
-            "block": true,
-            "blockData": [
-                {
-                    "x": 2,
-                    "y": 11
-                }
-            ]
-        },
-        {
-            "url": "Tree_Group.prefab",
-            "name": "Tree_Group",
-            "show": true,
-            "positions": {
-                "x": -531.757,
-                "y": -409.86,
+                "x": -548.716,
+                "y": -230.835,
                 "z": 0
             },
             "rotation": {
@@ -182,17 +70,17 @@
             "blockData": [
                 {
                     "x": 3,
-                    "y": 12
+                    "y": 10
                 }
             ]
         },
         {
-            "url": "Village_Group_D_Damage.prefab",
-            "name": "Village_Group_D_Damage",
+            "url": "Stone_A.prefab",
+            "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 851.765,
-                "y": 610.521,
+                "x": -430.285,
+                "y": -467.528,
                 "z": 0
             },
             "rotation": {
@@ -201,8 +89,36 @@
                 "z": 0
             },
             "scale": {
-                "x": 1.3,
-                "y": 1.3,
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 4,
+                    "y": 12
+                }
+            ]
+        },
+        {
+            "url": "Guidepost_01_Group.prefab",
+            "name": "Guidepost_01_Group",
+            "show": true,
+            "positions": {
+                "x": 856.8710000000001,
+                "y": -9.966999999999985,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
                 "z": 1
             },
             "children": [],
@@ -210,11 +126,171 @@
             "blockData": [
                 {
                     "x": 14,
-                    "y": 1
+                    "y": 8
+                }
+            ]
+        },
+        {
+            "url": "decoration-007.prefab",
+            "name": "decoration-007",
+            "show": true,
+            "positions": {
+                "x": -730.667,
+                "y": 379.651,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 0,
+                    "y": 3
                 },
                 {
+                    "x": 1,
+                    "y": 3
+                },
+                {
+                    "x": 2,
+                    "y": 3
+                }
+            ]
+        },
+        {
+            "url": "Stone_B.prefab",
+            "name": "Stone_B",
+            "show": true,
+            "positions": {
+                "x": -904.918,
+                "y": 483.504,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 0,
+                    "y": 2
+                }
+            ]
+        },
+        {
+            "url": "Tree_Group.prefab",
+            "name": "Tree_Group",
+            "show": true,
+            "positions": {
+                "x": -602.992,
+                "y": 251.662,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 2,
+                    "y": 5
+                }
+            ]
+        },
+        {
+            "url": "Ornamental_01_Group.prefab",
+            "name": "Ornamental_01_Group",
+            "show": true,
+            "positions": {
+                "x": -735.98,
+                "y": -522.079,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 1,
+                    "y": 13
+                }
+            ]
+        },
+        {
+            "url": "Huge_Rock_N5_Group.prefab",
+            "name": "Huge_Rock_N5_Group",
+            "show": true,
+            "positions": {
+                "x": 812.028,
+                "y": -440.219,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
                     "x": 13,
-                    "y": 1
+                    "y": 13
+                },
+                {
+                    "x": 12,
+                    "y": 13
+                },
+                {
+                    "x": 14,
+                    "y": 13
+                },
+                {
+                    "x": 14,
+                    "y": 12
+                },
+                {
+                    "x": 14,
+                    "y": 11
                 }
             ]
         }
