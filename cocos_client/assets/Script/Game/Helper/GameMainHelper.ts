@@ -258,6 +258,13 @@ export default class GameMainHelper {
         }
         return this.shadowController.Shadow_GetClearedTiledPositons();
     }
+
+    public tiledMapIsInGameScene(x: number, y: number):boolean{
+        let pos = this._tiledMapHelper.getPos(x, y);
+        _vec2_temp.x = pos.worldx;
+        _vec2_temp.y = pos.worldy;
+        return this._worldCameraRect.contains(_vec2_temp);
+    }
     public tiledMapShadowUpdate(dt: number) {
         if (!this.isTiledMapHelperInited) {
             return;
@@ -334,6 +341,8 @@ export default class GameMainHelper {
 
     private _shadowController: OuterShadowController = null;
 
+    private _worldCameraRect: Rect = null;
+
     constructor() {
         this._currentTrackingInteractData = {
             stepId: "",
@@ -342,6 +351,7 @@ export default class GameMainHelper {
         };
 
         NotificationMgr.addListener(NotificationName.GAME_JUMP_INNER_AND_SHOW_RELIC_TOWER, this._onGameJumpInnerAndShowRelicTower, this);
+        this._worldCameraRect = new Rect();
     }
 
     updateGameViewport() {
@@ -374,6 +384,10 @@ export default class GameMainHelper {
         _vec3_temp2.x = Math.round(ex);
         _vec3_temp2.y = Math.round(ey);
         Rect.fromMinMax(_rect_temp2, _vec3_temp, _vec3_temp2);
+        this._worldCameraRect.x = _rect_temp.x;
+        this._worldCameraRect.y = _rect_temp.y;
+        this._worldCameraRect.width = _rect_temp.width;
+        this._worldCameraRect.height = _rect_temp.height;
         // console.log('mapNode info:',_rect_temp,_rect_temp2,this._gameCamera,this._gameCamera.camera);
         this._outScene.getComponent(OuterDecorateController).refreshUI(_rect_temp, _rect_temp2);
         this._outScene.getComponent(OuterTiledMapActionController).refreshUI(_rect_temp, _rect_temp2);
@@ -386,6 +400,7 @@ export default class GameMainHelper {
     }
 }
 const _mat4_temp = new Mat4();
+const _vec2_temp = new Vec2();
 const _vec3_temp = new Vec3();
 const _vec3_temp2 = new Vec3();
 const _rect_temp = new Rect();

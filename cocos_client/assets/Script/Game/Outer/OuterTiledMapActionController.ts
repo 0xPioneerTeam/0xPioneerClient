@@ -514,6 +514,9 @@ export class OuterTiledMapActionController extends ViewController {
         if (shadowController.tiledMapIsAllBlackShadow(tiledPos.x, tiledPos.y)) {
             return;
         }
+        if(tiledPos.x < 0 || tiledPos.y < 0){
+            return;
+        }
         let stayPositons: Vec2[] = [v2(tiledPos.x, tiledPos.y)];
         // check is building first
         const stayBuilding = DataMgr.s.mapBuilding.getShowBuildingByMapPos(v2(tiledPos.x, tiledPos.y));
