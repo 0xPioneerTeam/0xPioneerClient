@@ -1,9 +1,7 @@
-import { _decorator, Camera, Component, find, geometry, MeshRenderer, Node, Sprite, UITransform, Vec3 } from "cc";
+import { _decorator, Camera, Component, Vec3 } from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
-import { OuterTiledMapActionController } from "../Game/Outer/OuterTiledMapActionController";
-import { MapPioneer } from "../Game/Outer/View/MapPioneer";
 const { ccclass, property } = _decorator;
 
 @ccclass("GameOverlayCamera")

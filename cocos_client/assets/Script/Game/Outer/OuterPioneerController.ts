@@ -24,7 +24,7 @@ import { EventUI } from "../../UI/Outer/EventUI";
 import { SecretGuardGettedUI } from "../../UI/Outer/SecretGuardGettedUI";
 import { GameMgr, PioneerMgr, UserInfoMgr } from "../../Utils/Global";
 import GameMainHelper from "../Helper/GameMainHelper";
-import { TilePos } from "../TiledMap/TileTool";
+import { TileMapHelper, TilePos } from "../TiledMap/TileTool";
 import { OuterTiledMapActionController } from "./OuterTiledMapActionController";
 import { MapItemMonster } from "./View/MapItemMonster";
 import { MapPioneer } from "./View/MapPioneer";
@@ -276,6 +276,9 @@ export class OuterPioneerController extends ViewController {
                 if (this._pioneerMap.has(pioneer.uniqueId)) {
                     temple = this._pioneerMap.get(pioneer.uniqueId);
                 } else {
+                    if(!GameMainHelper.instance.tiledMapIsInGameScene(pioneer.stayPos.x, pioneer.stayPos.y)){
+                        continue;
+                    }
                     // new
                     if (pioneer.type == MapPioneerType.player) {
                         temple = instantiate(this.selfPioneer);
@@ -288,7 +291,6 @@ export class OuterPioneerController extends ViewController {
                     temple.setParent(decorationView);
                     firstInit = true;
                     this._pioneerMap.set(pioneer.uniqueId, temple);
-
                     changed = true;
                 }
                 if (temple != null) {

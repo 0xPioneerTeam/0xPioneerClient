@@ -514,6 +514,9 @@ export class OuterTiledMapActionController extends ViewController {
         if (shadowController.tiledMapIsAllBlackShadow(tiledPos.x, tiledPos.y)) {
             return;
         }
+        if (tiledPos.x < 0 || tiledPos.y < 0) {
+            return;
+        }
         let stayPositons: Vec2[] = [v2(tiledPos.x, tiledPos.y)];
         // check is building first
         const stayBuilding = DataMgr.s.mapBuilding.getShowBuildingByMapPos(v2(tiledPos.x, tiledPos.y));
@@ -761,8 +764,8 @@ export class OuterTiledMapActionController extends ViewController {
         let layers = this._tileLayers;
         let areaWidth = TileMapHelper.INS.pixelwidth - TileMapHelper.INS.tilewidth / 2;
         let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight / 4;
-        let stx = rect2.xMin;
-        let sty = rect2.yMin;
+        let stx = Math.max(0, rect2.xMin);   // x > 0
+        let sty = Math.min(0, rect2.yMin);   // y < 0
         let endx = rect2.xMax;
         let endy = rect2.yMax;
         let containerBox = this.node._uiProps.uiTransformComp.getBoundingBox();
