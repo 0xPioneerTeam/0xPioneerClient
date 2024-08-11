@@ -1,201 +1,255 @@
 {
-  "npc_0": {
-    "id": "npc_0",
-    "name": "109005",
-    "type": "2",
-    "friendly": 1,
-    "show": 1,
+  "gangster_1": {
+    "id": "gangster_1",
+    "name": "109013",
+    "type": "4",
+    "friendly": 0,
+    "show": 0,
     "level": 1,
-    "refresh_limit": null,
-    "des": "1090051",
+    "refresh_limit": -1,
+    "des": "1090402",
     "nft_pioneer": "",
-    "hp": 50,
-    "attack": 5,
+    "hp": 100,
+    "attack": 10,
     "def": 0,
     "spd": 5,
-    "winprogress": 4,
+    "winprogress": 5,
     "exp": 5,
-    "animType": "prophetess",
+    "animType": "monster_a_1",
     "drop": null,
     "pos": [
       {
-        "x": 10,
+        "x": 2,
+        "y": 11
+      }
+    ]
+  },
+  "gangster_2": {
+    "id": "gangster_2",
+    "name": "109011",
+    "type": "3",
+    "friendly": 0,
+    "show": 0,
+    "level": 1,
+    "refresh_limit": null,
+    "des": "1090402",
+    "nft_pioneer": "",
+    "hp": 80,
+    "attack": 8,
+    "def": 0,
+    "spd": 5,
+    "winprogress": 40,
+    "exp": 5,
+    "animType": "rebels",
+    "drop": null,
+    "pos": [
+      {
+        "x": 1,
+        "y": 1
+      }
+    ]
+  },
+  "gangster_3": {
+    "id": "gangster_3",
+    "name": "109012",
+    "type": "3",
+    "friendly": 0,
+    "show": 0,
+    "level": 1,
+    "refresh_limit": null,
+    "des": "1090402",
+    "nft_pioneer": "",
+    "hp": 180,
+    "attack": 24,
+    "def": 0,
+    "spd": 5,
+    "winprogress": 30,
+    "exp": 5,
+    "animType": "doomsdayGangBigTeam",
+    "drop": null,
+    "pos": [
+      {
+        "x": 9,
+        "y": 12
+      }
+    ],
+    "logics": [
+      {
+        "type": 2,
+        "posx": null,
+        "posy": null,
+        "step": 1,
+        "cd": 5,
+        "direction": 5,
+        "repeat": -1,
+        "interval": null,
+        "range": null,
+        "speed": null,
+        "cond": "KillDoomsDayGangTeam"
+      }
+    ]
+  },
+  "gangster_4": {
+    "id": "gangster_4",
+    "name": "109010",
+    "type": "3",
+    "friendly": 0,
+    "show": 0,
+    "level": 1,
+    "refresh_limit": null,
+    "des": "1090402",
+    "nft_pioneer": "",
+    "hp": 100,
+    "attack": 10,
+    "def": 0,
+    "spd": 5,
+    "winprogress": 40,
+    "exp": 5,
+    "animType": "doomsdayGangTeam",
+    "drop": null,
+    "pos": [
+      {
+        "x": 14,
         "y": 5
       }
     ]
   },
-  "npc_1": {
-    "id": "npc_1",
-    "name": "109006",
-    "type": "2",
-    "friendly": 1,
-    "show": 0,
+  "hred_1": {
+    "id": "hred_1",
+    "name": "109013",
+    "type": "4",
+    "friendly": 0,
+    "show": 1,
     "level": 1,
-    "refresh_limit": null,
-    "des": "1090061",
+    "refresh_limit": 1,
+    "des": "1090401",
     "nft_pioneer": "",
-    "hp": 50,
-    "attack": 5,
-    "def": 10,
-    "spd": 5,
-    "winprogress": 5,
-    "exp": 5,
-    "animType": "artisan",
-    "drop": null,
-    "pos": [
-      {
-        "x": 5,
-        "y": 15
-      }
-    ]
-  },
-  "npc_2": {
-    "id": "npc_2",
-    "name": "109007",
-    "type": "2",
-    "friendly": 1,
-    "show": 0,
-    "level": 1,
-    "refresh_limit": null,
-    "des": "1090071",
-    "nft_pioneer": "",
-    "hp": 80,
+    "hp": 60,
     "attack": 15,
-    "def": 10,
+    "def": 0,
     "spd": 5,
-    "winprogress": 6,
+    "winprogress": 40,
     "exp": 5,
-    "animType": "secretGuard",
-    "drop": null,
+    "animType": "monster_a_1",
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
-        "x": 22,
-        "y": 22
+        "x": 10,
+        "y": 10
+      }
+    ],
+    "logics": [
+      {
+        "type": 2,
+        "posx": null,
+        "posy": null,
+        "step": 1,
+        "cd": 2,
+        "direction": 2,
+        "repeat": 10,
+        "interval": null,
+        "range": null,
+        "speed": null,
+        "cond": ""
+      },
+      {
+        "type": 3,
+        "posx": null,
+        "posy": null,
+        "step": null,
+        "cd": null,
+        "direction": null,
+        "repeat": null,
+        "interval": null,
+        "range": null,
+        "speed": null,
+        "cond": ""
       }
     ]
   },
-  "npc_3": {
-    "id": "npc_3",
-    "name": "109008",
-    "type": "2",
-    "friendly": 1,
-    "show": 0,
+  "hred_2": {
+    "id": "hred_2",
+    "name": "109014",
+    "type": "4",
+    "friendly": 0,
+    "show": 1,
     "level": 1,
-    "refresh_limit": null,
-    "des": "1090081",
+    "refresh_limit": 1,
+    "des": "1090401",
     "nft_pioneer": "",
-    "hp": 50,
+    "hp": 40,
     "attack": 10,
-    "def": 10,
+    "def": 0,
     "spd": 5,
-    "winprogress": 7,
+    "winprogress": 40,
     "exp": 5,
-    "animType": "doomsdayGangSpy",
-    "drop": null,
+    "animType": "monster_b_2",
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
-        "x": 15,
-        "y": 23
+        "x": 2,
+        "y": 4
+      }
+    ],
+    "logics": [
+      {
+        "type": 4,
+        "posx": null,
+        "posy": null,
+        "step": null,
+        "cd": null,
+        "direction": null,
+        "repeat": -1,
+        "interval": [
+          2,
+          3
+        ],
+        "range": 3,
+        "speed": 80,
+        "cond": ""
       }
     ]
   },
-  "npc_4": {
-    "id": "npc_4",
-    "name": "109009",
-    "type": "2",
-    "friendly": 1,
+  "hred_3": {
+    "id": "hred_3",
+    "name": "109015",
+    "type": "4",
+    "friendly": 0,
     "show": 1,
     "level": 1,
-    "refresh_limit": null,
-    "des": "1090091",
+    "refresh_limit": 1,
+    "des": "1090401",
     "nft_pioneer": "",
-    "hp": 50,
-    "attack": 12,
-    "def": 10,
+    "hp": 40,
+    "attack": 10,
+    "def": 0,
     "spd": 5,
-    "winprogress": 8,
+    "winprogress": 40,
     "exp": 5,
-    "animType": "hunter",
-    "drop": null,
+    "animType": "monster_c_3",
+    "drop": [
+      [
+        1,
+        "8001",
+        20
+      ]
+    ],
     "pos": [
       {
-        "x": 4,
-        "y": 8
-      }
-    ]
-  },
-  "npc_5": {
-    "id": "npc_5",
-    "name": "109030",
-    "type": "2",
-    "friendly": 1,
-    "show": 1,
-    "level": 1,
-    "refresh_limit": null,
-    "des": "1090301",
-    "nft_pioneer": "",
-    "hp": 1,
-    "attack": 1,
-    "def": 1,
-    "spd": 5,
-    "winprogress": null,
-    "exp": null,
-    "animType": "chief",
-    "drop": null,
-    "pos": [
-      {
-        "x": 4,
-        "y": 22
-      }
-    ]
-  },
-  "npc_6": {
-    "id": "npc_6",
-    "name": "109031",
-    "type": "2",
-    "friendly": 1,
-    "show": 1,
-    "level": 1,
-    "refresh_limit": null,
-    "des": "1090311",
-    "nft_pioneer": "",
-    "hp": 1,
-    "attack": 1,
-    "def": 1,
-    "spd": 5,
-    "winprogress": null,
-    "exp": null,
-    "animType": "rabbit",
-    "drop": null,
-    "pos": [
-      {
-        "x": 23,
-        "y": 23
-      }
-    ]
-  },
-  "npc_7": {
-    "id": "npc_7",
-    "name": "109032",
-    "type": "2",
-    "friendly": 1,
-    "show": 1,
-    "level": 1,
-    "refresh_limit": null,
-    "des": "1090321",
-    "nft_pioneer": "",
-    "hp": 1,
-    "attack": 1,
-    "def": 1,
-    "spd": 5,
-    "winprogress": null,
-    "exp": null,
-    "animType": "doc",
-    "drop": null,
-    "pos": [
-      {
-        "x": 25,
-        "y": 25
+        "x": 3,
+        "y": 11
       }
     ]
   },
@@ -211,8 +265,8 @@
     "nft_pioneer": "",
     "hp": 60,
     "attack": 15,
-    "def": 12,
-    "spd": 4,
+    "def": 0,
+    "spd": 5,
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_sandspider",
@@ -225,8 +279,8 @@
     ],
     "pos": [
       {
-        "x": 17,
-        "y": 31
+        "x": 11,
+        "y": 5
       }
     ]
   },
@@ -242,8 +296,8 @@
     "nft_pioneer": "",
     "hp": 60,
     "attack": 18,
-    "def": 11,
-    "spd": 7,
+    "def": 0,
+    "spd": 5,
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_scorpion",
@@ -256,8 +310,8 @@
     ],
     "pos": [
       {
-        "x": 20,
-        "y": 2
+        "x": 9,
+        "y": 11
       }
     ]
   },
@@ -273,8 +327,8 @@
     "nft_pioneer": "",
     "hp": 120,
     "attack": 25,
-    "def": 13,
-    "spd": 8,
+    "def": 0,
+    "spd": 5,
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_spiderqueen",
@@ -287,8 +341,26 @@
     ],
     "pos": [
       {
-        "x": 15,
-        "y": 28
+        "x": 2,
+        "y": 14
+      }
+    ],
+    "logics": [
+      {
+        "type": 4,
+        "posx": null,
+        "posy": null,
+        "step": null,
+        "cd": null,
+        "direction": null,
+        "repeat": -1,
+        "interval": [
+          2,
+          5
+        ],
+        "range": 2,
+        "speed": 100,
+        "cond": ""
       }
     ]
   },
@@ -304,7 +376,7 @@
     "nft_pioneer": "",
     "hp": 75,
     "attack": 18,
-    "def": 14,
+    "def": 0,
     "spd": 5,
     "winprogress": 40,
     "exp": 5,
@@ -318,8 +390,26 @@
     ],
     "pos": [
       {
-        "x": 19,
-        "y": 15
+        "x": 1,
+        "y": 7
+      }
+    ],
+    "logics": [
+      {
+        "type": 4,
+        "posx": null,
+        "posy": null,
+        "step": null,
+        "cd": null,
+        "direction": null,
+        "repeat": -1,
+        "interval": [
+          4,
+          6
+        ],
+        "range": 3,
+        "speed": 80,
+        "cond": ""
       }
     ]
   },
@@ -335,8 +425,8 @@
     "nft_pioneer": "",
     "hp": 90,
     "attack": 24,
-    "def": 18,
-    "spd": 6,
+    "def": 0,
+    "spd": 5,
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_ths",
@@ -349,8 +439,26 @@
     ],
     "pos": [
       {
-        "x": 29,
+        "x": 4,
         "y": 12
+      }
+    ],
+    "logics": [
+      {
+        "type": 4,
+        "posx": null,
+        "posy": null,
+        "step": null,
+        "cd": null,
+        "direction": null,
+        "repeat": -1,
+        "interval": [
+          2,
+          3
+        ],
+        "range": 2,
+        "speed": 120,
+        "cond": ""
       }
     ]
   },
@@ -366,8 +474,8 @@
     "nft_pioneer": "",
     "hp": 150,
     "attack": 40,
-    "def": 18,
-    "spd": 7,
+    "def": 0,
+    "spd": 5,
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_teshark",
@@ -380,8 +488,26 @@
     ],
     "pos": [
       {
-        "x": 21,
-        "y": 20
+        "x": 7,
+        "y": 0
+      }
+    ],
+    "logics": [
+      {
+        "type": 4,
+        "posx": null,
+        "posy": null,
+        "step": null,
+        "cd": null,
+        "direction": null,
+        "repeat": -1,
+        "interval": [
+          2,
+          3
+        ],
+        "range": 4,
+        "speed": 80,
+        "cond": ""
       }
     ]
   },
@@ -397,8 +523,8 @@
     "nft_pioneer": "",
     "hp": 75,
     "attack": 30,
-    "def": 12,
-    "spd": 1,
+    "def": 0,
+    "spd": 5,
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_deathworm",
@@ -411,8 +537,26 @@
     ],
     "pos": [
       {
-        "x": 15,
-        "y": 4
+        "x": 9,
+        "y": 9
+      }
+    ],
+    "logics": [
+      {
+        "type": 4,
+        "posx": null,
+        "posy": null,
+        "step": null,
+        "cd": null,
+        "direction": null,
+        "repeat": -1,
+        "interval": [
+          4,
+          7
+        ],
+        "range": 2,
+        "speed": 80,
+        "cond": ""
       }
     ]
   },
@@ -428,8 +572,8 @@
     "nft_pioneer": "",
     "hp": 60,
     "attack": 15,
-    "def": 12,
-    "spd": 4,
+    "def": 0,
+    "spd": 5,
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_sandspider",
@@ -442,8 +586,8 @@
     ],
     "pos": [
       {
-        "x": 24,
-        "y": 7
+        "x": 0,
+        "y": 8
       }
     ]
   },
@@ -459,8 +603,8 @@
     "nft_pioneer": "",
     "hp": 60,
     "attack": 18,
-    "def": 11,
-    "spd": 7,
+    "def": 0,
+    "spd": 5,
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_scorpion",
@@ -474,7 +618,7 @@
     "pos": [
       {
         "x": 9,
-        "y": 14
+        "y": 0
       }
     ]
   },
@@ -490,8 +634,8 @@
     "nft_pioneer": "",
     "hp": 75,
     "attack": 30,
-    "def": 12,
-    "spd": 1,
+    "def": 0,
+    "spd": 5,
     "winprogress": 40,
     "exp": 5,
     "animType": "monster_deathworm",
@@ -504,8 +648,8 @@
     ],
     "pos": [
       {
-        "x": 22,
-        "y": 25
+        "x": 12,
+        "y": 3
       }
     ]
   },
@@ -521,7 +665,7 @@
     "nft_pioneer": "",
     "hp": 60,
     "attack": 15,
-    "def": 10,
+    "def": 0,
     "spd": 5,
     "winprogress": 40,
     "exp": 5,
@@ -535,8 +679,8 @@
     ],
     "pos": [
       {
-        "x": 12,
-        "y": 14
+        "x": 3,
+        "y": 12
       }
     ]
   },
@@ -552,7 +696,7 @@
     "nft_pioneer": "",
     "hp": 40,
     "attack": 10,
-    "def": 10,
+    "def": 0,
     "spd": 5,
     "winprogress": 40,
     "exp": 5,
@@ -566,101 +710,58 @@
     ],
     "pos": [
       {
-        "x": 30,
-        "y": 7
+        "x": 6,
+        "y": 16
       }
     ]
   },
-  "hred_16": {
-    "id": "hred_16",
-    "name": "109016",
-    "type": "4",
-    "friendly": 0,
-    "show": 1,
-    "level": 2,
-    "refresh_limit": 1,
-    "des": "1090401",
-    "nft_pioneer": "",
-    "hp": 60,
-    "attack": 15,
-    "def": 12,
-    "spd": 4,
-    "winprogress": 40,
-    "exp": 5,
-    "animType": "monster_sandspider",
-    "drop": [
-      [
-        1,
-        "8001",
-        20
-      ]
-    ],
-    "pos": [
-      {
-        "x": 17,
-        "y": 26
-      }
-    ]
-  },
-  "hred_17": {
-    "id": "hred_17",
-    "name": "109015",
-    "type": "4",
-    "friendly": 0,
-    "show": 1,
+  "npc_1": {
+    "id": "npc_1",
+    "name": "109006",
+    "type": "2",
+    "friendly": 1,
+    "show": 0,
     "level": 1,
-    "refresh_limit": 1,
-    "des": "1090401",
+    "refresh_limit": null,
+    "des": "1090061",
     "nft_pioneer": "",
-    "hp": 40,
-    "attack": 10,
-    "def": 10,
+    "hp": 50,
+    "attack": 5,
+    "def": 0,
     "spd": 5,
-    "winprogress": 40,
+    "winprogress": 5,
     "exp": 5,
-    "animType": "monster_c_3",
-    "drop": [
-      [
-        1,
-        "8001",
-        20
-      ]
-    ],
+    "animType": "artisan",
+    "drop": null,
     "pos": [
       {
-        "x": 14,
-        "y": 20
+        "x": 5,
+        "y": 2
       }
     ]
   },
-  "hred_18": {
-    "id": "hred_18",
-    "name": "109017",
-    "type": "4",
-    "friendly": 0,
-    "show": 1,
-    "level": 2,
-    "refresh_limit": 1,
-    "des": "1090401",
+  "npc_2": {
+    "id": "npc_2",
+    "name": "109007",
+    "type": "2",
+    "friendly": 1,
+    "show": 0,
+    "level": 1,
+    "refresh_limit": null,
+    "des": "1090071",
     "nft_pioneer": "",
-    "hp": 60,
-    "attack": 18,
-    "def": 11,
-    "spd": 7,
-    "winprogress": 40,
+    "hp": 80,
+    "attack": 15,
+    "def": 0,
+    "spd": 5,
+    "winprogress": 6,
     "exp": 5,
-    "animType": "monster_scorpion",
-    "drop": [
-      [
-        1,
-        "8001",
-        20
-      ]
-    ],
+    "animType": "secretGuard",
+    "drop": null,
     "pos": [
       {
-        "x": 14,
-        "y": 30
+        "x": 12,
+        "y": 12
       }
     ]
   }

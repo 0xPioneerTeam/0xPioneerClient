@@ -1,6 +1,7 @@
 import { _decorator, CCBoolean, Component, instantiate, Node, Prefab, Sprite, UITransform, v3, Vec2 } from "cc";
 import { DEV, EDITOR } from "cc/env";
 import GameMainHelper from "../Helper/GameMainHelper";
+import { TILEMAP_SIZE } from "../../Const/ConstDefine";
 const { ccclass, property } = _decorator;
 
 @ccclass("MapTag")
@@ -50,9 +51,8 @@ export class MapTag extends Component {
                     return;
                 }
                 //  to update size 30*30
-                let TileSize = 30;
-                let tilewidth = 128 * TileSize + 64; //128*30 + 64
-                let tileheight = 96 * TileSize + 32; //96*30 + 32
+                let tilewidth = 128 * TILEMAP_SIZE + 64; //128*30 + 64
+                let tileheight = 96 * TILEMAP_SIZE + 32; //96*30 + 32
                 let tileNodeWidth = 128;
                 let tileNodeHeight = 128;
                 let blockUITrans = blockNode.getComponent(UITransform);
