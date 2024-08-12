@@ -765,9 +765,9 @@ export class OuterTiledMapActionController extends ViewController {
         let areaWidth = TileMapHelper.INS.pixelwidth - TileMapHelper.INS.tilewidth / 2;
         let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight / 4;
         let stx = Math.max(0, rect2.xMin);   // x > 0
-        let sty = Math.min(0, rect2.yMin);   // y < 0
+        let sty = rect2.yMin;   
         let endx = rect2.xMax;
-        let endy = rect2.yMax;
+        let endy = Math.min(0, rect2.yMax); // y < 0
         let containerBox = this.node._uiProps.uiTransformComp.getBoundingBox();
         let hasSets = [];
         let unBindPosArr = [];
