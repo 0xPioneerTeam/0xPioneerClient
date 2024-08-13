@@ -74,6 +74,8 @@ message player_sinfo {
 
     required uint32 battlePower = 70;
     repeated uint32 explorePlayerids = 71;
+
+    repeated share.wormhole_tag_data wormholeTags = 72;
 }
 
 // self player data
@@ -93,6 +95,12 @@ message player_info {
     required map_info_data mapbuilding = 7;
     required task_data taskinfo = 8;
     repeated pos2d shadows = 9;
+}
+
+message wormhole_tag_data {
+    required uint32 playerId = 1;
+    required string playerName = 2;
+    required string tpBuildingId = 3;
 }
 
 message storehouse_data {

@@ -490,6 +490,19 @@ message player_wormhole_fight_res {
     optional bool fightResult = 7;
 }
 
+message player_wormhole_tp_random_res {
+    required int32 res = 1;
+}
+message player_wormhole_tp_select_res {
+    required int32 res = 1;
+}
+message player_wormhole_tp_back_res {
+    required int32 res = 1;
+}
+message player_wormhole_tp_tag_res {
+    required int32 res = 1;
+}
+
 
 // ------ test ------
 message reborn_all_res {

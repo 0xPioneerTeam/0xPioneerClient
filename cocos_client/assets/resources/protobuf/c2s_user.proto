@@ -289,6 +289,23 @@ message player_wormhole_fight_start {
     required string buildingId = 1;
 }
 
+message player_wormhole_tp_random {
+    required string buildingId = 1;
+    required string pioneerId = 2;
+}
+message player_wormhole_tp_select {
+    required string buildingId = 1;
+    required string pioneerId = 2;
+    required string tpBuildingId = 3;
+}
+message player_wormhole_tp_back {
+    required string buildingId = 1;
+    required string pioneerId = 2;
+}
+message player_wormhole_tp_tag {
+    required string buildingId = 1;
+    required string pioneerId = 2;
+}
 
 // ------ test ------
 message reborn_all { }

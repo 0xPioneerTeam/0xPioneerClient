@@ -122,6 +122,11 @@ export enum protobuf_c2s {
     player_wormhole_set_attacker,
     player_wormhole_fight_start,
 
+    player_wormhole_tp_random,
+    player_wormhole_tp_select,
+    player_wormhole_tp_back,
+    player_wormhole_tp_tag,
+
 
     // ------ test ------
     reborn_all,
@@ -281,6 +286,12 @@ export enum protobuf_s2c {
     player_wormhole_set_defender_res,
     player_wormhole_set_attacker_res,
     player_wormhole_fight_start_res,
+
+    player_wormhole_tp_random_res,
+    player_wormhole_tp_select_res,
+    player_wormhole_tp_back_res,
+    player_wormhole_tp_tag_res,
+
     // wormhole: notify
     player_wormhole_fight_attacked_res,
     player_wormhole_fight_res,
