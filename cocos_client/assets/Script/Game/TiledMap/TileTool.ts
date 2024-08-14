@@ -463,8 +463,8 @@ export class TileMapHelper {
             //    searach around
             var apprivateTiles = this.Path_GetAround(currentTile);
             //     foreach (Tile adjacentTile in currentTile.apprivateTiles)
-            for (var i = 0; i < apprivateTiles.length; i++) {
-                var adjacentTile = apprivateTiles[i];
+            for (var j = 0; j < apprivateTiles.length; j++) {
+                var adjacentTile = apprivateTiles[j];
 
                 //block skip
                 if (this.Path_IsBlock(adjacentTile.x, adjacentTile.y)) continue;
@@ -553,8 +553,8 @@ export class TileMapHelper {
             //    searach around
             var apprivateTiles = this.Path_GetAround(currentTile);
             //     foreach (Tile adjacentTile in currentTile.apprivateTiles)
-            for (var i = 0; i < apprivateTiles.length; i++) {
-                var adjacentTile = apprivateTiles[i];
+            for (var j = 0; j < apprivateTiles.length; j++) {
+                var adjacentTile = apprivateTiles[j];
 
                 //block skip
                 if (g > nlimit && this.Path_IsBlock(adjacentTile.x, adjacentTile.y)) continue;
