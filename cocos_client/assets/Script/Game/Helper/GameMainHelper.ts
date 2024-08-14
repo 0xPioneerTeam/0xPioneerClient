@@ -121,7 +121,6 @@ export default class GameMainHelper {
         return this._shadowController;
     }
 
-
     //------------------------------------------ tiled map
     public initTiledMapHelper(map: TiledMap, tracking: Node) {
         //init tiledmap by a helper class
@@ -129,7 +128,7 @@ export default class GameMainHelper {
         this._mapNode = map.node;
         this._shadowBuildNode = this._mapNode.getChildByName("deco_shadow");
         let uitrans = this._shadowBuildNode.getComponent(UITransform);
-        if(!uitrans){
+        if (!uitrans) {
             this._shadowBuildNode.addComponent(UITransform);
         }
         //set a callback here. 35 is block
@@ -145,17 +144,17 @@ export default class GameMainHelper {
         }
         return this._tiledMapHelper.tilewidth;
     }
-    public tiledMapAddDynamicBlock(mapPos: Vec2,uuid:string): void {
+    public tiledMapAddDynamicBlock(mapPos: Vec2, uuid: string): void {
         if (!this.isTiledMapHelperInited) {
             return;
         }
-        this._tiledMapHelper.Path_AddDynamicBlock(mapPos.x,mapPos.y,uuid);
+        this._tiledMapHelper.Path_AddDynamicBlock(mapPos.x, mapPos.y, uuid);
     }
-    public tiledMapRemoveDynamicBlock(mapPos: Vec2,uuid:string): void {
+    public tiledMapRemoveDynamicBlock(mapPos: Vec2, uuid: string): void {
         if (!this.isTiledMapHelperInited) {
             return;
         }
-        this._tiledMapHelper.Path_RemoveDynamicBlock(mapPos.x,mapPos.y,uuid);
+        this._tiledMapHelper.Path_RemoveDynamicBlock(mapPos.x, mapPos.y, uuid);
     }
     public tiledMapGetAroundByDirection(mapPos: Vec2, direction: TileHexDirection): TilePos {
         if (!this.isTiledMapHelperInited) {
@@ -200,8 +199,8 @@ export default class GameMainHelper {
         }
         const fromPos = this._tiledMapHelper.getPos(fromTilePos.x, fromTilePos.y);
         const toPos = this._tiledMapHelper.getPos(toTilePos.x, toTilePos.y);
-        // path
-        const movePaths = this._tiledMapHelper.Path_FromTo2(fromPos, toPos);
+        // path   fromPos exblock check
+        const movePaths = this._tiledMapHelper.Path_FromTo2(fromPos, toPos, 2, [fromPos.x + "_" + fromPos.y]);
         let canMove = true;
         if (movePaths.length <= 1) {
             //only one from pos, cannot move
@@ -236,7 +235,7 @@ export default class GameMainHelper {
         }
         return this._tiledMapHelper.Path_IsBlock(mapPos.x, mapPos.y);
     }
-    public tiledMapShadowErase(mapPos: Vec2, ownerId: string = "0"){
+    public tiledMapShadowErase(mapPos: Vec2, ownerId: string = "0") {
         if (!this.isTiledMapHelperInited) {
             return [];
         }
@@ -259,7 +258,7 @@ export default class GameMainHelper {
         return this.shadowController.Shadow_GetClearedTiledPositons();
     }
 
-    public tiledMapIsInGameScene(x: number, y: number):boolean{
+    public tiledMapIsInGameScene(x: number, y: number): boolean {
         let pos = this._tiledMapHelper.getPos(x, y);
         _vec2_temp.x = pos.pixel_x;
         _vec2_temp.y = pos.pixel_y;
@@ -321,7 +320,7 @@ export default class GameMainHelper {
 
     private static _instance: GameMainHelper;
     private _mapNode: Node;
-    private _shadowBuildNode:Node;
+    private _shadowBuildNode: Node;
     private _gameCamera: Camera;
     private _gameCameraOriginalOrthoHeight: number;
     private _gameCameraZoom: number;
