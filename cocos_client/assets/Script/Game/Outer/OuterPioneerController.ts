@@ -628,8 +628,6 @@ export class OuterPioneerController extends ViewController {
             } else {
                 attackerData.hp -= tempFightData.hp;
                 fightView.attackAnim(attackerData, defenderData, tempFightData.hp, false);
-                // wait change
-                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
             }
             // fightView.refreshUI(
             //     {

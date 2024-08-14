@@ -24,6 +24,7 @@ import { NetworkMgr } from "../Net/NetworkMgr";
 import { UIHUDController } from "../UI/UIHUDController";
 import { TilePos } from "../Game/TiledMap/TileTool";
 import BigMapConfig from "../Config/BigMapConfig";
+import { share } from "../Net/msg/WebsocketMsg";
 
 export default class GameMgr {
     public rookieTaskExplainIsShow: boolean = false;
@@ -107,82 +108,87 @@ export default class GameMgr {
         return { reward: reward, quotaMax: quotaMax };
     }
 
-    public taskTracking(currentStepTask: TaskStepObject) {
+    public taskTracking(currentTask: share.Itask_info_data | share.Imission_data) {
         if (DataMgr.s.userInfo.data.rookieStep == RookieStep.FINISH) {
             return;
         }
-        if (currentStepTask == null) {
-            return;
-        }
-        let condition: TaskCondition = null;
-        if (currentStepTask.completeCon != null && currentStepTask.completeCon.conditions.length > 0) {
-            condition = currentStepTask.completeCon.conditions[0];
-        }
-        if (condition == null) {
-            return;
-        }
         let currentMapPos: Vec2 = null;
-        let interactBuildingId: string = null;
-        let interactPioneerId: string = null;
-        if (condition.type == TaskConditionType.Talk) {
-            let targetPioneer = null;
-            const allNpcs = DataMgr.s.pioneer.getAllNpcs();
-            const canTalkData = DataMgr.s.task.getCanTalkData();
-            for (const npc of allNpcs) {
-                const talkData = canTalkData[npc.id];
-                if (talkData == undefined) {
-                    continue;
+        if (!!(currentTask as share.Itask_info_data)) {
+            const templeTask: share.Itask_info_data = currentTask as share.Itask_info_data;
+            const currentStepTask: TaskStepObject = DataMgr.s.task.getTaskStep(templeTask.steps[templeTask.stepIndex].id);
+            if (currentStepTask == null) {
+                return;
+            }
+            let condition: TaskCondition = null;
+            if (currentStepTask.completeCon != null && currentStepTask.completeCon.conditions.length > 0) {
+                condition = currentStepTask.completeCon.conditions[0];
+            }
+            if (condition == null) {
+                return;
+            }
+            let interactBuildingId: string = null;
+            let interactPioneerId: string = null;
+            if (condition.type == TaskConditionType.Talk) {
+                let targetPioneer = null;
+                const allNpcs = DataMgr.s.pioneer.getAllNpcs();
+                const canTalkData = DataMgr.s.task.getCanTalkData();
+                for (const npc of allNpcs) {
+                    const talkData = canTalkData[npc.id];
+                    if (talkData == undefined) {
+                        continue;
+                    }
+                    if (talkData.talkId == condition.talk.talkId) {
+                        targetPioneer = npc;
+                        break;
+                    }
                 }
-                if (talkData.talkId == condition.talk.talkId) {
-                    targetPioneer = npc;
-                    break;
-                }
-            }
-            if (targetPioneer != null) {
-                interactPioneerId = targetPioneer.id;
-                currentMapPos = targetPioneer.stayPos;
-            }
-        } else if (condition.type == TaskConditionType.Kill) {
-            let targetPioneer: MapPioneerObject = null;
-            if (condition.kill.enemyIds.length > 0) {
-                //wait change
-                targetPioneer = DataMgr.s.pioneer.getById(condition.kill.enemyIds[CommonTools.getRandomInt(0, condition.kill.enemyIds.length - 1)]);
-            }
-            if (targetPioneer != null) {
-                interactPioneerId = targetPioneer.id;
-                currentMapPos = targetPioneer.stayPos;
-            }
-        } else if (condition.type == TaskConditionType.interact && condition.interact.interactId != null) {
-            if (condition.interact.target == MapMemberTargetType.pioneer) {
-                const targetPioneer = DataMgr.s.pioneer.getById(condition.interact.interactId);
                 if (targetPioneer != null) {
-                    currentMapPos = targetPioneer.stayPos;
                     interactPioneerId = targetPioneer.id;
+                    currentMapPos = targetPioneer.stayPos;
                 }
-            } else if (condition.interact.target == MapMemberTargetType.building) {
-                const targetBuilding = DataMgr.s.mapBuilding.getBuildingById(condition.interact.interactId);
-                if (targetBuilding != null) {
-                    currentMapPos = targetBuilding.stayMapPositions[0];
-                    interactBuildingId = targetBuilding.id;
+            } else if (condition.type == TaskConditionType.Kill) {
+                let targetPioneer: MapPioneerObject = null;
+                if (condition.kill.enemyIds.length > 0) {
+                    //wait change
+                    targetPioneer = DataMgr.s.pioneer.getById(condition.kill.enemyIds[CommonTools.getRandomInt(0, condition.kill.enemyIds.length - 1)]);
+                }
+                if (targetPioneer != null) {
+                    interactPioneerId = targetPioneer.id;
+                    currentMapPos = targetPioneer.stayPos;
+                }
+            } else if (condition.type == TaskConditionType.interact && condition.interact.interactId != null) {
+                if (condition.interact.target == MapMemberTargetType.pioneer) {
+                    const targetPioneer = DataMgr.s.pioneer.getById(condition.interact.interactId);
+                    if (targetPioneer != null) {
+                        currentMapPos = targetPioneer.stayPos;
+                        interactPioneerId = targetPioneer.id;
+                    }
+                } else if (condition.interact.target == MapMemberTargetType.building) {
+                    const targetBuilding = DataMgr.s.mapBuilding.getBuildingById(condition.interact.interactId);
+                    if (targetBuilding != null) {
+                        currentMapPos = targetBuilding.stayMapPositions[0];
+                        interactBuildingId = targetBuilding.id;
+                    }
                 }
             }
         }
+        
         if (currentMapPos != null) {
-            if (!GameMainHelper.instance.isGameShowOuter) {
-                GameMainHelper.instance.changeInnerAndOuterShow();
-            }
-            let triggerTask: boolean = false;
-            const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-            if (rookieStep == RookieStep.TASK_SHOW_TAP_1 || rookieStep == RookieStep.TASK_SHOW_TAP_2 || rookieStep == RookieStep.TASK_SHOW_TAP_3) {
-                triggerTask = true;
-            }
-            const worldPos = GameMainHelper.instance.tiledMapGetPosWorld(currentMapPos.x, currentMapPos.y);
-            GameMainHelper.instance.changeGameCameraWorldPosition(worldPos, true, triggerTask);
-            GameMainHelper.instance.showTrackingView(worldPos, {
-                stepId: currentStepTask.id,
-                interactBuildingId: interactBuildingId,
-                interactPioneerId: interactPioneerId,
-            });
+            // if (!GameMainHelper.instance.isGameShowOuter) {
+            //     GameMainHelper.instance.changeInnerAndOuterShow();
+            // }
+            // let triggerTask: boolean = false;
+            // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+            // if (rookieStep == RookieStep.TASK_SHOW_TAP_1 || rookieStep == RookieStep.TASK_SHOW_TAP_2 || rookieStep == RookieStep.TASK_SHOW_TAP_3) {
+            //     triggerTask = true;
+            // }
+            // const worldPos = GameMainHelper.instance.tiledMapGetPosWorld(currentMapPos.x, currentMapPos.y);
+            // GameMainHelper.instance.changeGameCameraWorldPosition(worldPos, true, triggerTask);
+            // GameMainHelper.instance.showTrackingView(worldPos, {
+            //     stepId: currentStepTask.id,
+            //     interactBuildingId: interactBuildingId,
+            //     interactPioneerId: interactPioneerId,
+            // });
         }
     }
 

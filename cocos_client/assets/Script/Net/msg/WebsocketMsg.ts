@@ -700,6 +700,9 @@ export namespace s2c_user {
     export interface Iuser_task_talk_info_change {
         canTalkData: { [key: string]: share.Itask_talk_data };
     }
+    export interface Iuser_mission_did_change {
+        missions: share.Imission_data[];
+    }
     export interface Iuser_task_did_change {
         task: share.Itask_info_data;
     }
@@ -1038,6 +1041,7 @@ export namespace share {
     export interface Itask_data {
         tasks: Itask_info_data[];
         canTalkData: { [key: string]: Itask_talk_data };
+        missions: { [key: string]: Imission_data };
     }
     export interface Itask_info_data {
         taskId: string;
@@ -1056,6 +1060,13 @@ export namespace share {
         id: string;
         completeIndex: number;
     }
+
+    export interface Imission_data {
+        missionId: string;
+        isComplete: boolean;
+        missionObjCount: number;
+    }
+
     export interface Isettlement_data {
         level: number;
         newPioneerIds: string[];

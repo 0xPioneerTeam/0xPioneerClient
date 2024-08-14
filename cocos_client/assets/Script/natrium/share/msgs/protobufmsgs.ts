@@ -237,7 +237,7 @@ export enum protobuf_s2c {
     user_task_did_change,
     user_task_action_talk,
     user_task_talk_info_change,
-
+    user_mission_did_change,
 
     // ------ item ------
     player_item_use_res,

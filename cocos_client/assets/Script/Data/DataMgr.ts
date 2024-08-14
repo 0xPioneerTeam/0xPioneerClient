@@ -967,6 +967,30 @@ export class DataMgr {
         let p: s2c_user.Iuser_task_talk_info_change = e.data;
         DataMgr.s.task.updateCanTalkData(p.canTalkData);
     };
+    public static user_mission_did_change = (e: any) => {
+        let p: s2c_user.Iuser_mission_did_change = e.data;
+        let getNew: boolean = false;
+        const rundata = DataMgr.s.task.getMissionAll();
+        for (const newMission of p.missions) {
+            let isExit: boolean = false;
+            for (const localMission of rundata) {
+                if (newMission.missionId == localMission.missionId) {
+                    isExit = true;
+                    localMission.missionObjCount = newMission.missionObjCount;
+                    localMission.isComplete = newMission.isComplete;
+                    break;
+                }
+            }
+            if (!isExit) {
+                rundata.push(newMission);
+                getNew = true;
+            }
+        }
+        if (getNew) {
+            NotificationMgr.triggerEvent(NotificationName.TASK_NEW_GETTED);
+        }
+        NotificationMgr.triggerEvent(NotificationName.TASK_DID_CHANGE);
+    }
 
     //------------------------------------- settlement
     public static get_user_settlement_info_res = (e: any) => {

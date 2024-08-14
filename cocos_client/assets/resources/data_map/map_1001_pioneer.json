@@ -164,65 +164,6 @@
       }
     ]
   },
-  "hred_1": {
-    "id": "hred_1",
-    "name": "109013",
-    "type": "4",
-    "friendly": 0,
-    "show": 1,
-    "level": 1,
-    "refresh_limit": 1,
-    "des": "1090401",
-    "nft_pioneer": "",
-    "hp": 60,
-    "attack": 15,
-    "def": 0,
-    "spd": 5,
-    "winprogress": 40,
-    "exp": 5,
-    "animType": "monster_a_1",
-    "drop": [
-      [
-        1,
-        "8001",
-        20
-      ]
-    ],
-    "pos": [
-      {
-        "x": 5,
-        "y": 5
-      }
-    ],
-    "logics": [
-      {
-        "type": 2,
-        "posx": null,
-        "posy": null,
-        "step": 1,
-        "cd": 2,
-        "direction": 2,
-        "repeat": 10,
-        "interval": null,
-        "range": null,
-        "speed": null,
-        "cond": ""
-      },
-      {
-        "type": 3,
-        "posx": null,
-        "posy": null,
-        "step": null,
-        "cd": null,
-        "direction": null,
-        "repeat": null,
-        "interval": null,
-        "range": null,
-        "speed": null,
-        "cond": ""
-      }
-    ]
-  },
   "hred_2": {
     "id": "hred_2",
     "name": "109014",
@@ -269,68 +210,6 @@
         "range": 3,
         "speed": 80,
         "cond": ""
-      }
-    ]
-  },
-  "hred_3": {
-    "id": "hred_3",
-    "name": "109015",
-    "type": "4",
-    "friendly": 0,
-    "show": 1,
-    "level": 1,
-    "refresh_limit": 1,
-    "des": "1090401",
-    "nft_pioneer": "",
-    "hp": 40,
-    "attack": 10,
-    "def": 0,
-    "spd": 5,
-    "winprogress": 40,
-    "exp": 5,
-    "animType": "monster_c_3",
-    "drop": [
-      [
-        1,
-        "8001",
-        20
-      ]
-    ],
-    "pos": [
-      {
-        "x": 2,
-        "y": 9
-      }
-    ]
-  },
-  "hred_4": {
-    "id": "hred_4",
-    "name": "109016",
-    "type": "4",
-    "friendly": 0,
-    "show": 1,
-    "level": 2,
-    "refresh_limit": 1,
-    "des": "1090401",
-    "nft_pioneer": "",
-    "hp": 60,
-    "attack": 15,
-    "def": 0,
-    "spd": 5,
-    "winprogress": 40,
-    "exp": 5,
-    "animType": "monster_sandspider",
-    "drop": [
-      [
-        1,
-        "8001",
-        50
-      ]
-    ],
-    "pos": [
-      {
-        "x": 6,
-        "y": 7
       }
     ]
   },

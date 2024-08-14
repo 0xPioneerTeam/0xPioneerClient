@@ -13,6 +13,7 @@ import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 import ItemConfig from "../Config/ItemConfig";
 import LanConfig from "../Config/LanConfig";
 import LvlupConfig from "../Config/LvlupConfig";
+import MissionConfig from "../Config/MissionConfig";
 import NewEventConfig from "../Config/NewEventConfig";
 import NewSubEventConfig from "../Config/NewSubEventConfig";
 import NFTPioneerConfig from "../Config/NFTPioneerConfig";
@@ -52,6 +53,7 @@ export default class ConfigMgr {
         if (!(await PioneerConfig.init())) return false;
         if (!(await TalkConfig.init())) return false;
         if (!(await TaskConfig.init())) return false;
+        if (!(await MissionConfig.init())) return false;
         if (!(await TaskStepConfigData.init())) return false;
         if (!(await WorldBoxConfig.init())) return false;
         if (!(await BigMapConfig.init())) return false;

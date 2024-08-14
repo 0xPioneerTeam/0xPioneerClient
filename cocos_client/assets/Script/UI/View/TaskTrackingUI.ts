@@ -8,11 +8,12 @@ import { NotificationName } from "../../Const/Notification";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { TaskStepObject } from "../../Const/TaskDefine";
 import GameMainHelper from "../../Game/Helper/GameMainHelper";
+import MissionConfig from "../../Config/MissionConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("TaskTrackingUI")
 export class TaskTrackingUI extends Component {
-    private _doingTask: share.Itask_info_data[] = [];
+    private _doingTask: (share.Itask_info_data | share.Imission_data)[] = [];
     private _isShow: boolean = false;
     private _showIndex: number = 0;
     private _currentTween: Tween<Node> = null;
@@ -44,7 +45,7 @@ export class TaskTrackingUI extends Component {
 
     start() {
         this._contentView.scale = v3(0, 1, 1);
-        this._doingTask = DataMgr.s.task.getAllDoingTasks().slice();
+        this._doingTask = [...DataMgr.s.task.getAllDoingTasks().slice(), ...DataMgr.s.task.getMissionAllDoing().slice()];
         this._refreshUI();
     }
 
@@ -71,20 +72,38 @@ export class TaskTrackingUI extends Component {
             if (this._showIndex > this._doingTask.length - 1) {
                 this._showIndex = 0;
             }
-            const task = this._doingTask[this._showIndex];
-            
-            // ORIGINAL CODE
-            const taskConfig = TaskConfig.getById(task.taskId);
-            if (taskConfig != null) {
-                this._titleLabel.string = LanMgr.getLanById(taskConfig.name);
-                this._progress.progress = task.stepIndex / task.steps.length;
-                this._progressValueUse.string = task.stepIndex.toString();
-                this._progressValueLimit.string = task.steps.length.toString();
+
+            let title: string = "";
+            let progress: number = 0;
+            let total: number = 0;
+
+            const temple = this._doingTask[this._showIndex];
+            if ("taskId" in temple) {
+                // task
+                const task = temple as share.Itask_info_data;
+                const taskConfig = TaskConfig.getById(task.taskId);
+                if (taskConfig != null) {
+                    title = LanMgr.getLanById(taskConfig.name);
+                    progress = task.stepIndex;
+                    total = task.steps.length;
+                }
+            } else {
+                // mission
+                const mission = temple as share.Imission_data;
+                const missionConfig = MissionConfig.getById(mission.missionId);
+                if (missionConfig != null) {
+                    title = LanMgr.getLanById(missionConfig.name);
+                    progress = mission.missionObjCount;
+                    total = missionConfig.objective[1][1];
+                }
             }
-            
+
+            this._titleLabel.string = title;
+            this._progress.progress = progress / total;
+            this._progressValueUse.string = progress.toString();
+            this._progressValueLimit.string = total.toString();
 
             // CHANGE TASK PROGRESS TO TASK STEP PROGRESS
-            
             // const currentTaskStep = task.steps[task.stepIndex];
             // if (currentTaskStep == null) {
             //     return;
@@ -138,15 +157,15 @@ export class TaskTrackingUI extends Component {
     }
     private onTapTask() {
         GameMusicPlayMgr.playTapButtonEffect();
-        const templeTask: share.Itask_info_data = this._doingTask[this._showIndex];
-        const currentStepTask: TaskStepObject = DataMgr.s.task.getTaskStep(templeTask.steps[templeTask.stepIndex].id);
-        GameMgr.taskTracking(currentStepTask);
+        const templeTask: share.Itask_info_data | share.Imission_data = this._doingTask[this._showIndex];
+        // const currentStepTask: TaskStepObject = DataMgr.s.task.getTaskStep(templeTask.steps[templeTask.stepIndex].id);
+        // GameMgr.taskTracking(currentStepTask);
     }
 
     //--------------------------- notification
     private _onTaskChange() {
         const originalTaskNum: number = this._doingTask.length;
-        this._doingTask = DataMgr.s.task.getAllDoingTasks().slice();
+        this._doingTask = [...DataMgr.s.task.getAllDoingTasks().slice(), ...DataMgr.s.task.getMissionAllDoing().slice()];
         if (this._doingTask.length < originalTaskNum) {
             this._isPlayingTaskFinishAnim = true;
 
@@ -163,7 +182,7 @@ export class TaskTrackingUI extends Component {
                 .call(() => {
                     this._changeContentShow(false, () => {
                         this._isPlayingTaskFinishAnim = false;
-                        this._doingTask = DataMgr.s.task.getAllDoingTasks().slice();
+                        this._doingTask = [...DataMgr.s.task.getAllDoingTasks().slice(), ...DataMgr.s.task.getMissionAllDoing().slice()];
                         this._refreshUI();
                     });
                 })

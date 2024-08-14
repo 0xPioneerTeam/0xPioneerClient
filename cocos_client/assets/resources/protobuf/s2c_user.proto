@@ -337,6 +337,10 @@ message user_task_talk_info_change {
     map<string, task_talk_data> canTalkData = 1;
 }
 
+message user_mission_did_change {
+    repeated share.mission_data missions = 1;
+}
+
 // ------ item ------
 message player_item_use_res {
     required int32 res = 1;

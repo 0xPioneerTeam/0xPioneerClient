@@ -27,6 +27,8 @@ import NetGlobalData from "./Data/NetGlobalData";
 export default class TaskDataMgr {
     private _data: share.Itask_info_data[] = [];
     private _canTalkData: { [key: string]: share.Itask_talk_data } = {};
+    private _missions: share.Imission_data[] = [];
+
     private _taskStepMap: Map<string, TaskStepObject> = new Map();
     public constructor() {}
     //--------------------------------
@@ -35,7 +37,7 @@ export default class TaskDataMgr {
     }
     //--------------------------------
     public getCanTalkData() {
-        return this._canTalkData;   
+        return this._canTalkData;
     }
     public getAll(): share.Itask_info_data[] {
         return this._data;
@@ -63,6 +65,14 @@ export default class TaskDataMgr {
         }
         return this._convertTaskStepConfigToObject(config);
     }
+
+    public getMissionAll(): share.Imission_data[] {
+        console.log("exce mission:" + JSON.stringify(this._missions));
+        return this._missions;
+    }
+    public getMissionAllDoing(): share.Imission_data[] {
+        return this._missions.filter((mission) => !mission.isComplete);
+    }
     //--------------------------------
     public updateCanTalkData(canTalkData: { [key: string]: share.Itask_talk_data }) {
         this._canTalkData = canTalkData;
@@ -72,6 +82,14 @@ export default class TaskDataMgr {
     private _initData() {
         this._data = NetGlobalData.taskinfo.tasks;
         this._canTalkData = NetGlobalData.taskinfo.canTalkData;
+
+        this._missions = [];
+        for (const key in NetGlobalData.taskinfo.missions) {
+            if (Object.prototype.hasOwnProperty.call(NetGlobalData.taskinfo.missions, key)) {
+                const element = NetGlobalData.taskinfo.missions[key];
+                this._missions.push(element);
+            }
+        }
     }
     // private _convertTaskConfigToObject(config: TaskConfigData): share.Itask_data {
     //     const preAction: TaskAction[] = [];

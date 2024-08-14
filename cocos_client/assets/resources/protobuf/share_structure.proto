@@ -525,6 +525,7 @@ message new_battle_report_fight_member_data {
 message task_data {
     repeated task_info_data tasks = 1;
     map<string, task_talk_data> canTalkData = 2;
+    map<string, mission_data> missions = 3;
 }
 
 message task_info_data {
@@ -545,6 +546,12 @@ message task_talk_data {
 message task_step_data {
     required string id = 1;
     required uint32 completeIndex = 2;
+}
+
+message mission_data {
+    required string missionId = 1;
+    required bool isComplete = 2;
+    required uint32 missionObjCount = 3;
 }
 
 message settlement_data {
