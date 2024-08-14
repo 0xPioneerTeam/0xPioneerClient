@@ -23,8 +23,8 @@
             "name": "Barrel_A",
             "show": true,
             "positions": {
-                "x": 605.086,
-                "y": 505.608,
+                "x": 549.407,
+                "y": 548.759,
                 "z": 0
             },
             "rotation": {
@@ -51,8 +51,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": -624.783,
-                "y": 386.945,
+                "x": -680.462,
+                "y": 430.096,
                 "z": 0
             },
             "rotation": {
@@ -79,8 +79,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": -674.783,
-                "y": 300.469,
+                "x": -730.462,
+                "y": 343.62,
                 "z": 0
             },
             "rotation": {
@@ -107,8 +107,8 @@
             "name": "Guidepost_01_Group",
             "show": true,
             "positions": {
-                "x": -800.708,
-                "y": -18.316,
+                "x": -856.387,
+                "y": 24.835,
                 "z": 0
             },
             "rotation": {
@@ -135,8 +135,8 @@
             "name": "Ornamental_01_Group",
             "show": true,
             "positions": {
-                "x": -616.668,
-                "y": -324.959,
+                "x": -672.347,
+                "y": -281.808,
                 "z": 0
             },
             "rotation": {
@@ -163,8 +163,8 @@
             "name": "Tree_Group",
             "show": true,
             "positions": {
-                "x": -531.757,
-                "y": -409.86,
+                "x": -587.436,
+                "y": -366.709,
                 "z": 0
             },
             "rotation": {
@@ -191,8 +191,8 @@
             "name": "Village_Group_D_Damage",
             "show": true,
             "positions": {
-                "x": 851.765,
-                "y": 610.521,
+                "x": 796.086,
+                "y": 653.672,
                 "z": 0
             },
             "rotation": {

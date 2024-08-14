@@ -23,8 +23,8 @@
             "name": "Barrel_A",
             "show": true,
             "positions": {
-                "x": -670.278,
-                "y": 691.251,
+                "x": -732.57,
+                "y": 728.626,
                 "z": 0
             },
             "rotation": {
@@ -51,8 +51,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 535.817,
-                "y": -370.105,
+                "x": 473.525,
+                "y": -332.73,
                 "z": 0
             },
             "rotation": {
@@ -79,8 +79,8 @@
             "name": "Ornamental_01_Group",
             "show": true,
             "positions": {
-                "x": -221.257,
-                "y": 624.015,
+                "x": -283.549,
+                "y": 661.39,
                 "z": 0
             },
             "rotation": {
@@ -107,8 +107,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 734.388,
-                "y": -672.04,
+                "x": 672.096,
+                "y": -634.665,
                 "z": 0
             },
             "rotation": {
@@ -135,8 +135,8 @@
             "name": "Barrel_A",
             "show": true,
             "positions": {
-                "x": -785.026,
-                "y": 294.47,
+                "x": -847.318,
+                "y": 331.845,
                 "z": 0
             },
             "rotation": {
@@ -163,8 +163,8 @@
             "name": "Huge_Rock_N3_Group",
             "show": true,
             "positions": {
-                "x": 893.339,
-                "y": -455.961,
+                "x": 831.047,
+                "y": -418.586,
                 "z": 0
             },
             "rotation": {

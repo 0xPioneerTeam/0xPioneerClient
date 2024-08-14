@@ -339,6 +339,41 @@
     "eng": "Damaged Gear",
     "tc": "損壞的齒輪"
   },
+  "107100": {
+    "id": "107100",
+    "eng": "Scavenger Soldier",
+    "tc": "游民战士"
+  },
+  "107101": {
+    "id": "107101",
+    "eng": "Wasteland Nomad",
+    "tc": "流浪武士"
+  },
+  "107102": {
+    "id": "107102",
+    "eng": "Wasteland Raider",
+    "tc": "废土武士"
+  },
+  "107103": {
+    "id": "107103",
+    "eng": "Radiation Warrior",
+    "tc": "辐射战士"
+  },
+  "107104": {
+    "id": "107104",
+    "eng": "Steel Guardian",
+    "tc": "钢铁卫士"
+  },
+  "107105": {
+    "id": "107105",
+    "eng": "Doomsday Legion",
+    "tc": "末日军团"
+  },
+  "107106": {
+    "id": "107106",
+    "eng": "Legion of Rescuers",
+    "tc": "拯救者军团"
+  },
   "107549": {
     "id": "107549",
     "eng": "text for English version",
@@ -346,8 +381,18 @@
   },
   "108001": {
     "id": "108001",
-    "eng": "Skill Name",
-    "tc": "技能名稱"
+    "eng": "Insight",
+    "tc": "洞察"
+  },
+  "108002": {
+    "id": "108002",
+    "eng": "Swift Shadow",
+    "tc": "迅影"
+  },
+  "108003": {
+    "id": "108003",
+    "eng": "Divine Eye",
+    "tc": "神眼"
   },
   "109001": {
     "id": "109001",
@@ -789,6 +834,41 @@
     "eng": "A gear with visible wear or breakage, a reminder of the passage of time and the inevitability of decay.",
     "tc": "一個有明顯磨損或損壞的齒輪，提醒時間的流逝和衰敗的必然性。"
   },
+  "117100": {
+    "id": "117100",
+    "eng": "These warriors are the most common combat units on the wasteland, usually ordinary people who have now picked up weapons to survive. Their equipment is rudimentary, mainly relying on",
+    "tc": "这些战士是废土上最常见的战斗单位，通常是曾经的普通人，现在为了生存而拿起了武器。他们的装备简陋，主要依"
+  },
+  "117101": {
+    "id": "117101",
+    "eng": "These soldiers are destitute warriors wandering among the wasteland, familiar with the terrain and environment, and able to quickly adapt to various battlefield environments.",
+    "tc": "这些战士是游走于废土之间的落魄战士，熟悉地形和环境，能够快速适应各种战场环境。"
+  },
+  "117102": {
+    "id": "117102",
+    "eng": "Warriors who survive in wasteland are more organized, have a fierce combat style, and are skilled in surprise attacks and ambushes.",
+    "tc": "在废土中生存下来的战士，组织更加严密，作战风格凶悍，擅长突袭和伏击。"
+  },
+  "117103": {
+    "id": "117103",
+    "eng": "These soldiers have been exposed to radiation for a long time, causing their bodies to mutate and become stronger and more durable. Their equipment has been further enhanced, possessing a certain level of radiation resistance and the ability to utilize the surrounding environment for combat",
+    "tc": "这些战士长期暴露在辐射环境中，身体发生了变异，变得更加强悍和耐打。他们的装备进一步增强，具备一定的抗辐射能力，并且可以利用周围环境进行作战。"
+  },
+  "117104": {
+    "id": "117104",
+    "eng": "These warriors are the most elite beings on the wasteland, equipped with high-tech armor reconstructed from waste technology. They can withstand huge damage and have the ability to counterattack enemies. Steel guardians are usually the core force of the entire army.",
+    "tc": "这些战士是废土上最精锐的存在，装备着用废旧科技重组的高科技盔甲。他们可以承受巨大的伤害并且有能力反击敌人。钢铁卫士通常是整个军队的核心力量。"
+  },
+  "117105": {
+    "id": "117105",
+    "eng": "The Apocalypse Legion is one of the most powerful warriors on the battlefield, with equipment and combat power several times that of other units. These soldiers are not only powerful in combat, but also able to command and inspire other soldiers to play a greater role in battle.",
+    "tc": "末日军团是战场上最强大的战士之一，他们的装备和战斗力都是其他单位的数倍。这些战士不仅战斗力强大，还能够指挥和激励其他战士，让他们在战斗中发挥更大的作用。"
+  },
+  "117106": {
+    "id": "117106",
+    "eng": "The highest level warriors and commanders not only possess exceptional combat power, but also wield the most powerful weapons and resources, and are capable of commanding an entire army.",
+    "tc": "最高级别的战士和指挥官，他们不仅拥有超强的战斗力，还掌握着最强大的武器和资源，并且够指挥整支军队。"
+  },
   "120001": {
     "id": "120001",
     "eng": "City Hall",
@@ -796,8 +876,8 @@
   },
   "120002": {
     "id": "120002",
-    "eng": "Barracks",
-    "tc": "兵營"
+    "eng": "Recruiting soldiers",
+    "tc": "募兵委"
   },
   "120003": {
     "id": "120003",
@@ -806,13 +886,18 @@
   },
   "120004": {
     "id": "120004",
-    "eng": "Energy Station",
-    "tc": "能量站"
+    "eng": "intelligence station",
+    "tc": "情报站"
   },
   "120005": {
     "id": "120005",
     "eng": "Babel Tower",
     "tc": "巴別塔"
+  },
+  "120006": {
+    "id": "120006",
+    "eng": "Barracks",
+    "tc": "兵營"
   },
   "121001": {
     "id": "121001",
@@ -831,13 +916,18 @@
   },
   "121004": {
     "id": "121004",
-    "eng": "Accelerated energy production efficiency",
-    "tc": "加速能量生產效率"
+    "eng": "Can increase reconnaissance field of view",
+    "tc": "可以增加侦察视野"
   },
   "121005": {
     "id": "121005",
     "eng": "More Relics are able to be acitved",
     "tc": "可以激活更多的遺物"
+  },
+  "121006": {
+    "id": "121006",
+    "eng": "Can train more types of troops",
+    "tc": "可以训练更多兵种"
   },
   "122001": {
     "id": "122001",
@@ -3811,8 +3901,18 @@
   },
   "1080011": {
     "id": "1080011",
-    "eng": "Skill Des",
-    "tc": "技能描述"
+    "eng": "Discover the enemy's weakness and increase attack damage by 20%",
+    "tc": "發現敵人的弱點，提升攻擊傷害20%"
+  },
+  "1080012": {
+    "id": "1080012",
+    "eng": "Every 3 attacks, an additional attack causing 75% damage will be added.",
+    "tc": "每攻擊3次，追加1次造成75%傷害的攻擊"
+  },
+  "1080013": {
+    "id": "1080013",
+    "eng": "Each attack has a 10% chance of causing 200% attack damage",
+    "tc": "每次攻擊有10%幾率造成200%的攻擊傷害"
   },
   "1090051": {
     "id": "1090051",

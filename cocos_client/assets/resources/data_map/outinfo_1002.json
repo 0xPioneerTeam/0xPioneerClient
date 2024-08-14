@@ -23,8 +23,8 @@
             "name": "Barrel_A",
             "show": true,
             "positions": {
-                "x": -413.848,
-                "y": -462.533,
+                "x": -477.848,
+                "y": -410.533,
                 "z": 0
             },
             "rotation": {
@@ -51,8 +51,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 406.227,
-                "y": 398.864,
+                "x": 343.227,
+                "y": 430.864,
                 "z": 0
             },
             "rotation": {
@@ -79,8 +79,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": -401.722,
-                "y": 100.823,
+                "x": -484.722,
+                "y": 147.823,
                 "z": 0
             },
             "rotation": {
@@ -107,8 +107,8 @@
             "name": "Barrel_A",
             "show": true,
             "positions": {
-                "x": 491.762,
-                "y": 492.883,
+                "x": 411.177,
+                "y": 544.67,
                 "z": 0
             },
             "rotation": {
@@ -135,8 +135,8 @@
             "name": "Guidepost_01_Group",
             "show": true,
             "positions": {
-                "x": 862.018,
-                "y": -18.316,
+                "x": 781.433,
+                "y": 33.471,
                 "z": 0
             },
             "rotation": {
@@ -163,8 +163,8 @@
             "name": "Village_Group_C_01_Damage",
             "show": true,
             "positions": {
-                "x": -554.643,
-                "y": -528.379,
+                "x": -635.228,
+                "y": -476.592,
                 "z": 0
             },
             "rotation": {
@@ -195,8 +195,8 @@
             "name": "Ornamental_01_Group",
             "show": true,
             "positions": {
-                "x": -353.192,
-                "y": 422.602,
+                "x": -433.777,
+                "y": 474.389,
                 "z": 0
             },
             "rotation": {
@@ -223,8 +223,8 @@
             "name": "Ornamental_01_Group",
             "show": true,
             "positions": {
-                "x": -623.455,
-                "y": 439.748,
+                "x": -704.04,
+                "y": 491.535,
                 "z": 0
             },
             "rotation": {
@@ -251,8 +251,8 @@
             "name": "Tree_Group",
             "show": true,
             "positions": {
-                "x": -543.622,
-                "y": 356.872,
+                "x": -624.207,
+                "y": 408.659,
                 "z": 0
             },
             "rotation": {

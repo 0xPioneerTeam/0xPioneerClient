@@ -23,8 +23,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 787.701,
-                "y": -380.462,
+                "x": 730.218,
+                "y": -336.594,
                 "z": 0
             },
             "rotation": {
@@ -51,8 +51,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": -801.549,
-                "y": -467.528,
+                "x": -859.032,
+                "y": -423.66,
                 "z": 0
             },
             "rotation": {
@@ -79,8 +79,8 @@
             "name": "Stone_B",
             "show": true,
             "positions": {
-                "x": -415.631,
-                "y": 678.607,
+                "x": -473.114,
+                "y": 722.475,
                 "z": 0
             },
             "rotation": {
@@ -107,8 +107,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 531.814,
-                "y": 588.031,
+                "x": 474.331,
+                "y": 631.899,
                 "z": 0
             },
             "rotation": {
@@ -135,8 +135,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": -557.046,
-                "y": -278.472,
+                "x": -614.529,
+                "y": -234.604,
                 "z": 0
             },
             "rotation": {
@@ -163,8 +163,8 @@
             "name": "Stone_B",
             "show": true,
             "positions": {
-                "x": 227.304,
-                "y": 472.06,
+                "x": 169.821,
+                "y": 515.928,
                 "z": 0
             },
             "rotation": {
@@ -191,8 +191,8 @@
             "name": "Stone_B",
             "show": true,
             "positions": {
-                "x": -757.278,
-                "y": -575.547,
+                "x": -814.761,
+                "y": -531.679,
                 "z": 0
             },
             "rotation": {
@@ -219,8 +219,8 @@
             "name": "Ornamental_05_Group",
             "show": true,
             "positions": {
-                "x": 160.9,
-                "y": 1.752,
+                "x": 103.417,
+                "y": 45.62,
                 "z": 0
             },
             "rotation": {
@@ -251,8 +251,8 @@
             "name": "Ornamental_04_Group",
             "show": true,
             "positions": {
-                "x": -158.303,
-                "y": 178.241,
+                "x": -215.786,
+                "y": 222.109,
                 "z": 0
             },
             "rotation": {
@@ -279,8 +279,8 @@
             "name": "Barrel_A",
             "show": true,
             "positions": {
-                "x": -93.629,
-                "y": -181.848,
+                "x": -151.112,
+                "y": -137.98,
                 "z": 0
             },
             "rotation": {
@@ -307,8 +307,8 @@
             "name": "Barrel_A",
             "show": true,
             "positions": {
-                "x": -358.878,
-                "y": 12.831,
+                "x": -416.361,
+                "y": 56.699,
                 "z": 0
             },
             "rotation": {
@@ -335,8 +335,8 @@
             "name": "Barrel_A",
             "show": true,
             "positions": {
-                "x": -287.678,
-                "y": -80.29,
+                "x": -345.161,
+                "y": -36.422,
                 "z": 0
             },
             "rotation": {
@@ -363,8 +363,8 @@
             "name": "Guidepost_01_Group",
             "show": true,
             "positions": {
-                "x": 221.486,
-                "y": -600.501,
+                "x": 164.003,
+                "y": -556.633,
                 "z": 0
             },
             "rotation": {

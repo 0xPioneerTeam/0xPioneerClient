@@ -23,8 +23,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 598.183,
-                "y": -459.56,
+                "x": 539.229,
+                "y": -414.898,
                 "z": 0
             },
             "rotation": {
@@ -51,8 +51,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 410.344,
-                "y": -368.546,
+                "x": 351.39,
+                "y": -323.884,
                 "z": 0
             },
             "rotation": {
@@ -79,8 +79,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 479.147,
-                "y": -281.131,
+                "x": 420.193,
+                "y": -236.469,
                 "z": 0
             },
             "rotation": {
@@ -107,8 +107,8 @@
             "name": "Ornamental_01_Group",
             "show": true,
             "positions": {
-                "x": -415.128,
-                "y": 528.669,
+                "x": -474.082,
+                "y": 573.331,
                 "z": 0
             },
             "rotation": {
@@ -135,8 +135,8 @@
             "name": "Ornamental_01_Group",
             "show": true,
             "positions": {
-                "x": -297.332,
-                "y": 727.737,
+                "x": -356.286,
+                "y": 772.399,
                 "z": 0
             },
             "rotation": {
@@ -163,8 +163,8 @@
             "name": "Ornamental_01_Group",
             "show": true,
             "positions": {
-                "x": -221.257,
-                "y": 624.015,
+                "x": -280.211,
+                "y": 668.677,
                 "z": 0
             },
             "rotation": {
@@ -191,8 +191,8 @@
             "name": "Tree_Group",
             "show": true,
             "positions": {
-                "x": -356.6650000000001,
-                "y": 621.44,
+                "x": -415.619,
+                "y": 666.102,
                 "z": 0
             },
             "rotation": {
@@ -219,8 +219,8 @@
             "name": "Tree_Group",
             "show": true,
             "positions": {
-                "x": -775.459,
-                "y": 539.57,
+                "x": -834.413,
+                "y": 584.232,
                 "z": 0
             },
             "rotation": {
@@ -247,8 +247,8 @@
             "name": "Village_Group_B_Damage",
             "show": true,
             "positions": {
-                "x": -550.319,
-                "y": -514.769,
+                "x": -609.273,
+                "y": -470.107,
                 "z": 0
             },
             "rotation": {

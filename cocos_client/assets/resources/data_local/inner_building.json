@@ -86,7 +86,7 @@
   "30004": {
     "id": "30004",
     "name": "120004",
-    "anim": "EnergyStation",
+    "anim": "ArtifactStore",
     "unlock": 1,
     "maxlevel": 10,
     "lvlup_progress": "progress",
@@ -107,8 +107,8 @@
     ],
     "staff_des": "122001",
     "pos": [
-      2,
-      0
+      10,
+      2
     ]
   },
   "30005": {
@@ -135,22 +135,22 @@
     ],
     "staff_des": "122001",
     "pos": [
-      10,
-      2
+      2,
+      0
     ]
   },
   "30006": {
     "id": "30006",
     "name": "120006",
-    "anim": "InformationStation",
+    "anim": "EnergyStation",
     "unlock": 1,
     "maxlevel": 10,
     "lvlup_progress": "progress",
     "lvlup_exp": "exp",
     "lvlup_cost": "cost_barr",
     "lvlup_time": "lvlup_time",
-    "prefab": "prefab_house",
-    "desc": "desc_house",
+    "prefab": "prefab_barracks",
+    "desc": "desc_barracks",
     "size": 2,
     "staff_effect": [
       [
@@ -163,8 +163,8 @@
     ],
     "staff_des": "122001",
     "pos": [
-      10,
-      1
+      4,
+      2
     ]
   }
 }

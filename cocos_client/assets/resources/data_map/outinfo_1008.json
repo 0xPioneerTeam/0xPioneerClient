@@ -23,8 +23,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": -719.78,
-                "y": -380.462,
+                "x": -787.987,
+                "y": -327.567,
                 "z": 0
             },
             "rotation": {
@@ -51,8 +51,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": -430.285,
-                "y": -467.528,
+                "x": -498.492,
+                "y": -414.633,
                 "z": 0
             },
             "rotation": {
@@ -79,8 +79,8 @@
             "name": "Stone_B",
             "show": true,
             "positions": {
-                "x": 857.045,
-                "y": 678.607,
+                "x": 788.838,
+                "y": 731.502,
                 "z": 0
             },
             "rotation": {
@@ -107,8 +107,8 @@
             "name": "Destroyed_Plane_Group",
             "show": true,
             "positions": {
-                "x": 681.698,
-                "y": -506.361,
+                "x": 613.491,
+                "y": -453.466,
                 "z": 0
             },
             "rotation": {
@@ -143,8 +143,8 @@
             "name": "Huge_Rock_N4_Group",
             "show": true,
             "positions": {
-                "x": -844.306,
-                "y": 227.814,
+                "x": -912.513,
+                "y": 280.709,
                 "z": 0
             },
             "rotation": {
@@ -183,8 +183,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 531.814,
-                "y": 588.031,
+                "x": 463.607,
+                "y": 640.926,
                 "z": 0
             },
             "rotation": {
@@ -211,8 +211,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": -557.046,
-                "y": -278.472,
+                "x": -625.253,
+                "y": -225.577,
                 "z": 0
             },
             "rotation": {
@@ -239,8 +239,8 @@
             "name": "Stone_B",
             "show": true,
             "positions": {
-                "x": 227.304,
-                "y": 472.06,
+                "x": 159.097,
+                "y": 524.955,
                 "z": 0
             },
             "rotation": {
@@ -267,8 +267,8 @@
             "name": "Stone_B",
             "show": true,
             "positions": {
-                "x": -757.278,
-                "y": -575.547,
+                "x": -825.485,
+                "y": -522.652,
                 "z": 0
             },
             "rotation": {

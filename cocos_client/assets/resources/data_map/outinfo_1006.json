@@ -23,8 +23,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 535.817,
-                "y": 389.107,
+                "x": 471.106,
+                "y": 442.146,
                 "z": 0
             },
             "rotation": {
@@ -51,8 +51,8 @@
             "name": "Ornamental_01_Group",
             "show": true,
             "positions": {
-                "x": 800.341,
-                "y": 624.015,
+                "x": 735.63,
+                "y": 677.054,
                 "z": 0
             },
             "rotation": {
@@ -79,8 +79,8 @@
             "name": "Stone_A",
             "show": true,
             "positions": {
-                "x": 734.388,
-                "y": 275.504,
+                "x": 669.677,
+                "y": 328.543,
                 "z": 0
             },
             "rotation": {
@@ -107,8 +107,8 @@
             "name": "Barrel_A",
             "show": true,
             "positions": {
-                "x": -605.178,
-                "y": -375.798,
+                "x": -669.889,
+                "y": -322.759,
                 "z": 0
             },
             "rotation": {
@@ -135,8 +135,8 @@
             "name": "Ornamental_06_Group",
             "show": true,
             "positions": {
-                "x": -359.449,
-                "y": -242.024,
+                "x": -424.16,
+                "y": -188.985,
                 "z": 0
             },
             "rotation": {
@@ -167,8 +167,8 @@
             "name": "Destroyed_Cruise_Group",
             "show": true,
             "positions": {
-                "x": -672.576,
-                "y": -598.727,
+                "x": -737.287,
+                "y": -545.688,
                 "z": 0
             },
             "rotation": {
