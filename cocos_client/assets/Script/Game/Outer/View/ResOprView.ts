@@ -196,10 +196,7 @@ export class ResOprView extends Component {
             }
         } else if (interactPioneer != null) {
             if (interactPioneer.type == MapPioneerType.npc) {
-                const canTalkData = DataMgr.s.task.getCanTalkData();
-                if (canTalkData[interactPioneer.id] != undefined) {
-                    actionTypes.push(MapInteractType.Talk);
-                }
+                actionTypes.push(MapInteractType.Talk);
                 actionTypes.push(MapInteractType.Move);
             } else if (interactPioneer.type == MapPioneerType.gangster) {
                 actionTypes.push(MapInteractType.Attack);

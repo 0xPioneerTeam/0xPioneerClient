@@ -913,6 +913,7 @@ export namespace share {
         killerId?: string;
         NFTId?: string;
 
+        actionFightBeginRes: Ifight_effect_trigger_res[];
         actionFightRes: Ifight_res[];
         actionFightWinner: number;
         rebirthStartTime?: number;
@@ -925,6 +926,12 @@ export namespace share {
         attackerId: string;
         defenderId: string;
         hp: number;
+        effectRes: Ifight_effect_trigger_res[];
+    }
+    export interface Ifight_effect_trigger_res {
+        actionId: string;
+        skillId: string;
+        effectId: string;
     }
 
     export interface Infts_data {

@@ -67,7 +67,6 @@ export default class TaskDataMgr {
     }
 
     public getMissionAll(): share.Imission_data[] {
-        console.log("exce mission:" + JSON.stringify(this._missions));
         return this._missions;
     }
     public getMissionAllDoing(): share.Imission_data[] {

@@ -188,15 +188,16 @@ message pioneer_data {
     optional string actionBuildingId = 68;
     repeated pos2d movePath = 69;
 
-    repeated fight_res actionFightRes = 70;
-    optional string actionFightId = 71;
-    optional uint32 actionFightWinner = 72;
-    optional uint32 actionFightHp = 73;
+    repeated fight_effect_trigger_res actionFightBeginRes = 70;
+    repeated fight_res actionFightRes = 71;
+    optional string actionFightId = 72;
+    optional uint32 actionFightWinner = 73;
+    optional uint32 actionFightHp = 74;
 
-    required uint32 eventStatus = 74;
+    required uint32 eventStatus = 75;
     
-    required uint32 winProgress = 75;
-    required uint32 winExp = 76;
+    required uint32 winProgress = 76;
+    required uint32 winExp = 77;
     
     optional string NFTInitLinkId = 80;
     optional int32 rebirthStartTime = 81;
@@ -250,15 +251,16 @@ message map_pioneer_data {
     optional string actionEventId = 30;
     optional string actionBuildingId = 31;
 
-    repeated fight_res actionFightRes = 32;
-    optional string actionFightId = 33;
-    optional uint32 actionFightWinner = 34;
-    optional uint32 actionFightHp = 35;
+    repeated fight_effect_trigger_res actionFightBeginRes = 32;
+    repeated fight_res actionFightRes = 33;
+    optional string actionFightId = 34;
+    optional uint32 actionFightWinner = 35;
+    optional uint32 actionFightHp = 36;
 
-    required uint32 eventStatus = 36;
+    required uint32 eventStatus = 37;
     
-    required uint32 winProgress = 37;
-    required uint32 winExp = 38;
+    required uint32 winProgress = 38;
+    required uint32 winExp = 39;
     
     // optional string NFTInitLinkId = 39;
     optional int32 rebirthStartTime = 40;
@@ -273,6 +275,13 @@ message fight_res {
     required string attackerId = 1;
     required string defenderId = 2;
     required uint32 hp = 3;
+    repeated fight_effect_trigger_res effectRes = 4;
+}
+
+message fight_effect_trigger_res {
+    required string actionId = 1;
+    required string skillId = 2;
+    required string effectId = 3;
 }
 
 message user_map_member_status {
@@ -502,9 +511,10 @@ message new_battle_report_fight_data {
     optional pos2d location = 3;
     required new_battle_report_fight_member_data attacker = 4;
     required new_battle_report_fight_member_data defender = 5;
-    repeated fight_res fightRes = 6;
-    repeated item_data winItems = 7;
-    repeated artifact_info_data winArtifacts = 8;
+    repeated fight_effect_trigger_res fightBeginRes = 6;
+    repeated fight_res fightRes = 7;
+    repeated item_data winItems = 8;
+    repeated artifact_info_data winArtifacts = 9;
 }
 message new_battle_report_mining_data {
     required string pioneerUniqueId = 1;

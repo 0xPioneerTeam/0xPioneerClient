@@ -104,7 +104,6 @@ export class MapPioneer extends Component {
                 case MapPioneerActionType.dead:
                     {
                         this._contentView.active = true;
-                        console.log("exce dead: " + this._model.uniqueId);
                         deadView.active = true;
                     }
                     break;
@@ -114,14 +113,12 @@ export class MapPioneer extends Component {
                         this._contentView.active = true;
                         wakeUpView.active = true;
                         wakeUpView.getComponent(Animation).play();
-                        console.log("exce wakeup: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.defend:
                     {
                         this._contentView.active = false; // not show
-                        console.log("exce defend: " + this._model.uniqueId);
                     }
                     break;
 
@@ -133,28 +130,24 @@ export class MapPioneer extends Component {
                         if (this._currnetIdleAnim != null) {
                             this._currnetIdleAnim.play();
                         }
-                        console.log("exce idle: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.moving:
                     {
                         this._contentView.active = true; // show
-                        console.log("exce moving: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.fighting:
                     {
                         this._contentView.active = false;
-                        console.log("exce fight: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.maincityFighting:
                     {
                         this._contentView.active = false;
-                        console.log("exce cityfight: " + this._model.uniqueId);
                     }
                     break;
                 case MapPioneerActionType.mining:
@@ -163,7 +156,6 @@ export class MapPioneer extends Component {
                         // if (collectView != null) {
                         //     collectView.active = true;
                         // }
-                        console.log("exce mining: " + this._model.uniqueId);
                     }
                     break;
 
@@ -172,7 +164,6 @@ export class MapPioneer extends Component {
                         this._contentView.active = true;
                         idleView.active = true;
                         this._addingtroopsView.active = true;
-                        console.log("exce addtr: " + this._model.uniqueId);
                     }
                     break;
 
@@ -189,21 +180,18 @@ export class MapPioneer extends Component {
                         this._contentView.active = true;
                         this._eventingView.active = true;
                         idleView.active = true;
-                        console.log("exce eventing: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.wormhole:
                     {
                         this._contentView.active = false;
-                        console.log("exce wormhole: " + this._model.uniqueId);
                     }
                     break;
 
                 case MapPioneerActionType.inCity:
                     {
                         this._contentView.active = false;
-                        console.log("exce incity: " + this._model.uniqueId);
                     }
                     break;
 
@@ -214,7 +202,6 @@ export class MapPioneer extends Component {
                     if (this._currnetIdleAnim != null) {
                         this._currnetIdleAnim.play();
                     }
-                    console.log("exce staying: " + this._model.uniqueId);
                 }
 
                 default:

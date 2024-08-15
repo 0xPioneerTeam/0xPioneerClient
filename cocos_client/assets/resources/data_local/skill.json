@@ -2,10 +2,49 @@
   "50001": {
     "id": "50001",
     "name": "108001",
+    "type": 3,
+    "triggertype": 2,
+    "typepara": null,
+    "para": [
+      1
+    ],
     "rank": 1,
     "effect": [
-      "500011",
+      "500011"
+    ]
+  },
+  "50002": {
+    "id": "50002",
+    "name": "108002",
+    "type": 3,
+    "triggertype": 3,
+    "typepara": [
+      3,
+      1
+    ],
+    "para": [
+      1
+    ],
+    "rank": 1,
+    "effect": [
       "500021"
+    ]
+  },
+  "50003": {
+    "id": "50003",
+    "name": "108003",
+    "type": 3,
+    "triggertype": 3,
+    "typepara": [
+      1,
+      1
+    ],
+    "para": [
+      1
+    ],
+    "rank": 1,
+    "effect": [
+      "500031"
     ]
   }
 }

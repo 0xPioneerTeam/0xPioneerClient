@@ -105,6 +105,10 @@ export class PioneersDataMgr {
             return;
         }
         const newObj = PioneerDefine.convertNetDataToObject(data);
+        if (newObj.actionType == MapPioneerActionType.moving && newObj.movePaths.length > 0) {
+            // new pioneer show is moveing, staypos set to move begin pos
+            newObj.stayPos = newObj.movePaths[0] as Vec2;
+        }
         this._pioneers.push(newObj);
     }
     public addObjData(data: MapPioneerObject) {

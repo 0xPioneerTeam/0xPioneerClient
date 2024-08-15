@@ -276,7 +276,7 @@ export class OuterPioneerController extends ViewController {
                 if (this._pioneerMap.has(pioneer.uniqueId)) {
                     temple = this._pioneerMap.get(pioneer.uniqueId);
                 } else {
-                    if(!GameMainHelper.instance.tiledMapIsInGameScene(pioneer.stayPos.x, pioneer.stayPos.y)){
+                    if(pioneer.type != MapPioneerType.player && !GameMainHelper.instance.tiledMapIsInGameScene(pioneer.stayPos.x, pioneer.stayPos.y)){
                         continue;
                     }
                     // new
