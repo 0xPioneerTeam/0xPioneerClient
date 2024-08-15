@@ -86,7 +86,7 @@
   "30004": {
     "id": "30004",
     "name": "120004",
-    "anim": "ArtifactStore",
+    "anim": "EnergyStation",
     "unlock": 1,
     "maxlevel": 10,
     "lvlup_progress": "progress",
