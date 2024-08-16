@@ -18,6 +18,17 @@ export class MapBuildingDataMgr {
     private _selfMainCitySlotId: string = null;
     public constructor() {}
 
+    public checkBuildingIsInSelfSlot(uniqueId: string): boolean {
+        let slotId = "";
+        const uniqueIdSplit = uniqueId.split("|");
+        if (uniqueIdSplit.length == 2) {
+            slotId = uniqueIdSplit[0];
+        }
+        if (slotId == this._selfMainCitySlotId) {
+            return true;
+        }
+        return false;
+    }
     public getSelfMainCitySlotId() {
         return this._selfMainCitySlotId;
     }

@@ -213,12 +213,16 @@ export class Main extends ViewController {
 
         NetworkMgr.websocket.on("player_fight_end", DataMgr.player_fight_end);
 
+        NetworkMgr.websocket.on("player_wormhole_tp_random_res", DataMgr.player_wormhole_tp_random_res);
+        NetworkMgr.websocket.on("player_wormhole_tp_select_res", DataMgr.player_wormhole_tp_select_res);
+        NetworkMgr.websocket.on("player_wormhole_tp_back_res", DataMgr.player_wormhole_tp_back_res);
+        NetworkMgr.websocket.on("player_wormhole_tp_tag_res", DataMgr.player_wormhole_tp_tag_res);
+
         // nft
         NetworkMgr.websocket.on("nft_change", DataMgr.nft_change);
         NetworkMgr.websocket.on("player_nft_lvlup_res", DataMgr.player_nft_lvlup_res);
         NetworkMgr.websocket.on("player_nft_rankup_res", DataMgr.player_nft_rankup_res);
         // wormhole
-        NetworkMgr.websocket.on("player_wormhole_fight_attacked_res", DataMgr.player_wormhole_fight_attacked_res);
         NetworkMgr.websocket.on("player_wormhole_fight_res", DataMgr.player_wormhole_fight_res);
         // psyc
         NetworkMgr.websocket.on("fetch_user_psyc_res", DataMgr.fetch_user_psyc_res);

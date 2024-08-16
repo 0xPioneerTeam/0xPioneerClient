@@ -25,6 +25,12 @@ export interface HeatValueObject {
     lotteryTimesLimit: number;
 }
 
+export interface WormholeTagObject {
+    playerId: string;
+    playerName: string;
+    tpBuildingId: string;
+}
+
 export interface UserInfoObject {
     id: string;
     name: string;
@@ -58,4 +64,8 @@ export interface UserInfoObject {
     CLvlCondtion: CLvlCondition[];
 
     buyEnergyLimitTimes: number;
+
+    wormholeTags: WormholeTagObject[];
+    wormholeMatchTimes: number;
+    wormholeTeleportTimes: number;
 }

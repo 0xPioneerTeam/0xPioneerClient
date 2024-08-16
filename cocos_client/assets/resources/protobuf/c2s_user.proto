@@ -251,6 +251,9 @@ message player_building_pos {
     required string buildingId = 1;
     repeated uint32 pos = 2;
 }
+message player_training_start {
+    repeated share.training_data training = 1;
+}
 
 
 // ------ pioneerNFT ------

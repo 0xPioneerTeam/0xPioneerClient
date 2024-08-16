@@ -135,6 +135,18 @@ export class WebsocketMsg {
     public player_fight_maincity(d: c2s_user.Iplayer_fight_maincity) {
         this.send_packet("player_fight_maincity", d);
     }
+    public player_wormhole_tp_random(d: c2s_user.Iplayer_wormhole_tp_random) {
+        this.send_packet("player_wormhole_tp_random", d);
+    }
+    public player_wormhole_tp_select(d: c2s_user.Iplayer_wormhole_tp_select) {
+        this.send_packet("player_wormhole_tp_select", d);
+    }
+    public player_wormhole_tp_back(d: c2s_user.Iplayer_wormhole_tp_back) {
+        this.send_packet("player_wormhole_tp_back", d);
+    }
+    public player_wormhole_tp_tag(d: c2s_user.Iplayer_wormhole_tp_tag) {
+        this.send_packet("player_wormhole_tp_tag", d);
+    }
 
     public player_fight_start(d: c2s_user.Iplayer_fight_start) {
         this.send_packet("player_fight_start", d);
@@ -378,6 +390,23 @@ export namespace c2s_user {
         buildingId: string;
         isReturn: boolean;
     }
+    export interface Iplayer_wormhole_tp_random {
+        buildingId: string;
+        pioneerId: string;
+    }
+    export interface Iplayer_wormhole_tp_select {
+        buildingId: string;
+        pioneerId: string;
+        tpBuildingId: string;
+    }
+    export interface Iplayer_wormhole_tp_back {
+        buildingId: string;
+        pioneerId: string;
+    }
+    export interface Iplayer_wormhole_tp_tag {
+        buildingId: string;
+        pioneerId: string;
+    }
 
     export interface Iplayer_fight_start {
         attackerId: string;
@@ -612,7 +641,20 @@ export namespace s2c_user {
     export interface Iplayer_fight_end {
         pioneerId: string;
     }
-
+    export interface Iplayer_wormhole_tp_random_res {
+        res: number;
+        tpPos: share.pos2d;
+    }
+    export interface Iplayer_wormhole_tp_select_res {
+        res: number;
+        tpPos: share.pos2d;
+    }
+    export interface Iplayer_wormhole_tp_back_res {
+        res: number;
+    }
+    export interface Iplayer_wormhole_tp_tag_res {
+        res: number;
+    }
     export interface Iplayer_worldbox_beginner_open_res {
         res: number;
         boxIndex: number;
@@ -676,11 +718,6 @@ export namespace s2c_user {
         res: number;
         buildingId: string;
         attacker: { [key: string]: string };
-    }
-    export interface Iplayer_wormhole_fight_attacked_res {
-        res: number;
-        attackerName: string;
-        defenderUid: string;
     }
     export interface Iplayer_wormhole_fight_res {
         res: number;
@@ -817,6 +854,11 @@ export namespace share {
         lvlupConds: { [key: string]: number };
 
         buyEnergyLimitTimes: number;
+
+        wormholeTags: share.Iwormhole_tag_data[];
+
+        wormholeMatchTimes: number;
+        wormholeTeleportTimes: number;
     }
     export interface Ibuilding_data {
         id: string;
@@ -1140,5 +1182,11 @@ export namespace share {
         unread: boolean;
         fight?: Inew_battle_report_fight_data;
         mining?: Inew_battle_report_mining_data;
+    }
+
+    export interface Iwormhole_tag_data {
+        playerId: number;
+        playerName: string;
+        tpBuildingId: string;
     }
 }

@@ -430,6 +430,10 @@ message player_building_pos_res {
     optional string buildingId = 2;
     repeated uint32 pos = 3;
 }
+message player_training_start_res {
+    required int32 res = 1;
+    repeated share.training_data training = 2;
+}
 // inner-building: notify
 message building_change {
     repeated share.building_data buildings = 1;
@@ -496,9 +500,11 @@ message player_wormhole_fight_res {
 
 message player_wormhole_tp_random_res {
     required int32 res = 1;
+    optional pos2d tpPos = 2;
 }
 message player_wormhole_tp_select_res {
     required int32 res = 1;
+    optional pos2d tpPos = 2;
 }
 message player_wormhole_tp_back_res {
     required int32 res = 1;

@@ -682,6 +682,46 @@ export class DataMgr {
         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { uniqueId: uniqueId });
     };
 
+    public static player_wormhole_tp_random_res = (e: any) => {
+        const p: s2c_user.Iplayer_wormhole_tp_random_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        const worldPos = GameMainHelper.instance.tiledMapGetPosWorld(p.tpPos.x, p.tpPos.y);
+        if (worldPos != null) {
+            GameMainHelper.instance.changeGameCameraWorldPosition(worldPos, true);
+            GameMainHelper.instance.updateGameViewport();
+        }
+    };
+
+    public static player_wormhole_tp_select_res = (e: any) => {
+        const p: s2c_user.Iplayer_wormhole_tp_select_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        const worldPos = GameMainHelper.instance.tiledMapGetPosWorld(p.tpPos.x, p.tpPos.y);
+        if (worldPos != null) {
+            GameMainHelper.instance.changeGameCameraWorldPosition(worldPos, true);
+            GameMainHelper.instance.updateGameViewport();
+        }
+    }
+
+    public static player_wormhole_tp_back_res = (e: any) => {
+        const p: s2c_user.Iplayer_wormhole_tp_back_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Pioneer is back");
+    }
+
+    public static player_wormhole_tp_tag_res = (e: any) => {
+        const p: s2c_user.Iplayer_wormhole_tp_tag_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Wormhole is marked");
+    }
+
     //------------------------------------- nft
     public static nft_change = (e: any) => {
         const p: s2c_user.Inft_change = e.data;
@@ -705,20 +745,6 @@ export class DataMgr {
     };
 
     //------------------------------------- wormhole
-    public static player_wormhole_fight_attacked_res = (e: any) => {
-        const p: s2c_user.Iplayer_wormhole_fight_attacked_res = e.data;
-        if (p.res !== 1) {
-            return;
-        }
-        if (DataMgr.s.userInfo.data.id != p.defenderUid) {
-            return;
-        }
-        GameMusicPlayMgr.playWormholeAttackEffect();
-        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_WORMHOLE_FAKE_ATTACK);
-        setTimeout(() => {
-            PioneerMgr.showFakeWormholeFight(p.attackerName);
-        }, 2000);
-    };
     public static player_wormhole_fight_res = (e: any) => {
         const p: s2c_user.Iplayer_wormhole_fight_res = e.data;
         if (p.res !== 1) {
@@ -990,7 +1016,7 @@ export class DataMgr {
             NotificationMgr.triggerEvent(NotificationName.TASK_NEW_GETTED);
         }
         NotificationMgr.triggerEvent(NotificationName.TASK_DID_CHANGE);
-    }
+    };
 
     //------------------------------------- settlement
     public static get_user_settlement_info_res = (e: any) => {

@@ -50,6 +50,7 @@ import CLog from "../../Utils/CLog";
 import { GameMgr, LanMgr, PioneerMgr } from "../../Utils/Global";
 import { OuterShadowController } from "./OuterShadowController";
 import { DispatchUI } from "../../UI/Dispatch/DispatchUI";
+import { WormholeTpSelectUI } from "../../UI/WormholeTpSelectUI";
 
 const { ccclass, property } = _decorator;
 
@@ -598,16 +599,9 @@ export class OuterTiledMapActionController extends ViewController {
             CLog.error("action cann't show");
             return;
         }
-        // move targetPos
-        const mainCityGatePos = GameMgr.getMainCityGatePos();
+        // fake step
         let step = 10;
         const speed = 200;
-        if (mainCityGatePos != null) {
-            const tempMovePath = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(mainCityGatePos, taregtPos);
-            if (tempMovePath.canMove) {
-                step = tempMovePath.path.length;
-            }
-        }
 
         // show action panel
         await this._actionView.show(
@@ -624,6 +618,7 @@ export class OuterTiledMapActionController extends ViewController {
                     result.node
                         .getComponent(DispatchUI)
                         .configuration(
+                            actionType,
                             stayBuilding,
                             stayPioneer,
                             taregtPos,
@@ -635,70 +630,6 @@ export class OuterTiledMapActionController extends ViewController {
                                 if (confirmed && currentActionPioneer != undefined) {
                                     if (isReturn) {
                                         PioneerMgr.addActionOverReturnPioneer(currentActionPioneer.uniqueId);
-                                    }
-                                    if (actionType == MapInteractType.Wormhole) {
-                                        if (stayBuilding == null) {
-                                            return;
-                                        }
-                                        const result = await UIPanelManger.inst.pushPanel(HUDName.Alter, UIPanelLayerType.HUD);
-                                        if (!result.success) {
-                                            return;
-                                        }
-                                        // useLanMgr
-                                        // const alterString: string = LanMgr.getLanById("106006");
-                                        const alterString: string = "Use Current Pioneers To Attack Wormhole?";
-                                        result.node.getComponent(AlterView).showTip(
-                                            alterString,
-                                            () => {
-                                                if (currentActionPioneer.actionType != MapPioneerActionType.wormhole) {
-                                                    PioneerMgr.setMovingTarget(
-                                                        currentActionPioneer.uniqueId,
-                                                        MapMemberTargetType.building,
-                                                        stayBuilding.uniqueId,
-                                                        actionType
-                                                    );
-                                                    if (movePaths.length <= 0) {
-                                                        DataMgr.s.pioneer.beginMove(currentActionPioneer.uniqueId, []);
-                                                    } else {
-                                                        const uploadPath: share.pos2d[] = [];
-                                                        for (const path of movePaths) {
-                                                            uploadPath.push({ x: path.x, y: path.y });
-                                                        }
-                                                        NetworkMgr.websocketMsg.player_move({
-                                                            pioneerId: currentActionPioneer.uniqueId,
-                                                            movePath: uploadPath,
-                                                            feeTxhash: "",
-                                                            isReturn: isReturn,
-                                                        });
-                                                    }
-                                                    NetGlobalData.wormholeAttackBuildingId = stayBuilding.uniqueId;
-                                                } else {
-                                                    // attack wormhole countdonw
-                                                    NetworkMgr.websocketMsg.player_wormhole_fight_start({
-                                                        buildingId: stayBuilding.uniqueId,
-                                                    });
-                                                }
-                                            },
-                                            () => {
-                                                // outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
-                                            }
-                                        );
-                                        return;
-                                    }
-                                    if (actionType == MapInteractType.CampOut) {
-                                        for (const temple of DataMgr.s.mapBuilding.getWormholeBuildings()) {
-                                            const wormObj = temple as MapBuildingWormholeObject;
-                                            wormObj.attacker.forEach((value: string, key: number) => {
-                                                if (value == currentActionPioneer.uniqueId) {
-                                                    NetworkMgr.websocketMsg.player_wormhole_set_attacker({
-                                                        pioneerId: "",
-                                                        buildingId: wormObj.uniqueId,
-                                                        index: key,
-                                                    });
-                                                }
-                                            });
-                                        }
-                                        return;
                                     }
                                     if (stayBuilding != null) {
                                         let slow: boolean = false;
@@ -715,39 +646,29 @@ export class OuterTiledMapActionController extends ViewController {
                                             return;
                                         }
                                     }
-                                    if (actionType != MapInteractType.Move) {
-                                        // move can't trigger interact
-                                        if (stayBuilding != null) {
-                                            PioneerMgr.setMovingTarget(
-                                                currentActionPioneer.uniqueId,
-                                                MapMemberTargetType.building,
-                                                stayBuilding.uniqueId,
-                                                actionType
-                                            );
-                                        }
-                                        if (stayPioneer != null) {
-                                            PioneerMgr.setMovingTarget(
-                                                currentActionPioneer.uniqueId,
-                                                MapMemberTargetType.pioneer,
-                                                stayPioneer.uniqueId,
-                                                actionType
-                                            );
-                                        }
+                                    let targetType: MapMemberTargetType = null;
+                                    let targetUnqueId: string = null;
+                                    let extra: any = {};
+                                    if (stayBuilding != null) {
+                                        targetType = MapMemberTargetType.building;
+                                        targetUnqueId = stayBuilding.uniqueId;
+                                    } else if (stayPioneer != null) {
+                                        targetType = MapMemberTargetType.pioneer;
+                                        targetUnqueId = stayPioneer.uniqueId;
                                     }
-                                    if (movePaths.length <= 0) {
-                                        DataMgr.s.pioneer.beginMove(currentActionPioneer.uniqueId, []);
-                                    } else {
-                                        const uploadPath: share.pos2d[] = [];
-                                        for (const path of movePaths) {
-                                            uploadPath.push({ x: path.x, y: path.y });
+
+                                    if (actionType == MapInteractType.WmTeleport) {
+                                        // select teleport target
+                                        const result = await UIPanelManger.inst.pushPanel(UIName.WormholeTpSelectUI);
+                                        if (result.success) {
+                                            result.node.getComponent(WormholeTpSelectUI).configuration((tpBuildingId: string)=> {
+                                                extra.tpBuildingId = tpBuildingId;
+                                                this._doInteract(currentActionPioneer.uniqueId, targetType, targetUnqueId, actionType, extra, movePaths, isReturn);
+                                            });
                                         }
-                                        NetworkMgr.websocketMsg.player_move({
-                                            pioneerId: currentActionPioneer.uniqueId,
-                                            movePath: uploadPath,
-                                            feeTxhash: "",
-                                            isReturn: actionType == MapInteractType.Move ? isReturn : false,
-                                        });
+                                        return;
                                     }
+                                    this._doInteract(currentActionPioneer.uniqueId, targetType, targetUnqueId, actionType, extra, movePaths, isReturn);
                                 } else {
                                     // outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
                                 }
@@ -1057,6 +978,36 @@ export class OuterTiledMapActionController extends ViewController {
         // } else {
         //     this._playFogAnim();
         // }
+    }
+
+    private _doInteract(actionPioneerUnqueId: string, targetType: MapMemberTargetType, targetId: string, interactType: MapInteractType, interactExtra: any, movePath: TilePos[], isReturn: boolean) {
+        if (targetType == null && interactType != MapInteractType.Move) {
+            // error params
+            return;
+        }
+        if (interactType != MapInteractType.Move) {
+            PioneerMgr.setMovingTarget(
+                actionPioneerUnqueId,
+                targetType,
+                targetId,
+                interactType,
+                interactExtra
+            );
+        }
+        if (movePath.length <= 0) {
+            DataMgr.s.pioneer.beginMove(actionPioneerUnqueId, []);
+        } else {
+            const uploadPath: share.pos2d[] = [];
+            for (const path of movePath) {
+                uploadPath.push({ x: path.x, y: path.y });
+            }
+            NetworkMgr.websocketMsg.player_move({
+                pioneerId: actionPioneerUnqueId,
+                movePath: uploadPath,
+                feeTxhash: "",
+                isReturn: interactType == MapInteractType.Move ? isReturn : false,
+            });
+        }
     }
 
     //----------------------- notification

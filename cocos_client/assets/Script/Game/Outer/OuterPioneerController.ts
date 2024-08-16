@@ -276,7 +276,7 @@ export class OuterPioneerController extends ViewController {
                 if (this._pioneerMap.has(pioneer.uniqueId)) {
                     temple = this._pioneerMap.get(pioneer.uniqueId);
                 } else {
-                    if(pioneer.type != MapPioneerType.player && !GameMainHelper.instance.tiledMapIsInGameScene(pioneer.stayPos.x, pioneer.stayPos.y)){
+                    if (pioneer.type != MapPioneerType.player && !GameMainHelper.instance.tiledMapIsInGameScene(pioneer.stayPos.x, pioneer.stayPos.y)) {
                         continue;
                     }
                     // new
@@ -303,10 +303,8 @@ export class OuterPioneerController extends ViewController {
                     } else if (pioneer.type == MapPioneerType.hred) {
                         temple.getComponent(MapItemMonster).refreshUI(pioneer);
                     }
-                    if (firstInit) {
-                        let pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(pioneer.stayPos.x, pioneer.stayPos.y);
-                        temple.setPosition(pixelPos);
-                    }
+                    let pixelPos = GameMainHelper.instance.tiledMapGetPosPixel(pioneer.stayPos.x, pioneer.stayPos.y);
+                    temple.setPosition(pixelPos);
                 }
             } else {
                 if (this._pioneerMap.has(pioneer.uniqueId)) {
@@ -330,7 +328,6 @@ export class OuterPioneerController extends ViewController {
                 this._pioneerMap.delete(key);
             }
         });
-
         if (changed) {
             this.node.getComponent(OuterTiledMapActionController).sortMapItemSiblingIndex();
         }

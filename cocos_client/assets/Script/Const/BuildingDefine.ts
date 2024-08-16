@@ -24,7 +24,8 @@ export enum InnerBuildingType {
     House = "30003",
     EnergyStation = "30004",
     ArtifactStore = "30005",
-    InformationStation = "30006",
+    TrainingCenter = "30007",
+    InformationStation = "30007",
 }
 
 export interface UserInnerBuildInfo {

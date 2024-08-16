@@ -192,6 +192,16 @@ export default class ConfigConfig {
                     type: key,
                     value: param[0],
                 };
+            } else if (key == ConfigType.WormholeMatchConsume) {
+                temple = {
+                    type: key,
+                    consumes: param,
+                }
+            } else if (key == ConfigType.WormholeTeleportConsume) {
+                temple = {
+                    type: key,
+                    consumes: param,
+                }
             }
             this._config.set(key as ConfigType, temple);
         }

@@ -77,6 +77,10 @@ export default class UserInfoDataMgr {
             CLvlCondtion: [],
 
             buyEnergyLimitTimes: netData.buyEnergyLimitTimes,
+
+            wormholeTags: [],
+            wormholeMatchTimes: netData.wormholeMatchTimes,
+            wormholeTeleportTimes: netData.wormholeTeleportTimes,
         };
         if (GAME_SKIP_ROOKIE) {
             newObj.rookieStep = RookieStep.FINISH;
@@ -163,6 +167,16 @@ export default class UserInfoDataMgr {
                     }
                 }
                 newObj.CLvlCondtion.push(temp);
+            }
+        }
+        if (netData.wormholeTags != null) {
+            for (const key in netData.wormholeTags) {
+                const temple = netData.wormholeTags[key];
+                newObj.wormholeTags.push({
+                    playerId: temple.playerId.toString(),
+                    playerName: temple.playerName,
+                    tpBuildingId: temple.tpBuildingId
+                });
             }
         }
         return newObj;

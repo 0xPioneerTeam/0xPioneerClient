@@ -199,15 +199,7 @@ export class InnerBuildingControllerRe extends ViewController {
                 if (buildingPrb != null) {
                     const view = instantiate(buildingPrb);
                     view.setScale(scale);
-                    if (key == InnerBuildingType.MainCity) {
-                        this._buildingMap.set(key, view.getComponent(InnerMainCityBuildingView));
-                    } else if (key == InnerBuildingType.Barrack) {
-                        this._buildingMap.set(key, view.getComponent(InnerBarracksBuildingView));
-                    } else if (key == InnerBuildingType.EnergyStation) {
-                        this._buildingMap.set(key, view.getComponent(InnerEnergyStationBuildingView));
-                    } else {
-                        this._buildingMap.set(key, view.getComponent(InnerBuildingView));
-                    }
+                    this._buildingMap.set(key, view.getComponent(InnerBuildingView));
                     const size: number = config.size;
                     if (this._allLatticeItems.length > 0) {
                         const useItems: InnerBuildingLatticeStruct[] = [];

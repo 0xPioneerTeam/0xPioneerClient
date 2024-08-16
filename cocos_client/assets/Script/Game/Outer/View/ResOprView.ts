@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, instantiate, Label, Layers, Layout, log, Node, Sprite, UITransform, v2, v3, Vec2, Vec3 } from "cc";
+import { _decorator, Button, Component, dynamicAtlasManager, instantiate, Label, Layers, Layout, log, Node, Sprite, UITransform, v2, v3, Vec2, Vec3 } from "cc";
 import { MapBuildingObject, MapBuildingWormholeObject } from "../../../Const/MapBuilding";
 import { MapPioneerObject, MapPioneerType } from "../../../Const/PioneerDefine";
 import { InnerBuildingType, MapBuildingType } from "../../../Const/BuildingDefine";
@@ -91,7 +91,7 @@ export class ResOprView extends Component {
                     if (info != undefined) {
                         mainCityBuildingInfo.getChildByPath("Leader/Value").getComponent(Label).string = info.pname;
                         mainCityBuildingInfo.getChildByPath("Civilization/Value").getComponent(Label).string = info.level.toString();
-        
+
                         mainCityIsLocked = DataMgr.s.userInfo.data.explorePlayerids.indexOf(parseInt(info.playerId)) == -1;
                         const lockView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Locked");
                         const fightValueView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Title");
@@ -105,7 +105,6 @@ export class ResOprView extends Component {
                         }
                     }
                 }
-                
             } else if (interactBuilding.type == MapBuildingType.resource) {
                 resourceBuildingInfo.active = true;
 
@@ -177,20 +176,16 @@ export class ResOprView extends Component {
                 actionTypes.push(MapInteractType.Event);
                 actionTypes.push(MapInteractType.Move);
             } else if (interactBuilding.type == MapBuildingType.wormhole) {
-                const wormholeObj = interactBuilding as MapBuildingWormholeObject;
-                let playerIsInWormhole: boolean = false;
-                // for (let [key, value] of wormholeObj.attacker) {
-                //     if (value == actionPioneerId) {
-                //         playerIsInWormhole = true;
-                //         break;
-                //     }
-                // }
-
-                actionTypes.push(MapInteractType.Wormhole);
-                if (playerIsInWormhole) {
-                    actionTypes.push(MapInteractType.CampOut);
+                let isSelf: boolean = DataMgr.s.mapBuilding.checkBuildingIsInSelfSlot(interactBuilding.uniqueId);
+                if (isSelf) {
+                    actionTypes.push(MapInteractType.WmMatch);
+                    actionTypes.push(MapInteractType.WmTeleport);
                 } else {
-                    actionTypes.push(MapInteractType.Camp);
+                    if (DataMgr.s.userInfo.data.wormholeTags.find((item) => item.tpBuildingId == interactBuilding.uniqueId)) {
+                        actionTypes.push(MapInteractType.WmRecall);
+                    } else {
+                        actionTypes.push(MapInteractType.WmMark);
+                    }
                 }
                 actionTypes.push(MapInteractType.Move);
             }
@@ -210,7 +205,7 @@ export class ResOprView extends Component {
         for (const type of actionTypes) {
             const actionItem = instantiate(this._actionItem);
             actionItem.name = "ACTION_" + type;
-            actionItem.getChildByPath("Icon/Wormhole").active = type == MapInteractType.Wormhole;
+            actionItem.getChildByPath("Icon/Wormhole").active = type == MapInteractType.WmMark || type == MapInteractType.WmMatch || type == MapInteractType.WmRecall || type == MapInteractType.WmTeleport;
             actionItem.getChildByPath("Icon/Search").active = type == MapInteractType.Explore || type == MapInteractType.Event || type == MapInteractType.Talk;
             actionItem.getChildByPath("Icon/Collect").active = type == MapInteractType.Collect;
             actionItem.getChildByPath("Icon/Attack").active = type == MapInteractType.Attack;
@@ -222,10 +217,22 @@ export class ResOprView extends Component {
             actionItem.getChildByPath("Icon/SiegeCity").active = type == MapInteractType.SiegeCity;
 
             let title: string = "";
-            if (type == MapInteractType.Wormhole) {
+            if (type == MapInteractType.WmMark) {
                 //useLanMgr
                 // title = LanMgr.getLanById("107549");
-                title = "Engage!";
+                title = "Mark";
+            } else if (type == MapInteractType.WmMatch) {
+                //useLanMgr
+                // title = LanMgr.getLanById("107549");
+                title = "Match";
+            } else if (type == MapInteractType.WmTeleport) {
+                //useLanMgr
+                // title = LanMgr.getLanById("107549");
+                title = "Teleport";
+            } else if (type == MapInteractType.WmRecall) {
+                //useLanMgr
+                // title = LanMgr.getLanById("107549");
+                title = "Recall";
             } else if (type == MapInteractType.Move) {
                 //useLanMgr
                 // title = LanMgr.getLanById("107549");

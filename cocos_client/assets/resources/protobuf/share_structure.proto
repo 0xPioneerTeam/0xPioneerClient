@@ -54,6 +54,7 @@ message player_sinfo {
     repeated string treasureDidGetRewards = 22;
     repeated string pointTreasureDidGetRewards = 23;
     required uint32 cityRadialRange = 24;
+    required uint32 sightRange = 241;
     required bool didFinishRookie = 25;
     required uint32 rookieStep = 26;
     optional troop_info_data generateTroopInfo = 27;
@@ -75,7 +76,9 @@ message player_sinfo {
     required uint32 battlePower = 70;
     repeated uint32 explorePlayerids = 71;
 
-    repeated share.wormhole_tag_data wormholeTags = 72;
+    repeated wormhole_tag_data wormholeTags = 72;
+    required uint32 wormholeMatchTimes = 73;
+    required uint32 wormholeTeleportTimes = 74;
 }
 
 // self player data
@@ -301,6 +304,16 @@ message building_data {
     required uint32 troopNum = 9;
     required bool troopIng = 10;
     repeated uint32 pos = 11;
+    optional building_tc_data tc = 12;
+}
+message building_tc_data {
+    map<string, uint32> troops = 1;
+    optional building_tc_training_data training = 2;
+}
+message building_tc_training_data {
+    required uint32 start = 1;
+    required uint32 end = 2;
+    map<string, uint32> troops = 3;
 }
 
 message pos2d {
@@ -575,4 +588,9 @@ message settlement_data {
     required uint32 gainEnergy = 8;
     required uint32 consumeEnergy = 9;
     required uint32 exploredEvents = 10;
+}
+
+message training_data {
+    required string id = 1; // troopId
+    required uint32 num = 2; // troopNum
 }

@@ -136,7 +136,10 @@ export const GameRankColor = [
 export const GameRankNameLanId = ["105001", "105002", "105003", "105004", "105005"];
 
 export enum MapInteractType {
-    Wormhole,
+    WmMatch,
+    WmTeleport,
+    WmMark,
+    WmRecall,
     Move,
     Attack,
     Explore,

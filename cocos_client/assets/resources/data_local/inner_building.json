@@ -83,34 +83,6 @@
       0
     ]
   },
-  "30004": {
-    "id": "30004",
-    "name": "120004",
-    "anim": "EnergyStation",
-    "unlock": 1,
-    "maxlevel": 10,
-    "lvlup_progress": "progress",
-    "lvlup_exp": "exp",
-    "lvlup_cost": "cost_barr",
-    "lvlup_time": "lvlup_time",
-    "prefab": "prefab_energy",
-    "desc": "desc_energy",
-    "size": 2,
-    "staff_effect": [
-      [
-        "lvlup_time",
-        1,
-        [
-          -0.2
-        ]
-      ]
-    ],
-    "staff_des": "122001",
-    "pos": [
-      10,
-      2
-    ]
-  },
   "30005": {
     "id": "30005",
     "name": "120005",
@@ -142,7 +114,7 @@
   "30006": {
     "id": "30006",
     "name": "120006",
-    "anim": "EnergyStation",
+    "anim": "Troops",
     "unlock": 1,
     "maxlevel": 10,
     "lvlup_progress": "progress",
@@ -164,6 +136,34 @@
     "staff_des": "122001",
     "pos": [
       4,
+      2
+    ]
+  },
+  "30007": {
+    "id": "30007",
+    "name": "120004",
+    "anim": "InformationCenter",
+    "unlock": 1,
+    "maxlevel": 10,
+    "lvlup_progress": "progress",
+    "lvlup_exp": "exp",
+    "lvlup_cost": "cost_barr",
+    "lvlup_time": "lvlup_time",
+    "prefab": "prefab_ic",
+    "desc": "desc_energy",
+    "size": 2,
+    "staff_effect": [
+      [
+        "lvlup_time",
+        1,
+        [
+          -0.2
+        ]
+      ]
+    ],
+    "staff_des": "122001",
+    "pos": [
+      10,
       2
     ]
   }

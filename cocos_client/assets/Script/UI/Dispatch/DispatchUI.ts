@@ -14,10 +14,14 @@ import { GameMgr, LanMgr } from "../../Utils/Global";
 import { MapBuildingObject } from "../../Const/MapBuilding";
 import { TilePos } from "../../Game/TiledMap/TileTool";
 import { MapBuildingType } from "../../Const/BuildingDefine";
+import { MapInteractType, ResourceData } from "../../Const/ConstDefine";
+import ConfigConfig from "../../Config/ConfigConfig";
+import { ConfigType, WormholeMatchConsumeParam, WormholeTeleportConsumeParam } from "../../Const/Config";
 const { ccclass, property } = _decorator;
 
 @ccclass("DispatchUI")
 export class DispatchUI extends ViewController {
+    private _interactType: MapInteractType;
     private _interactBuilding: MapBuildingObject;
     private _interactPioneer: MapPioneerObject;
     private _targetPos: Vec2;
@@ -36,6 +40,7 @@ export class DispatchUI extends ViewController {
     private _playerItem: Node = null;
 
     public configuration(
+        interactType: MapInteractType,
         interactBuilding: MapBuildingObject,
         interactPioneer: MapPioneerObject,
         targetPos: Vec2,
@@ -44,6 +49,7 @@ export class DispatchUI extends ViewController {
         moveSpeed: number,
         actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, movePath: TilePos[], isReturn: boolean) => void
     ) {
+        this._interactType = interactType;
         this._interactBuilding = interactBuilding;
         this._interactPioneer = interactPioneer;
         this._targetPos = targetPos;
@@ -161,12 +167,52 @@ export class DispatchUI extends ViewController {
                 targetStayPostions = [this._interactPioneer.stayPos];
             }
         }
+        const moveGap = Math.abs(beginPos.x - this._targetPos.x) + Math.abs(beginPos.y - this._targetPos.y);
+        if (moveGap >= 200) {
+            // donnot use a* to calculate move path
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Energy");
+            return;
+        }
         const movePath: TilePos[] = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
         const trueCostEnergy: number = GameMgr.getMapActionCostEnergy(movePath.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
+        if (player.energyMax < trueCostEnergy) {
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Energy");
+            return;
+        }
         if (player.energy < trueCostEnergy) {
             GameMgr.showBuyEnergyTip(player.uniqueId);
             return;
         }
+
+        let times: number = 0;
+        let consumeConfigs: [number, string, number][] = null;
+        if (this._interactType == MapInteractType.WmMatch) {
+            times = DataMgr.s.userInfo.data.wormholeMatchTimes;
+            consumeConfigs = (ConfigConfig.getConfig(ConfigType.WormholeMatchConsume) as WormholeMatchConsumeParam).consumes;
+        } else if (this._interactType == MapInteractType.WmTeleport) {
+            times = DataMgr.s.userInfo.data.wormholeTeleportTimes;
+            consumeConfigs = (ConfigConfig.getConfig(ConfigType.WormholeTeleportConsume) as WormholeTeleportConsumeParam).consumes;
+        }
+        if (consumeConfigs != null) {
+            let consume: [number, string, number] = null;
+            for (const element of consumeConfigs) {
+                if (element[0] == times + 1) {
+                    consume = element;
+                    break;
+                }
+            }
+            if (consume == null) {
+                consume = consumeConfigs[consumeConfigs.length - 1];
+            }
+            if (consume != null) {
+                let ownedNum: number = DataMgr.s.item.getObj_item_count(consume[1]);
+                if (ownedNum < consume[2]) {
+                    NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Resouces");
+                    return;
+                }
+            }
+        }
+
         UIPanelManger.inst.popPanel(this.node);
         if (this._actionCallback != null) {
             this._actionCallback(true, player.uniqueId, movePath, this._isReturn);
