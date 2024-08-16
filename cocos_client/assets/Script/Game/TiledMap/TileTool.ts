@@ -520,7 +520,7 @@ export class TileMapHelper {
      * @param exblocks  x+'_'+y 
      * @returns move path, if is only one pos from, cannot move to toPos
      */
-    Path_FromTo2(to: TilePos, from: TilePos, nlimit = 2,exblocks:string[] = []): TilePos[] {
+    Path_FromTo2(to: TilePos, from: TilePos, exblocks:string[] = []): TilePos[] {
         var openPathTiles: TilePos[] = [];
         var closedPathTiles: TilePos[] = [];
 
@@ -531,7 +531,7 @@ export class TileMapHelper {
         // push first point to opentable
         openPathTiles.push(currentTile);
 
-        for (var i = 0; i < 100; i++) {// while (openPathTiles.Count != 0)
+        for (var i = 0; i < 1000; i++) {// while (openPathTiles.Count != 0)
             //     sort and get lowest F
             openPathTiles.sort((a, b) => a.g + a.h - (b.g + b.h));
             currentTile = openPathTiles[0];
@@ -558,7 +558,7 @@ export class TileMapHelper {
                 var adjacentTile = apprivateTiles[j];
                 var blockKey = adjacentTile.x + '_' + adjacentTile.y;
                 //block skip
-                if (g > nlimit && exblocks.indexOf(blockKey) == -1 && this.Path_IsBlock(adjacentTile.x, adjacentTile.y)) continue;
+                if (exblocks.indexOf(blockKey) == -1 && this.Path_IsBlock(adjacentTile.x, adjacentTile.y)) continue;
 
                 //skip closed
                 if (closedPathTiles.indexOf(adjacentTile) >= 0) {

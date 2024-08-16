@@ -199,8 +199,14 @@ export default class GameMainHelper {
         }
         const fromPos = this._tiledMapHelper.getPos(fromTilePos.x, fromTilePos.y);
         const toPos = this._tiledMapHelper.getPos(toTilePos.x, toTilePos.y);
+
+        let unLimitBlocks = [];
+        toStayPos.forEach((pos) => {
+            unLimitBlocks.push(pos.x + "_" + pos.y);
+        });
+        unLimitBlocks.push(fromPos.x + "_" + fromPos.y);
         // path   fromPos exblock check
-        const movePaths = this._tiledMapHelper.Path_FromTo2(fromPos, toPos, 2, [fromPos.x + "_" + fromPos.y]);
+        const movePaths = this._tiledMapHelper.Path_FromTo2(fromPos, toPos, unLimitBlocks);
         let canMove = true;
         if (movePaths.length <= 1) {
             //only one from pos, cannot move
