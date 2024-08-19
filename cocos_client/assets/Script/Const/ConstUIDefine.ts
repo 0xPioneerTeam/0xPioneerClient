@@ -53,11 +53,15 @@ export enum UIName {
 
     WormholeTpSelectUI = "abresources/prefab/ui/WormholeTpSelectUI",
 
+    RecruitUI = "abresources/prefab/ui/builidng_action/RecruitUI",
+    RelicTowerUI = "abresources/prefab/ui/builidng_action/RelicTowerUI",
+    RelicTowerSelectUI = "abresources/prefab/ui/builidng_action/RelicTowerSelectUI",
+    ExerciseUI = "abresources/prefab/ui/builidng_action/ExerciseUI",
+    ConfigureUnitTypesUI = "abresources/prefab/ui/builidng_action/ConfigureUnitTypesUI",
+
     // bundle 2
     NewBuildingUpgradeUI = "abresources_2/prefab/ui/NewBuildingUpgradeUI",
-    RecruitUI = "abresources_2/prefab/ui/RecruitUI",
-    RelicTowerUI = "abresources_2/prefab/ui/RelicTowerUI",
-    RelicTowerSelectUI = "abresources_2/prefab/ui/RelicTowerSelectUI",
+    
 }
 
 export enum GameName {
