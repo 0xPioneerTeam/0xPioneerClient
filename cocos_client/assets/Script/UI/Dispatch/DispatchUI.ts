@@ -30,7 +30,7 @@ export class DispatchUI extends ViewController {
     private _moveSpeed: number = 0;
     private _actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, movePath: TilePos[], isReturn: boolean) => void = null;
 
-    private _isReturn: boolean = false;
+    private _isReturn: boolean = true;
 
     private _timeLabel: Label = null;
     private _returnSwitchButton: Node = null;
@@ -38,6 +38,7 @@ export class DispatchUI extends ViewController {
     private _playerScrollView: Node = null;
     private _playerContentView: Node = null;
     private _playerItem: Node = null;
+    private _costItem: Node = null;
 
     public configuration(
         interactType: MapInteractType,
@@ -63,13 +64,15 @@ export class DispatchUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-        this._timeLabel = this.node.getChildByPath("ContentView/CostTime/Value").getComponent(Label);
         this._returnSwitchButton = this.node.getChildByPath("ContentView/ReturnSwitchButton");
-        this._energyLabel = this.node.getChildByPath("ContentView/CostView/Content/Value").getComponent(Label);
+        // this._timeLabel = this.node.getChildByPath("ContentView/CostTime/Value").getComponent(Label);
+        // this._energyLabel = this.node.getChildByPath("ContentView/CostView/Content/Value").getComponent(Label);
         this._playerScrollView = this.node.getChildByPath("ContentView/ScrollView");
         this._playerContentView = this._playerScrollView.getChildByPath("View/Content");
         this._playerItem = this._playerContentView.getChildByPath("Item");
         this._playerItem.removeFromParent();
+        this._costItem = this._playerScrollView.getChildByPath("CostView");
+        this._costItem.removeFromParent();
     }
 
     protected viewDidStart(): void {
@@ -101,6 +104,42 @@ export class DispatchUI extends ViewController {
             view.setParent(this._playerContentView);
             view.getComponent(PlayerInfoItem).refreshUI(player);
             view.getComponent(Button).clickEvents[0].customEventData = player.uniqueId;
+
+            
+            const costView = instantiate(this._costItem);
+            costView.setParent(view);
+            costView.setPosition(0,-195);
+
+            let beginPos: Vec2 = player.stayPos;
+            let sparePositions: Vec2[] = [];
+            let targetStayPostions: Vec2[] = [];
+            if (this._interactBuilding != null) {
+                sparePositions = this._interactBuilding.stayMapPositions.slice();
+                targetStayPostions = this._interactBuilding.stayMapPositions.slice();
+                if (this._interactBuilding.type == MapBuildingType.city && sparePositions.length == 7) {
+                    sparePositions.splice(3, 1);
+                }
+            } else if (this._interactPioneer != null) {
+                if (this._interactPioneer.type == MapPioneerType.player || this._interactPioneer.type == MapPioneerType.npc) {
+                    targetStayPostions = [this._interactPioneer.stayPos];
+                }
+            }
+            const moveGap = Math.abs(beginPos.x - this._targetPos.x) + Math.abs(beginPos.y - this._targetPos.y);
+            if (moveGap >= 200) {
+                costView.getChildByPath("Content/Value").getComponent(Label).string = '>99';
+                costView.getChildByPath("CostTime/Value").getComponent(Label).string = '--:--:--';
+            }else{
+                const movePath: TilePos[] = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
+                const trueCostEnergy: number = GameMgr.getMapActionCostEnergy(movePath.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
+                if(trueCostEnergy > 99){
+                    costView.getChildByPath("Content/Value").getComponent(Label).string = '>99';
+                    costView.getChildByPath("CostTime/Value").getComponent(Label).string = '--:--:--';
+                }else{
+                    costView.getChildByPath("Content/Value").getComponent(Label).string = trueCostEnergy + '';
+                    const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / player.speed;
+                    costView.getChildByPath("CostTime/Value").getComponent(Label).string = CommonTools.formatSeconds(perStepTime * movePath.length * (this._isReturn ? 1 : 1));
+                }
+            }
             playerCount += 1;
         }
         this._playerScrollView.getComponent(UITransform).width =
@@ -111,14 +150,14 @@ export class DispatchUI extends ViewController {
     }
 
     private _refreshEnergyAndTime() {
-        const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / this._moveSpeed;
-        this._timeLabel.string = CommonTools.formatSeconds(perStepTime * this._step * (this._isReturn ? 1 : 1));
+        // const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / this._moveSpeed;
+        // this._timeLabel.string = CommonTools.formatSeconds(perStepTime * this._step * (this._isReturn ? 1 : 1));
 
         this._returnSwitchButton.getChildByPath("Return").active = this._isReturn;
         this._returnSwitchButton.getChildByPath("OneWay").active = !this._isReturn;
 
-        this._energyLabel.string = (this._tempShowCostEnergy * (this._isReturn ? 1 : 1)).toString();
-        this._energyLabel.node.parent.getComponent(Layout).updateLayout();
+        // this._energyLabel.string = (this._tempShowCostEnergy * (this._isReturn ? 1 : 1)).toString();
+        // this._energyLabel.node.parent.getComponent(Layout).updateLayout();
     }
 
     //-------------------------- action
@@ -180,7 +219,11 @@ export class DispatchUI extends ViewController {
             return;
         }
         if (player.energy < trueCostEnergy) {
-            GameMgr.showBuyEnergyTip(player.uniqueId);
+            if(trueCostEnergy<99){
+                GameMgr.showBuyEnergyTip(player.uniqueId);
+            }else{//todo show message
+
+            }
             return;
         }
 
