@@ -20,8 +20,6 @@ const { ccclass, property } = _decorator;
 
 @ccclass("InnerBuildingView")
 export class InnerBuildingView extends ViewController {
-    private _canUpgrade: boolean = false;
-
     public async refreshUI(building: UserInnerBuildInfo, canAction: boolean = true) {
         if (building == null || this._defaultBuildingView == null) {
             return false;
@@ -117,7 +115,6 @@ export class InnerBuildingView extends ViewController {
                 }
             }
         }
-        this._canUpgrade = canUpgrade;
         this._canBuildView.active = false;
         if (canUpgrade) {
             if (this._building.buildLevel == 0) {
@@ -216,26 +213,10 @@ export class InnerBuildingView extends ViewController {
             // UIHUDController.showCenterTip("The building is being upgraded, please wait.");
             return;
         }
-        if (this._canUpgrade) {
-            const result = await UIPanelManger.inst.pushPanel(UIName.NewBuildingUpgradeUI);
-            if (result.success) {
-                result.node.getComponent(NewBuildingUpgradeUI).refreshUI(this._building.buildType);
-            }
-            return;
-        }
 
-        if (this._building.buildLevel > 0) {
-            if (this._building.buildType == InnerBuildingType.ArtifactStore) {
-                const result = await UIPanelManger.inst.pushPanel(UIName.RelicTowerUI);
-                if (result.success) {
-                    result.node.getComponent(RelicTowerUI).configuration(0);
-                }
-            } else if (this._building.buildType == InnerBuildingType.Barrack) {
-                const result = await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
-                if (result.success) {
-                    result.node.getComponent(RecruitUI).refreshUI(true);
-                }
-            }
+        const result = await UIPanelManger.inst.pushPanel(UIName.NewBuildingUpgradeUI);
+        if (result.success) {
+            result.node.getComponent(NewBuildingUpgradeUI).refreshUI(this._building.buildType);
         }
         this.innerBuildingTaped();
     }

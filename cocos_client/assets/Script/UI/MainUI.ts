@@ -21,6 +21,9 @@ import ItemData from "../Const/Item";
 import { TreasureGettedUI } from "./TreasureGettedUI";
 import { LanMgr } from "../Utils/Global";
 import { MapPioneerActionType } from "../Const/PioneerDefine";
+import { InnerBuildingType } from "../Const/BuildingDefine";
+import { RelicTowerUI } from "./RelicTowerUI";
+import { RecruitUI } from "./Inner/RecruitUI";
 
 const { ccclass, property } = _decorator;
 
@@ -52,9 +55,9 @@ export class MainUI extends ViewController {
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this.changeLang, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_BUILDING_LATTICE_EDIT_CHANGED, this._onInnerBuildingLatticeEditChanged, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onInnerOuterChanged, this);
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._onInnerBuildingUpgradeFinished, this);
 
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
-
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionTypeChange, this);
 
@@ -88,8 +91,8 @@ export class MainUI extends ViewController {
             this
         );
         let testButtonActive: boolean = GAME_ENV_IS_DEBUG;
-        this.node.getChildByPath("CommonContent/AddHeatButton-001").active = testButtonActive;
-        this.node.getChildByPath("CommonContent/AddHeatButton-002").active = testButtonActive;
+        this.node.getChildByPath("CommonContent/AddHeatButton-001").active = false;
+        this.node.getChildByPath("CommonContent/AddHeatButton-002").active = false;
     }
 
     protected viewDidDestroy(): void {
@@ -98,11 +101,11 @@ export class MainUI extends ViewController {
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this.changeLang, this);
         NotificationMgr.removeListener(NotificationName.GAME_INNER_BUILDING_LATTICE_EDIT_CHANGED, this._onInnerBuildingLatticeEditChanged, this);
         NotificationMgr.removeListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onInnerOuterChanged, this);
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._onInnerBuildingUpgradeFinished, this);
 
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
 
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionTypeChange, this);
-
 
         NotificationMgr.removeListener(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, this._onGameMainResourcePlayAnim, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
@@ -123,6 +126,9 @@ export class MainUI extends ViewController {
         const backpackButton = this.node.getChildByPath("CommonContent/icon_treasure_box");
         const nftButton = this.node.getChildByPath("CommonContent/NFTButton");
         const defendButton = this.node.getChildByPath("CommonContent/SetDenderButton");
+        const recuritButton = this.node.getChildByPath("CommonContent/RecuritButton");
+        const exerciseButton = this.node.getChildByPath("CommonContent/ExerciseButton");
+        const artifactButton = this.node.getChildByPath("CommonContent/ArtifactButton");
         const test1Button = this.node.getChildByPath("CommonContent/AddHeatButton-001");
         const test2Button = this.node.getChildByPath("CommonContent/AddHeatButton-002");
 
@@ -139,6 +145,9 @@ export class MainUI extends ViewController {
         backpackButton.active = false;
         nftButton.active = false;
         defendButton.active = false;
+        recuritButton.active = false;
+        exerciseButton.active = false;
+        artifactButton.active = false;
         test1Button.active = false;
         test2Button.active = false;
 
@@ -157,9 +166,13 @@ export class MainUI extends ViewController {
         if (rookieStep >= RookieStep.FINISH) {
             taskButton.active = true;
             backpackButton.active = true;
-            defendButton.active = true;
-            test1Button.active = GAME_ENV_IS_DEBUG;
-            test2Button.active = GAME_ENV_IS_DEBUG;
+            nftButton.active = true;
+            defendButton.active = false;
+            recuritButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.Barrack) >= 1;
+            exerciseButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.TrainingCenter) >= 1;
+            artifactButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.ArtifactStore) >= 1;
+            test1Button.active = false;
+            test2Button.active = false;
 
             battleReportButton.active = true;
             innerOuterChangeButton.active = true;
@@ -278,6 +291,25 @@ export class MainUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         NetworkMgr.websocketMsg.reborn_all();
     }
+    private async onTapRecruit() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
+        if (result.success) {
+            result.node.getComponent(RecruitUI).refreshUI(true);
+        }
+    }
+    private async onTapExercise() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        // const result = await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
+    }
+    private async onTapArtifact() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(UIName.RelicTowerUI);
+        if (result.success) {
+            result.node.getComponent(RelicTowerUI).configuration(0);
+        }
+    }
+
     //----------------------------------------------------- notification
     private _onPioneerShowChanged(data: { id: string; show: boolean }) {
         this.checkCanShowGansterComingTip(data.id);
@@ -305,6 +337,10 @@ export class MainUI extends ViewController {
     }
 
     private _onPioneerActionTypeChange() {
+        this._refreshElementShow();
+    }
+
+    private _onInnerBuildingUpgradeFinished() {
         this._refreshElementShow();
     }
 

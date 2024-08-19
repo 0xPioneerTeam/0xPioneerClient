@@ -18,6 +18,8 @@ import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { RookieStep } from "../../Const/RookieDefine";
 import TalkConfig from "../../Config/TalkConfig";
 import { DialogueUI } from "../Outer/DialogueUI";
+import { RelicTowerUI } from "../RelicTowerUI";
+import { RecruitUI } from "./RecruitUI";
 const { ccclass } = _decorator;
 
 @ccclass("NewBuildingUpgradeUI")
@@ -34,6 +36,9 @@ export class NewBuildingUpgradeUI extends ViewController {
     private _resourceContent: Node = null;
     private _resourceItem: Node = null;
     private _actionButton: Node = null;
+    private _recruitButton: Node = null;
+    private _exerciseButton: Node = null;
+    private _artifactButton: Node = null;
 
     public refreshUI(type: InnerBuildingType) {
         this._type = type;
@@ -119,6 +124,10 @@ export class NewBuildingUpgradeUI extends ViewController {
             // LanMgr.getLanById("107549");
             this._actionButton.getChildByPath("Label").getComponent(Label).string = "Construct";
         }
+
+        this._recruitButton.active = this._innerData.buildType == InnerBuildingType.Barrack && this._innerData.buildLevel >= 1;
+        this._exerciseButton.active = this._innerData.buildType == InnerBuildingType.TrainingCenter && this._innerData.buildLevel >= 1;
+        this._artifactButton.active = this._innerData.buildType == InnerBuildingType.ArtifactStore && this._innerData.buildLevel >= 1;
     }
 
     protected viewDidLoad(): void {
@@ -134,6 +143,9 @@ export class NewBuildingUpgradeUI extends ViewController {
         this._resourceItem = this._resourceContent.getChildByPath("Item");
         this._resourceItem.removeFromParent();
         this._actionButton = contentView.getChildByPath("ActionButton");
+        this._recruitButton = contentView.getChildByPath("RecruitButton");
+        this._exerciseButton = contentView.getChildByPath("ExerciseButton");
+        this._artifactButton = contentView.getChildByPath("ArtifactButton");
 
         NotificationMgr.addListener(NotificationName.ITEM_CHANGE, this.onItemChanged, this);
         // NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_BUILDING_UPGRADE, this._onRookieTapThis, this);
@@ -176,16 +188,23 @@ export class NewBuildingUpgradeUI extends ViewController {
         if (this._innerData == null || this._innerConfig == null || this._costData == null) {
             return;
         }
-        if (DataMgr.s.userInfo.data.level < this._innerConfig.unlock) {
-            // useLanMgr
-            // UIHUDController.showCenterTip(LanMgr.getLanById("201004"));
-            UIHUDController.showCenterTip("Insufficient civilization level");
-            return;
-        }
+
         if (this._innerData.upgrading) {
             UIHUDController.showCenterTip(LanMgr.getLanById("201003"));
             // UIHUDController.showCenterTip("The building is being upgraded, please wait.");
             return;
+        }
+
+        if (this._innerData.buildType != InnerBuildingType.MainCity) {
+            // check maincity level
+            const mainCityLevel = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.MainCity);
+            const maxBuildingUpgradeLevel = InnerBuildingLvlUpConfig.getBuildingLevelData(mainCityLevel, "max_lvlBuilding");
+            if (this._innerData.buildLevel + 1 > maxBuildingUpgradeLevel) {
+                // useLanMgr
+                // UIHUDController.showCenterTip(LanMgr.getLanById("201004"));
+                UIHUDController.showCenterTip("The level limit has been reached. Please upgrade the level of the city hall first.");
+                return;
+            }
         }
 
         let canUpgrade: boolean = true;
@@ -211,6 +230,25 @@ export class NewBuildingUpgradeUI extends ViewController {
 
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+    }
+
+    private async onTapRecruit() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
+        if (result.success) {
+            result.node.getComponent(RecruitUI).refreshUI(true);
+        }
+    }
+    private async onTapExercise() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        // const result = await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
+    }
+    private async onTapArtifact() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(UIName.RelicTowerUI);
+        if (result.success) {
+            result.node.getComponent(RelicTowerUI).configuration(0);
+        }
     }
 
     private async onTapClose() {
