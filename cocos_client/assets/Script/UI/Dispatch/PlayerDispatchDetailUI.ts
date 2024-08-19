@@ -1,4 +1,4 @@
-import { _decorator, Component, EditBox, EventTouch, Label, Node, ProgressBar, Slider, tween, v3 } from "cc";
+import { _decorator, Button, Component, EditBox, EventTouch, instantiate, Label, Layout, Node, ProgressBar, Slider, tween, v3 } from "cc";
 import ViewController from "../../BasicView/ViewController";
 import { MapPioneerActionType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
@@ -12,13 +12,18 @@ import { NetworkMgr } from "../../Net/NetworkMgr";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import ItemData from "../../Const/Item";
+import TroopsConfig from "../../Config/TroopsConfig";
+import CommonTools from "../../Tool/CommonTools";
+import { GameMgr, LanMgr } from "../../Utils/Global";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerDispatchDetailUI")
 export class PlayerDispatchDetailUI extends ViewController {
     private _infos: MapPlayerPioneerObject[] = [];
     private _showIndex: number = 0;
+    private _selectTroopId: string = null;
     private _addTroopNum: number = 0;
+
     private _holdTime: number = 0;
     private _holdLimitTrigger: boolean = false;
     private _holdInterval: number = null;
@@ -35,9 +40,19 @@ export class PlayerDispatchDetailUI extends ViewController {
     private _troopLeftLabel: Label = null;
     private _troopAddEditBox: EditBox = null;
 
+    private _troopSelectView: Node = null;
+    private _troopSelectItemContentView: Node = null;
+    private _troopSelectItem: Node = null;
+
     public configuration(infos: MapPlayerPioneerObject[], showIndex: number) {
         this._infos = infos;
         this._showIndex = showIndex;
+
+        const info = infos[this._showIndex];
+        if (info.hp > 0) {
+            this._selectTroopId = info.troopId;
+            this._addTroopNum = GameMgr.convertHpToTroopNum(info.hp, info.troopId);
+        }
         this._refreshUI();
     }
 
@@ -56,6 +71,13 @@ export class PlayerDispatchDetailUI extends ViewController {
         this._troopLeftLabel = this.node.getChildByPath("ContentView/AddTroopView/LeftValue").getComponent(Label);
         this._troopAddEditBox = this.node.getChildByPath("ContentView/AddTroopView/Control/Value").getComponent(EditBox);
 
+        this._troopSelectView = this.node.getChildByPath("TroopSelectContentView");
+        this._troopSelectView.active = false;
+
+        this._troopSelectItemContentView = this._troopSelectView.getChildByPath("ScrollView/View/Content");
+        this._troopSelectItem = this._troopSelectItemContentView.getChildByPath("Item");
+        this._troopSelectItem.removeFromParent();
+
         this.node.getChildByPath("ContentView/AddTroopView/Control/minus").on(Node.EventType.TOUCH_START, this.onTouchStart, this);
         this.node.getChildByPath("ContentView/AddTroopView/Control/minus").on(Node.EventType.TOUCH_END, this.onTouchEnd, this);
         this.node.getChildByPath("ContentView/AddTroopView/Control/minus").on(Node.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
@@ -66,6 +88,18 @@ export class PlayerDispatchDetailUI extends ViewController {
 
     protected viewDidStart(): void {
         super.viewDidStart();
+
+        // default troop
+        this._createSelectItem("0");
+        // other troop
+        const troopsConfig = TroopsConfig.getAll();
+        for (const key in troopsConfig) {
+            if (Object.prototype.hasOwnProperty.call(troopsConfig, key)) {
+                const element = troopsConfig[key];
+                this._createSelectItem(element.id);
+            }
+        }
+        this._troopSelectItemContentView.getComponent(Layout).updateLayout();
 
         NotificationMgr.addListener(NotificationName.RESOURCE_GETTED, this._onResourceGetted, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
@@ -85,40 +119,86 @@ export class PlayerDispatchDetailUI extends ViewController {
         return this.node.getChildByPath("ContentView");
     }
 
+    private _createSelectItem(troopId: string) {
+        const item = instantiate(this._troopSelectItem);
+        item.parent = this._troopSelectItemContentView;
+        for (const child of item.getChildByPath("Icon").children) {
+            if (troopId == "0") {
+                child.active = child.name == "troops_0";
+            } else {
+                child.active = child.name.includes(troopId);
+            }
+        }
+        item.getComponent(Button).clickEvents[0].customEventData = troopId;
+    }
     private _refreshUI() {
         if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
             return;
         }
+        this._addTroopNum = Math.floor(this._addTroopNum);
+
         const info = this._infos[this._showIndex];
         const nft = DataMgr.s.nftPioneer.getNFTById(info.NFTId);
         if (nft == undefined) {
             return;
         }
 
+        let troopName = "";
+        let troopLevel = null;
+        let hp = 0;
+        let ownedTroopNum = 0;
+        if (this._selectTroopId != null) {
+            if (this._selectTroopId == "0") {
+                hp += this._addTroopNum;
+                troopName = "Common";
+                troopLevel = 0;
+            } else {
+                const troopConfig = TroopsConfig.getById(this._selectTroopId);
+                hp += this._addTroopNum * parseInt(troopConfig.hp_training);
+                troopName = LanMgr.getLanById(troopConfig.name);
+                troopLevel = parseInt(troopConfig.id) - 50000 + 1;
+            }
+            ownedTroopNum = this._getOwnedTroopNum(this._selectTroopId);
+        }
+        // icon show
+        for (const child of this.node.getChildByPath("ContentView/AddTroopView/img_Select/Icon").children) {
+            if (this._selectTroopId == null) {
+                child.active = false;
+            } else if (this._selectTroopId == "0") {
+                child.active = child.name == "troops_0";
+            } else {
+                child.active = child.name.includes(this._selectTroopId);
+            }
+        }
+        if (troopLevel == null) {
+            this.node.getChildByPath("ContentView/AddTroopView/img_Grade").active = false;
+        } else {
+            this.node.getChildByPath("ContentView/AddTroopView/img_Grade").active = true;
+            this.node.getChildByPath("ContentView/AddTroopView/img_Grade/lbl_lv").getComponent(Label).string = troopLevel.toString();
+        }
+        this.node.getChildByPath("ContentView/AddTroopView/lbl_lv").getComponent(Label).string = troopName;
+
         this._infoItem.getComponent(PlayerInfoItem).refreshUI(info);
         this._atkLabel.string = info.attack.toString();
         this._defLabel.string = info.defend.toString();
-        this._hpLabel.string = info.hpMax.toString();
+        this._hpLabel.string = hp.toString();
         this._speedLabel.string = info.speed.toString();
         this._intLabel.string = nft.iq.toString();
 
-        let addMaxNum = Math.floor(info.hpMax - info.hp);
+        let addMaxNum = Math.max(0, Math.min(info.hpMax, ownedTroopNum));
 
         this._troopProgress.progress = this._addTroopNum / addMaxNum;
         this._troopSlider.progress = this._addTroopNum / addMaxNum;
         this._troopLeftLabel.string = (addMaxNum - this._addTroopNum).toString();
         this._troopAddEditBox.string = this._addTroopNum.toString();
     }
-    private _getCurrentAddTroopNum(value: number, max: number) {
-        return Math.max(0, Math.min(value, DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop), max));
+    private _getOwnedTroopNum(troopId: string) {
+        if (troopId == "0") {
+            return DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop);
+        }
+        return DataMgr.s.innerBuilding.getOwnedExecriseTroopNum(this._selectTroopId);
     }
     private _updateAddNum(isMinus: boolean) {
-        if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
-            return;
-        }
-        const info = this._infos[this._showIndex];
-        const addMaxNum = Math.floor(info.hpMax - info.hp);
-
         let changeNum = 1;
         if (this._holdTime > 4) {
             changeNum *= 100;
@@ -128,12 +208,32 @@ export class PlayerDispatchDetailUI extends ViewController {
 
         this._holdLimitTrigger = false;
 
-        const currentAddTroop: number = this._getCurrentAddTroopNum(this._addTroopNum + (isMinus ? -changeNum : changeNum), addMaxNum);
-        if (this._addTroopNum != currentAddTroop) {
-            this._addTroopNum = currentAddTroop;
+        const resultValue = this._troopChangeVaild(this._addTroopNum + (isMinus ? -changeNum : changeNum));
+        if (this._addTroopNum != resultValue) {
+            this._addTroopNum = resultValue;
             this._refreshUI();
         }
     }
+
+    private _troopChangeVaild(value: number) {
+        if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
+            return;
+        }
+        if (this._selectTroopId == null) {
+            return 0;
+        }
+        if (value < 0) {
+            return 0;
+        }
+        const info = this._infos[this._showIndex];
+        const ownedNum = this._getOwnedTroopNum(this._selectTroopId);
+        const maxNum = Math.min(ownedNum, Math.floor(info.hpMax));
+        if (value > maxNum) {
+            return maxNum;
+        }
+        return Math.floor(value);
+    }
+
     //------------------------ action
     private async onTapClose() {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -145,14 +245,19 @@ export class PlayerDispatchDetailUI extends ViewController {
         if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
             return;
         }
+        if (this._selectTroopId == null) {
+            return;
+        }
         const info = this._infos[this._showIndex];
-        const addMaxNum = Math.floor(info.hpMax - info.hp);
-        const currentAddTroop: number = this._getCurrentAddTroopNum(Math.floor(this._troopSlider.progress * addMaxNum), addMaxNum);
 
-        this._troopSlider.progress = currentAddTroop / addMaxNum;
+        const ownedTroopNum = this._getOwnedTroopNum(this._selectTroopId);
+        let addMaxNum = Math.max(0, Math.min(info.hpMax, ownedTroopNum));
 
-        if (currentAddTroop != this._addTroopNum) {
-            this._addTroopNum = currentAddTroop;
+        const resultValue = this._troopChangeVaild(this._troopSlider.progress * addMaxNum);
+
+        this._troopSlider.progress = resultValue / addMaxNum;
+        if (resultValue != this._addTroopNum) {
+            this._addTroopNum = resultValue;
             this._refreshUI();
         }
     }
@@ -190,14 +295,32 @@ export class PlayerDispatchDetailUI extends ViewController {
         if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
             return;
         }
-        const info = this._infos[this._showIndex];
-        const addMaxNum = Math.floor(info.hpMax - info.hp);
-        const inputAddNum = parseInt(this._troopAddEditBox.string);
-        const currentAddTroop: number = this._getCurrentAddTroopNum(inputAddNum, addMaxNum);
-        if (this._addTroopNum != currentAddTroop) {
-            this._addTroopNum = currentAddTroop;
-            this._refreshUI();
-        }
+        // const info = this._infos[this._showIndex];
+        // const addMaxNum = Math.floor(info.hpMax - info.hp);
+        // const inputAddNum = parseInt(this._troopAddEditBox.string);
+        // const currentAddTroop: number = this._getCurrentAddTroopNum(inputAddNum, addMaxNum);
+        // if (this._addTroopNum != currentAddTroop) {
+        //     this._addTroopNum = currentAddTroop;
+        //     this._refreshUI();
+        // }
+    }
+
+    private onTapShowSelectTroop() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        this._troopSelectView.active = true;
+        this.node.getChildByPath("ContentView/AddTroopView/img_Select").active = false;
+    }
+    private onTapHideSelectTroop() {
+        this._troopSelectView.active = false;
+        this.node.getChildByPath("ContentView/AddTroopView/img_Select").active = true;
+    }
+    private onTapSelectTroop(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
+        this._troopSelectView.active = false;
+        this.node.getChildByPath("ContentView/AddTroopView/img_Select").active = true;
+        this._selectTroopId = customEventData;
+        this._addTroopNum = 0;
+        this._refreshUI();
     }
 
     private async onTapGenerateTroop() {
@@ -214,7 +337,11 @@ export class PlayerDispatchDetailUI extends ViewController {
         if (this._showIndex < 0) {
             this._showIndex = this._infos.length - 1;
         }
-        this._addTroopNum = 0;
+        const info = this._infos[this._showIndex];
+        if (info.hp > 0) {
+            this._selectTroopId = info.troopId;
+            this._addTroopNum = GameMgr.convertHpToTroopNum(info.hp, info.troopId);
+        }
         this._refreshUI();
     }
     private onTapRightSwitch() {
@@ -222,7 +349,11 @@ export class PlayerDispatchDetailUI extends ViewController {
         if (this._showIndex > this._infos.length - 1) {
             this._showIndex = 0;
         }
-        this._addTroopNum = 0;
+        const info = this._infos[this._showIndex];
+        if (info.hp > 0) {
+            this._selectTroopId = info.troopId;
+            this._addTroopNum = GameMgr.convertHpToTroopNum(info.hp, info.troopId);
+        }
         this._refreshUI();
     }
     private onTapComplete() {
@@ -241,6 +372,7 @@ export class PlayerDispatchDetailUI extends ViewController {
         NetworkMgr.websocketMsg.player_troop_to_hp({
             pioneerId: info.uniqueId,
             troopNum: this._addTroopNum,
+            troopId: this._selectTroopId,
         });
     }
 

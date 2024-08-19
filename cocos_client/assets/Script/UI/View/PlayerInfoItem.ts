@@ -4,6 +4,7 @@ import { LanMgr } from "../../Utils/Global";
 import { DataMgr } from "../../Data/DataMgr";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
+import TroopsConfig from "../../Config/TroopsConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerInfoItem")
@@ -104,8 +105,23 @@ export class PlayerInfoItem extends Component {
             child.active = child.name == info.id;
         }
         this.levelLabel.string = "Lv." + nft.level;
-        this.hpProgress.progress = info.hp / info.hpMax;
-        this.hpLabel.string = info.hp + "/" + info.hpMax;
+
+        let hpMax: number = 0;
+        let hp: number = info.hp;
+        if (info.troopId != null) {
+            if (info.troopId == "0") {
+                hpMax = info.hpMax;
+            } else {
+                const troopConfig = TroopsConfig.getById(info.troopId);
+                if (troopConfig != null) {
+                    hpMax = info.hpMax * parseInt(troopConfig.hp_training);
+                }
+            }
+        }
+
+        this.hpProgress.progress = hp / hpMax;
+        this.hpLabel.string = hp + "/" + hpMax;
+        
         this.apProgress.progress = info.energy / info.energyMax;
         this.apLabel.string = info.energy + "/" + info.energyMax;
         this.fightLabel.string = (info.attack * 75 + info.hp * 12 + info.defend * 100).toString();

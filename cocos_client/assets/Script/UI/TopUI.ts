@@ -24,6 +24,10 @@ import { NotificationName } from "../Const/Notification";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import { GameMgr } from "../Utils/Global";
+import InnerBuildingConfig from "../Config/InnerBuildingConfig";
+import { InnerBuildingType } from "../Const/BuildingDefine";
+import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("TopUI")
@@ -58,6 +62,7 @@ export default class TopUI extends Component {
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_NAME, this.refreshTopUI, this);
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_EXP, this._onPlayerExpChanged, this);
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this.refreshTopUI, this);
     }
 
     start() {
@@ -69,6 +74,7 @@ export default class TopUI extends Component {
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_NAME, this.refreshTopUI, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_EXP, this._onPlayerExpChanged, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this.refreshTopUI, this);
     }
 
     refreshTopUI() {
@@ -88,7 +94,10 @@ export default class TopUI extends Component {
         resourceView.getChildByPath("Food/Label").getComponent(Label).string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Food).toString();
         resourceView.getChildByPath("Wood/Label").getComponent(Label).string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Wood).toString();
         resourceView.getChildByPath("Stone/Label").getComponent(Label).string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Stone).toString();
-        resourceView.getChildByPath("Troops/Label").getComponent(Label).string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop).toString();
+
+        const maxTroop = InnerBuildingLvlUpConfig.getBuildingLevelData(DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.House), "max_pop");
+
+        resourceView.getChildByPath("Troops/Label").getComponent(Label).string = GameMgr.getAllTroopNum() + "/" + maxTroop;
     }
 
     private _playExpGettedAnim(expValue: number, playOver: () => void = null) {

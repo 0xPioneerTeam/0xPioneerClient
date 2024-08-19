@@ -210,6 +210,8 @@ message pioneer_data {
 
     optional uint32 dieTime = 90;
     optional uint32 rebornTime = 91;
+
+    optional string troopId = 92;
 }
 message map_pioneer_data {
     required string id = 1;
@@ -273,6 +275,8 @@ message map_pioneer_data {
 
     optional uint32 dieTime = 46;
     optional uint32 rebornTime = 47;
+
+    optional string troopId = 48;
 }
 message fight_res {
     required string attackerId = 1;

@@ -107,6 +107,7 @@ message player_psyc_to_energy {
 message player_troop_to_hp {
     required string pioneerId = 1;
     required uint32 troopNum = 2;
+    optional string troopId = 3;
 }
 
 

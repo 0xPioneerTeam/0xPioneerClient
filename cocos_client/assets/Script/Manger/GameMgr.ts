@@ -1,8 +1,8 @@
 import { sp, v2, Vec2 } from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
-import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
-import { GAME_ENV_IS_DEBUG, GameExtraEffectType, MapMemberTargetType } from "../Const/ConstDefine";
+import { InnerBuildingType, MapBuildingType, UserInnerBuildInfo } from "../Const/BuildingDefine";
+import { GAME_ENV_IS_DEBUG, GameExtraEffectType, MapMemberTargetType, ResourceCorrespondingItem } from "../Const/ConstDefine";
 import ItemData from "../Const/Item";
 import { MapBuildingObject } from "../Const/MapBuilding";
 import { NotificationName } from "../Const/Notification";
@@ -25,6 +25,8 @@ import { UIHUDController } from "../UI/UIHUDController";
 import { TilePos } from "../Game/TiledMap/TileTool";
 import BigMapConfig from "../Config/BigMapConfig";
 import { share } from "../Net/msg/WebsocketMsg";
+import TroopsConfig from "../Config/TroopsConfig";
+import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 
 export default class GameMgr {
     public rookieTaskExplainIsShow: boolean = false;
@@ -32,6 +34,53 @@ export default class GameMgr {
     public enterGameSence: boolean = false;
 
     public lastEventSelectFightIdx: number = -1;
+
+
+    public canAddTroopNum(): number {
+        const maxTroop = InnerBuildingLvlUpConfig.getBuildingLevelData(DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.House), "max_pop");
+        return maxTroop - this.getAllTroopNum();
+    }
+
+    public getAllTroopNum(): number {
+        let num = 0;
+        // user troop
+        num += DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop);
+        // tc
+        DataMgr.s.innerBuilding.data.forEach((value: UserInnerBuildInfo, key: InnerBuildingType) => {
+            if (key == InnerBuildingType.TrainingCenter) {
+                const tc = value.tc;
+                if (tc != null) {
+                    for (const key in tc.troops) {
+                        const element = tc.troops[key];
+                        num += element;
+                    }
+                    if (tc.training != null) {
+                        for (const key in tc.training.troops) {
+                            const element = tc.training.troops[key];
+                            num += element;
+                        }
+                    }
+                }
+            }
+        });
+        // pioneer
+        for (const pioneer of DataMgr.s.pioneer.getAllSelfPlayers()) {
+            if (pioneer.hp > 0) {
+                num += this.convertHpToTroopNum(pioneer.hp, pioneer.troopId);
+            }
+        }
+
+        return num;
+    }
+
+    public convertHpToTroopNum(hp: number, troopId: string) {
+        if (troopId == "0") {
+            return Math.ceil(hp);
+        } else {
+            const troop_config = TroopsConfig.getById(troopId);
+            return Math.ceil(hp / Number(troop_config.hp_training));
+        }
+    }
 
     public async showBuyEnergyTip(uniqueId: string) {
         const pioneer = DataMgr.s.pioneer.getById(uniqueId) as MapPlayerPioneerObject;
@@ -172,7 +221,7 @@ export default class GameMgr {
                 }
             }
         }
-        
+
         if (currentMapPos != null) {
             // if (!GameMainHelper.instance.isGameShowOuter) {
             //     GameMainHelper.instance.changeInnerAndOuterShow();
@@ -388,8 +437,8 @@ export default class GameMgr {
         return originalValue;
     }
 
-    private _slotIdToTempleConfigMap: Map<string, { templeConfigId: string, playerId: string, pname: string, level: number, battlePower: number } > = new Map();
-    public setSlotIdToTempleConfigData(slotId: string, data: { templeConfigId: string, playerId: string, pname: string, level: number, battlePower: number }) {
+    private _slotIdToTempleConfigMap: Map<string, { templeConfigId: string; playerId: string; pname: string; level: number; battlePower: number }> = new Map();
+    public setSlotIdToTempleConfigData(slotId: string, data: { templeConfigId: string; playerId: string; pname: string; level: number; battlePower: number }) {
         if (slotId == null || data == null) {
             return;
         }

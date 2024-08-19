@@ -336,6 +336,7 @@ export namespace c2s_user {
     export interface Iplayer_troop_to_hp {
         pioneerId: string;
         troopNum: number;
+        troopId: string;
     }
     export interface Iplayer_move {
         pioneerId: string;
@@ -981,6 +982,8 @@ export namespace share {
 
         dieTime?: number;
         rebornTime?: number;
+
+        troopId?: string;
     }
     export interface Ifight_res {
         attackerId: string;

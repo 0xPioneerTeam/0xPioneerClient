@@ -206,7 +206,7 @@ export class RecruitUI extends ViewController {
     }
     private onGenerateSlided(event: Event, customEventData: string) {
         const maxTroop: number = this._currentGenerateMaxNum();
-        const currentSelectTroop: number = Math.max(1, Math.min(Math.floor(this._generateSlider.progress * this._maxRecruitTroop), maxTroop));
+        const currentSelectTroop: number = Math.max(0, Math.min(Math.floor(this._generateSlider.progress * this._maxRecruitTroop), maxTroop));
 
         this._generateSlider.progress = currentSelectTroop / this._maxRecruitTroop;
         if (currentSelectTroop != this._selectGenerateNum) {
@@ -221,6 +221,12 @@ export class RecruitUI extends ViewController {
             // useLanMgr
             // LanMgr.getLanById("107549")
             UIHUDController.showCenterTip("Unable to produce");
+            return;
+        }
+        if (this._generateTimeNum > GameMgr.canAddTroopNum()) {
+            // useLanMgr
+            // LanMgr.getLanById("107549")
+            UIHUDController.showCenterTip("Cannot exceed the total population limit");
             return;
         }
         for (const cost of this._costDatas) {

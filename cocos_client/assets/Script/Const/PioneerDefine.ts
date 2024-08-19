@@ -191,6 +191,7 @@ export interface MapPlayerPioneerData extends MapPioneerData {
     rebirthEndTime: number;
     killerId: string;
     NFTId: string;
+    troopId: string;
 }
 
 export interface MapPioneerObject extends MapPioneerData {
@@ -220,7 +221,7 @@ export default class PioneerDefine {
         const movePath: Vec2[] = [];
         if (temple.movePath != null) {
             for (const path of temple.movePath) {
-                movePath.push(v2(path.x, path.y));               
+                movePath.push(v2(path.x, path.y));
             }
         }
         let obj = {
@@ -264,12 +265,11 @@ export default class PioneerDefine {
                 rebirthStartTime: currentTime,
                 rebirthEndTime: currentTime + (temple.rebirthEndTime - temple.rebirthStartTime) * 1000,
                 killerId: temple.killerId,
+                troopId: temple.troopId,
             };
             return playerObj;
         } else {
             return obj;
         }
     }
-
-
 }
