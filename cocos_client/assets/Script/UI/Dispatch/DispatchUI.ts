@@ -222,7 +222,7 @@ export class DispatchUI extends ViewController {
             if(trueCostEnergy<99){
                 GameMgr.showBuyEnergyTip(player.uniqueId);
             }else{//todo show message
-
+                //NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById(""));
             }
             return;
         }
