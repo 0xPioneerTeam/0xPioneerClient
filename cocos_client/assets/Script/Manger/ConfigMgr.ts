@@ -26,6 +26,7 @@ import ProtobufConfig from "../Config/ProtobufConfig";
 import TalkConfig from "../Config/TalkConfig";
 import TaskConfig from "../Config/TaskConfig";
 import TaskStepConfigData from "../Config/TaskStepConfig";
+import TroopsConfig from "../Config/TroopsConfig";
 import WorldBoxConfig from "../Config/WorldBoxConfig";
 
 export default class ConfigMgr {
@@ -55,6 +56,7 @@ export default class ConfigMgr {
         if (!(await TaskConfig.init())) return false;
         if (!(await MissionConfig.init())) return false;
         if (!(await TaskStepConfigData.init())) return false;
+        if (!(await TroopsConfig.init())) return false;
         if (!(await WorldBoxConfig.init())) return false;
         if (!(await BigMapConfig.init())) return false;
 

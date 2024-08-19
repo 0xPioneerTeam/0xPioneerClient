@@ -300,7 +300,7 @@ export class MainUI extends ViewController {
     }
     private async onTapExercise() {
         GameMusicPlayMgr.playTapButtonEffect();
-        // const result = await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
+        const result = await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
     }
     private async onTapArtifact() {
         GameMusicPlayMgr.playTapButtonEffect();

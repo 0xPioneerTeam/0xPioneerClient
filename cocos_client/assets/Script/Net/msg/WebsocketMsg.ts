@@ -191,6 +191,9 @@ export class WebsocketMsg {
     public player_generate_troop_start(d: c2s_user.Iplayer_generate_troop_start) {
         this.send_packet("player_generate_troop_start", d);
     }
+    public player_training_start(d: c2s_user.Iplayer_training_start) {
+        this.send_packet("player_training_start", d);
+    }
     public player_building_delegate_nft(d: c2s_user.Iplayer_building_delegate_nft) {
         this.send_packet("player_building_delegate_nft", d);
     }
@@ -456,6 +459,9 @@ export namespace c2s_user {
     }
     export interface Iplayer_generate_troop_start {
         num: number;
+    }
+    export interface Iplayer_training_start {
+        training: share.Itraining_data[];
     }
     export interface Iplayer_building_delegate_nft {
         innerBuildingId: string;
@@ -873,6 +879,18 @@ export namespace share {
         troopNum: number;
         troopIng: boolean;
         pos: [number, number];
+
+        tc?: Ibuilding_tc_data;
+    }
+
+    export interface Ibuilding_tc_data {
+        troops: { [key: string]: number };
+        training?: Ibuilding_tc_training_data;
+    }
+    export interface Ibuilding_tc_training_data {
+        start: number;
+        end: number;
+        troops: { [key: string]: number };
     }
 
     export interface Iplayer_data {
@@ -1188,5 +1206,9 @@ export namespace share {
         playerId: number;
         playerName: string;
         tpBuildingId: string;
+    }
+    export interface Itraining_data {
+        id: string;
+        num: number;
     }
 }

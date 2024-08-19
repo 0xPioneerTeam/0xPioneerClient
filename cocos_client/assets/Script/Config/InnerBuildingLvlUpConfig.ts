@@ -75,4 +75,29 @@ export default class InnerBuildingLvlUpConfig {
             return null;
         }
     }
+    public static getUnlockTroops(level: number): string[] {
+        const unlockTroops = [];
+        for (let i = 1; i <= level; i++) {
+            if (i.toString() in this._confs) {
+                const temple = this._confs[i.toString()];
+                if (temple.troops == null || temple.troops.length == 0) {
+                    continue;
+                }
+                unlockTroops.push(temple.troops);
+            }
+        }
+        return unlockTroops;
+    }
+    public static getTroopLockLevel(troopId: string): number {
+        for (const key in this._confs) {
+            const temple = this._confs[key];
+            if (temple.troops == null || temple.troops.length == 0) {
+                continue;
+            }
+            if (temple.troops == troopId) {
+                return parseInt(key);
+            }
+        }
+        return -1;
+    }
 }

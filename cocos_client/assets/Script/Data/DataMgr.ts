@@ -325,9 +325,7 @@ export class DataMgr {
                 continue;
             }
             DataMgr.s.innerBuilding.replaceData(netBuilding);
-            if (currentData.troopIng != netBuilding.troopIng || currentData.upgrading != netBuilding.upgradeIng) {
-                NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_DATA_CHANGE);
-            }
+            NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_DATA_CHANGE);
             if (currentData.upgrading && !netBuilding.upgradeIng) {
                 // upgrade finish
                 if (DataMgr.s.userInfo.data.rookieStep == RookieStep.MAIN_BUILDING_TAP_2) {

@@ -238,10 +238,16 @@ export class NewBuildingUpgradeUI extends ViewController {
         if (result.success) {
             result.node.getComponent(RecruitUI).refreshUI(true);
         }
+
+        await this.playExitAnimation();
+        UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapExercise() {
         GameMusicPlayMgr.playTapButtonEffect();
-        // const result = await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
+        const result = await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
+
+        await this.playExitAnimation();
+        UIPanelManger.inst.popPanel(this.node);
     }
     private async onTapArtifact() {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -249,6 +255,9 @@ export class NewBuildingUpgradeUI extends ViewController {
         if (result.success) {
             result.node.getComponent(RelicTowerUI).configuration(0);
         }
+
+        await this.playExitAnimation();
+        UIPanelManger.inst.popPanel(this.node);
     }
 
     private async onTapClose() {

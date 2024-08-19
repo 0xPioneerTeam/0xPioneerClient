@@ -1,5 +1,6 @@
 import { Node } from "cc";
 import { MapMemberFactionType, ResourceData } from "./ConstDefine";
+import { share } from "../Net/msg/WebsocketMsg";
 
 export enum MapBuildingType {
     resource = 3,
@@ -40,6 +41,8 @@ export interface UserInnerBuildInfo {
     troopNum: number;
     troopIng: boolean;
     pos: [number, number];
+
+    tc: share.Ibuilding_tc_data;
 }
 
 export type InnerBuildingStaffLevelUpType = string;
@@ -88,6 +91,10 @@ export interface ConfigInnerBuildingLevelUpData {
     psyc_output: number;
     psyc_storage: number;
     psyc_convert: [number, number][];
+
+    troops: string;
+    max_troops: number;
+    max_pop: number;
 }
 
 export interface InnerBuildingPsycData {

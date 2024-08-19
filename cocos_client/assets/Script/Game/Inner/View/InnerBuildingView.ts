@@ -214,6 +214,17 @@ export class InnerBuildingView extends ViewController {
             return;
         }
 
+        if (this._building.troopIng) {
+            UIHUDController.showCenterTip("Generating");
+            // UIHUDController.showCenterTip("The building is being upgraded, please wait.");
+            return;
+        }
+        if (this._building.tc?.training?.end > currentTimestamp) {
+            UIHUDController.showCenterTip("Generating");
+            // UIHUDController.showCenterTip("The building is being upgraded, please wait.");
+            return;
+        }
+
         const result = await UIPanelManger.inst.pushPanel(UIName.NewBuildingUpgradeUI);
         if (result.success) {
             result.node.getComponent(NewBuildingUpgradeUI).refreshUI(this._building.buildType);
