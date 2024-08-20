@@ -40,7 +40,7 @@ export class SettlementView extends Component {
             leftContent.getChildByName("ConsumedResources").active = false;
         }
         // troop
-        if (model.gainTroops > 0) {
+        if (model.gainTroops > 0 && false) {
             // useLanMgr
             // leftContent.getChildByPath("GainedTroops/Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
             leftContent.getChildByName("GainedTroops").active = true;
@@ -48,7 +48,7 @@ export class SettlementView extends Component {
         } else {
             leftContent.getChildByName("GainedTroops").active = false;
         }
-        if (model.consumeTroops > 0) {
+        if (model.consumeTroops > 0 && false) {
             // useLanMgr
             // leftContent.getChildByPath("ConsumedTroops/Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
             leftContent.getChildByName("ConsumedTroops").active = true;

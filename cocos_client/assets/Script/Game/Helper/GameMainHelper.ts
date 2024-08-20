@@ -12,6 +12,9 @@ import { OuterTiledMapActionController } from "../Outer/OuterTiledMapActionContr
 import { OuterDecorateController } from "../Outer/OuterDecorateController";
 import { OuterShadowController } from "../Outer/OuterShadowController";
 import { OuterBuildingController } from "../Outer/OuterBuildingController";
+import { InnerBuildingType } from "../../Const/BuildingDefine";
+import InnerBuildingLvlUpConfig from "../../Config/InnerBuildingLvlUpConfig";
+import { MainCityArrowComp } from "../Outer/View/MainCityArrowComp";
 
 export default class GameMainHelper {
     public static get instance() {
@@ -257,6 +260,17 @@ export default class GameMainHelper {
         const vision: number = DataMgr.s.userInfo.data.cityRadialRange - 1;
         return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "City", vision);
     }
+    public tiledMapOtherMainCityShadowErase(mapPos: Vec2) {
+        if (!this.isTiledMapHelperInited) {
+            return [];
+        }
+        const InformationStationLevel = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.InformationStation);
+        if (InformationStationLevel < 1) {
+            return [];
+        }
+        const vision: number = InnerBuildingLvlUpConfig.getBuildingLevelData(InformationStationLevel, "sight_range");
+        return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "City", vision);
+    }
     public tiledMapGetShadowClearedTiledPositions(): TilePos[] {
         if (!this.isTiledMapHelperInited) {
             return [];
@@ -348,6 +362,11 @@ export default class GameMainHelper {
 
     private _worldCameraRect: Rect = null;
 
+    /**
+     * binding ArrowComp
+     */
+    public bindCityArrowComp:MainCityArrowComp;
+
     constructor() {
         this._currentTrackingInteractData = {
             stepId: "",
@@ -398,6 +417,9 @@ export default class GameMainHelper {
         this._outScene.getComponent(OuterTiledMapActionController).refreshUI(_rect_temp, _rect_temp2);
         this._outScene.getComponent(OuterShadowController).refreshUI(_rect_temp, _rect_temp2);
         this._outScene.getComponent(OuterBuildingController).refreshUI(_rect_temp, _rect_temp2);
+        if(this.bindCityArrowComp){
+            this.bindCityArrowComp.calcMainCityArrowNode(this._worldCameraRect.center);
+        }
     }
 
     private _onGameJumpInnerAndShowRelicTower() {

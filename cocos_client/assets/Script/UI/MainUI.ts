@@ -24,6 +24,7 @@ import { MapPioneerActionType } from "../Const/PioneerDefine";
 import { InnerBuildingType } from "../Const/BuildingDefine";
 import { RelicTowerUI } from "./RelicTowerUI";
 import { RecruitUI } from "./Inner/RecruitUI";
+import { UIHUDController } from "./UIHUDController";
 
 const { ccclass, property } = _decorator;
 
@@ -293,6 +294,16 @@ export class MainUI extends ViewController {
     }
     private async onTapRecruit() {
         GameMusicPlayMgr.playTapButtonEffect();
+        const recruitBuilding = DataMgr.s.innerBuilding.data.get(InnerBuildingType.Barrack);
+        if (recruitBuilding?.upgrading) {
+            UIHUDController.showCenterTip(LanMgr.getLanById("201003"));
+            return;
+        }
+        if (recruitBuilding?.troopIng) {
+            UIHUDController.showCenterTip("Generating");
+            // UIHUDController.showCenterTip("The building is being upgraded, please wait.");
+            return;
+        }
         const result = await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
         if (result.success) {
             result.node.getComponent(RecruitUI).refreshUI(true);
@@ -300,10 +311,25 @@ export class MainUI extends ViewController {
     }
     private async onTapExercise() {
         GameMusicPlayMgr.playTapButtonEffect();
-        const result = await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
+        const exerciseBuilding = DataMgr.s.innerBuilding.data.get(InnerBuildingType.TrainingCenter);
+        if (exerciseBuilding?.upgrading) {
+            UIHUDController.showCenterTip(LanMgr.getLanById("201003"));
+            return;
+        }
+        if (exerciseBuilding?.tc?.training?.end > new Date().getTime()) {
+            UIHUDController.showCenterTip("Generating");
+            // UIHUDController.showCenterTip("The building is being upgraded, please wait.");
+            return;
+        }
+        UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
     }
     private async onTapArtifact() {
         GameMusicPlayMgr.playTapButtonEffect();
+        const artifactBuilding = DataMgr.s.innerBuilding.data.get(InnerBuildingType.ArtifactStore);
+        if (artifactBuilding?.upgrading) {
+            UIHUDController.showCenterTip(LanMgr.getLanById("201003"));
+            return;
+        }
         const result = await UIPanelManger.inst.pushPanel(UIName.RelicTowerUI);
         if (result.success) {
             result.node.getComponent(RelicTowerUI).configuration(0);

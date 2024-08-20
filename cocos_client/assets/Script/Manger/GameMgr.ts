@@ -69,7 +69,6 @@ export default class GameMgr {
                 num += this.convertHpToTroopNum(pioneer.hp, pioneer.troopId);
             }
         }
-
         return num;
     }
 
