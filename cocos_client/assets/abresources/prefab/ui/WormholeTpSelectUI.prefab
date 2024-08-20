@@ -436,7 +436,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 140.05859375,
+      "width": 534.84375,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -472,7 +472,7 @@
       "b": 113,
       "a": 255
     },
-    "_string": "Marked",
+    "_string": "Chose Wormhole to teleport",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 40,
@@ -1620,7 +1620,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "a83efbe9-1556-4fa9-96fc-5bfee3d2cd80@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 1,
@@ -1690,7 +1690,7 @@
       "a": 255
     },
     "_normalSprite": {
-      "__uuid__": "20835ba4-6145-4fbc-a58a-051ce700aa3e@f9941",
+      "__uuid__": "a83efbe9-1556-4fa9-96fc-5bfee3d2cd80@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_hoverSprite": {
