@@ -1,25 +1,7 @@
 {
-    "currentConfigId": "111111",
+    "currentConfigId": "dev_local",
     "configs": {
-        "42161": {
-            "chainId": "42161",
-            "chainName": "Arbitrum One",
-            "nativeCurrency": {
-                "name": "ETH",
-                "symbol": "ETH",
-                "decimals": 18
-            },
-            "rpcUrls": ["https://arb1.arbitrum.io/rpc"],
-            "blockExplorerUrls": ["https://arbiscan.io"],
-            "abi": "deployresult_arbitrumOne",
-            "api": {
-                "ws_host": "",
-                "http_host": "",
-                "init": false,
-                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
-            }
-        },
-        "534351": {
+        "dev": {
             "chainId": "534351",
             "chainName": "Scroll Sepolia",
             "nativeCurrency": {
@@ -37,25 +19,7 @@
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
             }
         },
-        "123456": {
-            "chainId": "534351",
-            "chainName": "Scroll Sepolia",
-            "nativeCurrency": {
-                "name": "ETH",
-                "symbol": "ETH",
-                "decimals": 18
-            },
-            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
-            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
-            "abi": "deployresult_scrollTestnet",
-            "api": {
-                "ws_host": "ws://10.1.6.36:4091",
-                "http_host": "http://10.1.6.36:8080",
-                "init": true,
-                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
-            }
-        },
-        "23456": {
+        "dev_local": {
             "chainId": "534351",
             "chainName": "Scroll Sepolia",
             "nativeCurrency": {
@@ -73,7 +37,7 @@
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
             }
         },
-        "111111": {
+        "dev_test": {
             "chainId": "534351",
             "chainName": "Scroll Sepolia",
             "nativeCurrency": {
@@ -91,7 +55,7 @@
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
             }
         },
-        "111112": {
+        "dev_test_2": {
             "chainId": "534351",
             "chainName": "Scroll Sepolia",
             "nativeCurrency": {
