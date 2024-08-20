@@ -95,6 +95,14 @@ export class GameMain extends ViewController {
                 result.node.getComponent(LoadingUI).showLoadingProgress(1);
                 this.scheduleOnce(() => {
                     UIPanelManger.inst.popPanel(result.node, UIPanelLayerType.ROOKIE);
+                    if (isOuterShow) {
+                        const mainCity = DataMgr.s.mapBuilding.getBuildingById(DataMgr.s.mapBuilding.getSelfMainCitySlotId() + "|building_1");
+                        if (mainCity == null || mainCity.stayMapPositions.length != 7) {
+                            return;
+                        }
+                        const currentWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(mainCity.stayMapPositions[3].x, mainCity.stayMapPositions[3].y);
+                        GameMainHelper.instance.changeGameCameraWorldPosition(currentWorldPos, true);
+                    }
                 }, 0.2);
             }, 0.3);
         }
