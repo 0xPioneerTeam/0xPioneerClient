@@ -12,6 +12,8 @@ import { OuterTiledMapActionController } from "../Outer/OuterTiledMapActionContr
 import { OuterDecorateController } from "../Outer/OuterDecorateController";
 import { OuterShadowController } from "../Outer/OuterShadowController";
 import { OuterBuildingController } from "../Outer/OuterBuildingController";
+import { InnerBuildingType } from "../../Const/BuildingDefine";
+import InnerBuildingLvlUpConfig from "../../Config/InnerBuildingLvlUpConfig";
 
 export default class GameMainHelper {
     public static get instance() {
@@ -255,6 +257,17 @@ export default class GameMainHelper {
             return [];
         }
         const vision: number = DataMgr.s.userInfo.data.cityRadialRange - 1;
+        return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "City", vision);
+    }
+    public tiledMapOtherMainCityShadowErase(mapPos: Vec2) {
+        if (!this.isTiledMapHelperInited) {
+            return [];
+        }
+        const InformationStationLevel = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.InformationStation);
+        if (InformationStationLevel < 1) {
+            return [];
+        }
+        const vision: number = InnerBuildingLvlUpConfig.getBuildingLevelData(InformationStationLevel, "sight_range");
         return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "City", vision);
     }
     public tiledMapGetShadowClearedTiledPositions(): TilePos[] {

@@ -63,6 +63,8 @@ export default class TopUI extends Component {
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_EXP, this._onPlayerExpChanged, this);
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
         NotificationMgr.addListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this.refreshTopUI, this);
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_DATA_CHANGE, this.refreshTopUI, this);
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this.refreshTopUI, this);
     }
 
     start() {
@@ -75,6 +77,8 @@ export default class TopUI extends Component {
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_EXP, this._onPlayerExpChanged, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
         NotificationMgr.removeListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this.refreshTopUI, this);
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_DATA_CHANGE, this.refreshTopUI, this);
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this.refreshTopUI, this);
     }
 
     refreshTopUI() {

@@ -145,16 +145,13 @@ export class PlayerDispatchDetailUI extends ViewController {
 
         let troopName = "";
         let troopLevel = null;
-        let hp = 0;
         let ownedTroopNum = 0;
         if (this._selectTroopId != null) {
             if (this._selectTroopId == "0") {
-                hp += this._addTroopNum;
                 troopName = "Common";
                 troopLevel = 0;
             } else {
                 const troopConfig = TroopsConfig.getById(this._selectTroopId);
-                hp += this._addTroopNum * parseInt(troopConfig.hp_training);
                 troopName = LanMgr.getLanById(troopConfig.name);
                 troopLevel = parseInt(troopConfig.id) - 50000 + 1;
             }
@@ -181,15 +178,19 @@ export class PlayerDispatchDetailUI extends ViewController {
         this._infoItem.getComponent(PlayerInfoItem).refreshUI(info);
         this._atkLabel.string = info.attack.toString();
         this._defLabel.string = info.defend.toString();
-        this._hpLabel.string = hp.toString();
+        this._hpLabel.string = info.hpMax.toString();
         this._speedLabel.string = info.speed.toString();
         this._intLabel.string = nft.iq.toString();
 
         let addMaxNum = Math.max(0, Math.min(info.hpMax, ownedTroopNum));
-
-        this._troopProgress.progress = this._addTroopNum / addMaxNum;
-        this._troopSlider.progress = this._addTroopNum / addMaxNum;
-        this._troopLeftLabel.string = (addMaxNum - this._addTroopNum).toString();
+        if (addMaxNum == 0) {
+            this._troopProgress.progress = 0;
+            this._troopSlider.progress = 0;
+        } else {
+            this._troopProgress.progress = this._addTroopNum / addMaxNum;
+            this._troopSlider.progress = this._addTroopNum / addMaxNum;
+        }
+        this._troopLeftLabel.string = Math.max(0, addMaxNum - this._addTroopNum).toString();
         this._troopAddEditBox.string = this._addTroopNum.toString();
     }
     private _getOwnedTroopNum(troopId: string) {
@@ -227,11 +228,11 @@ export class PlayerDispatchDetailUI extends ViewController {
         }
         const info = this._infos[this._showIndex];
         const ownedNum = this._getOwnedTroopNum(this._selectTroopId);
-        const maxNum = Math.min(ownedNum, Math.floor(info.hpMax));
+        const maxNum = Math.min(ownedNum, info.hpMax);
         if (value > maxNum) {
             return maxNum;
         }
-        return Math.floor(value);
+        return value;
     }
 
     //------------------------ action
@@ -295,14 +296,12 @@ export class PlayerDispatchDetailUI extends ViewController {
         if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
             return;
         }
-        // const info = this._infos[this._showIndex];
-        // const addMaxNum = Math.floor(info.hpMax - info.hp);
-        // const inputAddNum = parseInt(this._troopAddEditBox.string);
-        // const currentAddTroop: number = this._getCurrentAddTroopNum(inputAddNum, addMaxNum);
-        // if (this._addTroopNum != currentAddTroop) {
-        //     this._addTroopNum = currentAddTroop;
-        //     this._refreshUI();
-        // }
+        const info = this._infos[this._showIndex];
+        const currentAddTroop: number = this._troopChangeVaild(parseInt(this._troopAddEditBox.string));
+        if (this._addTroopNum != currentAddTroop) {
+            this._addTroopNum = currentAddTroop;
+            this._refreshUI();
+        }
     }
 
     private onTapShowSelectTroop() {
@@ -316,20 +315,19 @@ export class PlayerDispatchDetailUI extends ViewController {
     }
     private onTapSelectTroop(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
+        if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
+            return;
+        }
         this._troopSelectView.active = false;
         this.node.getChildByPath("ContentView/AddTroopView/img_Select").active = true;
         this._selectTroopId = customEventData;
         this._addTroopNum = 0;
-        this._refreshUI();
-    }
 
-    private async onTapGenerateTroop() {
-        GameMusicPlayMgr.playTapButtonEffect();
-        const result = await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
-        if (!result.success) {
-            return;
+        const info = this._infos[this._showIndex];
+        if (info.troopId == this._selectTroopId) {
+            this._addTroopNum = GameMgr.convertHpToTroopNum(info.hp, info.troopId);
         }
-        result.node.getComponent(RecruitUI).refreshUI(true);
+        this._refreshUI();
     }
 
     private onTapLeftSwitch() {
@@ -356,6 +354,15 @@ export class PlayerDispatchDetailUI extends ViewController {
         }
         this._refreshUI();
     }
+
+    private async onTapGenerateTroop() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(RecruitUI).refreshUI(true);
+    }
     private onTapComplete() {
         GameMusicPlayMgr.playTapButtonEffect();
         if (this._addTroopNum <= 0) {
@@ -369,9 +376,13 @@ export class PlayerDispatchDetailUI extends ViewController {
             NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Not within the city, unable to replenish troops");
             return;
         }
+        let addTroopNum: number = this._addTroopNum;
+        if (this._selectTroopId == info.troopId && info.hp > 0) {
+            addTroopNum = Math.min(addTroopNum, info.hpMax - GameMgr.convertHpToTroopNum(info.hp, info.troopId));
+        }
         NetworkMgr.websocketMsg.player_troop_to_hp({
             pioneerId: info.uniqueId,
-            troopNum: this._addTroopNum,
+            troopNum: addTroopNum,
             troopId: this._selectTroopId,
         });
     }
@@ -387,7 +398,6 @@ export class PlayerDispatchDetailUI extends ViewController {
         for (let i = 0; i < this._infos.length; i++) {
             if (this._infos[i].uniqueId == data.uniqueId) {
                 this._infos[i] = DataMgr.s.pioneer.getById(data.uniqueId) as MapPlayerPioneerObject;
-                this._addTroopNum = 0;
                 this._refreshUI();
                 break;
             }

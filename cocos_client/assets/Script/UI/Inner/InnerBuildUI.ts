@@ -1,12 +1,11 @@
-import { _decorator, Component, Label, Layout, Node, ProgressBar, Tween, v3 } from 'cc';
-import { LanMgr } from '../../Utils/Global';
-import { InnerBuildingType, UserInnerBuildInfo } from '../../Const/BuildingDefine';
-import InnerBuildingConfig from '../../Config/InnerBuildingConfig';
+import { _decorator, Component, Label, Layout, Node, ProgressBar, Tween, UITransform, v3, Widget } from "cc";
+import { LanMgr } from "../../Utils/Global";
+import { InnerBuildingType, UserInnerBuildInfo } from "../../Const/BuildingDefine";
+import InnerBuildingConfig from "../../Config/InnerBuildingConfig";
 const { ccclass, property } = _decorator;
 
-@ccclass('InnerBuildUI')
+@ccclass("InnerBuildUI")
 export class InnerBuildUI extends Component {
-
     public refreshUI(buildData: UserInnerBuildInfo, canUpgrade: boolean) {
         let buildingName: string = "";
         const innerBuildingConfig = InnerBuildingConfig.getByBuildingType(buildData.buildType);
@@ -21,10 +20,19 @@ export class InnerBuildUI extends Component {
         }
         this.txtBuildName.string = buildingName;
         this.level.string = `[Lv.${buildData.buildLevel}]`;
+        
+        this.scheduleOnce(()=> {
+            // label width will update in next loop
+            this.level.node.parent.getComponent(Layout).updateLayout();
+            this.node.getComponent(UITransform).setContentSize(this.level.node.parent.getComponent(UITransform).width, this.node.getComponent(UITransform).height);
+            this.progresssBar.node.getComponent(Widget).updateAlignment();
+            this.progresssBar.totalLength = this.progresssBar.node.getComponent(UITransform).width;
+            this.canUpgradeNode.getComponent(Widget).updateAlignment();
+            this.lockStatusIconNode.getComponent(Widget).updateAlignment();
+        });
 
-        this.level.node.parent.getComponent(Layout).updateLayout();
-
-        if (!buildData || buildData.buildLevel <= 0) {// lock
+        if (!buildData || buildData.buildLevel <= 0) {
+            // lock
             this.lockStatusIconNode.active = true;
         } else {
             this.lockStatusIconNode.active = false;
@@ -65,9 +73,5 @@ export class InnerBuildUI extends Component {
         this.progresssBar.node.active = false;
     }
 
-    update(deltaTime: number) {
-
-    }
+    update(deltaTime: number) {}
 }
-
-

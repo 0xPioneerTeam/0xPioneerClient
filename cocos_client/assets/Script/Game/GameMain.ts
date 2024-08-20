@@ -25,8 +25,6 @@ import { GameMgr, ResourcesMgr } from "../Utils/Global";
 import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import { HUDName } from "../Const/ConstUIDefine";
 import { LoadingUI } from "../UI/Loading/LoadingUI";
-import { DataMgr } from "../Data/DataMgr";
-import { RookieStep } from "../Const/RookieDefine";
 import { BundleName } from "../Basic/ResourcesMgr";
 
 const { ccclass, property } = _decorator;

@@ -142,7 +142,6 @@ export class OuterTiledMapActionController extends ViewController {
 
         this._initTileMap();
 
-        NotificationMgr.addListener(NotificationName.USERINFO_CITY_RADIAL_RANGE_CHANGE, this._onCityRadialRangeChange, this);
         NotificationMgr.addListener(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE, this._onHideActionView, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onHideActionView, this);
     }
@@ -295,12 +294,6 @@ export class OuterTiledMapActionController extends ViewController {
         );
         // local fog
         // this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions());
-
-        const allShadows = DataMgr.s.eraseShadow.getObj();
-        for (const shadow of allShadows) {
-            GameMainHelper.instance.tiledMapShadowErase(shadow);
-        }
-        this._eraseMainCityShadow();
         GameMainHelper.instance.updateGameViewport();
     }
 
@@ -330,7 +323,6 @@ export class OuterTiledMapActionController extends ViewController {
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
 
-        NotificationMgr.removeListener(NotificationName.USERINFO_CITY_RADIAL_RANGE_CHANGE, this._onCityRadialRangeChange, this);
         NotificationMgr.removeListener(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE, this._onHideActionView, this);
         NotificationMgr.removeListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onHideActionView, this);
     }
@@ -490,7 +482,31 @@ export class OuterTiledMapActionController extends ViewController {
                 DataMgr.s.eraseShadow.addObj(v2(pioneer.stayPos.x, pioneer.stayPos.y));
             }
         }
+        const selfCityUniqueId = DataMgr.s.mapBuilding.getSelfMainCitySlotId() + "|building_1";
+        // selfcity
         this._eraseMainCityShadow();
+        // othercity
+        const buildings = DataMgr.s.mapBuilding.getObj_building();
+        for (const element of buildings) {
+            if (element.uniqueId == selfCityUniqueId || element.type != MapBuildingType.city) {
+                continue;
+            }
+            if (element.stayMapPositions.length != 7) {
+                continue;
+            }
+            const slotSplit = element.uniqueId.split("|");
+            if (slotSplit.length != 2) {
+                continue;
+            }
+            const slotData = GameMgr.getMapSlotData(slotSplit[0]);
+            if (slotData == null || slotData.playerId == "0") {
+                continue;
+            }
+            if (DataMgr.s.userInfo.data.explorePlayerids.indexOf(parseInt(slotData.playerId)) == -1) {
+                continue;
+            }
+            GameMainHelper.instance.tiledMapOtherMainCityShadowErase(element.stayMapPositions[3]);
+        }
     }
 
     public async _clickOnMap(worldpos: Vec3) {
@@ -1011,9 +1027,6 @@ export class OuterTiledMapActionController extends ViewController {
     }
 
     //----------------------- notification
-    private _onCityRadialRangeChange() {
-        this._eraseMainCityShadow();
-    }
     private _onHideActionView() {
         if (this["_actionViewActioned"] == true) {
             this["_actionViewActioned"] = false;

@@ -217,13 +217,13 @@ export class RecruitUI extends ViewController {
 
     private async onTapGenerate() {
         GameMusicPlayMgr.playTapButtonEffect();
-        if (this._generateTimeNum <= 0) {
+        if (this._selectGenerateNum <= 0) {
             // useLanMgr
             // LanMgr.getLanById("107549")
             UIHUDController.showCenterTip("Unable to produce");
             return;
         }
-        if (this._generateTimeNum > GameMgr.canAddTroopNum()) {
+        if (this._selectGenerateNum > GameMgr.canAddTroopNum()) {
             // useLanMgr
             // LanMgr.getLanById("107549")
             UIHUDController.showCenterTip("Cannot exceed the total population limit");

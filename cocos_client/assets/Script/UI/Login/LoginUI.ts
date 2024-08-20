@@ -25,7 +25,7 @@ export class LoginUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-        this.node.getChildByPath("AlertView").active = true;
+        this.node.getChildByPath("AlertView").active = false;
     }
     protected viewDidStart(): void {
         super.viewDidStart();

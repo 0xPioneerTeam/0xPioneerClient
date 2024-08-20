@@ -101,6 +101,7 @@ export class PlayerInfoItem extends Component {
         for (let i = 1; i <= 5; i++) {
             this.rankNode.getChildByPath("Star_" + i).active = i <= nft.rank;
         }
+        this.rankNode.active = false;
         for (const child of this.roleView.children) {
             child.active = child.name == info.id;
         }
