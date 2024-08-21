@@ -1,6 +1,7 @@
 import { _decorator, Component, Node, UITransform, v2, Vec2} from "cc";
 import { DataMgr } from "../../../Data/DataMgr";
 import GameMainHelper from "../../Helper/GameMainHelper";
+import { Button } from "cc";
 
 const { ccclass, property } = _decorator;
 
@@ -22,22 +23,24 @@ export class MainCityArrowComp extends Component {
         const currentWorldPos = GameMainHelper.instance.tiledMapGetPosPixel(mainCity.stayMapPositions[3].x, mainCity.stayMapPositions[3].y);
         const cityPos = v2(currentWorldPos.x, currentWorldPos.y);
         if(Vec2.distance(cameraPos,cityPos) > 2000){
-            this.node.active = true;
+            this.arrowNode.active = true;
+            this.arrowNode.getComponent(Button).enabled = true;
+            this.arrowNode.getComponent(Button).interactable = true;
             let angle = Math.atan2(cityPos.y - cameraPos.y,cityPos.x - cameraPos.x);
             let angleV = angle * 180 / Math.PI;
             let arrowAngle = angleV+90;
             this.arrowNode.angle = arrowAngle;
             let size = this.node.getComponent(UITransform).contentSize;
             let arrx,arry,arrowValue = 0;
-            if(-45 < arrowAngle && arrowAngle < 45){
+            if(-45 <= arrowAngle && arrowAngle <= 45){
                 arrowValue = arrowAngle*Math.PI/180;
                 arrx = Math.tan(arrowValue) * size.width/2;
                 arry = -size.height/2;
-            }else if(45 < arrowAngle && arrowAngle < 135){
+            }else if(45 <= arrowAngle && arrowAngle <= 135){
                 arrowValue = (arrowAngle-90)*Math.PI/180;
                 arrx = size.width/2;
                 arry = Math.tan(arrowValue) * size.height/2;
-            }else if(135 < arrowAngle && arrowAngle < 225){
+            }else if(135 <= arrowAngle && arrowAngle <= 225){
                 arrowValue = (arrowAngle-180)*Math.PI/180;
                 arrx = -Math.tan(arrowValue) * size.width/2;
                 arry = size.height/2;
@@ -49,7 +52,7 @@ export class MainCityArrowComp extends Component {
             }
             this.arrowNode.setPosition(arrx,arry);
         }else{
-            this.node.active = false;
+            this.arrowNode.active = false;
         }
     }
 

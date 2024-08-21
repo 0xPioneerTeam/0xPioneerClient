@@ -135,6 +135,7 @@ export class MainUI extends ViewController {
 
         const battleReportButton = this.node.getChildByPath("CommonContent/reportsButton");
         const pioneerListView = this.node.getChildByPath("CommonContent/LeftNode");
+        const arrowContent = this.node.getChildByPath("arrowContent");
         const innerOuterChangeButton = this.node.getChildByPath("CommonContent/InnerOutChangeBtnBg");
 
         const innerBuildButton = this.node.getChildByPath("btnBuild");
@@ -218,6 +219,7 @@ export class MainUI extends ViewController {
             }
         }
         pioneerListView.active = GameMainHelper.instance.isGameShowOuter && hasOuterPioneer;
+        arrowContent.active = GameMainHelper.instance.isGameShowOuter;
 
         if (!GameMainHelper.instance.isGameShowOuter && UIPanelManger.inst.panelIsShow(UIName.TaskListUI)) {
             UIPanelManger.inst.popPanelByName(UIName.TaskListUI);
