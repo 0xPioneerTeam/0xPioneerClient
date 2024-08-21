@@ -17,6 +17,7 @@ import { share, WebsocketMsg } from "../Net/msg/WebsocketMsg";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
+import ManualNestedScrollView from "../BasicView/ManualNestedScrollView";
 const { ccclass, property } = _decorator;
 
 @ccclass("ExerciseUI")
@@ -36,6 +37,7 @@ export class ExerciseUI extends ViewController {
     private _current_res_cur: Label;
     private _current_res_max: Label;
 
+    private _itemScrollView: ManualNestedScrollView = null;
     private _list_Content: Node;
     private _exerciseItem: Node;
 
@@ -49,6 +51,7 @@ export class ExerciseUI extends ViewController {
         this._current_res_cur = contentView.getChildByPath("current_res/num/cur").getComponent(Label);
         this._current_res_max = contentView.getChildByPath("current_res/num/max").getComponent(Label);
 
+        this._itemScrollView = contentView.getChildByPath("ScrollView").getComponent(ManualNestedScrollView);
         this._list_Content = contentView.getChildByPath("ScrollView/View/Content");
         this._exerciseItem = this._list_Content.getChildByPath("ExercoseItem");
         this._list_Content.removeAllChildren();
@@ -93,7 +96,13 @@ export class ExerciseUI extends ViewController {
             item.getChildByPath("count/plus").on(Node.EventType.TOUCH_START, this.onTouchStart, this);
             item.getChildByPath("count/plus").on(Node.EventType.TOUCH_END, this.onTouchEnd, this);
             item.getChildByPath("count/plus").on(Node.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
+
             item.getChildByPath("count/ProgressBar/Slider").getComponent(Slider).slideEvents[0].customEventData = index.toString();
+            item.getChildByPath("count/ProgressBar/Slider").on(Node.EventType.TOUCH_END, this.onTapSliderHandleEnd, this)
+            item.getChildByPath("count/ProgressBar/Slider").on(Node.EventType.TOUCH_CANCEL, this.onTapSliderHandleEnd, this)
+            item.getChildByPath("count/ProgressBar/Slider/Handle").on(Node.EventType.TOUCH_END, this.onTapSliderHandleEnd, this);
+            item.getChildByPath("count/ProgressBar/Slider/Handle").on(Node.EventType.TOUCH_CANCEL, this.onTapSliderHandleEnd, this);
+
             item.setParent(this._list_Content);
 
             index += 1;
@@ -305,6 +314,7 @@ export class ExerciseUI extends ViewController {
     }
 
     private onAddSlided(event: Event, customEventData: string) {
+        this._itemScrollView.forceNested = true;
         const index = parseInt(customEventData);
         if (index < 0 || index > this._list_Content.children.length - 1) {
             return;
@@ -339,6 +349,9 @@ export class ExerciseUI extends ViewController {
                 this._refreshUI();
             }
         }
+    }
+    private onTapSliderHandleEnd() {
+        this._itemScrollView.forceNested = false;
     }
 
     private onTouchStart(event: EventTouch) {

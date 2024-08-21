@@ -650,10 +650,12 @@ export namespace s2c_user {
     }
     export interface Iplayer_wormhole_tp_random_res {
         res: number;
+        buildingId: string;
         tpPos: share.pos2d;
     }
     export interface Iplayer_wormhole_tp_select_res {
         res: number;
+        buildingId: string;
         tpPos: share.pos2d;
     }
     export interface Iplayer_wormhole_tp_back_res {

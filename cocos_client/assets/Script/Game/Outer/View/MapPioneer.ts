@@ -5,6 +5,7 @@ import { DataMgr } from "../../../Data/DataMgr";
 import { OuterFightResultView } from "./OuterFightResultView";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
+import TroopsConfig from "../../../Config/TroopsConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("MapPioneer")
@@ -15,6 +16,7 @@ export class MapPioneer extends Component {
     @property(Node)
     speedUpTag: Node;
 
+    private _overLoad: boolean = false;
     private _model: MapPioneerObject = null;
     private _lastStatus: MapPioneerActionType = null;
     private _lastActionEndTimestamp: number = null;
@@ -32,6 +34,9 @@ export class MapPioneer extends Component {
     private _timeCountLabel: Label = null;
 
     public refreshUI(model: MapPioneerObject) {
+        if (!this._overLoad) {
+            return;
+        }
         this._model = model;
         this.nameLabel.string = this._model.uniqueId;
         this._actionTimeStamp = this._model.actionEndTimeStamp;
@@ -248,6 +253,14 @@ export class MapPioneer extends Component {
                     
                     if (attacker != null && defender != null) {
                         // attacker is self, defender is enemy
+                        let attackerHpRate = 1;
+                        if (attacker["troopId"] != null && attacker["troopId"] != "" && attacker["troopId"] != "0") {
+                            attackerHpRate = parseInt(TroopsConfig.getById(attacker["troopId"]).hp_training);
+                        }
+                        let defenderHpRate = 1;
+                        if (defender["troopId"] != null && defender["troopId"] != "" && defender["troopId"] != "0") {
+                            defenderHpRate = parseInt(TroopsConfig.getById(defender["troopId"]).hp_training);
+                        }
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, {
                             fightDatas: this._model.fightData.slice(),
                             isWin: this._model.fightResultWin,
@@ -257,7 +270,7 @@ export class MapPioneer extends Component {
                                 name: attacker.name,
                                 animType: attacker.animType,
                                 hp: attacker.hp,
-                                hpmax: attacker.hpMax,
+                                hpmax: attacker.hpMax * attackerHpRate,
                             },
                             defenderData: {
                                 uniqueId: defender.uniqueId,
@@ -265,7 +278,7 @@ export class MapPioneer extends Component {
                                 name: defender.name,
                                 animType: defender.animType,
                                 hp: defender.hp,
-                                hpmax: defender.hpMax,
+                                hpmax: defender.hpMax * defenderHpRate,
                             },
                         });
                     }
@@ -386,6 +399,8 @@ export class MapPioneer extends Component {
 
         this._resourceAnimView = this._contentView.getChildByName("resourceGetted");
         this._resourceAnimView.active = false;
+
+        this._overLoad = true;
     }
     start() {}
 

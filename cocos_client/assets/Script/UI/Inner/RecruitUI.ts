@@ -20,13 +20,14 @@ const { ccclass, property } = _decorator;
 @ccclass("RecruitUI")
 export class RecruitUI extends ViewController {
     public refreshUI(initSelectGenerate: boolean = false) {
+        console.log("exce refresh");
         const barrackBuildingData = DataMgr.s.innerBuilding.data.get(InnerBuildingType.Barrack);
         if (barrackBuildingData == null) {
             return;
         }
 
         if (initSelectGenerate) {
-            this._selectGenerateNum = Math.min(this._currentGenerateMaxNum(), 1);
+            this._selectGenerateNum = Math.min(this._currentGenerateMaxNum(), 0);
         }
 
         // useLanMgr
@@ -101,6 +102,7 @@ export class RecruitUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
+        console.log("exce load");
         const barrackBuildingData = DataMgr.s.innerBuilding.data.get(InnerBuildingType.Barrack);
         if (barrackBuildingData == null) {
             return;
@@ -115,9 +117,10 @@ export class RecruitUI extends ViewController {
             }
         }
         // maxNum
-        this._maxTroop = 9999999;
+        this._maxTroop = 99999;
         const configMaxTroop = InnerBuildingLvlUpConfig.getBuildingLevelData(barrackBuildingData.buildLevel, "max_barr");
         if (configMaxTroop != null) {
+            console.log("exce trr");
             this._maxTroop = configMaxTroop;
         }
         // perGenerateNum
@@ -142,6 +145,11 @@ export class RecruitUI extends ViewController {
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this.changeLang, this);
     }
+    
+    protected viewDidStart(): void {
+        super.viewDidStart();
+        this.refreshUI(true);
+    }
 
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
@@ -162,7 +170,7 @@ export class RecruitUI extends ViewController {
     }
 
     private _currentGenerateMaxNum(): number {
-        let tempUseNum: number = 999999999;
+        let tempUseNum: number = 99999;
         for (const cost of this._costDatas) {
             tempUseNum = Math.min(tempUseNum, DataMgr.s.item.getObj_item_count(cost.itemConfigId) / cost.count, this._maxRecruitTroop);
         }

@@ -306,10 +306,7 @@ export class MainUI extends ViewController {
             // UIHUDController.showCenterTip("The building is being upgraded, please wait.");
             return;
         }
-        const result = await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
-        if (result.success) {
-            result.node.getComponent(RecruitUI).refreshUI(true);
-        }
+        UIPanelManger.inst.pushPanel(UIName.RecruitUI);
     }
     private async onTapExercise() {
         GameMusicPlayMgr.playTapButtonEffect();

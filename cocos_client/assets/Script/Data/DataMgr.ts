@@ -685,11 +685,15 @@ export class DataMgr {
         if (p.res !== 1) {
             return;
         }
-        const worldPos = GameMainHelper.instance.tiledMapGetPosWorld(p.tpPos.x, p.tpPos.y);
-        if (worldPos != null) {
-            GameMainHelper.instance.changeGameCameraWorldPosition(worldPos, true);
-            GameMainHelper.instance.updateGameViewport();
-        }
+        const animTime: number = 2.8;
+        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_WORMHOLE_BEGIN_ANIM, { uniqueId: p.buildingId, animTime: animTime });
+        setTimeout(() => {
+            const worldPos = GameMainHelper.instance.tiledMapGetPosWorld(p.tpPos.x, p.tpPos.y);
+            if (worldPos != null) {
+                GameMainHelper.instance.changeGameCameraWorldPosition(worldPos, true);
+                GameMainHelper.instance.updateGameViewport();
+            }
+        }, animTime * 1000);
     };
 
     public static player_wormhole_tp_select_res = (e: any) => {
@@ -697,11 +701,15 @@ export class DataMgr {
         if (p.res !== 1) {
             return;
         }
-        const worldPos = GameMainHelper.instance.tiledMapGetPosWorld(p.tpPos.x, p.tpPos.y);
-        if (worldPos != null) {
-            GameMainHelper.instance.changeGameCameraWorldPosition(worldPos, true);
-            GameMainHelper.instance.updateGameViewport();
-        }
+        const animTime: number = 2.8;
+        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_WORMHOLE_BEGIN_ANIM, { uniqueId: p.buildingId, animTime: animTime });
+        setTimeout(() => {
+            const worldPos = GameMainHelper.instance.tiledMapGetPosWorld(p.tpPos.x, p.tpPos.y);
+            if (worldPos != null) {
+                GameMainHelper.instance.changeGameCameraWorldPosition(worldPos, true);
+                GameMainHelper.instance.updateGameViewport();
+            }
+        }, animTime * 1000);
     }
 
     public static player_wormhole_tp_back_res = (e: any) => {

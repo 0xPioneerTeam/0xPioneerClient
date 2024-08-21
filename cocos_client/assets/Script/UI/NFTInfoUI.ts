@@ -28,10 +28,10 @@ const rarityName = ["Common", "Rare", "Elite", "Hero", "Legend", "Epic"];
 @ccclass("NFTInfoUI")
 export class NFTInfoUI extends ViewController {
     @property({ type: SpriteFrame, tooltip: "enbale" })
-    private tab_enable: Sprite = null;
+    private tab_enable: SpriteFrame = null;
 
     @property({ type: SpriteFrame, tooltip: "disable" })
-    private tab_disable: Sprite = null;
+    private tab_disable: SpriteFrame = null;
 
     @property({ type: SpriteFrame, tooltip: "active" })
     private btn_enable: SpriteFrame = null;
@@ -150,7 +150,6 @@ export class NFTInfoUI extends ViewController {
         //TAB RANK
         // rank up cost for up 1
         const rankupCost = PioneerLvlupConfig.getNFTRankUpCost(data.rarity, data.rank, data.rank + 1);
-        console.log(rankupCost);
 
         const costItem1 = ItemConfig.getById(rankupCost[0].itemConfigId);
         const costItem2 = ItemConfig.getById(rankupCost[1].itemConfigId);
@@ -160,8 +159,6 @@ export class NFTInfoUI extends ViewController {
         const needItem2: number = rankupCost[1].count;
         const costIcon1 = await ItemMgr.getItemIcon(costItem1.icon);
         const costIcon2 = await ItemMgr.getItemIcon(costItem2.icon);
-        console.log(ownItem1, needItem1, ownItem2, needItem2);
-        console.log(costItem1.icon, costItem1.icon);
 
         // rank up
         content.getChildByPath("TabRank/content/rank_info/from").getComponent(Label).string = "Rank." + data.rank;
@@ -172,14 +169,14 @@ export class NFTInfoUI extends ViewController {
         content.getChildByPath("TabRank/content/level_info/to").getComponent(Label).string =
             data.level >= data.levelLimit ? `Level.${data.level}/${data.levelLimit}` : `Level.${data.level}/${data.levelLimit + 20}`;
         // cost 1
-        content.getChildByPath("TabRank/content/Rank_Cost/res1/current").getComponent(Label).string = ownItem1;
-        content.getChildByPath("TabRank/content/Rank_Cost/res1/cost").getComponent(Label).string = needItem1;
+        content.getChildByPath("TabRank/content/Rank_Cost/res1/current").getComponent(Label).string = ownItem1.toString();
+        content.getChildByPath("TabRank/content/Rank_Cost/res1/cost").getComponent(Label).string = needItem1.toString();
         content.getChildByPath("TabRank/content/Rank_Cost/res1/current").getComponent(Label).color =
             ownItem1 >= needItem1 ? new Color().fromHEX("#8EDA61") : new Color().fromHEX("#EC4C4C");
         content.getChildByPath("TabRank/content/Rank_Cost/res1/Icon").getComponent(Sprite).spriteFrame = costIcon1;
         // cost 2
-        content.getChildByPath("TabRank/content/Rank_Cost/res2/current").getComponent(Label).string = ownItem2;
-        content.getChildByPath("TabRank/content/Rank_Cost/res2/cost").getComponent(Label).string = needItem2;
+        content.getChildByPath("TabRank/content/Rank_Cost/res2/current").getComponent(Label).string = ownItem2.toString();
+        content.getChildByPath("TabRank/content/Rank_Cost/res2/cost").getComponent(Label).string = needItem2.toString();
         content.getChildByPath("TabRank/content/Rank_Cost/res2/current").getComponent(Label).color =
             ownItem2 >= needItem2 ? new Color().fromHEX("#8EDA61") : new Color().fromHEX("#EC4C4C");
         content.getChildByPath("TabRank/content/Rank_Cost/res2/Icon").getComponent(Sprite).spriteFrame = costIcon2;
@@ -188,9 +185,7 @@ export class NFTInfoUI extends ViewController {
         content.getChildByPath("TabRank/content/Rank_Cost/Btn").getComponent(Sprite).spriteFrame = canRankup ? this.btn_enable : this.btn_disable;
         content.getChildByPath("TabRank/content/Rank_Cost/Btn/Label").getComponent(Label).string = data.rank >= data.rankLimit ? "Max" : "Rank Up";
         // talent (old skill)
-        const skillConfig = NFTSkillConfig.getById(data.skills[0].id) || "";
-        console.log(data.skills[0]);
-        console.log(skillConfig.effect);
+        const skillConfig = NFTSkillConfig.getById(data.skills[0].id);
         const skillEffectConfig = NFTSkillEffectConfig.getDesByIds(skillConfig.effect);
         content.getChildByPath("TabLevel/content/skill/name").getComponent(Label).string = LanMgr.getLanById(skillConfig.name);
         content.getChildByPath("TabLevel/content/skill/desc").getComponent(Label).string = skillEffectConfig;
@@ -230,7 +225,9 @@ export class NFTInfoUI extends ViewController {
 
         // action button
         content.getChildByPath("info/LeftArrowButton").active = this._currentIndex > 0;
+        content.getChildByPath("info/LeftArrowButton").getComponent(Button).interactable = true;
         content.getChildByPath("info/RightArrowButton").active = this._currentIndex < this._NFTDatas.length - 1;
+        content.getChildByPath("info/RightArrowButton").getComponent(Button).interactable = true;
     }
     //---------------------------------------------------- action
     private onTapTab(event: Event, customEventData: string) {

@@ -500,11 +500,13 @@ message player_wormhole_fight_res {
 
 message player_wormhole_tp_random_res {
     required int32 res = 1;
-    optional pos2d tpPos = 2;
+    optional string buildingId = 2;
+    optional pos2d tpPos = 3;
 }
 message player_wormhole_tp_select_res {
     required int32 res = 1;
-    optional pos2d tpPos = 2;
+    optional string buildingId = 2;
+    optional pos2d tpPos = 3;
 }
 message player_wormhole_tp_back_res {
     required int32 res = 1;

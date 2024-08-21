@@ -247,6 +247,8 @@ export class PlayerDispatchDetailUI extends ViewController {
             return;
         }
         if (this._selectTroopId == null) {
+            this._troopSlider.progress = 0;
+            this._troopProgress.progress = 0;
             return;
         }
         const info = this._infos[this._showIndex];
@@ -255,8 +257,12 @@ export class PlayerDispatchDetailUI extends ViewController {
         let addMaxNum = Math.max(0, Math.min(info.hpMax, ownedTroopNum));
 
         const resultValue = this._troopChangeVaild(this._troopSlider.progress * addMaxNum);
-
-        this._troopSlider.progress = resultValue / addMaxNum;
+        if (addMaxNum <= 0) {
+            this._troopSlider.progress = 0;
+            this._troopProgress.progress = 0;
+        } else {
+            this._troopSlider.progress = resultValue / addMaxNum;
+        }
         if (resultValue != this._addTroopNum) {
             this._addTroopNum = resultValue;
             this._refreshUI();
@@ -357,11 +363,7 @@ export class PlayerDispatchDetailUI extends ViewController {
 
     private async onTapGenerateTroop() {
         GameMusicPlayMgr.playTapButtonEffect();
-        const result = await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
-        if (!result.success) {
-            return;
-        }
-        result.node.getComponent(RecruitUI).refreshUI(true);
+        await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
     }
     private onTapComplete() {
         GameMusicPlayMgr.playTapButtonEffect();

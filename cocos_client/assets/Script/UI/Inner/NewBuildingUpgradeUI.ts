@@ -234,11 +234,7 @@ export class NewBuildingUpgradeUI extends ViewController {
 
     private async onTapRecruit() {
         GameMusicPlayMgr.playTapButtonEffect();
-        const result = await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
-        if (result.success) {
-            result.node.getComponent(RecruitUI).refreshUI(true);
-        }
-
+        await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
