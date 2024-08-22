@@ -4874,7 +4874,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 33.33984375,
+      "width": 48.90234375,
       "height": 50.4
     },
     "_anchorPoint": {
@@ -4910,7 +4910,7 @@
       "b": 145,
       "a": 255
     },
-    "_string": "HP",
+    "_string": "TOE",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 24,
@@ -10658,7 +10658,7 @@
       "b": 145,
       "a": 255
     },
-    "_string": "HP",
+    "_string": "TOE",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 24,

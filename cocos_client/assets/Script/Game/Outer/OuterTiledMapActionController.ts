@@ -551,13 +551,13 @@ export class OuterTiledMapActionController extends ViewController {
                     }
                 }
                 if (isSelf) {
-                    GameMainHelper.instance.changeInnerAndOuterShow();
-                    return;
-                }
-                const data = GameMgr.getMapSlotData(slotId);
-                if (slotId == null || data == undefined || data.playerId === "0") {
-                    NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Empty City");
-                    return;
+                    
+                } else {
+                    const data = GameMgr.getMapSlotData(slotId);
+                    if (slotId == null || data == undefined || data.playerId === "0") {
+                        NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Empty City");
+                        return;
+                    }
                 }
             }
             if (stayBuilding.type == MapBuildingType.wormhole) {
@@ -629,6 +629,10 @@ export class OuterTiledMapActionController extends ViewController {
             async (actionType: MapInteractType, targetName: string, costEnergy: number) => {
                 this["_actionViewActioned"] = true;
                 this._mouseDown = false;
+                if (actionType == MapInteractType.EnterInner) {
+                    GameMainHelper.instance.changeInnerAndOuterShow();
+                    return;
+                }
                 const result = await UIPanelManger.inst.pushPanel(UIName.DispatchUI);
                 if (result.success) {
                     result.node

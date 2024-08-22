@@ -96,7 +96,7 @@ export class PioneersDataMgr {
             killerId: "",
             NFTId: "",
             rebornTime: 0,
-            troopId: "0"
+            troopId: "0",
         };
         return obj;
     }

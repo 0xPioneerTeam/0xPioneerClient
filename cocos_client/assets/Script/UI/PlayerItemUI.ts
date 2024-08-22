@@ -3,6 +3,7 @@ import { LanMgr, PioneerMgr } from "../Utils/Global";
 import { MapPioneerActionType, MapPlayerPioneerObject } from "../Const/PioneerDefine";
 import { DataMgr } from "../Data/DataMgr";
 import CommonTools from "../Tool/CommonTools";
+import TroopsConfig from "../Config/TroopsConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerItemUI")
@@ -42,7 +43,10 @@ export class PlayerItemUI extends Component {
         //selected
         this._selectedView.active = DataMgr.s.pioneer.getCurrentPlayer().uniqueId == model.uniqueId;
         //hp
-        this._hpView.getChildByName("progressBar").getComponent(ProgressBar).progress = model.hp / model.hpMax;
+        if (model.troopId != null && model.troopId != "" && model.troopId != "0") {
+            this._hpRate = parseInt(TroopsConfig.getById(model.troopId).hp_training);
+        }
+        this._hpView.getChildByName("progressBar").getComponent(ProgressBar).progress = model.hp / (model.hpMax * this._hpRate);
         this._hpView.getChildByName("Value").getComponent(Label).string = model.hp.toString();
 
         this._hpView.getChildByName("EProgressBar").getComponent(ProgressBar).progress = model.energy / model.energyMax;
@@ -53,6 +57,7 @@ export class PlayerItemUI extends Component {
     private _roleNames: string[] = ["secretGuard", "doomsdayGangSpy", "rebels"];
 
     private _model: MapPlayerPioneerObject = null;
+    private _hpRate: number = 1;
 
     private _nameLabel: Label = null;
     private _statusView: Node = null;
@@ -90,7 +95,7 @@ export class PlayerItemUI extends Component {
         }
         const view = this.node.getChildByPath("HpTipView");
         view.active = true;
-        view.getChildByPath("HpValue").getComponent(Label).string = "HP" + this._model.hp + "/" + this._model.hpMax;
+        view.getChildByPath("HpValue").getComponent(Label).string = "HP" + this._model.hp + "/" + (this._model.hpMax * this._hpRate);
         view.getChildByPath("ApValue").getComponent(Label).string = "AP" + this._model.energy + "/" + this._model.energyMax;
     }
     private onMouseLeave() {

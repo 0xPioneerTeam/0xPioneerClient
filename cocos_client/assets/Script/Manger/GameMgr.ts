@@ -256,7 +256,14 @@ export default class GameMgr {
     public getMainCityGatePos(): Vec2 {
         const buildings = DataMgr.s.mapBuilding.getObj_building();
         const mainCity = buildings.find((item) => {
-            return item.type == MapBuildingType.city;
+            if (item.type != MapBuildingType.city) {
+                return;
+            }
+            const splitUniqueId = item.uniqueId.split("|");
+            if (splitUniqueId.length != 2) {
+                return false;
+            }
+            return splitUniqueId[0] == DataMgr.s.mapBuilding.getSelfMainCitySlotId();
         });
         if (mainCity == undefined || mainCity.stayMapPositions.length != 7) {
             return null;

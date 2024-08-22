@@ -9,6 +9,8 @@ import { DataMgr } from "../Data/DataMgr";
 import { LanMgr } from "../Utils/Global";
 import { BackpackArrangeType } from "../Const/ConstDefine";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import NotificationMgr from "../Basic/NotificationMgr";
+import { NotificationName } from "../Const/Notification";
 const { ccclass, property } = _decorator;
 
 @ccclass("NFTBackpackUI")
@@ -43,10 +45,16 @@ export class NFTBackpackUI extends ViewController {
 
         this._initBackpack();
         this._refreshBackpackUI();
+
+        NotificationMgr.addListener(NotificationName.NFT_LEVEL_UP, this._refreshBackpackUI, this);
+        NotificationMgr.addListener(NotificationName.NFT_RANK_UP, this._refreshBackpackUI, this);
     }
 
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
+
+        NotificationMgr.removeListener(NotificationName.NFT_LEVEL_UP, this._refreshBackpackUI, this);
+        NotificationMgr.removeListener(NotificationName.NFT_RANK_UP, this._refreshBackpackUI, this);
     }
 
     protected viewPopAnimation(): boolean {

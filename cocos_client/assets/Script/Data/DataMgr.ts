@@ -2,7 +2,7 @@ import NotificationMgr from "../Basic/NotificationMgr";
 import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
 import ItemData, { ItemType } from "../Const/Item";
 import { NotificationName } from "../Const/Notification";
-import { MapPioneerActionType } from "../Const/PioneerDefine";
+import { MapPioneerActionType, MapPioneerType, MapPlayerPioneerObject } from "../Const/PioneerDefine";
 import { c2s_user, s2c_user, share } from "../Net/msg/WebsocketMsg";
 import CLog from "../Utils/CLog";
 import { RunData } from "./RunData";
@@ -468,6 +468,18 @@ export class DataMgr {
                     }
                     // action type
                     if (oldData.actionType != newData.actionType || oldData.actionEndTimeStamp != newData.actionEndTimeStamp) {
+                        if (newData.type == MapPioneerType.player && oldData.actionType != MapPioneerActionType.inCity && newData.actionType == MapPioneerActionType.inCity) {
+                            // local play return
+                            const targetPos = GameMgr.getMainCityGatePos();
+                            if (targetPos != null) {
+                                (newData as MapPlayerPioneerObject).needReturn = true;
+                                newData.stayPos = oldData.stayPos;
+                                DataMgr.s.pioneer.beginMove(
+                                    newData.uniqueId,
+                                    GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(oldData.stayPos, targetPos).path
+                                );
+                            }
+                        }
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: newData.uniqueId });
                     }
                     // fight
@@ -710,7 +722,7 @@ export class DataMgr {
                 GameMainHelper.instance.updateGameViewport();
             }
         }, animTime * 1000);
-    }
+    };
 
     public static player_wormhole_tp_back_res = (e: any) => {
         const p: s2c_user.Iplayer_wormhole_tp_back_res = e.data;
@@ -718,7 +730,7 @@ export class DataMgr {
             return;
         }
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Pioneer is back");
-    }
+    };
 
     public static player_wormhole_tp_tag_res = (e: any) => {
         const p: s2c_user.Iplayer_wormhole_tp_tag_res = e.data;
@@ -726,7 +738,7 @@ export class DataMgr {
             return;
         }
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Wormhole is marked");
-    }
+    };
 
     //------------------------------------- nft
     public static nft_change = (e: any) => {

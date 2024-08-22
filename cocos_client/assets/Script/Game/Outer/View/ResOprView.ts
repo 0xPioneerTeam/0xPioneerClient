@@ -80,22 +80,24 @@ export class ResOprView extends Component {
         otherBuildingInfo.active = false;
         pioneerInfo.active = false;
 
-        let mainCityIsLocked: boolean = true;
+        let mainCityIsSelf: boolean = false;
+        let mainCityIsUnLock: boolean = true;
         if (interactBuilding != null) {
             if (interactBuilding.type == MapBuildingType.city) {
                 mainCityBuildingInfo.active = true;
 
                 const uniqueIdSplit = interactBuilding.uniqueId.split("|");
                 if (uniqueIdSplit.length == 2) {
+                    mainCityIsSelf = uniqueIdSplit[0] == DataMgr.s.mapBuilding.getSelfMainCitySlotId();
                     const info = GameMgr.getMapSlotData(uniqueIdSplit[0]);
                     if (info != undefined) {
                         mainCityBuildingInfo.getChildByPath("Leader/Value").getComponent(Label).string = info.pname;
                         mainCityBuildingInfo.getChildByPath("Civilization/Value").getComponent(Label).string = info.level.toString();
 
-                        mainCityIsLocked = DataMgr.s.userInfo.data.explorePlayerids.indexOf(parseInt(info.playerId)) == -1;
+                        mainCityIsUnLock = info.playerId == DataMgr.s.userInfo.data.id || DataMgr.s.userInfo.data.explorePlayerids.indexOf(parseInt(info.playerId)) != -1 ;
                         const lockView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Locked");
                         const fightValueView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Title");
-                        if (mainCityIsLocked) {
+                        if (!mainCityIsUnLock) {
                             lockView.active = true;
                             fightValueView.active = false;
                         } else {
@@ -157,15 +159,18 @@ export class ResOprView extends Component {
 
             difficultView.active = false;
         }
-
         //----------------------------------- action
         const actionTypes: number[] = [];
         if (interactBuilding != null) {
             if (interactBuilding.type == MapBuildingType.city) {
-                if (DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.InformationStation) > 0 && mainCityIsLocked) {
-                    actionTypes.push(MapInteractType.Detect);
+                if (mainCityIsSelf) {
+                    actionTypes.push(MapInteractType.EnterInner);
+                } else {
+                    if (DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.InformationStation) > 0 && !mainCityIsUnLock) {
+                        actionTypes.push(MapInteractType.Detect);
+                    }
+                    actionTypes.push(MapInteractType.SiegeCity);
                 }
-                actionTypes.push(MapInteractType.SiegeCity);
             } else if (interactBuilding.type == MapBuildingType.explore) {
                 actionTypes.push(MapInteractType.Explore);
                 actionTypes.push(MapInteractType.Move);
@@ -215,6 +220,7 @@ export class ResOprView extends Component {
             actionItem.getChildByPath("Icon/Move").active = type == MapInteractType.Move;
             actionItem.getChildByPath("Icon/Detect").active = type == MapInteractType.Detect;
             actionItem.getChildByPath("Icon/SiegeCity").active = type == MapInteractType.SiegeCity;
+            actionItem.getChildByPath("Icon/EnterInner").active = type == MapInteractType.EnterInner;
 
             let title: string = "";
             if (type == MapInteractType.WmMark) {
@@ -273,6 +279,10 @@ export class ResOprView extends Component {
                 //useLanMgr
                 // title = LanMgr.getLanById("107549");
                 title = "SiegeCity";
+            } else if (type == MapInteractType.EnterInner) {
+                //useLanMgr
+                // title = LanMgr.getLanById("107549");
+                title = "Enter";
             }
             const costEnergy = GameMgr.getMapActionCostEnergy(step, interactBuilding != null ? interactBuilding.uniqueId : null);
             actionItem.getChildByPath("Title").getComponent(Label).string = title;

@@ -158,30 +158,30 @@ message pioneer_data {
     required string name = 9;
     required string animType = 10;
 
-    required float hp = 11;
+    required uint32 hp = 11;
 
-    required float hpMax = 20;
+    required uint32 hpMax = 20;
     // required uint32 hpMaxbase = 10;
     // repeated int32 hpMaxadd = 11;
     // repeated int32 hpMaxmul = 12;
     
-    required float attack = 30;
+    required uint32 attack = 30;
     // required uint32 attackbase = 14;
     // repeated int32 attackadd = 15;
     // repeated int32 attackmul = 16;
 
-    required float defend = 40;
+    required uint32 defend = 40;
     // required uint32 defendbase = 18;
     // repeated int32 defendadd = 19;
     // repeated int32 defendmul = 20;
 
-    required float speed = 50;
+    required uint32 speed = 50;
     // required uint32 speedbase = 22;
     // repeated int32 speedadd = 23;
     // repeated int32 speedmul = 24;
 
-    optional float energy = 61;
-    optional float energyMax = 62;
+    optional uint32 energy = 61;
+    optional uint32 energyMax = 62;
 
     required string actionType = 63;
     required uint32 actionBeginTimeStamp = 64;
@@ -225,24 +225,24 @@ message map_pioneer_data {
     required string name = 8;
     required string animType = 9;
 
-    required float hp = 10;
+    required uint32 hp = 10;
 
-    required float hpMax = 11;
+    required uint32 hpMax = 11;
     // required uint32 hpMaxbase = 10;
     // repeated int32 hpMaxadd = 11;
     // repeated int32 hpMaxmul = 12;
     
-    required float attack = 13;
+    required uint32 attack = 13;
     // required uint32 attackbase = 14;
     // repeated int32 attackadd = 15;
     // repeated int32 attackmul = 16;
 
-    required float defend = 17;
+    required uint32 defend = 17;
     // required uint32 defendbase = 18;
     // repeated int32 defendadd = 19;
     // repeated int32 defendmul = 20;
 
-    required float speed = 21;
+    required uint32 speed = 21;
     // required uint32 speedbase = 22;
     // repeated int32 speedadd = 23;
     // repeated int32 speedmul = 24;
@@ -355,21 +355,21 @@ message nfts_info_data {
     required string name = 3;
     required string skin = 4;
 
-    optional float attack = 10;
-    optional float defense = 11;
-    optional float hp = 12;
-    optional float speed = 13;
-    optional float iq = 14;
+    optional uint32 attack = 10;
+    optional uint32 defense = 11;
+    optional uint32 hp = 12;
+    optional uint32 speed = 13;
+    optional uint32 iq = 14;
     optional uint32 level = 15;
     optional uint32 levelLimit = 16;
     optional uint32 rank = 17;
     optional uint32 rankLimit = 18;
 
-    optional float attackGrowValue = 20;
-    optional float defenseGrowValue = 21;
-    optional float hpGrowValue = 22;
-    optional float speedGrowValue = 23;
-    optional float iqGrowValue = 24;
+    optional uint32 attackGrowValue = 20;
+    optional uint32 defenseGrowValue = 21;
+    optional uint32 hpGrowValue = 22;
+    optional uint32 speedGrowValue = 23;
+    optional uint32 iqGrowValue = 24;
     repeated nft_pioneer_skil skills = 25;
 
     optional string workingBuildingId = 26;
@@ -409,9 +409,9 @@ message mapbuilding_info_data {
     required uint32 exp = 23;
     
 
-    optional float hpMax = 24;
-    optional float hp = 25;
-    optional float attack = 26;
+    optional uint32 hpMax = 24;
+    optional uint32 hp = 25;
+    optional uint32 attack = 26;
     optional uint32 winprogress = 27;
 
     
@@ -462,7 +462,7 @@ message map_building_info_data {
     optional uint32 progress = 15;
     required uint32 exp = 16;
     
-    optional float attack = 17;
+    optional uint32 attack = 17;
     optional uint32 winprogress = 18;
 }
 

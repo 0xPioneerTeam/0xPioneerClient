@@ -1,28 +1,13 @@
 import { Component, Node, tween, v3 } from "cc";
 
 export default class ViewController extends Component {
-
-    protected viewDidLoad() {
-
-    }
-    protected viewDidStart() {
-
-    }
-    protected viewDidAppear() {
-
-    }
-    protected viewDidDisAppear() {
-
-    }
-    protected viewUpdate(dt: number) {
-
-    }
-    protected viewLateUpdate(dt: number) {
-
-    }
-    protected viewDidDestroy() {
-
-    }
+    protected viewDidLoad() {}
+    protected viewDidStart() {}
+    protected viewDidAppear() {}
+    protected viewDidDisAppear() {}
+    protected viewUpdate(dt: number) {}
+    protected viewLateUpdate(dt: number) {}
+    protected viewDidDestroy() {}
     protected viewPopAnimation(): boolean {
         return false;
     }
@@ -31,8 +16,7 @@ export default class ViewController extends Component {
     }
     protected async playExitAnimation(): Promise<void> {
         return new Promise((resolve) => {
-            if (this.viewPopAnimation() &&
-                this.contentView() != null) {
+            if (this.viewPopAnimation() && this.contentView() != null) {
                 const contentView: Node = this.contentView();
                 tween()
                     .target(contentView)
@@ -46,9 +30,6 @@ export default class ViewController extends Component {
             }
         });
     }
-
-
-
 
     private _started: boolean = false;
     protected onLoad(): void {
@@ -65,8 +46,7 @@ export default class ViewController extends Component {
     protected start(): void {
         this.viewDidStart();
 
-        if (this.viewPopAnimation() &&
-            this.contentView() != null) {
+        if (this.viewPopAnimation() && this.contentView() != null) {
             const contentView: Node = this.contentView();
             contentView.active = true;
             contentView.setScale(0, 0, 0);

@@ -192,6 +192,7 @@ export interface MapPlayerPioneerData extends MapPioneerData {
     killerId: string;
     NFTId: string;
     troopId: string;
+    needReturn?: boolean;
 }
 
 export interface MapPioneerObject extends MapPioneerData {

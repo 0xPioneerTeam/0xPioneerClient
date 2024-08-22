@@ -64,6 +64,9 @@ export class DispatchUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
+        const localReturn = localStorage.getItem("__interactReturn");
+        this._isReturn = localReturn == "false" ? false : true;
+
         this._returnSwitchButton = this.node.getChildByPath("ContentView/ReturnSwitchButton");
         // this._timeLabel = this.node.getChildByPath("ContentView/CostTime/Value").getComponent(Label);
         // this._energyLabel = this.node.getChildByPath("ContentView/CostView/Content/Value").getComponent(Label);
@@ -147,6 +150,9 @@ export class DispatchUI extends ViewController {
 
         this._playerScrollView.getChildByPath("View").getComponent(Widget).updateAlignment();
         this._playerContentView.getComponent(Widget).updateAlignment();
+
+        // wromhole action not support return
+        this._returnSwitchButton.active = this._interactType != MapInteractType.WmMark && this._interactType != MapInteractType.WmMatch && this._interactType != MapInteractType.WmRecall && this._interactType != MapInteractType.WmTeleport;
     }
 
     private _refreshEnergyAndTime() {
@@ -174,6 +180,7 @@ export class DispatchUI extends ViewController {
     }
     private onReturnCheckToggle() {
         this._isReturn = !this._isReturn;
+        localStorage.setItem("__interactReturn", this._isReturn.toString());
         this._refreshEnergyAndTime();
     }
     private onTapItem(event: Event, customEvnetData: string) {

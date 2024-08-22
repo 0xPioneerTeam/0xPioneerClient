@@ -13,6 +13,7 @@ import {
     MapPioneerObject,
     MapPioneerLogicObject,
     MapPioneerAttributesChangeModel,
+    MapPlayerPioneerObject,
 } from "../Const/PioneerDefine";
 import { DataMgr } from "../Data/DataMgr";
 import { MapBuildingMainCityObject, MapBuildingObject, MapBuildingTavernObject, MapBuildingWormholeObject } from "../Const/MapBuilding";
@@ -104,6 +105,10 @@ export default class PioneerMgr {
         const pioneer: MapPioneerObject = pioneerDataMgr.getById(uniqueId);
         if (pioneer == undefined) {
             return;
+        }
+        if (pioneer.type == MapPioneerType.player && (pioneer as MapPlayerPioneerObject).needReturn) {
+            (pioneer as MapPlayerPioneerObject).needReturn = false;
+            DataMgr.s.pioneer.changeActionType(pioneer.uniqueId, MapPioneerActionType.inCity);
         }
         let interactType = null;
         let interactExtra = null;

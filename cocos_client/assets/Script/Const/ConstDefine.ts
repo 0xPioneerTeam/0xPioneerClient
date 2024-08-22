@@ -149,5 +149,6 @@ export enum MapInteractType {
     CampOut,
     Talk,
     Detect,
-    SiegeCity
+    SiegeCity,
+    EnterInner,
 }

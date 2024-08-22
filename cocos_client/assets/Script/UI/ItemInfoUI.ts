@@ -25,14 +25,14 @@ export class ItemInfoUI extends ViewController {
         this._closeCallback = closeCallback;
         // resource not show
         // remove all resource
-        for (let i = 0; i < this._items.length; i++) {
-            const templeConfig = ItemConfig.getById(this._items[i].itemConfigId);
-            if (templeConfig != null && templeConfig.itemType == ItemType.Resource) {
-                // resource no show
-                this._items.splice(i, 1);
-                i--;
-            }
-        }
+        // for (let i = 0; i < this._items.length; i++) {
+        //     const templeConfig = ItemConfig.getById(this._items[i].itemConfigId);
+        //     if (templeConfig != null && templeConfig.itemType == ItemType.Resource) {
+        //         // resource no show
+        //         this._items.splice(i, 1);
+        //         i--;
+        //     }
+        // }
         if (this._items.length > 0) {
             let currentItem: ItemData = this._items.splice(0, 1)[0];
             this._canGetItem = currentItem;

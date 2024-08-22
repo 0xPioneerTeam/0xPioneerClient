@@ -13,7 +13,8 @@ export default class BackpackMgr {
             if (config == null) {
                 return false;
             }
-            return config.itemType != ItemType.Resource;
+            // 8007 and 8008 resource is special show in backpack
+            return config.itemType != ItemType.Resource || config.configId == "8007" || config.configId == "8008";
         });
 
         const artifact = DataMgr.s.artifact.getObj();
@@ -51,7 +52,7 @@ export default class BackpackMgr {
             let bValue: number = 0;
             let aValue: number = 0;
             if (arrangeType == BackpackArrangeType.Recently) {
-                bValue = b.addTimeStamp
+                bValue = b.addTimeStamp;
                 aValue = a.addTimeStamp;
             } else if (arrangeType == BackpackArrangeType.Rarity) {
                 bValue = this._getRarity(b);
