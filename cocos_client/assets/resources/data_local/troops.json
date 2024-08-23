@@ -7,14 +7,14 @@
     "rec_cost_training": [
       [
         "8001",
-        1
+        2
       ],
       [
         "8005",
-        1
+        2
       ]
     ],
-    "hp_training": "10",
+    "hp_training": "5",
     "icon": "troops_50000"
   },
   "50001": {
@@ -25,14 +25,14 @@
     "rec_cost_training": [
       [
         "8001",
-        1
+        2
       ],
       [
         "8005",
-        2
+        4
       ]
     ],
-    "hp_training": "15",
+    "hp_training": "10",
     "icon": "troops_50001"
   },
   "50002": {
@@ -43,14 +43,14 @@
     "rec_cost_training": [
       [
         "8001",
-        2
+        4
       ],
       [
         "8005",
-        2
+        8
       ]
     ],
-    "hp_training": "25",
+    "hp_training": "20",
     "icon": "troops_50002"
   },
   "50003": {
@@ -61,14 +61,14 @@
     "rec_cost_training": [
       [
         "8001",
-        2
+        8
       ],
       [
         "8005",
-        3
+        15
       ]
     ],
-    "hp_training": "50",
+    "hp_training": "40",
     "icon": "troops_50003"
   },
   "50004": {
@@ -79,14 +79,14 @@
     "rec_cost_training": [
       [
         "8001",
-        3
+        15
       ],
       [
         "8005",
-        3
+        30
       ]
     ],
-    "hp_training": "70",
+    "hp_training": "80",
     "icon": "troops_50004"
   },
   "50005": {
@@ -97,14 +97,14 @@
     "rec_cost_training": [
       [
         "8001",
-        4
+        30
       ],
       [
         "8005",
-        3
+        30
       ]
     ],
-    "hp_training": "100",
+    "hp_training": "150",
     "icon": "troops_50005"
   },
   "50006": {
@@ -115,14 +115,14 @@
     "rec_cost_training": [
       [
         "8001",
-        4
+        30
       ],
       [
         "8005",
-        4
+        60
       ]
     ],
-    "hp_training": "150",
+    "hp_training": "200",
     "icon": "troops_50006"
   }
 }
