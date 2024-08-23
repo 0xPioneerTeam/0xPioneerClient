@@ -1,0 +1,604 @@
+{
+  "1": {
+    "id": "1",
+    "progress": 10,
+    "exp": 5,
+    "lvlup_time": 5,
+    "cost_main": [
+      [
+        8003,
+        50
+      ]
+    ],
+    "prefab_main": "City_Hall_Group",
+    "desc_main": "121001",
+    "cost_barr": [
+      [
+        8003,
+        50
+      ]
+    ],
+    "prefab_barr": "Barracks_Group",
+    "desc_barr": "121002",
+    "max_barr": 1500,
+    "time_barr": 20,
+    "rec_cost_barr": "[[8001,10],[8003,5]]",
+    "prefab_house": "Pioneer_house",
+    "desc_house": "121003",
+    "prefab_energy": "Pioneer_factory_C",
+    "info_y_energy": 250,
+    "desc_energy": "121004",
+    "psyc_output": 5,
+    "psyc_storage": 1500,
+    "psyc_convert": [
+      [
+        8002,
+        20
+      ],
+      [
+        8003,
+        10
+      ]
+    ],
+    "relic_max": 3,
+    "prefab_tower": "Tower_Of_Babel_Group",
+    "desc_babel": "121005",
+    "max_lvlBuilding": 1,
+    "prefab_ic": "Pioneer_factory_C",
+    "sight_range": 3,
+    "prefab_barracks": "Training_Camp_Group",
+    "desc_barracks": "121006",
+    "troops": "50000",
+    "max_troops": 1000,
+    "max_pop": 2000
+  },
+  "2": {
+    "id": "2",
+    "progress": 20,
+    "exp": 10,
+    "lvlup_time": 10,
+    "cost_main": [
+      [
+        8002,
+        150
+      ],
+      [
+        8003,
+        240
+      ]
+    ],
+    "prefab_main": "City_Hall_Group",
+    "desc_main": "121001",
+    "cost_barr": [
+      [
+        8002,
+        120
+      ],
+      [
+        8003,
+        200
+      ]
+    ],
+    "prefab_barr": "Barracks_Group",
+    "desc_barr": "121002",
+    "max_barr": 2000,
+    "time_barr": 18,
+    "rec_cost_barr": "[[8001,10],[8003,5]]",
+    "prefab_house": "Pioneer_house",
+    "desc_house": "121003",
+    "prefab_energy": "Pioneer_factory_C",
+    "info_y_energy": 250,
+    "desc_energy": "121004",
+    "psyc_output": 10,
+    "psyc_storage": 2000,
+    "psyc_convert": [
+      [
+        8002,
+        20
+      ],
+      [
+        8003,
+        10
+      ]
+    ],
+    "relic_max": 4,
+    "prefab_tower": "Tower_Of_Babel_Group",
+    "desc_babel": "121005",
+    "max_lvlBuilding": 2,
+    "prefab_ic": "Pioneer_factory_C",
+    "sight_range": 4,
+    "prefab_barracks": "Training_Camp_Group",
+    "desc_barracks": "121006",
+    "troops": "50001",
+    "max_troops": 1500,
+    "max_pop": 3000
+  },
+  "3": {
+    "id": "3",
+    "progress": 30,
+    "exp": 15,
+    "lvlup_time": 15,
+    "cost_main": [
+      [
+        8002,
+        300
+      ],
+      [
+        8003,
+        480
+      ]
+    ],
+    "prefab_main": "City_Hall_Group",
+    "desc_main": "121001",
+    "cost_barr": [
+      [
+        8002,
+        240
+      ],
+      [
+        8003,
+        400
+      ]
+    ],
+    "prefab_barr": "Barracks_Group",
+    "desc_barr": "121002",
+    "max_barr": 2500,
+    "time_barr": 16,
+    "rec_cost_barr": "[[8001,10],[8003,5]]",
+    "prefab_house": "Pioneer_house",
+    "desc_house": "121003",
+    "prefab_energy": "Pioneer_factory_C",
+    "info_y_energy": 560,
+    "desc_energy": "121004",
+    "psyc_output": 15,
+    "psyc_storage": 2500,
+    "psyc_convert": [
+      [
+        8002,
+        15
+      ],
+      [
+        8003,
+        7
+      ]
+    ],
+    "relic_max": 5,
+    "prefab_tower": "Tower_Of_Babel_Group",
+    "desc_babel": "121005",
+    "max_lvlBuilding": 3,
+    "prefab_ic": "Pioneer_factory_C",
+    "sight_range": 5,
+    "prefab_barracks": "Training_Camp_Group",
+    "desc_barracks": "121006",
+    "troops": "50002",
+    "max_troops": 2000,
+    "max_pop": 4000
+  },
+  "4": {
+    "id": "4",
+    "progress": 40,
+    "exp": 20,
+    "lvlup_time": 20,
+    "cost_main": [
+      [
+        8002,
+        450
+      ],
+      [
+        8003,
+        600
+      ]
+    ],
+    "prefab_main": "City_Hall_Group",
+    "desc_main": "121001",
+    "cost_barr": [
+      [
+        8002,
+        360
+      ],
+      [
+        8003,
+        600
+      ]
+    ],
+    "prefab_barr": "Barracks_Group",
+    "desc_barr": "121002",
+    "max_barr": 3000,
+    "time_barr": 14,
+    "rec_cost_barr": "[[8001,10],[8003,5]]",
+    "prefab_house": "Pioneer_house",
+    "desc_house": "121003",
+    "prefab_energy": "Pioneer_factory_C",
+    "info_y_energy": 560,
+    "desc_energy": "121004",
+    "psyc_output": 20,
+    "psyc_storage": 3000,
+    "psyc_convert": [
+      [
+        8002,
+        15
+      ],
+      [
+        8003,
+        7
+      ]
+    ],
+    "relic_max": 6,
+    "prefab_tower": "Tower_Of_Babel_Group",
+    "desc_babel": "121005",
+    "max_lvlBuilding": 4,
+    "prefab_ic": "Pioneer_factory_C",
+    "sight_range": 5,
+    "prefab_barracks": "Training_Camp_Group",
+    "desc_barracks": "121006",
+    "troops": "50003",
+    "max_troops": 2500,
+    "max_pop": 5000
+  },
+  "5": {
+    "id": "5",
+    "progress": 50,
+    "exp": 25,
+    "lvlup_time": 25,
+    "cost_main": [
+      [
+        8002,
+        600
+      ],
+      [
+        8003,
+        720
+      ]
+    ],
+    "prefab_main": "City_Hall_Group",
+    "desc_main": "121001",
+    "cost_barr": [
+      [
+        8002,
+        480
+      ],
+      [
+        8003,
+        800
+      ]
+    ],
+    "prefab_barr": "Barracks_Group",
+    "desc_barr": "121002",
+    "max_barr": 3500,
+    "time_barr": 12,
+    "rec_cost_barr": "[[8001,8],[8003,4]]",
+    "prefab_house": "Pioneer_house",
+    "desc_house": "121003",
+    "prefab_energy": "Pioneer_factory_C",
+    "info_y_energy": 560,
+    "desc_energy": "121004",
+    "psyc_output": 25,
+    "psyc_storage": 3500,
+    "psyc_convert": [
+      [
+        8002,
+        15
+      ],
+      [
+        8003,
+        7
+      ]
+    ],
+    "relic_max": 7,
+    "prefab_tower": "Tower_Of_Babel_Group",
+    "desc_babel": "121005",
+    "max_lvlBuilding": 5,
+    "prefab_ic": "Pioneer_factory_C",
+    "sight_range": 6,
+    "prefab_barracks": "Training_Camp_Group",
+    "desc_barracks": "121006",
+    "troops": "50004",
+    "max_troops": 3000,
+    "max_pop": 6000
+  },
+  "6": {
+    "id": "6",
+    "progress": 60,
+    "exp": 30,
+    "lvlup_time": 30,
+    "cost_main": [
+      [
+        8002,
+        800
+      ],
+      [
+        8003,
+        1000
+      ]
+    ],
+    "prefab_main": "City_Hall_Group",
+    "desc_main": "121001",
+    "cost_barr": [
+      [
+        8002,
+        600
+      ],
+      [
+        8003,
+        1000
+      ]
+    ],
+    "prefab_barr": "Barracks_Group",
+    "desc_barr": "121002",
+    "max_barr": 4000,
+    "time_barr": 10,
+    "rec_cost_barr": "[[8001,8],[8003,4]]",
+    "prefab_house": "Pioneer_house",
+    "desc_house": "121003",
+    "prefab_energy": "Tower_Of_Babel_Group_01",
+    "info_y_energy": 560,
+    "desc_energy": "121004",
+    "psyc_output": 30,
+    "psyc_storage": 4000,
+    "psyc_convert": [
+      [
+        8002,
+        15
+      ],
+      [
+        8003,
+        7
+      ]
+    ],
+    "relic_max": 8,
+    "prefab_tower": "Tower_Of_Babel_Group",
+    "desc_babel": "121005",
+    "max_lvlBuilding": 6,
+    "prefab_ic": "Tower_Of_Babel_Group_01",
+    "sight_range": 6,
+    "prefab_barracks": "Training_Camp_Group",
+    "desc_barracks": "121006",
+    "troops": "50005",
+    "max_troops": 3500,
+    "max_pop": 7000
+  },
+  "7": {
+    "id": "7",
+    "progress": 70,
+    "exp": 35,
+    "lvlup_time": 35,
+    "cost_main": [
+      [
+        8002,
+        1000
+      ],
+      [
+        8003,
+        1400
+      ]
+    ],
+    "prefab_main": "City_Hall_Group",
+    "desc_main": "121001",
+    "cost_barr": [
+      [
+        8002,
+        720
+      ],
+      [
+        8003,
+        1200
+      ]
+    ],
+    "prefab_barr": "Barracks_Group",
+    "desc_barr": "121002",
+    "max_barr": 4500,
+    "time_barr": 9,
+    "rec_cost_barr": "[[8001,8],[8003,4]]",
+    "prefab_house": "Pioneer_house",
+    "desc_house": "121003",
+    "prefab_energy": "Tower_Of_Babel_Group_01",
+    "info_y_energy": 560,
+    "desc_energy": "121004",
+    "psyc_output": 35,
+    "psyc_storage": 4500,
+    "psyc_convert": [
+      [
+        8002,
+        15
+      ],
+      [
+        8003,
+        7
+      ]
+    ],
+    "relic_max": 9,
+    "prefab_tower": "Tower_Of_Babel_Group",
+    "desc_babel": "121005",
+    "max_lvlBuilding": 7,
+    "prefab_ic": "Tower_Of_Babel_Group_01",
+    "sight_range": 7,
+    "prefab_barracks": "Training_Camp_Group",
+    "desc_barracks": "121006",
+    "troops": "50006",
+    "max_troops": 4000,
+    "max_pop": 8000
+  },
+  "8": {
+    "id": "8",
+    "progress": 80,
+    "exp": 40,
+    "lvlup_time": 40,
+    "cost_main": [
+      [
+        8002,
+        1200
+      ],
+      [
+        8003,
+        2000
+      ]
+    ],
+    "prefab_main": "City_Hall_Group",
+    "desc_main": "121001",
+    "cost_barr": [
+      [
+        8002,
+        1000
+      ],
+      [
+        8003,
+        1500
+      ]
+    ],
+    "prefab_barr": "Barracks_Group",
+    "desc_barr": "121002",
+    "max_barr": 5000,
+    "time_barr": 8,
+    "rec_cost_barr": "[[8001,6],[8003,3]]",
+    "prefab_house": "Pioneer_house",
+    "desc_house": "121003",
+    "prefab_energy": "Tower_Of_Babel_Group_01",
+    "info_y_energy": 560,
+    "desc_energy": "121004",
+    "psyc_output": 40,
+    "psyc_storage": 5000,
+    "psyc_convert": [
+      [
+        8002,
+        15
+      ],
+      [
+        8003,
+        7
+      ]
+    ],
+    "relic_max": 10,
+    "prefab_tower": "Tower_Of_Babel_Group",
+    "desc_babel": "121005",
+    "max_lvlBuilding": 8,
+    "prefab_ic": "Tower_Of_Babel_Group_01",
+    "sight_range": 7,
+    "prefab_barracks": "Training_Camp_Group",
+    "desc_barracks": "121006",
+    "troops": "",
+    "max_troops": 4500,
+    "max_pop": 9000
+  },
+  "9": {
+    "id": "9",
+    "progress": 90,
+    "exp": 45,
+    "lvlup_time": 45,
+    "cost_main": [
+      [
+        8002,
+        1500
+      ],
+      [
+        8003,
+        2700
+      ]
+    ],
+    "prefab_main": "City_Hall_Group",
+    "desc_main": "121001",
+    "cost_barr": [
+      [
+        8002,
+        1500
+      ],
+      [
+        8003,
+        2000
+      ]
+    ],
+    "prefab_barr": "Barracks_Group",
+    "desc_barr": "121002",
+    "max_barr": 5500,
+    "time_barr": 7,
+    "rec_cost_barr": "[[8001,6],[8003,3]]",
+    "prefab_house": "Pioneer_house",
+    "desc_house": "121003",
+    "prefab_energy": "Tower_Of_Babel_Group_01",
+    "info_y_energy": 560,
+    "desc_energy": "121004",
+    "psyc_output": 45,
+    "psyc_storage": 5500,
+    "psyc_convert": [
+      [
+        8002,
+        15
+      ],
+      [
+        8003,
+        7
+      ]
+    ],
+    "relic_max": 11,
+    "prefab_tower": "Tower_Of_Babel_Group",
+    "desc_babel": "121005",
+    "max_lvlBuilding": 9,
+    "prefab_ic": "Tower_Of_Babel_Group_01",
+    "sight_range": 8,
+    "prefab_barracks": "Training_Camp_Group",
+    "desc_barracks": "121006",
+    "troops": "",
+    "max_troops": 5000,
+    "max_pop": 10000
+  },
+  "10": {
+    "id": "10",
+    "progress": 100,
+    "exp": 50,
+    "lvlup_time": 50,
+    "cost_main": [
+      [
+        8002,
+        1800
+      ],
+      [
+        8003,
+        3600
+      ]
+    ],
+    "prefab_main": "City_Hall_Group",
+    "desc_main": "121001",
+    "cost_barr": [
+      [
+        8002,
+        2000
+      ],
+      [
+        8003,
+        3000
+      ]
+    ],
+    "prefab_barr": "Barracks_Group",
+    "desc_barr": "121002",
+    "max_barr": 6000,
+    "time_barr": 6,
+    "rec_cost_barr": "[[8001,5],[8003,3]]",
+    "prefab_house": "Pioneer_house",
+    "desc_house": "121003",
+    "prefab_energy": "Tower_Of_Babel_Group_01",
+    "info_y_energy": 560,
+    "desc_energy": "121004",
+    "psyc_output": 50,
+    "psyc_storage": 6000,
+    "psyc_convert": [
+      [
+        8002,
+        15
+      ],
+      [
+        8003,
+        7
+      ]
+    ],
+    "relic_max": 12,
+    "prefab_tower": "Tower_Of_Babel_Group",
+    "desc_babel": "121005",
+    "max_lvlBuilding": 10,
+    "prefab_ic": "Tower_Of_Babel_Group_01",
+    "sight_range": 8,
+    "prefab_barracks": "Training_Camp_Group",
+    "desc_barracks": "121006",
+    "troops": "",
+    "max_troops": 5500,
+    "max_pop": 11000
+  }
+}

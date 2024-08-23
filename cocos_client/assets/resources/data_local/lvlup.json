@@ -1,0 +1,1816 @@
+{
+  "1": {
+    "id": "1",
+    "age": 1,
+    "level": 1,
+    "name": "800001",
+    "exp": 50,
+    "condition": [
+      [
+        2,
+        1,
+        5
+      ],
+      [
+        7,
+        1,
+        5
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        1
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 0,
+    "city_vision": 4,
+    "reward": null,
+    "city_feature": 1,
+    "event_building": [],
+    "env_up": 1,
+    "psyc_limit": 1,
+    "p_exp": 5,
+    "p_rank_1": [
+      [
+        "7",
+        1
+      ]
+    ],
+    "p_rank_2": [
+      [
+        "8",
+        1
+      ]
+    ],
+    "p_rank_3": [
+      [
+        "9",
+        1
+      ]
+    ],
+    "p_rank_4": [
+      [
+        "10",
+        1
+      ]
+    ],
+    "p_rank_5": [
+      [
+        "11",
+        1
+      ]
+    ]
+  },
+  "2": {
+    "id": "2",
+    "age": 1,
+    "level": 2,
+    "name": "800002",
+    "exp": 75,
+    "condition": [
+      [
+        2,
+        1,
+        10
+      ],
+      [
+        3,
+        1,
+        2
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        105
+      ]
+    ],
+    "extra_res": 0.01,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        100
+      ],
+      [
+        1,
+        "8002",
+        100
+      ],
+      [
+        1,
+        "8003",
+        100
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 1,
+    "psyc_limit": 1,
+    "p_exp": 10,
+    "p_rank_1": [
+      [
+        "7",
+        1
+      ]
+    ],
+    "p_rank_2": [
+      [
+        "8",
+        1
+      ]
+    ],
+    "p_rank_3": [
+      [
+        "9",
+        1
+      ]
+    ],
+    "p_rank_4": [
+      [
+        "10",
+        1
+      ]
+    ],
+    "p_rank_5": [
+      [
+        "11",
+        1
+      ]
+    ]
+  },
+  "3": {
+    "id": "3",
+    "age": 1,
+    "level": 3,
+    "name": "800003",
+    "exp": 100,
+    "condition": [
+      [
+        1,
+        "30001",
+        2
+      ],
+      [
+        2,
+        1,
+        15
+      ],
+      [
+        3,
+        1,
+        15
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        105
+      ],
+      [
+        3,
+        105
+      ]
+    ],
+    "extra_res": 0.01,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        100
+      ],
+      [
+        1,
+        "8002",
+        100
+      ],
+      [
+        1,
+        "8003",
+        100
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [
+      "building_48",
+      "building_49",
+      "building_50",
+      "building_51",
+      "building_55",
+      "building_56"
+    ],
+    "env_up": 1,
+    "psyc_limit": 1,
+    "p_exp": 15,
+    "p_rank_1": [
+      [
+        "7",
+        1
+      ]
+    ],
+    "p_rank_2": [
+      [
+        "8",
+        1
+      ]
+    ],
+    "p_rank_3": [
+      [
+        "9",
+        1
+      ]
+    ],
+    "p_rank_4": [
+      [
+        "10",
+        1
+      ]
+    ],
+    "p_rank_5": [
+      [
+        "11",
+        1
+      ]
+    ]
+  },
+  "4": {
+    "id": "4",
+    "age": 2,
+    "level": 1,
+    "name": "800004",
+    "exp": 125,
+    "condition": [
+      [
+        2,
+        2,
+        5
+      ],
+      [
+        3,
+        2,
+        5
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        105
+      ],
+      [
+        3,
+        105
+      ]
+    ],
+    "extra_res": 0.01,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        200
+      ],
+      [
+        1,
+        "8002",
+        200
+      ],
+      [
+        1,
+        "8003",
+        200
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [
+      "building_18",
+      "building_52",
+      "building_53",
+      "building_54"
+    ],
+    "env_up": 2,
+    "psyc_limit": 1,
+    "p_exp": 20,
+    "p_rank_1": [
+      [
+        "7",
+        1
+      ]
+    ],
+    "p_rank_2": [
+      [
+        "8",
+        1
+      ]
+    ],
+    "p_rank_3": [
+      [
+        "9",
+        1
+      ]
+    ],
+    "p_rank_4": [
+      [
+        "10",
+        1
+      ]
+    ],
+    "p_rank_5": [
+      [
+        "11",
+        1
+      ]
+    ]
+  },
+  "5": {
+    "id": "5",
+    "age": 2,
+    "level": 2,
+    "name": "800005",
+    "exp": 150,
+    "condition": [
+      [
+        2,
+        2,
+        10
+      ],
+      [
+        3,
+        2,
+        10
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        110
+      ],
+      [
+        3,
+        105
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 20,
+    "city_vision": 1,
+    "reward": [
+      [
+        1,
+        "8001",
+        200
+      ],
+      [
+        1,
+        "8002",
+        200
+      ],
+      [
+        1,
+        "8003",
+        200
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [
+      "building_19"
+    ],
+    "env_up": 2,
+    "psyc_limit": 1,
+    "p_exp": 25,
+    "p_rank_1": [
+      [
+        "7",
+        1
+      ]
+    ],
+    "p_rank_2": [
+      [
+        "8",
+        1
+      ]
+    ],
+    "p_rank_3": [
+      [
+        "9",
+        1
+      ]
+    ],
+    "p_rank_4": [
+      [
+        "10",
+        1
+      ]
+    ],
+    "p_rank_5": [
+      [
+        "11",
+        1
+      ]
+    ]
+  },
+  "6": {
+    "id": "6",
+    "age": 2,
+    "level": 3,
+    "name": "800006",
+    "exp": 175,
+    "condition": [
+      [
+        1,
+        "30001",
+        3
+      ],
+      [
+        2,
+        2,
+        15
+      ],
+      [
+        3,
+        2,
+        15
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        110
+      ],
+      [
+        3,
+        110
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 20,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        200
+      ],
+      [
+        1,
+        "8002",
+        200
+      ],
+      [
+        1,
+        "8003",
+        200
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [
+      "building_20"
+    ],
+    "env_up": 2,
+    "psyc_limit": 2,
+    "p_exp": 30,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "7": {
+    "id": "7",
+    "age": 3,
+    "level": 1,
+    "name": "800007",
+    "exp": 200,
+    "condition": [
+      [
+        2,
+        3,
+        5
+      ],
+      [
+        3,
+        3,
+        5
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        110
+      ],
+      [
+        3,
+        110
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 20,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        300
+      ],
+      [
+        1,
+        "8002",
+        300
+      ],
+      [
+        1,
+        "8003",
+        300
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 2,
+    "psyc_limit": 2,
+    "p_exp": 35,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "8": {
+    "id": "8",
+    "age": 3,
+    "level": 2,
+    "name": "800008",
+    "exp": 225,
+    "condition": [
+      [
+        2,
+        3,
+        10
+      ],
+      [
+        3,
+        3,
+        10
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        110
+      ],
+      [
+        3,
+        110
+      ],
+      [
+        5,
+        105
+      ]
+    ],
+    "extra_res": 0.01,
+    "hp_max": 20,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        300
+      ],
+      [
+        1,
+        "8002",
+        300
+      ],
+      [
+        1,
+        "8003",
+        300
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 2,
+    "psyc_limit": 2,
+    "p_exp": 40,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "9": {
+    "id": "9",
+    "age": 3,
+    "level": 3,
+    "name": "800009",
+    "exp": 250,
+    "condition": [
+      [
+        2,
+        3,
+        15
+      ],
+      [
+        3,
+        3,
+        15
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        110
+      ],
+      [
+        3,
+        110
+      ],
+      [
+        5,
+        110
+      ]
+    ],
+    "extra_res": 0.01,
+    "hp_max": 20,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        300
+      ],
+      [
+        1,
+        "8002",
+        300
+      ],
+      [
+        1,
+        "8003",
+        300
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 2,
+    "psyc_limit": 2,
+    "p_exp": 45,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "10": {
+    "id": "10",
+    "age": 3,
+    "level": 4,
+    "name": "800010",
+    "exp": 275,
+    "condition": [
+      [
+        1,
+        "30001",
+        4
+      ],
+      [
+        2,
+        3,
+        20
+      ],
+      [
+        3,
+        3,
+        20
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        3
+      ],
+      [
+        2,
+        115
+      ],
+      [
+        3,
+        110
+      ],
+      [
+        5,
+        110
+      ]
+    ],
+    "extra_res": 0.01,
+    "hp_max": 20,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        300
+      ],
+      [
+        1,
+        "8002",
+        300
+      ],
+      [
+        1,
+        "8003",
+        300
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 3,
+    "psyc_limit": 2,
+    "p_exp": 50,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "11": {
+    "id": "11",
+    "age": 4,
+    "level": 1,
+    "name": "800011",
+    "exp": 300,
+    "condition": [
+      [
+        2,
+        4,
+        5
+      ],
+      [
+        3,
+        4,
+        5
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        115
+      ],
+      [
+        3,
+        115
+      ],
+      [
+        5,
+        110
+      ]
+    ],
+    "extra_res": 0.0125,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        400
+      ],
+      [
+        1,
+        "8002",
+        400
+      ],
+      [
+        1,
+        "8003",
+        400
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 3,
+    "psyc_limit": 2,
+    "p_exp": 55,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "12": {
+    "id": "12",
+    "age": 4,
+    "level": 2,
+    "name": "800012",
+    "exp": 325,
+    "condition": [
+      [
+        2,
+        4,
+        10
+      ],
+      [
+        3,
+        4,
+        10
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        115
+      ],
+      [
+        3,
+        115
+      ],
+      [
+        5,
+        115
+      ]
+    ],
+    "extra_res": 0.0125,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        400
+      ],
+      [
+        1,
+        "8002",
+        400
+      ],
+      [
+        1,
+        "8003",
+        400
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 3,
+    "psyc_limit": 2,
+    "p_exp": 60,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "13": {
+    "id": "13",
+    "age": 4,
+    "level": 3,
+    "name": "800013",
+    "exp": 350,
+    "condition": [
+      [
+        2,
+        4,
+        15
+      ],
+      [
+        3,
+        4,
+        15
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        120
+      ],
+      [
+        3,
+        115
+      ],
+      [
+        5,
+        115
+      ]
+    ],
+    "extra_res": 0.0125,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        400
+      ],
+      [
+        1,
+        "8002",
+        400
+      ],
+      [
+        1,
+        "8003",
+        400
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 3,
+    "psyc_limit": 2,
+    "p_exp": 65,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "14": {
+    "id": "14",
+    "age": 4,
+    "level": 4,
+    "name": "800014",
+    "exp": 375,
+    "condition": [
+      [
+        2,
+        4,
+        20
+      ],
+      [
+        3,
+        4,
+        20
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        120
+      ],
+      [
+        3,
+        120
+      ],
+      [
+        5,
+        115
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 25,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        400
+      ],
+      [
+        1,
+        "8002",
+        400
+      ],
+      [
+        1,
+        "8003",
+        400
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 3,
+    "psyc_limit": 2,
+    "p_exp": 70,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "15": {
+    "id": "15",
+    "age": 4,
+    "level": 5,
+    "name": "800015",
+    "exp": 400,
+    "condition": [
+      [
+        1,
+        "30001",
+        5
+      ],
+      [
+        2,
+        4,
+        25
+      ],
+      [
+        3,
+        4,
+        25
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        4
+      ],
+      [
+        2,
+        120
+      ],
+      [
+        3,
+        120
+      ],
+      [
+        5,
+        120
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 25,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        400
+      ],
+      [
+        1,
+        "8002",
+        400
+      ],
+      [
+        1,
+        "8003",
+        400
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 3,
+    "psyc_limit": 2,
+    "p_exp": 75,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "16": {
+    "id": "16",
+    "age": 5,
+    "level": 1,
+    "name": "800016",
+    "exp": 425,
+    "condition": [
+      [
+        2,
+        5,
+        5
+      ],
+      [
+        3,
+        5,
+        5
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        120
+      ],
+      [
+        3,
+        120
+      ],
+      [
+        5,
+        120
+      ],
+      [
+        4,
+        1
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 25,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        500
+      ],
+      [
+        1,
+        "8002",
+        500
+      ],
+      [
+        1,
+        "8003",
+        500
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 3,
+    "psyc_limit": 2,
+    "p_exp": 80,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "17": {
+    "id": "17",
+    "age": 5,
+    "level": 2,
+    "name": "800017",
+    "exp": 450,
+    "condition": [
+      [
+        2,
+        5,
+        10
+      ],
+      [
+        3,
+        5,
+        10
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        125
+      ],
+      [
+        3,
+        120
+      ],
+      [
+        5,
+        120
+      ],
+      [
+        4,
+        1
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        500
+      ],
+      [
+        1,
+        "8002",
+        500
+      ],
+      [
+        1,
+        "8003",
+        500
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 3,
+    "psyc_limit": 2,
+    "p_exp": 85,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "18": {
+    "id": "18",
+    "age": 5,
+    "level": 3,
+    "name": "800018",
+    "exp": 475,
+    "condition": [
+      [
+        2,
+        5,
+        15
+      ],
+      [
+        3,
+        5,
+        15
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        125
+      ],
+      [
+        3,
+        125
+      ],
+      [
+        5,
+        120
+      ],
+      [
+        4,
+        1
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        500
+      ],
+      [
+        1,
+        "8002",
+        500
+      ],
+      [
+        1,
+        "8003",
+        500
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 3,
+    "psyc_limit": 2,
+    "p_exp": 90,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "19": {
+    "id": "19",
+    "age": 5,
+    "level": 4,
+    "name": "800019",
+    "exp": 500,
+    "condition": [
+      [
+        2,
+        4,
+        20
+      ],
+      [
+        3,
+        5,
+        20
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        125
+      ],
+      [
+        3,
+        125
+      ],
+      [
+        5,
+        125
+      ],
+      [
+        4,
+        1
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        500
+      ],
+      [
+        1,
+        "8002",
+        500
+      ],
+      [
+        1,
+        "8003",
+        500
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 3,
+    "psyc_limit": 3,
+    "p_exp": 95,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "20": {
+    "id": "20",
+    "age": 5,
+    "level": 5,
+    "name": "800020",
+    "exp": 525,
+    "condition": [
+      [
+        1,
+        "30001",
+        6
+      ],
+      [
+        2,
+        5,
+        25
+      ],
+      [
+        3,
+        5,
+        25
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        130
+      ],
+      [
+        3,
+        125
+      ],
+      [
+        5,
+        125
+      ],
+      [
+        4,
+        1
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        500
+      ],
+      [
+        1,
+        "8002",
+        500
+      ],
+      [
+        1,
+        "8003",
+        500
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 4,
+    "psyc_limit": 3,
+    "p_exp": 100,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "21": {
+    "id": "21",
+    "age": 6,
+    "level": 1,
+    "name": "800021",
+    "exp": 550,
+    "condition": [
+      [
+        2,
+        6,
+        5
+      ],
+      [
+        3,
+        6,
+        5
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        130
+      ],
+      [
+        3,
+        125
+      ],
+      [
+        5,
+        125
+      ],
+      [
+        4,
+        2
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 0,
+    "city_vision": 1,
+    "reward": [
+      [
+        1,
+        "8001",
+        600
+      ],
+      [
+        1,
+        "8002",
+        600
+      ],
+      [
+        1,
+        "8003",
+        600
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 4,
+    "psyc_limit": 3,
+    "p_exp": 105,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "22": {
+    "id": "22",
+    "age": 6,
+    "level": 2,
+    "name": "800022",
+    "exp": 575,
+    "condition": [
+      [
+        2,
+        6,
+        10
+      ],
+      [
+        3,
+        6,
+        10
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        130
+      ],
+      [
+        3,
+        130
+      ],
+      [
+        5,
+        125
+      ],
+      [
+        4,
+        2
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        600
+      ],
+      [
+        1,
+        "8002",
+        600
+      ],
+      [
+        1,
+        "8003",
+        600
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 4,
+    "psyc_limit": 3,
+    "p_exp": 110,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "23": {
+    "id": "23",
+    "age": 6,
+    "level": 3,
+    "name": "800023",
+    "exp": 600,
+    "condition": [
+      [
+        2,
+        6,
+        15
+      ],
+      [
+        3,
+        6,
+        15
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        130
+      ],
+      [
+        3,
+        130
+      ],
+      [
+        5,
+        130
+      ],
+      [
+        4,
+        2
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        600
+      ],
+      [
+        1,
+        "8002",
+        600
+      ],
+      [
+        1,
+        "8003",
+        600
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 4,
+    "psyc_limit": 3,
+    "p_exp": 115,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "24": {
+    "id": "24",
+    "age": 6,
+    "level": 4,
+    "name": "800024",
+    "exp": 625,
+    "condition": [
+      [
+        2,
+        6,
+        20
+      ],
+      [
+        3,
+        6,
+        20
+      ]
+    ],
+    "civil_effect": [
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        135
+      ],
+      [
+        3,
+        130
+      ],
+      [
+        5,
+        130
+      ],
+      [
+        4,
+        2
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        600
+      ],
+      [
+        1,
+        "8002",
+        600
+      ],
+      [
+        1,
+        "8003",
+        600
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 4,
+    "psyc_limit": 3,
+    "p_exp": 120,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  },
+  "25": {
+    "id": "25",
+    "age": 6,
+    "level": 5,
+    "name": "800025",
+    "exp": 650,
+    "condition": null,
+    "civil_effect": [
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        135
+      ],
+      [
+        3,
+        135
+      ],
+      [
+        5,
+        135
+      ],
+      [
+        4,
+        2
+      ]
+    ],
+    "extra_res": 0,
+    "hp_max": 0,
+    "city_vision": 0,
+    "reward": [
+      [
+        1,
+        "8001",
+        600
+      ],
+      [
+        1,
+        "8002",
+        600
+      ],
+      [
+        1,
+        "8003",
+        600
+      ]
+    ],
+    "city_feature": 0,
+    "event_building": [],
+    "env_up": 4,
+    "psyc_limit": 3,
+    "p_exp": 125,
+    "p_rank_1": null,
+    "p_rank_2": null,
+    "p_rank_3": null,
+    "p_rank_4": null,
+    "p_rank_5": null
+  }
+}
