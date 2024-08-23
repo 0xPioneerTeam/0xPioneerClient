@@ -17,7 +17,6 @@ import {
     Burst,
     Color,
 } from "cc";
-import { BackpackItem } from "./BackpackItem";
 import { BackpackMgr, ItemMgr, LanMgr } from "../Utils/Global";
 import ViewController from "../BasicView/ViewController";
 import { UIName } from "../Const/ConstUIDefine";
@@ -32,6 +31,7 @@ import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import ArtifactData from "../Model/ArtifactData";
 import { ArtifactItem } from "./ArtifactItem";
 import { ArtifactInfoUI } from "./ArtifactInfoUI";
+import { BackpackItem } from "./BackpackItem";
 const { ccclass, property } = _decorator;
 
 @ccclass("BackpackUI")
@@ -115,7 +115,7 @@ export class BackpackUI extends ViewController {
             if (this._data[i] instanceof ItemData) {
                 itemView = instantiate(this.itemPrb);
                 this._backpackContent.addChild(itemView);
-                itemView.getComponent(BackpackItem).refreshUI(this._data[i]);
+                itemView.getComponent(BackpackItem).refreshUI(this._data[i], true);
             } else if (this._data[i] instanceof ArtifactData) {
                 itemView = instantiate(this.artifactPrb);
                 this._backpackContent.addChild(itemView);
@@ -155,6 +155,7 @@ export class BackpackUI extends ViewController {
         this._refreshMenu();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+        DataMgr.s.item.readAllNewItem();
     }
     private async onTapItem(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -166,6 +167,7 @@ export class BackpackUI extends ViewController {
                 if (result.success) {
                     result.node.getComponent(ItemInfoUI).showItem([data]);
                 }
+                DataMgr.s.item.readNewItemById(data.itemConfigId);
             } else if (data instanceof ArtifactData) {
                 const result = await UIPanelManger.inst.pushPanel(UIName.ArtifactInfoUI);
                 if (result.success) {

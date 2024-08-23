@@ -3,11 +3,14 @@ import ItemData, { ItemType } from "../../Const/Item";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import NetGlobalData from "./Data/NetGlobalData";
+import { ResourceCorrespondingItem } from "../../Const/ConstDefine";
 
 export class ItemDataMgr {
     private _data: ItemData[] = [];
+    private _redPointKey: string = "__itemDataMgrRedPoint_";
 
-    public loadObj() {
+    public loadObj(walletAddr: string) {
+        this._redPointKey += walletAddr;
         this._initData();
     }
 
@@ -24,7 +27,6 @@ export class ItemDataMgr {
         }
         return count;
     }
-
     public getObj_item_skillbook(): ItemData[] {
         return this._data.filter((item) => {
             const config = ItemConfig.getById(item.itemConfigId);
@@ -34,7 +36,6 @@ export class ItemDataMgr {
             return config.itemType == ItemType.SkillBook;
         });
     }
-
     public getObj_item_backpack(): ItemData[] {
         return this._data.filter((item) => {
             const config = ItemConfig.getById(item.itemConfigId);
@@ -44,6 +45,24 @@ export class ItemDataMgr {
             return config.itemType != ItemType.Resource;
         });
     }
+
+    public getAllNewItemCount(): number {
+        let count: number = 0;
+        const localData = this._getLocalNewItemData();
+        for (const key in localData) {
+            count += localData[key].count;
+        }
+        return count;
+    }
+    public getNewItemCountById(itemId: string): number {
+        const localData = this._getLocalNewItemData();
+        if (localData[itemId] != null) {
+            return localData[itemId].count;
+        }
+        return 0;
+    }
+
+    //--------------------------------------------------
     public countChanged(change: ItemData): void {
         if (change.count == 0) {
             return;
@@ -52,6 +71,31 @@ export class ItemDataMgr {
         if (config == null) {
             return;
         }
+
+        // before data changed, check new item
+        if (change.count > 0) {
+            let isBackpackShow: boolean = true;
+            if (config.itemType == ItemType.Resource) {
+                if (config.configId != ResourceCorrespondingItem.NFTExp && config.configId != ResourceCorrespondingItem.NFTRankExp) {
+                    isBackpackShow = false;
+                }
+            }
+            let getNewItem: boolean = false;
+            if (isBackpackShow && this.getObj_item_count(config.configId) <= 0) {
+                getNewItem = true;
+            }
+            if (getNewItem) {
+                const localData = this._getLocalNewItemData();
+                if (localData[config.configId] != null) {
+                    localData[config.configId].count += change.count;
+                } else {
+                    localData[config.configId] = change;
+                }
+                localStorage.setItem(this._redPointKey, JSON.stringify(localData));
+                NotificationMgr.triggerEvent(NotificationName.BACKPACK_GET_NEW_ITEM);
+            }
+        }
+
         let exsitIndex: number = -1;
         for (let i = 0; i < this._data.length; i++) {
             if (this._data[i].itemConfigId == change.itemConfigId) {
@@ -80,6 +124,20 @@ export class ItemDataMgr {
         }
         NotificationMgr.triggerEvent(NotificationName.ITEM_CHANGE);
     }
+    public readAllNewItem() {
+        localStorage.setItem(this._redPointKey, JSON.stringify({}));
+        NotificationMgr.triggerEvent(NotificationName.BACKPACK_READ_NEW_ITEM);
+    }
+    public readNewItemById(itemId: string) {
+        const localData = this._getLocalNewItemData();
+        if (localData[itemId] != null) {
+            delete localData[itemId];
+            localStorage.setItem(this._redPointKey, JSON.stringify(localData));
+            NotificationMgr.triggerEvent(NotificationName.BACKPACK_READ_NEW_ITEM);
+        }
+    }
+
+    //--------------------------------------------------
     private _initData() {
         this._data = [];
 
@@ -92,5 +150,8 @@ export class ItemDataMgr {
             item.addTimeStamp = netItems[key].addTimeStamp;
             this._data.push(item);
         }
+    }
+    private _getLocalNewItemData(): { [key: string]: ItemData } {
+        return localStorage.getItem(this._redPointKey) == null ? {} : JSON.parse(localStorage.getItem(this._redPointKey));
     }
 }

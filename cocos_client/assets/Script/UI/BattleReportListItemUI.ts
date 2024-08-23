@@ -122,13 +122,13 @@ export class BattleReportListItemUI extends Component {
         this.node.getChildByPath("BgAvatar/RoleView").getComponent(MapCharacter).refreshUI(selfRoleInfo.avatar);
         this.leftNameLabel.string = selfRoleInfo.nameUseLan ? LanMgr.getLanById(selfRoleInfo.name) : selfRoleInfo.name;
         this.leftHpBar.progress = selfRoleInfo.hp / selfRoleInfo.hpmax;
-        this.leftHpText.string = `${CommonTools.getOneDecimalNum(selfRoleInfo.hp)} / ${CommonTools.getOneDecimalNum(selfRoleInfo.hpmax)}`;
+        this.leftHpText.string = `${selfRoleInfo.hp} / ${selfRoleInfo.hpmax}`;
         this.leftAttackerOrDefenderSign.spriteFrame = data.selfIsAttacker ? this.attackerSign : this.defenderSign;
 
         this.node.getChildByPath("BgAvatar-001/RoleView").getComponent(MapCharacter).refreshUI(enemyRoleInfo.avatar);
         this.rightNameLabel.string = enemyRoleInfo.nameUseLan ? LanMgr.getLanById(enemyRoleInfo.name) : enemyRoleInfo.name;
         this.rightHpBar.progress = enemyRoleInfo.hp / enemyRoleInfo.hpmax;
-        this.rightHpText.string = `${CommonTools.getOneDecimalNum(enemyRoleInfo.hp)} / ${CommonTools.getOneDecimalNum(enemyRoleInfo.hpmax)}`;
+        this.rightHpText.string = `${enemyRoleInfo.hp} / ${enemyRoleInfo.hpmax}`;
         this.rightAttackerOrDefenderSign.spriteFrame = data.selfIsAttacker ? this.defenderSign : this.attackerSign;
 
         this.fightResultSprite.spriteFrame = selfIsWin ? this.fightResultVictory : this.fightResultDefeat;

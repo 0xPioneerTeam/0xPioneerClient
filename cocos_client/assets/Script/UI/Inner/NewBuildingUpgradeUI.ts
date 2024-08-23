@@ -20,6 +20,7 @@ import TalkConfig from "../../Config/TalkConfig";
 import { DialogueUI } from "../Outer/DialogueUI";
 import { RelicTowerUI } from "../RelicTowerUI";
 import { RecruitUI } from "./RecruitUI";
+import { RedPointView } from "../View/RedPointView";
 const { ccclass } = _decorator;
 
 @ccclass("NewBuildingUpgradeUI")
@@ -149,6 +150,15 @@ export class NewBuildingUpgradeUI extends ViewController {
 
         NotificationMgr.addListener(NotificationName.ITEM_CHANGE, this.onItemChanged, this);
         // NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_BUILDING_UPGRADE, this._onRookieTapThis, this);
+        // artifact
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+    }
+
+    protected viewDidStart(): void {
+        super.viewDidStart();
+
+        this._refreshArtifactRedPoint();
     }
 
     protected viewDidAppear(): void {
@@ -174,12 +184,22 @@ export class NewBuildingUpgradeUI extends ViewController {
 
         NotificationMgr.removeListener(NotificationName.ITEM_CHANGE, this.onItemChanged, this);
         // NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_BUILDING_UPGRADE, this._onRookieTapThis, this);
+        // artifact
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
     }
     protected viewPopAnimation(): boolean {
         return true;
     }
     protected contentView(): Node {
         return this.node.getChildByPath("__ViewContent");
+    }
+
+    //-----------------------------
+    private _refreshArtifactRedPoint() {
+        const redPointValue: number = DataMgr.s.artifact.getAllNewArtifactCount();
+        const redPointView = this.node.getChildByPath("__ViewContent/ArtifactButton/RedPointView").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue);
     }
 
     //----------------------------- action

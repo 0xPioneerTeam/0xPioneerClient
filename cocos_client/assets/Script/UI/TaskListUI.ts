@@ -12,6 +12,7 @@ import TaskStepConfig from "../Config/TaskStepConfig";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { RookieStep } from "../Const/RookieDefine";
 import MissionConfig from "../Config/MissionConfig";
+import { RedPointView } from "./View/RedPointView";
 const { ccclass, property } = _decorator;
 
 @ccclass("TaskListUI")
@@ -326,6 +327,8 @@ export class TaskListUI extends ViewController {
                 tapIndex: actionView.getComponent(Button).clickEvents[0].customEventData,
             });
         }
+
+        this.node.getChildByPath("Icon/RedPoint").getComponent(RedPointView).refreshUI(DataMgr.s.task.getAllDoingTasks().length + DataMgr.s.task.getMissionAllDoing().length);
     }
 
     private _isDetailShow: boolean = false;
@@ -386,7 +389,6 @@ export class TaskListUI extends ViewController {
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this.refreshUI, this);
         NotificationMgr.addListener(NotificationName.TASK_DID_CHANGE, this.refreshUI, this);
-        NotificationMgr.addListener(NotificationName.TASK_LIST, this.refreshUI, this);
     }
 
     protected viewDidDestroy(): void {
@@ -394,10 +396,10 @@ export class TaskListUI extends ViewController {
 
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this.refreshUI, this);
         NotificationMgr.removeListener(NotificationName.TASK_DID_CHANGE, this.refreshUI, this);
-        NotificationMgr.removeListener(NotificationName.TASK_LIST, this.refreshUI, this);
 
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_TASK_ITEM, this._onTapTaskItem, this);
     }
+
     private _isTask(obj: share.Itask_info_data | share.Imission_data) {
         if ("taskId" in obj) {
             return true;

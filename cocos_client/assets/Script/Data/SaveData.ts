@@ -76,8 +76,8 @@ export class SaveData {
     public async load(walletAddr: string) {
         this._userInfoDataMgr.loadObj();
         this._taskDataMgr.loadObj();
-        this._itemDataMgr.loadObj();
-        this._artifactDataMgr.loadObj();
+        this._itemDataMgr.loadObj(walletAddr);
+        this._artifactDataMgr.loadObj(walletAddr);
         this._innerBuildingDataMgr.loadObj();
         this._pioneersDataMgr.loadObj();
         this._mapBuildingDataMgr.loadObj();

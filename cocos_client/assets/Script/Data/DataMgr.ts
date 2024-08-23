@@ -313,7 +313,7 @@ export class DataMgr {
             change.effectIndex = artifact.effectIndex;
             change.uniqueId = artifact.uniqueId;
             change.effect = artifact.effect;
-            DataMgr.s.artifact.countChanged(change);
+            DataMgr.s.artifact.countChanged(change, true);
         }
     };
     //------------------------------------- inner building
@@ -986,14 +986,6 @@ export class DataMgr {
                 break;
             }
         }
-    };
-    public static get_user_task_info_res = (e: any) => {
-        let p: s2c_user.Iget_user_task_info_res = e.data;
-        // if (p.res == 1) {
-        //     NetGlobalData.tasks = p.tasks;
-        //     DataMgr.s.task.loadObj();
-        //     NotificationMgr.triggerEvent(NotificationName.TASK_LIST);
-        // }
     };
     public static user_task_action_talk = async (e: any) => {
         let p: s2c_user.Iuser_task_action_talk = e.data;

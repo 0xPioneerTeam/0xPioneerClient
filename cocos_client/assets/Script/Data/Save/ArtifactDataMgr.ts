@@ -11,9 +11,12 @@ import { ConfigType, MapDifficultCoefficientParam } from "../../Const/Config";
 
 export class ArtifactDataMgr {
     private _data: ArtifactData[];
+    private _redPointKey: string = "__artifactDataMgrRedPoint_";
+
     public constructor() {}
 
-    public async loadObj() {
+    public async loadObj(walletAddr: string) {
+        this._redPointKey += walletAddr;
         this._initData();
     }
     //------------------------------------------------------------
@@ -50,7 +53,7 @@ export class ArtifactDataMgr {
     public getObj_artifact_equiped() {
         return this._data.filter((artifact) => artifact.effectIndex >= 0);
     }
-    public getObj_by_id(id: string) {
+    public getObj_by_id(id: string): ArtifactData | undefined {
         return this._data.find((artifact) => artifact.artifactConfigId == id);
     }
     public getObj_by_effectIndex(effectIndex: number) {
@@ -97,7 +100,6 @@ export class ArtifactDataMgr {
         }
         return effectNum;
     }
-
     public getAllEffectiveEffect(clevel: number): Map<GameExtraEffectType, number> {
         const effectData: Map<GameExtraEffectType, number> = new Map();
         for (const artifact of this._data) {
@@ -146,11 +148,45 @@ export class ArtifactDataMgr {
         return effectValue;
     }
 
+    public getAllNewArtifactCount(): number {
+        let count: number = 0;
+        const localData = this._getLocalNewArtifactData();
+        for (const key in localData) {
+            count += localData[key].count;
+        }
+        return count;
+    }
+    public getNewArtifactCountById(uniqueId: string): number {
+        const localData = this._getLocalNewArtifactData();
+        if (localData[uniqueId] == null) {
+            return 0;
+        }
+        return localData[uniqueId].count;
+    }
     //-------------------------------------------------------
-    public countChanged(change: ArtifactData): void {
+    public countChanged(change: ArtifactData, isCombine: boolean = false): void {
         if (change.count == 0) {
             return;
         }
+    
+        if (change.count > 0 && !isCombine) {
+            let getNewArtifact = false;
+            const exsitArtifact = this.getObj_by_id(change.uniqueId);
+            if (exsitArtifact == undefined || exsitArtifact.count <= 0) {
+                getNewArtifact = true;
+            }
+            if (getNewArtifact) {
+                const localData = this._getLocalNewArtifactData();
+                if (localData[change.uniqueId] != null) {
+                    localData[change.uniqueId].count += change.count;
+                } else {
+                    localData[change.uniqueId] = change;
+                }
+                localStorage.setItem(this._redPointKey, JSON.stringify(localData));
+                NotificationMgr.triggerEvent(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT);
+            }
+        }
+
         let exsitIndex: number = -1;
         for (let i = 0; i < this._data.length; i++) {
             if (this._data[i].uniqueId == change.uniqueId) {
@@ -179,6 +215,28 @@ export class ArtifactDataMgr {
         NotificationMgr.triggerEvent(NotificationName.ARTIFACT_EQUIP_DID_CHANGE);
     }
 
+    public readAllNewArtifact() {
+        localStorage.setItem(this._redPointKey, JSON.stringify({}));
+        NotificationMgr.triggerEvent(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT);
+    }
+    public readNewArtifactById(uniqueId: string) {
+        const localData = this._getLocalNewArtifactData();
+        if (localData[uniqueId] != null) {
+            delete localData[uniqueId];
+            localStorage.setItem(this._redPointKey, JSON.stringify(localData));
+            NotificationMgr.triggerEvent(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     private _initData() {
         this._data = [];
         if (NetGlobalData.artifacts == null) {
@@ -193,6 +251,9 @@ export class ArtifactDataMgr {
             item.uniqueId = netItems[key].uniqueId;
             this._data.push(item);
         }
+    }
+    private _getLocalNewArtifactData(): { [key: string]: ArtifactData } {
+        return localStorage.getItem(this._redPointKey) == null ? {} : JSON.parse(localStorage.getItem(this._redPointKey));
     }
 
     private _checkIsInMainSlot(effecIndex: number) {

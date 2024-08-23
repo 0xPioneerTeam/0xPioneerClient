@@ -4,6 +4,7 @@ import NFTPioneerConfig from "../../Config/NFTPioneerConfig";
 import NFTPioneerNameConfig from "../../Config/NFTPioneerNameConfig";
 import NFTSkillConfig from "../../Config/NFTSkillConfig";
 import NFTSkillEffectConfig from "../../Config/NFTSkillEffectConfig";
+import PioneerLvlupConfig from "../../Config/PioneerLvlupConfig";
 import { InnerBuildingType } from "../../Const/BuildingDefine";
 import { ConfigType, NFTLevelInitLimitNumParam, NFTLevelLimitPerRankAddNumParam, NFTRankLimitNumParam, NFTRaritySkillInitNumParam } from "../../Const/Config";
 import { BackpackArrangeType, GameExtraEffectType } from "../../Const/ConstDefine";
@@ -24,10 +25,10 @@ export default class NFTPioneerDataMgr {
     public getAll(): NFTPioneerObject[] {
         return this._data;
     }
-    public getNFTById(NFTId: string): NFTPioneerObject {
+    public getNFTById(NFTId: string): NFTPioneerObject | undefined {
         return this._data.find((v) => v.uniqueId == NFTId);
     }
-    public getNFTByWorkingBuildingId(buildingId: InnerBuildingType): NFTPioneerObject {
+    public getNFTByWorkingBuildingId(buildingId: InnerBuildingType): NFTPioneerObject | undefined {
         return this._data.find((v) => v.workingBuildingId == buildingId);
     }
     public getNFTEffectById(NFTId: string, type: GameExtraEffectType): number {
@@ -160,16 +161,16 @@ export default class NFTPioneerDataMgr {
             name: netData.name,
             skin: netData.skin,
 
-            attack: CommonTools.getOneDecimalNum(netData.attack),
-            defense: CommonTools.getOneDecimalNum(netData.defense),
-            hp: CommonTools.getOneDecimalNum(netData.hp),
-            speed: CommonTools.getOneDecimalNum(netData.speed),
-            iq: CommonTools.getOneDecimalNum(netData.iq),
-            attackGrowValue: CommonTools.getOneDecimalNum(netData.attackGrowValue),
-            defenseGrowValue: CommonTools.getOneDecimalNum(netData.defenseGrowValue),
-            hpGrowValue: CommonTools.getOneDecimalNum(netData.hpGrowValue),
-            speedGrowValue: CommonTools.getOneDecimalNum(netData.speedGrowValue),
-            iqGrowValue: CommonTools.getOneDecimalNum(netData.iqGrowValue),
+            attack: netData.attack,
+            defense: netData.defense,
+            hp: netData.hp,
+            speed: netData.speed,
+            iq: netData.iq,
+            attackGrowValue: netData.attackGrowValue,
+            defenseGrowValue: netData.defenseGrowValue,
+            hpGrowValue: netData.hpGrowValue,
+            speedGrowValue: netData.speedGrowValue,
+            iqGrowValue: netData.iqGrowValue,
             level: netData.level,
             levelLimit: netData.levelLimit,
             rank: netData.rank,
