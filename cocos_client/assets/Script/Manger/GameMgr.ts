@@ -27,6 +27,7 @@ import BigMapConfig from "../Config/BigMapConfig";
 import { share } from "../Net/msg/WebsocketMsg";
 import TroopsConfig from "../Config/TroopsConfig";
 import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
+import PioneerLvlupConfig from "../Config/PioneerLvlupConfig";
 
 export default class GameMgr {
     public rookieTaskExplainIsShow: boolean = false;
@@ -493,5 +494,86 @@ export default class GameMgr {
             return splits[0];
         }
         return null;
+    }
+
+    // red point
+    private _showRedPoint: boolean = true;
+    public get showRedPoint(): boolean {
+        return this._showRedPoint;
+    }
+    public set showRedPoint(value: boolean) {
+        this._showRedPoint = value;
+        localStorage.setItem("__redPointValue", this._showRedPoint.toString());
+        NotificationMgr.triggerEvent(NotificationName.GAME_SETTING_REDPOINT_SHOW_CHANGED, this);
+    }
+
+    // NFT
+    public checkHasNFTCanRed(): boolean {
+        const allNFTs = DataMgr.s.nftPioneer.getAll();
+        for (const element of allNFTs) {
+            if (this._checkNFTCanLevelUp(element.uniqueId)) {
+                return true;
+            }
+            if (this._checkNFTCanRankUp(element.uniqueId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public checkNFTCanRedById(NFTId: string): boolean {
+        if (this._checkNFTCanLevelUp(NFTId)) {
+            return true;
+        }
+        if (this._checkNFTCanRankUp(NFTId)) {
+            return true;
+        }
+        return false;
+    }
+    public checkNFTCanLevelUp(NFTId: string): boolean {
+        return this._checkNFTCanLevelUp(NFTId);
+    }
+    public checkNFTCanRankUp(NFTId: string): boolean {
+        return this._checkNFTCanRankUp(NFTId);
+    }
+
+    private _checkNFTCanLevelUp(NFTId: string): boolean {
+        const NFT = DataMgr.s.nftPioneer.getNFTById(NFTId);
+        if (NFT == undefined) {
+            return false;
+        }
+        if (NFT.level >= NFT.levelLimit) {
+            return false;
+        }
+        const nftLevelUpCost = PioneerLvlupConfig.getNFTLevelUpCost(NFT.rank, NFT.rank + 1);
+        if (DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.NFTExp) < nftLevelUpCost) {
+            return false;
+        }
+        return true;
+    }
+    private _checkNFTCanRankUp(NFTId: string): boolean {
+        const NFT = DataMgr.s.nftPioneer.getNFTById(NFTId);
+        if (NFT == undefined) {
+            return false;
+        }
+        if (NFT.rank >= NFT.rankLimit) {
+            return false;
+        }
+        const nftRankUpCostItems = PioneerLvlupConfig.getNFTRankUpCost(NFT.rarity, NFT.rank, NFT.rank + 1);
+        for (const element of nftRankUpCostItems) {
+            if (DataMgr.s.item.getObj_item_count(element.itemConfigId) < element.count) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    public constructor() {
+        this._showRedPoint = true;
+        const redPointValue = localStorage.getItem("__redPointValue");
+        if (redPointValue != null && redPointValue == "false") {
+            this._showRedPoint = false;
+        }
     }
 }

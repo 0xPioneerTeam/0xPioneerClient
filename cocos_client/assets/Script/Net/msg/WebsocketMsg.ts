@@ -752,10 +752,6 @@ export namespace s2c_user {
     export interface Iuser_task_did_change {
         task: share.Itask_info_data;
     }
-    export interface Iget_user_task_info_res {
-        res: number;
-        tasks: share.Itask_data[];
-    }
     export interface Iuser_task_action_talk {
         talkId: string;
     }

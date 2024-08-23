@@ -20,7 +20,6 @@ const { ccclass, property } = _decorator;
 @ccclass("RecruitUI")
 export class RecruitUI extends ViewController {
     public refreshUI(initSelectGenerate: boolean = false) {
-        console.log("exce refresh");
         const barrackBuildingData = DataMgr.s.innerBuilding.data.get(InnerBuildingType.Barrack);
         if (barrackBuildingData == null) {
             return;
@@ -102,7 +101,6 @@ export class RecruitUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-        console.log("exce load");
         const barrackBuildingData = DataMgr.s.innerBuilding.data.get(InnerBuildingType.Barrack);
         if (barrackBuildingData == null) {
             return;
@@ -120,7 +118,6 @@ export class RecruitUI extends ViewController {
         this._maxTroop = 99999;
         const configMaxTroop = InnerBuildingLvlUpConfig.getBuildingLevelData(barrackBuildingData.buildLevel, "max_barr");
         if (configMaxTroop != null) {
-            console.log("exce trr");
             this._maxTroop = configMaxTroop;
         }
         // perGenerateNum

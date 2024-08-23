@@ -64,44 +64,44 @@ export class NTFLevelUpUI extends ViewController {
         levelView.getChildByPath("Next").getComponent(Label).string = "Lv " + (this._data.level + this._levelUpNum);
 
         // attack
-        const growAttack = CommonTools.getOneDecimalNum(this._data.attackGrowValue * this._levelUpNum);
+        const growAttack = this._data.attackGrowValue * this._levelUpNum;
         const attackView = contentView.getChildByPath("Property/Attack");
         // userlanMgr
         // attackView.getChildByPath("Current").getComponent(Label).string = LanMgr.getLanById("201003"); + " +" + growAttack;
         attackView.getChildByPath("Current").getComponent(Label).string = "ATK +" + growAttack;
-        attackView.getChildByPath("Next").getComponent(Label).string = CommonTools.getOneDecimalNum(this._data.attack + growAttack).toString();
+        attackView.getChildByPath("Next").getComponent(Label).string = (this._data.attack + growAttack).toString();
 
         // defense
-        const growDefense = CommonTools.getOneDecimalNum(this._data.defenseGrowValue * this._levelUpNum);
+        const growDefense = this._data.defenseGrowValue * this._levelUpNum;
         const defenseView = contentView.getChildByPath("Property/Defense");
         // userlanMgr
         // defenseView.getChildByPath("Current").getComponent(Label).string = LanMgr.getLanById("201003"); + " +" + growDefense;
         defenseView.getChildByPath("Current").getComponent(Label).string = "DEF +" + growDefense;
-        defenseView.getChildByPath("Next").getComponent(Label).string = CommonTools.getOneDecimalNum(this._data.defense + growDefense).toString();
+        defenseView.getChildByPath("Next").getComponent(Label).string = (this._data.defense + growDefense).toString();
 
         // hp
-        const growHp = CommonTools.getOneDecimalNum(this._data.hpGrowValue * this._levelUpNum);
+        const growHp = this._data.hpGrowValue * this._levelUpNum;
         const hpView = contentView.getChildByPath("Property/Hp");
         // userlanMgr
         // hpView.getChildByPath("Current").getComponent(Label).string = LanMgr.getLanById("201003"); + " +" + growHp;
         hpView.getChildByPath("Current").getComponent(Label).string = "HP +" + growHp;
-        hpView.getChildByPath("Next").getComponent(Label).string = CommonTools.getOneDecimalNum(this._data.hp + growHp).toString();
+        hpView.getChildByPath("Next").getComponent(Label).string = (this._data.hp + growHp).toString();
 
         // speed
-        const growSpeed = CommonTools.getOneDecimalNum(this._data.speedGrowValue * this._levelUpNum);
+        const growSpeed = this._data.speedGrowValue * this._levelUpNum;
         const speedView = contentView.getChildByPath("Property/Speed");
         // userlanMgr
         // speedView.getChildByPath("Current").getComponent(Label).string = LanMgr.getLanById("201003"); + " +" + growSpeed;
         speedView.getChildByPath("Current").getComponent(Label).string = "SPD +" + growSpeed;
-        speedView.getChildByPath("Next").getComponent(Label).string = CommonTools.getOneDecimalNum(this._data.speed + growSpeed).toString();
+        speedView.getChildByPath("Next").getComponent(Label).string = (this._data.speed + growSpeed).toString();
 
         // iq
-        const growIq = CommonTools.getOneDecimalNum(this._data.iqGrowValue * this._levelUpNum);
+        const growIq = this._data.iqGrowValue * this._levelUpNum;
         const iqView = contentView.getChildByPath("Property/Int");
         // userlanMgr
         // iqView.getChildByPath("Current").getComponent(Label).string = LanMgr.getLanById("201003"); + " +" + growIq;
         iqView.getChildByPath("Current").getComponent(Label).string = "Int +" + growIq;
-        iqView.getChildByPath("Next").getComponent(Label).string = CommonTools.getOneDecimalNum(this._data.iq + growIq).toString();
+        iqView.getChildByPath("Next").getComponent(Label).string = (this._data.iq + growIq).toString();
 
         // resource
         this._currentCost = PioneerLvlupConfig.getNFTLevelUpCost(this._data.level, this._data.level + this._levelUpNum);

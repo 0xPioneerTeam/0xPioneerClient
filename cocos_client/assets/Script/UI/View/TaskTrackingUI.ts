@@ -40,7 +40,6 @@ export class TaskTrackingUI extends Component {
         this._finishTip.active = false;
 
         NotificationMgr.addListener(NotificationName.TASK_DID_CHANGE, this._onTaskChange, this);
-        NotificationMgr.addListener(NotificationName.TASK_LIST, this._onTaskChange, this);
     }
 
     start() {
@@ -53,7 +52,6 @@ export class TaskTrackingUI extends Component {
 
     protected onDestroy(): void {
         NotificationMgr.removeListener(NotificationName.TASK_DID_CHANGE, this._onTaskChange, this);
-        NotificationMgr.removeListener(NotificationName.TASK_LIST, this._onTaskChange, this);
     }
 
     private _refreshUI() {

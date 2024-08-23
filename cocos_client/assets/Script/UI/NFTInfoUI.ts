@@ -1,7 +1,7 @@
 import { _decorator, Label, Node, Button, instantiate, Sprite, SpriteFrame, Color } from "cc";
 import ViewController from "../BasicView/ViewController";
 import { NFTPioneerObject } from "../Const/NFTPioneerDefine";
-import { ItemMgr, LanMgr } from "../Utils/Global";
+import { GameMgr, ItemMgr, LanMgr } from "../Utils/Global";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { UIName } from "../Const/ConstUIDefine";
 import { NTFLevelUpUI } from "./NTFLevelUpUI";
@@ -20,6 +20,7 @@ import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { GameRankColor, ResourceCorrespondingItem } from "../Const/ConstDefine";
 import PioneerLvlupConfig from "../Config/PioneerLvlupConfig";
 import ItemConfig from "../Config/ItemConfig";
+import { RedPointView } from "./View/RedPointView";
 
 const { ccclass, property } = _decorator;
 
@@ -228,6 +229,10 @@ export class NFTInfoUI extends ViewController {
         content.getChildByPath("info/LeftArrowButton").getComponent(Button).interactable = true;
         content.getChildByPath("info/RightArrowButton").active = this._currentIndex < this._NFTDatas.length - 1;
         content.getChildByPath("info/RightArrowButton").getComponent(Button).interactable = true;
+
+        // red point
+        content.getChildByPath("TabLevel/RedPointView").getComponent(RedPointView).refreshUI(GameMgr.checkNFTCanLevelUp(data.uniqueId) ? 1 : 0, false);
+        content.getChildByPath("TabRank/RedPointView").getComponent(RedPointView).refreshUI(GameMgr.checkNFTCanRankUp(data.uniqueId) ? 1 : 0, false);
     }
     //---------------------------------------------------- action
     private onTapTab(event: Event, customEventData: string) {

@@ -13,6 +13,7 @@ import {
     ScrollView,
     Slider,
     Sprite,
+    Toggle,
     UITransform,
     v2,
     Vec3,
@@ -21,7 +22,7 @@ import { SettlementView } from "./View/SettlementView";
 import ArtifactData from "../Model/ArtifactData";
 import { ArtifactItem } from "./ArtifactItem";
 import { BackpackItem } from "./BackpackItem";
-import { LanMgr, UserInfoMgr, AudioMgr } from "../Utils/Global";
+import { LanMgr, UserInfoMgr, AudioMgr, GameMgr } from "../Utils/Global";
 import ViewController from "../BasicView/ViewController";
 import { UIHUDController } from "./UIHUDController";
 import NotificationMgr from "../Basic/NotificationMgr";
@@ -62,6 +63,7 @@ export class PlayerInfoUI extends ViewController {
     private _settleUseSelectItems: Node[] = [];
 
     private _langSelectView: Node = null;
+    private _redPointShowView: Node = null;
 
     public configuration(selectIndex: number, onlyShowSelect: boolean) {
         this._selectIndex = selectIndex;
@@ -121,6 +123,8 @@ export class PlayerInfoUI extends ViewController {
         this._langSelectView = this.node.getChildByName("OptionContainer");
         this._langSelectView.active = false;
 
+        this._redPointShowView = this.node.getChildByPath("Content/tabContents/SettingsContent/RedPointTitle/Switch");
+
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._onChangeLang, this);
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.SETTLEMENT_DATA_CHANGE, this._refreshUI, this);
@@ -132,6 +136,8 @@ export class PlayerInfoUI extends ViewController {
         super.viewDidStart();
 
         this._selectLang = LanMgr.getLang();
+
+        this._refreshRedPointShow();
     }
 
     protected viewDidAppear(): void {
@@ -354,6 +360,11 @@ export class PlayerInfoUI extends ViewController {
         }
     }
 
+    private _refreshRedPointShow() {
+        this._redPointShowView.getChildByPath("Off").active = !GameMgr.showRedPoint;
+        this._redPointShowView.getChildByPath("On").active = GameMgr.showRedPoint;
+    }
+
     private async _refreshNextLevelView() {
         const nextLevel = DataMgr.s.userInfo.data.level + 1;
         // useLanMgr
@@ -527,6 +538,12 @@ export class PlayerInfoUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         this._langSelectView.active = false;
         this.node.getChildByPath("Content/tabContents/SettingsContent/LanguageMenu/LanguageBtn/Arrow").angle = 0;
+    }
+
+    private onTapRedPointCheck() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        GameMgr.showRedPoint = !GameMgr.showRedPoint;
+        this._refreshRedPointShow();
     }
 
     private onTapClose() {

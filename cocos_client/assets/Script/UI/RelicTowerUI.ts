@@ -245,11 +245,12 @@ export class RelicTowerUI extends ViewController {
                     continue;
                 }
                 const view = instantiate(this._storageItem);
-                view.getComponent(ArtifactItem).refreshUI(this._invokeStorageDatas[i]);
+                view.getComponent(ArtifactItem).refreshUI(this._invokeStorageDatas[i], true);
                 view.setParent(this._storageItemContent);
                 view.getChildByPath("OnEffectBg").active = this._invokeStorageDatas[i].effectIndex >= 0;
                 view.getChildByPath("EffectTitle").active = this._invokeStorageDatas[i].effectIndex >= 0;
-                view.getChildByPath("New").active = this._newArtifactIds.indexOf(this._invokeStorageDatas[i].uniqueId) != -1;
+                // view.getChildByPath("New").active = this._newArtifactIds.indexOf(this._invokeStorageDatas[i].uniqueId) != -1;
+                view.getChildByPath("New").active = false;
 
                 view.getComponent(LongPressButton).shortClick[0].customEventData = i.toString();
                 view.getComponent(LongPressButton).shortClickInteractable = this._invokeStorageDatas[i].effectIndex < 0 && config.rank < 5;
@@ -293,6 +294,7 @@ export class RelicTowerUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+        DataMgr.s.artifact.readAllNewArtifact();
     }
     private onTapOnEffectTab() {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -346,6 +348,9 @@ export class RelicTowerUI extends ViewController {
             return;
         }
         const data = this._invokeStorageDatas[index];
+        // red point
+        DataMgr.s.artifact.readNewArtifactById(data.uniqueId);
+
         this._invokeSelectDatas.push(data);
         if (this._invokeSelectDatas.length == 1) {
             // first select, confrim rank
@@ -361,6 +366,9 @@ export class RelicTowerUI extends ViewController {
             return;
         }
         const data = this._invokeStorageDatas[index];
+        //red point
+        DataMgr.s.artifact.readNewArtifactById(data.uniqueId);
+
         const result = await UIPanelManger.inst.pushPanel(UIName.ArtifactInfoUI);
         if (!result.success) {
             return;

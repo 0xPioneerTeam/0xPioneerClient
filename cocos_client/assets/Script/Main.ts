@@ -234,7 +234,6 @@ export class Main extends ViewController {
 
         // task
         NetworkMgr.websocket.on("user_task_did_change", DataMgr.user_task_did_change);
-        NetworkMgr.websocket.on("get_user_task_info_res", DataMgr.get_user_task_info_res);
         NetworkMgr.websocket.on("user_task_action_talk", DataMgr.user_task_action_talk);
         NetworkMgr.websocket.on("user_task_talk_info_change", DataMgr.user_task_talk_info_change);
         NetworkMgr.websocket.on("user_mission_did_change", DataMgr.user_mission_did_change);

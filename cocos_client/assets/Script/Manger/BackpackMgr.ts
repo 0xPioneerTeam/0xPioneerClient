@@ -1,6 +1,6 @@
 import ArtifactConfig from "../Config/ArtifactConfig";
 import ItemConfig from "../Config/ItemConfig";
-import { BackpackArrangeType, BackpackCategoryType } from "../Const/ConstDefine";
+import { BackpackArrangeType, BackpackCategoryType, ResourceCorrespondingItem } from "../Const/ConstDefine";
 import ItemData, { ItemType } from "../Const/Item";
 import { DataMgr } from "../Data/DataMgr";
 import ArtifactData from "../Model/ArtifactData";
@@ -14,7 +14,7 @@ export default class BackpackMgr {
                 return false;
             }
             // 8007 and 8008 resource is special show in backpack
-            return config.itemType != ItemType.Resource || config.configId == "8007" || config.configId == "8008";
+            return config.itemType != ItemType.Resource || config.configId == ResourceCorrespondingItem.NFTExp || config.configId == ResourceCorrespondingItem.NFTRankExp;
         });
 
         const artifact = DataMgr.s.artifact.getObj();

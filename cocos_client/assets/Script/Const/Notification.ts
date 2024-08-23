@@ -51,6 +51,9 @@ export enum NotificationName {
 
     GAME_MAIN_RESOURCE_PLAY_ANIM,
 
+    //------------------------------------ setting
+    GAME_SETTING_REDPOINT_SHOW_CHANGED,
+
     //---------------------- userInfo
     USERINFO_DID_CHANGE_NAME,
     USERINFO_DID_CHANGE_EXP,
@@ -79,16 +82,19 @@ export enum NotificationName {
     RESOURCE_GETTED,
     RESOURCE_CONSUMED,
     ITEM_CHANGE,
+    BACKPACK_GET_NEW_ITEM,
+    BACKPACK_READ_NEW_ITEM,
 
     //------------------------------------ artifact
     ARTIFACT_CHANGE,
     ARTIFACT_EQUIP_DID_CHANGE,
+    ARTIFACTPACK_GET_NEW_ARTIFACT,
+    ARTIFACTPACK_READ_NEW_ARTIFACT,
 
     //---------------------- task
     TASK_CANNOTGET,
     TASK_DID_CHANGE,
     TASK_NEW_GETTED,
-    TASK_LIST,
     TASK_CAN_TALK_CHANGE,
     
     //------------------------------------ map building

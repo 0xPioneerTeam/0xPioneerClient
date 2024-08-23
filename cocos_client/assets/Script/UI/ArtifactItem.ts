@@ -1,15 +1,25 @@
-import { _decorator, Component, Sprite, SpriteFrame, Node } from 'cc';
+import { _decorator, Component, Sprite, SpriteFrame, Node } from "cc";
 import * as cc from "cc";
-import ArtifactData from '../Model/ArtifactData';
-import { ArtifactMgr } from '../Utils/Global';
-import ArtifactConfig from '../Config/ArtifactConfig';
+import ArtifactData from "../Model/ArtifactData";
+import { ArtifactMgr } from "../Utils/Global";
+import ArtifactConfig from "../Config/ArtifactConfig";
+import NotificationMgr from "../Basic/NotificationMgr";
+import { NotificationName } from "../Const/Notification";
+import { RedPointView } from "./View/RedPointView";
+import { DataMgr } from "../Data/DataMgr";
 const { ccclass, property } = _decorator;
 
-@ccclass('ArtifactItem')
+@ccclass("ArtifactItem")
 export class ArtifactItem extends Component {
-    public async refreshUI(item: ArtifactData = null) {
+    private _itemData: ArtifactData = null;
+    private _showRedPoint: boolean = false;
+
+    public async refreshUI(item: ArtifactData = null, showRedPoint: boolean = false) {
+        this._itemData = item;
+        this._showRedPoint = showRedPoint;
+
         const propView = this.node.getChildByName("Prop");
-        if (item == null) {
+        if (item == null || item == undefined) {
             propView.active = false;
         } else {
             propView.active = true;
@@ -23,6 +33,25 @@ export class ArtifactItem extends Component {
 
             // num
             propView.getChildByName("Count").getComponent(cc.Label).string = "x" + item.count;
+
+            propView.getChildByPath("RedPointView").active = showRedPoint;
+            propView.getChildByPath("RedPointView").getComponent(RedPointView).refreshUI(DataMgr.s.artifact.getNewArtifactCountById(item.uniqueId));
         }
+    }
+
+    protected onLoad(): void {}
+
+    protected start(): void {
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshRedPoint, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshRedPoint, this);
+    }
+
+    protected onDestroy(): void {
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshRedPoint, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshRedPoint, this);
+    }
+
+    private _refreshRedPoint() {
+        this.refreshUI(this._itemData, this._showRedPoint);
     }
 }
