@@ -6,8 +6,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      5,
-      2
+      1,
+      1
     ],
     "node": "oasis",
     "level": 1,
@@ -36,8 +36,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      3,
-      11
+      8,
+      4
     ],
     "node": "sand_mineral",
     "level": 1,
@@ -61,21 +61,21 @@
   },
   {
     "id": "building_3",
-    "name": "110001",
+    "name": "110002",
     "type": 3,
     "show": 1,
     "pos_type": 1,
     "positions": [
-      2,
-      7
+      10,
+      9
     ],
-    "node": "sand_mineral",
+    "node": "swamp_jungle",
     "level": 1,
     "progress": 20,
     "refresh_limit": 1,
     "time": 15,
     "resources": [
-      "8003",
+      "8002",
       100
     ],
     "quota": 1,
@@ -96,8 +96,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      10,
-      8
+      6,
+      0
     ],
     "node": "ancient_ruins",
     "level": 1,
@@ -123,8 +123,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      7,
-      13
+      13,
+      2
     ],
     "node": "spider_cave",
     "level": 1,
@@ -150,8 +150,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      0,
-      12
+      10,
+      14
     ],
     "node": "laboratory",
     "level": 3,
@@ -177,8 +177,8 @@
     "show": 0,
     "pos_type": 0,
     "positions": [
-      8,
-      1
+      14,
+      13
     ],
     "node": "Aquatic_Relics_Group",
     "level": 5,
@@ -204,8 +204,8 @@
     "show": 0,
     "pos_type": 1,
     "positions": [
-      13,
-      2
+      0,
+      13
     ],
     "node": "ruin",
     "level": 1,
@@ -231,8 +231,8 @@
     "show": 0,
     "pos_type": 0,
     "positions": [
-      14,
-      5
+      15,
+      8
     ],
     "node": "treasure",
     "level": 1,
@@ -258,8 +258,8 @@
     "show": 0,
     "pos_type": 0,
     "positions": [
-      5,
-      7
+      4,
+      8
     ],
     "node": "ambush",
     "level": 1,
@@ -269,33 +269,6 @@
     "resources": null,
     "quota": null,
     "exp": 5,
-    "event": "",
-    "des": "320005",
-    "hp": null,
-    "attack": null,
-    "winprogress": null,
-    "faction": 0,
-    "defendPioneerIds": [],
-    "cost": 5
-  },
-  {
-    "id": "building_11",
-    "name": "110015",
-    "type": 7,
-    "show": 0,
-    "pos_type": 1,
-    "positions": [
-      7,
-      4
-    ],
-    "node": "Pyramid_Group",
-    "level": 1,
-    "progress": null,
-    "refresh_limit": 1,
-    "time": 15,
-    "resources": null,
-    "quota": null,
-    "exp": null,
     "event": "",
     "des": "320005",
     "hp": null,

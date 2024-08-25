@@ -1,29 +1,4 @@
 {
-  "gangster_1": {
-    "id": "gangster_1",
-    "name": "109013",
-    "type": "4",
-    "friendly": 0,
-    "show": 0,
-    "level": 1,
-    "refresh_limit": -1,
-    "des": "1090402",
-    "nft_pioneer": "",
-    "hp": 100,
-    "attack": 10,
-    "def": 0,
-    "spd": 5,
-    "winprogress": 5,
-    "exp": 5,
-    "animType": "monster_a_1",
-    "drop": null,
-    "pos": [
-      {
-        "x": 1,
-        "y": 11
-      }
-    ]
-  },
   "gangster_2": {
     "id": "gangster_2",
     "name": "109011",
@@ -45,7 +20,7 @@
     "pos": [
       {
         "x": 1,
-        "y": 1
+        "y": 3
       }
     ]
   },
@@ -69,8 +44,8 @@
     "drop": null,
     "pos": [
       {
-        "x": 14,
-        "y": 5
+        "x": 15,
+        "y": 14
       }
     ]
   },
@@ -100,8 +75,8 @@
     ],
     "pos": [
       {
-        "x": 2,
-        "y": 4
+        "x": 1,
+        "y": 12
       }
     ],
     "logics": [
@@ -119,55 +94,6 @@
         ],
         "range": 3,
         "speed": 80,
-        "cond": ""
-      }
-    ]
-  },
-  "hred_6": {
-    "id": "hred_6",
-    "name": "109018",
-    "type": "4",
-    "friendly": 0,
-    "show": 0,
-    "level": 3,
-    "refresh_limit": 3,
-    "des": "1090401",
-    "nft_pioneer": "",
-    "hp": 120,
-    "attack": 25,
-    "def": 0,
-    "spd": 5,
-    "winprogress": 40,
-    "exp": 5,
-    "animType": "monster_spiderqueen",
-    "drop": [
-      [
-        1,
-        "8001",
-        100
-      ]
-    ],
-    "pos": [
-      {
-        "x": 5,
-        "y": 14
-      }
-    ],
-    "logics": [
-      {
-        "type": 4,
-        "posx": null,
-        "posy": null,
-        "step": null,
-        "cd": null,
-        "direction": null,
-        "repeat": -1,
-        "interval": [
-          2,
-          5
-        ],
-        "range": 2,
-        "speed": 100,
         "cond": ""
       }
     ]
@@ -198,8 +124,8 @@
     ],
     "pos": [
       {
-        "x": 1,
-        "y": 7
+        "x": 8,
+        "y": 5
       }
     ],
     "logics": [
@@ -216,55 +142,6 @@
           6
         ],
         "range": 3,
-        "speed": 80,
-        "cond": ""
-      }
-    ]
-  },
-  "hred_9": {
-    "id": "hred_9",
-    "name": "109021",
-    "type": "4",
-    "friendly": 0,
-    "show": 0,
-    "level": 5,
-    "refresh_limit": 3,
-    "des": "1090401",
-    "nft_pioneer": "",
-    "hp": 150,
-    "attack": 40,
-    "def": 0,
-    "spd": 5,
-    "winprogress": 40,
-    "exp": 5,
-    "animType": "monster_teshark",
-    "drop": [
-      [
-        1,
-        "8001",
-        200
-      ]
-    ],
-    "pos": [
-      {
-        "x": 7,
-        "y": 0
-      }
-    ],
-    "logics": [
-      {
-        "type": 4,
-        "posx": null,
-        "posy": null,
-        "step": null,
-        "cd": null,
-        "direction": null,
-        "repeat": -1,
-        "interval": [
-          2,
-          3
-        ],
-        "range": 4,
         "speed": 80,
         "cond": ""
       }
@@ -296,39 +173,8 @@
     ],
     "pos": [
       {
-        "x": 0,
-        "y": 8
-      }
-    ]
-  },
-  "hred_12": {
-    "id": "hred_12",
-    "name": "109017",
-    "type": "4",
-    "friendly": 0,
-    "show": 0,
-    "level": 2,
-    "refresh_limit": 2,
-    "des": "1090401",
-    "nft_pioneer": "",
-    "hp": 60,
-    "attack": 18,
-    "def": 0,
-    "spd": 5,
-    "winprogress": 40,
-    "exp": 5,
-    "animType": "monster_scorpion",
-    "drop": [
-      [
-        1,
-        "8001",
-        40
-      ]
-    ],
-    "pos": [
-      {
         "x": 9,
-        "y": 0
+        "y": 9
       }
     ]
   },
@@ -383,8 +229,8 @@
     "drop": null,
     "pos": [
       {
-        "x": 5,
-        "y": 12
+        "x": 3,
+        "y": 11
       }
     ]
   },
@@ -408,8 +254,8 @@
     "drop": null,
     "pos": [
       {
-        "x": 7,
-        "y": 12
+        "x": 5,
+        "y": 11
       }
     ]
   }

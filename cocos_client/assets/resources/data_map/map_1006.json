@@ -6,8 +6,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      10,
-      2
+      0,
+      7
     ],
     "node": "swamp_jungle",
     "level": 1,
@@ -31,13 +31,43 @@
   },
   {
     "id": "building_2",
+    "name": "110002",
+    "type": 3,
+    "show": 1,
+    "pos_type": 1,
+    "positions": [
+      15,
+      2
+    ],
+    "node": "swamp_jungle",
+    "level": 1,
+    "progress": 20,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": [
+      "8002",
+      100
+    ],
+    "quota": 1,
+    "exp": 5,
+    "event": "",
+    "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_3",
     "name": "110003",
     "type": 3,
     "show": 1,
     "pos_type": 1,
     "positions": [
-      11,
-      5
+      5,
+      13
     ],
     "node": "oasis",
     "level": 1,
@@ -60,14 +90,14 @@
     "cost": 5
   },
   {
-    "id": "building_3",
+    "id": "building_4",
     "name": "110001",
     "type": 3,
     "show": 1,
     "pos_type": 1,
     "positions": [
-      3,
-      9
+      6,
+      7
     ],
     "node": "sand_mineral",
     "level": 1,
@@ -90,52 +120,28 @@
     "cost": 5
   },
   {
-    "id": "building_4",
-    "name": "910016",
-    "type": 4,
+    "id": "building_5",
+    "name": "110001",
+    "type": 3,
     "show": 1,
     "pos_type": 1,
     "positions": [
-      8,
-      6
+      9,
+      0
     ],
-    "node": "laboratory",
-    "level": 3,
-    "progress": 25,
-    "refresh_limit": 3,
+    "node": "sand_mineral",
+    "level": 1,
+    "progress": 20,
+    "refresh_limit": 1,
     "time": 15,
-    "resources": null,
-    "quota": null,
-    "exp": 8,
-    "event": "1",
-    "des": "900076",
-    "hp": null,
-    "attack": null,
-    "winprogress": null,
-    "faction": 0,
-    "defendPioneerIds": [],
-    "cost": 5
-  },
-  {
-    "id": "building_5",
-    "name": "910017",
-    "type": 4,
-    "show": 0,
-    "pos_type": 1,
-    "positions": [
-      10,
-      10
+    "resources": [
+      "8003",
+      100
     ],
-    "node": "Tree_Group",
-    "level": 3,
-    "progress": 30,
-    "refresh_limit": 4,
-    "time": 15,
-    "resources": null,
-    "quota": null,
-    "exp": 10,
-    "event": "2",
-    "des": "900077",
+    "quota": 1,
+    "exp": 5,
+    "event": "",
+    "des": "320005",
     "hp": null,
     "attack": null,
     "winprogress": null,
@@ -145,24 +151,27 @@
   },
   {
     "id": "building_6",
-    "name": "910018",
-    "type": 4,
-    "show": 0,
+    "name": "110003",
+    "type": 3,
+    "show": 1,
     "pos_type": 1,
     "positions": [
-      7,
-      9
+      12,
+      7
     ],
-    "node": "Pyramid_Group",
-    "level": 4,
-    "progress": 40,
-    "refresh_limit": 5,
+    "node": "oasis",
+    "level": 1,
+    "progress": 20,
+    "refresh_limit": 1,
     "time": 15,
-    "resources": null,
-    "quota": null,
-    "exp": 15,
-    "event": "3",
-    "des": "900078",
+    "resources": [
+      "8001",
+      100
+    ],
+    "quota": 1,
+    "exp": 5,
+    "event": "",
+    "des": "320005",
     "hp": null,
     "attack": null,
     "winprogress": null,
@@ -172,17 +181,17 @@
   },
   {
     "id": "building_7",
-    "name": "110012",
-    "type": 2,
+    "name": "110013",
+    "type": 1,
     "show": 0,
-    "pos_type": 0,
+    "pos_type": 1,
     "positions": [
-      11,
-      8
+      13,
+      12
     ],
-    "node": "ambush",
+    "node": "ruin",
     "level": 1,
-    "progress": null,
+    "progress": 40,
     "refresh_limit": 1,
     "time": 15,
     "resources": null,
@@ -190,6 +199,33 @@
     "exp": 5,
     "event": "",
     "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_8",
+    "name": "910016",
+    "type": 4,
+    "show": 1,
+    "pos_type": 1,
+    "positions": [
+      4,
+      1
+    ],
+    "node": "ancient_ruins",
+    "level": 1,
+    "progress": 25,
+    "refresh_limit": 3,
+    "time": 15,
+    "resources": null,
+    "quota": null,
+    "exp": 8,
+    "event": "1",
+    "des": "900076",
     "hp": null,
     "attack": null,
     "winprogress": null,
