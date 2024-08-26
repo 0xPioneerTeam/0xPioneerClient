@@ -51,7 +51,10 @@ message player_rookie_update {
 }
 message player_rookie_wormhole_fight {
     required string pioneerId = 1;
- }
+}
+message player_get_rookie_award {
+    
+}
 
 // ------ chain ------
 message get_pending { }

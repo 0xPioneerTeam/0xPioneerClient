@@ -68,6 +68,9 @@ message player_rookie_wormhole_fight_res {
     optional uint32 hp = 3;
     repeated share.fight_res fightRes = 4;
 }
+message player_get_rookie_award_res {
+    required int32 res = 1;
+}
 
 
 // ------ chain ------
