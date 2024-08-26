@@ -173,14 +173,14 @@ export class ItemSelectFromThreeUI extends ViewController {
     protected viewDidAppear(): void {
         super.viewDidAppear();
 
-        const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-        if (rookieStep == RookieStep.OPEN_BOX_1 || rookieStep == RookieStep.OPEN_BOX_2 || rookieStep == RookieStep.OPEN_BOX_3) {
-            NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_NEED_MASK_SHOW, {
-                tag: "selectFromThree",
-                view: this.node.getChildByPath("__ViewContent/GetAllBtn"),
-                tapIndex: "-1",
-            });
-        }
+        // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+        // if (rookieStep == RookieStep.OPEN_BOX_1 || rookieStep == RookieStep.OPEN_BOX_2 || rookieStep == RookieStep.OPEN_BOX_3) {
+        //     NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_NEED_MASK_SHOW, {
+        //         tag: "selectFromThree",
+        //         view: this.node.getChildByPath("__ViewContent/GetAllBtn"),
+        //         tapIndex: "-1",
+        //     });
+        // }
     }
     protected viewPopAnimation(): boolean {
         return true;
@@ -227,17 +227,17 @@ export class ItemSelectFromThreeUI extends ViewController {
         }
         result.node.getComponent(AlterView).showTip(LanMgr.replaceLanById("104005", [this._getAllPiotCostNum]), async () => {
             const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-            if (rookieStep == RookieStep.OPEN_BOX_1 || rookieStep == RookieStep.OPEN_BOX_2 || rookieStep == RookieStep.OPEN_BOX_3) {
-                NetworkMgr.websocketMsg.player_worldbox_beginner_open_select({
-                    boxIndex: this._boxIndex,
-                    selectIndex: -1,
-                });
-            } else {
+            // if (rookieStep == RookieStep.OPEN_BOX_1 || rookieStep == RookieStep.OPEN_BOX_2 || rookieStep == RookieStep.OPEN_BOX_3) {
+            //     NetworkMgr.websocketMsg.player_worldbox_beginner_open_select({
+            //         boxIndex: this._boxIndex,
+            //         selectIndex: -1,
+            //     });
+            // } else {
                 NetworkMgr.websocketMsg.player_worldbox_open_select({
                     boxIndex: this._boxIndex,
                     selectIndex: -1,
                 });
-            }
+            // }
             await this.playExitAnimation();
             UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.UI);
         });

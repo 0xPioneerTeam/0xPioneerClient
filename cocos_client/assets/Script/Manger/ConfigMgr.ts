@@ -8,6 +8,7 @@ import ConfigConfig from "../Config/ConfigConfig";
 import DropConfig from "../Config/DropConfig";
 import EvaluationConfig from "../Config/EvaluationConfig";
 import EventConfig from "../Config/EventConfig";
+import GuideConfig from "../Config/GuideConfig";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 import ItemConfig from "../Config/ItemConfig";
@@ -39,6 +40,7 @@ export default class ConfigMgr {
         if (!(await DropConfig.init())) return false;
         if (!(await EvaluationConfig.init())) return false;
         if (!(await EventConfig.init())) return false;
+        if (!(await GuideConfig.init())) return false;
         if (!(await NewEventConfig.init())) return false;
         if (!(await NewSubEventConfig.init())) return false;
         if (!(await InnerBuildingConfig.init())) return false;

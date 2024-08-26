@@ -137,6 +137,11 @@ export class OuterTiledMapActionController extends ViewController {
     private _actionView: ResOprView = null;
 
     private _hexViewRadius: number = 0;
+
+    public get actionView(){
+        return this._actionView;
+    }
+    
     protected viewDidLoad(): void {
         super.viewDidLoad();
 

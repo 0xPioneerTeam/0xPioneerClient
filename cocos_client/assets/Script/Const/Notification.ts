@@ -6,6 +6,7 @@ export enum NotificationName {
     USER_LOGIN_SUCCEED,
 
     //------------------------------------ rookie guide
+    GAME_SCENE_ENTER,
     FAKE_ROOKIESTEP_CHANGE,
     ROOKIE_GUIDE_BEGIN_EYES,
     ROOKIE_GUIDE_THIRD_EYES,

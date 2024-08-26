@@ -112,19 +112,19 @@ export class DataMgr {
         }
         // heat
         if (localData.heatValue.currentHeatValue != p.info.heatValue.currentHeatValue) {
-            if (DataMgr.s.userInfo.data.rookieStep == RookieStep.PIOT_TO_HEAT) {
-                NetworkMgr.websocketMsg.player_rookie_update({
-                    rookieStep: RookieStep.NPC_TALK_4,
-                });
-                NotificationMgr.triggerEvent(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, {
-                    animType: RookieResourceAnim.GOLD_TO_HEAT,
-                    callback: () => {
-                        NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_HEAT);
-                    },
-                } as RookieResourceAnimStruct);
-            } else {
+            // if (DataMgr.s.userInfo.data.rookieStep == RookieStep.PIOT_TO_HEAT) {
+            //     NetworkMgr.websocketMsg.player_rookie_update({
+            //         rookieStep: RookieStep.NPC_TALK_4,
+            //     });
+            //     NotificationMgr.triggerEvent(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, {
+            //         animType: RookieResourceAnim.GOLD_TO_HEAT,
+            //         callback: () => {
+            //             NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_HEAT);
+            //         },
+            //     } as RookieResourceAnimStruct);
+            // } else {
                 NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_HEAT);
-            }
+            // }
         }
         // box
         let boxUpdate: boolean = false;
@@ -165,18 +165,18 @@ export class DataMgr {
         if (p.res !== 1) {
             return;
         }
-        if (
-            p.rookieStep == RookieStep.NPC_TALK_3 ||
-            p.rookieStep == RookieStep.NPC_TALK_4 ||
-            p.rookieStep == RookieStep.NPC_TALK_5 ||
-            p.rookieStep == RookieStep.NPC_TALK_7 ||
-            p.rookieStep == RookieStep.SYSTEM_TALK_21
-        ) {
-            // play anim to change step
-            return;
-        } else if (p.rookieStep == RookieStep.OUTER_WORMHOLE) {
-            p.rookieStep = RookieStep.LOCAL_DEFEND_TAP_CLOSE;
-        }
+        // if (
+        //     p.rookieStep == RookieStep.NPC_TALK_3 ||
+        //     p.rookieStep == RookieStep.NPC_TALK_4 ||
+        //     p.rookieStep == RookieStep.NPC_TALK_5 ||
+        //     p.rookieStep == RookieStep.NPC_TALK_7 ||
+        //     p.rookieStep == RookieStep.SYSTEM_TALK_21
+        // ) {
+        //     // play anim to change step
+        //     return;
+        // } else if (p.rookieStep == RookieStep.OUTER_WORMHOLE) {
+        //     p.rookieStep = RookieStep.LOCAL_DEFEND_TAP_CLOSE;
+        // }
         DataMgr.s.userInfo.data.rookieStep = p.rookieStep;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
     };
@@ -220,14 +220,14 @@ export class DataMgr {
                 NotificationMgr.triggerEvent(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, {
                     animType: RookieResourceAnim.PIONEER_0_TO_GOLD,
                     callback: () => {
-                        DataMgr.s.userInfo.data.rookieStep = RookieStep.NPC_TALK_3;
+                        // DataMgr.s.userInfo.data.rookieStep = RookieStep.NPC_TALK_3;
                         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
                         this._resourceRefresh(p.iteminfo);
                     },
                 } as RookieResourceAnimStruct);
             }
-        } else if (rookieStep == RookieStep.RESOURCE_COLLECT) {
-            NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_COLLECT_RESOURCE);
+        // } else if (rookieStep == RookieStep.RESOURCE_COLLECT) {
+        //     NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_COLLECT_RESOURCE);
         }
 
         if (rookieBreak) {
@@ -328,15 +328,15 @@ export class DataMgr {
             NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_DATA_CHANGE);
             if (currentData.upgrading && !netBuilding.upgradeIng) {
                 // upgrade finish
-                if (DataMgr.s.userInfo.data.rookieStep == RookieStep.MAIN_BUILDING_TAP_2) {
-                    NetworkMgr.websocketMsg.player_rookie_update({
-                        rookieStep: RookieStep.SYSTEM_TALK_20,
-                    });
-                } else if (DataMgr.s.userInfo.data.rookieStep == RookieStep.MAIN_BUILDING_TAP_3) {
-                    NetworkMgr.websocketMsg.player_rookie_update({
-                        rookieStep: RookieStep.SYSTEM_TALK_22,
-                    });
-                }
+                // if (DataMgr.s.userInfo.data.rookieStep == RookieStep.MAIN_BUILDING_TAP_2) {
+                //     NetworkMgr.websocketMsg.player_rookie_update({
+                //         rookieStep: RookieStep.SYSTEM_TALK_20,
+                //     });
+                // } else if (DataMgr.s.userInfo.data.rookieStep == RookieStep.MAIN_BUILDING_TAP_3) {
+                //     NetworkMgr.websocketMsg.player_rookie_update({
+                //         rookieStep: RookieStep.SYSTEM_TALK_22,
+                //     });
+                // }
                 NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, currentData.buildType);
             }
 
@@ -872,20 +872,20 @@ export class DataMgr {
 
         if (threes.length <= 0) {
             // select from three cannot to next step
-            const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-            if (rookieStep == RookieStep.OPEN_BOX_1 && p.boxId == "9001") {
-                NetworkMgr.websocketMsg.player_rookie_update({
-                    rookieStep: RookieStep.NPC_TALK_5,
-                });
-            } else if (rookieStep == RookieStep.OPEN_BOX_2 && p.boxId == "9002") {
-                NetworkMgr.websocketMsg.player_rookie_update({
-                    rookieStep: RookieStep.NPC_TALK_7,
-                });
-            } else if (rookieStep == RookieStep.OPEN_BOX_3 && p.boxId == "9003") {
-                NetworkMgr.websocketMsg.player_rookie_update({
-                    rookieStep: RookieStep.SYSTEM_TALK_21,
-                });
-            }
+            // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+            // if (rookieStep == RookieStep.OPEN_BOX_1 && p.boxId == "9001") {
+            //     NetworkMgr.websocketMsg.player_rookie_update({
+            //         rookieStep: RookieStep.NPC_TALK_5,
+            //     });
+            // } else if (rookieStep == RookieStep.OPEN_BOX_2 && p.boxId == "9002") {
+            //     NetworkMgr.websocketMsg.player_rookie_update({
+            //         rookieStep: RookieStep.NPC_TALK_7,
+            //     });
+            // } else if (rookieStep == RookieStep.OPEN_BOX_3 && p.boxId == "9003") {
+            //     NetworkMgr.websocketMsg.player_rookie_update({
+            //         rookieStep: RookieStep.SYSTEM_TALK_21,
+            //     });
+            // }
         }
 
         this._playOpenBoxAnim(p.boxIndex, p.boxId, p.items, p.artifacts, p.threes);
@@ -896,23 +896,23 @@ export class DataMgr {
             return;
         }
         let nextStep: RookieStep = null;
-        const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-        if (rookieStep == RookieStep.OPEN_BOX_1) {
-            NetworkMgr.websocketMsg.player_rookie_update({
-                rookieStep: RookieStep.NPC_TALK_5,
-            });
-            nextStep = RookieStep.NPC_TALK_5;
-        } else if (rookieStep == RookieStep.OPEN_BOX_2) {
-            NetworkMgr.websocketMsg.player_rookie_update({
-                rookieStep: RookieStep.NPC_TALK_7,
-            });
-            nextStep = RookieStep.NPC_TALK_7;
-        } else if (rookieStep == RookieStep.OPEN_BOX_3) {
-            NetworkMgr.websocketMsg.player_rookie_update({
-                rookieStep: RookieStep.SYSTEM_TALK_21,
-            });
-            nextStep = RookieStep.SYSTEM_TALK_21;
-        }
+        // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+        // if (rookieStep == RookieStep.OPEN_BOX_1) {
+        //     NetworkMgr.websocketMsg.player_rookie_update({
+        //         rookieStep: RookieStep.NPC_TALK_5,
+        //     });
+        //     nextStep = RookieStep.NPC_TALK_5;
+        // } else if (rookieStep == RookieStep.OPEN_BOX_2) {
+        //     NetworkMgr.websocketMsg.player_rookie_update({
+        //         rookieStep: RookieStep.NPC_TALK_7,
+        //     });
+        //     nextStep = RookieStep.NPC_TALK_7;
+        // } else if (rookieStep == RookieStep.OPEN_BOX_3) {
+        //     NetworkMgr.websocketMsg.player_rookie_update({
+        //         rookieStep: RookieStep.SYSTEM_TALK_21,
+        //     });
+        //     nextStep = RookieStep.SYSTEM_TALK_21;
+        // }
         if (nextStep != null) {
             DataMgr.s.userInfo.data.rookieStep = nextStep;
             NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);

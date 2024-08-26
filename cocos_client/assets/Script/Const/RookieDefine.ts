@@ -3,73 +3,15 @@ export enum RookieStep {
 
     NPC_TALK_1 = 10,
 
-    NPC_TALK_3 = 20,
+    REPAIR_CITY = 15,
 
-    PIOT_TO_HEAT = 30,
-
-    NPC_TALK_4 = 40,
-
-    OPEN_BOX_1 = 50,
-
-    NPC_TALK_5 = 60,
-
-    TASK_SHOW_TAP_1 = 70,
-
-    ENEMY_FIGHT = 80,
-
-    TASK_SHOW_TAP_2 = 90,
-
-    NPC_TALK_6 = 100,
-
-    OPEN_BOX_2 = 110,
-
-    NPC_TALK_7 = 120,
-
-    ENTER_INNER = 130,
-
-    MAIN_BUILDING_TAP_1 = 140,
-
-    TASK_SHOW_TAP_3 = 150,
-
-    NPC_TALK_19 = 160,
-
-    RESOURCE_COLLECT = 170,
-
-    ENTER_INNER_2 = 180,
-
-    MAIN_BUILDING_TAP_2 = 190,
-
-    SYSTEM_TALK_20 = 200,
-
-    OPEN_BOX_3 = 210,
-
-    SYSTEM_TALK_21 = 220,
-
-    MAIN_BUILDING_TAP_3 = 230,
-
-    SYSTEM_TALK_22 = 240,
-
-    ENTER_OUTER = 250,
-
-    WORMHOLE_ATTACK = 260,
-
-    SYSTEM_TALK_23 = 270,
-    
-    DEFEND_TAP = 280,
-
-    SYSTEM_TALK_24 = 290,
-
-    LOCAL_DEFEND_TAP_CLOSE = 300,
-
-    OUTER_WORMHOLE = 310,
-
-    SHOW_WORMHOLE_TOKEN = 330,
-
-    LOCAL_SYSTEM_TALK_32 = 341,
-
-    SYSTEM_TALK_33 = 340,
 
     FINISH = 999999,
+}
+
+export enum RookieStepState {
+    DOING = 0,
+    FINISH = 1,
 }
 
 export enum RookieResourceAnim {

@@ -27,6 +27,7 @@ import { HUDName } from "../Const/ConstUIDefine";
 import { LoadingUI } from "../UI/Loading/LoadingUI";
 import { BundleName } from "../Basic/ResourcesMgr";
 import { DataMgr } from "../Data/DataMgr";
+import RookieStepMgr from "../Manger/RookieStepMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -48,6 +49,7 @@ export class GameMain extends ViewController {
         this._refreshUI(false);
 
         GameMgr.enterGameSence = true;
+        NotificationMgr.triggerEvent(NotificationName.GAME_SCENE_ENTER);
     }
 
     protected viewDidAppear(): void {

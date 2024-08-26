@@ -1,4 +1,4 @@
-import { _decorator, Asset, AssetManager, Component, director, DynamicAtlasManager, game, macro, Node } from "cc";
+import { _decorator, Asset, AssetManager, director } from "cc";
 import ViewController from "./BasicView/ViewController";
 import { AudioMgr, LanMgr, LocalDataLoader, ResourcesMgr } from "./Utils/Global";
 import ConfigMgr from "./Manger/ConfigMgr";
@@ -6,7 +6,7 @@ import NotificationMgr from "./Basic/NotificationMgr";
 import { NotificationName } from "./Const/Notification";
 import { GameName, HUDName, UIName } from "./Const/ConstUIDefine";
 import { LoadingUI } from "./UI/Loading/LoadingUI";
-import { GAME_ENV_IS_DEBUG, PioneerGameTest } from "./Const/ConstDefine";
+import { GAME_ENV_IS_DEBUG } from "./Const/ConstDefine";
 import UIPanelManger, { UIPanelLayerType } from "./Basic/UIPanelMgr";
 import { UIMainRootController } from "./UI/UIMainRootController";
 import { DataMgr } from "./Data/DataMgr";
@@ -16,6 +16,8 @@ import CLog from "./Utils/CLog";
 import { EthereumEventData_accountChanged, EthereumEventData_chainChanged, EthereumEventData_init, EthereumEventType } from "./Net/ethers/Ethereum";
 import { c2s_user, s2c_user } from "./Net/msg/WebsocketMsg";
 import { BundleName } from "./Basic/ResourcesMgr";
+import { GuideMgr } from "./UI/guide/GuideMgr";
+import RookieStepMgr from "./Manger/RookieStepMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("Main")
@@ -155,6 +157,8 @@ export class Main extends ViewController {
         this["__gameMainShowed"] = true;
         await LocalDataLoader.loadLocalDatas();
         await UIPanelManger.inst.pushPanel(UIName.MainUI);
+        GuideMgr.ins.initGuideData();
+        RookieStepMgr.instance().init();
         await this.node.getChildByPath("UI_Canvas/UI_ROOT").getComponent(UIMainRootController).checkShowRookieGuide();
         await UIPanelManger.inst.pushPanel(GameName.GameMain, UIPanelLayerType.Game);
     }

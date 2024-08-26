@@ -87,10 +87,10 @@ export class HeatTreasureUI extends Component {
         detailButton.active = false;
         questionButton.active = false;
 
-        if (rookieStep >= RookieStep.NPC_TALK_4) {
-            treasureProgressView.active = true;
-            questionButton.active = true;
-        }
+        // if (rookieStep >= RookieStep.NPC_TALK_4) {
+        //     treasureProgressView.active = true;
+        //     questionButton.active = true;
+        // }
         //------------------------------------------ heat
         const heatValue: number = DataMgr.s.userInfo.data.heatValue.currentHeatValue;
         const worldBoxThreshold: number[] = (ConfigConfig.getConfig(ConfigType.WorldBoxThreshold) as WorldBoxThresholdParam).thresholds;
@@ -180,39 +180,39 @@ export class HeatTreasureUI extends Component {
                 }
             }
         } else {
-            if (rookieStep >= RookieStep.OPEN_BOX_3) {
-                exploreValue = perBoxNeedExploreValue * 3;
-            } else if (rookieStep >= RookieStep.OPEN_BOX_2) {
-                exploreValue = perBoxNeedExploreValue * 2;
-            } else if (rookieStep >= RookieStep.NPC_TALK_4) {
-                exploreValue = perBoxNeedExploreValue;
-            }
+            // if (rookieStep >= RookieStep.OPEN_BOX_3) {
+            //     exploreValue = perBoxNeedExploreValue * 3;
+            // } else if (rookieStep >= RookieStep.OPEN_BOX_2) {
+            //     exploreValue = perBoxNeedExploreValue * 2;
+            // } else if (rookieStep >= RookieStep.NPC_TALK_4) {
+            //     exploreValue = perBoxNeedExploreValue;
+            // }
 
-            if (rookieStep > RookieStep.OPEN_BOX_3) {
-                worldBoxes = [
-                    { rank: 1, isOpen: true },
-                    { rank: 1, isOpen: true },
-                    { rank: 1, isOpen: true },
-                ];
-            } else if (rookieStep > RookieStep.OPEN_BOX_2) {
-                worldBoxes = [
-                    { rank: 1, isOpen: true },
-                    { rank: 1, isOpen: true },
-                    { rank: 1, isOpen: false },
-                ];
-            } else if (rookieStep > RookieStep.OPEN_BOX_1) {
-                worldBoxes = [
-                    { rank: 1, isOpen: true },
-                    { rank: 1, isOpen: false },
-                    { rank: 1, isOpen: false },
-                ];
-            } else {
-                worldBoxes = [
-                    { rank: 0, isOpen: false },
-                    { rank: 0, isOpen: false },
-                    { rank: 0, isOpen: false },
-                ];
-            }
+            // if (rookieStep > RookieStep.OPEN_BOX_3) {
+            //     worldBoxes = [
+            //         { rank: 1, isOpen: true },
+            //         { rank: 1, isOpen: true },
+            //         { rank: 1, isOpen: true },
+            //     ];
+            // } else if (rookieStep > RookieStep.OPEN_BOX_2) {
+            //     worldBoxes = [
+            //         { rank: 1, isOpen: true },
+            //         { rank: 1, isOpen: true },
+            //         { rank: 1, isOpen: false },
+            //     ];
+            // } else if (rookieStep > RookieStep.OPEN_BOX_1) {
+            //     worldBoxes = [
+            //         { rank: 1, isOpen: true },
+            //         { rank: 1, isOpen: false },
+            //         { rank: 1, isOpen: false },
+            //     ];
+            // } else {
+            //     worldBoxes = [
+            //         { rank: 0, isOpen: false },
+            //         { rank: 0, isOpen: false },
+            //         { rank: 0, isOpen: false },
+            //     ];
+            // }
         }
         const exploreTotalValue: number = perBoxNeedExploreValue * worldBoxes.length;
 
@@ -344,7 +344,7 @@ export class HeatTreasureUI extends Component {
 
     //----------------------------------- notification
     private _onHeatChange() {
-        const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+        // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
         const heatAnimView = this.node.getChildByPath("__ViewContent/Content/HeatProgress/HeatAnim");
         let delayTime: number = 1.5;
         if (heatAnimView.active) {
@@ -354,12 +354,12 @@ export class HeatTreasureUI extends Component {
         delayTime = 0;
         this.scheduleOnce(() => {
             this._refreshUI();
-            if (DataMgr.s.userInfo.data.rookieStep == RookieStep.PIOT_TO_HEAT) {
-                this.scheduleOnce(() => {
-                    DataMgr.s.userInfo.data.rookieStep = RookieStep.NPC_TALK_4;
-                    NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
-                }, 0.2);
-            }
+            // if (DataMgr.s.userInfo.data.rookieStep == RookieStep.PIOT_TO_HEAT) {
+            //     this.scheduleOnce(() => {
+            //         DataMgr.s.userInfo.data.rookieStep = RookieStep.NPC_TALK_4;
+            //         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
+            //     }, 0.2);
+            // }
         }, delayTime);
     }
 

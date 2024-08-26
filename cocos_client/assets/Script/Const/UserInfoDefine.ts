@@ -1,7 +1,7 @@
 import { share } from "../Net/msg/WebsocketMsg";
 import { InnerBuildingType, UserInnerBuildInfo } from "./BuildingDefine";
 import { CLvlCondition, CLvlConditionType } from "./Lvlup";
-import { RookieStep } from "./RookieDefine";
+import { RookieStep, RookieStepState } from "./RookieDefine";
 
 export interface ResourceModel {
     id: string;
@@ -48,6 +48,8 @@ export interface UserInfoObject {
     cityRadialRange: number;
 
     rookieStep: RookieStep;
+
+    rookiestate:RookieStepState;
 
     energyDidGetTimes: number;
     energyGetLimitTimes: number;

@@ -294,40 +294,26 @@ export class ResOprView extends Component {
 
         CommonTools.changeLayerIteratively(this.node, DataMgr.s.userInfo.data.rookieStep == RookieStep.FINISH ? Layers.Enum.DEFAULT : this.node.layer);
 
-        this.scheduleOnce(() => {
-            let view: Node = null;
-            let viewIndex: number = -1;
-            const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
-            if (
-                rookieStep == RookieStep.NPC_TALK_1 ||
-                rookieStep == RookieStep.NPC_TALK_3 ||
-                rookieStep == RookieStep.NPC_TALK_4 ||
-                rookieStep == RookieStep.NPC_TALK_5 ||
-                rookieStep == RookieStep.NPC_TALK_6 ||
-                rookieStep == RookieStep.NPC_TALK_7 ||
-                rookieStep == RookieStep.NPC_TALK_19
-            ) {
-                viewIndex = actionTypes.indexOf(MapInteractType.Talk);
-            } else if (rookieStep == RookieStep.ENEMY_FIGHT) {
-                viewIndex = actionTypes.indexOf(MapInteractType.Attack);
-            } else if (rookieStep == RookieStep.RESOURCE_COLLECT) {
-                viewIndex = actionTypes.indexOf(MapInteractType.Collect);
-            } else if (rookieStep == RookieStep.WORMHOLE_ATTACK) {
-                viewIndex = actionTypes.indexOf(MapInteractType.Camp);
-            } else if (rookieStep == RookieStep.OUTER_WORMHOLE) {
-                viewIndex = actionTypes.indexOf(MapInteractType.CampOut);
-            }
-            if (viewIndex != -1) {
-                view = this._actionItemContent.getChildByPath("ACTION_" + actionTypes[viewIndex]);
-            }
-            if (view != null) {
-                NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_NEED_MASK_SHOW, {
-                    tag: "mapAction",
-                    view: view,
-                    tapIndex: view.getComponent(Button).clickEvents[0].customEventData,
-                });
-            }
-        });
+        // this.scheduleOnce(() => {
+        //     let view: Node = null;
+        //     let viewIndex: number = -1;
+        //     const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
+        //     if (
+        //         rookieStep == RookieStep.NPC_TALK_1
+        //     ) {
+        //         viewIndex = actionTypes.indexOf(MapInteractType.Talk);
+        //     } 
+        //     if (viewIndex != -1) {
+        //         view = this._actionItemContent.getChildByPath("ACTION_" + actionTypes[viewIndex]);
+        //     }
+        //     if (view != null) {
+        //         NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_NEED_MASK_SHOW, {
+        //             tag: "mapAction",
+        //             view: view,
+        //             tapIndex: view.getComponent(Button).clickEvents[0].customEventData,
+        //         });
+        //     }
+        // });
     }
     public hide() {
         this.node.active = false;
@@ -340,9 +326,8 @@ export class ResOprView extends Component {
         this._actionItemContent = this.node.getChildByPath("ActionView/Action");
         this._actionItem = this._actionItemContent.getChildByPath("Item");
         this._actionItem.removeFromParent();
-
-        NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAP_ACTION, this._oRookieTapMapAction, this);
     }
+    
     start() {}
 
     update(deltaTime: number) {}
@@ -379,6 +364,6 @@ export class ResOprView extends Component {
         if (data == null || data.tapIndex == null) {
             return;
         }
-        this.onTapAction(null, data.tapIndex);
+        this.hide();
     }
 }
