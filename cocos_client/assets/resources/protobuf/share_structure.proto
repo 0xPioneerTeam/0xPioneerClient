@@ -57,6 +57,7 @@ message player_sinfo {
     required uint32 sightRange = 241;
     required bool didFinishRookie = 25;
     required uint32 rookieStep = 26;
+    required uint32 rookieState = 261;
     optional troop_info_data generateTroopInfo = 27;
     optional energy_info_data generateEnergyInfo = 28;
 
