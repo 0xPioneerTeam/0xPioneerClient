@@ -13,6 +13,10 @@ export class RedPointView extends Component {
     private _value: Label = null;
     
     public refreshUI(value: number, showNum: boolean = true) {
+        if (this._redPoint == null || this._value == null) {
+            // why when refresh, _redPoint is null ??
+            return;
+        }
         this._pointValue = value;
         this._showNum = showNum;
 

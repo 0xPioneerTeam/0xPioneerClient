@@ -163,6 +163,33 @@ export class ArtifactDataMgr {
         }
         return localData[uniqueId].count;
     }
+    public getOnEffectHasNew(index: number): boolean {
+        const onEffectArtifact = this._data.find((item)=> {
+            return item.effectIndex == index;
+        });
+        if (onEffectArtifact == undefined) {
+            // empty position
+            return true;
+        }
+        const allNotUsedArtifacts = this._data.filter((item)=> {
+            return item.effectIndex < 0;
+        });
+        const onEffectArtifactConfig = ArtifactConfig.getById(onEffectArtifact.artifactConfigId);
+        if (onEffectArtifactConfig == null) {
+            return false;
+        }
+        for (const element of allNotUsedArtifacts) {
+            const config = ArtifactConfig.getById(element.artifactConfigId);
+            if (config == null) {
+                continue;
+            }
+            if (config.rank > onEffectArtifactConfig.rank) {
+                // has higher artifact
+                return true;
+            }
+        }
+        return false;
+    }
     //-------------------------------------------------------
     public countChanged(change: ArtifactData, isCombine: boolean = false): void {
         if (change.count == 0) {

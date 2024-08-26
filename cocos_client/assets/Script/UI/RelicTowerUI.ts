@@ -39,6 +39,7 @@ import ArtifactConfig from "../Config/ArtifactConfig";
 import LongPressButton from "../BasicView/LongPressButton";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { RelicTowerSelectUI } from "./RelicTowerSelectUI";
+import { RedPointView } from "./View/RedPointView";
 const { ccclass, property } = _decorator;
 
 @ccclass("RelicTowerUI")
@@ -131,6 +132,9 @@ export class RelicTowerUI extends ViewController {
         this._compositeItem = this._storageView.getChildByPath("RightContent/Compose");
 
         NotificationMgr.addListener(NotificationName.ARTIFACT_EQUIP_DID_CHANGE, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshUI, this);
+
         NetworkMgr.websocket.on("player_artifact_combine_res", this._onPlayerArtifactCombine);
     }
     protected viewDidStart(): void {
@@ -140,7 +144,9 @@ export class RelicTowerUI extends ViewController {
         super.viewDidDestroy();
 
         NotificationMgr.removeListener(NotificationName.ARTIFACT_EQUIP_DID_CHANGE, this._refreshUI, this);
-        NotificationMgr.removeListener(NotificationName.ARTIFACT_CHANGE, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshUI, this);
+
         NetworkMgr.websocket.off("player_artifact_combine_res", this._onPlayerArtifactCombine);
     }
     protected viewPopAnimation(): boolean {
@@ -156,6 +162,20 @@ export class RelicTowerUI extends ViewController {
             this._tabButtons[i].getChildByName("BtnPageDark").active = i != this._showIndex;
             this._tabButtons[i].getChildByName("Label").getComponent(Label).color = i == this._showIndex ? new Color(66, 53, 35) : new Color(122, 114, 111);
         }
+
+        let hasRedPoint: boolean = false;
+        for (let i = 0; i < this._currentSlotViews.length; i++) {
+            const locked: boolean = !(i < this._effectLimit);
+            if (locked) {
+                continue;
+            }
+            if (DataMgr.s.artifact.getOnEffectHasNew(i)) {
+                hasRedPoint = true;
+                break;
+            }
+        }
+        this._tabButtons[0].getChildByPath("RedPointView").getComponent(RedPointView).refreshUI(hasRedPoint ? 1 : 0, false);
+        this._tabButtons[1].getChildByPath("RedPointView").getComponent(RedPointView).refreshUI(DataMgr.s.artifact.getAllNewArtifactCount());
 
         if (this._showIndex == 0) {
             this._onEffectView.active = true;
@@ -175,7 +195,6 @@ export class RelicTowerUI extends ViewController {
             this._effectContent.getComponent(Layout).updateLayout();
 
             const artifacts = DataMgr.s.artifact.getObj_artifact_equiped();
-
             for (let i = 0; i < this._currentSlotViews.length; i++) {
                 const locked: boolean = !(i < this._effectLimit);
                 let data: ArtifactData = null;
@@ -193,7 +212,15 @@ export class RelicTowerUI extends ViewController {
 
                 itemView.getComponent(ArtifactItem1).refreshUI(data);
 
-                itemView.getChildByPath("Prop").setSiblingIndex(99);
+                itemView.getChildByPath("Prop").setSiblingIndex(98);
+
+                let canRed: boolean = false;
+                if (!locked) {
+                    canRed = DataMgr.s.artifact.getOnEffectHasNew(i);
+                }
+                const redPointView = itemView.getChildByPath("RedPointView").getComponent(RedPointView);
+                redPointView.refreshUI(canRed ? 1 : 0, false);
+                redPointView.node.setSiblingIndex(99);
 
                 itemView.getComponent(LongPressButton).shortClick[0].customEventData = i.toString();
                 itemView.getComponent(LongPressButton).shortClickInteractable = !locked;
