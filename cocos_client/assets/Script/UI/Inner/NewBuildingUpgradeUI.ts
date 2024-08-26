@@ -153,12 +153,18 @@ export class NewBuildingUpgradeUI extends ViewController {
         // artifact
         NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
         NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+        // recruit
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
+        // exercise
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED, this._refreshExerciseRedPoint, this);
     }
 
     protected viewDidStart(): void {
         super.viewDidStart();
 
         this._refreshArtifactRedPoint();
+        this._refreshRecruitRedPoint();
+        this._refreshExerciseRedPoint();
     }
 
     protected viewDidAppear(): void {
@@ -187,6 +193,10 @@ export class NewBuildingUpgradeUI extends ViewController {
         // artifact
         NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
         NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+        // recruit
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
+        // exercise
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED, this._refreshExerciseRedPoint, this);
     }
     protected viewPopAnimation(): boolean {
         return true;
@@ -200,6 +210,16 @@ export class NewBuildingUpgradeUI extends ViewController {
         const redPointValue: number = DataMgr.s.artifact.getAllNewArtifactCount();
         const redPointView = this.node.getChildByPath("__ViewContent/ArtifactButton/RedPointView").getComponent(RedPointView);
         redPointView.refreshUI(redPointValue);
+    }
+    private _refreshRecruitRedPoint() {
+        const redPointValue: boolean = DataMgr.s.userInfo.getRecruitRedPoint();
+        const redPointView = this.node.getChildByPath("__ViewContent/RecruitButton/RedPointView").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue ? 1 : 0, false);
+    }
+    private _refreshExerciseRedPoint() {
+        const redPointValue: boolean = DataMgr.s.userInfo.getExerciseRedPoint();
+        const redPointView = this.node.getChildByPath("__ViewContent/ExerciseButton/RedPointView").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue ? 1 : 0, false);
     }
 
     //----------------------------- action

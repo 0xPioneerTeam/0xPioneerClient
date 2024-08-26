@@ -272,6 +272,7 @@ export class ExerciseUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+        DataMgr.s.userInfo.changeExerciseRedPoint(false);
     }
 
     private async onTapGenerate() {
@@ -311,6 +312,7 @@ export class ExerciseUI extends ViewController {
         });
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+        DataMgr.s.userInfo.changeExerciseRedPoint(false);
     }
 
     private onAddSlided(event: Event, customEventData: string) {

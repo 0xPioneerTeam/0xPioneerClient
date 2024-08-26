@@ -9,9 +9,14 @@ import NetGlobalData from "./Data/NetGlobalData";
 
 export default class UserInfoDataMgr {
     private _data: UserInfoObject = null;
+
+    private _recruitRedPointKey: string = "__UserInfoDataMgrRecruitRedPoint_";
+    private _exerciseRedPointKey: string = "__UserInfoDataMgrExerciseRedPoint_";
     public constructor() {}
     //--------------------------------
-    public loadObj() {
+    public loadObj(walletAddr: string) {
+        this._recruitRedPointKey += walletAddr;
+        this._exerciseRedPointKey += walletAddr;
         this._initData();
     }
     //--------------------------------
@@ -31,6 +36,22 @@ export default class UserInfoDataMgr {
     public changePlayerName(name: string) {
         this._data.name = name;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_NAME);
+    }
+
+    public getRecruitRedPoint(): boolean {
+        return localStorage.getItem(this._recruitRedPointKey) == "true" ? true : false;
+    }
+    public getExerciseRedPoint(): boolean {
+        return localStorage.getItem(this._exerciseRedPointKey) == "true" ? true : false;
+    }
+    
+    public changeRecruitRedPoint(show: boolean) {
+        localStorage.setItem(this._recruitRedPointKey, show ? "true" : "false");
+        NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED);
+    }
+    public changeExerciseRedPoint(show: boolean) {
+        localStorage.setItem(this._exerciseRedPointKey, show ? "true" : "false");
+        NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED);
     }
     //------------------------------------------------------------------------
     private async _initData() {

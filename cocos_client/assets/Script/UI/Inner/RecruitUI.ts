@@ -180,6 +180,7 @@ export class RecruitUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+        DataMgr.s.userInfo.changeRecruitRedPoint(false);
     }
 
     private onTapGenerateMax() {
@@ -243,6 +244,7 @@ export class RecruitUI extends ViewController {
 
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+        DataMgr.s.userInfo.changeRecruitRedPoint(false);
     }
     private async onTapDelegate() {
         GameMusicPlayMgr.playTapButtonEffect();

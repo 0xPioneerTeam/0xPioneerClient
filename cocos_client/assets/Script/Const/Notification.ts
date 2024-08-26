@@ -74,6 +74,8 @@ export enum NotificationName {
     //------------------------------------ inner building
     INNER_BUILDING_UPGRADE_FINISHED,
     INNER_BUILDING_DATA_CHANGE,
+    INNER_BUILDING_RECRUIT_REDPOINT_CHANGED,
+    INNER_BUILDING_TRAIN_REDPOINT_CHANGED,
 
     //------------------------------------ language
     CHANGE_LANG,

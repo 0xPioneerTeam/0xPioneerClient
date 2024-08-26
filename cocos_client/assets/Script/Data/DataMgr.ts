@@ -339,6 +339,13 @@ export class DataMgr {
                 }
                 NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, currentData.buildType);
             }
+
+            if (currentData.troopIng && !netBuilding.troopIng) {
+                DataMgr.s.userInfo.changeRecruitRedPoint(true);
+            }
+            if (currentData.tc != null && netBuilding.tc != null && currentData.tc.training != null && netBuilding.tc.training == null) {
+                DataMgr.s.userInfo.changeExerciseRedPoint(true);
+            }
         }
     };
     public static player_building_pos_res = (e: any) => {
