@@ -1,4 +1,199 @@
 {
+  "100000": {
+    "id": "100000",
+    "eng": "You’re finally here. The prophecy is about to be fulfilled. You are the future King of Noxus!",
+    "tc": "您終於來了，預言即將成為現實，未來的諾克薩斯之王！"
+  },
+  "100001": {
+    "id": "100001",
+    "eng": "You seem confused, but don't worry, you'll understand soon.",
+    "tc": "看起來您很困惑，沒關係，很快您就明白了"
+  },
+  "100002": {
+    "id": "100002",
+    "eng": "Your subjects have prepared some gifts to welcome you. Please accept them.",
+    "tc": "您的臣民為了迎接您的到來，準備了一些見面禮，還請接受"
+  },
+  "100100": {
+    "id": "100100",
+    "eng": "As you can see, our kingdom has been ravaged by enemies. All the buildings have been reduced to ruins.",
+    "tc": "如您所見，我們的王國遭受到敵人的掠奪，所有建築都被夷為廢墟"
+  },
+  "100101": {
+    "id": "100101",
+    "eng": "Restoring the former glory of Noxus begins with repairing the Town Hall.",
+    "tc": "要重整諾克薩斯的往日榮光，需要從修復市政廳開始"
+  },
+  "100102": {
+    "id": "100102",
+    "eng": "Everything is proceeding as planned. Once the Town Hall is restored, you can build other structures.",
+    "tc": "一切都按照計畫在進行，有了市政廳就能修建其他更多建築了"
+  },
+  "100200": {
+    "id": "100200",
+    "eng": "To fend off imminent enemy attacks, we need to establish our own army first.",
+    "tc": "為了抵禦敵人隨時而來的襲擊，我們需要先組建自己的軍隊"
+  },
+  "100201": {
+    "id": "100201",
+    "eng": "Building a Barracks will provide us with a steady supply of soldiers.",
+    "tc": "修建了募兵處，就能為我們源源不斷提供兵源了"
+  },
+  "100202": {
+    "id": "100202",
+    "eng": "See, that was easy! Now it’s time to recruit some soldiers.",
+    "tc": "看，很容易吧，那接下來就是要招募士兵了"
+  },
+  "100300": {
+    "id": "100300",
+    "eng": "The people of Noxus have never feared war, and they take pride in joining the army to defend their homeland.",
+    "tc": "諾克薩斯的子民從來不懼怕戰爭，也以加入守衛家園的軍隊為榮"
+  },
+  "100301": {
+    "id": "100301",
+    "eng": "Just make sure to provide enough rations.",
+    "tc": "只要給足糧餉就行"
+  },
+  "100302": {
+    "id": "100302",
+    "eng": "A strong army is essential for rebuilding the royal city.",
+    "tc": "擁有一支具有戰鬥力的軍隊是重建王城的根本"
+  },
+  "100400": {
+    "id": "100400",
+    "eng": "The size of the army is influenced by the number of houses. To recruit more soldiers, we need to build more houses.",
+    "tc": "軍隊的規模受房屋影響，想要招募更多士兵，那就需要修建更多房屋"
+  },
+  "100500": {
+    "id": "100500",
+    "eng": "Rapid development cannot rely on the current limited resources.",
+    "tc": "想要快速發展，僅靠現在的這點資源是遠遠不夠的"
+  },
+  "100501": {
+    "id": "100501",
+    "eng": "Sending the army outside the city to gather resources is the safest way to acquire them.",
+    "tc": "將軍隊派到城外去採集資源，是最為安全獲取資源的方式"
+  },
+  "100502": {
+    "id": "100502",
+    "eng": "Resources are the root cause of all wars.",
+    "tc": "資源，所有戰爭的根源都是為了爭奪資源"
+  },
+  "100600": {
+    "id": "100600",
+    "eng": "Oh, there’s another special resource called PIOT.",
+    "tc": "對了，還有一種特殊的資源叫做PIOT"
+  },
+  "100601": {
+    "id": "100601",
+    "eng": "Those who possess PIOT can become rulers with governing authority in the world.",
+    "tc": "擁有PIOT的人可以成為擁有治理權的世界主宰"
+  },
+  "100602": {
+    "id": "100602",
+    "eng": "Using PIOT can directly increase Heat Value, and it can also be used to speed up actions, acquire extra resources, and enhance your returns.",
+    "tc": "使用PIOT可以直接增加熱力值，並且PIOT還可以用於行動提速，額外獲取資源等提升你收益的作用"
+  },
+  "100603": {
+    "id": "100603",
+    "eng": "Heat Value is closely tied to treasure chests. The higher your Heat Value, the more treasure chests you can open daily, increasing your chances of obtaining high-quality rewards.",
+    "tc": "熱力值是一個與寶箱緊密聯繫的數值，熱力值越高，每日可開啟的寶箱數量越多，獲得高品質獎勵的機會也將提升"
+  },
+  "100700": {
+    "id": "100700",
+    "eng": "Treasure chests are the core of your income in this world. Your rewards and the resources that support your actions in the world can all be obtained through treasure chests.",
+    "tc": "寶箱是你在世界中獲得收益的核心，你的收益和支撐你在世界中行動的資源都可以通過寶箱獲得"
+  },
+  "100701": {
+    "id": "100701",
+    "eng": "However, the rewards inside treasure chests are shared by all users, so you need to find ways to claim high-quality rewards before others do.",
+    "tc": "但是寶箱內的獎勵是所有用戶共用的，所以你需要想方設法的比其他人先獲得寶箱內的高品質獎勵。"
+  },
+  "100702": {
+    "id": "100702",
+    "eng": "You’re still a bit confused, aren’t you? No worries, open a treasure chest and see what we can get.",
+    "tc": "你肯定還有些困惑，沒關係，先開一個寶箱，看我們能獲得什麼"
+  },
+  "100703": {
+    "id": "100703",
+    "eng": "Wow, we’ve obtained Psyche Energy, which we usually refer to as PSYC. Your actions will require the support of PSYC.",
+    "tc": "哇哦，我們獲得了靈能，通常我們也稱之為PSYC，你的行動都將會需要PSYC的支持"
+  },
+  "100800": {
+    "id": "100800",
+    "eng": "Curious about what exactly PSYC does?",
+    "tc": "是不是想知道PSYC具體有什麼作用？"
+  },
+  "100801": {
+    "id": "100801",
+    "eng": "Don’t rush. To make our army stronger, let’s build a Barracks first.",
+    "tc": "不急，為了讓我們的軍隊更具有戰鬥力，先修建兵營"
+  },
+  "100900": {
+    "id": "100900",
+    "eng": "Next, train the soldiers to make our army more powerful.",
+    "tc": "接著訓練士兵，讓我們的軍隊更具有戰鬥力"
+  },
+  "100901": {
+    "id": "100901",
+    "eng": "Having an army with different types of units will allow us to handle various complex war scenarios.",
+    "tc": "擁有不同兵種的軍隊，能讓我們應對各種複雜的戰爭環境"
+  },
+  "100902": {
+    "id": "100902",
+    "eng": "Take it step by step; we’ll start by training the most basic infantry.",
+    "tc": "慢慢來，我們先訓練最為初級的步兵"
+  },
+  "101000": {
+    "id": "101000",
+    "eng": "After all that preparation, let’s have the young man face a real challenge.",
+    "tc": "鋪墊了那麼久，讓小夥子真正接受一場挑戰吧"
+  },
+  "101001": {
+    "id": "101001",
+    "eng": "Do you see that enemy outside the city? They’re just scattered troops, nothing to fear.",
+    "tc": "看到城外的那個敵人了嗎，散兵游勇，不足為懼"
+  },
+  "101002": {
+    "id": "101002",
+    "eng": "Let our blades taste the blood of the enemy!",
+    "tc": "讓我們的利刃品嘗敵人的鮮血吧！"
+  },
+  "101100": {
+    "id": "101100",
+    "eng": "A simple battle doesn’t mean we’re strong enough.",
+    "tc": "輕而易舉的戰鬥並不能代表我們已經足夠強大"
+  },
+  "101101": {
+    "id": "101101",
+    "eng": "Training commanding officers can effectively enhance the combat power of the army.",
+    "tc": "訓練帶兵的將領，能有效地提升軍隊的戰鬥力"
+  },
+  "101102": {
+    "id": "101102",
+    "eng": "The simplest way is to level them up.",
+    "tc": "最為簡單的方式，提升他們的等級"
+  },
+  "101200": {
+    "id": "101200",
+    "eng": "On this continent, there are countless others like you who have been summoned.",
+    "tc": "在這片大陸上，有著無數個如你一樣被召喚而來的人"
+  },
+  "101201": {
+    "id": "101201",
+    "eng": "But there will only be one King of Noxus. Will it be you?",
+    "tc": "但諾克薩斯之王只會有一個，會是你嗎？"
+  },
+  "101202": {
+    "id": "101202",
+    "eng": "I don’t know! But I hope it’s you.",
+    "tc": "我不知道！但我希望是你"
+  },
+  "101203": {
+    "id": "101203",
+    "eng": "Go check out your neighboring friends. Let’s see who’s the imposter!",
+    "tc": "去看看你周圍的好鄰居吧，讓我看看誰才是冒牌貨！"
+  },
   "104001": {
     "id": "104001",
     "eng": "No qualification",
@@ -381,8 +576,8 @@
   },
   "108001": {
     "id": "108001",
-    "eng": "Skill Name",
-    "tc": "技能名稱"
+    "eng": "Insight",
+    "tc": "洞察"
   },
   "108002": {
     "id": "108002",
@@ -393,11 +588,6 @@
     "id": "108003",
     "eng": "Divine Eye",
     "tc": "神眼"
-  },
-  "108004": {
-    "id": "108004",
-    "eng": "Insight",
-    "tc": "洞察"
   },
   "109001": {
     "id": "109001",
@@ -4626,8 +4816,8 @@
   },
   "1080011": {
     "id": "1080011",
-    "eng": "Skill Des",
-    "tc": "技能描述"
+    "eng": "Discover the enemy's weakness and increase attack damage by 20%",
+    "tc": "發現敵人的弱點，提升攻擊傷害20%"
   },
   "1080012": {
     "id": "1080012",
@@ -4638,11 +4828,6 @@
     "id": "1080013",
     "eng": "Each attack has a 10% chance of causing 200% attack damage",
     "tc": "每次攻擊有10%幾率造成200%的攻擊傷害"
-  },
-  "1080014": {
-    "id": "1080014",
-    "eng": "Discover the enemy's weakness and increase attack damage by 20%",
-    "tc": "發現敵人的弱點，提升攻擊傷害20%"
   },
   "1090051": {
     "id": "1090051",
