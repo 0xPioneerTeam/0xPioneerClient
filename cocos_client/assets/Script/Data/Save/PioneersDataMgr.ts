@@ -100,6 +100,47 @@ export class PioneersDataMgr {
         };
         return obj;
     }
+    
+    public createNPCData(uniqueId: string, pos: Vec2) {
+        const pioneerId: string = uniqueId.split("|")[1];
+        const animType = PioneerConfig.getById(pioneerId)?.animType;
+        let obj: MapPlayerPioneerObject = {
+            uniqueId: uniqueId,
+            id: pioneerId,
+            show: true,
+            level: 1,
+            faction: MapMemberFactionType.friend,
+            type: MapPioneerType.npc,
+            animType: animType == undefined ? "self" : animType,
+            name: uniqueId,
+            hp: 0,
+            hpMax: 0,
+            attack: 0,
+            defend: 0,
+            speed: 0,
+            energy: 0,
+            energyMax: 0,
+            stayPos: pos,
+            movePaths: [],
+            actionType: MapPioneerActionType.staying,
+            actionBeginTimeStamp: 0,
+            actionEndTimeStamp: 0,
+            actionEndReturn: false,
+            logics: [],
+            winProgress: 0,
+            winExp: 0,
+            drop: [],
+            rebirthStartTime: 0,
+            rebirthEndTime: 0,
+            killerId: "",
+            NFTId: "",
+            rebornTime: 0,
+            troopId: "0",
+        };
+        return obj;
+    }
+
+
     public addData(data: share.Ipioneer_data) {
         const isExit = this._pioneers.findIndex((item) => item.uniqueId == data.uniqueId) != -1;
         if (isExit) {
