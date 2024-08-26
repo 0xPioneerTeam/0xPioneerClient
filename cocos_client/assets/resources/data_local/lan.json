@@ -1,4 +1,69 @@
 {
+  "1000": {
+    "id": "1000",
+    "eng": "Prophet's revelation",
+    "tc": "先知的啟示"
+  },
+  "1001": {
+    "id": "1001",
+    "eng": "Repair the city hall",
+    "tc": "修復市政廳"
+  },
+  "1002": {
+    "id": "1002",
+    "eng": "Build a recruiting office",
+    "tc": "修建募兵處"
+  },
+  "1003": {
+    "id": "1003",
+    "eng": "Recruit soldiers",
+    "tc": "徵召士兵"
+  },
+  "1004": {
+    "id": "1004",
+    "eng": "Build houses",
+    "tc": "修建房屋"
+  },
+  "1005": {
+    "id": "1005",
+    "eng": "Gather resources",
+    "tc": "採集資源"
+  },
+  "1006": {
+    "id": "1006",
+    "eng": "Thermal PIOT",
+    "tc": "熱力PIOT"
+  },
+  "1007": {
+    "id": "1007",
+    "eng": "Open treasure chest",
+    "tc": "打開寶箱"
+  },
+  "1008": {
+    "id": "1008",
+    "eng": "Build barracks",
+    "tc": "修建兵營"
+  },
+  "1009": {
+    "id": "1009",
+    "eng": "Train soldiers",
+    "tc": "訓練士兵"
+  },
+  "1010": {
+    "id": "1010",
+    "eng": "Challenge wild monsters",
+    "tc": "挑戰野怪"
+  },
+  "1011": {
+    "id": "1011",
+    "eng": "Upgrade heroes",
+    "tc": "升級英雄"
+  },
+  "1012": {
+    "id": "1012",
+    "eng": "Wormhole challenge",
+    "tc": "蟲洞挑戰"
+  },
   "100000": {
     "id": "100000",
     "eng": "You’re finally here. The prophecy is about to be fulfilled. You are the future King of Noxus!",
