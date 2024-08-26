@@ -33,6 +33,7 @@ export class DispatchUI extends ViewController {
     private _isReturn: boolean = true;
 
     private _timeLabel: Label = null;
+    private _returnTitle: Node = null;
     private _returnSwitchButton: Node = null;
     private _energyLabel: Label = null;
     private _playerScrollView: Node = null;
@@ -67,6 +68,7 @@ export class DispatchUI extends ViewController {
         const localReturn = localStorage.getItem("__interactReturn");
         this._isReturn = localReturn == "false" ? false : true;
 
+        this._returnTitle = this.node.getChildByPath("ContentView/ReturnTitle");
         this._returnSwitchButton = this.node.getChildByPath("ContentView/ReturnSwitchButton");
         // this._timeLabel = this.node.getChildByPath("ContentView/CostTime/Value").getComponent(Label);
         // this._energyLabel = this.node.getChildByPath("ContentView/CostView/Content/Value").getComponent(Label);
@@ -152,16 +154,15 @@ export class DispatchUI extends ViewController {
         this._playerContentView.getComponent(Widget).updateAlignment();
 
         // wromhole action not support return
+
         this._returnSwitchButton.active = this._interactType != MapInteractType.WmMark && this._interactType != MapInteractType.WmMatch && this._interactType != MapInteractType.WmRecall && this._interactType != MapInteractType.WmTeleport;
+        this._returnTitle.active = this._returnSwitchButton.active;
     }
 
     private _refreshEnergyAndTime() {
         // const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / this._moveSpeed;
         // this._timeLabel.string = CommonTools.formatSeconds(perStepTime * this._step * (this._isReturn ? 1 : 1));
-
-        this._returnSwitchButton.getChildByPath("Return").active = this._isReturn;
-        this._returnSwitchButton.getChildByPath("OneWay").active = !this._isReturn;
-
+        this._returnSwitchButton.getChildByPath("Selected").active = this._isReturn;
         // this._energyLabel.string = (this._tempShowCostEnergy * (this._isReturn ? 1 : 1)).toString();
         // this._energyLabel.node.parent.getComponent(Layout).updateLayout();
     }

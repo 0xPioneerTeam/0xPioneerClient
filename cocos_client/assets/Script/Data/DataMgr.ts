@@ -345,6 +345,9 @@ export class DataMgr {
             }
             if (currentData.tc != null && netBuilding.tc != null && currentData.tc.training != null && netBuilding.tc.training == null) {
                 DataMgr.s.userInfo.changeExerciseRedPoint(true);
+                // use lan
+                NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Training completed");
+                NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_TRAIN_FINISHED);
             }
         }
     };
@@ -475,16 +478,22 @@ export class DataMgr {
                     }
                     // action type
                     if (oldData.actionType != newData.actionType || oldData.actionEndTimeStamp != newData.actionEndTimeStamp) {
-                        if (newData.type == MapPioneerType.player && oldData.actionType != MapPioneerActionType.inCity && newData.actionType == MapPioneerActionType.inCity) {
-                            // local play return
-                            const targetPos = GameMgr.getMainCityGatePos();
-                            if (targetPos != null) {
-                                (newData as MapPlayerPioneerObject).needReturn = true;
-                                newData.stayPos = oldData.stayPos;
-                                DataMgr.s.pioneer.beginMove(
-                                    newData.uniqueId,
-                                    GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(oldData.stayPos, targetPos).path
-                                );
+                        if (
+                            newData.type == MapPioneerType.player &&
+                            oldData.actionType != MapPioneerActionType.inCity &&
+                            newData.actionType == MapPioneerActionType.inCity
+                        ) {
+                            if (!PioneerMgr.checkWormholeBackPioneer(newData.uniqueId)) {
+                                // local play return
+                                const targetPos = GameMgr.getMainCityGatePos();
+                                if (targetPos != null) {
+                                    (newData as MapPlayerPioneerObject).needReturn = true;
+                                    newData.stayPos = oldData.stayPos;
+                                    DataMgr.s.pioneer.beginMove(
+                                        newData.uniqueId,
+                                        GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(oldData.stayPos, targetPos).path
+                                    );
+                                }
                             }
                         }
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: newData.uniqueId });
@@ -736,6 +745,7 @@ export class DataMgr {
         if (p.res !== 1) {
             return;
         }
+        PioneerMgr.setWormholeBackPioneer(p.pioneerId);
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Pioneer is back");
     };
 

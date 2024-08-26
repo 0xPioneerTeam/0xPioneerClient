@@ -294,6 +294,11 @@ export class OuterTiledMapActionController extends ViewController {
         );
         // local fog
         // this._refreshFog(GameMainHelper.instance.tiledMapGetShadowClearedTiledPositions());
+
+        const allShadows = DataMgr.s.eraseShadow.getObj();
+        for (const shadow of allShadows) {
+            GameMainHelper.instance.tiledMapShadowErase(shadow);
+        }
         GameMainHelper.instance.updateGameViewport();
     }
 
@@ -551,7 +556,6 @@ export class OuterTiledMapActionController extends ViewController {
                     }
                 }
                 if (isSelf) {
-                    
                 } else {
                     const data = GameMgr.getMapSlotData(slotId);
                     if (slotId == null || data == undefined || data.playerId === "0") {
@@ -681,9 +685,17 @@ export class OuterTiledMapActionController extends ViewController {
                                         // select teleport target
                                         const result = await UIPanelManger.inst.pushPanel(UIName.WormholeTpSelectUI);
                                         if (result.success) {
-                                            result.node.getComponent(WormholeTpSelectUI).configuration((tpBuildingId: string)=> {
+                                            result.node.getComponent(WormholeTpSelectUI).configuration((tpBuildingId: string) => {
                                                 extra.tpBuildingId = tpBuildingId;
-                                                this._doInteract(currentActionPioneer.uniqueId, targetType, targetUnqueId, actionType, extra, movePaths, isReturn);
+                                                this._doInteract(
+                                                    currentActionPioneer.uniqueId,
+                                                    targetType,
+                                                    targetUnqueId,
+                                                    actionType,
+                                                    extra,
+                                                    movePaths,
+                                                    isReturn
+                                                );
                                             });
                                         }
                                         return;
@@ -705,8 +717,8 @@ export class OuterTiledMapActionController extends ViewController {
         let layers = this._tileLayers;
         let areaWidth = TileMapHelper.INS.pixelwidth - TileMapHelper.INS.tilewidth / 2;
         let areaHeight = TileMapHelper.INS.pixelheight - TileMapHelper.INS.tileheight / 4;
-        let stx = Math.max(0, rect2.xMin);   // x > 0
-        let sty = rect2.yMin;   
+        let stx = Math.max(0, rect2.xMin); // x > 0
+        let sty = rect2.yMin;
         let endx = rect2.xMax;
         let endy = Math.min(0, rect2.yMax); // y < 0
         let containerBox = this.node._uiProps.uiTransformComp.getBoundingBox();
@@ -1000,19 +1012,21 @@ export class OuterTiledMapActionController extends ViewController {
         // }
     }
 
-    private _doInteract(actionPioneerUnqueId: string, targetType: MapMemberTargetType, targetId: string, interactType: MapInteractType, interactExtra: any, movePath: TilePos[], isReturn: boolean) {
+    private _doInteract(
+        actionPioneerUnqueId: string,
+        targetType: MapMemberTargetType,
+        targetId: string,
+        interactType: MapInteractType,
+        interactExtra: any,
+        movePath: TilePos[],
+        isReturn: boolean
+    ) {
         if (targetType == null && interactType != MapInteractType.Move) {
             // error params
             return;
         }
         if (interactType != MapInteractType.Move) {
-            PioneerMgr.setMovingTarget(
-                actionPioneerUnqueId,
-                targetType,
-                targetId,
-                interactType,
-                interactExtra
-            );
+            PioneerMgr.setMovingTarget(actionPioneerUnqueId, targetType, targetId, interactType, interactExtra);
         }
         if (movePath.length <= 0) {
             DataMgr.s.pioneer.beginMove(actionPioneerUnqueId, []);

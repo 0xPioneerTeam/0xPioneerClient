@@ -660,6 +660,7 @@ export namespace s2c_user {
     }
     export interface Iplayer_wormhole_tp_back_res {
         res: number;
+        pioneerId: string;
     }
     export interface Iplayer_wormhole_tp_tag_res {
         res: number;

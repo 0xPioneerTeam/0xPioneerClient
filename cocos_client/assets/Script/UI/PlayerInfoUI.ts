@@ -123,7 +123,7 @@ export class PlayerInfoUI extends ViewController {
         this._langSelectView = this.node.getChildByName("OptionContainer");
         this._langSelectView.active = false;
 
-        this._redPointShowView = this.node.getChildByPath("Content/tabContents/SettingsContent/RedPointTitle/Switch");
+        this._redPointShowView = this.node.getChildByPath("Content/tabContents/SettingsContent/RedPointTitle/SwitchButton");
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._onChangeLang, this);
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._refreshUI, this);
@@ -361,8 +361,7 @@ export class PlayerInfoUI extends ViewController {
     }
 
     private _refreshRedPointShow() {
-        this._redPointShowView.getChildByPath("Off").active = !GameMgr.showRedPoint;
-        this._redPointShowView.getChildByPath("On").active = GameMgr.showRedPoint;
+        this._redPointShowView.getChildByPath("Selected").active = GameMgr.showRedPoint;
     }
 
     private async _refreshNextLevelView() {

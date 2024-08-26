@@ -190,6 +190,9 @@ export class NFTInfoUI extends ViewController {
         const skillEffectConfig = NFTSkillEffectConfig.getDesByIds(skillConfig.effect);
         content.getChildByPath("TabLevel/content/skill/name").getComponent(Label).string = LanMgr.getLanById(skillConfig.name);
         content.getChildByPath("TabLevel/content/skill/desc").getComponent(Label).string = skillEffectConfig;
+        for (const child of content.getChildByPath("TabLevel/content/skill/Icon").children) {
+            child.active = child.name == skillConfig.icon;
+        }
         // skill
         // old skill have been remove tempolary, so we don't show it
         // for (const item of this._skillAllItems) {

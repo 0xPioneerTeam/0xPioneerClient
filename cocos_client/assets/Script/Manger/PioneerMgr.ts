@@ -95,9 +95,21 @@ export default class PioneerMgr {
     public addActionOverReturnPioneer(uniqueId: string) {
         this._actionOverReturnPioneerUniqueId.push(uniqueId);
     }
+    public setWormholeBackPioneer(uniqueId: string) {
+        this._wormholeBackPioneerUniqueId.push(uniqueId);
+    }
+    public checkWormholeBackPioneer(uniqueId: string) {
+        const index = this._wormholeBackPioneerUniqueId.indexOf(uniqueId);
+        if (index != -1) {
+            this._wormholeBackPioneerUniqueId.splice(index, 1);
+            return true;
+        }
+        return false;
+    }
 
     private _movingTargetDataMap: Map<string, { target: MapMemberTargetType; id: string; interactType: MapInteractType, extra: any }> = new Map();
     private _actionOverReturnPioneerUniqueId: string[] = [];
+    private _wormholeBackPioneerUniqueId: string[] = [];
     public constructor() {}
 
     private async _moveMeeted(uniqueId: string, interactDirectly: boolean) {

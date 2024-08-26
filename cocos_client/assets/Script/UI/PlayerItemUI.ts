@@ -96,7 +96,7 @@ export class PlayerItemUI extends Component {
         const view = this.node.getChildByPath("HpTipView");
         view.active = true;
         view.getChildByPath("HpValue").getComponent(Label).string = "HP" + this._model.hp + "/" + (this._model.hpMax * this._hpRate);
-        view.getChildByPath("ApValue").getComponent(Label).string = "AP" + this._model.energy + "/" + this._model.energyMax;
+        view.getChildByPath("ApValue").getComponent(Label).string = "STM" + this._model.energy + "/" + this._model.energyMax;
     }
     private onMouseLeave() {
         const view = this.node.getChildByPath("HpTipView");

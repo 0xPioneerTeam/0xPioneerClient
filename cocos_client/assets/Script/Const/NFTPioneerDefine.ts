@@ -20,6 +20,7 @@ export interface NFTPioneerSkillConfigData {
     name: string;
     rank: number;
     effect: string[];
+    icon: string;
 }
 export interface NFTPioneerSkillEffectConfigData {
     id: string;

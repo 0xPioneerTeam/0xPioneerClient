@@ -246,7 +246,9 @@ export default class GameMgr {
         let buildingCost: number = 0;
         if (interactBuildingId != null) {
             const buildingConfig = this.getMapBuildingConfigByExistSlotInfo(interactBuildingId);
-            buildingCost = buildingConfig.cost;
+            if (buildingConfig.cost != null) {
+                buildingCost = buildingConfig.cost;
+            }
         }
         const perStepCostEnergy = (ConfigConfig.getConfig(ConfigType.OneStepCostEnergy) as OneStepCostEnergyParam).cost;
         return perStepCostEnergy * moveStep + buildingCost;

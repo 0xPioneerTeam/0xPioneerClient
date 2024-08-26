@@ -7,14 +7,14 @@ import { UIName } from "../../Const/ConstUIDefine";
 import { PlayerInfoItem } from "../View/PlayerInfoItem";
 import { DataMgr } from "../../Data/DataMgr";
 import { ResourceCorrespondingItem } from "../../Const/ConstDefine";
-import { RecruitUI } from "../Inner/RecruitUI";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import ItemData from "../../Const/Item";
 import TroopsConfig from "../../Config/TroopsConfig";
-import CommonTools from "../../Tool/CommonTools";
 import { GameMgr, LanMgr } from "../../Utils/Global";
+import { InnerBuildingType } from "../../Const/BuildingDefine";
+import InnerBuildingLvlUpConfig from "../../Config/InnerBuildingLvlUpConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerDispatchDetailUI")
@@ -48,11 +48,9 @@ export class PlayerDispatchDetailUI extends ViewController {
         this._infos = infos;
         this._showIndex = showIndex;
 
-        const info = infos[this._showIndex];
-        if (info.hp > 0) {
-            this._selectTroopId = info.troopId;
-            this._addTroopNum = GameMgr.convertHpToTroopNum(info.hp, info.troopId);
-        }
+        this._selectTroopId = "0";
+        this._addTroopNum = 0;
+        this._initTroopSelect();
         this._refreshUI();
     }
 
@@ -89,19 +87,10 @@ export class PlayerDispatchDetailUI extends ViewController {
     protected viewDidStart(): void {
         super.viewDidStart();
 
-        // default troop
-        this._createSelectItem("0");
-        // other troop
-        const troopsConfig = TroopsConfig.getAll();
-        for (const key in troopsConfig) {
-            if (Object.prototype.hasOwnProperty.call(troopsConfig, key)) {
-                const element = troopsConfig[key];
-                this._createSelectItem(element.id);
-            }
-        }
-        this._troopSelectItemContentView.getComponent(Layout).updateLayout();
 
         NotificationMgr.addListener(NotificationName.RESOURCE_GETTED, this._onResourceGetted, this);
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_TRAIN_FINISHED, this._onNewTroopGetted, this);
+
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
     }
 
@@ -109,6 +98,8 @@ export class PlayerDispatchDetailUI extends ViewController {
         super.viewDidDestroy();
 
         NotificationMgr.removeListener(NotificationName.RESOURCE_GETTED, this._onResourceGetted, this);
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_TRAIN_FINISHED, this._onNewTroopGetted, this);
+
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
     }
 
@@ -119,7 +110,7 @@ export class PlayerDispatchDetailUI extends ViewController {
         return this.node.getChildByPath("ContentView");
     }
 
-    private _createSelectItem(troopId: string) {
+    private _createSelectItem(troopId: string, value: number) {
         const item = instantiate(this._troopSelectItem);
         item.parent = this._troopSelectItemContentView;
         for (const child of item.getChildByPath("Icon").children) {
@@ -129,14 +120,39 @@ export class PlayerDispatchDetailUI extends ViewController {
                 child.active = child.name.includes(troopId);
             }
         }
+        item.getChildByPath("Value").getComponent(Label).string = value == null ? "0" : value.toString();
+
         item.getComponent(Button).clickEvents[0].customEventData = troopId;
     }
+
+    private _initTroopSelect() {
+        // clear child
+        this._troopSelectItemContentView.removeAllChildren();
+        // default troop
+        this._createSelectItem("0", this._getOwnedTroopNum("0"));
+        // other troop
+        const troopsConfig = TroopsConfig.getAll();
+        let unlockTroops = [];
+        const troopBuildingData = DataMgr.s.innerBuilding.data.get(InnerBuildingType.TrainingCenter);
+        if (troopBuildingData != null) {
+            unlockTroops = InnerBuildingLvlUpConfig.getUnlockTroops(troopBuildingData.buildLevel);
+        }
+        for (const key in troopsConfig) {
+            if (Object.prototype.hasOwnProperty.call(troopsConfig, key)) {
+                const element = troopsConfig[key];
+                if (!unlockTroops.includes(element.id)) {
+                    continue;
+                }
+                this._createSelectItem(element.id, this._getOwnedTroopNum(element.id));
+            }
+        }
+        this._troopSelectItemContentView.getComponent(Layout).updateLayout();
+    }
+
     private _refreshUI() {
         if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
             return;
         }
-        this._addTroopNum = Math.floor(this._addTroopNum);
-
         const info = this._infos[this._showIndex];
         const nft = DataMgr.s.nftPioneer.getNFTById(info.NFTId);
         if (nft == undefined) {
@@ -190,14 +206,21 @@ export class PlayerDispatchDetailUI extends ViewController {
             this._troopProgress.progress = this._addTroopNum / addMaxNum;
             this._troopSlider.progress = this._addTroopNum / addMaxNum;
         }
-        this._troopLeftLabel.string = Math.max(0, addMaxNum - this._addTroopNum).toString();
+        this._troopLeftLabel.string = Math.max(0, ownedTroopNum - this._addTroopNum).toString();
         this._troopAddEditBox.string = this._addTroopNum.toString();
     }
     private _getOwnedTroopNum(troopId: string) {
-        if (troopId == "0") {
-            return DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop);
+        let pioneerNum: number = 0;
+        if (this._showIndex >= 0 && this._showIndex < this._infos.length) {
+            const info = this._infos[this._showIndex];
+            if (info.troopId == troopId) {
+                pioneerNum = GameMgr.convertHpToTroopNum(info.hp, info.troopId);
+            }
         }
-        return DataMgr.s.innerBuilding.getOwnedExecriseTroopNum(this._selectTroopId);
+        if (troopId == "0") {
+            return DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop) + pioneerNum;
+        }
+        return DataMgr.s.innerBuilding.getOwnedExecriseTroopNum(troopId) + pioneerNum;
     }
     private _updateAddNum(isMinus: boolean) {
         let changeNum = 1;
@@ -227,7 +250,7 @@ export class PlayerDispatchDetailUI extends ViewController {
             return 0;
         }
         const info = this._infos[this._showIndex];
-        const ownedNum = this._getOwnedTroopNum(this._selectTroopId);
+        let ownedNum = this._getOwnedTroopNum(this._selectTroopId);
         const maxNum = Math.min(ownedNum, info.hpMax);
         if (value > maxNum) {
             return maxNum;
@@ -252,11 +275,10 @@ export class PlayerDispatchDetailUI extends ViewController {
             return;
         }
         const info = this._infos[this._showIndex];
-
-        const ownedTroopNum = this._getOwnedTroopNum(this._selectTroopId);
+        let ownedTroopNum = this._getOwnedTroopNum(this._selectTroopId);
         let addMaxNum = Math.max(0, Math.min(info.hpMax, ownedTroopNum));
 
-        const resultValue = this._troopChangeVaild(this._troopSlider.progress * addMaxNum);
+        const resultValue = Math.floor(this._troopChangeVaild(this._troopSlider.progress * addMaxNum));
         if (addMaxNum <= 0) {
             this._troopSlider.progress = 0;
             this._troopProgress.progress = 0;
@@ -302,8 +324,8 @@ export class PlayerDispatchDetailUI extends ViewController {
         if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
             return;
         }
-        const info = this._infos[this._showIndex];
         const currentAddTroop: number = this._troopChangeVaild(parseInt(this._troopAddEditBox.string));
+        this._troopAddEditBox.string = currentAddTroop.toString();
         if (this._addTroopNum != currentAddTroop) {
             this._addTroopNum = currentAddTroop;
             this._refreshUI();
@@ -328,11 +350,6 @@ export class PlayerDispatchDetailUI extends ViewController {
         this.node.getChildByPath("ContentView/AddTroopView/img_Select").active = true;
         this._selectTroopId = customEventData;
         this._addTroopNum = 0;
-
-        const info = this._infos[this._showIndex];
-        if (info.troopId == this._selectTroopId) {
-            this._addTroopNum = GameMgr.convertHpToTroopNum(info.hp, info.troopId);
-        }
         this._refreshUI();
     }
 
@@ -341,11 +358,9 @@ export class PlayerDispatchDetailUI extends ViewController {
         if (this._showIndex < 0) {
             this._showIndex = this._infos.length - 1;
         }
-        const info = this._infos[this._showIndex];
-        if (info.hp > 0) {
-            this._selectTroopId = info.troopId;
-            this._addTroopNum = GameMgr.convertHpToTroopNum(info.hp, info.troopId);
-        }
+        this._selectTroopId = "0";
+        this._addTroopNum = 0;
+        this._initTroopSelect();
         this._refreshUI();
     }
     private onTapRightSwitch() {
@@ -353,38 +368,59 @@ export class PlayerDispatchDetailUI extends ViewController {
         if (this._showIndex > this._infos.length - 1) {
             this._showIndex = 0;
         }
-        const info = this._infos[this._showIndex];
-        if (info.hp > 0) {
-            this._selectTroopId = info.troopId;
-            this._addTroopNum = GameMgr.convertHpToTroopNum(info.hp, info.troopId);
-        }
+        this._selectTroopId = "0";
+        this._addTroopNum = 0;
+        this._initTroopSelect();
         this._refreshUI();
     }
 
     private async onTapGenerateTroop() {
         GameMusicPlayMgr.playTapButtonEffect();
-        await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
-    }
-    private onTapComplete() {
-        GameMusicPlayMgr.playTapButtonEffect();
-        if (this._addTroopNum <= 0) {
+        if (this._selectTroopId == null) {
             return;
         }
+        if (this._selectTroopId == "0") {
+            await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
+        } else {
+           await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
+        }
+    }
+    private onTapOneClickSupplement() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
+            return;
+        }
+        if (this._selectTroopId == null) {
+            return;
+        }
+        const info = this._infos[this._showIndex];
+        let ownedNum = this._getOwnedTroopNum(this._selectTroopId);
+        if (ownedNum <= 0) {
+            // use lan
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient reserve troops, please go to recruit troops");
+            return;
+        }
+        const value = this._troopChangeVaild(9999);
+        if (this._addTroopNum != value) {
+            this._addTroopNum = value;
+        }
+        this._refreshUI();
+    }
+
+    private onTapComplete() {
+        GameMusicPlayMgr.playTapButtonEffect();
         if (this._showIndex < 0 || this._showIndex > this._infos.length - 1) {
             return;
         }
         const info = this._infos[this._showIndex];
         if (info.actionType != MapPioneerActionType.inCity) {
+            // use lan
             NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Not within the city, unable to replenish troops");
             return;
         }
-        let addTroopNum: number = this._addTroopNum;
-        if (this._selectTroopId == info.troopId && info.hp > 0) {
-            addTroopNum = Math.min(addTroopNum, info.hpMax - GameMgr.convertHpToTroopNum(info.hp, info.troopId));
-        }
         NetworkMgr.websocketMsg.player_troop_to_hp({
             pioneerId: info.uniqueId,
-            troopNum: addTroopNum,
+            troopNum: this._addTroopNum,
             troopId: this._selectTroopId,
         });
     }
@@ -395,12 +431,16 @@ export class PlayerDispatchDetailUI extends ViewController {
             this._refreshUI();
         }
     }
+    private _onNewTroopGetted() {
+        this._initTroopSelect();
+        this._refreshUI();
+    }
 
-    private _onPioneerHpChange(data: { uniqueId: string }) {
+    private async _onPioneerHpChange(data: { uniqueId: string }) {
         for (let i = 0; i < this._infos.length; i++) {
             if (this._infos[i].uniqueId == data.uniqueId) {
-                this._infos[i] = DataMgr.s.pioneer.getById(data.uniqueId) as MapPlayerPioneerObject;
-                this._refreshUI();
+                await this.playExitAnimation();
+                UIPanelManger.inst.popPanel(this.node);
                 break;
             }
         }

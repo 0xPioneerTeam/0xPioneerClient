@@ -3815,7 +3815,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -55,
+      "x": 0,
       "y": 25.811,
       "z": 0
     },
@@ -3861,7 +3861,7 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": 0.5,
       "y": 0.5
     },
     "_id": ""
@@ -3893,7 +3893,7 @@
       "a": 255
     },
     "_string": "HP50/100",
-    "_horizontalAlign": 0,
+    "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 20,
     "_fontSize": 20,
@@ -3955,7 +3955,7 @@
     },
     "_alignFlags": 8,
     "_target": null,
-    "_left": -5,
+    "_left": 3.5224609375,
     "_right": 0,
     "_top": 0,
     "_bottom": 0,
@@ -4019,7 +4019,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -55,
+      "x": -1.3056640625,
       "y": -1.433,
       "z": 0
     },
@@ -4060,12 +4060,12 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 91.8515625,
+      "width": 107.388671875,
       "height": 31.72
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": 0.5,
       "y": 0.5
     },
     "_id": ""
@@ -4096,8 +4096,8 @@
       "b": 255,
       "a": 255
     },
-    "_string": "AP50/100",
-    "_horizontalAlign": 0,
+    "_string": "STM50/100",
+    "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 20,
     "_fontSize": 20,
