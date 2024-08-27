@@ -4,6 +4,7 @@ import { NotificationName } from "../../../Const/Notification";
 import GameMainHelper from "../../../Game/Helper/GameMainHelper";
 import RookieStepMgr from "../../../Manger/RookieStepMgr";
 import { GsBase } from "./GsBase";
+import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
 
 
 export class GsRepairCity extends GsBase{
@@ -31,8 +32,11 @@ export class GsRepairCity extends GsBase{
     _onTapGuideTask(){
         if(this._guide_step == 1){
             const innerOuterChangeButton = this.mainUI.node.getChildByPath("CommonContent/InnerOutChangeBtnBg");
+
             RookieStepMgr.instance().maskView.configuration(false, innerOuterChangeButton.worldPosition, innerOuterChangeButton.getComponent(UITransform).contentSize, () => {
-                GameMainHelper.instance.changeInnerBuildingLatticeEdit();
+                GameMusicPlayMgr.playTapButtonEffect();
+                GameMainHelper.instance.changeInnerAndOuterShow();
+                RookieStepMgr.instance().maskView.hide();
                 this._guide_step = 2;
             });
         }

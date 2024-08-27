@@ -289,6 +289,16 @@
     "eng": "You can change settings by clicking the player avatar in the top-left corner.",
     "tc": "你可以通過點擊左上角的玩家頭像來更改設置。"
   },
+  "104007": {
+    "id": "104007",
+    "eng": "In progress",
+    "tc": "进行中"
+  },
+  "104008": {
+    "id": "104008",
+    "eng": "Reward available",
+    "tc": "可领奖"
+  },
   "105001": {
     "id": "105001",
     "eng": "Common",

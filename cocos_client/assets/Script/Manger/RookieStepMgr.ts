@@ -33,7 +33,8 @@ export default class RookieStepMgr {
             return;
         }
         this._maskView = result.node.getComponent(RookieStepMaskUI);
-        this._refreshMaskShow();
+        this._maskView.hide();
+        // this._refreshMaskShow();
 
         // NotificationMgr.addListener(NotificationName.TALK_FINISH, this._onTalkFinish, this);
         // NotificationMgr.addListener(NotificationName.GAME_CAMERA_POSITION_CHANGED, this._onGameCameraPosChange, this);
@@ -57,12 +58,12 @@ export default class RookieStepMgr {
         return this._instance;
     }
 
-    public constructor() {}
+    // public constructor() {}
 
-    private _refreshMaskShow() {
-        const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-        this._maskView.node.active = rookieStep != RookieStep.WAKE_UP && rookieStep != RookieStep.FINISH;
-    }
+    // private _refreshMaskShow() {
+        // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+        // this._maskView.node.active = rookieStep != RookieStep.WAKE_UP && rookieStep != RookieStep.FINISH;
+    // }
     
     // private _onTalkFinish(data: { talkId: string }) {
     //     const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;

@@ -15,12 +15,10 @@
         100
       ]
     ],
-    "pre_content": [
-      100000,
-      100001,
-      100002
+    "pre_talk": [
+      "talk1000"
     ],
-    "fin_content": null,
+    "fin_talk": null,
     "guidestepgroup": 1000
   },
   "1001": {
@@ -39,12 +37,11 @@
         100
       ]
     ],
-    "pre_content": [
-      100100,
-      100101
+    "pre_talk": [
+      "talk1001"
     ],
-    "fin_content": [
-      100102
+    "fin_talk": [
+      "talk10011"
     ],
     "guidestepgroup": 1001
   },
@@ -64,12 +61,11 @@
         100
       ]
     ],
-    "pre_content": [
-      100200,
-      100201
+    "pre_talk": [
+      "talk1002"
     ],
-    "fin_content": [
-      100202
+    "fin_talk": [
+      "talk10021"
     ],
     "guidestepgroup": 1002
   },
@@ -89,12 +85,11 @@
         100
       ]
     ],
-    "pre_content": [
-      100300,
-      100301
+    "pre_talk": [
+      "talk1003"
     ],
-    "fin_content": [
-      100302
+    "fin_talk": [
+      "talk10031"
     ],
     "guidestepgroup": 1003
   },
@@ -114,10 +109,10 @@
         100
       ]
     ],
-    "pre_content": [
-      100400
+    "pre_talk": [
+      "talk1004"
     ],
-    "fin_content": null,
+    "fin_talk": null,
     "guidestepgroup": 1004
   },
   "1005": {
@@ -136,12 +131,11 @@
         100
       ]
     ],
-    "pre_content": [
-      100500,
-      100501
+    "pre_talk": [
+      "talk1005"
     ],
-    "fin_content": [
-      100502
+    "fin_talk": [
+      "talk10051"
     ],
     "guidestepgroup": 1005
   },
@@ -161,13 +155,11 @@
         100
       ]
     ],
-    "pre_content": [
-      100600,
-      100601,
-      100602
+    "pre_talk": [
+      "talk1006"
     ],
-    "fin_content": [
-      100603
+    "fin_talk": [
+      "talk10061"
     ],
     "guidestepgroup": 1006
   },
@@ -187,13 +179,11 @@
         100
       ]
     ],
-    "pre_content": [
-      100700,
-      100701,
-      100702
+    "pre_talk": [
+      "talk1007"
     ],
-    "fin_content": [
-      100703
+    "fin_talk": [
+      "talk10071"
     ],
     "guidestepgroup": 1007
   },
@@ -213,11 +203,10 @@
         100
       ]
     ],
-    "pre_content": [
-      100800,
-      100801
+    "pre_talk": [
+      "talk1008"
     ],
-    "fin_content": null,
+    "fin_talk": null,
     "guidestepgroup": 1008
   },
   "1009": {
@@ -236,12 +225,10 @@
         100
       ]
     ],
-    "pre_content": [
-      100900,
-      100901,
-      100902
+    "pre_talk": [
+      "talk1009"
     ],
-    "fin_content": null,
+    "fin_talk": null,
     "guidestepgroup": 1009
   },
   "1010": {
@@ -260,12 +247,10 @@
         100
       ]
     ],
-    "pre_content": [
-      101000,
-      101001,
-      101002
+    "pre_talk": [
+      "talk1010"
     ],
-    "fin_content": null,
+    "fin_talk": null,
     "guidestepgroup": 1010
   },
   "1011": {
@@ -284,12 +269,10 @@
         100
       ]
     ],
-    "pre_content": [
-      101100,
-      101101,
-      101102
+    "pre_talk": [
+      "talk1011"
     ],
-    "fin_content": null,
+    "fin_talk": null,
     "guidestepgroup": 1011
   },
   "1012": {
@@ -308,13 +291,10 @@
         100
       ]
     ],
-    "pre_content": [
-      101200,
-      101201,
-      101202,
-      101203
+    "pre_talk": [
+      "talk1012"
     ],
-    "fin_content": null,
+    "fin_talk": null,
     "guidestepgroup": 1012
   },
   "null": {
@@ -324,8 +304,8 @@
     "guide_stepInfo": "",
     "next_guide": null,
     "reward": null,
-    "pre_content": null,
-    "fin_content": null,
+    "pre_talk": null,
+    "fin_talk": null,
     "guidestepgroup": null
   }
 }

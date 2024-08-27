@@ -7,6 +7,6 @@ export interface GuideConfigData {
     guide_stepInfo: string;
     next_guide: number;
     guidestepgroup: number;
-    pre_content: [number, number];
-    fin_content: [number];
+    pre_talk: [number];
+    fin_talk: [number];
 }

@@ -53,7 +53,7 @@ export class GuideUI extends ViewController {
         this.lbl_cur.string = conf.guide_stepInfo.split("|")[0];
         this.lbl_total.string = conf.guide_stepInfo.split("|")[1];
         this.lbl_msg.string = LanMgr.getLanById(conf.name);
-        this.lbl_state.string = rookieState == 0 ? LanMgr.getLanById('rookie_state_doing') : LanMgr.getLanById('rookie_state_finish');
+        this.lbl_state.string = rookieState == 0 ? LanMgr.getLanById('104007') : LanMgr.getLanById('104008');
     }
 
     onTapGuide() {

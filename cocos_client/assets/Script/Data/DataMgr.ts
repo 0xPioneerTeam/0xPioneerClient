@@ -37,6 +37,7 @@ export class DataMgr {
     public static async init(): Promise<boolean> {
         DataMgr.r = new RunData();
         DataMgr.s = new SaveData();
+        window['DataMgr'] = DataMgr;
         return true;
     }
 
@@ -180,6 +181,11 @@ export class DataMgr {
         DataMgr.s.userInfo.data.rookieStep = p.rookieStep;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
     };
+    public static GM_GUIDE(step,state){
+        DataMgr.s.userInfo.data.rookieStep = step;
+        DataMgr.s.userInfo.data.rookieState = state;
+        NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
+    }
     public static player_rookie_wormhole_fight_res = (e: any) => {
         // wait change
         // const p: s2c_user.Iplayer_rookie_wormhole_fight_res = e.data;
