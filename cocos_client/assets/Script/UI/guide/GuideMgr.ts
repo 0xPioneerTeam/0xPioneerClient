@@ -7,6 +7,16 @@ import { DataMgr } from "../../Data/DataMgr";
 import { GsNpcTalk1 } from "./gscript/GsNpcTalk1";
 import { GsRepairCity } from "./gscript/GsRepairCity";
 import { GsBase } from "./gscript/GsBase";
+import { Gs1002 } from "./gscript/Gs1002";
+import { Gs1003 } from "./gscript/Gs1003";
+import { Gs1005 } from "./gscript/Gs1005";
+import { Gs1006 } from "./gscript/Gs1006";
+import { Gs1007 } from "./gscript/Gs1007";
+import { Gs1008 } from "./gscript/Gs1008";
+import { Gs1009 } from "./gscript/Gs1009";
+import { Gs1010 } from "./gscript/Gs1010";
+import { Gs1011 } from "./gscript/Gs1011";
+import { Gs1012 } from "./gscript/Gs1012";
 
 
 export class GuideMgr{
@@ -30,14 +40,22 @@ export class GuideMgr{
         this._guideScripts = {};
         this._guideScripts[RookieStep.WAKE_UP] = Gswakeup;
         this._guideScripts[RookieStep.NPC_TALK_1] = GsNpcTalk1;
-        this._guideScripts[RookieStep.GUIDE_1002] = GsRepairCity;
+        this._guideScripts[RookieStep.GUIDE_1001] = GsRepairCity;
+        this._guideScripts[RookieStep.GUIDE_1002] = Gs1002;
+        this._guideScripts[RookieStep.GUIDE_1003] = Gs1003;
+        this._guideScripts[RookieStep.GUIDE_1005] = Gs1005;
+        this._guideScripts[RookieStep.GUIDE_1006] = Gs1006;
+        this._guideScripts[RookieStep.GUIDE_1007] = Gs1007;
+        this._guideScripts[RookieStep.GUIDE_1008] = Gs1008;
+        this._guideScripts[RookieStep.GUIDE_1009] = Gs1009;
+        this._guideScripts[RookieStep.GUIDE_1010] = Gs1010;
+        this._guideScripts[RookieStep.GUIDE_1011] = Gs1011;
+        this._guideScripts[RookieStep.GUIDE_1012] = Gs1012;
         this._rookieNode = find("Main/UI_Canvas/ROOKIE_ROOT");
         NotificationMgr.addListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
     }
 
     public async showGuide(step:RookieStep){
-        const script = this._guideScripts[step];
-        if(!script) return;
         let children = this._rookieNode.children;
         children.forEach(child=>{
             let comp = child.getComponent(GsBase);
@@ -45,6 +63,8 @@ export class GuideMgr{
                 comp.endDestroy();
             }
         });
+        const script = this._guideScripts[step];
+        if(!script) return;
         let node = new Node('guide_'+step);
         node.addComponent(script);
         this._rookieNode.addChild(node);

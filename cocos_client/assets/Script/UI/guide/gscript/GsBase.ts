@@ -5,6 +5,9 @@ import { OuterTiledMapActionController } from "../../../Game/Outer/OuterTiledMap
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
 import { GameMgr } from "../../../Utils/Global";
+import { InnerBuildingControllerRe } from "../../../Game/Inner/InnerBuildingControllerRe";
+import { OuterShadowController } from "../../../Game/Outer/OuterShadowController";
+import { OuterBuildingController } from "../../../Game/Outer/OuterBuildingController";
 
 
 export class GsBase extends Component{
@@ -12,6 +15,9 @@ export class GsBase extends Component{
     public mainUI:MainUI;
     public _pioneerController:OuterPioneerController;
     public _tileMapController:OuterTiledMapActionController;
+    public _shadowController:OuterShadowController;
+    public _buildingController:OuterBuildingController;
+    public _innerBuildingController:InnerBuildingControllerRe;
 
     /**isOneGudie */
     public onlyOneGudie:boolean = true;
@@ -42,6 +48,13 @@ export class GsBase extends Component{
         }
         this._pioneerController = outScene.getComponent(OuterPioneerController);
         this._tileMapController = outScene.getComponent(OuterTiledMapActionController);
+        this._shadowController = outScene.getComponent(OuterShadowController);
+        this._buildingController = outScene.getComponent(OuterBuildingController);
+        let InnerSceneRe = find("Main/Canvas/GameContent/Game/InnerSceneRe");
+        if(InnerSceneRe == null){
+            return;
+        }
+        this._innerBuildingController = InnerSceneRe.getComponent(InnerBuildingControllerRe);
     }
 
     public findDecoLayerEle(eleName:string){

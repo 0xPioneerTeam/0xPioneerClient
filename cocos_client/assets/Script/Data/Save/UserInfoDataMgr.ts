@@ -104,6 +104,7 @@ export default class UserInfoDataMgr {
             wormholeMatchTimes: netData.wormholeMatchTimes,
             wormholeTeleportTimes: netData.wormholeTeleportTimes,
         };
+        
         if (GAME_SKIP_ROOKIE) {
             newObj.rookieStep = RookieStep.FINISH;
             NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);

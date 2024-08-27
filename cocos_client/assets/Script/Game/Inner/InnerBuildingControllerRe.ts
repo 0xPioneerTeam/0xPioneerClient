@@ -185,6 +185,11 @@ export class InnerBuildingControllerRe extends ViewController {
             }
         }
     }
+
+    public getBuildingByKey(key:InnerBuildingType){
+        return this._buildingMap.get(key);
+    }
+
     private async _initBuilding() {
         const innerBuilding = DataMgr.s.innerBuilding.data;
         let index: number = 0;

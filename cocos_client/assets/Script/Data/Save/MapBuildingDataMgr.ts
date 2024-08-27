@@ -108,6 +108,12 @@ export class MapBuildingDataMgr {
     public getObj_building() {
         return this._building_data;
     }
+
+    public getSelfMainCityBuilding(): MapBuildingObject {
+        let uniqueId = this.getSelfMainCitySlotId() + "|building_1";
+        return this.getBuildingById(uniqueId);
+    }
+
     public getBuildingById(uniqueId: string): MapBuildingObject | null {
         const findDatas = this._building_data.filter((buiding) => {
             return buiding.uniqueId === uniqueId;

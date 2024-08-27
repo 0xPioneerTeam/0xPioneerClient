@@ -87,10 +87,10 @@ export class HeatTreasureUI extends Component {
         detailButton.active = false;
         questionButton.active = false;
 
-        // if (rookieStep >= RookieStep.NPC_TALK_4) {
-        //     treasureProgressView.active = true;
-        //     questionButton.active = true;
-        // }
+        if (rookieStep >= RookieStep.GUIDE_1004) {
+            treasureProgressView.active = true;
+            questionButton.active = true;
+        }
         //------------------------------------------ heat
         const heatValue: number = DataMgr.s.userInfo.data.heatValue.currentHeatValue;
         const worldBoxThreshold: number[] = (ConfigConfig.getConfig(ConfigType.WorldBoxThreshold) as WorldBoxThresholdParam).thresholds;
@@ -180,20 +180,15 @@ export class HeatTreasureUI extends Component {
                 }
             }
         } else {
-            // if (rookieStep >= RookieStep.OPEN_BOX_3) {
-            //     exploreValue = perBoxNeedExploreValue * 3;
-            // } else if (rookieStep >= RookieStep.OPEN_BOX_2) {
-            //     exploreValue = perBoxNeedExploreValue * 2;
-            // } else if (rookieStep >= RookieStep.NPC_TALK_4) {
-            //     exploreValue = perBoxNeedExploreValue;
-            // }
-
-            // if (rookieStep > RookieStep.OPEN_BOX_3) {
-            //     worldBoxes = [
-            //         { rank: 1, isOpen: true },
-            //         { rank: 1, isOpen: true },
-            //         { rank: 1, isOpen: true },
-            //     ];
+            if (rookieStep >= RookieStep.GUIDE_1006) {
+                exploreValue = perBoxNeedExploreValue * 3;
+            } 
+            if (rookieStep > RookieStep.GUIDE_1006) {
+                worldBoxes = [
+                    { rank: 1, isOpen: true },
+                    { rank: 1, isOpen: false },
+                    { rank: 1, isOpen: false },
+                ];
             // } else if (rookieStep > RookieStep.OPEN_BOX_2) {
             //     worldBoxes = [
             //         { rank: 1, isOpen: true },
@@ -206,13 +201,13 @@ export class HeatTreasureUI extends Component {
             //         { rank: 1, isOpen: false },
             //         { rank: 1, isOpen: false },
             //     ];
-            // } else {
-            //     worldBoxes = [
-            //         { rank: 0, isOpen: false },
-            //         { rank: 0, isOpen: false },
-            //         { rank: 0, isOpen: false },
-            //     ];
-            // }
+            } else {
+                worldBoxes = [
+                    { rank: 0, isOpen: false },
+                    { rank: 0, isOpen: false },
+                    { rank: 0, isOpen: false },
+                ];
+            }
         }
         const exploreTotalValue: number = perBoxNeedExploreValue * worldBoxes.length;
 

@@ -176,7 +176,7 @@ export class MainUI extends ViewController {
             taskTrackView.active = GameMainHelper.instance.isGameShowOuter;
 
             this._worldBoxCountTipView.active = true;
-        }else if(rookieStep >= RookieStep.REPAIR_CITY){
+        }else if(rookieStep >= RookieStep.GUIDE_1001){
             innerOuterChangeButton.active = true;
         }
         // } else if (rookieStep >= RookieStep.DEFEND_TAP) {

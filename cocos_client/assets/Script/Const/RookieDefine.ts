@@ -3,7 +3,7 @@ export enum RookieStep {
 
     NPC_TALK_1 = 1000,
 
-    REPAIR_CITY = 1001,
+    GUIDE_1001 = 1001,
 
     GUIDE_1002 = 1002,
     GUIDE_1003 = 1003,

@@ -8,7 +8,7 @@ import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
 import { InnerBuildingType } from "../../../Const/BuildingDefine";
 
 
-export class GsRepairCity extends GsBase{
+export class Gs1002 extends GsBase{
     gsStart() {
         super.gsStart();
     }
@@ -43,10 +43,10 @@ export class GsRepairCity extends GsBase{
             });
         }
         if(this._guide_step == 2){
-            const maincityNode = this._innerBuildingController.getBuildingByKey(InnerBuildingType.MainCity).node;
-            RookieStepMgr.instance().maskView.configuration(false, maincityNode.worldPosition, maincityNode.getComponent(UITransform).contentSize, () => {
+            const BarrackNode = this._innerBuildingController.getBuildingByKey(InnerBuildingType.Barrack).node;
+            RookieStepMgr.instance().maskView.configuration(false, BarrackNode.worldPosition, BarrackNode.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
-                let button = maincityNode.getChildByName('clickNode').getComponent(Button);
+                let button = BarrackNode.getChildByName('clickNode').getComponent(Button);
                 let event = new Event(NodeEventType.TOUCH_START);
                 EventHandler.emitEvents(button.clickEvents,event);
                 this._guide_step = 3;

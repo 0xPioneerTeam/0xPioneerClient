@@ -12,6 +12,8 @@ import TalkConfig from "../../../Config/TalkConfig";
 import { UIName } from "../../../Const/ConstUIDefine";
 import { DialogueUI } from "../../Outer/DialogueUI";
 import { NetworkMgr } from "../../../Net/NetworkMgr";
+import { GuideMgr } from "../GuideMgr";
+import GuideConfig from "../../../Config/GuideConfig";
 
 
 export class GsNpcTalk1 extends GsBase{
@@ -57,6 +59,9 @@ export class GsNpcTalk1 extends GsBase{
             }
             let node = actionView.node.getChildByPath('ActionView/Action');
             let view = node.children[0];
+            if(!view){
+                return;
+            }
             RookieStepMgr.instance().maskView.configuration(true, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
                 actionView.hide();
                 RookieStepMgr.instance().maskView.hide();
@@ -68,7 +73,13 @@ export class GsNpcTalk1 extends GsBase{
     
 
     async _oRookieTapMapAction(){
-        const talkConfig = TalkConfig.getById("talk01");
+        const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+        let preTalk = GuideConfig.getById(rookieStep+'').pre_talk;
+        let talkConfig;
+        if(preTalk.length > 0){
+           talkConfig = TalkConfig.getById(preTalk[0] + '');
+        }
+        talkConfig = TalkConfig.getById('talk01');
         if (talkConfig == null) {
             return;
         }
@@ -77,9 +88,9 @@ export class GsNpcTalk1 extends GsBase{
             return;
         }
         result.node.getComponent(DialogueUI).dialogShow(talkConfig);
-        NetworkMgr.websocketMsg.player_rookie_update({
-            rookieStep: RookieStep.REPAIR_CITY,
-        });
+        // NetworkMgr.websocketMsg.player_rookie_update({
+        //     rookieStep: RookieStep.GUIDE_1001
+        // })
         this.endDestroy();
     }
 }

@@ -1,4 +1,4 @@
-import { view, UITransform, Button, EventHandler, NodeEventType } from "cc";
+import { view, UITransform, Button, find, EventHandler } from "cc";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
 import GameMainHelper from "../../../Game/Helper/GameMainHelper";
@@ -8,14 +8,14 @@ import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
 import { InnerBuildingType } from "../../../Const/BuildingDefine";
 
 
-export class GsRepairCity extends GsBase{
+export class Gs1004 extends GsBase{
     gsStart() {
         super.gsStart();
     }
 
     protected update(dt: number): void {
         let isGameShowOuter = GameMainHelper.instance.isGameShowOuter;
-        if(isGameShowOuter)
+        if(!isGameShowOuter)
         {
             this._guide_step = 1;
         }else{
@@ -43,12 +43,11 @@ export class GsRepairCity extends GsBase{
             });
         }
         if(this._guide_step == 2){
-            const maincityNode = this._innerBuildingController.getBuildingByKey(InnerBuildingType.MainCity).node;
-            RookieStepMgr.instance().maskView.configuration(false, maincityNode.worldPosition, maincityNode.getComponent(UITransform).contentSize, () => {
+            const House = this._innerBuildingController.getBuildingByKey(InnerBuildingType.House).node;
+            RookieStepMgr.instance().maskView.configuration(false, House.worldPosition, House.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
-                let button = maincityNode.getChildByName('clickNode').getComponent(Button);
-                let event = new Event(NodeEventType.TOUCH_START);
-                EventHandler.emitEvents(button.clickEvents,event);
+                let button = House.getChildByName('clickNode').getComponent(Button);
+                EventHandler.emitEvents(button.clickEvents);
                 this._guide_step = 3;
             });
         }

@@ -21,6 +21,8 @@ export class ResOprView extends Component {
     private _actionItem: Node = null;
     private _actionItemContent: Node = null;
 
+    public interactBuilding:MapBuildingObject;
+
     public async show(
         interactBuilding: MapBuildingObject,
         interactPioneer: MapPioneerObject,
@@ -31,7 +33,8 @@ export class ResOprView extends Component {
     ) {
         this.node.active = true;
         this.node.worldPosition = targetWorldPos;
-
+        this.interactBuilding = interactBuilding;
+        
         const infoView = this.node.getChildByPath("InfoView");
         const actionView = this.node.getChildByPath("ActionView");
         const difficultView = this.node.getChildByPath("DifficultView");
