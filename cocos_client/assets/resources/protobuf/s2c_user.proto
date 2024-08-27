@@ -262,6 +262,10 @@ message player_event_select_res {
 message player_event_exit_res {
     required int32 res = 1;
 }
+message player_maincity_back_res {
+    required int32 res = 1;
+    optional string pioneerId = 2;
+}
 // pioneer: notify
 message sinfo_change {
     required share.player_sinfo info = 1;

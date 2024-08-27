@@ -3,7 +3,7 @@ import { ItemConfigType } from "./Item";
 
 export const GAME_JUMP_SWITCH_IS_OPEN = true;
 export const GAME_SKIP_ROOKIE = false;
-export const GAME_ENV_IS_DEBUG = true;
+export const GAME_ENV_IS_DEBUG = false;
 export const PioneerGameTest = false;
 
 export const TILEMAP_SIZE = 16; //tileMap layer size 16*16
@@ -152,4 +152,5 @@ export enum MapInteractType {
     Detect,
     SiegeCity,
     EnterInner,
+    MainBack,
 }

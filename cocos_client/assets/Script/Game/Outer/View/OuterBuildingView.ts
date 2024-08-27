@@ -29,15 +29,20 @@ export class OuterBuildingView extends ViewController {
 
         let name: string = "";
         if (building.type == MapBuildingType.city) {
-            const uniqueIdSplit = building.uniqueId.split("|");
-            if (uniqueIdSplit.length == 2) {
-                const data = GameMgr.getMapSlotData(uniqueIdSplit[0]);
-                if (data == undefined || data.playerId == "0") {
-                    name = "empty city";
-                } else {
-                    name = data.pname + " " + LanMgr.getLanById(building.name);
+            if (this._isSelfMainCity) {
+                name = DataMgr.s.userInfo.data.name + " " + LanMgr.getLanById(building.name);
+            } else {
+                const uniqueIdSplit = building.uniqueId.split("|");
+                if (uniqueIdSplit.length == 2) {
+                    const data = GameMgr.getMapSlotData(uniqueIdSplit[0]);
+                    if (data == undefined || data.playerId == "0") {
+                        name = "empty city";
+                    } else {
+                        name = data.pname + " " + LanMgr.getLanById(building.name);
+                    }
                 }
             }
+           
         } else {
             name = LanMgr.getLanById(building.name);
         }
@@ -315,6 +320,7 @@ export class OuterBuildingView extends ViewController {
         NotificationMgr.addListener(NotificationName.MAP_BUILDING_WORMHOLE_FAKE_ATTACK, this._onWormholeFakeAttack, this);
         NotificationMgr.addListener(NotificationName.MAP_BUILDING_WORMHOLE_BEGIN_ANIM, this._onWormholeBeginAnim, this);
 
+        NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_NAME, this._onUserInfoChangeName, this);
         this.schedule(() => {
             if (this._building != null) {
                 const currentTimestamp: number = new Date().getTime();
@@ -357,6 +363,9 @@ export class OuterBuildingView extends ViewController {
         NotificationMgr.removeListener(NotificationName.ARTIFACT_EQUIP_DID_CHANGE, this._onArtifactEquipDidChange, this);
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_WORMHOLE_FAKE_ATTACK, this._onWormholeFakeAttack, this);
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_WORMHOLE_BEGIN_ANIM, this._onWormholeBeginAnim, this);
+
+        NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_NAME, this._onUserInfoChangeName, this);
+
     }
 
     protected viewUpdate(dt: number): void {
@@ -449,6 +458,16 @@ export class OuterBuildingView extends ViewController {
             return;
         }
         this._wormholePlayBeginAnimTime = animTime;
+        this.refreshUI(this._building);
+    }
+
+    private  _onUserInfoChangeName() {
+        if (this._building == null) {
+            return;
+        }
+        if (this._building.type != MapBuildingType.city) {
+            return;
+        }
         this.refreshUI(this._building);
     }
 }

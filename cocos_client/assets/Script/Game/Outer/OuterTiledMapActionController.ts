@@ -520,9 +520,9 @@ export class OuterTiledMapActionController extends ViewController {
     }
 
     public async _clickOnMap(worldpos: Vec3) {
-        if (DataMgr.s.userInfo.data.rookieStep != RookieStep.FINISH) {
-            this["_actionViewActioned"] = false;
-        }
+        // if (DataMgr.s.userInfo.data.rookieStep != RookieStep.FINISH) {
+        //     this["_actionViewActioned"] = false;
+        // }
         const outPioneerController = this.node.getComponent(OuterPioneerController);
         if (this["_actionViewActioned"] == true) {
             this["_actionViewActioned"] = false;
@@ -1031,6 +1031,14 @@ export class OuterTiledMapActionController extends ViewController {
             return;
         }
         if (interactType != MapInteractType.Move) {
+            if (interactType == MapInteractType.MainBack && targetType == MapMemberTargetType.building) {
+                // back
+                NetworkMgr.websocketMsg.player_maincity_back({
+                    pioneerId: actionPioneerUnqueId,
+                    buildingId: targetId,
+                });
+                return;
+            }
             PioneerMgr.setMovingTarget(actionPioneerUnqueId, targetType, targetId, interactType, interactExtra);
         }
         if (movePath.length <= 0) {

@@ -225,7 +225,7 @@ export default class PioneerMgr {
                                     buildingId: stayBuilding.uniqueId,
                                     isReturn: this._checkActionSendParamRetrun(uniqueId),
                                 });
-                            }
+                            } 
                         }, interactDelayTime);
                     }
                 }

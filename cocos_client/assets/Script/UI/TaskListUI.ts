@@ -94,11 +94,6 @@ export class TaskListUI extends ViewController {
 
         const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
         let rookieTaskId: string = "";
-        if (rookieStep == RookieStep.TASK_SHOW_TAP_1 || rookieStep == RookieStep.TASK_SHOW_TAP_2) {
-            rookieTaskId = "task12";
-        } else if (rookieStep == RookieStep.TASK_SHOW_TAP_3) {
-            rookieTaskId = "task13";
-        }
         let rookieTaskIndex: number = -1;
         for (let i = toDoTasks.length - 1; i >= 0; i--) {
             if (actionTaskShowCount >= 3) {

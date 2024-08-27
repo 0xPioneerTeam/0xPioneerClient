@@ -17,6 +17,7 @@ import { MapBuildingType } from "../../Const/BuildingDefine";
 import { MapInteractType, ResourceData } from "../../Const/ConstDefine";
 import ConfigConfig from "../../Config/ConfigConfig";
 import { ConfigType, WormholeMatchConsumeParam, WormholeTeleportConsumeParam } from "../../Const/Config";
+import { UIHUDController } from "../UIHUDController";
 const { ccclass, property } = _decorator;
 
 @ccclass("DispatchUI")
@@ -105,12 +106,14 @@ export class DispatchUI extends ViewController {
             if (player.NFTId == null) {
                 continue;
             }
+            if (this._interactType == MapInteractType.MainBack && player.actionType != MapPioneerActionType.staying) {
+                continue;
+            }
             const view = instantiate(this._playerItem);
             view.setParent(this._playerContentView);
             view.getComponent(PlayerInfoItem).refreshUI(player);
             view.getComponent(Button).clickEvents[0].customEventData = player.uniqueId;
 
-            
             const costView = instantiate(this._costItem);
             costView.setParent(view);
             costView.setPosition(0,-195);
@@ -147,6 +150,12 @@ export class DispatchUI extends ViewController {
             }
             playerCount += 1;
         }
+        if (playerCount == 0) {
+            UIPanelManger.inst.popPanel(this.node);
+            // use lan
+            UIHUDController.showCenterTip("All the pioneers are in the city");
+            return;
+        }
         this._playerScrollView.getComponent(UITransform).width =
             this._playerItem.getComponent(UITransform).width * playerCount + (playerCount - 1) * this._playerContentView.getComponent(Layout).spacingX;
 
@@ -155,7 +164,7 @@ export class DispatchUI extends ViewController {
 
         // wromhole action not support return
 
-        this._returnSwitchButton.active = this._interactType != MapInteractType.WmMark && this._interactType != MapInteractType.WmMatch && this._interactType != MapInteractType.WmRecall && this._interactType != MapInteractType.WmTeleport;
+        this._returnSwitchButton.active = this._interactType != MapInteractType.WmMark && this._interactType != MapInteractType.WmMatch && this._interactType != MapInteractType.WmRecall && this._interactType != MapInteractType.WmTeleport && this._interactType != MapInteractType.MainBack;
         this._returnTitle.active = this._returnSwitchButton.active;
     }
 
