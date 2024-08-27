@@ -5,6 +5,8 @@ import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import { DataMgr } from "../../Data/DataMgr";
 import { GsNpcTalk1 } from "./gscript/GsNpcTalk1";
+import { GsRepairCity } from "./gscript/GsRepairCity";
+import { GsBase } from "./gscript/GsBase";
 
 
 export class GuideMgr{
@@ -28,6 +30,7 @@ export class GuideMgr{
         this._guideScripts = {};
         this._guideScripts[RookieStep.WAKE_UP] = Gswakeup;
         this._guideScripts[RookieStep.NPC_TALK_1] = GsNpcTalk1;
+        this._guideScripts[RookieStep.GUIDE_1002] = GsRepairCity;
         this._rookieNode = find("Main/UI_Canvas/ROOKIE_ROOT");
         NotificationMgr.addListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
     }
@@ -35,6 +38,13 @@ export class GuideMgr{
     public async showGuide(step:RookieStep){
         const script = this._guideScripts[step];
         if(!script) return;
+        let children = this._rookieNode.children;
+        children.forEach(child=>{
+            let comp = child.getComponent(GsBase);
+            if(comp && comp.onlyOneGudie){
+                comp.endDestroy();
+            }
+        });
         let node = new Node('guide_'+step);
         node.addComponent(script);
         this._rookieNode.addChild(node);

@@ -85,7 +85,7 @@ export default class UserInfoDataMgr {
             energyGetLimitTimes: netData.limitFetchTimes,
             cityRadialRange: netData.cityRadialRange,
             rookieStep: netData.rookieStep,
-            rookiestate: 0,
+            rookieState: netData.rookieState,
             // lost
             tavernGetPioneerTimestamp: 0,
             wormholeDefenderIds: new Map(),

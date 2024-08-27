@@ -1,6 +1,5 @@
 import { Component, find } from "cc";
 import { MainUI } from "../../MainUI";
-import GameMainHelper from "../../../Game/Helper/GameMainHelper";
 import { OuterPioneerController } from "../../../Game/Outer/OuterPioneerController";
 import { OuterTiledMapActionController } from "../../../Game/Outer/OuterTiledMapActionController";
 import NotificationMgr from "../../../Basic/NotificationMgr";
@@ -11,9 +10,13 @@ import { GameMgr } from "../../../Utils/Global";
 export class GsBase extends Component{
 
     public mainUI:MainUI;
-
     public _pioneerController:OuterPioneerController;
     public _tileMapController:OuterTiledMapActionController;
+
+    /**isOneGudie */
+    public onlyOneGudie:boolean = true;
+
+    protected _guide_step:number = -1;
 
     public start(){
         this.initBinding();

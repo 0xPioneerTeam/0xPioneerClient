@@ -214,6 +214,9 @@ export class WebsocketMsg {
         // return;
         this.send_packet("player_rookie_update", d);
     }
+    public player_get_rookie_award(d: c2s_user.Iplayer_get_rookie_award){
+        this.send_packet("player_get_rookie_award", d);
+    }
     public player_rookie_wormhole_fight(d: c2s_user.Iplayer_rookie_wormhole_fight) {
         this.send_packet("player_rookie_wormhole_fight", d);
     }
@@ -512,6 +515,8 @@ export namespace c2s_user {
     export interface Isave_archives {
         archives: string;
     }
+
+    export interface Iplayer_get_rookie_award {}
 }
 
 export namespace s2c_user {
@@ -844,6 +849,7 @@ export namespace share {
         pointTreasureDidGetRewards: string[];
         cityRadialRange: number;
         rookieStep: number;
+        rookieState: number;
         generateTroopInfo?: troop_info_data;
         generateEnergyInfo?: energy_info_data;
 

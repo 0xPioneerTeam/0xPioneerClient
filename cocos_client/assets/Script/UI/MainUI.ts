@@ -176,6 +176,9 @@ export class MainUI extends ViewController {
             taskTrackView.active = GameMainHelper.instance.isGameShowOuter;
 
             this._worldBoxCountTipView.active = true;
+        }else if(rookieStep >= RookieStep.REPAIR_CITY){
+            innerOuterChangeButton.active = true;
+        }
         // } else if (rookieStep >= RookieStep.DEFEND_TAP) {
         //     defendButton.active = true;
         //     taskButton.active = true;
@@ -201,7 +204,7 @@ export class MainUI extends ViewController {
         //     battleReportButton.active = true;
         // } else if (rookieStep >= RookieStep.TASK_SHOW_TAP_1) {
         //     taskButton.active = true;
-        }
+        // }
 
         let hasOuterPioneer = false;
         for (const pioneer of DataMgr.s.pioneer.getAllSelfPlayers()) {

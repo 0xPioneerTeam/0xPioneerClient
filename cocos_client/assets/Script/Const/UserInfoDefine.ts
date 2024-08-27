@@ -49,7 +49,7 @@ export interface UserInfoObject {
 
     rookieStep: RookieStep;
 
-    rookiestate:RookieStepState;
+    rookieState:RookieStepState;
 
     energyDidGetTimes: number;
     energyGetLimitTimes: number;

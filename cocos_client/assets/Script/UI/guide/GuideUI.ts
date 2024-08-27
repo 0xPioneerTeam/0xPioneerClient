@@ -6,6 +6,7 @@ import { DataMgr } from "../../Data/DataMgr";
 import GuideConfig from "../../Config/GuideConfig";
 import { LanMgr } from "../../Utils/Global";
 import { RookieStep } from "../../Const/RookieDefine";
+import { NetworkMgr } from "../../Net/NetworkMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -18,7 +19,7 @@ export class GuideUI extends ViewController {
     private lbl_state:Label = null;
 
     _lastRookeStep:number = 0;
-    _lastRookiestate:number = 0;
+    _lastRookieState:number = 0;
 
     protected viewDidLoad(): void {
         super.viewDidLoad();
@@ -37,14 +38,14 @@ export class GuideUI extends ViewController {
 
     _onRookieStepChange(){
         const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-        const rookiestate = DataMgr.s.userInfo.data.rookiestate;
+        const rookieState = DataMgr.s.userInfo.data.rookieState;
         if(rookieStep >= RookieStep.FINISH){
             this.node.active = false;
             return;
         }
-        if(this._lastRookeStep == rookieStep && this._lastRookiestate == rookiestate) return;
+        if(this._lastRookeStep == rookieStep && this._lastRookieState == rookieState) return;
         this._lastRookeStep = rookieStep;
-        this._lastRookiestate = rookiestate;
+        this._lastRookieState = rookieState;
         let conf = GuideConfig.getById(rookieStep+'');
         if(!conf){
             return;
@@ -52,19 +53,19 @@ export class GuideUI extends ViewController {
         this.lbl_cur.string = conf.guide_stepInfo.split("|")[0];
         this.lbl_total.string = conf.guide_stepInfo.split("|")[1];
         this.lbl_msg.string = LanMgr.getLanById(conf.name);
-        this.lbl_state.string = rookiestate == 0 ? LanMgr.getLanById('rookie_state_doing') : LanMgr.getLanById('rookie_state_finish');
+        this.lbl_state.string = rookieState == 0 ? LanMgr.getLanById('rookie_state_doing') : LanMgr.getLanById('rookie_state_finish');
     }
 
     onTapGuide() {
         const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-        const rookiestate = DataMgr.s.userInfo.data.rookiestate;
+        const rookieState = DataMgr.s.userInfo.data.rookieState;
         if(rookieStep >= RookieStep.FINISH){
             return;
         }
-        if(rookiestate == 0){
-
+        if(rookieState == 0){
+            NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_TAP_TASK_PANEL);
         }else{//finsh
-
+            NetworkMgr.websocketMsg.player_get_rookie_award({});
         }
     }
 

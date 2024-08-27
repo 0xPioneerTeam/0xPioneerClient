@@ -10,7 +10,6 @@ import GameMainHelper from "../../../Game/Helper/GameMainHelper";
 import { MapPioneer } from "../../../Game/Outer/View/MapPioneer";
 import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
 import { NetworkMgr } from "../../../Net/NetworkMgr";
-import { GameMgr } from "../../../Utils/Global";
 import { GsBase } from "./GsBase";
 
 

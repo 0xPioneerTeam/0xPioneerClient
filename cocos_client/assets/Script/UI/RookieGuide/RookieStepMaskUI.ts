@@ -76,4 +76,8 @@ export class RookieStepMaskUI extends ViewController {
             this._nextActionCallback();
         }
     }
+
+    hide(){
+        this.node.active = false;
+    }
 }

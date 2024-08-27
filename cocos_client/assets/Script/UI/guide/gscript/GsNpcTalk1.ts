@@ -20,11 +20,9 @@ export class GsNpcTalk1 extends GsBase{
         super.start();
     }
 
-    private _step_check:number = -1;
     gsStart() {
         super.gsStart();
         this.scheduleOnce(()=>{
-            const rookieStep = DataMgr.s.userInfo.data.rookieStep;
             const actionPioneer = DataMgr.s.pioneer.getCurrentPlayer();
             let mapId = actionPioneer.uniqueId.split('|')[0];
             let npcUni = mapId + '|npc_0';
@@ -35,7 +33,7 @@ export class GsNpcTalk1 extends GsBase{
             let pioneer = this._pioneerController.getPioneerByUniqueId(npcUni);
             // const view = pioneer.find("Main/Canvas/GameContent/Game/OutScene/TiledMap/deco_layer/MAP_" + npcId + "/role/RookieSizeView");
             if (pioneer == null) {
-                return;
+                return;/*  */
             }
             const view = pioneer.getChildByPath('role/RookieSizeView');
             if (pioneer == undefined) {
@@ -46,13 +44,13 @@ export class GsNpcTalk1 extends GsBase{
                     return;
                 }
                 this._tileMapController._clickOnMap(pioneer.worldPosition);
-                this._step_check = 1;
+                this._guide_step = 1;
             });
         },0.2);
     }
 
     protected update(dt: number): void {
-        if(this._step_check == 1){
+        if(this._guide_step == 1){
             let actionView = this._tileMapController.actionView;
             if(!actionView){
                 return;
@@ -61,9 +59,10 @@ export class GsNpcTalk1 extends GsBase{
             let view = node.children[0];
             RookieStepMgr.instance().maskView.configuration(true, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
                 actionView.hide();
+                RookieStepMgr.instance().maskView.hide();
                 this._oRookieTapMapAction();
             });
-            this._step_check = 2;
+            this._guide_step = 2;
         }
     }
     
