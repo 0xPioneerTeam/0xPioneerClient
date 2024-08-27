@@ -93,6 +93,11 @@ export class DataMgr {
         const localData = DataMgr.s.userInfo.data;
         DataMgr.s.userInfo.replaceData(p.info);
         const newData = DataMgr.s.userInfo.data;
+        //rookie step
+        if(localData.rookieStep != newData.rookieStep || localData.rookieState != newData.rookieState)
+        {
+            NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
+        }
         // exp
         if (localData.exp != p.info.exp) {
             NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_EXP, { exp: p.info.exp - localData.exp });
@@ -179,6 +184,7 @@ export class DataMgr {
         //     p.rookieStep = RookieStep.LOCAL_DEFEND_TAP_CLOSE;
         // }
         DataMgr.s.userInfo.data.rookieStep = p.rookieStep;
+        DataMgr.s.userInfo.data.rookieStep = p.rookieStep;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
     };
     public static GM_GUIDE(step,state){
@@ -208,39 +214,39 @@ export class DataMgr {
     };
     //------------------------------------- item
     public static storhouse_change = async (e: any) => {
-        const p: s2c_user.Istorhouse_change = e.data;
+        // const p: s2c_user.Istorhouse_change = e.data;
 
-        let rookieBreak: boolean = false;
-        const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-        if (rookieStep == RookieStep.NPC_TALK_1) {
-            // fly piot
-            let goldNum: number = 0;
-            for (const item of p.iteminfo) {
-                if (item.itemConfigId == ResourceCorrespondingItem.Gold) {
-                    goldNum = item.count;
-                    break;
-                }
-            }
-            if (goldNum > 0) {
-                rookieBreak = true;
-                NotificationMgr.triggerEvent(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, {
-                    animType: RookieResourceAnim.PIONEER_0_TO_GOLD,
-                    callback: () => {
-                        // DataMgr.s.userInfo.data.rookieStep = RookieStep.NPC_TALK_3;
-                        NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
-                        this._resourceRefresh(p.iteminfo);
-                    },
-                } as RookieResourceAnimStruct);
-            }
+        // let rookieBreak: boolean = false;
+        // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+        // if (rookieStep == RookieStep.NPC_TALK_1) {
+        //     // fly piot
+        //     let goldNum: number = 0;
+        //     for (const item of p.iteminfo) {
+        //         if (item.itemConfigId == ResourceCorrespondingItem.Gold) {
+        //             goldNum = item.count;
+        //             break;
+        //         }
+        //     }
+        //     if (goldNum > 0) {
+        //         rookieBreak = true;
+        //         NotificationMgr.triggerEvent(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, {
+        //             animType: RookieResourceAnim.PIONEER_0_TO_GOLD,
+        //             callback: () => {
+        //                 // DataMgr.s.userInfo.data.rookieStep = RookieStep.NPC_TALK_3;
+        //                 NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
+        //                 this._resourceRefresh(p.iteminfo);
+        //             },
+        //         } as RookieResourceAnimStruct);
+        //     }
         // } else if (rookieStep == RookieStep.RESOURCE_COLLECT) {
         //     NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_COLLECT_RESOURCE);
-        }
+        // }
 
-        if (rookieBreak) {
-            return;
-        }
+        // if (rookieBreak) {
+        //     return;
+        // }
 
-        this._resourceRefresh(p.iteminfo);
+        // this._resourceRefresh(p.iteminfo);
     };
 
     private static async _resourceRefresh(iteminfo: ItemData[]) {
