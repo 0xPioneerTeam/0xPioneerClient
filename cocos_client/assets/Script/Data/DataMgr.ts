@@ -214,39 +214,8 @@ export class DataMgr {
     };
     //------------------------------------- item
     public static storhouse_change = async (e: any) => {
-        // const p: s2c_user.Istorhouse_change = e.data;
-
-        // let rookieBreak: boolean = false;
-        // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-        // if (rookieStep == RookieStep.NPC_TALK_1) {
-        //     // fly piot
-        //     let goldNum: number = 0;
-        //     for (const item of p.iteminfo) {
-        //         if (item.itemConfigId == ResourceCorrespondingItem.Gold) {
-        //             goldNum = item.count;
-        //             break;
-        //         }
-        //     }
-        //     if (goldNum > 0) {
-        //         rookieBreak = true;
-        //         NotificationMgr.triggerEvent(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, {
-        //             animType: RookieResourceAnim.PIONEER_0_TO_GOLD,
-        //             callback: () => {
-        //                 // DataMgr.s.userInfo.data.rookieStep = RookieStep.NPC_TALK_3;
-        //                 NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
-        //                 this._resourceRefresh(p.iteminfo);
-        //             },
-        //         } as RookieResourceAnimStruct);
-        //     }
-        // } else if (rookieStep == RookieStep.RESOURCE_COLLECT) {
-        //     NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_COLLECT_RESOURCE);
-        // }
-
-        // if (rookieBreak) {
-        //     return;
-        // }
-
-        // this._resourceRefresh(p.iteminfo);
+        const p: s2c_user.Istorhouse_change = e.data;
+        this._resourceRefresh(p.iteminfo);
     };
 
     private static async _resourceRefresh(iteminfo: ItemData[]) {
@@ -493,7 +462,8 @@ export class DataMgr {
                         if (
                             newData.type == MapPioneerType.player &&
                             oldData.actionType != MapPioneerActionType.inCity &&
-                            newData.actionType == MapPioneerActionType.inCity
+                            newData.actionType == MapPioneerActionType.inCity &&
+                            newData.hp > 0
                         ) {
                             if (!PioneerMgr.checkWormholeBackPioneer(newData.uniqueId)) {
                                 // local play return

@@ -71,8 +71,8 @@ export class MainUI extends ViewController {
         NotificationMgr.addListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshBackpackRedPoint, this);
         NotificationMgr.addListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshBackpackRedPoint, this);
         // artifact
-        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
-        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._onArtifactNewChanged, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._onArtifactNewChanged, this);
         // recruit
         NotificationMgr.addListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
         // exercise
@@ -140,8 +140,8 @@ export class MainUI extends ViewController {
         NotificationMgr.removeListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshBackpackRedPoint, this);
         NotificationMgr.removeListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshBackpackRedPoint, this);
         // artifact
-        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
-        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._onArtifactNewChanged, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._onArtifactNewChanged, this);
         // recruit
         NotificationMgr.removeListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
         // exercise
@@ -168,7 +168,7 @@ export class MainUI extends ViewController {
         redPointView.refreshUI(redPointValue, false);
     }
     private _refreshBackpackRedPoint() {
-        const redPointValue: number = DataMgr.s.item.getAllNewItemCount();
+        const redPointValue: number = DataMgr.s.item.getAllNewItemCount() + DataMgr.s.artifact.getAllNewArtifactCount();
         const redPointView = this.node.getChildByPath("CommonContent/icon_treasure_box/RedPoint").getComponent(RedPointView);
         redPointView.refreshUI(redPointValue);
     }
@@ -528,5 +528,10 @@ export class MainUI extends ViewController {
     }
     private _onRookieTapDefend() {
         this.onTapSetDefender();
+    }
+
+    private _onArtifactNewChanged() {
+        this._refreshBackpackRedPoint();
+        this._refreshArtifactRedPoint();
     }
 }

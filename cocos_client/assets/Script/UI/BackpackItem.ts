@@ -17,7 +17,6 @@ export class BackpackItem extends Component {
     public async refreshUI(item: ItemData = null, showRedPoint: boolean = false) {
         this._itemData = item;
         this._showRedPoint = showRedPoint;
-
         const propView = this.node.getChildByPath("Prop");
         if (item == null) {
             propView.active = false;
@@ -42,8 +41,6 @@ export class BackpackItem extends Component {
     }
 
     protected start(): void {
-        this.node.getChildByPath("Prop/RedPointView").getComponent(RedPointView).refreshUI(0);
-
         NotificationMgr.addListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshRedPoint, this);
         NotificationMgr.addListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshRedPoint, this);
     }
