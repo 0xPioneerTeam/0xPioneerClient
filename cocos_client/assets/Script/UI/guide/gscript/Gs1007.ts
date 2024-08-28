@@ -13,7 +13,9 @@ export class Gs1007 extends GsBase {
         this._guide_step = 1;
     }
 
-    protected update(dt: number): void {}
+    protected update(dt: number): void {
+        this._guide_step == 1
+    }
 
     protected onEnable(): void {
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_TASK_PANEL, this._onTapGuideTask, this);
@@ -29,6 +31,9 @@ export class Gs1007 extends GsBase {
             let canTapView = null;
             let index: number = -1;
             const contentView = this.mainUI.node.getChildByPath("CommonContent/HeatTreasureUI/__ViewContent/Content/ProgressBar/BoxContent");
+            if(!contentView){
+                return;
+            }
             for (let i = 0; i < contentView.children.length; i++) {
                 let canTap: boolean = false;
                 for (const boxChild of contentView.children[i].children) {

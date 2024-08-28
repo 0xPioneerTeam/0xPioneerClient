@@ -15,7 +15,7 @@ export class Gs1006 extends GsBase{
     }
 
     protected update(dt: number): void {
-        
+        this._guide_step = 1;
     }
     
     protected onEnable(): void {
@@ -30,6 +30,9 @@ export class Gs1006 extends GsBase{
         this.initBinding();
         if(this._guide_step == 1){
             const HeatProgress = this.mainUI.node.getChildByPath("CommonContent/HeatTreasureUI/__ViewContent/Content/HeatProgress");
+            if(!HeatProgress){
+                return;
+            }
             RookieStepMgr.instance().maskView.configuration(false, HeatProgress.worldPosition, HeatProgress.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
                 GameMusicPlayMgr.playTapButtonEffect();
