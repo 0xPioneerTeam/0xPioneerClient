@@ -1,4 +1,4 @@
-import { view, UITransform, Button, find } from "cc";
+import { view, UITransform, Button, find, EventHandler, NodeEventType, ProgressBar } from "cc";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
 import GameMainHelper from "../../../Game/Helper/GameMainHelper";
@@ -14,7 +14,23 @@ export class Gs1009 extends GsBase{
     }
 
     protected update(dt: number): void {
-       
+        let isGameShowOuter = GameMainHelper.instance.isGameShowOuter;
+        if(isGameShowOuter)
+        {
+            this._guide_step = 1;
+        }else{
+            this._guide_step = 2;
+            let ExerciseButton = find("Main/UI_Canvas/UI_ROOT/NewBuildingUpgradeUI/__ViewContent/ExerciseButton");
+            if(ExerciseButton){
+                this._guide_step = 3;
+                return;
+            }
+            let ExerciseUI = find("Main/UI_Canvas/UI_ROOT/ExerciseUI");
+            if(ExerciseUI){
+                this._guide_step = 4;
+                return;
+            }
+        }
     }
     
     protected onEnable(): void {
@@ -27,6 +43,45 @@ export class Gs1009 extends GsBase{
     
     _onTapGuideTask(){
         this.initBinding();
+        if(this._guide_step == 1){
+            const innerOuterChangeButton = this.mainUI.node.getChildByPath("CommonContent/InnerOutChangeBtnBg");
+            RookieStepMgr.instance().maskView.configuration(false, innerOuterChangeButton.worldPosition, innerOuterChangeButton.getComponent(UITransform).contentSize, () => {
+                RookieStepMgr.instance().maskView.hide();
+                GameMusicPlayMgr.playTapButtonEffect();
+                GameMainHelper.instance.changeInnerAndOuterShow();
+                this._guide_step = 2;
+            });
+        }
+        if(this._guide_step == 2){
+            const view = this._innerBuildingController.getBuildingByKey(InnerBuildingType.TrainingCenter).node;
+            RookieStepMgr.instance().maskView.configuration(false, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
+                RookieStepMgr.instance().maskView.hide();
+                let button = view.getChildByName('clickNode').getComponent(Button);
+                let event = new Event(NodeEventType.TOUCH_START);
+                EventHandler.emitEvents(button.clickEvents,event);
+                this._guide_step = 3;
+                this.scheduleOnce(()=>{
+                    this._onTapGuideTask();
+                },0.5);
+            });
+        }
+        if(this._guide_step == 3){
+            let ExerciseButton = find("Main/UI_Canvas/UI_ROOT/NewBuildingUpgradeUI/__ViewContent/ExerciseButton");
+            RookieStepMgr.instance().maskView.configuration(false, ExerciseButton.worldPosition, ExerciseButton.getComponent(UITransform).contentSize, () => {
+                RookieStepMgr.instance().maskView.hide();
+                let button = ExerciseButton.getComponent(Button);
+                let event = new Event(NodeEventType.TOUCH_START);
+                EventHandler.emitEvents(button.clickEvents,event);
+                this._guide_step = 4;
+            });
+        }
+        if(this._guide_step == 4){
+            let ExercoseItem = find("Main/UI_Canvas/UI_ROOT/ExerciseUI/__ViewContent/ScrollView/View/Content").children[0];
+            RookieStepMgr.instance().maskView.configuration(false, ExercoseItem.worldPosition, ExercoseItem.getComponent(UITransform).contentSize, () => {
+                RookieStepMgr.instance().maskView.hide();
+                this._guide_step = 5;
+            });
+        }
       
     }
 

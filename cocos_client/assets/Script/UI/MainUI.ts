@@ -176,6 +176,9 @@ export class MainUI extends ViewController {
             taskTrackView.active = GameMainHelper.instance.isGameShowOuter;
 
             this._worldBoxCountTipView.active = true;
+        }else if(rookieStep >= RookieStep.GUIDE_1010){
+            nftButton.active = true;
+            innerOuterChangeButton.active = true;
         }else if(rookieStep >= RookieStep.GUIDE_1001){
             innerOuterChangeButton.active = true;
         }
