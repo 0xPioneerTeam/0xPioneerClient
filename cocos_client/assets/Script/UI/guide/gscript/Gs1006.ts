@@ -39,7 +39,6 @@ export class Gs1006 extends GsBase{
                 this._guide_step = 2;
             });
         }
-        
     }
 
 
