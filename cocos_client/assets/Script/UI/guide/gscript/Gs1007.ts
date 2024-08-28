@@ -14,7 +14,7 @@ export class Gs1007 extends GsBase {
     }
 
     protected update(dt: number): void {
-        this._guide_step == 1
+        this._guide_step = 1
     }
 
     protected onEnable(): void {
