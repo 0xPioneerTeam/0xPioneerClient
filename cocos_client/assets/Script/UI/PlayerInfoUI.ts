@@ -22,7 +22,7 @@ import { SettlementView } from "./View/SettlementView";
 import ArtifactData from "../Model/ArtifactData";
 import { ArtifactItem } from "./ArtifactItem";
 import { BackpackItem } from "./BackpackItem";
-import { LanMgr, UserInfoMgr, AudioMgr, GameMgr } from "../Utils/Global";
+import { LanMgr, UserInfoMgr, AudioMgr, GameMgr, ClvlMgr } from "../Utils/Global";
 import ViewController from "../BasicView/ViewController";
 import { UIHUDController } from "./UIHUDController";
 import NotificationMgr from "../Basic/NotificationMgr";
@@ -36,6 +36,7 @@ import { NetworkMgr } from "../Net/NetworkMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { GAME_ENV_IS_DEBUG } from "../Const/ConstDefine";
 import { UIName } from "../Const/ConstUIDefine";
+import { RedPointView } from "./View/RedPointView";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerInfoUI")
@@ -127,7 +128,12 @@ export class PlayerInfoUI extends ViewController {
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._onChangeLang, this);
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_NAME, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.SETTLEMENT_DATA_CHANGE, this._refreshUI, this);
+
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_HEAT, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_CLVL_CONDTION_CHANGE, this._refreshUI, this);
 
         NetworkMgr.websocketMsg.get_user_settlement_info({});
     }
@@ -151,7 +157,12 @@ export class PlayerInfoUI extends ViewController {
 
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this._onChangeLang, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_NAME, this._refreshUI, this);
         NotificationMgr.removeListener(NotificationName.SETTLEMENT_DATA_CHANGE, this._refreshUI, this);
+
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_HEAT, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_CLVL_CONDTION_CHANGE, this._refreshUI, this);
     }
 
     //-------------------------------- function
@@ -281,6 +292,11 @@ export class PlayerInfoUI extends ViewController {
             // useLanMgr
             // currentShowView.getChildByPath("RewardContent/GetHpMax/Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
             currentShowView.getChildByPath("RewardContent/GetHpMax/Value").getComponent(Label).string = "+" + LvlupConfig.getTotalHpMaxByLvl(currentLevel);
+
+            // red point
+            const clevelUpConditionFinish = ClvlMgr.getCurretLevelUpFinishCondition();
+            currentShowView.getChildByPath("NextLevel/RedPointView").getComponent(RedPointView).refreshUI(clevelUpConditionFinish.value >= clevelUpConditionFinish.total ? 1 : 0, false);
+
         } else if (this._selectIndex == 1) {
             // summary
             const settleViewContent = currentShowView.getChildByPath("PeriodicSettlement/view/content");

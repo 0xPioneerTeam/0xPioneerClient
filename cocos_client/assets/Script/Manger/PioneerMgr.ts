@@ -145,7 +145,7 @@ export default class PioneerMgr {
 
         let interactDelayTime: number = 0;
         if (!interactDirectly) {
-            interactDelayTime = 250;
+            interactDelayTime = 500;
         }
 
         if (stayBuilding == null) {
@@ -225,7 +225,7 @@ export default class PioneerMgr {
                                     buildingId: stayBuilding.uniqueId,
                                     isReturn: this._checkActionSendParamRetrun(uniqueId),
                                 });
-                            }
+                            } 
                         }, interactDelayTime);
                     }
                 }

@@ -94,10 +94,18 @@ export class ResOprView extends Component {
                     mainCityIsSelf = uniqueIdSplit[0] == DataMgr.s.mapBuilding.getSelfMainCitySlotId();
                     const info = GameMgr.getMapSlotData(uniqueIdSplit[0]);
                     if (info != undefined) {
-                        mainCityBuildingInfo.getChildByPath("Leader/Value").getComponent(Label).string = info.pname;
+                        let cityName: string = "";
+                        if (uniqueIdSplit[0] == DataMgr.s.mapBuilding.getSelfMainCitySlotId()) {
+                            cityName = DataMgr.s.userInfo.data.name;
+                        } else {
+                            cityName = info.pname;
+                        }
+                        infoView.getChildByPath("Top/Name").getComponent(Label).string = cityName;
+                        mainCityBuildingInfo.getChildByPath("Leader/Value").getComponent(Label).string = cityName;
                         mainCityBuildingInfo.getChildByPath("Civilization/Value").getComponent(Label).string = info.level.toString();
 
-                        mainCityIsUnLock = info.playerId == DataMgr.s.userInfo.data.id || DataMgr.s.userInfo.data.explorePlayerids.indexOf(parseInt(info.playerId)) != -1 ;
+                        mainCityIsUnLock =
+                            info.playerId == DataMgr.s.userInfo.data.id || DataMgr.s.userInfo.data.explorePlayerids.indexOf(parseInt(info.playerId)) != -1;
                         const lockView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Locked");
                         const fightValueView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Title");
                         if (!mainCityIsUnLock) {
@@ -168,6 +176,7 @@ export class ResOprView extends Component {
             if (interactBuilding.type == MapBuildingType.city) {
                 if (mainCityIsSelf) {
                     actionTypes.push(MapInteractType.EnterInner);
+                    actionTypes.push(MapInteractType.MainBack);
                 } else {
                     if (DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.InformationStation) > 0 && !mainCityIsUnLock) {
                         actionTypes.push(MapInteractType.Detect);
@@ -213,7 +222,8 @@ export class ResOprView extends Component {
         for (const type of actionTypes) {
             const actionItem = instantiate(this._actionItem);
             actionItem.name = "ACTION_" + type;
-            actionItem.getChildByPath("Icon/Wormhole").active = type == MapInteractType.WmMark || type == MapInteractType.WmMatch || type == MapInteractType.WmRecall || type == MapInteractType.WmTeleport;
+            actionItem.getChildByPath("Icon/Wormhole").active =
+                type == MapInteractType.WmMark || type == MapInteractType.WmMatch || type == MapInteractType.WmRecall || type == MapInteractType.WmTeleport;
             actionItem.getChildByPath("Icon/Search").active = type == MapInteractType.Explore || type == MapInteractType.Event || type == MapInteractType.Talk;
             actionItem.getChildByPath("Icon/Collect").active = type == MapInteractType.Collect;
             actionItem.getChildByPath("Icon/Attack").active = type == MapInteractType.Attack;
@@ -224,6 +234,7 @@ export class ResOprView extends Component {
             actionItem.getChildByPath("Icon/Detect").active = type == MapInteractType.Detect;
             actionItem.getChildByPath("Icon/SiegeCity").active = type == MapInteractType.SiegeCity;
             actionItem.getChildByPath("Icon/EnterInner").active = type == MapInteractType.EnterInner;
+            actionItem.getChildByPath("Icon/MainBack").active = type == MapInteractType.MainBack;
 
             let title: string = "";
             if (type == MapInteractType.WmMark) {
@@ -286,6 +297,10 @@ export class ResOprView extends Component {
                 //useLanMgr
                 // title = LanMgr.getLanById("107549");
                 title = "Enter";
+            } else if (type == MapInteractType.MainBack) {
+                //useLanMgr
+                // title = LanMgr.getLanById("107549");
+                title = "Back";
             }
             const costEnergy = GameMgr.getMapActionCostEnergy(step, interactBuilding != null ? interactBuilding.uniqueId : null);
             actionItem.getChildByPath("Title").getComponent(Label).string = title;
@@ -305,7 +320,7 @@ export class ResOprView extends Component {
         //         rookieStep == RookieStep.NPC_TALK_1
         //     ) {
         //         viewIndex = actionTypes.indexOf(MapInteractType.Talk);
-        //     } 
+        //     }
         //     if (viewIndex != -1) {
         //         view = this._actionItemContent.getChildByPath("ACTION_" + actionTypes[viewIndex]);
         //     }
@@ -330,7 +345,7 @@ export class ResOprView extends Component {
         this._actionItem = this._actionItemContent.getChildByPath("Item");
         this._actionItem.removeFromParent();
     }
-    
+
     start() {}
 
     update(deltaTime: number) {}

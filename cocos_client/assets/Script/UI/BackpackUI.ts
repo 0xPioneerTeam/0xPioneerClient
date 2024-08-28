@@ -119,7 +119,7 @@ export class BackpackUI extends ViewController {
             } else if (this._data[i] instanceof ArtifactData) {
                 itemView = instantiate(this.artifactPrb);
                 this._backpackContent.addChild(itemView);
-                itemView.getComponent(ArtifactItem).refreshUI(this._data[i]);
+                itemView.getComponent(ArtifactItem).refreshUI(this._data[i], true);
             }
 
             const button = itemView.addComponent(Button);
@@ -156,6 +156,7 @@ export class BackpackUI extends ViewController {
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
         DataMgr.s.item.readAllNewItem();
+        DataMgr.s.artifact.readAllNewArtifact();
     }
     private async onTapItem(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -173,6 +174,7 @@ export class BackpackUI extends ViewController {
                 if (result.success) {
                     result.node.getComponent(ArtifactInfoUI).showItem([data]);
                 }
+                DataMgr.s.artifact.readNewArtifactById(data.uniqueId);
             }
         }
     }

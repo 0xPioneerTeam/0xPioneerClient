@@ -13,12 +13,13 @@ import GameMainHelper from "../Game/Helper/GameMainHelper";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import CommonTools from "../Tool/CommonTools";
-import { LanMgr } from "../Utils/Global";
+import { GameMgr, LanMgr } from "../Utils/Global";
 import { NewSettlementUI } from "./NewSettlementUI";
 import { NFTBackpackUI } from "./NFTBackpackUI";
 import { RelicTowerUI } from "./RelicTowerUI";
 import { TaskListUI } from "./TaskListUI";
 import { UIHUDController } from "./UIHUDController";
+import { RedPointView } from "./View/RedPointView";
 
 const { ccclass, property } = _decorator;
 
@@ -61,21 +62,45 @@ export class MainUI extends ViewController {
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_TASK, this._onRookieTapTask, this);
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_DEFEND, this._onRookieTapDefend, this);
 
+        // task
+        NotificationMgr.addListener(NotificationName.TASK_DID_CHANGE, this._refreshTaskRedPoint, this);
+        // nft
+        NotificationMgr.addListener(NotificationName.NFT_LEVEL_UP, this._refreshNFTRedPoint, this);
+        NotificationMgr.addListener(NotificationName.NFT_RANK_UP, this._refreshNFTRedPoint, this);
+        // item
+        NotificationMgr.addListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshBackpackRedPoint, this);
+        NotificationMgr.addListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshBackpackRedPoint, this);
+        // artifact
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._onArtifactNewChanged, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._onArtifactNewChanged, this);
+        // recruit
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
+        // exercise
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED, this._refreshExerciseRedPoint, this);
+
         this._refreshWorldBoxCountTip();
     }
 
     protected async viewDidStart(): Promise<void> {
         super.viewDidStart();
-        this._refreshElementShow(); 
+        this._refreshElementShow();
         this._refreshSettlememntTip();
         this._onInnerOuterChanged();
         this.changeLang();
+
+        // redPoint
+        this._refreshTaskRedPoint();
+        this._refreshNFTRedPoint();
+        this._refreshBackpackRedPoint();
+        this._refreshArtifactRedPoint();
+        this._refreshRecruitRedPoint();
+        this._refreshExerciseRedPoint();
 
         // const bigGanster = DataMgr.s.pioneer.getById("gangster_3");
         // if (bigGanster != null && bigGanster.show) {
         //     this.checkCanShowGansterComingTip(bigGanster.id);
         // }
-
+ 
         this.backpackBtn.node.on(
             Button.EventType.CLICK,
             async () => {
@@ -105,6 +130,22 @@ export class MainUI extends ViewController {
         NotificationMgr.removeListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_TASK, this._onRookieTapTask, this);
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_DEFEND, this._onRookieTapDefend, this);
+
+        // task
+        NotificationMgr.removeListener(NotificationName.TASK_DID_CHANGE, this._refreshTaskRedPoint, this);
+        // nft
+        NotificationMgr.removeListener(NotificationName.NFT_LEVEL_UP, this._refreshNFTRedPoint, this);
+        NotificationMgr.removeListener(NotificationName.NFT_RANK_UP, this._refreshNFTRedPoint, this);
+        // item
+        NotificationMgr.removeListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshBackpackRedPoint, this);
+        NotificationMgr.removeListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshBackpackRedPoint, this);
+        // artifact
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._onArtifactNewChanged, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._onArtifactNewChanged, this);
+        // recruit
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
+        // exercise
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED, this._refreshExerciseRedPoint, this);
     }
 
     changeLang(): void {
@@ -115,6 +156,39 @@ export class MainUI extends ViewController {
         // this._worldBoxCountTipView.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("107549")
     }
 
+    // red point
+    private _refreshTaskRedPoint() {
+        const redPointValue: number = DataMgr.s.task.getAllDoingTasks().length + DataMgr.s.task.getMissionAllDoing().length;
+        const redPointView = this.node.getChildByPath("CommonContent/TaskButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue);
+    }
+    private _refreshNFTRedPoint() {
+        const redPointValue: number = GameMgr.checkHasNFTCanRed() ? 1 : 0;
+        const redPointView = this.node.getChildByPath("CommonContent/NFTButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue, false);
+    }
+    private _refreshBackpackRedPoint() {
+        const redPointValue: number = DataMgr.s.item.getAllNewItemCount() + DataMgr.s.artifact.getAllNewArtifactCount();
+        const redPointView = this.node.getChildByPath("CommonContent/icon_treasure_box/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue);
+    }
+    private _refreshArtifactRedPoint() {
+        const redPointValue: number = DataMgr.s.artifact.getAllNewArtifactCount();
+        const redPointView = this.node.getChildByPath("CommonContent/ArtifactButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue);
+    }
+    private _refreshRecruitRedPoint() {
+        const redPointValue: boolean = DataMgr.s.userInfo.getRecruitRedPoint();
+        const redPointView = this.node.getChildByPath("CommonContent/RecuritButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue? 1 : 0, false);
+    }
+    private _refreshExerciseRedPoint() {
+        const redPointValue: boolean = DataMgr.s.userInfo.getExerciseRedPoint();
+        const redPointView = this.node.getChildByPath("CommonContent/ExerciseButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue? 1 : 0, false);
+    }
+
+    // button
     private _refreshElementShow() {
         const taskButton = this.node.getChildByPath("CommonContent/TaskButton");
         const backpackButton = this.node.getChildByPath("CommonContent/icon_treasure_box");
@@ -454,5 +528,10 @@ export class MainUI extends ViewController {
     }
     private _onRookieTapDefend() {
         this.onTapSetDefender();
+    }
+
+    private _onArtifactNewChanged() {
+        this._refreshBackpackRedPoint();
+        this._refreshArtifactRedPoint();
     }
 }

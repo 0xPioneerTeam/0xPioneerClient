@@ -3,6 +3,8 @@ import * as cc from "cc";
 import ArtifactData from "../Model/ArtifactData";
 import { ArtifactMgr } from "../Utils/Global";
 import ArtifactConfig from "../Config/ArtifactConfig";
+import NotificationMgr from "../Basic/NotificationMgr";
+import { NotificationName } from "../Const/Notification";
 import { RedPointView } from "./View/RedPointView";
 import { DataMgr } from "../Data/DataMgr";
 const { ccclass, property } = _decorator;
@@ -40,10 +42,16 @@ export class ArtifactItem extends Component {
     protected onLoad(): void {}
 
     protected start(): void {
-        
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshRedPoint, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshRedPoint, this);
     }
 
     protected onDestroy(): void {
-       
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshRedPoint, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshRedPoint, this);
+    }
+
+    private _refreshRedPoint() {
+        this.refreshUI(this._itemData, this._showRedPoint);
     }
 }
