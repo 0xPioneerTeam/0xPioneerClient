@@ -68,9 +68,6 @@ export class Gs1012 extends GsBase{
             if(building.uniqueId.split("|")[0] != citySlot){
                 return false;
             }
-            if(this._shadowController.tiledMapIsAllBlackShadow(building.stayMapPositions[0].x,building.stayMapPositions[0].y)){
-                return false;
-            }
             return true;
         });
         const mainCity = DataMgr.s.mapBuilding.getSelfMainCityBuilding();

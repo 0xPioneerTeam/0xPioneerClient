@@ -41,6 +41,12 @@ export class Gs1005 extends GsBase{
             }
         }
         if(this._resBuilding){
+            let ExploreView = this._resBuilding.node.getChildByPath("ExploreView")
+            if(ExploreView.active){
+                //collecting
+                this._guide_step = -1;
+                return;
+            }
             let actionView = this._tileMapController.actionView;
             if(!actionView.node.active){
                 this._guide_step = 2;
@@ -109,6 +115,9 @@ export class Gs1005 extends GsBase{
         }
         if(this._guide_step == 2){
             const view = this._resBuilding.node;
+            if(!view){
+                return;
+            }
             RookieStepMgr.instance().maskView.configuration(true, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
                 GameMusicPlayMgr.playTapButtonEffect();

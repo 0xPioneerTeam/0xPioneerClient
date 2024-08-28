@@ -20,6 +20,11 @@ const { ccclass, property } = _decorator;
 
 @ccclass("InnerBuildingView")
 export class InnerBuildingView extends ViewController {
+
+    public get building(): UserInnerBuildInfo {
+        return this._building;
+    }
+    
     public async refreshUI(building: UserInnerBuildInfo, canAction: boolean = true) {
         if (building == null || this._defaultBuildingView == null) {
             return false;

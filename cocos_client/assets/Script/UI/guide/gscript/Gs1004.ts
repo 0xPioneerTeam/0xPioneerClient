@@ -20,6 +20,19 @@ export class Gs1004 extends GsBase{
             this._guide_step = 1;
         }else{
             this._guide_step = 2;
+            if(!this._innerBuildingController){
+                this.initBinding();
+                return;
+            }
+            let ExploreView = this._innerBuildingController.getBuildingByKey(InnerBuildingType.House)
+            if(ExploreView){
+                //collecting
+                let upgrading = ExploreView.building.upgrading;
+                if(upgrading){
+                    this._guide_step = -1;
+                    return;
+                }
+            }
         }
     }
     
