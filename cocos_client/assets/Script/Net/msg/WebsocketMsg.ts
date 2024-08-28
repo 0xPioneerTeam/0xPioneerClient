@@ -135,6 +135,9 @@ export class WebsocketMsg {
     public player_fight_maincity(d: c2s_user.Iplayer_fight_maincity) {
         this.send_packet("player_fight_maincity", d);
     }
+    public player_maincity_back(d: c2s_user.Iplayer_maincity_back) {
+        this.send_packet("player_maincity_back", d);
+    }
     public player_wormhole_tp_random(d: c2s_user.Iplayer_wormhole_tp_random) {
         this.send_packet("player_wormhole_tp_random", d);
     }
@@ -396,6 +399,10 @@ export namespace c2s_user {
         pioneerId: string;
         buildingId: string;
         isReturn: boolean;
+    }
+    export interface Iplayer_maincity_back {
+        pioneerId: string;
+        buildingId: string;
     }
     export interface Iplayer_wormhole_tp_random {
         buildingId: string;

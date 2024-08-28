@@ -80,6 +80,9 @@ export interface ConfigInnerBuildingLevelUpData {
 
     prefab_barr: string;
     desc_barr: string;
+    max_barr: number;
+    time_barr: number;
+    rec_cost_barr: [number, number][];
 
     prefab_house: string;
     desc_house: string;
@@ -88,9 +91,23 @@ export interface ConfigInnerBuildingLevelUpData {
     info_y_energy: number;
     desc_energy: string;
 
+    prefab_tower: string;
+    desc_babel: string;
+    max_lvlBuilding: number;
+
+    prefab_ic: string;
+
+    sight_range: number;
+
+    prefab_barracks: string;
+    desc_barracks: string;
+    
+
     psyc_output: number;
     psyc_storage: number;
     psyc_convert: [number, number][];
+
+    relic_max: number;
 
     troops: string;
     max_troops: number;

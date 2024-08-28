@@ -69,6 +69,7 @@ export enum protobuf_c2s {
     player_event_generate_enemy = 711,
     player_event_select = 712,
     player_event_exit = 713,
+    player_maincity_back = 714,
 
     // ------ mapbuilding ------
     // mapbuilding: getinfo
@@ -196,6 +197,7 @@ export enum protobuf_s2c {
     player_event_generate_enemy_res = 10811,
     player_event_select_res = 10812,
     player_event_exit_res = 10813,
+    player_maincity_back_res = 10814,
     // pioneer: notify
     sinfo_change = 10850,
     pioneer_change = 10851,

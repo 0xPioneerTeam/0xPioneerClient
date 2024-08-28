@@ -4016,8 +4016,8 @@
   },
   "920013": {
     "id": "920013",
-    "eng": "Upgrade Building 501107 to level 1",
-    "tc": "升級501107所到1級"
+    "eng": "Upgrade intelligence station to level 1",
+    "tc": "升級情报站到1級"
   },
   "920014": {
     "id": "920014",
@@ -4026,8 +4026,8 @@
   },
   "920015": {
     "id": "920015",
-    "eng": "Kill 4 more enemies",
-    "tc": "再次擊殺4個敵人"
+    "eng": "Kill 2 more enemies",
+    "tc": "再次擊殺2個敵人"
   },
   "920016": {
     "id": "920016",
@@ -5001,7 +5001,7 @@
   },
   "1100201": {
     "id": "1100201",
-    "eng": "The character lacks stamina. Should we spend %s psycs to replenish their stamina? There is %s remaining purchase today.",
-    "tc": "該角色體力不足，是否花費%s數量的psycs為角色補滿體力，今日剩餘購買次數%s次。"
+    "eng": "%The character's stamina is insufficient. Should you spend% s of% s to replenish the character's stamina? There are% s remaining purchases today.",
+    "tc": "角色%s体力不足，是否花费%s数量的%s为角色补充%s体力，今日剩余购买次数%s。"
   }
 }

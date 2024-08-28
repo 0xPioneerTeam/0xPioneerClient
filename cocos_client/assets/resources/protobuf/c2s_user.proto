@@ -189,6 +189,10 @@ message player_event_exit {
     required string pioneerId = 1;
     required string buildingId = 2;
 }
+message player_maincity_back {
+    required string pioneerId = 1;
+    required string buildingId = 2;
+}
 
 
 // ------ mapbuilding ------
