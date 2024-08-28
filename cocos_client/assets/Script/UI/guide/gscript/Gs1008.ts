@@ -20,6 +20,15 @@ export class Gs1008 extends GsBase{
             this._guide_step = 1;
         }else{
             this._guide_step = 2;
+            let TrainingCenter = this._innerBuildingController.getBuildingByKey(InnerBuildingType.TrainingCenter)
+            if(TrainingCenter){
+                //collecting
+                let upgrading = TrainingCenter.building.upgrading;
+                if(upgrading){
+                    this._guide_step = -1;
+                    return;
+                }
+            }
         }
     }
     

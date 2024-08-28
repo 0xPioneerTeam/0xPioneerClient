@@ -106,6 +106,9 @@ export class Gs1010 extends GsBase{
         }
         if(this._guide_step == 2){
             const view = this._resMonster;
+            if(!view){
+                return;
+            }
             RookieStepMgr.instance().maskView.configuration(true, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
                 GameMusicPlayMgr.playTapButtonEffect();

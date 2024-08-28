@@ -19,6 +19,15 @@ export class Gs1009 extends GsBase{
         {
             this._guide_step = 1;
         }else{
+            let TrainingCenter = this._innerBuildingController.getBuildingByKey(InnerBuildingType.TrainingCenter)
+            if(TrainingCenter){
+                //collecting
+                let troopIng = TrainingCenter.building.troopIng;
+                if (troopIng) {
+                    this._guide_step = -1;
+                    return;
+                }
+            }
             this._guide_step = 2;
             let ExerciseButton = find("Main/UI_Canvas/UI_ROOT/NewBuildingUpgradeUI/__ViewContent/ExerciseButton");
             if(ExerciseButton){
