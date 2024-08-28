@@ -37,7 +37,7 @@
     "pos_type": 1,
     "positions": [
       1,
-      6
+      7
     ],
     "node": "swamp_jungle",
     "level": 1,
@@ -96,8 +96,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      15,
-      14
+      14,
+      13
     ],
     "node": "oasis",
     "level": 1,
@@ -156,8 +156,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      8,
-      0
+      6,
+      1
     ],
     "node": "sand_mineral",
     "level": 1,
@@ -240,7 +240,7 @@
     "show": 0,
     "pos_type": 1,
     "positions": [
-      6,
+      5,
       5
     ],
     "node": "ruin",
@@ -267,8 +267,8 @@
     "show": 0,
     "pos_type": 0,
     "positions": [
-      14,
-      3
+      13,
+      5
     ],
     "node": "ambush",
     "level": 1,

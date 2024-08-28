@@ -34,7 +34,7 @@
     "pos_type": 1,
     "positions": [
       3,
-      0
+      1
     ],
     "node": "swamp_jungle",
     "level": 1,
@@ -93,8 +93,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      3,
-      14
+      2,
+      11
     ],
     "node": "sand_mineral",
     "level": 1,
@@ -183,8 +183,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      15,
-      2
+      14,
+      3
     ],
     "node": "oasis",
     "level": 1,
@@ -213,8 +213,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      12,
-      0
+      9,
+      1
     ],
     "node": "laboratory",
     "level": 3,

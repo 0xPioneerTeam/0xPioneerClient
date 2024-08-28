@@ -6,8 +6,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      1,
-      0
+      4,
+      2
     ],
     "node": "oasis",
     "level": 1,
@@ -66,8 +66,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      10,
-      12
+      1,
+      13
     ],
     "node": "swamp_jungle",
     "level": 1,
@@ -96,8 +96,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      15,
-      0
+      4,
+      8
     ],
     "node": "ancient_ruins",
     "level": 1,
@@ -123,8 +123,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      3,
-      14
+      7,
+      12
     ],
     "node": "spider_cave",
     "level": 1,
@@ -150,8 +150,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      8,
-      0
+      11,
+      4
     ],
     "node": "laboratory",
     "level": 3,
@@ -177,8 +177,8 @@
     "show": 0,
     "pos_type": 0,
     "positions": [
-      15,
-      14
+      10,
+      11
     ],
     "node": "Aquatic_Relics_Group",
     "level": 5,
@@ -204,8 +204,8 @@
     "show": 0,
     "pos_type": 1,
     "positions": [
-      5,
-      4
+      14,
+      1
     ],
     "node": "ruin",
     "level": 1,
@@ -258,8 +258,8 @@
     "show": 0,
     "pos_type": 0,
     "positions": [
-      10,
-      8
+      14,
+      13
     ],
     "node": "ambush",
     "level": 1,

@@ -36,8 +36,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      13,
-      14
+      11,
+      13
     ],
     "node": "swamp_jungle",
     "level": 1,
@@ -97,7 +97,7 @@
     "pos_type": 1,
     "positions": [
       5,
-      14
+      13
     ],
     "node": "oasis",
     "level": 1,

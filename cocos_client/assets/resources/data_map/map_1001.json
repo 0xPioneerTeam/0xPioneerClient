@@ -33,8 +33,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      0,
-      3
+      2,
+      13
     ],
     "node": "swamp_jungle",
     "level": 1,
@@ -93,8 +93,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      1,
-      14
+      6,
+      1
     ],
     "node": "sand_mineral",
     "level": 1,
@@ -123,8 +123,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      10,
-      12
+      9,
+      13
     ],
     "node": "sand_mineral",
     "level": 1,
@@ -153,8 +153,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      15,
-      4
+      13,
+      10
     ],
     "node": "swamp_jungle",
     "level": 1,
@@ -183,8 +183,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      15,
-      14
+      14,
+      4
     ],
     "node": "oasis",
     "level": 1,
@@ -213,8 +213,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      11,
-      0
+      1,
+      3
     ],
     "node": "laboratory",
     "level": 3,

@@ -96,8 +96,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      6,
-      0
+      5,
+      1
     ],
     "node": "ancient_ruins",
     "level": 1,
@@ -150,8 +150,8 @@
     "show": 1,
     "pos_type": 1,
     "positions": [
-      10,
-      14
+      11,
+      13
     ],
     "node": "laboratory",
     "level": 3,
@@ -204,7 +204,7 @@
     "show": 0,
     "pos_type": 1,
     "positions": [
-      0,
+      3,
       13
     ],
     "node": "ruin",
@@ -231,7 +231,7 @@
     "show": 0,
     "pos_type": 0,
     "positions": [
-      15,
+      14,
       8
     ],
     "node": "treasure",
