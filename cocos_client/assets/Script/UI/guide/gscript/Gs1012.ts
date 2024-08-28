@@ -62,7 +62,7 @@ export class Gs1012 extends GsBase{
         let citySlot = DataMgr.s.mapBuilding.getSelfMainCitySlotId();
         let buildingData = DataMgr.s.mapBuilding.getObj_building();
         let resBds = buildingData.filter(building=>{
-            if(building.type != MapBuildingType.tavern){
+            if(building.type != MapBuildingType.wormhole){
                 return false;
             }
             if(building.uniqueId.split("|")[0] != citySlot){
