@@ -5001,7 +5001,12 @@
   },
   "1100201": {
     "id": "1100201",
-    "eng": "%The character's stamina is insufficient. Should you spend% s of% s to replenish the character's stamina? There are% s remaining purchases today.",
-    "tc": "角色%s体力不足，是否花费%s数量的%s为角色补充%s体力，今日剩余购买次数%s。"
+    "eng": "The character %s lacks stamina. Should you spend %s of %s to replenish %s stamina for the character? There are %s remaining purchases today.",
+    "tc": "角色%s體力不足，是否花費%s數量的%s為角色補充%s體力，今日剩餘購買次數%s。"
+  },
+  "1100202": {
+    "id": "1100202",
+    "eng": "Investigation requires the consumption of %s psyc. Should we proceed with the investigation.",
+    "tc": "偵查需要消耗%s的psyc，是否進行偵查。"
   }
 }
