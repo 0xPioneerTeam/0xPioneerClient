@@ -5011,7 +5011,17 @@
   },
   "1100203": {
     "id": "1100203",
+    "eng": "Insufficient %s",
+    "tc": "%s不足。"
+  },
+  "1100204": {
+    "id": "1100204",
     "eng": "When there are no troops, characters can only collect data",
     "tc": "角色在沒有部隊時，只能進行採集"
+  },
+  "1100205": {
+    "id": "1100205",
+    "eng": "Please follow the prompts to complete the beginner guide. Click on the dialog box above to receive the guide prompt.",
+    "tc": "請按提示完成初學者指南。 点击上面的對話方塊以接收指南提示。"
   }
 }
