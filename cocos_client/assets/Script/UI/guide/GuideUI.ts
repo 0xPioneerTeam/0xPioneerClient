@@ -57,7 +57,7 @@ export class GuideUI extends ViewController {
         if(rookieState == 1 && conf.fin_talk && conf.fin_talk.length>=1){
             talkId = conf.fin_talk[0];
         }
-        if(talkId){
+        if(talkId && rookieStep != RookieStep.WAKE_UP){
             NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_TRIGGER_LEFT_TALK,{talkId:talkId});
         }
         this.lbl_cur.string = conf.guide_stepInfo.split("|")[0];

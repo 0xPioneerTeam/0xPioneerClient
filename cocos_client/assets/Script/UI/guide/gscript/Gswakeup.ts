@@ -11,31 +11,37 @@ import { MapPioneer } from "../../../Game/Outer/View/MapPioneer";
 import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
 import { NetworkMgr } from "../../../Net/NetworkMgr";
 import { GsBase } from "./GsBase";
+import GuideConfig from "../../../Config/GuideConfig";
 
 
-export class Gswakeup extends GsBase{
+export class Gswakeup extends GsBase {
 
     public async start() {
-        await UIPanelManger.inst.pushPanel(UIName.RookieGuide);
         super.start();
+        await UIPanelManger.inst.pushPanel(UIName.RookieGuide);
     }
 
     gsStart() {
         super.gsStart();
         const actionPioneer = DataMgr.s.pioneer.getCurrentPlayer();
-        if (DataMgr.s.userInfo.data.rookieStep == RookieStep.WAKE_UP) {
-            if (actionPioneer != null) {
-                this.scheduleOnce(() => {
-                    GameMainHelper.instance.tiledMapShadowErase(actionPioneer.stayPos);
-                }, 0.2);
-                GameMainHelper.instance.changeGameCameraZoom(0.5);
-                // dead
-                actionPioneer.actionType = MapPioneerActionType.dead;
-                let pioneer = this._pioneerController.getPioneerByUniqueId(actionPioneer.uniqueId);
-                if (pioneer) {
-                    pioneer.getComponent(MapPioneer).refreshUI(actionPioneer);
-                }
+        if (actionPioneer != null) {
+            this.scheduleOnce(() => {
+                GameMainHelper.instance.tiledMapShadowErase(actionPioneer.stayPos);
+            }, 0.2);
+            GameMainHelper.instance.changeGameCameraZoom(0.5);
+            // dead
+            actionPioneer.actionType = MapPioneerActionType.dead;
+            let pioneer = this._pioneerController.getPioneerByUniqueId(actionPioneer.uniqueId);
+            if (pioneer) {
+                pioneer.getComponent(MapPioneer).refreshUI(actionPioneer);
             }
+        }
+    }
+
+    protected update(dt: number): void {
+        const actionPioneer = DataMgr.s.pioneer.getCurrentPlayer();
+        if (actionPioneer != null) {
+            GameMainHelper.instance.tiledMapShadowErase(actionPioneer.stayPos);
         }
     }
 
@@ -58,13 +64,16 @@ export class Gswakeup extends GsBase{
             // if (this._pioneerMap.has(actionPioneer.uniqueId)) {
             //     view = this._pioneerMap.get(actionPioneer.uniqueId).getComponent(MapPioneer);
             // }
+            let conf = GuideConfig.getById(RookieStep.WAKE_UP + '');
+            let talkId = conf.pre_talk[0];
+
             this.scheduleOnce(async () => {
                 actionPioneer.actionType = MapPioneerActionType.idle;
                 view.getComponent(MapPioneer).refreshUI(actionPioneer);
                 UIPanelManger.inst.popPanelByName(UIName.RookieGuide);
-                NetworkMgr.websocketMsg.player_rookie_update({
-                    rookieStep: RookieStep.NPC_TALK_1,
-                });
+                if (talkId) {
+                    NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_TRIGGER_LEFT_TALK, { talkId: talkId });
+                }
                 this.endDestroy();
             }, 6.8);
         }

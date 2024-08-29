@@ -34,8 +34,8 @@ export default class RookieStepMgr {
         }
         this._maskView = result.node.getComponent(RookieStepMaskUI);
         this._maskView.hide();
+        NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
         // this._refreshMaskShow();
-
         // NotificationMgr.addListener(NotificationName.TALK_FINISH, this._onTalkFinish, this);
         // NotificationMgr.addListener(NotificationName.GAME_CAMERA_POSITION_CHANGED, this._onGameCameraPosChange, this);
         // NotificationMgr.addListener(NotificationName.GAME_INNER_DID_SHOW, this._onGameInnerDidShow, this);
@@ -47,8 +47,6 @@ export default class RookieStepMgr {
         // NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_BUILDING_UPGRADE_CLOSE, this._onRookieBuildingUpgradeClose, this);
 
         // NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_NEED_MASK_SHOW, this._onRooieNeedMaskShow, this);
-
-        GuideMgr.ins.showGuide(rookieStep);
     }
 
     public static instance(): RookieStepMgr {

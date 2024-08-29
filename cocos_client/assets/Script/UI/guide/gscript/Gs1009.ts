@@ -22,8 +22,7 @@ export class Gs1009 extends GsBase{
             let TrainingCenter = this._innerBuildingController.getBuildingByKey(InnerBuildingType.TrainingCenter)
             if(TrainingCenter){
                 //collecting
-                let troopIng = TrainingCenter.building.troopIng;
-                if (troopIng) {
+                if (TrainingCenter.building && TrainingCenter.building.troopIng) {
                     this._guide_step = -1;
                     return;
                 }

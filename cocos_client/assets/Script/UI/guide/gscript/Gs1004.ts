@@ -27,8 +27,7 @@ export class Gs1004 extends GsBase{
             let ExploreView = this._innerBuildingController.getBuildingByKey(InnerBuildingType.House)
             if(ExploreView){
                 //collecting
-                let upgrading = ExploreView.building.upgrading;
-                if(upgrading){
+                if(ExploreView.building && ExploreView.building.upgrading){
                     this._guide_step = -1;
                     return;
                 }

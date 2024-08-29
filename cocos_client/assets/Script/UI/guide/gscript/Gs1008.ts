@@ -23,8 +23,7 @@ export class Gs1008 extends GsBase{
             let TrainingCenter = this._innerBuildingController.getBuildingByKey(InnerBuildingType.TrainingCenter)
             if(TrainingCenter){
                 //collecting
-                let upgrading = TrainingCenter.building.upgrading;
-                if(upgrading){
+                if(TrainingCenter.building && TrainingCenter.building.upgrading){
                     this._guide_step = -1;
                     return;
                 }

@@ -1,7 +1,6 @@
 export enum RookieStep {
-    WAKE_UP = 0,
 
-    NPC_TALK_1 = 1000,
+    WAKE_UP = 1000,
 
     GUIDE_1001 = 1001,
 

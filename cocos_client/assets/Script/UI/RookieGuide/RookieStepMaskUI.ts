@@ -23,6 +23,7 @@ export class RookieStepMaskUI extends ViewController {
         isDialogUse: boolean = false,
         tapPostionType: RookieTapPositionType = RookieTapPositionType.NORMAL
     ) {
+        
         this.scheduleOnce(() => {
             this._contentView.active = true;
             this.node.active = true;

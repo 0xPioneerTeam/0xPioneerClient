@@ -19,7 +19,20 @@ export class Gs1002 extends GsBase{
         {
             this._guide_step = 1;
         }else{
+            if(!this._innerBuildingController){
+                this.initBinding();
+                return;
+            }
             this._guide_step = 2;
+            let Barrack = this._innerBuildingController.getBuildingByKey(InnerBuildingType.Barrack)
+            if(Barrack){
+                //collecting
+                let upgrading = Barrack.building.upgrading;
+                if(upgrading){
+                    this._guide_step = -1;
+                    return;
+                }
+            }
         }
     }
     

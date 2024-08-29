@@ -41,6 +41,10 @@ export class Gs1005 extends GsBase{
             }
         }
         if(this._resBuilding){
+            if(!this._resBuilding.node){
+                this._resBuilding = null;
+                return;
+            }
             let ExploreView = this._resBuilding.node.getChildByPath("ExploreView")
             if(ExploreView.active){
                 //collecting

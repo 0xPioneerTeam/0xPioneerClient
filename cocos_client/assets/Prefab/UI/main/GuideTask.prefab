@@ -654,7 +654,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -312.98,
+      "x": -309.863,
       "y": -47.817,
       "z": 0
     },
@@ -700,7 +700,7 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 1,
       "y": 0.5
     },
     "_id": ""
@@ -732,7 +732,7 @@
       "a": 255
     },
     "_string": "2",
-    "_horizontalAlign": 1,
+    "_horizontalAlign": 2,
     "_verticalAlign": 1,
     "_actualFontSize": 20,
     "_fontSize": 20,
@@ -926,7 +926,7 @@
     },
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": -292.332,
+      "x": -297.786,
       "y": -47.817,
       "z": 0
     },
@@ -972,7 +972,7 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 0,
       "y": 0.5
     },
     "_id": ""
@@ -1004,7 +1004,7 @@
       "a": 255
     },
     "_string": "10",
-    "_horizontalAlign": 1,
+    "_horizontalAlign": 0,
     "_verticalAlign": 1,
     "_actualFontSize": 20,
     "_fontSize": 20,
@@ -1132,7 +1132,7 @@
     "_lineHeight": 40,
     "_string": "test",
     "_horizontalAlign": 0,
-    "_verticalAlign": 0,
+    "_verticalAlign": 1,
     "_fontSize": 22,
     "_fontColor": {
       "__type__": "cc.Color",
@@ -1192,7 +1192,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -227.55200000000002,
-      "y": -48.331999999999994,
+      "y": -47.331999999999994,
       "z": 0
     },
     "_lrot": {

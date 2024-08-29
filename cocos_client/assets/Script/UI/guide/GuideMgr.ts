@@ -38,8 +38,8 @@ export class GuideMgr{
 
     initGuideData(){
         this._guideScripts = {};
+        // this._guideScripts[RookieStep.WAKE_UP] = Gswakeup;
         this._guideScripts[RookieStep.WAKE_UP] = Gswakeup;
-        this._guideScripts[RookieStep.NPC_TALK_1] = GsNpcTalk1;
         this._guideScripts[RookieStep.GUIDE_1001] = GsRepairCity;
         this._guideScripts[RookieStep.GUIDE_1002] = Gs1002;
         this._guideScripts[RookieStep.GUIDE_1003] = Gs1003;
@@ -65,6 +65,7 @@ export class GuideMgr{
         });
         const script = this._guideScripts[step];
         if(!script) return;
+        console.log("showGuide",step);
         let node = new Node('guide_'+step);
         node.addComponent(script);
         this._rookieNode.addChild(node);
@@ -73,6 +74,7 @@ export class GuideMgr{
     private _onRookieStepChange(){
         const rookieStep = DataMgr.s.userInfo.data.rookieStep;
         if(this._lastRookeStep == rookieStep) return;
+        console.log('USERINFO_ROOKE_STEP_CHANGE',rookieStep)
         this._lastRookeStep = rookieStep;
         this.showGuide(rookieStep);
     }
