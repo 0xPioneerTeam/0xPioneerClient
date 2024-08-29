@@ -15,7 +15,7 @@ export class Gs1003 extends GsBase {
 
     protected update(dt: number): void {
         let isGameShowOuter = GameMainHelper.instance.isGameShowOuter;
-        if(!isGameShowOuter)
+        if(isGameShowOuter)
         {
             this._guide_step = 1;
         }else{
