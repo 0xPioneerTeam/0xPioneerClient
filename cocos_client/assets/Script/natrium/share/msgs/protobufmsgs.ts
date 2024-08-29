@@ -208,7 +208,7 @@ export enum protobuf_s2c {
     mappioneer_reborn_change = 10856,
     pioneer_reborn_res = 10857,
     player_fight_end = 10858,
-
+    get_new_pioneer = 10859,
     // ------ mapbuilding ------
     // mapbuilding: getinfo
     get_mapbuilding_info_res = 10900,

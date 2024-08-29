@@ -266,6 +266,9 @@ message player_maincity_back_res {
     required int32 res = 1;
     optional string pioneerId = 2;
 }
+message get_new_pioneer {
+    repeated pioneer_data datas = 1;
+}
 // pioneer: notify
 message sinfo_change {
     required share.player_sinfo info = 1;
