@@ -66,7 +66,7 @@ export class Gswakeup extends GsBase {
             let talkId = conf.pre_talk[0];
 
             this.scheduleOnce(async () => {
-                actionPioneer.actionType = MapPioneerActionType.idle;
+                actionPioneer.actionType = MapPioneerActionType.inCity;
                 view.getComponent(MapPioneer).refreshUI(actionPioneer);
                 UIPanelManger.inst.popPanelByName(UIName.RookieGuide);
                 if (talkId) {

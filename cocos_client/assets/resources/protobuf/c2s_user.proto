@@ -154,9 +154,7 @@ message player_explore_gangster_start {
     required string gangsterId = 2;
 }
 message player_explore_maincity {
-    required string pioneerId = 1;
     required string buildingId = 2;
-    required bool isReturn = 3;
 }
 message player_fight_maincity {
     required string pioneerId = 1;
@@ -193,7 +191,9 @@ message player_maincity_back {
     required string pioneerId = 1;
     required string buildingId = 2;
 }
-
+message player_pos_detect {
+    required share.pos2d detect = 1;
+}
 
 // ------ mapbuilding ------
 // mapbuilding: getinfo

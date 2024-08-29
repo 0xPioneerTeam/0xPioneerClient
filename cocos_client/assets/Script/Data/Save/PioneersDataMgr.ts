@@ -141,7 +141,7 @@ export class PioneersDataMgr {
     }
 
 
-    public addData(data: share.Ipioneer_data) {
+    public addData(data: share.Ipioneer_data, isSelfPioneer: boolean = false) {
         const isExit = this._pioneers.findIndex((item) => item.uniqueId == data.uniqueId) != -1;
         if (isExit) {
             return;
@@ -152,6 +152,9 @@ export class PioneersDataMgr {
             newObj.stayPos = newObj.movePaths[0] as Vec2;
         }
         this._pioneers.push(newObj);
+        if (isSelfPioneer) {
+            this._selfPioneerUnqueIds.push(data.uniqueId);
+        }
     }
     public addObjData(data: MapPioneerObject) {
         const isExit = this._pioneers.findIndex((item) => item.uniqueId == data.uniqueId) != -1;

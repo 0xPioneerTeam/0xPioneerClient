@@ -10,6 +10,7 @@ export default class NetGlobalData {
     public static mapBuildings: share.Imap_info_data = null;
     public static taskinfo: share.Itask_data = null;
     public static shadows: share.pos2d[] = null;
+    public static detects: share.pos2d[] = null;
     public static wormholeAttackBuildingId: string = null;
 
     public static worldTreasureGetted: boolean = false;

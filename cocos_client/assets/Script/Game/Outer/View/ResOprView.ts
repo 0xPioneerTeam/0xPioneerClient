@@ -21,10 +21,11 @@ export class ResOprView extends Component {
     private _actionItem: Node = null;
     private _actionItemContent: Node = null;
 
-    public interactBuilding:MapBuildingObject;
-    public interactPioneer:MapPioneerObject;
+    public interactBuilding: MapBuildingObject;
+    public interactPioneer: MapPioneerObject;
 
     public async show(
+        isShadow: boolean,
         interactBuilding: MapBuildingObject,
         interactPioneer: MapPioneerObject,
         targetPos: Vec2,
@@ -36,7 +37,7 @@ export class ResOprView extends Component {
         this.node.worldPosition = targetWorldPos;
         this.interactBuilding = interactBuilding;
         this.interactPioneer = interactPioneer;
-        
+
         const infoView = this.node.getChildByPath("InfoView");
         const actionView = this.node.getChildByPath("ActionView");
         const difficultView = this.node.getChildByPath("DifficultView");
@@ -46,26 +47,31 @@ export class ResOprView extends Component {
         const buildingCofig = interactBuilding != null ? GameMgr.getMapBuildingConfigByExistSlotInfo(interactBuilding.uniqueId) : null;
         //----------------------------------- info
         let name: string = "";
-        if (interactBuilding != null) {
-            if (interactBuilding.type == MapBuildingType.city) {
-                name = LanMgr.getLanById("320006");
-            } else if (interactBuilding.type == MapBuildingType.resource) {
-                name = LanMgr.getLanById("320003");
-            } else if (interactBuilding.type == MapBuildingType.event) {
-                name = LanMgr.getLanById("320004");
-            } else if (interactBuilding.type == MapBuildingType.wormhole) {
-                name = LanMgr.getLanById("320005");
-            }
-        } else if (interactPioneer != null) {
-            if (interactPioneer.type == MapPioneerType.npc) {
-                name = LanMgr.getLanById("330001");
-            } else if (interactPioneer.type == MapPioneerType.gangster) {
-                name = LanMgr.getLanById("330002");
-            } else if (interactPioneer.type == MapPioneerType.hred) {
-                name = LanMgr.getLanById("330003");
-            }
+        if (isShadow) {
+            // use lan
+            name = "shadow";
         } else {
-            name = LanMgr.getLanById("320001");
+            if (interactBuilding != null) {
+                if (interactBuilding.type == MapBuildingType.city) {
+                    name = LanMgr.getLanById("320006");
+                } else if (interactBuilding.type == MapBuildingType.resource) {
+                    name = LanMgr.getLanById("320003");
+                } else if (interactBuilding.type == MapBuildingType.event) {
+                    name = LanMgr.getLanById("320004");
+                } else if (interactBuilding.type == MapBuildingType.wormhole) {
+                    name = LanMgr.getLanById("320005");
+                }
+            } else if (interactPioneer != null) {
+                if (interactPioneer.type == MapPioneerType.npc) {
+                    name = LanMgr.getLanById("330001");
+                } else if (interactPioneer.type == MapPioneerType.gangster) {
+                    name = LanMgr.getLanById("330002");
+                } else if (interactPioneer.type == MapPioneerType.hred) {
+                    name = LanMgr.getLanById("330003");
+                }
+            } else {
+                name = LanMgr.getLanById("320001");
+            }
         }
 
         this._targetName = name;
@@ -87,139 +93,162 @@ export class ResOprView extends Component {
 
         let mainCityIsSelf: boolean = false;
         let mainCityIsUnLock: boolean = true;
-        if (interactBuilding != null) {
-            if (interactBuilding.type == MapBuildingType.city) {
-                mainCityBuildingInfo.active = true;
-
-                const uniqueIdSplit = interactBuilding.uniqueId.split("|");
-                if (uniqueIdSplit.length == 2) {
-                    mainCityIsSelf = uniqueIdSplit[0] == DataMgr.s.mapBuilding.getSelfMainCitySlotId();
-                    const info = GameMgr.getMapSlotData(uniqueIdSplit[0]);
-                    if (info != undefined) {
-                        let cityName: string = "";
-                        if (uniqueIdSplit[0] == DataMgr.s.mapBuilding.getSelfMainCitySlotId()) {
-                            cityName = DataMgr.s.userInfo.data.name;
-                        } else {
-                            cityName = info.pname;
-                        }
-                        infoView.getChildByPath("Top/Name").getComponent(Label).string = cityName;
-                        mainCityBuildingInfo.getChildByPath("Leader/Value").getComponent(Label).string = cityName;
-                        mainCityBuildingInfo.getChildByPath("Civilization/Value").getComponent(Label).string = info.level.toString();
-
-                        mainCityIsUnLock =
-                            info.playerId == DataMgr.s.userInfo.data.id || DataMgr.s.userInfo.data.explorePlayerids.indexOf(parseInt(info.playerId)) != -1;
-                        const lockView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Locked");
-                        const fightValueView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Title");
-                        if (!mainCityIsUnLock) {
-                            lockView.active = true;
-                            fightValueView.active = false;
-                        } else {
-                            lockView.active = false;
-                            fightValueView.active = true;
-                            fightValueView.getChildByPath("Value").getComponent(Label).string = info.battlePower != null ? info.battlePower.toString() : "";
-                        }
-                    }
-                }
-            } else if (interactBuilding.type == MapBuildingType.resource) {
-                resourceBuildingInfo.active = true;
-
-                const resourceData = GameMgr.getResourceBuildingRewardAndQuotaMax(interactBuilding);
-                if (resourceData != null) {
-                    const itemConf = ItemConfig.getById(resourceData.reward.itemConfigId);
-                    resourceBuildingInfo.getChildByPath("Reward/Item/Icon").getComponent(Sprite).spriteFrame = await ItemMgr.getItemIcon(itemConf.icon);
-                    resourceBuildingInfo.getChildByPath("Reward/Item/Num").getComponent(Label).string = resourceData.reward.count + "";
-
-                    resourceBuildingInfo.getChildByPath("Quota/Value").getComponent(Label).string = interactBuilding.quota + "/" + resourceData.quotaMax;
-                }
-            } else {
-                otherBuildingInfo.active = true;
-                if (buildingCofig != null) {
-                    otherBuildingInfo.getChildByPath("Title").getComponent(Label).string = LanMgr.getLanById(buildingCofig.des);
-                }
-            }
-
-            if (interactBuilding.type == MapBuildingType.event) {
-                difficultView.active = interactBuilding.level > DataMgr.s.artifact.getArtifactLevel();
-            }
-        } else if (interactPioneer != null) {
+        if (isShadow) {
             pioneerInfo.active = true;
 
-            const pioneerConfig = GameMgr.getMapPioneerConfigByExistSlotInfo(interactPioneer.uniqueId);
-            if (pioneerConfig != null) {
-                pioneerInfo.getChildByPath("Title").getComponent(Label).string = LanMgr.getLanById(pioneerConfig.des);
-            }
-
-            const monsterView = pioneerInfo.getChildByPath("MonterProperty");
-            monsterView.active = false;
-            if (interactPioneer.type == MapPioneerType.hred || interactPioneer.type == MapPioneerType.gangster) {
-                monsterView.active = true;
-                monsterView.getChildByPath("HP/Value").getComponent(Label).string = interactPioneer.hp + "/" + interactPioneer.hpMax;
-                monsterView.getChildByPath("Attack/Value").getComponent(Label).string = interactPioneer.attack + "";
-                monsterView.getChildByPath("Defense/Value").getComponent(Label).string = interactPioneer.defend + "";
-                monsterView.getChildByPath("Speed/Value").getComponent(Label).string = interactPioneer.speed + "";
-            }
-
-            if (interactPioneer.type == MapPioneerType.hred) {
-                difficultView.active = interactPioneer.level > DataMgr.s.artifact.getArtifactLevel();
-            }
-        } else {
-            pioneerInfo.active = true;
-
-            pioneerInfo.getChildByPath("Title").getComponent(Label).string = LanMgr.getLanById("320002");
+            // use lan
+            pioneerInfo.getChildByPath("Title").getComponent(Label).string = "Shadow";
 
             const monsterView = pioneerInfo.getChildByPath("MonterProperty");
             monsterView.active = false;
 
             difficultView.active = false;
+        } else {
+            if (interactBuilding != null) {
+                if (interactBuilding.type == MapBuildingType.city) {
+                    mainCityBuildingInfo.active = true;
+
+                    const uniqueIdSplit = interactBuilding.uniqueId.split("|");
+                    if (uniqueIdSplit.length == 2) {
+                        mainCityIsSelf = uniqueIdSplit[0] == DataMgr.s.mapBuilding.getSelfMainCitySlotId();
+                        const info = GameMgr.getMapSlotData(uniqueIdSplit[0]);
+                        if (info != undefined) {
+                            let cityName: string = "";
+                            if (uniqueIdSplit[0] == DataMgr.s.mapBuilding.getSelfMainCitySlotId()) {
+                                cityName = DataMgr.s.userInfo.data.name;
+                            } else {
+                                cityName = info.pname;
+                            }
+                            infoView.getChildByPath("Top/Name").getComponent(Label).string = cityName;
+                            mainCityBuildingInfo.getChildByPath("Leader/Value").getComponent(Label).string = cityName;
+                            mainCityBuildingInfo.getChildByPath("Civilization/Value").getComponent(Label).string = info.level.toString();
+
+                            mainCityIsUnLock =
+                                info.playerId == DataMgr.s.userInfo.data.id || DataMgr.s.userInfo.data.explorePlayerids.indexOf(parseInt(info.playerId)) != -1;
+                            const lockView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Locked");
+                            const fightValueView = mainCityBuildingInfo.getChildByPath("Encrypted/Content/Title");
+                            if (!mainCityIsUnLock) {
+                                lockView.active = true;
+                                fightValueView.active = false;
+                            } else {
+                                lockView.active = false;
+                                fightValueView.active = true;
+                                fightValueView.getChildByPath("Value").getComponent(Label).string = info.battlePower != null ? info.battlePower.toString() : "";
+                            }
+                        }
+                    }
+                } else if (interactBuilding.type == MapBuildingType.resource) {
+                    resourceBuildingInfo.active = true;
+
+                    const resourceData = GameMgr.getResourceBuildingRewardAndQuotaMax(interactBuilding);
+                    if (resourceData != null) {
+                        const itemConf = ItemConfig.getById(resourceData.reward.itemConfigId);
+                        resourceBuildingInfo.getChildByPath("Reward/Item/Icon").getComponent(Sprite).spriteFrame = await ItemMgr.getItemIcon(itemConf.icon);
+                        resourceBuildingInfo.getChildByPath("Reward/Item/Num").getComponent(Label).string = resourceData.reward.count + "";
+
+                        resourceBuildingInfo.getChildByPath("Quota/Value").getComponent(Label).string = interactBuilding.quota + "/" + resourceData.quotaMax;
+                    }
+                } else {
+                    otherBuildingInfo.active = true;
+                    if (buildingCofig != null) {
+                        otherBuildingInfo.getChildByPath("Title").getComponent(Label).string = LanMgr.getLanById(buildingCofig.des);
+                    }
+                }
+
+                if (interactBuilding.type == MapBuildingType.event) {
+                    difficultView.active = interactBuilding.level > DataMgr.s.artifact.getArtifactLevel();
+                }
+            } else if (interactPioneer != null) {
+                pioneerInfo.active = true;
+
+                const pioneerConfig = GameMgr.getMapPioneerConfigByExistSlotInfo(interactPioneer.uniqueId);
+                if (pioneerConfig != null) {
+                    pioneerInfo.getChildByPath("Title").getComponent(Label).string = LanMgr.getLanById(pioneerConfig.des);
+                }
+
+                const monsterView = pioneerInfo.getChildByPath("MonterProperty");
+                monsterView.active = false;
+                if (interactPioneer.type == MapPioneerType.hred || interactPioneer.type == MapPioneerType.gangster) {
+                    monsterView.active = true;
+                    monsterView.getChildByPath("HP/Value").getComponent(Label).string = interactPioneer.hp + "/" + interactPioneer.hpMax;
+                    monsterView.getChildByPath("Attack/Value").getComponent(Label).string = interactPioneer.attack + "";
+                    monsterView.getChildByPath("Defense/Value").getComponent(Label).string = interactPioneer.defend + "";
+                    monsterView.getChildByPath("Speed/Value").getComponent(Label).string = interactPioneer.speed + "";
+                }
+
+                if (interactPioneer.type == MapPioneerType.hred) {
+                    difficultView.active = interactPioneer.level > DataMgr.s.artifact.getArtifactLevel();
+                }
+            } else {
+                pioneerInfo.active = true;
+
+                pioneerInfo.getChildByPath("Title").getComponent(Label).string = LanMgr.getLanById("320002");
+
+                const monsterView = pioneerInfo.getChildByPath("MonterProperty");
+                monsterView.active = false;
+
+                difficultView.active = false;
+            }
         }
+
         //----------------------------------- action
         const actionTypes: number[] = [];
-        if (interactBuilding != null) {
-            if (interactBuilding.type == MapBuildingType.city) {
-                if (mainCityIsSelf) {
-                    actionTypes.push(MapInteractType.EnterInner);
-                    actionTypes.push(MapInteractType.MainBack);
-                } else {
-                    if (DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.InformationStation) > 0 && !mainCityIsUnLock) {
-                        actionTypes.push(MapInteractType.Detect);
-                    }
-                    actionTypes.push(MapInteractType.SiegeCity);
-                }
-            } else if (interactBuilding.type == MapBuildingType.explore) {
-                actionTypes.push(MapInteractType.Explore);
-                actionTypes.push(MapInteractType.Move);
-            } else if (interactBuilding.type == MapBuildingType.resource) {
-                actionTypes.push(MapInteractType.Collect);
-                actionTypes.push(MapInteractType.Move);
-            } else if (interactBuilding.type == MapBuildingType.event) {
-                actionTypes.push(MapInteractType.Event);
-                actionTypes.push(MapInteractType.Move);
-            } else if (interactBuilding.type == MapBuildingType.wormhole) {
-                let isSelf: boolean = DataMgr.s.mapBuilding.checkBuildingIsInSelfSlot(interactBuilding.uniqueId);
-                if (isSelf) {
-                    actionTypes.push(MapInteractType.WmMatch);
-                    actionTypes.push(MapInteractType.WmTeleport);
-                } else {
-                    if (DataMgr.s.userInfo.data.wormholeTags.find((item) => item.tpBuildingId == interactBuilding.uniqueId)) {
-                        actionTypes.push(MapInteractType.WmRecall);
-                    } else {
-                        actionTypes.push(MapInteractType.WmMark);
-                    }
-                }
-                actionTypes.push(MapInteractType.Move);
-            }
-        } else if (interactPioneer != null) {
-            if (interactPioneer.type == MapPioneerType.npc) {
-                actionTypes.push(MapInteractType.Talk);
-                actionTypes.push(MapInteractType.Move);
-            } else if (interactPioneer.type == MapPioneerType.gangster) {
-                actionTypes.push(MapInteractType.Attack);
-            } else if (interactPioneer.type == MapPioneerType.hred) {
-                actionTypes.push(MapInteractType.Attack);
+        if (isShadow) {
+            if (DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.InformationStation) > 0) {
+                actionTypes.push(MapInteractType.Detect);
             }
         } else {
-            actionTypes.push(MapInteractType.Move);
+            if (interactBuilding != null) {
+                if (interactBuilding.type == MapBuildingType.city) {
+                    if (mainCityIsSelf) {
+                        actionTypes.push(MapInteractType.EnterInner);
+                        actionTypes.push(MapInteractType.MainBack);
+                    } else {
+                        if (DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.InformationStation) > 0 && !mainCityIsUnLock) {
+                            actionTypes.push(MapInteractType.Detect);
+                        }
+                        actionTypes.push(MapInteractType.SiegeCity);
+                    }
+                } else if (interactBuilding.type == MapBuildingType.explore) {
+                    actionTypes.push(MapInteractType.Explore);
+                    actionTypes.push(MapInteractType.Move);
+                } else if (interactBuilding.type == MapBuildingType.resource) {
+                    actionTypes.push(MapInteractType.Collect);
+                    actionTypes.push(MapInteractType.Move);
+                } else if (interactBuilding.type == MapBuildingType.event) {
+                    actionTypes.push(MapInteractType.Event);
+                    actionTypes.push(MapInteractType.Move);
+                } else if (interactBuilding.type == MapBuildingType.wormhole) {
+                    let isSelf: boolean = DataMgr.s.mapBuilding.checkBuildingIsInSelfSlot(interactBuilding.uniqueId);
+                    if (isSelf) {
+                        actionTypes.push(MapInteractType.WmMatch);
+                        actionTypes.push(MapInteractType.WmTeleport);
+                    } else {
+                        if (DataMgr.s.userInfo.data.wormholeTags.find((item) => item.tpBuildingId == interactBuilding.uniqueId)) {
+                            actionTypes.push(MapInteractType.WmRecall);
+                        } else {
+                            actionTypes.push(MapInteractType.WmMark);
+                        }
+                    }
+                    actionTypes.push(MapInteractType.Move);
+                }
+            } else if (interactPioneer != null) {
+                if (interactPioneer.type == MapPioneerType.npc) {
+                    actionTypes.push(MapInteractType.Talk);
+                    actionTypes.push(MapInteractType.Move);
+                } else if (interactPioneer.type == MapPioneerType.gangster) {
+                    actionTypes.push(MapInteractType.Attack);
+                } else if (interactPioneer.type == MapPioneerType.hred) {
+                    actionTypes.push(MapInteractType.Attack);
+                }
+            } else {
+                actionTypes.push(MapInteractType.Move);
+                if (DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.InformationStation) > 0) {
+                    actionTypes.push(MapInteractType.Detect);
+                }
+            }
         }
+        
         this._actionItemContent.destroyAllChildren();
         for (const type of actionTypes) {
             const actionItem = instantiate(this._actionItem);

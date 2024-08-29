@@ -260,7 +260,7 @@ export default class GameMainHelper {
         const vision: number = DataMgr.s.userInfo.data.cityRadialRange - 1;
         return this.shadowController.Shadow_Earse(this._tiledMapHelper.getPos(mapPos.x, mapPos.y), "City", vision);
     }
-    public tiledMapOtherMainCityShadowErase(mapPos: Vec2) {
+    public tiledMapDetectShadowErase(mapPos: Vec2) {
         if (!this.isTiledMapHelperInited) {
             return [];
         }

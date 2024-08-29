@@ -49,6 +49,8 @@ export enum ConfigType {
     PerNumSelectBox = "10009",
 
     InitMaxTroopNum = "500002",
+
+    DetectCost = "500003",
 }
 
 export interface ConfigData {
@@ -173,4 +175,7 @@ export interface WormholeTeleportConsumeParam extends ConfigData {
 }
 export interface InitMaxTroopNumParam extends ConfigData {
     num: number;
+}
+export interface DetectCostParam extends ConfigData {
+    cost: number;
 }

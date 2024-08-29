@@ -107,7 +107,7 @@ export default class PioneerMgr {
         return false;
     }
 
-    private _movingTargetDataMap: Map<string, { target: MapMemberTargetType; id: string; interactType: MapInteractType, extra: any }> = new Map();
+    private _movingTargetDataMap: Map<string, { target: MapMemberTargetType; id: string; interactType: MapInteractType; extra: any }> = new Map();
     private _actionOverReturnPioneerUniqueId: string[] = [];
     private _wormholeBackPioneerUniqueId: string[] = [];
     public constructor() {}
@@ -212,24 +212,16 @@ export default class PioneerMgr {
                     const slotId = uniqueIdSplit[0];
                     if (slotId != DataMgr.s.mapBuilding.getSelfMainCitySlotId()) {
                         setTimeout(() => {
-                            // detect
-                            if (interactType == MapInteractType.Detect) {
-                                NetworkMgr.websocketMsg.player_explore_maincity({
-                                    pioneerId: uniqueId,
-                                    buildingId: stayBuilding.uniqueId,
-                                    isReturn: this._checkActionSendParamRetrun(uniqueId),
-                                });
-                            } else if (interactType == MapInteractType.SiegeCity) {
+                            if (interactType == MapInteractType.SiegeCity) {
                                 NetworkMgr.websocketMsg.player_fight_maincity({
                                     pioneerId: uniqueId,
                                     buildingId: stayBuilding.uniqueId,
                                     isReturn: this._checkActionSendParamRetrun(uniqueId),
                                 });
-                            } 
+                            }
                         }, interactDelayTime);
                     }
                 }
-                
             } else if (stayBuilding.type == MapBuildingType.explore) {
                 if (pioneer.type == MapPioneerType.player && pioneer.faction == MapMemberFactionType.friend) {
                     setTimeout(() => {
@@ -249,25 +241,25 @@ export default class PioneerMgr {
                     if (interactType == MapInteractType.WmMatch) {
                         NetworkMgr.websocketMsg.player_wormhole_tp_random({
                             pioneerId: uniqueId,
-                            buildingId: stayBuilding.uniqueId
+                            buildingId: stayBuilding.uniqueId,
                         });
                     } else if (interactType == MapInteractType.WmTeleport) {
                         if (interactExtra != null) {
                             NetworkMgr.websocketMsg.player_wormhole_tp_select({
                                 pioneerId: uniqueId,
                                 buildingId: stayBuilding.uniqueId,
-                                tpBuildingId: interactExtra.tpBuildingId
+                                tpBuildingId: interactExtra.tpBuildingId,
                             });
                         }
                     } else if (interactType == MapInteractType.WmMark) {
                         NetworkMgr.websocketMsg.player_wormhole_tp_tag({
                             pioneerId: uniqueId,
-                            buildingId: stayBuilding.uniqueId
+                            buildingId: stayBuilding.uniqueId,
                         });
                     } else if (interactType == MapInteractType.WmRecall) {
                         NetworkMgr.websocketMsg.player_wormhole_tp_back({
                             pioneerId: uniqueId,
-                            buildingId: stayBuilding.uniqueId
+                            buildingId: stayBuilding.uniqueId,
                         });
                     }
                 }, interactDelayTime);

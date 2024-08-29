@@ -207,6 +207,11 @@ export default class ConfigConfig {
                     type: key,
                     num: param[0],
                 }
+            } else if (key == ConfigType.DetectCost) {
+                temple = {
+                    type: key,
+                    cost: param[0],
+                }
             }
             this._config.set(key as ConfigType, temple);
         }

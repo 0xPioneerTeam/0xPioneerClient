@@ -99,6 +99,7 @@ message player_info {
     required map_info_data mapbuilding = 7;
     required task_data taskinfo = 8;
     repeated pos2d shadows = 9;
+    repeated pos2d detects = 10;
 }
 
 message wormhole_tag_data {

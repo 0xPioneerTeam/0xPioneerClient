@@ -138,6 +138,9 @@ export class WebsocketMsg {
     public player_maincity_back(d: c2s_user.Iplayer_maincity_back) {
         this.send_packet("player_maincity_back", d);
     }
+    public player_pos_detect(d: c2s_user.Iplayer_pos_detect) {
+        this.send_packet("player_pos_detect", d);
+    }
     public player_wormhole_tp_random(d: c2s_user.Iplayer_wormhole_tp_random) {
         this.send_packet("player_wormhole_tp_random", d);
     }
@@ -391,9 +394,7 @@ export namespace c2s_user {
         buildingId: string;
     }
     export interface Iplayer_explore_maincity {
-        pioneerId: string;
         buildingId: string;
-        isReturn: boolean;
     }
     export interface Iplayer_fight_maincity {
         pioneerId: string;
@@ -403,6 +404,9 @@ export namespace c2s_user {
     export interface Iplayer_maincity_back {
         pioneerId: string;
         buildingId: string;
+    }
+    export interface Iplayer_pos_detect {
+        detect: share.pos2d;
     }
     export interface Iplayer_wormhole_tp_random {
         buildingId: string;
@@ -610,7 +614,9 @@ export namespace s2c_user {
     export interface Ipioneer_leavezone {
         pioneerIds: string[];
     }
-
+    export interface Iplayer_get_new_pioneer {
+        datas: share.Ipioneer_data[];
+    }
     export interface Ipioneer_change {
         pioneers: share.Ipioneer_data[];
     }
@@ -638,10 +644,12 @@ export namespace s2c_user {
     }
     export interface Iplayer_explore_maincity_res {
         res: number;
-        pioneerId: string;
         buildingId: string;
-        isReturn: string;
         battlePower: number;
+    }
+    export interface Iplayer_pos_detect_res {
+        res: number;
+        detect: share.pos2d;
     }
     export interface Iplayer_event_select_res {
         res: number;
@@ -922,6 +930,7 @@ export namespace share {
         mapbuilding: Imap_info_data;
         taskinfo: Itask_data;
         shadows: pos2d[];
+        detects: pos2d[];
     }
 
     export interface Istorehouse_data {

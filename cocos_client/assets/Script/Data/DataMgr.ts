@@ -8,7 +8,7 @@ import CLog from "../Utils/CLog";
 import { RunData } from "./RunData";
 import { SaveData } from "./SaveData";
 import { MapBuildingWormholeObject } from "../Const/MapBuilding";
-import { GameMgr, LanMgr, PioneerMgr } from "../Utils/Global";
+import { GameMgr, LanMgr, PioneerMgr, UserInfoMgr } from "../Utils/Global";
 import NetGlobalData from "./Save/Data/NetGlobalData";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import ArtifactData from "../Model/ArtifactData";
@@ -28,7 +28,8 @@ import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Con
 import { ArtifactInfoUI } from "../UI/ArtifactInfoUI";
 import { NewEventUI } from "../UI/Event/NewEventUI";
 import { NewEventBattleUI } from "../UI/Event/NewEventBattleUI";
-import { v2 } from "cc";
+import { native, v2 } from "cc";
+import { SecretGuardGettedUI } from "../UI/Outer/SecretGuardGettedUI";
 
 export class DataMgr {
     public static r: RunData;
@@ -60,6 +61,7 @@ export class DataMgr {
                 NetGlobalData.mapBuildings = p.data.info.mapbuilding;
                 NetGlobalData.taskinfo = p.data.info.taskinfo;
                 NetGlobalData.shadows = p.data.info.shadows;
+                NetGlobalData.detects = p.data.info.detects;
                 // load save data
                 await DataMgr.s.load(this.r.wallet.addr);
 
@@ -439,6 +441,34 @@ export class DataMgr {
         }
     };
 
+    public static player_get_new_pioneer = (e: any) => {
+        const p: s2c_user.Iplayer_get_new_pioneer = e.data;
+        for (const data of p.datas) {
+            DataMgr.s.pioneer.addData(data, true);
+            const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
+            if (pioneer != undefined) {
+                if (this["_LAST_NEW_TIME"] == null) {
+                    this["_LAST_NEW_TIME"] = new Date().getTime();
+                } else {
+                    const currentTimeStamp = new Date().getTime();
+                    if (currentTimeStamp - this["_LAST_NEW_TIME"] <= 2000) {
+                        UserInfoMgr.afterNewPioneerDatas.push(pioneer);
+                        return;
+                    }
+                }
+                setTimeout(async () => {
+                    if (UIPanelManger.inst.panelIsShow(UIName.CivilizationLevelUpUI)) {
+                        UserInfoMgr.afterCivilizationClosedShowPioneerDatas.push(pioneer);
+                    } else {
+                        const result = await UIPanelManger.inst.pushPanel(UIName.SecretGuardGettedUI);
+                        if (result.success) {
+                            result.node.getComponent(SecretGuardGettedUI).dialogShow(pioneer.animType);
+                        }
+                    }
+                });
+            }
+        }
+    };
     public static pioneer_change = (e: any) => {
         const p: s2c_user.Ipioneer_change = e.data;
         let newPioneerDatas: share.Ipioneer_data[] = [];
@@ -679,6 +709,13 @@ export class DataMgr {
             }
         }
     };
+    public static player_pos_detect_res = (e: any) => {
+        const p: s2c_user.Iplayer_pos_detect_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        DataMgr.s.eraseShadow.addDetectObj(v2(p.detect.x, p.detect.y));
+    }
 
     public static player_fight_end = (e: any) => {
         const p: s2c_user.Iplayer_fight_end = e.data;

@@ -236,8 +236,6 @@ message player_explore_gangster_start_res {
 message player_explore_maincity_res {
     required int32 res = 1;
     optional string buildingId = 2;
-    optional string pioneerId = 3;
-    optional bool isReturn = 4;
     optional uint32 battlePower = 5;
 }
 message player_fight_maincity_res {
@@ -266,8 +264,13 @@ message player_maincity_back_res {
     required int32 res = 1;
     optional string pioneerId = 2;
 }
-message get_new_pioneer {
-    repeated pioneer_data datas = 1;
+message player_pos_detect_res {
+    required int32 res = 1;
+    optional share.pos2d detect = 2;
+}
+
+message player_get_new_pioneer {
+    repeated share.pioneer_data datas = 1;
 }
 // pioneer: notify
 message sinfo_change {

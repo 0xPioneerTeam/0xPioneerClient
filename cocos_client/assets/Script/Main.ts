@@ -202,6 +202,7 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("player_leavezone", DataMgr.player_leavezone);
         NetworkMgr.websocket.on("pioneer_leavezone", DataMgr.pioneer_leavezone);
 
+        NetworkMgr.websocket.on("player_get_new_pioneer", DataMgr.player_get_new_pioneer);
         NetworkMgr.websocket.on("pioneer_change", DataMgr.pioneer_change);
         NetworkMgr.websocket.on("mapbuilding_change", DataMgr.mapbuilding_change);
 
@@ -214,6 +215,8 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("player_explore_npc_start_res", DataMgr.player_explore_npc_start_res);
         NetworkMgr.websocket.on("player_wormhole_set_attacker_res", DataMgr.player_wormhole_set_attacker_res);
         NetworkMgr.websocket.on("player_explore_maincity_res", DataMgr.player_explore_maincity_res);
+        NetworkMgr.websocket.on("player_pos_detect_res", DataMgr.player_pos_detect_res);
+
 
         NetworkMgr.websocket.on("player_fight_end", DataMgr.player_fight_end);
 

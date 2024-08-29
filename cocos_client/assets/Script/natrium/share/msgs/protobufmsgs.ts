@@ -70,6 +70,7 @@ export enum protobuf_c2s {
     player_event_select = 712,
     player_event_exit = 713,
     player_maincity_back = 714,
+    player_pos_detect = 715,
 
     // ------ mapbuilding ------
     // mapbuilding: getinfo
@@ -198,6 +199,7 @@ export enum protobuf_s2c {
     player_event_select_res = 10812,
     player_event_exit_res = 10813,
     player_maincity_back_res = 10814,
+    player_pos_detect_res = 10815,
     // pioneer: notify
     sinfo_change = 10850,
     pioneer_change = 10851,
@@ -208,7 +210,7 @@ export enum protobuf_s2c {
     mappioneer_reborn_change = 10856,
     pioneer_reborn_res = 10857,
     player_fight_end = 10858,
-    get_new_pioneer = 10859,
+    player_get_new_pioneer = 10859,
     // ------ mapbuilding ------
     // mapbuilding: getinfo
     get_mapbuilding_info_res = 10900,
