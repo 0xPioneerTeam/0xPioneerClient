@@ -65,7 +65,7 @@
     "id": "1003",
     "name": "1003",
     "pre_guide": 1002,
-    "guide_stepInfo": "5|13",
+    "guide_stepInfo": "4|13",
     "next_guide": 1004,
     "reward": [
       [
@@ -87,7 +87,7 @@
     "id": "1004",
     "name": "1004",
     "pre_guide": 1003,
-    "guide_stepInfo": "4|13",
+    "guide_stepInfo": "5|13",
     "next_guide": 1005,
     "reward": [
       [
