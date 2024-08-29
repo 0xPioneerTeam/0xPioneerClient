@@ -1,4 +1,4 @@
-import { UITransform, Button, EventHandler, NodeEventType } from "cc";
+import { UITransform, Button, EventHandler, NodeEventType, Vec3 } from "cc";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
 import GameMainHelper from "../../../Game/Helper/GameMainHelper";
@@ -52,6 +52,8 @@ export class Gs1008 extends GsBase{
         }
         if(this._guide_step == 2){
             const TrainingCenter = this._innerBuildingController.getBuildingByKey(InnerBuildingType.TrainingCenter).node;
+            GameMainHelper.instance.changeGameCameraPosition(Vec3.ZERO, true);
+            GameMainHelper.instance.changeGameCameraZoom(1, true);
             RookieStepMgr.instance().maskView.configuration(false, TrainingCenter.worldPosition, TrainingCenter.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
                 let button = TrainingCenter.getChildByName('clickNode').getComponent(Button);

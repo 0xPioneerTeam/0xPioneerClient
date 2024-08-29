@@ -1,4 +1,4 @@
-import { view, UITransform, Button, EventHandler, NodeEventType } from "cc";
+import { view, UITransform, Button, EventHandler, NodeEventType, Vec3 } from "cc";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
 import GameMainHelper from "../../../Game/Helper/GameMainHelper";
@@ -56,6 +56,8 @@ export class Gs1002 extends GsBase{
         }
         if(this._guide_step == 2){
             const BarrackNode = this._innerBuildingController.getBuildingByKey(InnerBuildingType.Barrack).node;
+            GameMainHelper.instance.changeGameCameraPosition(Vec3.ZERO, true);
+            GameMainHelper.instance.changeGameCameraZoom(1, true);
             RookieStepMgr.instance().maskView.configuration(false, BarrackNode.worldPosition, BarrackNode.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
                 let button = BarrackNode.getChildByName('clickNode').getComponent(Button);

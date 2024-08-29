@@ -1,4 +1,4 @@
-import { view, UITransform, Button, find, ProgressBar, EventHandler, NodeEventType } from "cc";
+import { view, UITransform, Button, find, ProgressBar, EventHandler, NodeEventType, Vec3 } from "cc";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
 import GameMainHelper from "../../../Game/Helper/GameMainHelper";
@@ -15,7 +15,7 @@ export class Gs1003 extends GsBase {
 
     protected update(dt: number): void {
         let isGameShowOuter = GameMainHelper.instance.isGameShowOuter;
-        if(!isGameShowOuter)
+        if(isGameShowOuter)
         {
             this._guide_step = 1;
         }else{
@@ -56,6 +56,8 @@ export class Gs1003 extends GsBase {
         }
         if(this._guide_step == 2){
             const House = this._innerBuildingController.getBuildingByKey(InnerBuildingType.House).node;
+            GameMainHelper.instance.changeGameCameraPosition(Vec3.ZERO, true);
+            GameMainHelper.instance.changeGameCameraZoom(1, true);
             RookieStepMgr.instance().maskView.configuration(false, House.worldPosition, House.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
                 let button = House.getChildByName('clickNode').getComponent(Button);
