@@ -75,9 +75,9 @@ export class NewBuildingUpgradeUI extends ViewController {
             showName = "MainCity";
         } else if (type == InnerBuildingType.EnergyStation) {
             showName = "EnergyStation";
-        } else if (type == InnerBuildingType.ArtifactStore) {
+        } else {
             showName = "ArtifactStore";
-        }
+        } 
         for (const child of this._titleView.children) {
             child.active = child.name == showName;
         }
