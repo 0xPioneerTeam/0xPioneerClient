@@ -39,34 +39,10 @@
   },
   "1002": {
     "id": "1002",
-    "name": "1002",
-    "pre_guide": 1001,
-    "guide_stepInfo": "3|13",
-    "next_guide": 1003,
-    "reward": [
-      [
-        8005,
-        200
-      ],
-      [
-        8001,
-        200
-      ]
-    ],
-    "pre_talk": [
-      "talk1002"
-    ],
-    "fin_talk": [
-      "talk10021"
-    ],
-    "guidestepgroup": 1002
-  },
-  "1003": {
-    "id": "1003",
     "name": "1003",
     "pre_guide": 1002,
-    "guide_stepInfo": "4|13",
-    "next_guide": 1004,
+    "guide_stepInfo": "3|13",
+    "next_guide": 1003,
     "reward": [
       [
         8002,
@@ -82,6 +58,30 @@
     ],
     "fin_talk": [
       "talk10031"
+    ],
+    "guidestepgroup": 1002
+  },
+  "1003": {
+    "id": "1003",
+    "name": "1002",
+    "pre_guide": 1001,
+    "guide_stepInfo": "4|13",
+    "next_guide": 1004,
+    "reward": [
+      [
+        8005,
+        200
+      ],
+      [
+        8001,
+        200
+      ]
+    ],
+    "pre_talk": [
+      "talk1002"
+    ],
+    "fin_talk": [
+      "talk10021"
     ],
     "guidestepgroup": 1003
   },
