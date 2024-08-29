@@ -61,9 +61,7 @@ export class Gswakeup extends GsBase {
         if (actionPioneer != null) {
             actionPioneer.actionType = MapPioneerActionType.wakeup;
             let view: Node = this._pioneerController.getPioneerByUniqueId(actionPioneer.uniqueId);
-            // if (this._pioneerMap.has(actionPioneer.uniqueId)) {
-            //     view = this._pioneerMap.get(actionPioneer.uniqueId).getComponent(MapPioneer);
-            // }
+            view.getComponent(MapPioneer).refreshUI(actionPioneer);
             let conf = GuideConfig.getById(RookieStep.WAKE_UP + '');
             let talkId = conf.pre_talk[0];
 
