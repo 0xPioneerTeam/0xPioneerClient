@@ -424,6 +424,36 @@
     "eng": "Map and Teasure chest refresh countdown: ",
     "tc": "地圖和寶藏箱刷新倒數計時："
   },
+  "106016": {
+    "id": "106016",
+    "eng": "1.After building the intelligence station, the reconnaissance function can be used.\n\n2.The reconnaissance function can detect the combat power of other players in the main city, and can dispel a certain range of fog through fog reconnaissance.\n\n3.Upgrading the intelligence station can increase the range of dispelling fog.",
+    "tc": "1.建造情報站後，即可使用偵察功能。\n\n2.偵察功能可以偵察其他玩家主城的戰鬥力，對迷霧偵察可以驅散一定範圍的迷霧。\n\n3.陞級情報站可以提升驅散迷霧的範圍。"
+  },
+  "106017": {
+    "id": "106017",
+    "eng": "1.After the establishment of the recruitment committee, conscription can be carried out.\n\n2.When recruiting through the recruitment committee, the number of troops cannot exceed the upper limit of the recruitment committee's capacity, nor can it exceed the population limit.\n\n3.After upgrading the recruitment committee, it can increase the speed of recruitment and the upper limit of accommodating troops, while also reducing the consumption of recruitment.",
+    "tc": "1.建造募兵委後，即可以進行徵兵。\n\n2.通過募兵委徵兵時，兵力不能超過募兵委容納兵力的上限，同時也不能超過人口上限。\n\n3.募兵委升級後，可提升募兵的速度與容納兵力的上限，同時還會降低募兵的消耗。"
+  },
+  "106018": {
+    "id": "106018",
+    "eng": "1.After building the barracks, the soldiers recruited by the recruitment committee can be trained into other branches of the army.\n\n2.The individual health of different branches of the army varies, and the training costs and time also differ.\n\n3.Upgrading the barracks can unlock more trainable units.",
+    "tc": "1.建造兵營後，即可將募兵委徵召的阿兵哥訓練成其他兵種。\n\n2.不同兵種的單兵血量不同，訓練費用與訓練時間也不同。\n\n3.陞級兵營可以解鎖更多可訓練的兵種。"
+  },
+  "106019": {
+    "id": "106019",
+    "eng": "1.Upgrading one's residence can increase the population limit.\n\n2.Soldiers in the recruitment committee, various branches of troops in the barracks, and troops led by characters shall be counted towards the total population, and the total population shall not exceed the population limit.",
+    "tc": "1.陞級居所可提升人口上限。\n\n2.募兵委中的阿兵哥，兵營中的各種兵種，角色帶領的部隊，都會計入人口總數，人口總數不得超過人口上限。"
+  },
+  "106020": {
+    "id": "106020",
+    "eng": "1.Only after building the city hall can other buildings be constructed.\n\n2.The level of other buildings cannot exceed that of the city hall.\n\n3.Upgrading the level of the city hall can increase the upper limit of the level of other buildings.",
+    "tc": "1.建造市政廳後才能建造其他建築。\n\n2.其他建築的等級無法超出市政廳的等級。\n\n3.陞級市政廳等級即可提升其他建築的等級上限。"
+  },
+  "106021": {
+    "id": "106021",
+    "eng": "1.After building the Tower of Babel, players can enshrine artifacts in the tower, and the enshrined artifacts will have the attribute effects of the artifact. At the same time, players can use three artifacts to forge a new artifact.\n\n2.After upgrading the Tower of Babel, players can unlock more artifact worship slots and obtain more artifact effects at the same time.",
+    "tc": "1.建築巴別塔後，玩家可以將神器供奉在巴別塔中，被供奉的神器將發貨神器的内容效果，同時玩家可以用三個神器重新熔煉出一個新神器。\n\n2.玩家陞級巴別塔後，可以解鎖更多的神器供奉比特，玩家可以同時獲得更多的神器效果。"
+  },
   "107001": {
     "id": "107001",
     "eng": "Eye of Pharaoh",
