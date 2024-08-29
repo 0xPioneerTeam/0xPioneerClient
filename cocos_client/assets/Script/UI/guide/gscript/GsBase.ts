@@ -8,6 +8,8 @@ import { GameMgr } from "../../../Utils/Global";
 import { InnerBuildingControllerRe } from "../../../Game/Inner/InnerBuildingControllerRe";
 import { OuterShadowController } from "../../../Game/Outer/OuterShadowController";
 import { OuterBuildingController } from "../../../Game/Outer/OuterBuildingController";
+import { DataMgr } from "../../../Data/DataMgr";
+import GameMainHelper from "../../../Game/Helper/GameMainHelper";
 
 
 export class GsBase extends Component{
@@ -59,6 +61,15 @@ export class GsBase extends Component{
 
     public findDecoLayerEle(eleName:string){
         
+    }
+
+    fouceMainCity(){
+        const mainCity = DataMgr.s.mapBuilding.getSelfMainCityBuilding();
+        if (mainCity == null || mainCity.stayMapPositions.length != 7) {
+            return;
+        }
+        const currentWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(mainCity.stayMapPositions[3].x, mainCity.stayMapPositions[3].y);
+        GameMainHelper.instance.changeGameCameraWorldPosition(currentWorldPos, false);
     }
 
     public endDestroy() {

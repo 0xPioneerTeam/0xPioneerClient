@@ -57,7 +57,7 @@ export class MainCityArrowComp extends Component {
     }
 
     onClickBlackCityBtn(){
-        const mainCity = DataMgr.s.mapBuilding.getBuildingById(DataMgr.s.mapBuilding.getSelfMainCitySlotId() + "|building_1");
+        const mainCity = DataMgr.s.mapBuilding.getSelfMainCityBuilding();
         if (mainCity == null || mainCity.stayMapPositions.length != 7) {
             return;
         }

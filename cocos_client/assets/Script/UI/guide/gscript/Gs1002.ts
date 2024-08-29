@@ -27,8 +27,7 @@ export class Gs1002 extends GsBase{
             let Barrack = this._innerBuildingController.getBuildingByKey(InnerBuildingType.Barrack)
             if(Barrack){
                 //collecting
-                let upgrading = Barrack.building.upgrading;
-                if(upgrading){
+                if(Barrack.building && Barrack.building.upgrading){
                     this._guide_step = -1;
                     return;
                 }
