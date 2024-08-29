@@ -48,9 +48,9 @@ export class Gs1012 extends GsBase{
                 return;
             }
             if(actionView.interactBuilding != this._buildData){
-                actionView.node.active = false;
-                //worning
-                UIHUDController.showCenterTip(LanMgr.getLanById("1"));
+                // actionView.node.active = false;
+                // //worning
+                // UIHUDController.showCenterTip(LanMgr.getLanById("1100205"));
                 return;
             }else{
                 this._guide_step = 3;

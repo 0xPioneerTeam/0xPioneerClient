@@ -59,7 +59,7 @@ export class Gs1005 extends GsBase{
             if(actionView.interactBuilding != this._buildData){
                 actionView.node.active = false;
                 //worning
-                UIHUDController.showCenterTip(LanMgr.getLanById("1"));
+                UIHUDController.showCenterTip(LanMgr.getLanById("1100205"));
                 return;
             }else{
                 this._guide_step = 3;

@@ -116,7 +116,7 @@ export class DispatchUI extends ViewController {
 
             const costView = instantiate(this._costItem);
             costView.setParent(view);
-            costView.setPosition(0,-195);
+            costView.setPosition(0, -195);
 
             let beginPos: Vec2 = player.stayPos;
             let sparePositions: Vec2[] = [];
@@ -134,18 +134,23 @@ export class DispatchUI extends ViewController {
             }
             const moveGap = Math.abs(beginPos.x - this._targetPos.x) + Math.abs(beginPos.y - this._targetPos.y);
             if (moveGap >= 200) {
-                costView.getChildByPath("Content/Value").getComponent(Label).string = '>99';
-                costView.getChildByPath("CostTime/Value").getComponent(Label).string = '--:--:--';
-            }else{
+                costView.getChildByPath("Content/Value").getComponent(Label).string = ">99";
+                costView.getChildByPath("CostTime/Value").getComponent(Label).string = "--:--:--";
+            } else {
                 const movePath: TilePos[] = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
-                const trueCostEnergy: number = GameMgr.getMapActionCostEnergy(movePath.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
-                if(trueCostEnergy > 99){
-                    costView.getChildByPath("Content/Value").getComponent(Label).string = '>99';
-                    costView.getChildByPath("CostTime/Value").getComponent(Label).string = '--:--:--';
-                }else{
-                    costView.getChildByPath("Content/Value").getComponent(Label).string = trueCostEnergy + '';
+                const trueCostEnergy: number = GameMgr.getMapActionCostEnergy(
+                    movePath.length,
+                    this._interactBuilding != null ? this._interactBuilding.uniqueId : null
+                );
+                if (trueCostEnergy > 99) {
+                    costView.getChildByPath("Content/Value").getComponent(Label).string = ">99";
+                    costView.getChildByPath("CostTime/Value").getComponent(Label).string = "--:--:--";
+                } else {
+                    costView.getChildByPath("Content/Value").getComponent(Label).string = trueCostEnergy + "";
                     const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / player.speed;
-                    costView.getChildByPath("CostTime/Value").getComponent(Label).string = CommonTools.formatSeconds(perStepTime * movePath.length * (this._isReturn ? 1 : 1));
+                    costView.getChildByPath("CostTime/Value").getComponent(Label).string = CommonTools.formatSeconds(
+                        perStepTime * movePath.length * (this._isReturn ? 1 : 1)
+                    );
                 }
             }
             playerCount += 1;
@@ -164,7 +169,12 @@ export class DispatchUI extends ViewController {
 
         // wromhole action not support return
 
-        this._returnSwitchButton.active = this._interactType != MapInteractType.WmMark && this._interactType != MapInteractType.WmMatch && this._interactType != MapInteractType.WmRecall && this._interactType != MapInteractType.WmTeleport && this._interactType != MapInteractType.MainBack;
+        this._returnSwitchButton.active =
+            this._interactType != MapInteractType.WmMark &&
+            this._interactType != MapInteractType.WmMatch &&
+            this._interactType != MapInteractType.WmRecall &&
+            this._interactType != MapInteractType.WmTeleport &&
+            this._interactType != MapInteractType.MainBack;
         this._returnTitle.active = this._returnSwitchButton.active;
     }
 
@@ -203,9 +213,8 @@ export class DispatchUI extends ViewController {
             NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("203002"));
             return;
         }
-        if (player.hp <= 0) {
-            // NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106009"));
-            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient troops");
+        if (this._interactType != MapInteractType.Collect && player.hp <= 0) {
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("1100204"));
             return;
         }
         let beginPos: Vec2 = player.stayPos;
@@ -236,9 +245,10 @@ export class DispatchUI extends ViewController {
             return;
         }
         if (player.energy < trueCostEnergy) {
-            if(trueCostEnergy<99){
+            if (trueCostEnergy < 99) {
                 GameMgr.showBuyEnergyTip(player.uniqueId);
-            }else{//todo show message
+            } else {
+                //todo show message
                 //NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById(""));
             }
             return;

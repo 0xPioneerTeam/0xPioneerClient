@@ -15,7 +15,7 @@ import { RookieStep } from "../Const/RookieDefine";
 import { ClvlMgr, LanMgr } from "../Utils/Global";
 import { CLvlEffectType } from "../Const/Lvlup";
 import ConfigConfig from "../Config/ConfigConfig";
-import { BuyEnergyCoefficientParam, BuyEnergyLimitParam, BuyEnergyPriceParam, BuyEnergyThresParam, ConfigType, OneStepCostEnergyParam } from "../Const/Config";
+import { BuyEnergyCoefficientParam, BuyEnergyLimitParam, BuyEnergyPriceParam, BuyEnergyThresParam, ConfigType, InitMaxTroopNumParam, OneStepCostEnergyParam } from "../Const/Config";
 import ItemConfig from "../Config/ItemConfig";
 import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import { HUDName } from "../Const/ConstUIDefine";
@@ -38,8 +38,7 @@ export default class GameMgr {
 
 
     public canAddTroopNum(): number {
-        const maxTroop = InnerBuildingLvlUpConfig.getBuildingLevelData(DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.House), "max_pop");
-        return maxTroop - this.getAllTroopNum();
+        return this.getMaxTroopNum() - this.getAllTroopNum();
     }
 
     public getAllTroopNum(): number {
@@ -70,6 +69,16 @@ export default class GameMgr {
                 num += this.convertHpToTroopNum(pioneer.hp, pioneer.troopId);
             }
         }
+        return num;
+    }
+    public getMaxTroopNum(): number {
+        let num: number = 0;
+        const houseNum = InnerBuildingLvlUpConfig.getBuildingLevelData(DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.House), "max_pop");
+        if (houseNum != null) {
+            num += houseNum;
+        }
+        const initNum = (ConfigConfig.getConfig(ConfigType.InitMaxTroopNum) as InitMaxTroopNumParam).num;
+        num += initNum;
         return num;
     }
 

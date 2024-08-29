@@ -89,9 +89,7 @@ export default class TopUI extends Component {
         resourceView.getChildByPath("Wood/Label").getComponent(Label).string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Wood).toString();
         resourceView.getChildByPath("Stone/Label").getComponent(Label).string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Stone).toString();
 
-        const maxTroop = InnerBuildingLvlUpConfig.getBuildingLevelData(DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.House), "max_pop");
-
-        resourceView.getChildByPath("Troops/Label").getComponent(Label).string = GameMgr.getAllTroopNum() + "/" + maxTroop;
+        resourceView.getChildByPath("Troops/Label").getComponent(Label).string = GameMgr.getAllTroopNum() + "/" + GameMgr.getMaxTroopNum();
     }
 
     private _playExpGettedAnim(expValue: number, playOver: () => void = null) {

@@ -4,7 +4,6 @@ import { Gswakeup } from "./gscript/Gswakeup";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import { DataMgr } from "../../Data/DataMgr";
-import { GsNpcTalk1 } from "./gscript/GsNpcTalk1";
 import { GsRepairCity } from "./gscript/GsRepairCity";
 import { GsBase } from "./gscript/GsBase";
 import { Gs1002 } from "./gscript/Gs1002";
@@ -17,6 +16,7 @@ import { Gs1009 } from "./gscript/Gs1009";
 import { Gs1010 } from "./gscript/Gs1010";
 import { Gs1011 } from "./gscript/Gs1011";
 import { Gs1012 } from "./gscript/Gs1012";
+import { Gs1004 } from "./gscript/Gs1004";
 
 
 export class GuideMgr{
@@ -43,6 +43,7 @@ export class GuideMgr{
         this._guideScripts[RookieStep.GUIDE_1001] = GsRepairCity;
         this._guideScripts[RookieStep.GUIDE_1002] = Gs1002;
         this._guideScripts[RookieStep.GUIDE_1003] = Gs1003;
+        this._guideScripts[RookieStep.GUIDE_1004] = Gs1004;
         this._guideScripts[RookieStep.GUIDE_1005] = Gs1005;
         this._guideScripts[RookieStep.GUIDE_1006] = Gs1006;
         this._guideScripts[RookieStep.GUIDE_1007] = Gs1007;

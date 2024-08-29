@@ -47,6 +47,8 @@ export enum ConfigType {
     SelectFromThreeGetAllCostCoefficient = "10008",
 
     PerNumSelectBox = "10009",
+
+    InitMaxTroopNum = "500002",
 }
 
 export interface ConfigData {
@@ -168,4 +170,7 @@ export interface WormholeMatchConsumeParam extends ConfigData {
 }
 export interface WormholeTeleportConsumeParam extends ConfigData {
     consumes: [number, string, number][];
+}
+export interface InitMaxTroopNumParam extends ConfigData {
+    num: number;
 }
