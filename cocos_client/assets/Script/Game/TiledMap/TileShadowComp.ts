@@ -53,6 +53,9 @@ export class TileShadowComp extends Component {
         if (this._tilex == tilex && this._tiley == tiley && this._grid == grid) {
             return;
         } 
+        if(!this._spComp){
+            return;
+        }
         this._tilex = tilex;
         this._tiley = tiley;
         this._grid = grid;

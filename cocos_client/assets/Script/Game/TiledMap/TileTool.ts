@@ -1,6 +1,4 @@
 import { instantiate, Intersection2D, Node, Prefab, size, SpriteFrame, TiledLayer, TiledMap, v2, v3, Vec2, Vec3 } from "cc";
-import { TileShadowComp } from "./TileShadowComp";
-import { Rect } from "cc";
 
 export enum TileHexDirection {
     LeftTop = 0,
