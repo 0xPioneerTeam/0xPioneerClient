@@ -16,7 +16,7 @@
     "time": 15,
     "resources": null,
     "quota": null,
-    "exp": 5,
+    "exp": 0,
     "event": "",
     "des": "320005",
     "hp": 240,
@@ -46,7 +46,7 @@
       100
     ],
     "quota": 1,
-    "exp": 5,
+    "exp": 0,
     "event": "",
     "des": "320005",
     "hp": null,
@@ -76,7 +76,7 @@
       100
     ],
     "quota": 1,
-    "exp": 5,
+    "exp": 0,
     "event": "",
     "des": "320005",
     "hp": null,
@@ -106,7 +106,7 @@
       100
     ],
     "quota": 1,
-    "exp": 5,
+    "exp": 0,
     "event": "",
     "des": "320005",
     "hp": null,
@@ -136,7 +136,7 @@
       100
     ],
     "quota": 1,
-    "exp": 5,
+    "exp": 0,
     "event": "",
     "des": "320005",
     "hp": null,
@@ -166,7 +166,7 @@
       100
     ],
     "quota": 1,
-    "exp": 5,
+    "exp": 0,
     "event": "",
     "des": "320005",
     "hp": null,
@@ -196,7 +196,7 @@
       100
     ],
     "quota": 1,
-    "exp": 5,
+    "exp": 0,
     "event": "",
     "des": "320005",
     "hp": null,
@@ -223,7 +223,7 @@
     "time": 15,
     "resources": null,
     "quota": null,
-    "exp": 8,
+    "exp": 0,
     "event": "1",
     "des": "900076",
     "hp": null,
