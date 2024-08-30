@@ -16,7 +16,13 @@
     "winprogress": 40,
     "exp": 0,
     "animType": "rebels",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8007",
+        50
+      ]
+    ],
     "pos": [
       {
         "x": 1,
@@ -41,7 +47,13 @@
     "winprogress": 30,
     "exp": 0,
     "animType": "doomsdayGangBigTeam",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8007",
+        50
+      ]
+    ],
     "pos": [
       {
         "x": 6,
@@ -81,7 +93,13 @@
     "winprogress": 40,
     "exp": 0,
     "animType": "doomsdayGangTeam",
-    "drop": null,
+    "drop": [
+      [
+        1,
+        "8007",
+        50
+      ]
+    ],
     "pos": [
       {
         "x": 10,
