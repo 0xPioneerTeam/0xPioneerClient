@@ -14,7 +14,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "rebels",
     "drop": null,
     "pos": [
@@ -39,7 +39,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 30,
-    "exp": 5,
+    "exp": 0,
     "animType": "doomsdayGangBigTeam",
     "drop": null,
     "pos": [
@@ -79,7 +79,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "doomsdayGangTeam",
     "drop": null,
     "pos": [
@@ -104,7 +104,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "monster_b_2",
     "drop": [
       [
@@ -153,7 +153,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "monster_sandspider",
     "drop": [
       [
@@ -184,7 +184,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "monster_spiderqueen",
     "drop": [
       [
@@ -233,7 +233,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "monster_teshark",
     "drop": [
       [
@@ -282,7 +282,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "monster_sandspider",
     "drop": [
       [
@@ -313,7 +313,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 5,
-    "exp": 5,
+    "exp": 0,
     "animType": "artisan",
     "drop": null,
     "pos": [
@@ -338,7 +338,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 6,
-    "exp": 5,
+    "exp": 0,
     "animType": "secretGuard",
     "drop": null,
     "pos": [

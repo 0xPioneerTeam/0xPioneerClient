@@ -14,7 +14,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 5,
-    "exp": 5,
+    "exp": 0,
     "animType": "monster_a_1",
     "drop": null,
     "pos": [
@@ -39,7 +39,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "rebels",
     "drop": null,
     "pos": [
@@ -64,7 +64,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "monster_b_2",
     "drop": [
       [
@@ -113,7 +113,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "monster_c_3",
     "drop": [
       [
@@ -144,7 +144,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "monster_scorpion",
     "drop": [
       [
@@ -175,7 +175,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 40,
-    "exp": 5,
+    "exp": 0,
     "animType": "monster_dhs",
     "drop": [
       [
@@ -224,7 +224,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 5,
-    "exp": 5,
+    "exp": 0,
     "animType": "artisan",
     "drop": null,
     "pos": [
@@ -249,7 +249,7 @@
     "def": 0,
     "spd": 5,
     "winprogress": 6,
-    "exp": 5,
+    "exp": 0,
     "animType": "secretGuard",
     "drop": null,
     "pos": [
