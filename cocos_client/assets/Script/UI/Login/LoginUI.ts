@@ -17,7 +17,7 @@ import { PlayerInfoUI } from "../PlayerInfoUI";
 import { CollectWalletUI } from "../CollectWallet/CollectWalletUI";
 const { ccclass, property } = _decorator;
 
-@ccclass("CompLogin")
+@ccclass("LoginUI")
 export class LoginUI extends ViewController {
     //--------------------------------------- lifeCyc
     private _loginClicked: boolean = false;
