@@ -295,6 +295,9 @@ export class NewBuildingUpgradeUI extends ViewController {
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
+    private async onTapQuestion() {
+        GameMusicPlayMgr.playTapButtonEffect();
+    }
 
     private async onTapClose() {
         GameMusicPlayMgr.playTapButtonEffect();

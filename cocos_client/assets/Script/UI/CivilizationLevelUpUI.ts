@@ -30,6 +30,8 @@ export class CivilizationLevelUpUI extends ViewController {
     private _showBuildAnimView: Node = null;
     private _showFinishAnimView: Node = null;
 
+    private _tipView: Node = null;
+
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
@@ -47,6 +49,10 @@ export class CivilizationLevelUpUI extends ViewController {
 
         this._finishLightAnimView = this.node.getChildByPath("Content/Video/Mask/FinishLight");
         this._finishLightAnimView.active = false;
+
+        this._tipView = this.node.getChildByPath("Tip");
+        // this._tipView.getComponent(Label).string = LanMgr.getLanById("use lan:Click on the blank space to close");
+        this._tipView.active = false;
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this.refreshUI, this);
     }
@@ -122,6 +128,7 @@ export class CivilizationLevelUpUI extends ViewController {
                             .call(() => {
                                 this._finishLightAnimView.active = false;
                                 this.node.getChildByName("Content").getComponent(Button).interactable = true;
+                                this._tipView.active = true;
                             })
                             .start();
 

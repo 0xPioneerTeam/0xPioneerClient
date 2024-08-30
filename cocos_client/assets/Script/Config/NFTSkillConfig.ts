@@ -1,5 +1,6 @@
 import { resources } from "cc";
 import { NFTPioneerSkillConfigData } from "../Const/NFTPioneerDefine";
+import CLog from "../Utils/CLog";
 
 export default class NFTSkillConfig {
     private static _confs: { [index: string]: NFTPioneerSkillConfigData } = {};
@@ -19,6 +20,7 @@ export default class NFTSkillConfig {
             return false;
         }
         this._confs = obj;
+        CLog.debug("nftskill init success", this._confs);
         return true;
     }
 

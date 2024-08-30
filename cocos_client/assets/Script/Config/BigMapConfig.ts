@@ -2,6 +2,7 @@ import { ForwardFlow, resources } from "cc";
 import { MapTemplateConfigs } from "../Const/MapDefine";
 import { MapBuildingConfigData } from "../Const/MapBuilding";
 import { PioneerConfigData } from "../Const/PioneerDefine";
+import CLog from "../Utils/CLog";
 
 export default class BigMapConfig {
     private static _buildingConfigs: Map<string, MapBuildingConfigData[]> = new Map();
@@ -66,6 +67,7 @@ export default class BigMapConfig {
             }
             this._pioneerConfigs.set(id, templePioneers);
         }
+        CLog.debug("BigMapConfig init success");
         return true;
     }
 

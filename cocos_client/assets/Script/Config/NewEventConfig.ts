@@ -1,5 +1,6 @@
 import { resources } from "cc";
 import { NewEventConfigData } from "../Const/NewEventDefine";
+import CLog from "../Utils/CLog";
 
 export default class NewEventConfig {
     private static _confs: NewEventConfigData[] = [];
@@ -16,6 +17,7 @@ export default class NewEventConfig {
         });
        
         this._confs = obj;
+        CLog.debug("newEvent init success", this._confs);
         return true;
     }
 

@@ -20,6 +20,7 @@ export default class MissionConfig {
         }
 
         this._confs = obj;
+        CLog.debug("missionConfig init success", this._confs);
         return true;
     }
 

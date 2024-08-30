@@ -1,4 +1,4 @@
-import { sp, v2, Vec2 } from "cc";
+import { random, sp, v2, Vec2 } from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import { InnerBuildingType, MapBuildingType, UserInnerBuildInfo } from "../Const/BuildingDefine";
@@ -555,7 +555,7 @@ export default class GameMgr {
         if (NFT.level >= NFT.levelLimit) {
             return false;
         }
-        const nftLevelUpCost = PioneerLvlupConfig.getNFTLevelUpCost(NFT.rank, NFT.rank + 1);
+        const nftLevelUpCost = PioneerLvlupConfig.getNFTLevelUpCost(NFT.level, NFT.level + 1);
         if (DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.NFTExp) < nftLevelUpCost) {
             return false;
         }

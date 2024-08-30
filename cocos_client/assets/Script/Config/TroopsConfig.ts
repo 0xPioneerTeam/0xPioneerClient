@@ -1,5 +1,6 @@
 import { resources } from "cc";
 import { TroopsConfigData } from "../Const/TroopsDefine";
+import CLog from "../Utils/CLog";
 
 export default class TroopsConfig {
     private static _confs: { [index: string]: TroopsConfigData } = {};
@@ -19,6 +20,7 @@ export default class TroopsConfig {
         }
 
         this._confs = obj;
+        CLog.debug("TroopConfig init success", this._confs);
         return true;
     }
 

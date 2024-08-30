@@ -1,6 +1,7 @@
 import { resources } from "cc";
 import { NFTPioneerConfigData } from "../Const/NFTPioneerDefine";
 import CommonTools from "../Tool/CommonTools";
+import CLog from "../Utils/CLog";
 
 export default class NFTPioneerConfig {
     private static _confs: { [index: string]: NFTPioneerConfigData } = {};
@@ -21,6 +22,7 @@ export default class NFTPioneerConfig {
             return false;
         }
         this._confs = obj;
+        CLog.debug("nftPioneer init success", this._confs);
         return true;
     }
 

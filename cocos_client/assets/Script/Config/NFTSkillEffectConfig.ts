@@ -1,6 +1,7 @@
 import { resources } from "cc";
 import { NFTPioneerSkillEffectConfigData } from "../Const/NFTPioneerDefine";
 import { LanMgr } from "../Utils/Global";
+import CLog from "../Utils/CLog";
 
 export default class NFTSkillEffectConfig {
     private static _confs: { [index: string]: NFTPioneerSkillEffectConfigData } = {};
@@ -20,6 +21,7 @@ export default class NFTSkillEffectConfig {
             return false;
         }
         this._confs = obj;
+        CLog.debug("nftskilleffect init success", this._confs);
         return true;
     }
 

@@ -167,13 +167,16 @@ export class ArtifactDataMgr {
         const onEffectArtifact = this._data.find((item)=> {
             return item.effectIndex == index;
         });
-        if (onEffectArtifact == undefined) {
-            // empty position
-            return true;
-        }
         const allNotUsedArtifacts = this._data.filter((item)=> {
             return item.effectIndex < 0;
         });
+        if (onEffectArtifact == undefined) {
+            // empty position and has artifact can set
+            if (allNotUsedArtifacts.length <= 0) {
+                return false;
+            }
+            return true;
+        }
         const onEffectArtifactConfig = ArtifactConfig.getById(onEffectArtifact.artifactConfigId);
         if (onEffectArtifactConfig == null) {
             return false;

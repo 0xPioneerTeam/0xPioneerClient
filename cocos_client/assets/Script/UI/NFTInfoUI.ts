@@ -69,6 +69,8 @@ export class NFTInfoUI extends ViewController {
         NotificationMgr.addListener(NotificationName.NFT_RANK_UP, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.NFT_LEARN_SKILL, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.NFT_FORGET_SKILL, this._refreshUI, this);
+        
+        NotificationMgr.addListener(NotificationName.ITEM_CHANGE, this._refreshUI, this);
     }
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
@@ -77,6 +79,8 @@ export class NFTInfoUI extends ViewController {
         NotificationMgr.removeListener(NotificationName.NFT_RANK_UP, this._refreshUI, this);
         NotificationMgr.removeListener(NotificationName.NFT_LEARN_SKILL, this._refreshUI, this);
         NotificationMgr.removeListener(NotificationName.NFT_FORGET_SKILL, this._refreshUI, this);
+
+        NotificationMgr.removeListener(NotificationName.ITEM_CHANGE, this._refreshUI, this);
     }
     protected viewPopAnimation(): boolean {
         return true;
