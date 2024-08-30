@@ -1,4 +1,4 @@
-import { _decorator, Asset, AssetManager, director } from "cc";
+import { _decorator, Asset, AssetManager, director, Game, game } from "cc";
 import ViewController from "./BasicView/ViewController";
 import { AudioMgr, LanMgr, LocalDataLoader, ResourcesMgr } from "./Utils/Global";
 import ConfigMgr from "./Manger/ConfigMgr";
@@ -340,9 +340,12 @@ export class Main extends ViewController {
     private blurTs;
     private onBlur() {
         this.blurTs = new Date().getTime();
+        // director.pause();
     }
     private onFocus() {
         let durTs = new Date().getTime() - this.blurTs;
-        director.tick(durTs / 1000);
+        // director.tick(durTs / 1000);
+
+        // director.resume();
     }
 }

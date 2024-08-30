@@ -27,14 +27,14 @@ export default class GameMainHelper {
     public setGameCamera(camera: Camera) {
         this._gameCamera = camera;
         this._gameCameraOriginalOrthoHeight = this._gameCamera.orthoHeight;
-        this._gameCameraZoom = 1;
+        this._gameCameraZoom = 1; 
     }
     public changeGameCameraZoom(zoom: number, animation: boolean = false) {
         const zoomConfig = ConfigConfig.getConfig(ConfigType.MapScaleMaxAndMin) as MapScaleParam;
         this._gameCameraZoom = Math.max(zoomConfig.scaleMin, Math.min(zoom, zoomConfig.scaleMax));
         if (!this._isGameShowOuter) {
-            // new inner max zoom limit 1
-            this._gameCameraZoom = Math.min(1, this._gameCameraZoom);
+            // new inner max zoom limit 0.8
+            this._gameCameraZoom = Math.min(0.8, this._gameCameraZoom);  
         }
         if (animation) {
             tween()
