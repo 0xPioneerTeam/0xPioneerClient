@@ -2561,47 +2561,47 @@
   },
   "501103": {
     "id": "501103",
-    "eng": "Gather",
-    "tc": "資源收集"
+    "eng": "Wild Resource Collection",
+    "tc": "野外資源收集"
   },
   "501104": {
     "id": "501104",
-    "eng": "Defeat",
-    "tc": "擊敗敵人"
+    "eng": "Defeat Wild Enemies",
+    "tc": "擊敗野外敵人"
   },
   "501105": {
     "id": "501105",
-    "eng": "Upgrade",
-    "tc": "建築升級"
+    "eng": "City Building Upgrade",
+    "tc": "城内建築升級"
   },
   "501106": {
     "id": "501106",
-    "eng": "Explore",
-    "tc": "探索未知"
+    "eng": "Map Exploration of the Unknown",
+    "tc": "地图探索未知"
   },
   "501107": {
     "id": "501107",
-    "eng": "Recruit",
+    "eng": "Recruitment",
     "tc": "募兵"
   },
   "501108": {
     "id": "501108",
-    "eng": "Advance",
+    "eng": "Civilization Breakthrough",
     "tc": "文明突破"
   },
   "501109": {
     "id": "501109",
-    "eng": "Stockpile",
+    "eng": "Resource Hoarding",
     "tc": "物資囤積"
   },
   "501110": {
     "id": "501110",
-    "eng": "Chest",
-    "tc": "世界寶箱"
+    "eng": "Open Treasure Chests",
+    "tc": "开启寶箱"
   },
   "501111": {
     "id": "501111",
-    "eng": "Use",
+    "eng": "Use Items",
     "tc": "使用道具"
   },
   "501112": {
@@ -2611,7 +2611,7 @@
   },
   "501113": {
     "id": "501113",
-    "eng": "Locate",
+    "eng": "Find NPCs",
     "tc": "尋找NPC"
   },
   "502001": {
@@ -4041,8 +4041,8 @@
   },
   "920012": {
     "id": "920012",
-    "eng": "Gather 4 more times",
-    "tc": "再次完成4次採集"
+    "eng": "Gather 2 more times",
+    "tc": "再次完成2次採集"
   },
   "920013": {
     "id": "920013",
