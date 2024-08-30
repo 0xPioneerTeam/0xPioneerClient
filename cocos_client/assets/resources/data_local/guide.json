@@ -11,6 +11,7 @@
         100
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1000"
     ],
@@ -33,6 +34,7 @@
         240
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1001"
     ],
@@ -57,6 +59,7 @@
         240
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1002"
     ],
@@ -77,6 +80,7 @@
         500
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1003"
     ],
@@ -95,6 +99,7 @@
         200
       ]
     ],
+    "progress": 100,
     "pre_talk": [
       "talk1004"
     ],
@@ -115,6 +120,7 @@
         20
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1005"
     ],
@@ -135,6 +141,7 @@
         10
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1006"
     ],
@@ -159,6 +166,7 @@
         240
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1007"
     ],
@@ -179,6 +187,7 @@
         500
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1008"
     ],
@@ -197,6 +206,7 @@
         500
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1009"
     ],
@@ -215,6 +225,7 @@
         50
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1010"
     ],
@@ -237,6 +248,7 @@
         40
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1011"
     ],
@@ -259,6 +271,7 @@
         1000
       ]
     ],
+    "progress": null,
     "pre_talk": [
       "talk1012"
     ],
@@ -272,6 +285,7 @@
     "guide_stepInfo": "",
     "next_guide": null,
     "reward": null,
+    "progress": null,
     "pre_talk": null,
     "fin_talk": null,
     "guidestepgroup": null
