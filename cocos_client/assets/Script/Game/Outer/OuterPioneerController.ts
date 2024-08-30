@@ -265,7 +265,7 @@ export class OuterPioneerController extends ViewController {
             return;
         }
         const allPioneers = DataMgr.s.pioneer.getAll();
-        let changed: boolean = false;
+        let changed: boolean = true;
         for (const pioneer of allPioneers) {
             let canShow: boolean = pioneer.show;
             if (pioneer.type == MapPioneerType.player) {

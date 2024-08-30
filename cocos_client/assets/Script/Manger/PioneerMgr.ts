@@ -145,7 +145,7 @@ export default class PioneerMgr {
 
         let interactDelayTime: number = 0;
         if (!interactDirectly) {
-            interactDelayTime = 500;
+            interactDelayTime = 650;
         }
 
         if (stayBuilding == null) {

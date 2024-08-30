@@ -1,6 +1,6 @@
 import { EventTouch, instantiate, Label, Layout, ProgressBar, Slider, tween, v3 } from "cc";
 import { _decorator, Component, Node } from "cc";
-import UIPanelManger from "../Basic/UIPanelMgr";
+import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import ViewController from "../BasicView/ViewController";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { PlayerInfoItem } from "./View/PlayerInfoItem";
@@ -18,6 +18,8 @@ import { NetworkMgr } from "../Net/NetworkMgr";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
 import ManualNestedScrollView from "../BasicView/ManualNestedScrollView";
+import { HUDName } from "../Const/ConstUIDefine";
+import { AlterTipView } from "./View/AlterTipView";
 const { ccclass, property } = _decorator;
 
 @ccclass("ExerciseUI")
@@ -398,5 +400,14 @@ export class ExerciseUI extends ViewController {
             }
             this._updateNum(actionIndex, currentButton.name == "minus");
         }
+    }
+
+    private async onTapQuestion() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(HUDName.AlterTip, UIPanelLayerType.HUD);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(AlterTipView).showTip(LanMgr.getLanById("106018"));
     }
 }

@@ -22,9 +22,9 @@ import {
 import ArtifactData from "../Model/ArtifactData";
 import { GameMgr, LanMgr } from "../Utils/Global";
 import ViewController from "../BasicView/ViewController";
-import { UIName } from "../Const/ConstUIDefine";
+import { HUDName, UIName } from "../Const/ConstUIDefine";
 import { ArtifactInfoUI } from "./ArtifactInfoUI";
-import UIPanelManger from "../Basic/UIPanelMgr";
+import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import { ArtifactItem1 } from "./ArtifactItem1";
 import { ArtifactItem } from "./ArtifactItem";
 import { InnerBuildingType } from "../Const/BuildingDefine";
@@ -40,6 +40,7 @@ import LongPressButton from "../BasicView/LongPressButton";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { RelicTowerSelectUI } from "./RelicTowerSelectUI";
 import { RedPointView } from "./View/RedPointView";
+import { AlterTipView } from "./View/AlterTipView";
 const { ccclass, property } = _decorator;
 
 @ccclass("RelicTowerUI")
@@ -466,6 +467,14 @@ export class RelicTowerUI extends ViewController {
             return;
         }
         result.node.getComponent(ArtifactInfoUI).showItem([this._compositeData]);
+    }
+    private async onTapQuestion() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(HUDName.AlterTip, UIPanelLayerType.HUD);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(AlterTipView).showTip(LanMgr.getLanById("106021"));
     }
     //-------------------------------------------------------------------------
     private _onPlayerArtifactCombine = (e: any) => {

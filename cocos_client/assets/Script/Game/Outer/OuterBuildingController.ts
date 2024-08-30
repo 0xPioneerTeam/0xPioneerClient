@@ -149,7 +149,7 @@ export class OuterBuildingController extends Component {
         if (decorationView == null) {
             return;
         }
-        let changed: boolean = false;
+        let changed: boolean = true;
         const allBuildings = DataMgr.s.mapBuilding.getObj_building();
         for (const building of allBuildings) {
             if (building.show) {

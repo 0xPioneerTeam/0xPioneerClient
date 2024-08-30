@@ -73,5 +73,6 @@ export enum HUDName {
     Loading = "abresources/prefab/hud/LoadingUI",
     ResourceGetted = "abresources/prefab/hud/ResourceGettedView",
     Alter = "abresources/prefab/hud/AlterView",
+    AlterTip = "abresources/prefab/hud/AlterTipView",
     NetAlterView = "abresources/prefab/hud/NetAlterView",
 }

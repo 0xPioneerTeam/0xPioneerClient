@@ -9,12 +9,13 @@ import { NotificationName } from "../../Const/Notification";
 import InnerBuildingLvlUpConfig from "../../Config/InnerBuildingLvlUpConfig";
 import { InnerBuildingType } from "../../Const/BuildingDefine";
 import ItemData from "../../Const/Item";
-import UIPanelManger from "../../Basic/UIPanelMgr";
+import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { DataMgr } from "../../Data/DataMgr";
-import { UIName } from "../../Const/ConstUIDefine";
+import { HUDName, UIName } from "../../Const/ConstUIDefine";
 import { DelegateUI } from "../DelegateUI";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
+import { AlterTipView } from "../View/AlterTipView";
 const { ccclass, property } = _decorator;
 
 @ccclass("RecruitUI")
@@ -253,5 +254,13 @@ export class RecruitUI extends ViewController {
             return;
         }
         result.node.getComponent(DelegateUI).showUI(InnerBuildingType.Barrack);
+    }
+    private async onTapQuestion() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(HUDName.AlterTip, UIPanelLayerType.HUD);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(AlterTipView).showTip(LanMgr.getLanById("106017"));
     }
 }

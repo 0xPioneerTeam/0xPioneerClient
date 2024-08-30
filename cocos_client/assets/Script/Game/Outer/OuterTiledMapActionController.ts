@@ -23,7 +23,7 @@ import {
 import NotificationMgr from "../../Basic/NotificationMgr";
 import ViewController from "../../BasicView/ViewController";
 import Config, { ConfigType, DetectCostParam } from "../../Const/Config";
-import { ECursorType, MapInteractType, MapMemberTargetType } from "../../Const/ConstDefine";
+import { ECursorType, MapInteractType, MapMemberTargetType, ResourceCorrespondingItem } from "../../Const/ConstDefine";
 import { NotificationName } from "../../Const/Notification";
 import { DataMgr } from "../../Data/DataMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
@@ -682,6 +682,10 @@ export class OuterTiledMapActionController extends ViewController {
                     if (result.success) {
                         const costNum: number = (ConfigConfig.getConfig(ConfigType.DetectCost) as DetectCostParam).cost;
                         result.node.getComponent(AlterView).showTip(LanMgr.replaceLanById("1100202", [costNum]), () => {
+                            if (DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Energy) < costNum) {
+                                UIHUDController.showCenterTip("Insufficient energy");
+                                return;
+                            }
                             if (stayBuilding != null && stayBuilding.type == MapBuildingType.city) {
                                 NetworkMgr.websocketMsg.player_explore_maincity({
                                     buildingId: stayBuilding.uniqueId,

@@ -9,9 +9,9 @@ import { ConfigInnerBuildingData, InnerBuildingType, UserInnerBuildInfo } from "
 import InnerBuildingConfig from "../../Config/InnerBuildingConfig";
 import InnerBuildingLvlUpConfig from "../../Config/InnerBuildingLvlUpConfig";
 import { NotificationName } from "../../Const/Notification";
-import UIPanelManger from "../../Basic/UIPanelMgr";
+import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { DataMgr } from "../../Data/DataMgr";
-import { UIName } from "../../Const/ConstUIDefine";
+import { HUDName, UIName } from "../../Const/ConstUIDefine";
 import { DelegateUI } from "../DelegateUI";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
@@ -21,6 +21,7 @@ import { DialogueUI } from "../Outer/DialogueUI";
 import { RelicTowerUI } from "../RelicTowerUI";
 import { RecruitUI } from "./RecruitUI";
 import { RedPointView } from "../View/RedPointView";
+import { AlterTipView } from "../View/AlterTipView";
 const { ccclass } = _decorator;
 
 @ccclass("NewBuildingUpgradeUI")
@@ -77,7 +78,7 @@ export class NewBuildingUpgradeUI extends ViewController {
             showName = "EnergyStation";
         } else {
             showName = "ArtifactStore";
-        } 
+        }
         for (const child of this._titleView.children) {
             child.active = child.name == showName;
         }
@@ -297,6 +298,25 @@ export class NewBuildingUpgradeUI extends ViewController {
     }
     private async onTapQuestion() {
         GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(HUDName.AlterTip, UIPanelLayerType.HUD);
+        if (!result.success) {
+            return;
+        }
+        let tipLanId = "";
+        if (this._type == InnerBuildingType.MainCity) {
+            tipLanId = "106020";
+        } else if (this._type == InnerBuildingType.Barrack) {
+            tipLanId = "106017";
+        } else if (this._type == InnerBuildingType.ArtifactStore) {
+            tipLanId = "106021";
+        } else if (this._type == InnerBuildingType.House) {
+            tipLanId = "106019";
+        } else if (this._type == InnerBuildingType.InformationStation) {
+            tipLanId = "106016";
+        } else if (this._type == InnerBuildingType.TrainingCenter) {
+            tipLanId = "106018";
+        }
+        result.node.getComponent(AlterTipView).showTip(LanMgr.getLanById(tipLanId));
     }
 
     private async onTapClose() {
