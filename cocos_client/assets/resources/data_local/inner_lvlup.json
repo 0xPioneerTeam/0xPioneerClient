@@ -1,13 +1,13 @@
 {
   "1": {
     "id": "1",
-    "progress": 10,
+    "progress": 30,
     "exp": 1,
     "lvlup_time": 5,
     "cost_main": [
       [
         8003,
-        50
+        40
       ]
     ],
     "prefab_main": "City_Hall_Group",
@@ -54,13 +54,13 @@
   },
   "2": {
     "id": "2",
-    "progress": 20,
+    "progress": 40,
     "exp": 1,
     "lvlup_time": 10,
     "cost_main": [
       [
         8002,
-        150
+        110
       ],
       [
         8003,
@@ -115,7 +115,7 @@
   },
   "3": {
     "id": "3",
-    "progress": 30,
+    "progress": 50,
     "exp": 1,
     "lvlup_time": 15,
     "cost_main": [
@@ -176,7 +176,7 @@
   },
   "4": {
     "id": "4",
-    "progress": 40,
+    "progress": 60,
     "exp": 1,
     "lvlup_time": 20,
     "cost_main": [
@@ -237,7 +237,7 @@
   },
   "5": {
     "id": "5",
-    "progress": 50,
+    "progress": 70,
     "exp": 1,
     "lvlup_time": 25,
     "cost_main": [
@@ -298,7 +298,7 @@
   },
   "6": {
     "id": "6",
-    "progress": 60,
+    "progress": 80,
     "exp": 1,
     "lvlup_time": 30,
     "cost_main": [
@@ -359,7 +359,7 @@
   },
   "7": {
     "id": "7",
-    "progress": 70,
+    "progress": 90,
     "exp": 1,
     "lvlup_time": 35,
     "cost_main": [
@@ -420,7 +420,7 @@
   },
   "8": {
     "id": "8",
-    "progress": 80,
+    "progress": 100,
     "exp": 1,
     "lvlup_time": 40,
     "cost_main": [
@@ -481,7 +481,7 @@
   },
   "9": {
     "id": "9",
-    "progress": 90,
+    "progress": 110,
     "exp": 1,
     "lvlup_time": 45,
     "cost_main": [
@@ -542,7 +542,7 @@
   },
   "10": {
     "id": "10",
-    "progress": 100,
+    "progress": 120,
     "exp": 1,
     "lvlup_time": 50,
     "cost_main": [
