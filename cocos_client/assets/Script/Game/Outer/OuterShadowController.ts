@@ -97,7 +97,7 @@ export class OuterShadowController extends ViewController {
             return;
         }
         // console.log("refreshUI:" + pos1.x + "," + pos1.y + "->" + pos2.x + "," + pos2.y);
-        let bigSize = 2;
+        let bigSize = 4;
         let px1 = pos1.x - bigSize;
         let px2 = pos2.x + bigSize;
         let py1 = pos1.y + bigSize;
@@ -163,7 +163,7 @@ export class OuterShadowController extends ViewController {
                     shadowComp.node.setParent(this._shadowContentNodes[i]);
                     break;
                 }
-                if (this._shadowContentNodes[i].children.length > 200) {
+                if (this._shadowContentNodes[i].children.length > 250) {
                     continue;
                 }
                 shadowComp.node.setParent(this._shadowContentNodes[i]);
@@ -179,7 +179,7 @@ export class OuterShadowController extends ViewController {
                     shadowComp.node.setParent(this._shadowContentNodes[i]);
                     break;
                 }
-                if (this._shadowContentNodes[i].children.length > 200) {
+                if (this._shadowContentNodes[i].children.length > 250) {
                     continue;
                 }
                 shadowComp.node.setParent(this._shadowContentNodes[i]);
