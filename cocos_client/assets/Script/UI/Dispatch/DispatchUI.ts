@@ -138,7 +138,7 @@ export class DispatchUI extends ViewController {
                 costView.getChildByPath("CostTime/Value").getComponent(Label).string = "--:--:--";
             } else {
                 const movePath: TilePos[] = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
-                const trueCostEnergy: number = GameMgr.getMapActionCostEnergy(
+                const trueCostEnergy: number = this._interactType == MapInteractType.MainBack ? 0 : GameMgr.getMapActionCostEnergy(
                     movePath.length,
                     this._interactBuilding != null ? this._interactBuilding.uniqueId : null
                 );
@@ -239,7 +239,7 @@ export class DispatchUI extends ViewController {
             return;
         }
         const movePath: TilePos[] = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
-        const trueCostEnergy: number = GameMgr.getMapActionCostEnergy(movePath.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
+        const trueCostEnergy: number = this._interactType == MapInteractType.MainBack ? 0 : GameMgr.getMapActionCostEnergy(movePath.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
         if (player.energyMax < trueCostEnergy) {
             NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Energy");
             return;

@@ -65,9 +65,6 @@ export class Main extends ViewController {
         if (result.succeed) {
             result.bundle.preloadDir("");
         }
-
-        window.addEventListener("blur", this.onBlur, false);
-        window.addEventListener("focus", this.onFocus, false);
     }
 
     protected async viewDidStart(): Promise<void> {
@@ -335,17 +332,5 @@ export class Main extends ViewController {
                 rookieStep: d.rookieStep,
             },
         });
-    }
-
-    private blurTs;
-    private onBlur() {
-        this.blurTs = new Date().getTime();
-        // director.pause();
-    }
-    private onFocus() {
-        let durTs = new Date().getTime() - this.blurTs;
-        // director.tick(durTs / 1000);
-
-        // director.resume();
     }
 }

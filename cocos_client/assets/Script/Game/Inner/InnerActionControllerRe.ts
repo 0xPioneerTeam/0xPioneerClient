@@ -47,6 +47,7 @@ export default class InnerActionControllerRe extends ViewController {
         }, this);
 
         this.node.on(Node.EventType.MOUSE_WHEEL, (event: EventMouse) => {
+            return;
             if (this._isBuildingPosEdit) {
 
             } else {
@@ -62,6 +63,7 @@ export default class InnerActionControllerRe extends ViewController {
         }, this);
 
         this.node.on(Node.EventType.MOUSE_MOVE, (event: EventMouse) => {
+            return;
             if (this._mouseDown) {
                 let pos = GameMainHelper.instance.gameCameraPosition.clone().add(new Vec3(-event.movementX, event.movementY, 0));
                 if (this._isBuildingPosEdit) {

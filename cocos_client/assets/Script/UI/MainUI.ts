@@ -68,7 +68,7 @@ export class MainUI extends ViewController {
         NotificationMgr.addListener(NotificationName.NFT_LEVEL_UP, this._refreshNFTRedPoint, this);
         NotificationMgr.addListener(NotificationName.NFT_RANK_UP, this._refreshNFTRedPoint, this);
         // item
-        NotificationMgr.addListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshBackpackRedPoint, this);
+        NotificationMgr.addListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._onGetNewItem, this);
         NotificationMgr.addListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshBackpackRedPoint, this);
         // artifact
         NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._onArtifactNewChanged, this);
@@ -137,7 +137,7 @@ export class MainUI extends ViewController {
         NotificationMgr.removeListener(NotificationName.NFT_LEVEL_UP, this._refreshNFTRedPoint, this);
         NotificationMgr.removeListener(NotificationName.NFT_RANK_UP, this._refreshNFTRedPoint, this);
         // item
-        NotificationMgr.removeListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshBackpackRedPoint, this);
+        NotificationMgr.removeListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._onGetNewItem, this);
         NotificationMgr.removeListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshBackpackRedPoint, this);
         // artifact
         NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._onArtifactNewChanged, this);
@@ -533,6 +533,11 @@ export class MainUI extends ViewController {
         this.onTapSetDefender();
     }
 
+
+    private _onGetNewItem() {
+        this._refreshBackpackRedPoint();
+        this._refreshNFTRedPoint();
+    }
     private _onArtifactNewChanged() {
         this._refreshBackpackRedPoint();
         this._refreshArtifactRedPoint();

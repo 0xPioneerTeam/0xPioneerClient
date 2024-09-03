@@ -17,6 +17,7 @@ import {
     UITransform,
     v2,
     Vec3,
+    Widget,
 } from "cc";
 import { SettlementView } from "./View/SettlementView";
 import ArtifactData from "../Model/ArtifactData";
@@ -64,6 +65,9 @@ export class PlayerInfoUI extends ViewController {
     private _settleUseSelectItems: Node[] = [];
 
     private _langSelectView: Node = null;
+    private _langSelectContentView: Node = null;
+    private _langSelectContetnItem: Node = null;
+
     private _redPointShowView: Node = null;
 
     public configuration(selectIndex: number, onlyShowSelect: boolean) {
@@ -122,6 +126,9 @@ export class PlayerInfoUI extends ViewController {
         this._settleSelectItem.active = false;
 
         this._langSelectView = this.node.getChildByName("OptionContainer");
+        this._langSelectContentView = this._langSelectView.getChildByPath("View/Content");
+        this._langSelectContetnItem = this._langSelectContentView.getChildByPath("Item");
+        this._langSelectContetnItem.removeFromParent();
         this._langSelectView.active = false;
 
         this._redPointShowView = this.node.getChildByPath("Content/tabContents/SettingsContent/RedPointTitle/SwitchButton");
@@ -142,6 +149,7 @@ export class PlayerInfoUI extends ViewController {
         super.viewDidStart();
 
         this._selectLang = LanMgr.getLang();
+        this._initLangView();
 
         this._refreshRedPointShow();
     }
@@ -219,6 +227,16 @@ export class PlayerInfoUI extends ViewController {
         this._refreshUI();
     }
 
+    private _initLangView() {
+        const allLangs = LanMgr.getAllLang();
+        allLangs.forEach((value: string, key: string)=> {
+            const langItem = instantiate(this._langSelectContetnItem);
+            langItem.getComponent(Label).string = value;
+            langItem.getComponent(Button).clickEvents[0].customEventData = key;
+            this._langSelectContentView.addChild(langItem);
+        });
+        this._langSelectContentView.getComponent(Layout).updateLayout();
+    }
     private _refreshUI() {
         if (this._settlementItem == null) {
             return;
@@ -233,7 +251,6 @@ export class PlayerInfoUI extends ViewController {
         const achievementBtn = this.node.getChildByPath("Content/tabButtons/AchievementsBtn");
         const settingBtn = this.node.getChildByPath("Content/tabButtons/SettingsBtn");
 
-        const allLangs = LanMgr.getAllLang();
         // useLanMgr
         // infoBtn.getChildByName("Label").getComponent(Label).string = LanMgr.getLanById("107549");
         // summaryBtn.getChildByName("Label").getComponent(Label).string = LanMgr.getLanById("107549");
@@ -252,9 +269,19 @@ export class PlayerInfoUI extends ViewController {
         // this._changeNameView.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
         // this._changeNameView.getChildByPath("Content/UserName").getComponent(EditBox).placeholder = LanMgr.getLanById("107549");
         // this._changeNameView.getChildByPath("Content/ConfirmButton/Label").getComponent(Label).string = LanMgr.getLanById("107549");
-
-        this._langSelectView.getChildByPath("View/Content/English").getComponent(Label).string = allLangs.get("eng");
-        this._langSelectView.getChildByPath("View/Content/TraditionalChinese").getComponent(Label).string = allLangs.get("tc");
+        const langTitles = [];
+        const allLangs = LanMgr.getAllLang();
+        allLangs.forEach((value: string, key: string) => {
+            langTitles.push(value);
+        });
+        for (let i = 0; i < this._langSelectContentView.children.length; i++) {
+            if (i < langTitles.length) {
+                this._langSelectContentView.children[i].active = true;
+                this._langSelectContentView.children[i].getComponent(Label).string = langTitles[i];
+            } else {
+                this._langSelectContentView.children[i].active = false;
+            }
+        }
 
         for (let i = 0; i < this._tabButtons.length; i++) {
             this._tabButtons[i].getChildByName("BtnPageLight").active = i == this._selectIndex;
@@ -295,8 +322,10 @@ export class PlayerInfoUI extends ViewController {
 
             // red point
             const clevelUpConditionFinish = ClvlMgr.getCurretLevelUpFinishCondition();
-            currentShowView.getChildByPath("NextLevel/RedPointView").getComponent(RedPointView).refreshUI(clevelUpConditionFinish.value >= clevelUpConditionFinish.total ? 1 : 0, false);
-
+            currentShowView
+                .getChildByPath("NextLevel/RedPointView")
+                .getComponent(RedPointView)
+                .refreshUI(clevelUpConditionFinish.value >= clevelUpConditionFinish.total ? 1 : 0, false);
         } else if (this._selectIndex == 1) {
             // summary
             const settleViewContent = currentShowView.getChildByPath("PeriodicSettlement/view/content");
@@ -536,9 +565,15 @@ export class PlayerInfoUI extends ViewController {
     private onTapLangSelectShow() {
         GameMusicPlayMgr.playTapButtonEffect();
         this._langSelectView.active = true;
+        this.scheduleOnce(()=> {
+            this._langSelectView.getChildByPath("View").getComponent(UITransform).height = this._langSelectContentView.getComponent(UITransform).height;
+            this._langSelectView.getChildByPath("View/Bg").getComponent(Widget).updateAlignment();
+        });
         this.node.getChildByPath("Content/tabContents/SettingsContent/LanguageMenu/LanguageBtn/Arrow").angle = 180;
-        this._langSelectView.getChildByPath("View/Content/English/ImgScreenSelect").active = this._selectLang == "eng";
-        this._langSelectView.getChildByPath("View/Content/TraditionalChinese/ImgScreenSelect").active = this._selectLang == "tc";
+        for (let i = 0; i < this._langSelectContentView.children.length; i++) {
+            this._langSelectContentView.children[i].getChildByPath("ImgScreenSelect").active =
+                LanMgr.getAllLang().get(this._selectLang) == this._langSelectContentView.children[i].getComponent(Label).string;
+        }
     }
     private onTapLangItem(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();

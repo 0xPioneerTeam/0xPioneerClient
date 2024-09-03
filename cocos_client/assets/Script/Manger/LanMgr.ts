@@ -9,7 +9,7 @@ export default class LanMgr {
         // ["eng",  this.getLanById("107549")],
         // ["ts",  this.getLanById("107549")],
         ["eng", "English"],
-        ["tc", "traditional Chinese"],
+        // ["tc", "traditional Chinese"],
     ]);
     private _localLanKey: string = "local_lan";
 

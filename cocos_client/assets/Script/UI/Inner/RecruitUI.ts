@@ -64,7 +64,7 @@ export class RecruitUI extends ViewController {
             }
         } else {
             for (const cost of this._costDatas) {
-                const view = instantiate(this._costItem);
+                const view = instantiate(this._costItem);   
                 view.active = true;
                 view.setParent(this._costItem.parent);
                 view.getChildByPath("Icon/8001").active = cost.itemConfigId == ResourceCorrespondingItem.Food;
