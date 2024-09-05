@@ -3539,6 +3539,11 @@
     "eng": "",
     "tc": ""
   },
+  "850000": {
+    "id": "850000",
+    "eng": "Reinforce Troops",
+    "tc": "补充部队"
+  },
   "900001": {
     "id": "900001",
     "eng": "A low growl of a wild beast echoed from the shadows, as a wild boar charged at your troops.",
