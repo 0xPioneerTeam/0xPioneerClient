@@ -38,8 +38,12 @@ export class RelicTowerSelectUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
+        // this.node.getChildByPath("__ViewContent/Info/NoOccupied/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200018");
+        // this.node.getChildByPath("__ViewContent/ConfirmButton/item").getComponent(Label).string = LanMgr.getLanById("lanreplace200020");
+
         this._itemContent = this.node.getChildByPath("__ViewContent/Artifacts/ScrollView/View/Content");
         this._itemView = this._itemContent.getChildByPath("Item");
+        // this._itemView.getChildByPath("Effect/Working").getComponent(Label).string = LanMgr.getLanById("lanreplace200019");
         this._itemView.removeFromParent();
     }
     protected viewDidStart(): void {

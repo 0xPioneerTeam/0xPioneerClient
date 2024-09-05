@@ -50,6 +50,7 @@ export default class GameMainHelper {
         }
     }
     public changeGameCameraWorldPosition(position: Vec3, animation: boolean = false, triggerTask: boolean = false) {
+        this._gameCameraMoving = true;
         if (animation) {
             const distance = Vec3.distance(this._gameCamera.node.worldPosition.clone(), position.clone());
             tween()
@@ -57,14 +58,17 @@ export default class GameMainHelper {
                 .to(Math.min(0.8, distance / 1800), { worldPosition: position })
                 .call(() => {
                     NotificationMgr.triggerEvent(NotificationName.GAME_CAMERA_POSITION_CHANGED, { triggerTask: triggerTask });
+                    this._gameCameraMoving = false;
                 })
                 .start();
         } else {
             this._gameCamera.node.setWorldPosition(position);
             NotificationMgr.triggerEvent(NotificationName.GAME_CAMERA_POSITION_CHANGED, { triggerTask: triggerTask });
+            this._gameCameraMoving = false;
         }
     }
     public changeGameCameraPosition(position: Vec3, animation: boolean = false, triggerTask: boolean = false) {
+        this._gameCameraMoving = true;
         if (animation) {
             const distance = Vec3.distance(this._gameCamera.node.position.clone(), position.clone());
             tween()
@@ -72,11 +76,13 @@ export default class GameMainHelper {
                 .to(Math.min(0.8, distance / 1800), { position: position })
                 .call(() => {
                     NotificationMgr.triggerEvent(NotificationName.GAME_CAMERA_POSITION_CHANGED, { triggerTask: triggerTask });
+                    this._gameCameraMoving = false;
                 })
                 .start();
         } else {
             this._gameCamera.node.setPosition(position);
             NotificationMgr.triggerEvent(NotificationName.GAME_CAMERA_POSITION_CHANGED, { triggerTask: triggerTask });
+            this._gameCameraMoving = false;
         }
     }
     public getGameCameraScreenToWorld(postion: Vec3) {
@@ -107,6 +113,10 @@ export default class GameMainHelper {
 
     //------------------------------------------ inner outer
     public changeInnerAndOuterShow() {
+        if (this._gameCameraMoving) {
+            // cannot change inner and outer during camera move
+            return;
+        }
         this._isGameShowOuter = !this._isGameShowOuter;
         NotificationMgr.triggerEvent(NotificationName.GAME_INNER_AND_OUTER_CHANGED);
     }
@@ -344,6 +354,7 @@ export default class GameMainHelper {
     private _gameCamera: Camera;
     private _gameCameraOriginalOrthoHeight: number;
     private _gameCameraZoom: number;
+    private _gameCameraMoving: boolean = false;
 
     private _isGameShowOuter: boolean = true;
 

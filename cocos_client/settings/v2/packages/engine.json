@@ -110,10 +110,10 @@
         "_value": true
       },
       "spine": {
-        "_value": true
+        "_value": false
       },
       "dragon-bones": {
-        "_value": true
+        "_value": false
       },
       "marionette": {
         "_value": false
@@ -131,13 +131,11 @@
       "audio",
       "base",
       "custom-pipeline",
-      "dragon-bones",
       "gfx-webgl",
       "gfx-webgl2",
       "intersection-2d",
       "particle-2d",
       "profiler",
-      "spine",
       "tiled-map",
       "tween",
       "ui",

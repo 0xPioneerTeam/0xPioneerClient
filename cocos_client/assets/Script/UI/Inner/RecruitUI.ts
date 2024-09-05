@@ -30,12 +30,12 @@ export class RecruitUI extends ViewController {
             this._selectGenerateNum = Math.min(this._currentGenerateMaxNum(), 0);
         }
 
-        // useLanMgr
-        // this.node.getChildByPath("__ViewContent/title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/current_res/title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/recruiting/title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/footer/time/txt").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/footer/Button/Label").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this.node.getChildByPath("__ViewContent/title").getComponent(Label).string = LanMgr.getLanById("lanreplace200013");
+        // this.node.getChildByPath("__ViewContent/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200014");
+        // this.node.getChildByPath("__ViewContent/recruiting/title").getComponent(Label).string = LanMgr.getLanById("lanreplace200015");
+        // this.node.getChildByPath("__ViewContent/footer/time/txt").getComponent(Label).string = LanMgr.getLanById("lanreplace200016");
+        // this.node.getChildByPath("__ViewContent/footer/Button/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200017");
+
 
         const currentTroops: number = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop);
 

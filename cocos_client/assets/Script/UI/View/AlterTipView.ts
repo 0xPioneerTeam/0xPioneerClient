@@ -14,6 +14,8 @@ export class AlterTipView extends ViewController {
 
     protected viewDidLoad(): void {
         super.viewDidLoad();
+
+        // this.node.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("lanreplace200001");
     }
 
     protected viewDidAppear(): void {

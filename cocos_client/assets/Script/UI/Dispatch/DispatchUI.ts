@@ -66,6 +66,11 @@ export class DispatchUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
+        // this.node.getChildByPath("ContentView/Title").getComponent(Label).string = LanMgr.getLanById("lanreplace200033");
+        // this.node.getChildByPath("ContentView/ReturnTitle").getComponent(Label).string = LanMgr.getLanById("lanreplace200035");
+        // this.node.getChildByPath("ContentView/ListButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200036");
+        
+        
         const localReturn = localStorage.getItem("__interactReturn");
         this._isReturn = localReturn == "false" ? false : true;
 
@@ -78,6 +83,7 @@ export class DispatchUI extends ViewController {
         this._playerItem = this._playerContentView.getChildByPath("Item");
         this._playerItem.removeFromParent();
         this._costItem = this._playerScrollView.getChildByPath("CostView");
+        // this._costItem.getChildByPath("CostTime").getComponent(Label).string = LanMgr.getLanById("lanreplace200034");
         this._costItem.removeFromParent();
     }
 

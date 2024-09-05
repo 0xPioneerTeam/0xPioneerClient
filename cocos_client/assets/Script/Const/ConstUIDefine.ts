@@ -57,7 +57,6 @@ export enum UIName {
     RelicTowerUI = "abresources/prefab/ui/builidng_action/RelicTowerUI",
     RelicTowerSelectUI = "abresources/prefab/ui/builidng_action/RelicTowerSelectUI",
     ExerciseUI = "abresources/prefab/ui/builidng_action/ExerciseUI",
-    ConfigureUnitTypesUI = "abresources/prefab/ui/builidng_action/ConfigureUnitTypesUI",
 
     // bundle 2
     NewBuildingUpgradeUI = "abresources_2/prefab/ui/NewBuildingUpgradeUI",

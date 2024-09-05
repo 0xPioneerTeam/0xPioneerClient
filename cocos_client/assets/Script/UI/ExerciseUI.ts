@@ -46,6 +46,12 @@ export class ExerciseUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
+        // this.node.getChildByPath("__ViewContent/title").getComponent(Label).string = LanMgr.getLanById("lanreplace200009");
+        // this.node.getChildByPath("__ViewContent/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200010");
+        // this.node.getChildByPath("__ViewContent/footer/txt_time").getComponent(Label).string = LanMgr.getLanById("lanreplace200011");
+        // this.node.getChildByPath("__ViewContent/footer/btn_exercise/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200012");
+
+
         this._title = this.node.getChildByPath("__ViewContent/title").getComponent(Label);
         const contentView = this.node.getChildByPath("__ViewContent");
         this._timeLabel = contentView.getChildByPath("footer/txt_timeVal").getComponent(Label);

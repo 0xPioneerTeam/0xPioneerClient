@@ -75,8 +75,12 @@ export class RelicTowerUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-        // useLanMgr
-        // this.node.getChildByPath("__ViewContent/Bg/title").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this.node.getChildByPath("__ViewContent/Bg/title").getComponent(Label).string = LanMgr.getLanById("lanreplace200021");
+        // this.node.getChildByPath("__ViewContent/Bg/tabButtons/OnEffectButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200022");
+        // this.node.getChildByPath("__ViewContent/Bg/tabButtons/StorageButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200023");
+        // this.node.getChildByPath("__ViewContent/Bg/Storage/RightContent/InvokeButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200025");
+        // this.node.getChildByPath("__ViewContent/Bg/Storage/RightContent/GetButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200026");
+
 
         this._onEffectView = this.node.getChildByPath("__ViewContent/Bg/OnEffect");
         this._storageView = this.node.getChildByPath("__ViewContent/Bg/Storage");
@@ -124,6 +128,7 @@ export class RelicTowerUI extends ViewController {
         //------------------------------------------------ storage
         this._storageItemContent = this._storageView.getChildByPath("LeftContent/ScrollView/View/Content");
         this._storageItem = this._storageItemContent.getChildByPath("Item");
+        // this._storageItem.getChildByPath("EffectTitle").getComponent(Label).string = LanMgr.getLanById("lanreplace200024");
         this._storageItem.removeFromParent();
 
         this._invokeSlotItems = [];

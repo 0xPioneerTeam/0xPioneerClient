@@ -57,6 +57,12 @@ export class PlayerDispatchDetailUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
+        // this.node.getChildByPath("ContentView/AddTroopView/img_Select/Tip").getComponent(Label).string = LanMgr.getLanById("lanreplace200037");
+        // this.node.getChildByPath("ContentView/AddTroopView/OneClickSuppleButton/name").getComponent(Label).string = LanMgr.getLanById("lanreplace200038");
+        // this.node.getChildByPath("ContentView/AddTroopView/CompleteButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200039");
+        // this.node.getChildByPath("ContentView/AddTroopView/ConsriptionButton/name").getComponent(Label).string = LanMgr.getLanById("lanreplace200040");
+
+
         this._infoItem = this.node.getChildByPath("ContentView/Info");
         this._atkLabel = this.node.getChildByPath("ContentView/PropertyView/ATK/Value").getComponent(Label);
         this._defLabel = this.node.getChildByPath("ContentView/PropertyView/DEF/Value").getComponent(Label);

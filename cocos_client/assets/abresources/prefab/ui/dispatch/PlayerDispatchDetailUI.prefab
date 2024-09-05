@@ -9407,7 +9407,7 @@
     "_fontSize": 14,
     "_fontFamily": "Arial",
     "_lineHeight": 14,
-    "_overflow": 0,
+    "_overflow": 2,
     "_enableWrapText": true,
     "_font": null,
     "_isSystemFontUsed": true,

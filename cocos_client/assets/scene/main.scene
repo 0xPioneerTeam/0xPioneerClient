@@ -565,7 +565,7 @@
     "_priority": 1,
     "_fov": 45,
     "_fovAxis": 0,
-    "_orthoHeight": 747.9471788715487,
+    "_orthoHeight": 540,
     "_near": 0,
     "_far": 1000,
     "_color": {

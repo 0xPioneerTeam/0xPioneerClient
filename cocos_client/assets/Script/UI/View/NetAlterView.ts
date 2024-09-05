@@ -5,6 +5,7 @@ import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import CLog from "../../Utils/CLog";
+import { LanMgr } from "../../Utils/Global";
 
 const { ccclass, property } = _decorator;
 
@@ -13,11 +14,10 @@ export class NetAlterView extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-        // useLanMgr
-        // this.node.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("Content/Tip").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("Content/ReconnectButton/name").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("Content/ReloadButton/name").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this.node.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("lanreplace200005");
+        // this.node.getChildByPath("Content/Tip").getComponent(Label).string = LanMgr.getLanById("lanreplace200006");
+        // this.node.getChildByPath("Content/ReconnectButton/name").getComponent(Label).string = LanMgr.getLanById("lanreplace200007");
+        // this.node.getChildByPath("Content/ReloadButton/name").getComponent(Label).string = LanMgr.getLanById("lanreplace200008");
     }
 
     protected viewDidAppear(): void {
