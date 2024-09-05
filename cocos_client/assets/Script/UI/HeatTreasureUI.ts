@@ -41,7 +41,7 @@ const { ccclass, property } = _decorator;
 
 @ccclass("HeatTreasureUI")
 export class HeatTreasureUI extends Component {
-    private _openIndex: number = -1;
+    private _boxCanOpenState: boolean[] = [];
     private _commonCostPiotNum: number = 1;
 
     private _boxContent: Node = null;
@@ -87,7 +87,7 @@ export class HeatTreasureUI extends Component {
         detailButton.active = false;
         questionButton.active = false;
 
-        if (rookieStep >= RookieStep.NPC_TALK_4) {
+        if (rookieStep >= RookieStep.GUIDE_1004) {
             treasureProgressView.active = true;
             questionButton.active = true;
         }
@@ -150,70 +150,34 @@ export class HeatTreasureUI extends Component {
         const boxThreshold: number[] = (ConfigConfig.getConfig(ConfigType.BoxNumByHeat) as BoxNumByHeatParam).thresholds;
         const maxBoxNum: number = boxThreshold[heatLevel];
 
-        let isFinishRookie: boolean = rookieStep == RookieStep.FINISH;
         let worldBoxes: { rank: number; isOpen: boolean }[] = [];
-        if (isFinishRookie) {
-            const boxInfo: share.box_data[] = DataMgr.s.userInfo.data.boxes;
-            for (let i = 0; i < maxBoxNum; i++) {
-                if (boxInfo[i] == undefined) {
-                    worldBoxes.push({
-                        rank: 0,
-                        isOpen: false,
-                    });
-                } else {
-                    let tempRank: number = 1;
-                    if (boxInfo[i].id == "90001") {
-                        tempRank = 1;
-                    } else if (boxInfo[i].id == "90002") {
-                        tempRank = 2;
-                    } else if (boxInfo[i].id == "90003") {
-                        tempRank = 3;
-                    } else if (boxInfo[i].id == "90004") {
-                        tempRank = 4;
-                    } else if (boxInfo[i].id == "90005") {
-                        tempRank = 5;
-                    }
-                    worldBoxes.push({
-                        rank: tempRank,
-                        isOpen: boxInfo[i].opened,
-                    });
-                }
-            }
-        } else {
-            if (rookieStep >= RookieStep.OPEN_BOX_3) {
-                exploreValue = perBoxNeedExploreValue * 3;
-            } else if (rookieStep >= RookieStep.OPEN_BOX_2) {
-                exploreValue = perBoxNeedExploreValue * 2;
-            } else if (rookieStep >= RookieStep.NPC_TALK_4) {
-                exploreValue = perBoxNeedExploreValue;
-            }
-
-            if (rookieStep > RookieStep.OPEN_BOX_3) {
-                worldBoxes = [
-                    { rank: 1, isOpen: true },
-                    { rank: 1, isOpen: true },
-                    { rank: 1, isOpen: true },
-                ];
-            } else if (rookieStep > RookieStep.OPEN_BOX_2) {
-                worldBoxes = [
-                    { rank: 1, isOpen: true },
-                    { rank: 1, isOpen: true },
-                    { rank: 1, isOpen: false },
-                ];
-            } else if (rookieStep > RookieStep.OPEN_BOX_1) {
-                worldBoxes = [
-                    { rank: 1, isOpen: true },
-                    { rank: 1, isOpen: false },
-                    { rank: 1, isOpen: false },
-                ];
+        const boxInfo: share.box_data[] = DataMgr.s.userInfo.data.boxes;
+        for (let i = 0; i < maxBoxNum; i++) {
+            if (boxInfo[i] == undefined) {
+                worldBoxes.push({
+                    rank: 0,
+                    isOpen: false,
+                });
             } else {
-                worldBoxes = [
-                    { rank: 0, isOpen: false },
-                    { rank: 0, isOpen: false },
-                    { rank: 0, isOpen: false },
-                ];
+                let tempRank: number = 1;
+                if (boxInfo[i].id == "90001") {
+                    tempRank = 1;
+                } else if (boxInfo[i].id == "90002") {
+                    tempRank = 2;
+                } else if (boxInfo[i].id == "90003") {
+                    tempRank = 3;
+                } else if (boxInfo[i].id == "90004") {
+                    tempRank = 4;
+                } else if (boxInfo[i].id == "90005") {
+                    tempRank = 5;
+                }
+                worldBoxes.push({
+                    rank: tempRank,
+                    isOpen: boxInfo[i].opened,
+                });
             }
         }
+
         const exploreTotalValue: number = perBoxNeedExploreValue * worldBoxes.length;
 
         const boxContentWidth: number = this._boxContent.getComponent(UITransform).width;
@@ -221,12 +185,12 @@ export class HeatTreasureUI extends Component {
 
         this._boxContent.removeAllChildren();
         const perNumSelectBox: number = (ConfigConfig.getConfig(ConfigType.PerNumSelectBox) as PerNumSelectBoxParam).value;
-        this._openIndex = -1;
+        this._boxCanOpenState = [];
         for (let i = 0; i < worldBoxes.length; i++) {
             let isSelectBox: boolean = (i + 1) % perNumSelectBox == 0;
             let rank = worldBoxes[i].rank;
             const getted = worldBoxes[i].isOpen;
-            const canGet = exploreValue >= (i + 1) * perBoxNeedExploreValue && !getted;
+            let canGet = exploreValue >= (i + 1) * perBoxNeedExploreValue && !getted;
             if (rookieStep != RookieStep.FINISH) {
                 rank = canGet ? 1 : 0;
             }
@@ -283,11 +247,9 @@ export class HeatTreasureUI extends Component {
                 }
             }
             item.getComponent(Button).clickEvents[0].customEventData = i.toString();
-            item.getComponent(Button).interactable = canGet;
+            item.getComponent(Button).interactable = true;
             item.setPosition(v3(-boxContentWidth / 2 + (boxContentWidth / worldBoxes.length) * (i + 1), 0, 0));
-            if (canGet && this._openIndex == -1) {
-                this._openIndex = i;
-            }
+            this._boxCanOpenState.push(canGet);
         }
     }
 
@@ -295,19 +257,21 @@ export class HeatTreasureUI extends Component {
     private async onTapBoxItem(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
-        if (index != this._openIndex) {
+        let canGetIndex: number = -1;
+        for (let i = 0; i < this._boxCanOpenState.length; i++) {
+            if (this._boxCanOpenState[i]) {
+                canGetIndex = i;
+                break;
+            }
+        }
+        if (index != canGetIndex) {
+            // use lan
+            UIHUDController.showCenterTip("Cannot open now");
             return;
         }
-        if (DataMgr.s.userInfo.data.rookieStep == RookieStep.FINISH) {
-            NetworkMgr.websocketMsg.player_worldbox_open({
-                boxIndex: index,
-            });
-        } else {
-            // rookie get box
-            NetworkMgr.websocketMsg.player_worldbox_beginner_open({
-                boxIndex: index,
-            });
-        }
+        NetworkMgr.websocketMsg.player_worldbox_open({
+            boxIndex: index,
+        });
     }
     private async onTapConvertPiotToHeat() {
         if (this._commonCostPiotNum == 0) {
@@ -323,7 +287,7 @@ export class HeatTreasureUI extends Component {
             return;
         }
         const costPiotNum: number = Math.min(this._commonCostPiotNum, piotNum);
-        
+
         const result = await UIPanelManger.inst.pushPanel(HUDName.Alter, UIPanelLayerType.HUD);
         if (!result.success) {
             return;
@@ -344,7 +308,7 @@ export class HeatTreasureUI extends Component {
 
     //----------------------------------- notification
     private _onHeatChange() {
-        const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+        // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
         const heatAnimView = this.node.getChildByPath("__ViewContent/Content/HeatProgress/HeatAnim");
         let delayTime: number = 1.5;
         if (heatAnimView.active) {
@@ -354,12 +318,12 @@ export class HeatTreasureUI extends Component {
         delayTime = 0;
         this.scheduleOnce(() => {
             this._refreshUI();
-            if (DataMgr.s.userInfo.data.rookieStep == RookieStep.PIOT_TO_HEAT) {
-                this.scheduleOnce(() => {
-                    DataMgr.s.userInfo.data.rookieStep = RookieStep.NPC_TALK_4;
-                    NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
-                }, 0.2);
-            }
+            // if (DataMgr.s.userInfo.data.rookieStep == RookieStep.PIOT_TO_HEAT) {
+            //     this.scheduleOnce(() => {
+            //         DataMgr.s.userInfo.data.rookieStep = RookieStep.NPC_TALK_4;
+            //         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
+            //     }, 0.2);
+            // }
         }, delayTime);
     }
 

@@ -1,0 +1,226 @@
+{
+    "url": "",
+    "name": "deco_layer",
+    "show": true,
+    "positions": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+    },
+    "children": [
+        {
+            "url": "Village_Group_A_Damage.prefab",
+            "name": "Village_Group_A_Damage",
+            "show": true,
+            "positions": {
+                "x": 489.901,
+                "y": 511.321,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 2,
+                "y": 2,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 12,
+                    "y": 3
+                },
+                {
+                    "x": 11,
+                    "y": 3
+                },
+                {
+                    "x": 10,
+                    "y": 3
+                }
+            ]
+        },
+        {
+            "url": "Barrel_A.prefab",
+            "name": "Barrel_A",
+            "show": true,
+            "positions": {
+                "x": -729.278,
+                "y": -35.504,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 2,
+                    "y": 8
+                }
+            ]
+        },
+        {
+            "url": "Ornamental_01_Group.prefab",
+            "name": "Ornamental_01_Group",
+            "show": true,
+            "positions": {
+                "x": -155.053,
+                "y": 492.635,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 6,
+                    "y": 3
+                }
+            ]
+        },
+        {
+            "url": "Stone_A.prefab",
+            "name": "Stone_A",
+            "show": true,
+            "positions": {
+                "x": 222.84,
+                "y": -139.512,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 9,
+                    "y": 9
+                }
+            ]
+        },
+        {
+            "url": "Ornamental_01_Group.prefab",
+            "name": "Ornamental_01_Group",
+            "show": true,
+            "positions": {
+                "x": -288.257,
+                "y": 677.015,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 5,
+                    "y": 1
+                }
+            ]
+        },
+        {
+            "url": "Stone_A.prefab",
+            "name": "Stone_A",
+            "show": true,
+            "positions": {
+                "x": 678.388,
+                "y": -629.04,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 13,
+                    "y": 14
+                }
+            ]
+        },
+        {
+            "url": "Barrel_A.prefab",
+            "name": "Barrel_A",
+            "show": true,
+            "positions": {
+                "x": 678.563,
+                "y": 342.47,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 13,
+                    "y": 4
+                }
+            ]
+        }
+    ]
+}

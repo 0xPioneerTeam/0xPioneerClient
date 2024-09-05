@@ -1,23 +1,11 @@
-import {
-    _decorator,
-    Component,
-    Node,
-    Animation,
-    tween,
-    instantiate,
-    Label,
-    ProgressBar,
-    v3,
-    Event,
-} from "cc";
-import { LanMgr } from "../../../Utils/Global";
+import { _decorator, Component, Node, Animation, tween, instantiate, Label, ProgressBar, v3, Event } from "cc";
 import { MapPioneerActionType, MapPioneerMoveDirection, MapPioneerObject } from "../../../Const/PioneerDefine";
 import { OuterFightView } from "./OuterFightView";
 import { DataMgr } from "../../../Data/DataMgr";
 import { OuterFightResultView } from "./OuterFightResultView";
 import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
-import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
+import TroopsConfig from "../../../Config/TroopsConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("MapPioneer")
@@ -28,17 +16,14 @@ export class MapPioneer extends Component {
     @property(Node)
     speedUpTag: Node;
 
+    private _overLoad: boolean = false;
     private _model: MapPioneerObject = null;
     private _lastStatus: MapPioneerActionType = null;
     private _lastActionEndTimestamp: number = null;
     private _actionTimeStamp: number = 0;
-    private _actionTotalTime: number = 0;
 
     private _fightView: OuterFightView = null;
     private _fightResultView: OuterFightResultView = null;
-    private _fightInterval: number = null;
-    private _fightAttackerOrigianlData: { id: string; name: string; hp: number; hpmax: number } = null;
-    private _fightDefenderOriginalData: { id: string; name: string; hp: number; hpmax: number } = null;
 
     private _contentView: Node = null;
     private _addingtroopsView: Node = null;
@@ -49,10 +34,12 @@ export class MapPioneer extends Component {
     private _timeCountLabel: Label = null;
 
     public refreshUI(model: MapPioneerObject) {
+        if (!this._overLoad) {
+            return;
+        }
         this._model = model;
-        this.nameLabel.string = LanMgr.getLanById(this._model.name);
+        this.nameLabel.string = this._model.uniqueId;
         this._actionTimeStamp = this._model.actionEndTimeStamp;
-        this._actionTotalTime = this._actionTimeStamp - model.actionBeginTimeStamp;
 
         let idleView = null;
         let leftWalkView = null;
@@ -66,7 +53,7 @@ export class MapPioneer extends Component {
         let roleView = null;
         for (const name of this._roleNames) {
             const templeView = this._contentView.getChildByPath("role/" + name);
-            templeView.active = name == model.animType;
+            templeView.active = name == this._model.animType;
             if (templeView.active) {
                 roleView = templeView;
             }
@@ -163,6 +150,11 @@ export class MapPioneer extends Component {
                     }
                     break;
 
+                case MapPioneerActionType.maincityFighting:
+                    {
+                        this._contentView.active = false;
+                    }
+                    break;
                 case MapPioneerActionType.mining:
                     {
                         this._contentView.active = false;
@@ -202,32 +194,92 @@ export class MapPioneer extends Component {
                     }
                     break;
 
+                case MapPioneerActionType.inCity:
+                    {
+                        this._contentView.active = false;
+                    }
+                    break;
+
+                case MapPioneerActionType.staying: {
+                    this._contentView.active = true;
+                    idleView.active = true;
+                    this._idleCountTime = 0;
+                    if (this._currnetIdleAnim != null) {
+                        this._currnetIdleAnim.play();
+                    }
+                }
+
                 default:
                     break;
             }
 
-            if (this._model.actionType == MapPioneerActionType.fighting || this._model.actionType == MapPioneerActionType.eventing) {
+            if (this._model.actionType == MapPioneerActionType.fighting || this._model.actionType == MapPioneerActionType.eventing || this._model.actionType == MapPioneerActionType.maincityFighting) {
                 if (this._model.fightData != null && this._model.fightData.length > 0) {
                     let attacker = this._model;
-                    if (this._model.actionType == MapPioneerActionType.eventing && this._model.actionBuildingId != null) {
-                        const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
-                        if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(this._model.id)) {
-                            attacker = currentBuilding.eventPioneerDatas.get(this._model.id);
-                        }
-                    }
                     let defender: MapPioneerObject = null;
                     const fightDatas = this._model.fightData.slice();
-                    if (fightDatas[0].attackerId == attacker.id) {
-                        defender = DataMgr.s.pioneer.getById(fightDatas[0].defenderId);
+
+                    if (this._model.actionType == MapPioneerActionType.eventing && this._model.actionBuildingId != null) {
+                        const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
+                        if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(this._model.uniqueId)) {
+                            attacker = currentBuilding.eventPioneerDatas.get(this._model.uniqueId);
+                        }
+                        if (fightDatas[0].attackerId == attacker.uniqueId) {
+                            if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(fightDatas[0].defenderId)) {
+                                defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].defenderId);
+                            }
+                        } else {
+                            if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(fightDatas[0].attackerId)) {
+                                defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].attackerId);
+                            }
+                        }
+                    } else if (this._model.actionType == MapPioneerActionType.maincityFighting && this._model.actionBuildingId != null) {
+                        const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
+                        if (currentBuilding != null && currentBuilding.maincityFightPioneerDatas.has(this._model.uniqueId)) {
+                            if (currentBuilding.maincityFightPioneerDatas.has(this._model.uniqueId)) {
+                                attacker = currentBuilding.maincityFightPioneerDatas.get(this._model.uniqueId);
+                            }
+                            if (currentBuilding.maincityFightPioneerDatas.has(this._model.actionFightId)) {
+                                defender = currentBuilding.maincityFightPioneerDatas.get(this._model.actionFightId);
+                            }
+                        }
                     } else {
-                        defender = DataMgr.s.pioneer.getById(fightDatas[0].attackerId);
+                        if (fightDatas[0].attackerId == attacker.uniqueId) {
+                            defender = DataMgr.s.pioneer.getById(fightDatas[0].defenderId);
+                        } else {
+                            defender = DataMgr.s.pioneer.getById(fightDatas[0].attackerId);
+                        }
                     }
-                    if (defender != null) {
+                    
+                    if (attacker != null && defender != null) {
+                        // attacker is self, defender is enemy
+                        let attackerHpRate = 1;
+                        if (attacker["troopId"] != null && attacker["troopId"] != "" && attacker["troopId"] != "0") {
+                            attackerHpRate = parseInt(TroopsConfig.getById(attacker["troopId"]).hp_training);
+                        }
+                        let defenderHpRate = 1;
+                        if (defender["troopId"] != null && defender["troopId"] != "" && defender["troopId"] != "0") {
+                            defenderHpRate = parseInt(TroopsConfig.getById(defender["troopId"]).hp_training);
+                        }
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, {
                             fightDatas: this._model.fightData.slice(),
                             isWin: this._model.fightResultWin,
-                            attackerData: { id: attacker.id, name: attacker.name, hp: attacker.hp, hpmax: attacker.hpMax },
-                            defenderData: { id: defender.id, name: defender.name, hp: defender.hp, hpmax: defender.hpMax },
+                            attackerData: {
+                                uniqueId: attacker.uniqueId,
+                                id: attacker.id,
+                                name: attacker.name,
+                                animType: attacker.animType,
+                                hp: attacker.hp,
+                                hpmax: attacker.hpMax * attackerHpRate,
+                            },
+                            defenderData: {
+                                uniqueId: defender.uniqueId,
+                                id: defender.id,
+                                name: defender.name,
+                                animType: defender.animType,
+                                hp: defender.hp,
+                                hpmax: defender.hpMax * defenderHpRate,
+                            },
                         });
                     }
                 }
@@ -259,9 +311,6 @@ export class MapPioneer extends Component {
                 }
             }
         }
-    }
-    public setEventWaitedCallback(callback: () => void) {
-        this._eventWaitedCallback = callback;
     }
 
     public isMoving() {
@@ -300,8 +349,6 @@ export class MapPioneer extends Component {
 
         this._playingView.push(animView);
     }
-    private _eventWaitedCallback: () => void = null;
-
     private _playingView: Node[] = [];
     private _resourceAnimView: Node = null;
 
@@ -347,9 +394,13 @@ export class MapPioneer extends Component {
 
         this._timeCountProgress = this._contentView.getChildByPath("lastTIme/progressBar").getComponent(ProgressBar);
         this._timeCountLabel = this._contentView.getChildByPath("lastTIme/time").getComponent(Label);
+        this._timeCountProgress.node.active = false;
+        this._timeCountLabel.node.active = false;
 
         this._resourceAnimView = this._contentView.getChildByName("resourceGetted");
         this._resourceAnimView.active = false;
+
+        this._overLoad = true;
     }
     start() {}
 
@@ -374,17 +425,17 @@ export class MapPioneer extends Component {
         if (this._model == null) {
             return;
         }
-        const currentTimeStamp = new Date().getTime();
-        if (this._actionTimeStamp > currentTimeStamp && (this._model.fightData == null || this._model.fightData.length <= 0)) {
-            this._timeCountProgress.node.active = true;
-            this._timeCountLabel.node.active = true;
+        // const currentTimeStamp = new Date().getTime();
+        // if (this._model.actionType != MapPioneerActionType.staying && this._actionTimeStamp > currentTimeStamp && (this._model.fightData == null || this._model.fightData.length <= 0)) {
+        //     this._timeCountProgress.node.active = true;
+        //     this._timeCountLabel.node.active = true;
 
-            this._timeCountProgress.progress = (this._actionTimeStamp - currentTimeStamp) / this._actionTotalTime;
-            this._timeCountLabel.string = ((this._actionTimeStamp - currentTimeStamp) / 1000).toFixed(2) + "s";
-        } else {
-            this._timeCountProgress.node.active = false;
-            this._timeCountLabel.node.active = false;
-        }
+        //     this._timeCountProgress.progress = (this._actionTimeStamp - currentTimeStamp) / this._actionTotalTime;
+        //     this._timeCountLabel.string = ((this._actionTimeStamp - currentTimeStamp) / 1000).toFixed(2) + "s";
+        // } else {
+        //     this._timeCountProgress.node.active = false;
+        //     this._timeCountLabel.node.active = false;
+        // }
 
         // event tip
         // if (this._model != null && (this._model.actionType == MapPioneerActionType.eventStarting || this._model.actionType == MapPioneerActionType.eventing)) {
@@ -393,23 +444,15 @@ export class MapPioneer extends Component {
         // }
     }
 
-    //----------------- event
-    private onTapEventWaited(event: Event) {
-        GameMusicPlayMgr.playTapButtonEffect();
-        if (this._eventWaitedCallback != null) {
-            this._eventWaitedCallback();
-        }
-    }
-
     //----------------- notificaiton
-    private _onFightBegin(data: { id: string }) {
+    private _onFightBegin(data: { uniqueId: string }) {
         if (this._model == null) {
             return;
         }
-        if (this._model.id != data.id) {
+        if (this._model.uniqueId != data.uniqueId) {
             return;
         }
-        this._model = DataMgr.s.pioneer.getById(data.id);
+        this._model = DataMgr.s.pioneer.getById(data.uniqueId);
         this.refreshUI(this._model);
     }
 }

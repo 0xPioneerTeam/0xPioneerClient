@@ -13,10 +13,6 @@ const { ccclass, property } = _decorator;
 @ccclass("AlterView")
 export class AlterView extends ViewController {
     public showTip(tip: string, confirmCallback: () => void = null, cancelCallback: () => void = null) {
-        // useLanMgr
-        // this.node.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("Content/ConfrimButton/name").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("Content/CancelButton/name").getComponent(Label).string = LanMgr.getLanById("107549");
         this.node.getChildByPath("Content/Tip").getComponent(Label).string = tip;
         this._confirmCallback = confirmCallback;
         this._cancelCallback = cancelCallback;
@@ -26,6 +22,10 @@ export class AlterView extends ViewController {
     private _cancelCallback: () => void = null;
     protected viewDidLoad(): void {
         super.viewDidLoad();
+
+        // this.node.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("lanreplace200002");
+        // this.node.getChildByPath("Content/ConfrimButton/name").getComponent(Label).string = LanMgr.getLanById("lanreplace200003");
+        // this.node.getChildByPath("Content/CancelButton/name").getComponent(Label).string = LanMgr.getLanById("lanreplace200004");
 
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_ALTER_CONFRIM, this._onRookieTapThis, this);
     }

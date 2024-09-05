@@ -1,0 +1,128 @@
+{
+  "50000": {
+    "id": "50000",
+    "name": "107100",
+    "desc": "117100",
+    "time_training": "100",
+    "rec_cost_training": [
+      [
+        "8001",
+        2
+      ],
+      [
+        "8005",
+        2
+      ]
+    ],
+    "hp_training": "5",
+    "icon": "troops_50000"
+  },
+  "50001": {
+    "id": "50001",
+    "name": "107101",
+    "desc": "117101",
+    "time_training": "200",
+    "rec_cost_training": [
+      [
+        "8001",
+        2
+      ],
+      [
+        "8005",
+        4
+      ]
+    ],
+    "hp_training": "10",
+    "icon": "troops_50001"
+  },
+  "50002": {
+    "id": "50002",
+    "name": "107102",
+    "desc": "117102",
+    "time_training": "500",
+    "rec_cost_training": [
+      [
+        "8001",
+        4
+      ],
+      [
+        "8005",
+        8
+      ]
+    ],
+    "hp_training": "20",
+    "icon": "troops_50002"
+  },
+  "50003": {
+    "id": "50003",
+    "name": "107103",
+    "desc": "117103",
+    "time_training": "800",
+    "rec_cost_training": [
+      [
+        "8001",
+        8
+      ],
+      [
+        "8005",
+        15
+      ]
+    ],
+    "hp_training": "40",
+    "icon": "troops_50003"
+  },
+  "50004": {
+    "id": "50004",
+    "name": "107104",
+    "desc": "117104",
+    "time_training": "1000",
+    "rec_cost_training": [
+      [
+        "8001",
+        15
+      ],
+      [
+        "8005",
+        30
+      ]
+    ],
+    "hp_training": "80",
+    "icon": "troops_50004"
+  },
+  "50005": {
+    "id": "50005",
+    "name": "107105",
+    "desc": "117105",
+    "time_training": "1300",
+    "rec_cost_training": [
+      [
+        "8001",
+        30
+      ],
+      [
+        "8005",
+        30
+      ]
+    ],
+    "hp_training": "150",
+    "icon": "troops_50005"
+  },
+  "50006": {
+    "id": "50006",
+    "name": "107106",
+    "desc": "117106",
+    "time_training": "2000",
+    "rec_cost_training": [
+      [
+        "8001",
+        30
+      ],
+      [
+        "8005",
+        60
+      ]
+    ],
+    "hp_training": "200",
+    "icon": "troops_50006"
+  }
+}

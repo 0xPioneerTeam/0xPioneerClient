@@ -11,6 +11,8 @@ import TaskConfig from "../Config/TaskConfig";
 import TaskStepConfig from "../Config/TaskStepConfig";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { RookieStep } from "../Const/RookieDefine";
+import MissionConfig from "../Config/MissionConfig";
+import { RedPointView } from "./View/RedPointView";
 const { ccclass, property } = _decorator;
 
 @ccclass("TaskListUI")
@@ -40,8 +42,9 @@ export class TaskListUI extends ViewController {
         }
         this._detailProgressList = [];
 
-        const finishedTasks: share.Itask_data[] = [];
-        const toDoTasks: share.Itask_data[] = [];
+        const finishedTasks: (share.Itask_info_data | share.Imission_data)[] = [];
+        const toDoTasks: (share.Itask_info_data | share.Imission_data)[] = [];
+        // task
         const allGettedTasks = DataMgr.s.task.getAllGettedTasks();
         for (const task of allGettedTasks) {
             if (task.isFinished || task.isFailed) {
@@ -50,66 +53,136 @@ export class TaskListUI extends ViewController {
                 toDoTasks.push(task);
             }
         }
+        // mission
+        const allMissions = DataMgr.s.task.getMissionAll();
+        for (const mission of allMissions) {
+            if (mission.isComplete) {
+                finishedTasks.push(mission);
+            } else {
+                toDoTasks.push(mission);
+            }
+        }
+
+        toDoTasks.sort((a, b) => {
+            const isTaskA = this._isTask(a);
+            const isTaskB = this._isTask(b);
+            if (isTaskA === isTaskB) {
+                if (isTaskA) {
+                    return parseInt((a as share.Itask_info_data).taskId) - parseInt((b as share.Itask_info_data).taskId);
+                } else {
+                    return parseInt((a as share.Imission_data).missionId) - parseInt((b as share.Imission_data).missionId);
+                }
+            }
+            return isTaskA ? -1 : 1; // Task接口的对象排在前面，Mission接口的对象排在后面
+        });
+        finishedTasks.sort((a, b) => {
+            const isTaskA = this._isTask(a);
+            const isTaskB = this._isTask(b);
+            if (isTaskA === isTaskB) {
+                if (isTaskA) {
+                    return parseInt((a as share.Itask_info_data).taskId) - parseInt((b as share.Itask_info_data).taskId);
+                } else {
+                    return parseInt((a as share.Imission_data).missionId) - parseInt((b as share.Imission_data).missionId);
+                }
+            }
+            return isTaskA ? -1 : 1; // Task接口的对象排在前面，Mission接口的对象排在后面
+        });
+
         this._toDoTaskList = toDoTasks;
 
         let actionTaskShowCount: number = 0;
 
         const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
         let rookieTaskId: string = "";
-        if (rookieStep == RookieStep.TASK_SHOW_TAP_1 || rookieStep == RookieStep.TASK_SHOW_TAP_2) {
-            rookieTaskId = "task12";
-        } else if (rookieStep == RookieStep.TASK_SHOW_TAP_3) {
-            rookieTaskId = "task13";
-        }
         let rookieTaskIndex: number = -1;
         for (let i = toDoTasks.length - 1; i >= 0; i--) {
             if (actionTaskShowCount >= 3) {
                 break;
             }
             actionTaskShowCount += 1;
-            const currentTask: share.Itask_data = toDoTasks[i];
-            const currentStep: share.Itask_step_data = currentTask.steps[currentTask.stepIndex];
-            if (currentStep == null) {
-                continue;
+
+            let title: string = "";
+            let subTitle: string = "";
+            let progress: number = 0;
+            let total: number = 0;
+
+            const temple: share.Itask_info_data | share.Imission_data = toDoTasks[i];
+            if (this._isTask(temple)) {
+                const currentTask = temple as share.Itask_info_data;
+                const currentStep: share.Itask_step_data = currentTask.steps[currentTask.stepIndex];
+                if (currentStep == null) {
+                    continue;
+                }
+                const taskConfig = TaskConfig.getById(currentTask.taskId);
+                const taskStepConfig = TaskStepConfig.getById(currentStep?.id);
+
+                title = LanMgr.getLanById(taskConfig.name);
+                subTitle = taskStepConfig == null ? "" : LanMgr.getLanById(taskStepConfig.name);
+                progress = currentTask.stepIndex;
+                total = currentTask.steps.length;
+
+                if (currentTask.taskId == rookieTaskId) {
+                    rookieTaskIndex = i;
+                }
+            } else {
+                const mission = temple as share.Imission_data;
+                const missionConfig = MissionConfig.getById(mission.missionId);
+                if (missionConfig == null) {
+                    continue;
+                }
+                title = LanMgr.getLanById(missionConfig.name);
+                subTitle = LanMgr.getLanById(missionConfig.description);
+                progress = mission.missionObjCount;
+                if (missionConfig.objective.length == 2 && missionConfig.objective[1].length == 2) {
+                    total = missionConfig.objective[1][1];
+                }
             }
-            const taskConfig = TaskConfig.getById(currentTask.taskId);
-            const taskStepConfig = TaskStepConfig.getById(currentStep?.id);
             const action = instantiate(this._actionItem);
             action.active = true;
-            action.getChildByName("Title").getComponent(Label).string = LanMgr.getLanById(taskConfig.name);
-            action.getChildByName("SubTitle").getComponent(Label).string = taskStepConfig == null ? "" : LanMgr.getLanById(taskStepConfig.name);
-            action.getChildByName("Progress").getComponent(Label).string = currentTask.stepIndex + "/" + currentTask.steps.length;
+            action.getChildByName("Title").getComponent(Label).string = title;
+            action.getChildByName("SubTitle").getComponent(Label).string = subTitle;
+            action.getChildByName("Progress").getComponent(Label).string = progress + "/" + total;
             action.getComponent(Button).clickEvents[0].customEventData = i.toString();
             action.setParent(this._actionItem.getParent());
             this._actionTaskList.push(action);
-
-            if (currentTask.taskId == rookieTaskId) {
-                rookieTaskIndex = i;
-            }
         }
 
         this._actionTaskView.getChildByPath("DetailButton/TaskNum").getComponent(Label).string =
-            LanMgr.replaceLanById("202003", [allGettedTasks.length]) + " >>";
+            LanMgr.replaceLanById("202003", [allGettedTasks.length + allMissions.length]) + " >>";
         // this._actionTaskView.getChildByPath("DetailButton/TaskNum").getComponent(Label).string = "All " + taskInfo.length + " Tasks";
 
         this._detailTaskView.active = this._isDetailShow;
         if (this._isDetailShow) {
-            let showTasks: share.Itask_data[] = null;
+            // base task
+            let showTasks: (share.Itask_info_data | share.Imission_data)[] = null;
             if (this._isDetailToDoShow) {
                 showTasks = toDoTasks;
             } else {
                 showTasks = finishedTasks;
             }
-            showTasks.sort((a: share.Itask_data, b: share.Itask_data) => a.taskId.localeCompare(b.taskId));
             for (let i = 0; i < showTasks.length; i++) {
                 const detail = instantiate(this._detailTaskItem);
                 detail.active = true;
 
-                const taskConfig = TaskConfig.getById(showTasks[i].taskId);
-                if (taskConfig == null) {
-                    continue;
+                let title: string = "";
+                const temple = showTasks[i];
+                if (this._isTask(temple)) {
+                    const currentTask = temple as share.Itask_info_data;
+                    const taskConfig = TaskConfig.getById(currentTask.taskId);
+                    if (taskConfig == null) {
+                        continue;
+                    }
+                    title = LanMgr.getLanById(taskConfig.name);
+                } else {
+                    const mission = temple as share.Imission_data;
+                    const missionConfig = MissionConfig.getById(mission.missionId);
+                    if (missionConfig == null) {
+                        continue;
+                    }
+                    title = LanMgr.getLanById(missionConfig.name);
                 }
-                detail.getChildByName("Label").getComponent(Label).string = LanMgr.getLanById(taskConfig.name);
+
+                detail.getChildByName("Label").getComponent(Label).string = title;
                 detail.getChildByName("Selected").active = i == this._detailSelectedIndex;
                 detail.getComponent(Button).clickEvents[0].customEventData = i.toString();
                 detail.setParent(this._detailTaskItem.getParent());
@@ -117,75 +190,112 @@ export class TaskListUI extends ViewController {
             }
             this._detailTaskItem.getParent().getComponent(Layout).updateLayout();
 
+            // task detail
             if (this._detailSelectedIndex < showTasks.length) {
                 this._detailTaskView.getChildByName("ProgressList").active = true;
-                const currentTask: share.Itask_data = showTasks[this._detailSelectedIndex];
-                if (currentTask.isFailed) {
-                    const unDoneTitleItem = instantiate(this._detailProgressUndoneTitleItem);
-                    unDoneTitleItem.active = true;
-                    unDoneTitleItem.setParent(this._detailProgressFinishTitleItem.getParent());
-                    this._detailProgressList.push(unDoneTitleItem);
-                } else {
-                    // check has task finished
-                    // 1- finished title
-                    // 2- finished task
-                    // 3- todo title
-                    // 4- todo task
-                    const finishedDatas: { status: number; stepData: share.Itask_step_data }[] = [];
-                    const todoDatas: { status: number; stepData: share.Itask_step_data }[] = [];
-                    let hasFinishedTitle: boolean = false;
-                    let hasToDoTitle: boolean = false;
-                    for (let i = 0; i < currentTask.steps.length; i++) {
-                        let currentStep = currentTask.steps[i];
-                        if (i < currentTask.stepIndex) {
-                            // step finished
-                            if (!hasFinishedTitle) {
-                                hasFinishedTitle = true;
-                                finishedDatas.push({ status: 1, stepData: null });
+                const tempTask = showTasks[this._detailSelectedIndex];
+                if (this._isTask(tempTask)) {
+                    // task
+                    const currentTask = tempTask as share.Itask_info_data;
+                    if (currentTask.isFailed) {
+                        const unDoneTitleItem = instantiate(this._detailProgressUndoneTitleItem);
+                        unDoneTitleItem.active = true;
+                        unDoneTitleItem.setParent(this._detailProgressFinishTitleItem.getParent());
+                        this._detailProgressList.push(unDoneTitleItem);
+                    } else {
+                        // check has task finished
+                        // 1- finished title
+                        // 2- finished task
+                        // 3- todo title
+                        // 4- todo task
+                        const finishedDatas: { status: number; stepData: share.Itask_step_data }[] = [];
+                        const todoDatas: { status: number; stepData: share.Itask_step_data }[] = [];
+                        let hasFinishedTitle: boolean = false;
+                        let hasToDoTitle: boolean = false;
+                        for (let i = 0; i < currentTask.steps.length; i++) {
+                            let currentStep = currentTask.steps[i];
+                            if (i < currentTask.stepIndex) {
+                                // step finished
+                                if (!hasFinishedTitle) {
+                                    hasFinishedTitle = true;
+                                    finishedDatas.push({ status: 1, stepData: null });
+                                }
+                                finishedDatas.push({ status: 2, stepData: currentStep });
+                            } else {
+                                if (!hasToDoTitle) {
+                                    hasToDoTitle = true;
+                                    todoDatas.push({ status: 3, stepData: null });
+                                }
+                                todoDatas.push({ status: 4, stepData: currentStep });
                             }
-                            finishedDatas.push({ status: 2, stepData: currentStep });
-                        } else {
-                            if (!hasToDoTitle) {
-                                hasToDoTitle = true;
-                                todoDatas.push({ status: 3, stepData: null });
+                        }
+                        for (const temple of [...finishedDatas, ...todoDatas]) {
+                            if (temple.status == 1) {
+                                const finishTitleItem = instantiate(this._detailProgressFinishTitleItem);
+                                finishTitleItem.active = true;
+                                finishTitleItem.setParent(this._detailProgressFinishTitleItem.getParent());
+                                this._detailProgressList.push(finishTitleItem);
+                            } else if (temple.status == 2) {
+                                const stepObj = DataMgr.s.task.getTaskStep(temple.stepData.id);
+
+                                const finish = instantiate(this._detailProgressFinishItem);
+                                finish.active = true;
+                                finish.setParent(this._detailProgressFinishItem.getParent());
+                                finish.getChildByName("Title").getComponent(Label).string = LanMgr.getLanById(stepObj.name);
+                                finish.getChildByName("Progress").getComponent(Label).string =
+                                    temple.stepData.completeIndex + "/" + stepObj.completeCon.conditions.length;
+                                this._detailProgressList.push(finish);
+                            } else if (temple.status == 3) {
+                                const toDoTitleItem = instantiate(this._detailProgressToDoTitleItem);
+                                toDoTitleItem.active = true;
+                                toDoTitleItem.setParent(this._detailProgressToDoTitleItem.getParent());
+                                this._detailProgressList.push(toDoTitleItem);
+                            } else if (temple.status == 4) {
+                                const stepObj = DataMgr.s.task.getTaskStep(temple.stepData.id);
+
+                                const finish = instantiate(this._detailProgressToDoItem);
+                                finish.active = true;
+                                finish.setParent(this._detailProgressToDoItem.getParent());
+                                finish.getChildByName("Title").getComponent(Label).string = LanMgr.getLanById(stepObj.name);
+                                finish.getChildByName("Progress").getComponent(Label).string =
+                                    temple.stepData.completeIndex + "/" + stepObj.completeCon.conditions.length;
+                                this._detailProgressList.push(finish);
                             }
-                            todoDatas.push({ status: 4, stepData: currentStep });
                         }
                     }
-                    for (const temple of [...finishedDatas, ...todoDatas]) {
-                        if (temple.status == 1) {
+                } else {
+                    // mission
+                    const mission = tempTask as share.Imission_data;
+                    const missionConfig = MissionConfig.getById(mission.missionId);
+                    if (missionConfig != null) {
+                        if (mission.isComplete) {
                             const finishTitleItem = instantiate(this._detailProgressFinishTitleItem);
                             finishTitleItem.active = true;
                             finishTitleItem.setParent(this._detailProgressFinishTitleItem.getParent());
                             this._detailProgressList.push(finishTitleItem);
-                        } else if (temple.status == 2) {
-                            const stepObj = DataMgr.s.task.getTaskStep(temple.stepData.id);
 
                             const finish = instantiate(this._detailProgressFinishItem);
                             finish.active = true;
                             finish.setParent(this._detailProgressFinishItem.getParent());
-                            finish.getChildByName("Title").getComponent(Label).string = LanMgr.getLanById(stepObj.name);
-                            finish.getChildByName("Progress").getComponent(Label).string =
-                                temple.stepData.completeIndex + "/" + stepObj.completeCon.conditions.length;
+                            finish.getChildByName("Title").getComponent(Label).string = LanMgr.getLanById(missionConfig.name);
+                            finish.getChildByName("Progress").getComponent(Label).string = mission.missionObjCount + "/" + missionConfig.objective[1][1];
                             this._detailProgressList.push(finish);
-                        } else if (temple.status == 3) {
+                        } else {
                             const toDoTitleItem = instantiate(this._detailProgressToDoTitleItem);
                             toDoTitleItem.active = true;
                             toDoTitleItem.setParent(this._detailProgressToDoTitleItem.getParent());
                             this._detailProgressList.push(toDoTitleItem);
-                        } else if (temple.status == 4) {
-                            const stepObj = DataMgr.s.task.getTaskStep(temple.stepData.id);
 
-                            const finish = instantiate(this._detailProgressToDoItem);
-                            finish.active = true;
-                            finish.setParent(this._detailProgressToDoItem.getParent());
-                            finish.getChildByName("Title").getComponent(Label).string = LanMgr.getLanById(stepObj.name);
-                            finish.getChildByName("Progress").getComponent(Label).string =
-                                temple.stepData.completeIndex + "/" + stepObj.completeCon.conditions.length;
-                            this._detailProgressList.push(finish);
+                            const todoItem = instantiate(this._detailProgressToDoItem);
+                            todoItem.active = true;
+                            todoItem.setParent(this._detailProgressToDoItem.getParent());
+                            todoItem.getChildByName("Title").getComponent(Label).string = LanMgr.getLanById(missionConfig.name);
+                            todoItem.getChildByName("Progress").getComponent(Label).string = mission.missionObjCount + "/" + missionConfig.objective[1][1];
+                            this._detailProgressList.push(todoItem);
                         }
                     }
                 }
+
                 this._detailProgressToDoItem.getParent().getComponent(Layout).updateLayout();
             } else {
                 this._detailTaskView.getChildByName("ProgressList").active = false;
@@ -212,11 +322,13 @@ export class TaskListUI extends ViewController {
                 tapIndex: actionView.getComponent(Button).clickEvents[0].customEventData,
             });
         }
+
+        this.node.getChildByPath("Icon/RedPoint").getComponent(RedPointView).refreshUI(DataMgr.s.task.getAllDoingTasks().length + DataMgr.s.task.getMissionAllDoing().length);
     }
 
     private _isDetailShow: boolean = false;
     private _isDetailToDoShow: boolean = true;
-    private _toDoTaskList: share.Itask_data[] = [];
+    private _toDoTaskList: (share.Itask_info_data | share.Imission_data)[] = [];
     private _detailSelectedIndex: number = 0;
 
     private _actionTaskList: Node[] = [];
@@ -262,6 +374,8 @@ export class TaskListUI extends ViewController {
         this._toDoButton = this.node.getChildByPath("TaskDetailView/ToDoButton");
         this._completedButton = this.node.getChildByPath("TaskDetailView/CompletedButton");
 
+        this._detailTaskView.active = false;
+
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_TASK_ITEM, this._onTapTaskItem, this);
     }
 
@@ -270,7 +384,6 @@ export class TaskListUI extends ViewController {
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this.refreshUI, this);
         NotificationMgr.addListener(NotificationName.TASK_DID_CHANGE, this.refreshUI, this);
-        NotificationMgr.addListener(NotificationName.TASK_LIST, this.refreshUI, this);
     }
 
     protected viewDidDestroy(): void {
@@ -278,10 +391,17 @@ export class TaskListUI extends ViewController {
 
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this.refreshUI, this);
         NotificationMgr.removeListener(NotificationName.TASK_DID_CHANGE, this.refreshUI, this);
-        NotificationMgr.removeListener(NotificationName.TASK_LIST, this.refreshUI, this);
 
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_TASK_ITEM, this._onTapTaskItem, this);
     }
+
+    private _isTask(obj: share.Itask_info_data | share.Imission_data) {
+        if ("taskId" in obj) {
+            return true;
+        }
+        return false;
+    }
+
     //---------------------------------------------------
     // action
     private onTapClose() {
@@ -303,9 +423,8 @@ export class TaskListUI extends ViewController {
         if (index >= this._toDoTaskList.length) {
             return;
         }
-        const templeTask: share.Itask_data = this._toDoTaskList[index];
-        const currentStepTask: TaskStepObject = DataMgr.s.task.getTaskStep(templeTask.steps[templeTask.stepIndex].id);
-        GameMgr.taskTracking(currentStepTask);
+        const templeTask: share.Itask_info_data | share.Imission_data = this._toDoTaskList[index];
+        GameMgr.taskTracking(templeTask);
     }
     private onTapCloseDetail() {
         GameMusicPlayMgr.playTapButtonEffect();

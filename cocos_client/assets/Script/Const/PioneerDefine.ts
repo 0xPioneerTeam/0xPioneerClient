@@ -42,14 +42,18 @@ export enum MapPioneerActionType {
     wakeup = "wakeup",
     idle = "idle",
     defend = "defend",
+    exploring = "exploring",
+    eventStarting = "eventStarting",
+    addingtroops = "addingtroops",
+    wormhole = "wormhole",
+
+    inCity = "inCity",
     moving = "moving",
     mining = "mining",
     fighting = "fighting",
-    exploring = "exploring",
-    eventStarting = "eventStarting",
     eventing = "eventing",
-    addingtroops = "addingtroops",
-    wormhole = "wormhole",
+    staying = "staying",
+    maincityFighting = "maincityFighting",
 }
 
 export enum MapPioneerType {
@@ -139,6 +143,7 @@ export interface MapPioneerFightStuct {
 }
 
 export interface MapPioneerData {
+    uniqueId: string;
     id: string;
     show: boolean;
     level: number;
@@ -161,6 +166,8 @@ export interface MapPioneerData {
     actionType: MapPioneerActionType;
     actionBeginTimeStamp: number;
     actionEndTimeStamp: number;
+    actionEndReturn: boolean;
+    actionFightId?: string;
 
     logics: MapPioneerLogicData[];
 
@@ -184,84 +191,63 @@ export interface MapPlayerPioneerData extends MapPioneerData {
     rebirthEndTime: number;
     killerId: string;
     NFTId: string;
-}
-
-export interface MapNpcPioneerData extends MapPioneerData {
-    talkId: string;
+    troopId: string;
+    needReturn?: boolean;
 }
 
 export interface MapPioneerObject extends MapPioneerData {
     stayPos: Vec2;
-    movePaths: TilePos[];
+    movePaths: (TilePos | Vec2)[];
     logics: MapPioneerLogicObject[];
 }
 
 export interface MapPlayerPioneerObject extends MapPlayerPioneerData {
     stayPos: Vec2;
-    movePaths: TilePos[];
+    movePaths: (TilePos | Vec2)[];
     logics: MapPioneerLogicObject[];
 }
 
-export interface MapNpcPioneerObject extends MapNpcPioneerData {
-    stayPos: Vec2;
-    movePaths: TilePos[];
-    logics: MapPioneerLogicObject[];
-}
-
-export interface FIGHT_FINISHED_DATA {
-    attacker: {
-        id: string;
-        name: string;
-        hp: number;
-        hpMax: number;
-    };
-    defender: {
-        id: string;
-        name: string;
-        hp: number;
-        hpMax: number;
-    };
-    attackerIsSelf: boolean;
-    buildingId: string;
-    position: Vec2;
-    isWin: boolean;
-    rewards: [];
-    isWormhole: boolean;
-}
-export interface MINING_FINISHED_DATA {
-    buildingId: string;
-    pioneerId: string;
-    duration: number;
-    rewards: any[];
+export interface MapFightObject {
+    uniqueId: string;
+    id: string;
+    name: string;
+    animType: string;
+    hp: number;
+    hpmax: number;
 }
 
 export default class PioneerDefine {
     public static convertNetDataToObject(temple: share.Ipioneer_data): MapPioneerObject {
-        const config = PioneerConfig.getById(temple.id);
-        if (config == null) {
-            return null;
-        }
         const currentTime = new Date().getTime();
+        const movePath: Vec2[] = [];
+        if (temple.movePath != null) {
+            for (const path of temple.movePath) {
+                movePath.push(v2(path.x, path.y));
+            }
+        }
         let obj = {
+            uniqueId: temple.uniqueId,
             id: temple.id,
             show: temple.show,
             level: temple.level,
             faction: temple.faction,
             type: temple.type as MapPioneerType,
-            animType: config.animType,
-            name: config.name,
-            hp: CommonTools.getOneDecimalNum(temple.hp),
-            hpMax: CommonTools.getOneDecimalNum(temple.hpMax),
-            attack: CommonTools.getOneDecimalNum(temple.attack),
-            defend: CommonTools.getOneDecimalNum(temple.defend),
-            speed: CommonTools.getOneDecimalNum(temple.speed),
+            animType: temple.animType,
+            name: temple.name,
+            hp: temple.hp,
+            hpMax: temple.hpMax,
+            attack: temple.attack,
+            defend: temple.defend,
+            speed: temple.speed,
             energy: temple.energy,
             energyMax: temple.energyMax,
             stayPos: v2(temple.stayPos.x, temple.stayPos.y),
-            movePaths: [],
+            movePaths: movePath,
             actionType: temple.actionType as MapPioneerActionType,
             actionBeginTimeStamp: currentTime,
             actionEndTimeStamp: currentTime + (temple.actionEndTimeStamp - temple.actionBeginTimeStamp) * 1000,
+            actionEndReturn: temple.actionEndReturn,
+            actionFightId: temple.actionFightId,
             logics: [],
             winProgress: temple.winProgress,
             winExp: temple.winExp,
@@ -280,15 +266,9 @@ export default class PioneerDefine {
                 rebirthStartTime: currentTime,
                 rebirthEndTime: currentTime + (temple.rebirthEndTime - temple.rebirthStartTime) * 1000,
                 killerId: temple.killerId,
+                troopId: temple.troopId,
             };
             return playerObj;
-        } else if (obj.type == MapPioneerType.npc) {
-            let npcObj: MapNpcPioneerObject;
-            npcObj = {
-                ...obj,
-                talkId: temple.talkId,
-            };
-            return npcObj;
         } else {
             return obj;
         }

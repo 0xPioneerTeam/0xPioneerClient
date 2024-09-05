@@ -22,9 +22,9 @@ import {
 import ArtifactData from "../Model/ArtifactData";
 import { GameMgr, LanMgr } from "../Utils/Global";
 import ViewController from "../BasicView/ViewController";
-import { UIName } from "../Const/ConstUIDefine";
+import { HUDName, UIName } from "../Const/ConstUIDefine";
 import { ArtifactInfoUI } from "./ArtifactInfoUI";
-import UIPanelManger from "../Basic/UIPanelMgr";
+import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import { ArtifactItem1 } from "./ArtifactItem1";
 import { ArtifactItem } from "./ArtifactItem";
 import { InnerBuildingType } from "../Const/BuildingDefine";
@@ -39,6 +39,8 @@ import ArtifactConfig from "../Config/ArtifactConfig";
 import LongPressButton from "../BasicView/LongPressButton";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { RelicTowerSelectUI } from "./RelicTowerSelectUI";
+import { RedPointView } from "./View/RedPointView";
+import { AlterTipView } from "./View/AlterTipView";
 const { ccclass, property } = _decorator;
 
 @ccclass("RelicTowerUI")
@@ -73,8 +75,12 @@ export class RelicTowerUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-        // useLanMgr
-        // this.node.getChildByPath("__ViewContent/Bg/title").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this.node.getChildByPath("__ViewContent/Bg/title").getComponent(Label).string = LanMgr.getLanById("lanreplace200021");
+        // this.node.getChildByPath("__ViewContent/Bg/tabButtons/OnEffectButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200022");
+        // this.node.getChildByPath("__ViewContent/Bg/tabButtons/StorageButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200023");
+        // this.node.getChildByPath("__ViewContent/Bg/Storage/RightContent/InvokeButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200025");
+        // this.node.getChildByPath("__ViewContent/Bg/Storage/RightContent/GetButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200026");
+
 
         this._onEffectView = this.node.getChildByPath("__ViewContent/Bg/OnEffect");
         this._storageView = this.node.getChildByPath("__ViewContent/Bg/Storage");
@@ -122,6 +128,7 @@ export class RelicTowerUI extends ViewController {
         //------------------------------------------------ storage
         this._storageItemContent = this._storageView.getChildByPath("LeftContent/ScrollView/View/Content");
         this._storageItem = this._storageItemContent.getChildByPath("Item");
+        // this._storageItem.getChildByPath("EffectTitle").getComponent(Label).string = LanMgr.getLanById("lanreplace200024");
         this._storageItem.removeFromParent();
 
         this._invokeSlotItems = [];
@@ -131,6 +138,9 @@ export class RelicTowerUI extends ViewController {
         this._compositeItem = this._storageView.getChildByPath("RightContent/Compose");
 
         NotificationMgr.addListener(NotificationName.ARTIFACT_EQUIP_DID_CHANGE, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshUI, this);
+
         NetworkMgr.websocket.on("player_artifact_combine_res", this._onPlayerArtifactCombine);
     }
     protected viewDidStart(): void {
@@ -140,7 +150,9 @@ export class RelicTowerUI extends ViewController {
         super.viewDidDestroy();
 
         NotificationMgr.removeListener(NotificationName.ARTIFACT_EQUIP_DID_CHANGE, this._refreshUI, this);
-        NotificationMgr.removeListener(NotificationName.ARTIFACT_CHANGE, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshUI, this);
+
         NetworkMgr.websocket.off("player_artifact_combine_res", this._onPlayerArtifactCombine);
     }
     protected viewPopAnimation(): boolean {
@@ -156,6 +168,20 @@ export class RelicTowerUI extends ViewController {
             this._tabButtons[i].getChildByName("BtnPageDark").active = i != this._showIndex;
             this._tabButtons[i].getChildByName("Label").getComponent(Label).color = i == this._showIndex ? new Color(66, 53, 35) : new Color(122, 114, 111);
         }
+
+        let hasRedPoint: boolean = false;
+        for (let i = 0; i < this._currentSlotViews.length; i++) {
+            const locked: boolean = !(i < this._effectLimit);
+            if (locked) {
+                continue;
+            }
+            if (DataMgr.s.artifact.getOnEffectHasNew(i)) {
+                hasRedPoint = true;
+                break;
+            }
+        }
+        this._tabButtons[0].getChildByPath("RedPointView").getComponent(RedPointView).refreshUI(hasRedPoint ? 1 : 0, false);
+        this._tabButtons[1].getChildByPath("RedPointView").getComponent(RedPointView).refreshUI(DataMgr.s.artifact.getAllNewArtifactCount());
 
         if (this._showIndex == 0) {
             this._onEffectView.active = true;
@@ -175,7 +201,6 @@ export class RelicTowerUI extends ViewController {
             this._effectContent.getComponent(Layout).updateLayout();
 
             const artifacts = DataMgr.s.artifact.getObj_artifact_equiped();
-
             for (let i = 0; i < this._currentSlotViews.length; i++) {
                 const locked: boolean = !(i < this._effectLimit);
                 let data: ArtifactData = null;
@@ -193,7 +218,15 @@ export class RelicTowerUI extends ViewController {
 
                 itemView.getComponent(ArtifactItem1).refreshUI(data);
 
-                itemView.getChildByPath("Prop").setSiblingIndex(99);
+                itemView.getChildByPath("Prop").setSiblingIndex(98);
+
+                let canRed: boolean = false;
+                if (!locked) {
+                    canRed = DataMgr.s.artifact.getOnEffectHasNew(i);
+                }
+                const redPointView = itemView.getChildByPath("RedPointView").getComponent(RedPointView);
+                redPointView.refreshUI(canRed ? 1 : 0, false);
+                redPointView.node.setSiblingIndex(99);
 
                 itemView.getComponent(LongPressButton).shortClick[0].customEventData = i.toString();
                 itemView.getComponent(LongPressButton).shortClickInteractable = !locked;
@@ -245,11 +278,12 @@ export class RelicTowerUI extends ViewController {
                     continue;
                 }
                 const view = instantiate(this._storageItem);
-                view.getComponent(ArtifactItem).refreshUI(this._invokeStorageDatas[i]);
+                view.getComponent(ArtifactItem).refreshUI(this._invokeStorageDatas[i], true);
                 view.setParent(this._storageItemContent);
                 view.getChildByPath("OnEffectBg").active = this._invokeStorageDatas[i].effectIndex >= 0;
                 view.getChildByPath("EffectTitle").active = this._invokeStorageDatas[i].effectIndex >= 0;
-                view.getChildByPath("New").active = this._newArtifactIds.indexOf(this._invokeStorageDatas[i].uniqueId) != -1;
+                // view.getChildByPath("New").active = this._newArtifactIds.indexOf(this._invokeStorageDatas[i].uniqueId) != -1;
+                view.getChildByPath("New").active = false;
 
                 view.getComponent(LongPressButton).shortClick[0].customEventData = i.toString();
                 view.getComponent(LongPressButton).shortClickInteractable = this._invokeStorageDatas[i].effectIndex < 0 && config.rank < 5;
@@ -293,6 +327,7 @@ export class RelicTowerUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+        DataMgr.s.artifact.readAllNewArtifact();
     }
     private onTapOnEffectTab() {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -346,6 +381,9 @@ export class RelicTowerUI extends ViewController {
             return;
         }
         const data = this._invokeStorageDatas[index];
+        // red point
+        DataMgr.s.artifact.readNewArtifactById(data.uniqueId);
+
         this._invokeSelectDatas.push(data);
         if (this._invokeSelectDatas.length == 1) {
             // first select, confrim rank
@@ -361,6 +399,9 @@ export class RelicTowerUI extends ViewController {
             return;
         }
         const data = this._invokeStorageDatas[index];
+        //red point
+        DataMgr.s.artifact.readNewArtifactById(data.uniqueId);
+
         const result = await UIPanelManger.inst.pushPanel(UIName.ArtifactInfoUI);
         if (!result.success) {
             return;
@@ -431,6 +472,14 @@ export class RelicTowerUI extends ViewController {
             return;
         }
         result.node.getComponent(ArtifactInfoUI).showItem([this._compositeData]);
+    }
+    private async onTapQuestion() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(HUDName.AlterTip, UIPanelLayerType.HUD);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(AlterTipView).showTip(LanMgr.getLanById("106021"));
     }
     //-------------------------------------------------------------------------
     private _onPlayerArtifactCombine = (e: any) => {

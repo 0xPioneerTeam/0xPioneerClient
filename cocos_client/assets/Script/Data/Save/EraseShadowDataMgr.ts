@@ -4,6 +4,7 @@ import NetGlobalData from "./Data/NetGlobalData";
 
 export class EraseShadowDataMgr {
     private _data: Vec2[];
+    private _detects: Vec2[];
 
     public constructor() {}
 
@@ -11,22 +12,34 @@ export class EraseShadowDataMgr {
         this._initData();
     }
 
-    public getObj() {
+    public getEraseObj() {
         return this._data;
     }
+    public getDetectObj() {
+        return this._detects;
+    }
 
-    public addObj(data: Vec2) {
+    public addEraseObj(data: Vec2) {
         this._data.push(data);
+    }
+    public addDetectObj(data: Vec2) {
+        this._detects.push(data);
     }
 
     private _initData() {
         this._data = [];
-        if (NetGlobalData.shadows == null) {
-            return;
+        this._detects = [];
+        if (NetGlobalData.shadows != null) {
+            const shadows = NetGlobalData.shadows;
+            for (let i = 0; i < shadows.length; i++) {
+                this._data.push(new Vec2(shadows[i].x, shadows[i].y));
+            }
         }
-        const shadows = NetGlobalData.shadows;
-        for (let i = 0; i < shadows.length; i++) {
-            this._data.push(new Vec2(shadows[i].x, shadows[i].y));
+        if (NetGlobalData.detects != null) {
+            const detects = NetGlobalData.detects;
+            for (let i = 0; i < detects.length; i++) {
+                this._detects.push(new Vec2(detects[i].x, detects[i].y));
+            }
         }
     }
 }

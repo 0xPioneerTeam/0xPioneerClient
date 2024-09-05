@@ -25,17 +25,17 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 107
-      },
-      {
-        "__id__": 109
-      },
-      {
         "__id__": 111
+      },
+      {
+        "__id__": 113
+      },
+      {
+        "__id__": 115
       }
     ],
     "_prefab": {
-      "__id__": 113
+      "__id__": 117
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -92,10 +92,16 @@
       },
       {
         "__id__": 104
+      },
+      {
+        "__id__": 106
+      },
+      {
+        "__id__": 108
       }
     ],
     "_prefab": {
-      "__id__": 106
+      "__id__": 110
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -1926,6 +1932,42 @@
     "fileId": "52OexSDFFJzpDa7lldCXAE"
   },
   {
+    "__type__": "50ab2yk8TZDUKjycayAEs+M",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 107
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "37yFTd+hxO76Xv0x8i2RCJ"
+  },
+  {
+    "__type__": "cca19ruiShLl5UYkHf1QbNT",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 109
+    },
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "fc6tLm/UxLM4+PcBgDzrxo"
+  },
+  {
     "__type__": "cc.PrefabInfo",
     "root": {
       "__id__": 1
@@ -1948,11 +1990,11 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 108
+      "__id__": 112
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1920,
+      "width": 1919.9999999999998,
       "height": 1080
     },
     "_anchorPoint": {
@@ -1976,7 +2018,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 110
+      "__id__": 114
     },
     "_alignFlags": 45,
     "_target": null,
@@ -2012,7 +2054,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 112
+      "__id__": 116
     },
     "_id": ""
   },

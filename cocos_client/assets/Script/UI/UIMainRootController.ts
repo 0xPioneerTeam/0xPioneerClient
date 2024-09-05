@@ -8,7 +8,6 @@ import { NotificationName } from "../Const/Notification";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
-import { RookieStep } from "../Const/RookieDefine";
 import { ResourcesMgr } from "../Utils/Global";
 import { BundleName } from "../Basic/ResourcesMgr";
 import TalkConfig from "../Config/TalkConfig";
@@ -20,11 +19,12 @@ const { ccclass, property } = _decorator;
 export class UIMainRootController extends ViewController {
     public async checkShowRookieGuide() {
         GameMusicPlayMgr.stopMusic();
-        if (DataMgr.s.userInfo.data.rookieStep == RookieStep.WAKE_UP) {
-            await UIPanelManger.inst.pushPanel(UIName.RookieGuide);
-        } else {
-            GameMusicPlayMgr.playGameMusic();
-        }
+        // if (DataMgr.s.userInfo.data.rookieStep == RookieStep.WAKE_UP) {
+        //     await UIPanelManger.inst.pushPanel(UIName.RookieGuide);
+        // } else {
+            
+        // }
+        GameMusicPlayMgr.playGameMusic();
         const result = await ResourcesMgr.initBundle(BundleName.InnerBundle);
         if (!result.succeed) {
             return;

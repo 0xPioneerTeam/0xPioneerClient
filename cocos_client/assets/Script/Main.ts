@@ -1,12 +1,12 @@
-import { _decorator, Asset, AssetManager, Component, director, DynamicAtlasManager, game, macro, Node } from "cc";
+import { _decorator, Asset, AssetManager, director, Game, game } from "cc";
 import ViewController from "./BasicView/ViewController";
-import { AudioMgr, BattleReportsMgr, LanMgr, LocalDataLoader, ResourcesMgr } from "./Utils/Global";
+import { AudioMgr, LanMgr, LocalDataLoader, ResourcesMgr } from "./Utils/Global";
 import ConfigMgr from "./Manger/ConfigMgr";
 import NotificationMgr from "./Basic/NotificationMgr";
 import { NotificationName } from "./Const/Notification";
 import { GameName, HUDName, UIName } from "./Const/ConstUIDefine";
 import { LoadingUI } from "./UI/Loading/LoadingUI";
-import { GAME_ENV_IS_DEBUG, PioneerGameTest } from "./Const/ConstDefine";
+import { GAME_ENV_IS_DEBUG } from "./Const/ConstDefine";
 import UIPanelManger, { UIPanelLayerType } from "./Basic/UIPanelMgr";
 import { UIMainRootController } from "./UI/UIMainRootController";
 import { DataMgr } from "./Data/DataMgr";
@@ -16,6 +16,8 @@ import CLog from "./Utils/CLog";
 import { EthereumEventData_accountChanged, EthereumEventData_chainChanged, EthereumEventData_init, EthereumEventType } from "./Net/ethers/Ethereum";
 import { c2s_user, s2c_user } from "./Net/msg/WebsocketMsg";
 import { BundleName } from "./Basic/ResourcesMgr";
+import { GuideMgr } from "./UI/guide/GuideMgr";
+import RookieStepMgr from "./Manger/RookieStepMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("Main")
@@ -63,9 +65,6 @@ export class Main extends ViewController {
         if (result.succeed) {
             result.bundle.preloadDir("");
         }
-
-        window.addEventListener("blur", this.onBlur, false);
-        window.addEventListener("focus", this.onFocus, false);
     }
 
     protected async viewDidStart(): Promise<void> {
@@ -88,8 +87,6 @@ export class Main extends ViewController {
     }
 
     private async _onUserLoginSucceed() {
-        BattleReportsMgr.init();
-
         if (GAME_ENV_IS_DEBUG) {
             UIPanelManger.inst.popPanelByName(UIName.LoginUI);
             let loadingView: LoadingUI = null;
@@ -151,8 +148,14 @@ export class Main extends ViewController {
     }
 
     private async _showGameMain() {
+        if (this["__gameMainShowed"]) {
+            return;
+        }
+        this["__gameMainShowed"] = true;
         await LocalDataLoader.loadLocalDatas();
         await UIPanelManger.inst.pushPanel(UIName.MainUI);
+        GuideMgr.ins.initGuideData();
+        RookieStepMgr.instance().init();
         await this.node.getChildByPath("UI_Canvas/UI_ROOT").getComponent(UIMainRootController).checkShowRookieGuide();
         await UIPanelManger.inst.pushPanel(GameName.GameMain, UIPanelLayerType.Game);
     }
@@ -191,8 +194,13 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("player_building_levelup_res", DataMgr.player_building_levelup_res);
         NetworkMgr.websocket.on("player_generate_troop_start_res", DataMgr.player_generate_troop_start_res);
         // map
+        NetworkMgr.websocket.on("get_map_info_res", DataMgr.get_map_info_res);
+        NetworkMgr.websocket.on("player_enterzone", DataMgr.player_enterzone);
+        NetworkMgr.websocket.on("player_leavezone", DataMgr.player_leavezone);
+        NetworkMgr.websocket.on("pioneer_leavezone", DataMgr.pioneer_leavezone);
+
+        NetworkMgr.websocket.on("player_get_new_pioneer", DataMgr.player_get_new_pioneer);
         NetworkMgr.websocket.on("pioneer_change", DataMgr.pioneer_change);
-        NetworkMgr.websocket.on("pioneer_reborn_res", DataMgr.pioneer_reborn_res);
         NetworkMgr.websocket.on("mapbuilding_change", DataMgr.mapbuilding_change);
 
         NetworkMgr.websocket.on("mappioneer_reborn_change", DataMgr.mappioneer_reborn_change);
@@ -203,15 +211,22 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("player_explore_start_res", DataMgr.player_explore_start_res);
         NetworkMgr.websocket.on("player_explore_npc_start_res", DataMgr.player_explore_npc_start_res);
         NetworkMgr.websocket.on("player_wormhole_set_attacker_res", DataMgr.player_wormhole_set_attacker_res);
+        NetworkMgr.websocket.on("player_explore_maincity_res", DataMgr.player_explore_maincity_res);
+        NetworkMgr.websocket.on("player_pos_detect_res", DataMgr.player_pos_detect_res);
+
 
         NetworkMgr.websocket.on("player_fight_end", DataMgr.player_fight_end);
+
+        NetworkMgr.websocket.on("player_wormhole_tp_random_res", DataMgr.player_wormhole_tp_random_res);
+        NetworkMgr.websocket.on("player_wormhole_tp_select_res", DataMgr.player_wormhole_tp_select_res);
+        NetworkMgr.websocket.on("player_wormhole_tp_back_res", DataMgr.player_wormhole_tp_back_res);
+        NetworkMgr.websocket.on("player_wormhole_tp_tag_res", DataMgr.player_wormhole_tp_tag_res);
 
         // nft
         NetworkMgr.websocket.on("nft_change", DataMgr.nft_change);
         NetworkMgr.websocket.on("player_nft_lvlup_res", DataMgr.player_nft_lvlup_res);
         NetworkMgr.websocket.on("player_nft_rankup_res", DataMgr.player_nft_rankup_res);
         // wormhole
-        NetworkMgr.websocket.on("player_wormhole_fight_attacked_res", DataMgr.player_wormhole_fight_attacked_res);
         NetworkMgr.websocket.on("player_wormhole_fight_res", DataMgr.player_wormhole_fight_res);
         // psyc
         NetworkMgr.websocket.on("fetch_user_psyc_res", DataMgr.fetch_user_psyc_res);
@@ -222,10 +237,10 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("player_lvlup_change", DataMgr.player_lvlup_change);
 
         // task
-        NetworkMgr.websocket.on("user_task_action_getnewtalk", DataMgr.user_task_action_getnewtalk);
         NetworkMgr.websocket.on("user_task_did_change", DataMgr.user_task_did_change);
-        NetworkMgr.websocket.on("get_user_task_info_res", DataMgr.get_user_task_info_res);
         NetworkMgr.websocket.on("user_task_action_talk", DataMgr.user_task_action_talk);
+        NetworkMgr.websocket.on("user_task_talk_info_change", DataMgr.user_task_talk_info_change);
+        NetworkMgr.websocket.on("user_mission_did_change", DataMgr.user_mission_did_change);
 
         // box
         NetworkMgr.websocket.on("player_worldbox_beginner_open_res", DataMgr.player_worldbox_beginner_open_res);
@@ -317,14 +332,5 @@ export class Main extends ViewController {
                 rookieStep: d.rookieStep,
             },
         });
-    }
-
-    private blurTs;
-    private onBlur() {
-        this.blurTs = new Date().getTime();
-    }
-    private onFocus() {
-        let durTs = new Date().getTime() - this.blurTs;
-        director.tick(durTs / 1000);
     }
 }

@@ -1,6 +1,6 @@
 import ArtifactConfig from "../Config/ArtifactConfig";
 import ItemConfig from "../Config/ItemConfig";
-import { BackpackArrangeType, BackpackCategoryType } from "../Const/ConstDefine";
+import { BackpackArrangeType, BackpackCategoryType, ResourceCorrespondingItem } from "../Const/ConstDefine";
 import ItemData, { ItemType } from "../Const/Item";
 import { DataMgr } from "../Data/DataMgr";
 import ArtifactData from "../Model/ArtifactData";
@@ -13,7 +13,8 @@ export default class BackpackMgr {
             if (config == null) {
                 return false;
             }
-            return config.itemType != ItemType.Resource;
+            // 8007 and 8008 resource is special show in backpack
+            return config.itemType != ItemType.Resource || config.configId == ResourceCorrespondingItem.NFTExp || config.configId == ResourceCorrespondingItem.NFTRankExp;
         });
 
         const artifact = DataMgr.s.artifact.getObj();
@@ -51,7 +52,7 @@ export default class BackpackMgr {
             let bValue: number = 0;
             let aValue: number = 0;
             if (arrangeType == BackpackArrangeType.Recently) {
-                bValue = b.addTimeStamp
+                bValue = b.addTimeStamp;
                 aValue = a.addTimeStamp;
             } else if (arrangeType == BackpackArrangeType.Rarity) {
                 bValue = this._getRarity(b);

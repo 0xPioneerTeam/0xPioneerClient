@@ -1,5 +1,5 @@
 {
-  "ver": "1.0.26",
+  "ver": "1.0.27",
   "importer": "image",
   "imported": true,
   "uuid": "208db754-ec65-4adb-b5d4-a03da1614742",
@@ -56,8 +56,8 @@
         "borderRight": 0,
         "packable": true,
         "pixelsToUnit": 100,
-        "pivotX": 0.5,
-        "pivotY": 0.5,
+        "pivotX": 0,
+        "pivotY": 0,
         "meshType": 0,
         "vertices": {
           "rawPosition": [
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "hasAlpha": true,
     "fixAlphaTransparencyArtifacts": false,
-    "redirect": "208db754-ec65-4adb-b5d4-a03da1614742@f9941"
+    "redirect": "208db754-ec65-4adb-b5d4-a03da1614742@6c48a"
   }
 }

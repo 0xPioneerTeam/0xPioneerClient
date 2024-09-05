@@ -1,5 +1,4 @@
 import {_decorator, Button, Component, Label} from 'cc';
-import {BattleReportsMgr} from '../Utils/Global';
 import {UIName} from '../Const/ConstUIDefine';
 import NotificationMgr from '../Basic/NotificationMgr';
 import { NotificationName } from '../Const/Notification';
@@ -15,13 +14,10 @@ export class BattleReportEntryButton extends Component {
     protected onEnable() {
         this.node.on(Button.EventType.CLICK, this.onClickButton, this);
         this.updateBattleReportsUnreadCount();
-
-        NotificationMgr.addListener(NotificationName.BATTLE_REPORT_LIST_CHANGED, this.onBattleReportListChanged, this);
     }
 
     protected onDisable() {
         this.node.off(Button.EventType.CLICK, this.onClickButton, this);
-        NotificationMgr.removeListener(NotificationName.BATTLE_REPORT_LIST_CHANGED, this.onBattleReportListChanged, this);
     }
 
     private async onClickButton() {
@@ -36,7 +32,7 @@ export class BattleReportEntryButton extends Component {
         const emergencyCountLabel = this.node.getChildByName('emergencyCountLabel').getComponent(Label);
 
         const label = this.node.getChildByName('unreadCountLabel').getComponent(Label);
-        const count = DataMgr.s.battleReport.unreadCount;
+        const count = 0;
         if (count != 0) {
             label.string = Math.min(count, 99).toString();
             label.node.active = true;
@@ -48,7 +44,7 @@ export class BattleReportEntryButton extends Component {
             icon_WarReport_2.active = false;
         }
 
-        const emergencyReportCount = DataMgr.s.battleReport.emergencyCount;
+        const emergencyReportCount = 0;
         if (emergencyReportCount != 0) {
             icon_WarReport_3.active = true;
             emergencyCountLabel.string = Math.min(emergencyReportCount, 99).toString();

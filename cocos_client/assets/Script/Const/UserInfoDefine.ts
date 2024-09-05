@@ -1,7 +1,7 @@
 import { share } from "../Net/msg/WebsocketMsg";
 import { InnerBuildingType, UserInnerBuildInfo } from "./BuildingDefine";
 import { CLvlCondition, CLvlConditionType } from "./Lvlup";
-import { RookieStep } from "./RookieDefine";
+import { RookieStep, RookieStepState } from "./RookieDefine";
 
 export interface ResourceModel {
     id: string;
@@ -25,9 +25,17 @@ export interface HeatValueObject {
     lotteryTimesLimit: number;
 }
 
+export interface WormholeTagObject {
+    playerId: string;
+    playerName: string;
+    tpBuildingId: string;
+}
+
 export interface UserInfoObject {
     id: string;
     name: string;
+    battlePower: number;
+    explorePlayerids: number[];
     level: number;
     exp: number;
     exploreProgress: number;
@@ -40,6 +48,8 @@ export interface UserInfoObject {
     cityRadialRange: number;
 
     rookieStep: RookieStep;
+
+    rookieState:RookieStepState;
 
     energyDidGetTimes: number;
     energyGetLimitTimes: number;
@@ -56,4 +66,8 @@ export interface UserInfoObject {
     CLvlCondtion: CLvlCondition[];
 
     buyEnergyLimitTimes: number;
+
+    wormholeTags: WormholeTagObject[];
+    wormholeMatchTimes: number;
+    wormholeTeleportTimes: number;
 }

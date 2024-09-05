@@ -1,46 +1,35 @@
 import NotificationMgr from "../Basic/NotificationMgr";
 import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
-import ItemData, { ItemConfigType, ItemType } from "../Const/Item";
+import ItemData, { ItemType } from "../Const/Item";
 import { NotificationName } from "../Const/Notification";
-import {
-    FIGHT_FINISHED_DATA,
-    MINING_FINISHED_DATA,
-    MapNpcPioneerObject,
-    MapPioneerActionType,
-    MapPioneerEventAttributesChangeType,
-    MapPioneerType,
-    MapPlayerPioneerObject,
-} from "../Const/PioneerDefine";
+import { MapPioneerActionType, MapPioneerType, MapPlayerPioneerObject } from "../Const/PioneerDefine";
 import { c2s_user, s2c_user, share } from "../Net/msg/WebsocketMsg";
 import CLog from "../Utils/CLog";
 import { RunData } from "./RunData";
 import { SaveData } from "./SaveData";
 import { MapBuildingWormholeObject } from "../Const/MapBuilding";
-import { GameMgr, LanMgr, PioneerMgr } from "../Utils/Global";
+import { GameMgr, LanMgr, PioneerMgr, UserInfoMgr } from "../Utils/Global";
 import NetGlobalData from "./Save/Data/NetGlobalData";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import ArtifactData from "../Model/ArtifactData";
-import { UIHUDController } from "../UI/UIHUDController";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { UIName } from "../Const/ConstUIDefine";
 import { TreasureGettedUI } from "../UI/TreasureGettedUI";
 import CommonTools from "../Tool/CommonTools";
 import ItemConfig from "../Config/ItemConfig";
 import { ItemGettedUI } from "../UI/ItemGettedUI";
-import EventConfig from "../Config/EventConfig";
-import { EVENT_STEPEND_DATA } from "../Const/Event";
 import { TilePos } from "../Game/TiledMap/TileTool";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
 import TalkConfig from "../Config/TalkConfig";
 import { DialogueUI } from "../UI/Outer/DialogueUI";
-import MapBuildingConfig from "../Config/MapBuildingConfig";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { ResourceCorrespondingItem } from "../Const/ConstDefine";
 import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Const/RookieDefine";
 import { ArtifactInfoUI } from "../UI/ArtifactInfoUI";
-import { load } from "protobufjs";
 import { NewEventUI } from "../UI/Event/NewEventUI";
 import { NewEventBattleUI } from "../UI/Event/NewEventBattleUI";
+import { native, v2 } from "cc";
+import { SecretGuardGettedUI } from "../UI/Outer/SecretGuardGettedUI";
 
 export class DataMgr {
     public static r: RunData;
@@ -49,12 +38,10 @@ export class DataMgr {
     public static async init(): Promise<boolean> {
         DataMgr.r = new RunData();
         DataMgr.s = new SaveData();
+        window['DataMgr'] = DataMgr;
         return true;
     }
 
-    public static async save() {
-        await this.s.save();
-    }
     ///////////////// websocket
     public static onmsg = (e: any) => {
         CLog.debug("DataMgr/onmsg: e => " + JSON.stringify(e));
@@ -72,10 +59,19 @@ export class DataMgr {
                 NetGlobalData.usermap = p.data.info.usermap;
                 NetGlobalData.nfts = p.data.info.nfts;
                 NetGlobalData.mapBuildings = p.data.info.mapbuilding;
-                NetGlobalData.tasks = p.data.info.tasks;
+                NetGlobalData.taskinfo = p.data.info.taskinfo;
                 NetGlobalData.shadows = p.data.info.shadows;
+                NetGlobalData.detects = p.data.info.detects;
                 // load save data
                 await DataMgr.s.load(this.r.wallet.addr);
+
+                GameMgr.setSlotIdToTempleConfigData(NetGlobalData.mapBuildings.slotId, {
+                    templeConfigId: p.data.info.mapbuilding.templateConfigId,
+                    playerId: p.data.info.sinfo.playerid.toString(),
+                    pname: p.data.info.sinfo.pname,
+                    level: p.data.info.sinfo.level,
+                    battlePower: p.data.info.sinfo.battlePower,
+                });
 
                 NotificationMgr.triggerEvent(NotificationName.USER_LOGIN_SUCCEED);
             }
@@ -99,6 +95,11 @@ export class DataMgr {
         const localData = DataMgr.s.userInfo.data;
         DataMgr.s.userInfo.replaceData(p.info);
         const newData = DataMgr.s.userInfo.data;
+        //rookie step
+        if(localData.rookieStep != newData.rookieStep || localData.rookieState != newData.rookieState)
+        {
+            NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
+        }
         // exp
         if (localData.exp != p.info.exp) {
             NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_EXP, { exp: p.info.exp - localData.exp });
@@ -119,19 +120,19 @@ export class DataMgr {
         }
         // heat
         if (localData.heatValue.currentHeatValue != p.info.heatValue.currentHeatValue) {
-            if (DataMgr.s.userInfo.data.rookieStep == RookieStep.PIOT_TO_HEAT) {
-                NetworkMgr.websocketMsg.player_rookie_update({
-                    rookieStep: RookieStep.NPC_TALK_4,
-                });
-                NotificationMgr.triggerEvent(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, {
-                    animType: RookieResourceAnim.GOLD_TO_HEAT,
-                    callback: () => {
-                        NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_HEAT);
-                    },
-                } as RookieResourceAnimStruct);
-            } else {
+            // if (DataMgr.s.userInfo.data.rookieStep == RookieStep.PIOT_TO_HEAT) {
+            //     NetworkMgr.websocketMsg.player_rookie_update({
+            //         rookieStep: RookieStep.NPC_TALK_4,
+            //     });
+            //     NotificationMgr.triggerEvent(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, {
+            //         animType: RookieResourceAnim.GOLD_TO_HEAT,
+            //         callback: () => {
+            //             NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_HEAT);
+            //         },
+            //     } as RookieResourceAnimStruct);
+            // } else {
                 NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_HEAT);
-            }
+            // }
         }
         // box
         let boxUpdate: boolean = false;
@@ -172,74 +173,49 @@ export class DataMgr {
         if (p.res !== 1) {
             return;
         }
-        if (
-            p.rookieStep == RookieStep.NPC_TALK_3 ||
-            p.rookieStep == RookieStep.NPC_TALK_4 ||
-            p.rookieStep == RookieStep.NPC_TALK_5 ||
-            p.rookieStep == RookieStep.NPC_TALK_7 ||
-            p.rookieStep == RookieStep.SYSTEM_TALK_21
-        ) {
-            // play anim to change step
-            return;
-        } else if (p.rookieStep == RookieStep.OUTER_WORMHOLE) {
-            p.rookieStep = RookieStep.LOCAL_DEFEND_TAP_CLOSE;
-        }
+        // if (
+        //     p.rookieStep == RookieStep.NPC_TALK_3 ||
+        //     p.rookieStep == RookieStep.NPC_TALK_4 ||
+        //     p.rookieStep == RookieStep.NPC_TALK_5 ||
+        //     p.rookieStep == RookieStep.NPC_TALK_7 ||
+        //     p.rookieStep == RookieStep.SYSTEM_TALK_21
+        // ) {
+        //     // play anim to change step
+        //     return;
+        // } else if (p.rookieStep == RookieStep.OUTER_WORMHOLE) {
+        //     p.rookieStep = RookieStep.LOCAL_DEFEND_TAP_CLOSE;
+        // }
         DataMgr.s.userInfo.data.rookieStep = p.rookieStep;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
     };
+    public static GM_GUIDE(step,state){
+        DataMgr.s.userInfo.data.rookieStep = step;
+        DataMgr.s.userInfo.data.rookieState = state;
+        NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
+    }
     public static player_rookie_wormhole_fight_res = (e: any) => {
-        const p: s2c_user.Iplayer_rookie_wormhole_fight_res = e.data;
-        if (p.res !== 1) {
-            return;
-        }
-        const player = DataMgr.s.pioneer.getById(p.pioneerId) as MapPlayerPioneerObject;
-        if (player == undefined) {
-            return;
-        }
-        player.actionType = MapPioneerActionType.fighting;
-        player.fightData = p.fightRes;
-        player.fightResultWin = true;
-        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: player.id });
-        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT, {
-            playerId: player.id,
-            resultHp: p.hp,
-            delayTime: p.fightRes.length + 1,
-        });
+        // wait change
+        // const p: s2c_user.Iplayer_rookie_wormhole_fight_res = e.data;
+        // if (p.res !== 1) {
+        //     return;
+        // }
+        // const player = DataMgr.s.pioneer.getById(p.pioneerId) as MapPlayerPioneerObject;
+        // if (player == undefined) {
+        //     return;
+        // }
+        // player.actionType = MapPioneerActionType.fighting;
+        // player.fightData = p.fightRes;
+        // player.fightResultWin = true;
+        // NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: player.id });
+        // NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT, {
+        //     playerId: player.id,
+        //     resultHp: p.hp,
+        //     delayTime: p.fightRes.length + 1,
+        // });
     };
     //------------------------------------- item
     public static storhouse_change = async (e: any) => {
         const p: s2c_user.Istorhouse_change = e.data;
-
-        let rookieBreak: boolean = false;
-        const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-        if (rookieStep == RookieStep.NPC_TALK_1) {
-            // fly piot
-            let goldNum: number = 0;
-            for (const item of p.iteminfo) {
-                if (item.itemConfigId == ResourceCorrespondingItem.Gold) {
-                    goldNum = item.count;
-                    break;
-                }
-            }
-            if (goldNum > 0) {
-                rookieBreak = true;
-                NotificationMgr.triggerEvent(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, {
-                    animType: RookieResourceAnim.PIONEER_0_TO_GOLD,
-                    callback: () => {
-                        DataMgr.s.userInfo.data.rookieStep = RookieStep.NPC_TALK_3;
-                        NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
-                        this._resourceRefresh(p.iteminfo);
-                    },
-                } as RookieResourceAnimStruct);
-            }
-        } else if (rookieStep == RookieStep.RESOURCE_COLLECT) {
-            NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_COLLECT_RESOURCE);
-        }
-
-        if (rookieBreak) {
-            return;
-        }
-
         this._resourceRefresh(p.iteminfo);
     };
 
@@ -319,7 +295,7 @@ export class DataMgr {
             change.effectIndex = artifact.effectIndex;
             change.uniqueId = artifact.uniqueId;
             change.effect = artifact.effect;
-            DataMgr.s.artifact.countChanged(change);
+            DataMgr.s.artifact.countChanged(change, true);
         }
     };
     //------------------------------------- inner building
@@ -331,21 +307,29 @@ export class DataMgr {
                 continue;
             }
             DataMgr.s.innerBuilding.replaceData(netBuilding);
-            if (currentData.troopIng != netBuilding.troopIng || currentData.upgrading != netBuilding.upgradeIng) {
-                NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_DATA_CHANGE);
-            }
+            NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_DATA_CHANGE);
             if (currentData.upgrading && !netBuilding.upgradeIng) {
                 // upgrade finish
-                if (DataMgr.s.userInfo.data.rookieStep == RookieStep.MAIN_BUILDING_TAP_2) {
-                    NetworkMgr.websocketMsg.player_rookie_update({
-                        rookieStep: RookieStep.SYSTEM_TALK_20,
-                    });
-                } else if (DataMgr.s.userInfo.data.rookieStep == RookieStep.MAIN_BUILDING_TAP_3) {
-                    NetworkMgr.websocketMsg.player_rookie_update({
-                        rookieStep: RookieStep.SYSTEM_TALK_22,
-                    });
-                }
+                // if (DataMgr.s.userInfo.data.rookieStep == RookieStep.MAIN_BUILDING_TAP_2) {
+                //     NetworkMgr.websocketMsg.player_rookie_update({
+                //         rookieStep: RookieStep.SYSTEM_TALK_20,
+                //     });
+                // } else if (DataMgr.s.userInfo.data.rookieStep == RookieStep.MAIN_BUILDING_TAP_3) {
+                //     NetworkMgr.websocketMsg.player_rookie_update({
+                //         rookieStep: RookieStep.SYSTEM_TALK_22,
+                //     });
+                // }
                 NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, currentData.buildType);
+            }
+
+            if (currentData.troopIng && !netBuilding.troopIng) {
+                DataMgr.s.userInfo.changeRecruitRedPoint(true);
+            }
+            if (currentData.tc != null && netBuilding.tc != null && currentData.tc.training != null && netBuilding.tc.training == null) {
+                DataMgr.s.userInfo.changeExerciseRedPoint(true);
+                // use lan
+                NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Training completed");
+                NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_TRAIN_FINISHED);
             }
         }
     };
@@ -375,88 +359,167 @@ export class DataMgr {
     //------------------------------------- storehouse
 
     //------------------------------------- map
+    public static get_map_info_res = (e: any) => {
+        const p: s2c_user.Iget_map_info_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        let buildingChanged: boolean = false;
+        let pioneerChanged: boolean = false;
+        const slotIds: string[] = [];
+        for (const info of p.info) {
+            for (const key in info.buildings) {
+                if (Object.prototype.hasOwnProperty.call(info.buildings, key)) {
+                    const element = info.buildings[key];
+                    DataMgr.s.mapBuilding.addData(element);
+                    buildingChanged = true;
+                }
+            }
+            for (const key in info.pioneers) {
+                if (Object.prototype.hasOwnProperty.call(info.pioneers, key)) {
+                    const element = info.pioneers[key];
+                    DataMgr.s.pioneer.addData(element);
+                    pioneerChanged = true;
+                }
+            }
+            slotIds.push(info.slotId);
+            DataMgr.s.mapBuilding.setDecorateInfo(info.slotId, info.templateConfigId);
+            GameMgr.setSlotIdToTempleConfigData(info.slotId, {
+                templeConfigId: info.templateConfigId,
+                playerId: info.playerId.toString(),
+                pname: info.pname,
+                level: info.level,
+                battlePower: info.battlePower,
+            });
+        }
+        for (const key in p.user) {
+            if (Object.prototype.hasOwnProperty.call(p.user, key)) {
+                const element = p.user[key];
+                DataMgr.s.pioneer.addData(element);
+            }
+            pioneerChanged = true;
+        }
+        if (buildingChanged) {
+            NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_NEED_REFRESH);
+        }
+        if (pioneerChanged) {
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
+        }
+        GameMainHelper.instance.updateGameViewport();
+    };
+    public static player_enterzone = (e: any) => {
+        const p: s2c_user.Iplayer_enterzone = e.data;
+        for (const info of p.infos) {
+            const fakePioneer = DataMgr.s.pioneer.createFakeData(info.pioneerId, v2(info.pos.x, info.pos.y));
+            DataMgr.s.pioneer.addObjData(fakePioneer);
+        }
+        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
+    };
+    public static player_leavezone = (e: any) => {
+        const p: s2c_user.Iplayer_leavezone = e.data;
+
+        let needRefresh: boolean = false;
+        for (const id of p.playerids) {
+            DataMgr.s.pioneer.removeDataByPlayerId(id);
+            needRefresh = true;
+        }
+        if (needRefresh) {
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
+        }
+    };
+    public static pioneer_leavezone = (e: any) => {
+        const p: s2c_user.Ipioneer_leavezone = e.data;
+
+        let needRefresh: boolean = false;
+        for (const id of p.pioneerIds) {
+            DataMgr.s.pioneer.removeDataByUniqueId(id);
+            needRefresh = true;
+        }
+        if (needRefresh) {
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
+        }
+    };
+
+    public static player_get_new_pioneer = (e: any) => {
+        const p: s2c_user.Iplayer_get_new_pioneer = e.data;
+        for (const data of p.datas) {
+            DataMgr.s.pioneer.addData(data, true);
+            const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
+            if (pioneer != undefined) {
+                if (this["_LAST_NEW_TIME"] == null) {
+                    this["_LAST_NEW_TIME"] = new Date().getTime();
+                } else {
+                    const currentTimeStamp = new Date().getTime();
+                    if (currentTimeStamp - this["_LAST_NEW_TIME"] <= 2000) {
+                        UserInfoMgr.afterNewPioneerDatas.push(pioneer);
+                        return;
+                    }
+                }
+                setTimeout(async () => {
+                    if (UIPanelManger.inst.panelIsShow(UIName.CivilizationLevelUpUI)) {
+                        UserInfoMgr.afterCivilizationClosedShowPioneerDatas.push(pioneer);
+                    } else {
+                        const result = await UIPanelManger.inst.pushPanel(UIName.SecretGuardGettedUI);
+                        if (result.success) {
+                            result.node.getComponent(SecretGuardGettedUI).dialogShow(pioneer.animType);
+                        }
+                    }
+                });
+            }
+        }
+    };
     public static pioneer_change = (e: any) => {
         const p: s2c_user.Ipioneer_change = e.data;
+        let newPioneerDatas: share.Ipioneer_data[] = [];
         const localDatas = DataMgr.s.pioneer.getAll();
         for (const temple of p.pioneers) {
+            let exsit: boolean = false;
             for (let i = 0; i < localDatas.length; i++) {
-                if (temple.id == localDatas[i].id) {
+                if (temple.uniqueId == localDatas[i].uniqueId) {
                     const oldData = localDatas[i];
                     const newData = DataMgr.s.pioneer.replaceData(i, temple);
                     // show
                     if (oldData.show != newData.show) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { id: newData.id, show: newData.show });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: newData.uniqueId, show: newData.show });
                     }
                     // faction
                     if (oldData.faction != newData.faction) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FACTION_CHANGED, { id: newData.id, show: newData.show });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FACTION_CHANGED, { uniqueId: newData.uniqueId, show: newData.show });
                     }
                     // action type
                     if (oldData.actionType != newData.actionType || oldData.actionEndTimeStamp != newData.actionEndTimeStamp) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: newData.id });
-                        if (oldData.actionType == MapPioneerActionType.mining && oldData.actionBuildingId != null) {
-                            // mining over
-                            const resourceData = GameMgr.getResourceBuildingRewardAndQuotaMax(DataMgr.s.mapBuilding.getBuildingById(oldData.actionBuildingId));
-                            if (resourceData != null) {
-                                NotificationMgr.triggerEvent(NotificationName.MINING_FINISHED, {
-                                    buildingId: oldData.actionBuildingId,
-                                    pioneerId: oldData.id,
-                                    duration: 5000,
-                                    rewards: [{ id: resourceData.reward.itemConfigId, num: resourceData.reward.count }],
-                                } as MINING_FINISHED_DATA);
+                        if (
+                            newData.type == MapPioneerType.player &&
+                            oldData.actionType != MapPioneerActionType.inCity &&
+                            newData.actionType == MapPioneerActionType.inCity &&
+                            newData.hp > 0
+                        ) {
+                            if (!PioneerMgr.checkWormholeBackPioneer(newData.uniqueId)) {
+                                // local play return
+                                const targetPos = GameMgr.getMainCityGatePos();
+                                if (targetPos != null) {
+                                    (newData as MapPlayerPioneerObject).needReturn = true;
+                                    newData.stayPos = oldData.stayPos;
+                                    DataMgr.s.pioneer.beginMove(
+                                        newData.uniqueId,
+                                        GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(oldData.stayPos, targetPos).path
+                                    );
+                                }
                             }
                         }
-                        if (oldData.type == newData.type && newData.type == MapPioneerType.player && oldData.actionType == MapPioneerActionType.dead) {
-                            // player rebirth
-                            GameMusicPlayMgr.playPioneerRebonEffect();
-                        }
-                        // if (oldData.actionType == MapPioneerActionType.eventStarting && newData.actionType == MapPioneerActionType.eventing) {
-                        //     // event
-                        //     NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
-                        //         triggerPioneerId: newData.id,
-                        //         eventBuildingId: newData.actionBuildingId,
-                        //         eventId: newData.actionEventId,
-                        //     });
-                        //     const stepEndData: EVENT_STEPEND_DATA = {
-                        //         pioneerId: newData.id,
-                        //         buildingId: newData.actionBuildingId,
-                        //         eventId: newData.actionEventId,
-                        //         hasNextStep:
-                        //             newData.actionEventId != "-1" &&
-                        //             newData.actionEventId != "-2" &&
-                        //             newData.actionEventId != "" &&
-                        //             newData.actionEventId != null,
-                        //     };
-                        //     NotificationMgr.triggerEvent(NotificationName.EVENT_STEPEND, stepEndData);
-                        // }
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: newData.uniqueId });
                     }
-                    // event
-                    // if (newData.actionType == MapPioneerActionType.eventing && oldData.actionEventId != newData.actionEventId) {
-                    //     NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_EVENTID_CHANGE, {
-                    //         triggerPioneerId: newData.id,
-                    //         eventBuildingId: newData.actionBuildingId,
-                    //         eventId: newData.actionEventId,
-                    //     });
-                    //     const stepEndData: EVENT_STEPEND_DATA = {
-                    //         pioneerId: newData.id,
-                    //         buildingId: newData.actionBuildingId,
-                    //         eventId: newData.actionEventId,
-                    //         hasNextStep:
-                    //             newData.actionEventId != "-1" && newData.actionEventId != "-2" && newData.actionEventId != "" && newData.actionEventId != null,
-                    //     };
-                    //     NotificationMgr.triggerEvent(NotificationName.EVENT_STEPEND, stepEndData);
-                    // }
                     // fight
                     if (oldData.fightData == null && newData.fightData != null) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_BEGIN, { id: newData.id });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_BEGIN, { uniqueId: newData.uniqueId });
                     }
                     // staypos
                     if (oldData.stayPos.x != newData.stayPos.x || oldData.stayPos.y != newData.stayPos.y) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_STAY_POSITION_CHANGE, { id: newData.id });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_STAY_POSITION_CHANGE, { uniqueId: newData.uniqueId });
                     }
                     // hp
                     if (oldData.hp != newData.hp || oldData.hpMax != newData.hpMax) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED, { uniqueId: newData.uniqueId });
                         if (oldData.actionType != MapPioneerActionType.dead && newData.hp > oldData.hp && newData.hpMax == oldData.hpMax) {
                             //re heal
                             NotificationMgr.triggerEvent(
@@ -467,27 +530,25 @@ export class DataMgr {
                     }
                     // energy
                     if (oldData.energy != newData.energy || oldData.energyMax != oldData.energyMax) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ENERGY_CHANGED, { pioneerId: newData.id });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ENERGY_CHANGED, { uniqueId: newData.uniqueId });
                     }
-                    // map reborn
-                    if (oldData.rebornTime != newData.rebornTime) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_REBON_CHANGE);
-                    }
+                    exsit = true;
+                    break;
+                }
+                if (exsit) {
                     break;
                 }
             }
+            if (!exsit) {
+                newPioneerDatas.push(temple);
+            }
         }
-    };
-    public static pioneer_reborn_res = (e: any) => {
-        const p: s2c_user.Ipioneer_reborn_res = e.data;
-        if (p.res !== 1) {
-            return;
+        if (newPioneerDatas.length > 0) {
+            for (const data of newPioneerDatas) {
+                DataMgr.s.pioneer.addData(data);
+            }
+            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_NEED_REFRESH);
         }
-        const pioneer = DataMgr.s.pioneer.getById(p.pioneerId);
-        if (pioneer == undefined) {
-            return;
-        }
-        NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.replaceLanById("106011", [LanMgr.getLanById(pioneer.name)]));
     };
     public static mappioneer_reborn_change = (e: any) => {
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106009"));
@@ -501,14 +562,14 @@ export class DataMgr {
         const localDatas = DataMgr.s.mapBuilding.getObj_building();
         for (const temple of p.mapbuildings) {
             for (let i = 0; i < localDatas.length; i++) {
-                if (temple.id == localDatas[i].id) {
+                if (temple.uniqueId == localDatas[i].uniqueId) {
                     const oldData = localDatas[i];
                     const newData = DataMgr.s.mapBuilding.replaceData(i, temple);
                     if (oldData.show != newData.show) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_SHOW_CHANGE, { id: newData.id, show: newData.show });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_SHOW_CHANGE, { uniqueId: newData.uniqueId, show: newData.show });
                     }
                     if (oldData.faction != newData.faction) {
-                        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_FACTION_CHANGE, { id: newData.id });
+                        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_FACTION_CHANGE, { uniqueId: newData.uniqueId });
                     }
                     if (oldData.type == MapBuildingType.wormhole && newData.type == MapBuildingType.wormhole) {
                         const oldWorm = oldData as MapBuildingWormholeObject;
@@ -529,7 +590,8 @@ export class DataMgr {
                     if (
                         oldData.gatherPioneerIds.length != newData.gatherPioneerIds.length ||
                         oldData.eventPioneerIds.length != newData.eventPioneerIds.length ||
-                        oldData.explorePioneerIds.length != newData.explorePioneerIds.length
+                        oldData.explorePioneerIds.length != newData.explorePioneerIds.length ||
+                        oldData.maincityFightPioneerIds.length != newData.maincityFightPioneerIds.length
                     ) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_ACTION_PIONEER_CHANGE);
                     }
@@ -538,20 +600,23 @@ export class DataMgr {
                         NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_REBON_CHANGE);
                     }
                     if (newData.eventPioneerIds.length > 0) {
-                        if ((oldData.eventSubId != newData.eventSubId && newData.eventSubId != null) || newData.eventIndex > oldData.eventIndex) {
-                            const result = await UIPanelManger.inst.pushPanel(UIName.NewEventUI);
-                            if (result.success) {
-                                result.node.getComponent(NewEventUI).configuration(newData.eventPioneerIds[0], newData);
+                        const actionPioneerIdSpilts: string[] = newData.eventPioneerIds[0].split("|");
+                        const playerId: string = actionPioneerIdSpilts[0];
+                        if (playerId == DataMgr.s.userInfo.data.id) {
+                            if ((oldData.eventSubId != newData.eventSubId && newData.eventSubId != null) || newData.eventIndex > oldData.eventIndex) {
+                                const result = await UIPanelManger.inst.pushPanel(UIName.NewEventUI);
+                                if (result.success) {
+                                    result.node.getComponent(NewEventUI).configuration(newData.eventPioneerIds[0], newData);
+                                }
                             }
-                        }
-                        if (oldData.eventWaitFightEnemyId != newData.eventWaitFightEnemyId && newData.eventWaitFightEnemyId != null) {
-                            const result = await UIPanelManger.inst.pushPanel(UIName.NewEventBattleUI);
-                            if (result.success) {
-                                result.node.getComponent(NewEventBattleUI).configuration(newData.eventPioneerIds[0], newData)
+                            if (oldData.eventWaitFightEnemyId != newData.eventWaitFightEnemyId && newData.eventWaitFightEnemyId != null) {
+                                const result = await UIPanelManger.inst.pushPanel(UIName.NewEventBattleUI);
+                                if (result.success) {
+                                    result.node.getComponent(NewEventBattleUI).configuration(newData.eventPioneerIds[0], newData);
+                                }
                             }
                         }
                     }
-
                     break;
                 }
             }
@@ -562,16 +627,26 @@ export class DataMgr {
         if (p.res !== 1) {
             return;
         }
-        const npcObj = DataMgr.s.pioneer.getById(p.npcId) as MapNpcPioneerObject;
-        if (!!npcObj && npcObj.talkId != null) {
-            const talkData = TalkConfig.getById(npcObj.talkId);
-            if (talkData == null) {
-                return;
-            }
-            const result = await UIPanelManger.inst.pushPanel(UIName.DialogueUI);
-            if (result.success) {
-                result.node.getComponent(DialogueUI).dialogShow(talkData, null);
-            }
+        const idSplit = p.npcId.split("|");
+        let npcId: string = null;
+        if (idSplit.length == 2) {
+            npcId = idSplit[1];
+        }
+        if (npcId == null) {
+            return;
+        }
+        const canTalkData = DataMgr.s.task.getCanTalkData();
+        const talkData = canTalkData[npcId];
+        if (talkData == undefined) {
+            return;
+        }
+        const talkConfig = TalkConfig.getById(talkData.talkId);
+        if (talkConfig == null) {
+            return;
+        }
+        const result = await UIPanelManger.inst.pushPanel(UIName.DialogueUI);
+        if (result.success) {
+            result.node.getComponent(DialogueUI).dialogShow(talkConfig, null);
         }
     };
     public static player_move_res = (e: any) => {
@@ -591,7 +666,7 @@ export class DataMgr {
         if (p.res !== 1) {
             return;
         }
-        const buildingConfig = MapBuildingConfig.getById(p.buildingId);
+        const buildingConfig = GameMgr.getMapBuildingConfigByExistSlotInfo(p.buildingId);
         if (buildingConfig == undefined) {
             return;
         }
@@ -617,14 +692,87 @@ export class DataMgr {
         }
         GameMusicPlayMgr.playWormholeSetAttackerEffect();
     };
+    public static player_explore_maincity_res = (e: any) => {
+        const p: s2c_user.Iplayer_explore_maincity_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        const uniqueIdSplit = p.buildingId.split("|");
+        if (uniqueIdSplit.length == 2) {
+            const slotId = uniqueIdSplit[0];
+            const data = GameMgr.getMapSlotData(slotId);
+            if (data != undefined) {
+                DataMgr.s.userInfo.data.explorePlayerids.push(parseInt(data.playerId));
+                data.battlePower = p.battlePower;
+                NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Detect Succeed");
+            }
+        }
+    };
+    public static player_pos_detect_res = (e: any) => {
+        const p: s2c_user.Iplayer_pos_detect_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        DataMgr.s.eraseShadow.addDetectObj(v2(p.detect.x, p.detect.y));
+    }
 
     public static player_fight_end = (e: any) => {
         const p: s2c_user.Iplayer_fight_end = e.data;
-        const pioneer = DataMgr.s.pioneer.getById(p.pioneerId);
+        const uniqueId: string = p.pioneerId;
+        const pioneer = DataMgr.s.pioneer.getById(uniqueId);
         if (pioneer == undefined) {
             return;
         }
-        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { id: p.pioneerId });
+        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { uniqueId: uniqueId });
+    };
+
+    public static player_wormhole_tp_random_res = (e: any) => {
+        const p: s2c_user.Iplayer_wormhole_tp_random_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        const animTime: number = 2.8;
+        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_WORMHOLE_BEGIN_ANIM, { uniqueId: p.buildingId, animTime: animTime });
+        setTimeout(() => {
+            const worldPos = GameMainHelper.instance.tiledMapGetPosWorld(p.tpPos.x, p.tpPos.y);
+            if (worldPos != null) {
+                GameMainHelper.instance.changeGameCameraWorldPosition(worldPos, true);
+                GameMainHelper.instance.updateGameViewport();
+            }
+        }, animTime * 1000);
+    };
+
+    public static player_wormhole_tp_select_res = (e: any) => {
+        const p: s2c_user.Iplayer_wormhole_tp_select_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        const animTime: number = 2.8;
+        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_WORMHOLE_BEGIN_ANIM, { uniqueId: p.buildingId, animTime: animTime });
+        setTimeout(() => {
+            const worldPos = GameMainHelper.instance.tiledMapGetPosWorld(p.tpPos.x, p.tpPos.y);
+            if (worldPos != null) {
+                GameMainHelper.instance.changeGameCameraWorldPosition(worldPos, true);
+                GameMainHelper.instance.updateGameViewport();
+            }
+        }, animTime * 1000);
+    };
+
+    public static player_wormhole_tp_back_res = (e: any) => {
+        const p: s2c_user.Iplayer_wormhole_tp_back_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        PioneerMgr.setWormholeBackPioneer(p.pioneerId);
+        NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Pioneer is back");
+    };
+
+    public static player_wormhole_tp_tag_res = (e: any) => {
+        const p: s2c_user.Iplayer_wormhole_tp_tag_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Wormhole is marked");
     };
 
     //------------------------------------- nft
@@ -650,20 +798,6 @@ export class DataMgr {
     };
 
     //------------------------------------- wormhole
-    public static player_wormhole_fight_attacked_res = (e: any) => {
-        const p: s2c_user.Iplayer_wormhole_fight_attacked_res = e.data;
-        if (p.res !== 1) {
-            return;
-        }
-        if (DataMgr.s.userInfo.data.id != p.defenderUid) {
-            return;
-        }
-        GameMusicPlayMgr.playWormholeAttackEffect();
-        NotificationMgr.triggerEvent(NotificationName.MAP_BUILDING_WORMHOLE_FAKE_ATTACK);
-        setTimeout(() => {
-            PioneerMgr.showFakeWormholeFight(p.attackerName);
-        }, 2000);
-    };
     public static player_wormhole_fight_res = (e: any) => {
         const p: s2c_user.Iplayer_wormhole_fight_res = e.data;
         if (p.res !== 1) {
@@ -689,28 +823,6 @@ export class DataMgr {
         if (isSelfAttack) {
             GameMusicPlayMgr.playWormholeAttackEffect();
         }
-
-        NotificationMgr.triggerEvent(NotificationName.FIGHT_FINISHED, {
-            attacker: {
-                name: selfName,
-                id: selfId,
-                avatarIcon: "icon_player_avatar",
-                hp: isSelfWin ? 100 : 0,
-                hpMax: 100,
-            },
-            defender: {
-                name: otherName,
-                id: otherId,
-                hp: isSelfWin ? 0 : 50,
-                hpMax: 50,
-            },
-            attackerIsSelf: true,
-            buildingId: null,
-            position: null,
-            isWin: isSelfWin,
-            rewards: [],
-            isWormhole: true,
-        } as FIGHT_FINISHED_DATA);
         NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("106007"));
     };
 
@@ -778,20 +890,20 @@ export class DataMgr {
 
         if (threes.length <= 0) {
             // select from three cannot to next step
-            const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-            if (rookieStep == RookieStep.OPEN_BOX_1 && p.boxId == "9001") {
-                NetworkMgr.websocketMsg.player_rookie_update({
-                    rookieStep: RookieStep.NPC_TALK_5,
-                });
-            } else if (rookieStep == RookieStep.OPEN_BOX_2 && p.boxId == "9002") {
-                NetworkMgr.websocketMsg.player_rookie_update({
-                    rookieStep: RookieStep.NPC_TALK_7,
-                });
-            } else if (rookieStep == RookieStep.OPEN_BOX_3 && p.boxId == "9003") {
-                NetworkMgr.websocketMsg.player_rookie_update({
-                    rookieStep: RookieStep.SYSTEM_TALK_21,
-                });
-            }
+            // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+            // if (rookieStep == RookieStep.OPEN_BOX_1 && p.boxId == "9001") {
+            //     NetworkMgr.websocketMsg.player_rookie_update({
+            //         rookieStep: RookieStep.NPC_TALK_5,
+            //     });
+            // } else if (rookieStep == RookieStep.OPEN_BOX_2 && p.boxId == "9002") {
+            //     NetworkMgr.websocketMsg.player_rookie_update({
+            //         rookieStep: RookieStep.NPC_TALK_7,
+            //     });
+            // } else if (rookieStep == RookieStep.OPEN_BOX_3 && p.boxId == "9003") {
+            //     NetworkMgr.websocketMsg.player_rookie_update({
+            //         rookieStep: RookieStep.SYSTEM_TALK_21,
+            //     });
+            // }
         }
 
         this._playOpenBoxAnim(p.boxIndex, p.boxId, p.items, p.artifacts, p.threes);
@@ -802,23 +914,23 @@ export class DataMgr {
             return;
         }
         let nextStep: RookieStep = null;
-        const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-        if (rookieStep == RookieStep.OPEN_BOX_1) {
-            NetworkMgr.websocketMsg.player_rookie_update({
-                rookieStep: RookieStep.NPC_TALK_5,
-            });
-            nextStep = RookieStep.NPC_TALK_5;
-        } else if (rookieStep == RookieStep.OPEN_BOX_2) {
-            NetworkMgr.websocketMsg.player_rookie_update({
-                rookieStep: RookieStep.NPC_TALK_7,
-            });
-            nextStep = RookieStep.NPC_TALK_7;
-        } else if (rookieStep == RookieStep.OPEN_BOX_3) {
-            NetworkMgr.websocketMsg.player_rookie_update({
-                rookieStep: RookieStep.SYSTEM_TALK_21,
-            });
-            nextStep = RookieStep.SYSTEM_TALK_21;
-        }
+        // const rookieStep = DataMgr.s.userInfo.data.rookieStep;
+        // if (rookieStep == RookieStep.OPEN_BOX_1) {
+        //     NetworkMgr.websocketMsg.player_rookie_update({
+        //         rookieStep: RookieStep.NPC_TALK_5,
+        //     });
+        //     nextStep = RookieStep.NPC_TALK_5;
+        // } else if (rookieStep == RookieStep.OPEN_BOX_2) {
+        //     NetworkMgr.websocketMsg.player_rookie_update({
+        //         rookieStep: RookieStep.NPC_TALK_7,
+        //     });
+        //     nextStep = RookieStep.NPC_TALK_7;
+        // } else if (rookieStep == RookieStep.OPEN_BOX_3) {
+        //     NetworkMgr.websocketMsg.player_rookie_update({
+        //         rookieStep: RookieStep.SYSTEM_TALK_21,
+        //     });
+        //     nextStep = RookieStep.SYSTEM_TALK_21;
+        // }
         if (nextStep != null) {
             DataMgr.s.userInfo.data.rookieStep = nextStep;
             NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
@@ -896,10 +1008,6 @@ export class DataMgr {
     }
 
     /////////////// task
-    public static user_task_action_getnewtalk = (e: any) => {
-        let p: s2c_user.Iuser_task_action_getnewtalk = e.data;
-        DataMgr.s.pioneer.changeTalk(p.npcId, p.talkId);
-    };
     public static user_task_did_change = (e: any) => {
         let p: s2c_user.Iuser_task_did_change = e.data;
         const runDatas = DataMgr.s.task.getAll();
@@ -914,14 +1022,6 @@ export class DataMgr {
             }
         }
     };
-    public static get_user_task_info_res = (e: any) => {
-        let p: s2c_user.Iget_user_task_info_res = e.data;
-        if (p.res == 1) {
-            NetGlobalData.tasks = p.tasks;
-            DataMgr.s.task.loadObj();
-            NotificationMgr.triggerEvent(NotificationName.TASK_LIST);
-        }
-    };
     public static user_task_action_talk = async (e: any) => {
         let p: s2c_user.Iuser_task_action_talk = e.data;
         const talkConfig = TalkConfig.getById(p.talkId);
@@ -933,6 +1033,34 @@ export class DataMgr {
             return;
         }
         result.node.getComponent(DialogueUI).dialogShow(talkConfig);
+    };
+    public static user_task_talk_info_change = (e: any) => {
+        let p: s2c_user.Iuser_task_talk_info_change = e.data;
+        DataMgr.s.task.updateCanTalkData(p.canTalkData);
+    };
+    public static user_mission_did_change = (e: any) => {
+        let p: s2c_user.Iuser_mission_did_change = e.data;
+        let getNew: boolean = false;
+        const rundata = DataMgr.s.task.getMissionAll();
+        for (const newMission of p.missions) {
+            let isExit: boolean = false;
+            for (const localMission of rundata) {
+                if (newMission.missionId == localMission.missionId) {
+                    isExit = true;
+                    localMission.missionObjCount = newMission.missionObjCount;
+                    localMission.isComplete = newMission.isComplete;
+                    break;
+                }
+            }
+            if (!isExit) {
+                rundata.push(newMission);
+                getNew = true;
+            }
+        }
+        if (getNew) {
+            NotificationMgr.triggerEvent(NotificationName.TASK_NEW_GETTED);
+        }
+        NotificationMgr.triggerEvent(NotificationName.TASK_DID_CHANGE);
     };
 
     //------------------------------------- settlement

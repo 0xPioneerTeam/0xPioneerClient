@@ -43,10 +43,11 @@ export default class ButtonExtension extends Component {
                     originalOnClick.call(this, event);
                 }
                 this.__cooldowning = true;
-                this.scheduleOnce(() => {
+                // use settimeout, because of onDisable schiedule will not action
+                setTimeout(()=> {
                     this.interactable = this.__finishInteractable;
                     this.__cooldowning = false;
-                }, self.disableDuration);
+                }, self.disableDuration * 1000);
             }
         };
         // listen interactable change

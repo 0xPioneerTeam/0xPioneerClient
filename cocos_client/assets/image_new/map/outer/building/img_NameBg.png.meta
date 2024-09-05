@@ -1,5 +1,5 @@
 {
-  "ver": "1.0.26",
+  "ver": "1.0.27",
   "importer": "image",
   "imported": true,
   "uuid": "fe58c696-61a2-46b6-befb-74a51d1b3e5b",
@@ -52,8 +52,8 @@
         "rawHeight": 38,
         "borderTop": 0,
         "borderBottom": 0,
-        "borderLeft": 0,
-        "borderRight": 0,
+        "borderLeft": 29,
+        "borderRight": 36,
         "packable": true,
         "pixelsToUnit": 100,
         "pivotX": 0.5,
@@ -129,6 +129,6 @@
     "type": "sprite-frame",
     "hasAlpha": true,
     "fixAlphaTransparencyArtifacts": false,
-    "redirect": "fe58c696-61a2-46b6-befb-74a51d1b3e5b@f9941"
+    "redirect": "fe58c696-61a2-46b6-befb-74a51d1b3e5b@6c48a"
   }
 }

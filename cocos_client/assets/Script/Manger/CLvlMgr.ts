@@ -3,7 +3,7 @@ import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import ItemConfig from "../Config/ItemConfig";
 import LvlupConfig from "../Config/LvlupConfig";
 import { InnerBuildingType } from "../Const/BuildingDefine";
-import { ConfigType, WorldTreasureBoxRarityParam, WorldTreasureBoxRarityShowNameParam } from "../Const/Config";
+import { ConfigType, WorldBoxThresholdParam, WorldTreasureBoxRarityParam, WorldTreasureBoxRarityShowNameParam } from "../Const/Config";
 import { GameRankNameLanId, GetPropData } from "../Const/ConstDefine";
 import { CLvlCondition, CLvlConditionType, CLvlEffect, CLvlEffectType, CLvlModel } from "../Const/Lvlup";
 import { DataMgr } from "../Data/DataMgr";
@@ -207,5 +207,59 @@ export default class CLvlMgr {
     public getCurrentCLvlEffectByType(type: CLvlEffectType): CLvlEffect {
         this.getData();
         return this.getCLvlEffectByLevel(DataMgr.s.userInfo.data.level)?.get(type);
+    }
+
+    public getCurretLevelUpFinishCondition(): { value: number, total: number } {
+        const conditions = this.getData()[DataMgr.s.userInfo.data.level - 1]?.condition;
+        if (conditions == undefined) {
+            return null;
+        }
+        let finishedCount: number = 0;
+        for (let i = 0; i < conditions.length; i++) {
+            const condition = conditions[i];
+            let progress: number = 0;
+            if (condition.type == CLvlConditionType.InnerBuildingLevelUpToSpecificLevel) {
+                const innerBuildingLevel = DataMgr.s.innerBuilding.getInnerBuildingLevel(condition.innerBuildingCLvl.buildingId as InnerBuildingType);
+                progress = innerBuildingLevel;
+            } else if (condition.type == CLvlConditionType.HeatToSpecificLevel) {
+                const heatValue: number = DataMgr.s.userInfo.data.heatValue.currentHeatValue;
+                const worldBoxThreshold: number[] = (ConfigConfig.getConfig(ConfigType.WorldBoxThreshold) as WorldBoxThresholdParam).thresholds;
+                const gapNum: number = 5;
+                let heatLevel: number = gapNum;
+                for (let i = 0; i < gapNum; i++) {
+                    let endNum: number = worldBoxThreshold[i];
+                    if (heatValue <= endNum) {
+                        heatLevel = i + 1;
+                        break;
+                    }
+                }
+                progress = heatLevel;
+            } else {
+                for (const temp of DataMgr.s.userInfo.data.CLvlCondtion) {
+                    if (temp.type == condition.type) {
+                        if (
+                            (temp.type == CLvlConditionType.CollectSpecificLevelResourceToSpecificTimes && temp.collect.level == condition.collect.level) ||
+                            (temp.type == CLvlConditionType.ExploreSpecificLevelEventToSpecificTimes && temp.explore.level == condition.explore.level) ||
+                            (temp.type == CLvlConditionType.GetSpecificRankPioneerToSpecificNum && temp.getRankPioneer.rank == condition.getRankPioneer.rank) ||
+                            (temp.type == CLvlConditionType.GetSpecificLevelPioneerToSpecificNum &&
+                                temp.getLevelPioneer.level == condition.getLevelPioneer.level) ||
+                            (temp.type == CLvlConditionType.CostSpecificResourceToSpecificNum && temp.cost.itemId == condition.cost.itemId) ||
+                            (temp.type == CLvlConditionType.KillSpecificMonsterToSpecificNum && temp.kill.level == condition.kill.level) ||
+                            temp.type == CLvlConditionType.WinOtherPlayerToSpecificTimes
+                        ) {
+                            progress = temp.value;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (progress >= condition.value) {
+                finishedCount += 1;
+            } 
+        }
+        return {
+            value: finishedCount,
+            total: conditions.length
+        }
     }
 }

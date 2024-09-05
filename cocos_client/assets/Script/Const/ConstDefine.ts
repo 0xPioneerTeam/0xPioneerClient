@@ -3,8 +3,10 @@ import { ItemConfigType } from "./Item";
 
 export const GAME_JUMP_SWITCH_IS_OPEN = true;
 export const GAME_SKIP_ROOKIE = false;
-export const GAME_ENV_IS_DEBUG = true;
+export const GAME_ENV_IS_DEBUG = false;
 export const PioneerGameTest = false;
+
+export const TILEMAP_SIZE = 16; //tileMap layer size 16*16
 
 export enum AttrType {
     HP = 0,
@@ -26,7 +28,7 @@ export enum BackpackCategoryType {
 export enum BackpackArrangeType {
     Recently = "Recently",
     Rarity = "Rarity",
-    Type = "Type"
+    Type = "Type",
 }
 
 export enum ResourceCorrespondingItem {
@@ -37,6 +39,7 @@ export enum ResourceCorrespondingItem {
     Energy = "8005",
     Gold = "8006",
     NFTExp = "8007",
+    NFTRankExp = "8008",
 }
 
 export enum NPCNameLangType {
@@ -134,7 +137,10 @@ export const GameRankColor = [
 export const GameRankNameLanId = ["105001", "105002", "105003", "105004", "105005"];
 
 export enum MapInteractType {
-    Wormhole,
+    WmMatch,
+    WmTeleport,
+    WmMark,
+    WmRecall,
     Move,
     Attack,
     Explore,
@@ -143,4 +149,8 @@ export enum MapInteractType {
     Camp,
     CampOut,
     Talk,
+    Detect,
+    SiegeCity,
+    EnterInner,
+    MainBack,
 }

@@ -33,7 +33,6 @@ export class PlayerListUI extends Component {
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_SHOW_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._refreshPlayerList, this);
-        NotificationMgr.addListener(NotificationName.MAP_PIONEER_EVENTID_CHANGE, this._refreshPlayerList, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._refreshPlayerList, this);
 
@@ -51,7 +50,6 @@ export class PlayerListUI extends Component {
 
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_SHOW_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._refreshPlayerList, this);
-        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_EVENTID_CHANGE, this._refreshPlayerList, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._refreshPlayerList, this);
 
@@ -68,18 +66,11 @@ export class PlayerListUI extends Component {
 
     private _refreshPlayerList() {
         this._pioneers = [];
-        for (const temple of DataMgr.s.pioneer.getAllPlayers()) {
-            if (temple.show) {
-                const building = DataMgr.s.mapBuilding.getBuildingById(temple.actionBuildingId);
-                if (temple.actionType == MapPioneerActionType.eventing && building != null && building.eventPioneerDatas.has(temple.id)) {
-                    // eventing use building data
-                    const playerObj = building.eventPioneerDatas.get(temple.id) as MapPlayerPioneerObject;
-                    playerObj.actionEndTimeStamp = temple.actionEndTimeStamp;
-                    this._pioneers.push(playerObj);
-                } else {
-                    this._pioneers.push(temple);
-                }
+        for (const temple of DataMgr.s.pioneer.getAllSelfPlayers()) {
+            if (temple.actionType == MapPioneerActionType.inCity) {
+                continue;
             }
+            this._pioneers.push(temple);
         }
         let i = 0;
         for (i; i < this._pioneers.length; i++) {
@@ -115,7 +106,7 @@ export class PlayerListUI extends Component {
                     const currentWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(currentMapPos.x, currentMapPos.y);
                     GameMainHelper.instance.changeGameCameraWorldPosition(currentWorldPos, true);
                 }
-                DataMgr.s.pioneer.changeCurrentAction(this._pioneers[index].id);
+                DataMgr.s.pioneer.changeCurrentAction(this._pioneers[index].uniqueId);
                 this._refreshPlayerList();
                 NotificationMgr.triggerEvent(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE);
             }

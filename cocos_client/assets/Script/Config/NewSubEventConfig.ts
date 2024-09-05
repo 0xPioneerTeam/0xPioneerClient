@@ -1,5 +1,6 @@
 import { resources } from "cc";
 import { NewSubEventConfigData } from "../Const/NewEventDefine";
+import CLog from "../Utils/CLog";
 
 export default class NewSubEventConfig {
     private static _confs: NewSubEventConfigData[] = [];
@@ -16,6 +17,7 @@ export default class NewSubEventConfig {
         });
        
         this._confs = obj;
+        CLog.debug("newsub init success", this._confs);
         return true;
     }
 

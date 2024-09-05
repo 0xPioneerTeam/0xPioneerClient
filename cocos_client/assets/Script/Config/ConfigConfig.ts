@@ -192,6 +192,26 @@ export default class ConfigConfig {
                     type: key,
                     value: param[0],
                 };
+            } else if (key == ConfigType.WormholeMatchConsume) {
+                temple = {
+                    type: key,
+                    consumes: param,
+                }
+            } else if (key == ConfigType.WormholeTeleportConsume) {
+                temple = {
+                    type: key,
+                    consumes: param,
+                }
+            } else if (key == ConfigType.InitMaxTroopNum) {
+                temple = {
+                    type: key,
+                    num: param[0],
+                }
+            } else if (key == ConfigType.DetectCost) {
+                temple = {
+                    type: key,
+                    cost: param[0],
+                }
             }
             this._config.set(key as ConfigType, temple);
         }

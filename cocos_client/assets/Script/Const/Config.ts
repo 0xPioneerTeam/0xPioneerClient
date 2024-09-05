@@ -39,11 +39,18 @@ export enum ConfigType {
 
     MapDifficultCoefficient = "40001",
 
+    WormholeMatchConsume = "420004",
+    WormholeTeleportConsume = "420005",
+
     PiotToHeatCoefficient = "430002",
 
     SelectFromThreeGetAllCostCoefficient = "10008",
 
     PerNumSelectBox = "10009",
+
+    InitMaxTroopNum = "500002",
+
+    DetectCost = "500003",
 }
 
 export interface ConfigData {
@@ -158,4 +165,17 @@ export interface BuyEnergyThresParam extends ConfigData {
 
 export interface BuyEnergyCoefficientParam extends ConfigData {
     coefficient: number;
+}
+
+export interface WormholeMatchConsumeParam extends ConfigData {
+    consumes: [number, string, number][];
+}
+export interface WormholeTeleportConsumeParam extends ConfigData {
+    consumes: [number, string, number][];
+}
+export interface InitMaxTroopNumParam extends ConfigData {
+    num: number;
+}
+export interface DetectCostParam extends ConfigData {
+    cost: number;
 }

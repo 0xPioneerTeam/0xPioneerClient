@@ -1,20 +1,4 @@
-import {
-    Component,
-    Label,
-    ProgressBar,
-    Node,
-    Sprite,
-    _decorator,
-    Tween,
-    v3,
-    warn,
-    EventHandler,
-    Button,
-    randomRangeInt,
-    UIOpacity,
-    instantiate,
-    tween,
-} from "cc";
+import { Component, Label, ProgressBar, Node, Sprite, _decorator, v3, instantiate, tween } from "cc";
 import { ResourceCorrespondingItem } from "../Const/ConstDefine";
 import { UIName } from "../Const/ConstUIDefine";
 import { CivilizationLevelUpUI } from "./CivilizationLevelUpUI";
@@ -24,6 +8,10 @@ import { NotificationName } from "../Const/Notification";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import { ClvlMgr, GameMgr } from "../Utils/Global";
+import { InnerBuildingType } from "../Const/BuildingDefine";
+import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
+import { RedPointView } from "./View/RedPointView";
 const { ccclass, property } = _decorator;
 
 @ccclass("TopUI")
@@ -58,6 +46,11 @@ export default class TopUI extends Component {
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_NAME, this.refreshTopUI, this);
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_EXP, this._onPlayerExpChanged, this);
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_HEAT, this.refreshTopUI, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_CLVL_CONDTION_CHANGE, this.refreshTopUI, this);
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this.refreshTopUI, this);
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_DATA_CHANGE, this.refreshTopUI, this);
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this.refreshTopUI, this);
     }
 
     start() {
@@ -69,26 +62,34 @@ export default class TopUI extends Component {
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_NAME, this.refreshTopUI, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_EXP, this._onPlayerExpChanged, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_HEAT, this.refreshTopUI, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_CLVL_CONDTION_CHANGE, this.refreshTopUI, this);
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this.refreshTopUI, this);
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_DATA_CHANGE, this.refreshTopUI, this);
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this.refreshTopUI, this);
     }
 
     refreshTopUI() {
         const info = DataMgr.s.userInfo.data;
         this.txtPlayerName.string = info.name;
         this.txtPlayerLV.string = "C.LV" + info.level;
-        this.txtLvProgress.string = `${info.exp}/${1000}`;
         this.txtMoney.string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Gold).toString();
         this.txtEnergy.string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Energy).toString();
 
-        const lvlupConfig = LvlupConfig.getById(info.level.toString());
-        const maxExp = lvlupConfig.exp;
-        this.lvProgress.progress = Math.min(1, info.exp / maxExp);
-        this.node.getChildByPath("progressLv/txtLvProgress").getComponent(Label).string = info.exp + "/" + maxExp;
+        const levelUpFinishCondition = ClvlMgr.getCurretLevelUpFinishCondition();
+        this.txtLvProgress.string = levelUpFinishCondition.value + "/" + levelUpFinishCondition.total;
+        this.lvProgress.progress = Math.min(1, levelUpFinishCondition.value / levelUpFinishCondition.total);
+        this.node
+            .getChildByPath("RedPointView")
+            .getComponent(RedPointView)
+            .refreshUI(levelUpFinishCondition.value >= levelUpFinishCondition.total ? 1 : 0, false);
 
         const resourceView = this.node.getChildByName("Resource");
         resourceView.getChildByPath("Food/Label").getComponent(Label).string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Food).toString();
         resourceView.getChildByPath("Wood/Label").getComponent(Label).string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Wood).toString();
         resourceView.getChildByPath("Stone/Label").getComponent(Label).string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Stone).toString();
-        resourceView.getChildByPath("Troops/Label").getComponent(Label).string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop).toString();
+
+        resourceView.getChildByPath("Troops/Label").getComponent(Label).string = GameMgr.getAllTroopNum() + "/" + GameMgr.getMaxTroopNum();
     }
 
     private _playExpGettedAnim(expValue: number, playOver: () => void = null) {
@@ -121,11 +122,13 @@ export default class TopUI extends Component {
     }
     //----------------------------------------------- notification
     private _onPlayerExpChanged(data: { exp: number }): void {
-        this._playExpGettedAnim(data.exp, () => {
-            this.refreshTopUI();
-        });
+        // this._playExpGettedAnim(data.exp, () => {
+        //     this.refreshTopUI();
+        // });
+        this.refreshTopUI();
     }
     private async _onPlayerLvlupChanged(): Promise<void> {
+        this.refreshTopUI();
         const currentLevel: number = DataMgr.s.userInfo.data.level;
         const levelConfig = LvlupConfig.getById(currentLevel.toString());
         if (levelConfig != null) {

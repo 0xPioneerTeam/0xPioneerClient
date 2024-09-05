@@ -1,5 +1,5 @@
 import { _decorator, Animation, instantiate, inverseLerp, Label, Layout, Node, ParticleSystem2D, Prefab, UITransform, v3 } from "cc";
-import { LanMgr, ResourcesMgr } from "../../../Utils/Global";
+import { GameMgr, LanMgr, ResourcesMgr } from "../../../Utils/Global";
 import { MapBuildingType, InnerBuildingType, UserInnerBuildInfo } from "../../../Const/BuildingDefine";
 import ViewController from "../../../BasicView/ViewController";
 import NotificationMgr from "../../../Basic/NotificationMgr";
@@ -7,7 +7,7 @@ import InnerBuildingLvlUpConfig from "../../../Config/InnerBuildingLvlUpConfig";
 import InnerBuildingConfig from "../../../Config/InnerBuildingConfig";
 import { NotificationName } from "../../../Const/Notification";
 import { MapMemberFactionType } from "../../../Const/ConstDefine";
-import { MapBuildingObject, MapBuildingTavernObject, MapBuildingWormholeObject } from "../../../Const/MapBuilding";
+import { MapBuildingMainCityObject, MapBuildingObject, MapBuildingTavernObject, MapBuildingWormholeObject } from "../../../Const/MapBuilding";
 import { DataMgr } from "../../../Data/DataMgr";
 import CommonTools from "../../../Tool/CommonTools";
 import ArtifactConfig from "../../../Config/ArtifactConfig";
@@ -20,6 +20,8 @@ export class OuterBuildingView extends ViewController {
     public async refreshUI(building: MapBuildingObject) {
         this._building = building;
 
+        this._isSelfMainCity = GameMgr.getMapBuildingSlotByUnqueId(building.uniqueId) == DataMgr.s.mapBuilding.getSelfMainCitySlotId();
+
         const infoView = this.node.getChildByPath("InfoView/Content");
         this.node.getChildByPath("InfoView/Gap").getComponent(UITransform).height =
             this._viewHeightMap[this._building.animType] == null ? 120 : this._viewHeightMap[this._building.animType];
@@ -27,7 +29,20 @@ export class OuterBuildingView extends ViewController {
 
         let name: string = "";
         if (building.type == MapBuildingType.city) {
-            name = DataMgr.s.userInfo.data.name + " " + LanMgr.getLanById(building.name);
+            if (this._isSelfMainCity) {
+                name = DataMgr.s.userInfo.data.name + " " + LanMgr.getLanById(building.name);
+            } else {
+                const uniqueIdSplit = building.uniqueId.split("|");
+                if (uniqueIdSplit.length == 2) {
+                    const data = GameMgr.getMapSlotData(uniqueIdSplit[0]);
+                    if (data == undefined || data.playerId == "0") {
+                        name = "empty city";
+                    } else {
+                        name = data.pname + " " + LanMgr.getLanById(building.name);
+                    }
+                }
+            }
+           
         } else {
             name = LanMgr.getLanById(building.name);
         }
@@ -75,45 +90,47 @@ export class OuterBuildingView extends ViewController {
             } else {
                 infoView.getChildByPath("Level").active = false;
             }
-            let tempShowAni: string = null;
-            const effectArtifac = DataMgr.s.artifact.getObj_artifact_equiped();
-            for (const temp of effectArtifac) {
-                const config: ArtifactConfigData = ArtifactConfig.getById(temp.artifactConfigId);
-                if (config == null) {
-                    return;
+
+            if (this._isSelfMainCity) {
+                let tempShowAni: string = null;
+                const effectArtifac = DataMgr.s.artifact.getObj_artifact_equiped();
+                for (const temp of effectArtifac) {
+                    const config: ArtifactConfigData = ArtifactConfig.getById(temp.artifactConfigId);
+                    if (config == null) {
+                        return;
+                    }
+                    if (config.rank == 5) {
+                        tempShowAni = config.ani;
+                        break;
+                    }
                 }
-                if (config.rank == 5) {
-                    tempShowAni = config.ani;
-                    break;
+                if (tempShowAni != this._showArtifactAni) {
+                    if (this._artifactShowView != null) {
+                        this._artifactShowView.destroy();
+                        this._artifactShowView = null;
+                    }
+                    if (tempShowAni != null) {
+                        const prb = await ResourcesMgr.loadResource(BundleName.MainBundle, "prefab/artifactX5/Prefab/artifact/" + tempShowAni, Prefab);
+                        this._artifactShowView = instantiate(prb);
+                        infoView.getChildByPath("ArtifactShow").addChild(this._artifactShowView);
+                    }
+                    this._showArtifactAni = tempShowAni;
                 }
-            }
-            if (tempShowAni != this._showArtifactAni) {
-                if (this._artifactShowView != null) {
-                    this._artifactShowView.destroy();
-                    this._artifactShowView = null;
-                }
-                if (tempShowAni != null) {
-                    const prb = await ResourcesMgr.loadResource(BundleName.MainBundle, "prefab/artifactX5/Prefab/artifact/" + tempShowAni, Prefab);
-                    this._artifactShowView = instantiate(prb);
-                    infoView.getChildByPath("ArtifactShow").addChild(this._artifactShowView);
-                }
-                this._showArtifactAni = tempShowAni;
             }
         } else if (building.type == MapBuildingType.explore) {
-            exploreIcon.active = true;
-            if (building.explorePioneerIds != null && building.explorePioneerIds.length > 0) {
-                exploreView.active = true;
-                exploreView.getChildByPath("Icon/pioneer_default").active = building.explorePioneerIds[0] == "pioneer_0";
-                exploreView.getChildByPath("Icon/secretGuard").active = building.explorePioneerIds[0] == "pioneer_1";
-                exploreView.getChildByPath("Icon/doomsdayGangSpy").active = building.explorePioneerIds[0] == "pioneer_2";
-                exploreView.getChildByPath("Icon/rebels").active = building.explorePioneerIds[0] == "pioneer_3";
-
-                const currentTimeStamp: number = new Date().getTime();
-                const tempPioneer = DataMgr.s.pioneer.getById(building.explorePioneerIds[0]);
-                exploreView.getChildByPath("Label").getComponent(Label).string = CommonTools.formatSeconds(
-                    (tempPioneer.actionEndTimeStamp - currentTimeStamp) / 1000
-                );
-            }
+            // exploreIcon.active = true;
+            // if (building.explorePioneerIds != null && building.explorePioneerIds.length > 0) {
+            //     exploreView.active = true;
+            //     exploreView.getChildByPath("Icon/pioneer_default").active = building.explorePioneerIds[0] == "pioneer_0";
+            //     exploreView.getChildByPath("Icon/secretGuard").active = building.explorePioneerIds[0] == "pioneer_1";
+            //     exploreView.getChildByPath("Icon/doomsdayGangSpy").active = building.explorePioneerIds[0] == "pioneer_2";
+            //     exploreView.getChildByPath("Icon/rebels").active = building.explorePioneerIds[0] == "pioneer_3";
+            //     const currentTimeStamp: number = new Date().getTime();
+            //     const tempPioneer = DataMgr.s.pioneer.getById(building.explorePioneerIds[0]);
+            //     exploreView.getChildByPath("Label").getComponent(Label).string = CommonTools.formatSeconds(
+            //         (tempPioneer.actionEndTimeStamp - currentTimeStamp) / 1000
+            //     );
+            // }
         } else if (building.type == MapBuildingType.stronghold) {
             strongholdIcon.active = true;
             strongholdView.active = true;
@@ -150,8 +167,16 @@ export class OuterBuildingView extends ViewController {
             // }
         } else if (building.type == MapBuildingType.wormhole) {
             strongholdIcon.active = true;
-            const wormholeObj = building as MapBuildingWormholeObject;
-            if (this._fakeAttack) {
+            if (this._wormholePlayBeginAnimTime > 0) {
+                const preparedView = this.node.getChildByPath("BuildingContent/WormholeBeginAttack");
+                preparedView.active = true;
+                preparedView.getChildByPath("Lighting_Point_Effect_A").getComponent(ParticleSystem2D).resetSystem();
+                this.scheduleOnce(() => {
+                    preparedView.active = false;
+                    this.refreshUI(this._building);
+                }, this._wormholePlayBeginAnimTime);
+                this._wormholePlayBeginAnimTime = 0;
+            } else if (this._fakeAttack) {
                 const attackComeView = this.node.getChildByPath("BuildingContent/WormholeAttackerCome");
                 if (!attackComeView.active) {
                     attackComeView.active = true;
@@ -170,67 +195,18 @@ export class OuterBuildingView extends ViewController {
                         this.refreshUI(this._building);
                     }, 2.5);
                 }
-                this["PREPARED_VIEW_ACTIVED"] = false;
             } else {
-                wormholdView.active = wormholeObj.attacker.size > 0;
-                if (wormholdView.active) {
-                    const currentTimeStamp: number = new Date().getTime();
-                    const prepareDidFinish: boolean = wormholeObj.wormholdCountdownTime > currentTimeStamp;
-                    const maxWormholdLength: number = 3;
-                    for (let i = 0; i < maxWormholdLength; i++) {
-                        const tempView = wormholdView.getChildByPath("WormholdContent/Item_" + i);
-                        const emptyView = tempView.getChildByPath("Empty");
-                        const prepareView = tempView.getChildByPath("Prepare");
-                        if (wormholeObj.attacker.has(i)) {
-                            const pioneerId = wormholeObj.attacker.get(i);
-                            emptyView.active = false;
-                            prepareView.active = true;
-                            prepareView.getChildByPath("Icon/pioneer_default").active = pioneerId == "pioneer_0";
-                            prepareView.getChildByPath("Icon/secretGuard").active = pioneerId == "pioneer_1";
-                            prepareView.getChildByPath("Icon/doomsdayGangSpy").active = pioneerId == "pioneer_2";
-                            prepareView.getChildByPath("Icon/rebels").active = pioneerId == "pioneer_3";
-                            prepareView.getChildByPath("IconGarrison").active = !prepareDidFinish;
-                        } else {
-                            emptyView.active = true;
-                            prepareView.active = false;
-                        }
-                    }
-                    if (prepareDidFinish) {
-                        // begin attack
-                        const preparedView = this.node.getChildByPath("BuildingContent/WormholeBeginAttack");
-                        preparedView.active = true;
-                        if (this["PREPARED_VIEW_ACTIVED"] == false) {
-                            // play anim
-                            preparedView.getChildByPath("Lighting_Point_Effect_A").getComponent(ParticleSystem2D).resetSystem();
-                            this["PREPARED_VIEW_ACTIVED"] = true;
-                        }
-
-                        wormholdView.getChildByPath("Countdown").active = true;
-                        // useLanMgr
-                        // wormholdView.getChildByPath("Countdown").getComponent(Label).string = LanMgr.getLanById("107549") + ":" + CommonTools.formatSeconds(wormholeObj.wormholdCountdownTime);
-                        wormholdView.getChildByPath("Countdown").getComponent(Label).string =
-                            "wormhold traveling: " + CommonTools.formatSeconds((wormholeObj.wormholdCountdownTime - currentTimeStamp) / 1000);
-                    } else {
-                        // one more attacker
-                        this.node.getChildByPath("BuildingContent/WormholeStayOneMore").active = true;
-
-                        wormholdView.getChildByPath("Countdown").active = false;
-                        this["PREPARED_VIEW_ACTIVED"] = false;
-                    }
-                } else {
-                    // common
-                    this.node.getChildByPath("BuildingContent/" + this._building.animType).active = true;
-                    this["PREPARED_VIEW_ACTIVED"] = false;
-                }
+                // common
+                this.node.getChildByPath("BuildingContent/" + this._building.animType).active = true;
             }
         } else if (building.type == MapBuildingType.resource) {
             collectIcon.active = true;
             if (building.gatherPioneerIds != null && building.gatherPioneerIds.length > 0) {
                 exploreView.active = true;
-                exploreView.getChildByPath("Icon/pioneer_default").active = building.gatherPioneerIds[0] == "pioneer_0";
-                exploreView.getChildByPath("Icon/secretGuard").active = building.gatherPioneerIds[0] == "pioneer_1";
-                exploreView.getChildByPath("Icon/doomsdayGangSpy").active = building.gatherPioneerIds[0] == "pioneer_2";
-                exploreView.getChildByPath("Icon/rebels").active = building.gatherPioneerIds[0] == "pioneer_3";
+
+                for (const child of exploreView.getChildByPath("Icon").children) {
+                    child.active = building.gatherPioneerIds[0].indexOf(child.name) != -1;
+                }
 
                 const currentTimeStamp: number = new Date().getTime();
                 const tempPioneer = DataMgr.s.pioneer.getById(building.gatherPioneerIds[0]);
@@ -240,18 +216,16 @@ export class OuterBuildingView extends ViewController {
 
                 collectView.active = true;
                 for (const child of collectView.children) {
-                    child.active = child.name == building.gatherPioneerIds[0];
+                    child.active = building.gatherPioneerIds[0].indexOf(child.name) != -1;
                 }
             }
         } else if (building.type == MapBuildingType.event) {
             exploreIcon.active = true;
             if (building.eventPioneerIds != null && building.eventPioneerIds.length > 0) {
                 exploreView.active = true;
-                exploreView.getChildByPath("Icon/pioneer_default").active = building.eventPioneerIds[0] == "pioneer_0";
-                exploreView.getChildByPath("Icon/secretGuard").active = building.eventPioneerIds[0] == "pioneer_1";
-                exploreView.getChildByPath("Icon/doomsdayGangSpy").active = building.eventPioneerIds[0] == "pioneer_2";
-                exploreView.getChildByPath("Icon/rebels").active = building.eventPioneerIds[0] == "pioneer_3";
-                exploreView.getChildByPath("Label").getComponent(Label).string = "Exploring";
+                for (const child of exploreView.getChildByPath("Icon").children) {
+                    child.active = building.eventPioneerIds[0].indexOf(child.name) != -1;
+                }
             }
         } else if (building.type == MapBuildingType.tavern) {
             exploreIcon.active = true;
@@ -292,7 +266,10 @@ export class OuterBuildingView extends ViewController {
         }
     }
 
+    private _wormholePlayBeginAnimTime: number = 0;
     private _fakeAttack: boolean = false;
+
+    private _isSelfMainCity: boolean = false;
 
     private _toGetEnergyTip: Node = null;
     private _toBuildBuildingTip: Node = null;
@@ -337,14 +314,13 @@ export class OuterBuildingView extends ViewController {
     protected viewDidStart(): void {
         super.viewDidStart();
 
-        // worm attack begin anim check key
-        this["PREPARED_VIEW_ACTIVED"] = false;
-
         NotificationMgr.addListener(NotificationName.RESOURCE_GETTED, this._onResourceChanged, this);
         NotificationMgr.addListener(NotificationName.RESOURCE_CONSUMED, this._onResourceChanged, this);
         NotificationMgr.addListener(NotificationName.ARTIFACT_EQUIP_DID_CHANGE, this._onArtifactEquipDidChange, this);
         NotificationMgr.addListener(NotificationName.MAP_BUILDING_WORMHOLE_FAKE_ATTACK, this._onWormholeFakeAttack, this);
+        NotificationMgr.addListener(NotificationName.MAP_BUILDING_WORMHOLE_BEGIN_ANIM, this._onWormholeBeginAnim, this);
 
+        NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_NAME, this._onUserInfoChangeName, this);
         this.schedule(() => {
             if (this._building != null) {
                 const currentTimestamp: number = new Date().getTime();
@@ -386,6 +362,10 @@ export class OuterBuildingView extends ViewController {
         NotificationMgr.removeListener(NotificationName.RESOURCE_CONSUMED, this._onResourceChanged, this);
         NotificationMgr.removeListener(NotificationName.ARTIFACT_EQUIP_DID_CHANGE, this._onArtifactEquipDidChange, this);
         NotificationMgr.removeListener(NotificationName.MAP_BUILDING_WORMHOLE_FAKE_ATTACK, this._onWormholeFakeAttack, this);
+        NotificationMgr.removeListener(NotificationName.MAP_BUILDING_WORMHOLE_BEGIN_ANIM, this._onWormholeBeginAnim, this);
+
+        NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_NAME, this._onUserInfoChangeName, this);
+
     }
 
     protected viewUpdate(dt: number): void {
@@ -410,7 +390,12 @@ export class OuterBuildingView extends ViewController {
             return;
         }
         this._toBuildBuildingTip.active = false;
-        if (this._building != null && this._building.type == MapBuildingType.city && this._building.faction != MapMemberFactionType.enemy) {
+        if (
+            this._isSelfMainCity &&
+            this._building != null &&
+            this._building.type == MapBuildingType.city &&
+            this._building.faction != MapMemberFactionType.enemy
+        ) {
             let canBuild: boolean = false;
             const innerBuildings = DataMgr.s.innerBuilding.data;
             innerBuildings.forEach((value: UserInnerBuildInfo, key: InnerBuildingType) => {
@@ -456,6 +441,33 @@ export class OuterBuildingView extends ViewController {
             return;
         }
         this._fakeAttack = true;
+        this.refreshUI(this._building);
+    }
+    private _onWormholeBeginAnim(data: { uniqueId: string, animTime: number }) {
+        if (data == null) {
+            return;
+        }
+        const { uniqueId, animTime } = data;
+        if (uniqueId == null || animTime <= 0) {
+            return;
+        }
+        if (this._building == null) {
+            return;
+        }
+        if (this._building.type != MapBuildingType.wormhole || this._building.uniqueId != uniqueId) {
+            return;
+        }
+        this._wormholePlayBeginAnimTime = animTime;
+        this.refreshUI(this._building);
+    }
+
+    private  _onUserInfoChangeName() {
+        if (this._building == null) {
+            return;
+        }
+        if (this._building.type != MapBuildingType.city) {
+            return;
+        }
         this.refreshUI(this._building);
     }
 }

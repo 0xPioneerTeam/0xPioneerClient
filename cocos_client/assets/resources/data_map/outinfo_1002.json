@@ -1,0 +1,278 @@
+{
+    "url": "",
+    "name": "deco_layer",
+    "show": true,
+    "positions": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+    },
+    "children": [
+        {
+            "url": "Barrel_A.prefab",
+            "name": "Barrel_A",
+            "show": true,
+            "positions": {
+                "x": -477.848,
+                "y": -410.533,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 4,
+                    "y": 12
+                }
+            ]
+        },
+        {
+            "url": "Stone_A.prefab",
+            "name": "Stone_A",
+            "show": true,
+            "positions": {
+                "x": 343.227,
+                "y": 430.864,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 10,
+                    "y": 3
+                }
+            ]
+        },
+        {
+            "url": "Stone_A.prefab",
+            "name": "Stone_A",
+            "show": true,
+            "positions": {
+                "x": -484.722,
+                "y": 147.823,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 4,
+                    "y": 6
+                }
+            ]
+        },
+        {
+            "url": "Barrel_A.prefab",
+            "name": "Barrel_A",
+            "show": true,
+            "positions": {
+                "x": 411.177,
+                "y": 544.67,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 11,
+                    "y": 2
+                }
+            ]
+        },
+        {
+            "url": "Guidepost_01_Group.prefab",
+            "name": "Guidepost_01_Group",
+            "show": true,
+            "positions": {
+                "x": 918.823,
+                "y": 33.471,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 15,
+                    "y": 8
+                }
+            ]
+        },
+        {
+            "url": "Village_Group_C_01_Damage.prefab",
+            "name": "Village_Group_C_01_Damage",
+            "show": true,
+            "positions": {
+                "x": -635.228,
+                "y": -476.592,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 2,
+                "y": 2,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 3,
+                    "y": 13
+                },
+                {
+                    "x": 2,
+                    "y": 13
+                }
+            ]
+        },
+        {
+            "url": "Ornamental_01_Group.prefab",
+            "name": "Ornamental_01_Group",
+            "show": true,
+            "positions": {
+                "x": -433.777,
+                "y": 474.389,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 4,
+                    "y": 3
+                }
+            ]
+        },
+        {
+            "url": "Ornamental_01_Group.prefab",
+            "name": "Ornamental_01_Group",
+            "show": true,
+            "positions": {
+                "x": -704.04,
+                "y": 491.535,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 2,
+                    "y": 3
+                }
+            ]
+        },
+        {
+            "url": "Tree_Group.prefab",
+            "name": "Tree_Group",
+            "show": true,
+            "positions": {
+                "x": -624.207,
+                "y": 408.659,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 3,
+                    "y": 4
+                }
+            ]
+        }
+    ]
+}

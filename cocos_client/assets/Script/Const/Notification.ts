@@ -6,6 +6,10 @@ export enum NotificationName {
     USER_LOGIN_SUCCEED,
 
     //------------------------------------ rookie guide
+    GAME_SCENE_ENTER,
+
+    ROOKIE_GUIDE_TAP_TASK_PANEL,
+
     FAKE_ROOKIESTEP_CHANGE,
     ROOKIE_GUIDE_BEGIN_EYES,
     ROOKIE_GUIDE_THIRD_EYES,
@@ -51,6 +55,9 @@ export enum NotificationName {
 
     GAME_MAIN_RESOURCE_PLAY_ANIM,
 
+    //------------------------------------ setting
+    GAME_SETTING_REDPOINT_SHOW_CHANGED,
+
     //---------------------- userInfo
     USERINFO_DID_CHANGE_NAME,
     USERINFO_DID_CHANGE_EXP,
@@ -71,6 +78,10 @@ export enum NotificationName {
     //------------------------------------ inner building
     INNER_BUILDING_UPGRADE_FINISHED,
     INNER_BUILDING_DATA_CHANGE,
+    INNER_BUILDING_RECRUIT_REDPOINT_CHANGED,
+
+    INNER_BUILDING_TRAIN_FINISHED,
+    INNER_BUILDING_TRAIN_REDPOINT_CHANGED,
 
     //------------------------------------ language
     CHANGE_LANG,
@@ -79,34 +90,35 @@ export enum NotificationName {
     RESOURCE_GETTED,
     RESOURCE_CONSUMED,
     ITEM_CHANGE,
+    BACKPACK_GET_NEW_ITEM,
+    BACKPACK_READ_NEW_ITEM,
 
     //------------------------------------ artifact
     ARTIFACT_CHANGE,
     ARTIFACT_EQUIP_DID_CHANGE,
-
-    //------------------------------------ battle report
-    FIGHT_FINISHED,
-    MINING_FINISHED,
-    EVENT_STEPEND,
-    BATTLE_REPORT_LIST_CHANGED,
+    ARTIFACTPACK_GET_NEW_ARTIFACT,
+    ARTIFACTPACK_READ_NEW_ARTIFACT,
 
     //---------------------- task
     TASK_CANNOTGET,
     TASK_DID_CHANGE,
     TASK_NEW_GETTED,
-    TASK_LIST,
+    TASK_CAN_TALK_CHANGE,
+    
     //------------------------------------ map building
+    MAP_BUILDING_NEED_REFRESH,
     MAP_BUILDING_SHOW_CHANGE,
     MAP_BUILDING_FACTION_CHANGE,
     MAP_BUILDING_WORMHOLE_ATTACKER_CHANGE,
     MAP_BUILDING_WORMHOLE_ATTACK_COUNT_DONW_TIME_CHANGE,
     MAP_BUILDING_WORMHOLE_FAKE_ATTACK,
+    MAP_BUILDING_WORMHOLE_BEGIN_ANIM,
     MAP_BUILDING_ACTION_PIONEER_CHANGE,
     MAP_BUILDING_REBON_CHANGE,
 
     //---------------------- map pioneer
+    MAP_PIONEER_NEED_REFRESH,
     MAP_FAKE_FIGHT_SHOW,
-    MAP_PIONEER_EVENTID_CHANGE,
 
     MAP_PIONEER_FIGHT_BEGIN,
     MAP_PIONEER_FIGHT_END,
@@ -117,14 +129,12 @@ export enum NotificationName {
     MAP_PLAYER_PIONEER_DID_MOVE_STEP,
     MAP_PIONEER_MOVE_MEETTED,
     MAP_PIONEER_SHOW_CHANGED,
-    MAP_PIONEER_TALK_CHANGED,
     MAP_PIONEER_FACTION_CHANGED,
     MAP_PIONEER_ACTIONTYPE_CHANGED,
     MAP_PIONEER_STAY_POSITION_CHANGE,
     MAP_PIONEER_HP_CHANGED,
     MAP_PIONEER_ENERGY_CHANGED,
 
-    MAP_PIONEER_REBON_CHANGE,
     MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT,
     //---------------------- nft
     NFT_LEVEL_UP,

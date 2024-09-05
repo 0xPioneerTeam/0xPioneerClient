@@ -87,6 +87,9 @@ export class WebsocketMsg {
         this.send_packet("player_psyc_to_energy", d);
     }
 
+    public get_map_info(d: c2s_user.Iget_map_info) {
+        this.send_packet("get_map_info", d);
+    }
     public player_pioneer_change_show(d: c2s_user.Iplayer_pioneer_change_show) {
         this.send_packet("player_pioneer_change_show", d);
     }
@@ -95,6 +98,9 @@ export class WebsocketMsg {
     }
     public get_mapbuilding_info(d: c2s_user.Iget_mapbuilding_info) {
         this.send_packet("get_mapbuilding_info", d);
+    }
+    public player_troop_to_hp(d: c2s_user.Iplayer_troop_to_hp) {
+        this.send_packet("player_troop_to_hp", d);
     }
     public player_move(d: c2s_user.Iplayer_move) {
         this.send_packet("player_move", d);
@@ -123,6 +129,30 @@ export class WebsocketMsg {
     public player_event_exit(d: c2s_user.Iplayer_event_exit) {
         this.send_packet("player_event_exit", d);
     }
+    public player_explore_maincity(d: c2s_user.Iplayer_explore_maincity) {
+        this.send_packet("player_explore_maincity", d);
+    }
+    public player_fight_maincity(d: c2s_user.Iplayer_fight_maincity) {
+        this.send_packet("player_fight_maincity", d);
+    }
+    public player_maincity_back(d: c2s_user.Iplayer_maincity_back) {
+        this.send_packet("player_maincity_back", d);
+    }
+    public player_pos_detect(d: c2s_user.Iplayer_pos_detect) {
+        this.send_packet("player_pos_detect", d);
+    }
+    public player_wormhole_tp_random(d: c2s_user.Iplayer_wormhole_tp_random) {
+        this.send_packet("player_wormhole_tp_random", d);
+    }
+    public player_wormhole_tp_select(d: c2s_user.Iplayer_wormhole_tp_select) {
+        this.send_packet("player_wormhole_tp_select", d);
+    }
+    public player_wormhole_tp_back(d: c2s_user.Iplayer_wormhole_tp_back) {
+        this.send_packet("player_wormhole_tp_back", d);
+    }
+    public player_wormhole_tp_tag(d: c2s_user.Iplayer_wormhole_tp_tag) {
+        this.send_packet("player_wormhole_tp_tag", d);
+    }
 
     public player_fight_start(d: c2s_user.Iplayer_fight_start) {
         this.send_packet("player_fight_start", d);
@@ -149,10 +179,10 @@ export class WebsocketMsg {
         this.send_packet("player_piot_to_heat", d);
     }
     public player_level_reward(d: c2s_user.Iplayer_level_reward) {
-        this.send_packet("player_level_reward", d)
+        this.send_packet("player_level_reward", d);
     }
     public player_level_up(d: c2s_user.Iplayer_level_up) {
-        this.send_packet("player_level_up", d)
+        this.send_packet("player_level_up", d);
     }
     public player_worldbox_beginner_open(d: c2s_user.Iplayer_worldbox_beginner_open) {
         this.send_packet("player_worldbox_beginner_open", d);
@@ -166,6 +196,9 @@ export class WebsocketMsg {
     }
     public player_generate_troop_start(d: c2s_user.Iplayer_generate_troop_start) {
         this.send_packet("player_generate_troop_start", d);
+    }
+    public player_training_start(d: c2s_user.Iplayer_training_start) {
+        this.send_packet("player_training_start", d);
     }
     public player_building_delegate_nft(d: c2s_user.Iplayer_building_delegate_nft) {
         this.send_packet("player_building_delegate_nft", d);
@@ -187,6 +220,9 @@ export class WebsocketMsg {
         // return;
         this.send_packet("player_rookie_update", d);
     }
+    public player_get_rookie_award(d: c2s_user.Iplayer_get_rookie_award){
+        this.send_packet("player_get_rookie_award", d);
+    }
     public player_rookie_wormhole_fight(d: c2s_user.Iplayer_rookie_wormhole_fight) {
         this.send_packet("player_rookie_wormhole_fight", d);
     }
@@ -207,6 +243,10 @@ export class WebsocketMsg {
 
     public get_user_settlement_info(d: c2s_user.Iget_user_settlement_info) {
         this.send_packet("get_user_settlement_info", d);
+    }
+
+    public get_new_battle_report(d: c2s_user.Iget_new_battle_report) {
+        this.send_packet("get_new_battle_report", d);
     }
 
     public reborn_all() {
@@ -270,7 +310,11 @@ export namespace c2s_user {
     }
     export interface Iplayer_psyc_to_energy {
         pioneerId: string;
-        psycNum: number;   
+        psycNum: number;
+    }
+
+    export interface Iget_map_info {
+        slotIds: string[];
     }
 
     export interface Icreate_pioneer {
@@ -298,10 +342,16 @@ export namespace c2s_user {
     export interface Iget_mapbuilding_info {
         mapbuildingIds: string[];
     }
+    export interface Iplayer_troop_to_hp {
+        pioneerId: string;
+        troopNum: number;
+        troopId: string;
+    }
     export interface Iplayer_move {
         pioneerId: string;
         movePath: share.pos2d[];
         feeTxhash: string;
+        isReturn: boolean;
     }
     export interface Iplayer_talk_select {
         talkId: string;
@@ -311,6 +361,8 @@ export namespace c2s_user {
     export interface Iplayer_gather_start {
         pioneerId: string;
         resourceBuildingId: string;
+        feeTxhash: string;
+        isReturn: boolean;
     }
 
     export interface Iplayer_explore_start {
@@ -320,10 +372,12 @@ export namespace c2s_user {
     export interface Iplayer_explore_npc_start {
         pioneerId: string;
         npcId: string;
+        isReturn: boolean;
     }
     export interface Iplayer_event_start {
         pioneerId: string;
         buildingId: string;
+        isReturn: boolean;
     }
     export interface Iplayer_event_generate_enemy {
         pioneerId: string;
@@ -339,9 +393,43 @@ export namespace c2s_user {
         pioneerId: string;
         buildingId: string;
     }
+    export interface Iplayer_explore_maincity {
+        buildingId: string;
+    }
+    export interface Iplayer_fight_maincity {
+        pioneerId: string;
+        buildingId: string;
+        isReturn: boolean;
+    }
+    export interface Iplayer_maincity_back {
+        pioneerId: string;
+        buildingId: string;
+    }
+    export interface Iplayer_pos_detect {
+        detect: share.pos2d;
+    }
+    export interface Iplayer_wormhole_tp_random {
+        buildingId: string;
+        pioneerId: string;
+    }
+    export interface Iplayer_wormhole_tp_select {
+        buildingId: string;
+        pioneerId: string;
+        tpBuildingId: string;
+    }
+    export interface Iplayer_wormhole_tp_back {
+        buildingId: string;
+        pioneerId: string;
+    }
+    export interface Iplayer_wormhole_tp_tag {
+        buildingId: string;
+        pioneerId: string;
+    }
+
     export interface Iplayer_fight_start {
         attackerId: string;
         defenderId: string;
+        isReturn: boolean;
     }
     export interface Iplayer_item_use {
         itemId: string;
@@ -372,9 +460,7 @@ export namespace c2s_user {
     export interface Iplayer_level_reward {
         level: number;
     }
-    export interface Iplayer_level_up {
-
-    }
+    export interface Iplayer_level_up {}
     export interface Iplayer_worldbox_beginner_open {
         boxIndex: number;
     }
@@ -388,6 +474,9 @@ export namespace c2s_user {
     }
     export interface Iplayer_generate_troop_start {
         num: number;
+    }
+    export interface Iplayer_training_start {
+        training: share.Itraining_data[];
     }
     export interface Iplayer_building_delegate_nft {
         innerBuildingId: string;
@@ -432,9 +521,13 @@ export namespace c2s_user {
 
     export interface Iget_user_settlement_info {}
 
+    export interface Iget_new_battle_report {}
+
     export interface Isave_archives {
         archives: string;
     }
+
+    export interface Iplayer_get_rookie_award {}
 }
 
 export namespace s2c_user {
@@ -506,14 +599,26 @@ export namespace s2c_user {
         res: number;
         data?: share.Ipioneer_info | null;
     }
+    export interface Iget_map_info_res {
+        res: number;
+        info: share.Imap_info_data[];
+        user: { [key: string]: share.Ipioneer_data };
+    }
+
+    export interface Iplayer_enterzone {
+        infos: share.Iplayerinzoneinfo[];
+    }
+    export interface Iplayer_leavezone {
+        playerids: number[];
+    }
+    export interface Ipioneer_leavezone {
+        pioneerIds: string[];
+    }
+    export interface Iplayer_get_new_pioneer {
+        datas: share.Ipioneer_data[];
+    }
     export interface Ipioneer_change {
         pioneers: share.Ipioneer_data[];
-    }
-    export interface Ipioneer_reborn_res {
-        res: number;
-        pioneerId: string;
-        rebirthStartTime: number;
-        rebirthEndTime: number;
     }
     export interface Inft_change {
         nfts: share.Infts_info_data[];
@@ -537,6 +642,15 @@ export namespace s2c_user {
         buildingId: string;
         pioneerId: string;
     }
+    export interface Iplayer_explore_maincity_res {
+        res: number;
+        buildingId: string;
+        battlePower: number;
+    }
+    export interface Iplayer_pos_detect_res {
+        res: number;
+        detect: share.pos2d;
+    }
     export interface Iplayer_event_select_res {
         res: number;
         eventId: string;
@@ -554,7 +668,23 @@ export namespace s2c_user {
     export interface Iplayer_fight_end {
         pioneerId: string;
     }
-
+    export interface Iplayer_wormhole_tp_random_res {
+        res: number;
+        buildingId: string;
+        tpPos: share.pos2d;
+    }
+    export interface Iplayer_wormhole_tp_select_res {
+        res: number;
+        buildingId: string;
+        tpPos: share.pos2d;
+    }
+    export interface Iplayer_wormhole_tp_back_res {
+        res: number;
+        pioneerId: string;
+    }
+    export interface Iplayer_wormhole_tp_tag_res {
+        res: number;
+    }
     export interface Iplayer_worldbox_beginner_open_res {
         res: number;
         boxIndex: number;
@@ -619,11 +749,6 @@ export namespace s2c_user {
         buildingId: string;
         attacker: { [key: string]: string };
     }
-    export interface Iplayer_wormhole_fight_attacked_res {
-        res: number;
-        attackerName: string;
-        defenderUid: string;
-    }
     export interface Iplayer_wormhole_fight_res {
         res: number;
         buildingId: string;
@@ -639,16 +764,14 @@ export namespace s2c_user {
         txhash: string;
         logid: string;
     }
-    export interface Iuser_task_action_getnewtalk {
-        npcId: string;
-        talkId: string;
+    export interface Iuser_task_talk_info_change {
+        canTalkData: { [key: string]: share.Itask_talk_data };
+    }
+    export interface Iuser_mission_did_change {
+        missions: share.Imission_data[];
     }
     export interface Iuser_task_did_change {
-        task: share.Itask_data;
-    }
-    export interface Iget_user_task_info_res {
-        res: number;
-        tasks: share.Itask_data[];
+        task: share.Itask_info_data;
     }
     export interface Iuser_task_action_talk {
         talkId: string;
@@ -666,6 +789,11 @@ export namespace s2c_user {
     export interface Iget_user_settlement_info_res {
         res: number;
         data: { [key: string]: share.Isettlement_data };
+    }
+
+    export interface Iget_new_battle_report_res {
+        res: number;
+        data: share.Inew_battle_report_data[];
     }
 }
 
@@ -714,6 +842,9 @@ export namespace share {
         /** player_sinfo pname */
         pname: string;
 
+        battlePower: number;
+        explorePlayerids: number[];
+
         /** player_sinfo gender */
         gender: number;
 
@@ -733,6 +864,7 @@ export namespace share {
         pointTreasureDidGetRewards: string[];
         cityRadialRange: number;
         rookieStep: number;
+        rookieState: number;
         generateTroopInfo?: troop_info_data;
         generateEnergyInfo?: energy_info_data;
 
@@ -749,6 +881,11 @@ export namespace share {
         lvlupConds: { [key: string]: number };
 
         buyEnergyLimitTimes: number;
+
+        wormholeTags: share.Iwormhole_tag_data[];
+
+        wormholeMatchTimes: number;
+        wormholeTeleportTimes: number;
     }
     export interface Ibuilding_data {
         id: string;
@@ -763,6 +900,18 @@ export namespace share {
         troopNum: number;
         troopIng: boolean;
         pos: [number, number];
+
+        tc?: Ibuilding_tc_data;
+    }
+
+    export interface Ibuilding_tc_data {
+        troops: { [key: string]: number };
+        training?: Ibuilding_tc_training_data;
+    }
+    export interface Ibuilding_tc_training_data {
+        start: number;
+        end: number;
+        troops: { [key: string]: number };
     }
 
     export interface Iplayer_data {
@@ -778,9 +927,10 @@ export namespace share {
         artifact?: Iartifact_data;
         usermap?: Iusermap_data;
         nfts?: Infts_data;
-        mapbuilding?: Imapbuilding_data;
-        tasks?: Itask_data[];
-        shadows?: pos2d[];
+        mapbuilding: Imap_info_data;
+        taskinfo: Itask_data;
+        shadows: pos2d[];
+        detects: pos2d[];
     }
 
     export interface Istorehouse_data {
@@ -808,12 +958,16 @@ export namespace share {
         pioneer: { [key: string]: Ipioneer_data };
     }
     export interface Ipioneer_data {
+        uniqueId: string;
         id: string;
         show: boolean;
         level: number;
         faction: number;
         type: string;
         stayPos: pos2d;
+
+        name: string;
+        animType: string;
 
         hpMax: number;
         hp: number;
@@ -830,6 +984,9 @@ export namespace share {
         actionType: string;
         actionBeginTimeStamp: number;
         actionEndTimeStamp: number;
+        actionEndReturn?: boolean;
+        actionFightId?: string;
+        movePath?: pos2d[];
 
         winProgress?: number;
         winExp: number;
@@ -837,8 +994,8 @@ export namespace share {
         actionBuildingId?: string;
         killerId?: string;
         NFTId?: string;
-        talkId?: string;
 
+        actionFightBeginRes: Ifight_effect_trigger_res[];
         actionFightRes: Ifight_res[];
         actionFightWinner: number;
         rebirthStartTime?: number;
@@ -846,11 +1003,19 @@ export namespace share {
 
         dieTime?: number;
         rebornTime?: number;
+
+        troopId?: string;
     }
     export interface Ifight_res {
         attackerId: string;
         defenderId: string;
         hp: number;
+        effectRes: Ifight_effect_trigger_res[];
+    }
+    export interface Ifight_effect_trigger_res {
+        actionId: string;
+        skillId: string;
+        effectId: string;
     }
 
     export interface Infts_data {
@@ -887,11 +1052,18 @@ export namespace share {
         id: string;
         isOriginal: boolean;
     }
-
-    export interface Imapbuilding_data {
+    export interface Imap_info_data {
+        slotId: string;
+        playerId: number;
+        pname: string;
+        level: number;
+        battlePower: number;
+        templateConfigId: string;
         buildings: { [key: string]: Imapbuilding_info_data };
+        pioneers: { [key: string]: Ipioneer_data };
     }
     export interface Imapbuilding_info_data {
+        uniqueId: string;
         id: string;
         name: string;
         type: number;
@@ -930,8 +1102,10 @@ export namespace share {
 
         dieTime?: number;
         rebornTime?: number;
-    }
 
+        maincityFightPioneerIds?: string[];
+        maincityFightPioneerDatas: { [key: string]: share.Ipioneer_data }; 
+    }
     export interface Iartifact_three_confs {
         confs: Iartifact_three_conf[];
     }
@@ -956,6 +1130,11 @@ export namespace share {
     }
 
     export interface Itask_data {
+        tasks: Itask_info_data[];
+        canTalkData: { [key: string]: Itask_talk_data };
+        missions: { [key: string]: Imission_data };
+    }
+    export interface Itask_info_data {
         taskId: string;
         stepIndex: number;
         isFinished: boolean;
@@ -964,10 +1143,21 @@ export namespace share {
         isGetted: boolean;
         steps: Itask_step_data[];
     }
+    export interface Itask_talk_data {
+        npcUniqueId: string;
+        talkId: string;
+    }
     export interface Itask_step_data {
         id: string;
         completeIndex: number;
     }
+
+    export interface Imission_data {
+        missionId: string;
+        isComplete: boolean;
+        missionObjCount: number;
+    }
+
     export interface Isettlement_data {
         level: number;
         newPioneerIds: string[];
@@ -979,5 +1169,70 @@ export namespace share {
         gainEnergy: number;
         consumeEnergy: number;
         exploredEvents: number;
+    }
+
+    export interface Iplayerinzoneinfo {
+        instid: number;
+        playerid: number;
+        pioneerId: string;
+        ver: number;
+        pos: pos2d;
+    }
+
+    export enum Inew_battle_report_type {
+        fight = 0,
+        mining,
+    }
+    export enum Inew_battle_report_fight_member_type {
+        pioneer = 0,
+        monster,
+        player,
+    }
+    export interface Inew_battle_report_fight_member_data {
+        id: string;
+        avatar: string;
+        name: string;
+        nameUseLan: boolean;
+        hp: number;
+        hpmax: number;
+    }
+    export interface Inew_battle_report_fight_data {
+        selfIsAttacker: boolean;
+        attackerWin: boolean;
+
+        location?: pos2d;
+
+        attacker: Inew_battle_report_fight_member_data;
+        defender: Inew_battle_report_fight_member_data;
+
+        fightRes: Ifight_res[];
+
+        winItems: Iitem_data[];
+        winArtifacts: Iartifact_data[];
+    }
+    export interface Inew_battle_report_mining_data {
+        pioneerUniqueId: string;
+        location?: pos2d;
+        duration: number;
+
+        rewards: Iitem_data[];
+    }
+    export interface Inew_battle_report_data {
+        type: Inew_battle_report_type;
+        // s
+        timestamp: number;
+        unread: boolean;
+        fight?: Inew_battle_report_fight_data;
+        mining?: Inew_battle_report_mining_data;
+    }
+
+    export interface Iwormhole_tag_data {
+        playerId: number;
+        playerName: string;
+        tpBuildingId: string;
+    }
+    export interface Itraining_data {
+        id: string;
+        num: number;
     }
 }

@@ -1,24 +1,92 @@
 import { Vec2, v2 } from "cc";
 import { BuildingStayPosType, MapBuildingType } from "../../Const/BuildingDefine";
 import { MapBuildingBaseObject, MapBuildingMainCityObject, MapBuildingObject, MapBuildingWormholeObject } from "../../Const/MapBuilding";
-import NotificationMgr from "../../Basic/NotificationMgr";
-import { NotificationName } from "../../Const/Notification";
 import CLog from "../../Utils/CLog";
 import NetGlobalData from "./Data/NetGlobalData";
 import { share } from "../../Net/msg/WebsocketMsg";
 import GameMainHelper from "../../Game/Helper/GameMainHelper";
 import { TileHexDirection } from "../../Game/TiledMap/TileTool";
 import PioneerDefine from "../../Const/PioneerDefine";
+import CommonTools from "../../Tool/CommonTools";
+import { NetworkMgr } from "../../Net/NetworkMgr";
+import { director } from "cc";
 
 export class MapBuildingDataMgr {
     private _building_data: MapBuildingObject[];
+    private _decorateInfoMap: Map<string, string>;
+    private _requestHistory: Map<string, number> = new Map();
+    private _selfMainCitySlotId: string = null;
     public constructor() {}
 
+    public checkBuildingIsInSelfSlot(uniqueId: string): boolean {
+        let slotId = "";
+        const uniqueIdSplit = uniqueId.split("|");
+        if (uniqueIdSplit.length == 2) {
+            slotId = uniqueIdSplit[0];
+        }
+        if (slotId == this._selfMainCitySlotId) {
+            return true;
+        }
+        return false;
+    }
+    public getSelfMainCitySlotId() {
+        return this._selfMainCitySlotId;
+    }
+    public getDecorateInfo() {
+        return this._decorateInfoMap;
+    }
+    // ----------------------------------------------
     public replaceData(index: number, data: share.Imapbuilding_info_data) {
         const newObj = this._convertNetDataToObject(data);
         this._building_data[index] = newObj;
         return newObj;
     }
+    public addData(data: share.Imapbuilding_info_data) {
+        const newObj = this._convertNetDataToObject(data);
+        this._building_data.push(newObj);
+        return newObj;
+    }
+    public setDecorateInfo(slotId: string, templateConfigId: string) {
+        if (slotId == null || templateConfigId == null) {
+            return;
+        }
+        const mapWorldPos = CommonTools.convertSlotIdToMapWorldPos(slotId);
+        const configId = templateConfigId.split("_")[1];
+        this._decorateInfoMap.set(mapWorldPos.x + "_" + mapWorldPos.y, "outinfo_" + configId);
+    }
+
+    requestMapInfo(slotIds: any[]) {
+        if (slotIds.length > 0) {
+            let needs = [];
+            let total = director.getTotalFrames();
+            slotIds.forEach((slotId) => {
+                if (this._requestHistory.has(slotId)) {
+                    if (total - this._requestHistory.get(slotId) > 30000) {
+                        needs.push(slotId);
+                    }
+                } else {
+                    needs.push(slotId);
+                    this._requestHistory.set(slotId, total);
+                }
+            });
+            let needlen = needs.length;
+            if (needlen > 0) {
+                let rslen = Math.ceil(needlen / 3);
+                for (let i = 0; i < rslen; i++) {
+                    if (i == rslen - 1) {
+                        NetworkMgr.websocketMsg.get_map_info({
+                            slotIds: needs.slice(i * 3, needlen),
+                        });
+                    } else {
+                        NetworkMgr.websocketMsg.get_map_info({
+                            slotIds: needs.slice(i * 3, i * 3 + 3),
+                        });
+                    }
+                }
+            }
+        }
+    }
+
     public async loadObj() {
         this._building_data = [];
         if (NetGlobalData.mapBuildings == null) {
@@ -26,28 +94,37 @@ export class MapBuildingDataMgr {
         }
         const mapBuilings = NetGlobalData.mapBuildings.buildings;
         for (const key in mapBuilings) {
-            const element: share.Imapbuilding_info_data = mapBuilings[key];
-            this._building_data.push(this._convertNetDataToObject(element));
+            const element = this._convertNetDataToObject(mapBuilings[key]);
+            this._building_data.push(element);
         }
-        this._initInterval();
-        CLog.debug("MapBuildingDataMgr: loadObj/building_data, ", this._building_data);
+
+        this._selfMainCitySlotId = NetGlobalData.mapBuildings.slotId;
+
+        this._decorateInfoMap = new Map();
+        this.setDecorateInfo(NetGlobalData.mapBuildings.slotId, NetGlobalData.mapBuildings.templateConfigId);
     }
 
     // get obj
     public getObj_building() {
         return this._building_data;
     }
-    public getBuildingById(buidingId: string): MapBuildingObject | null {
+
+    public getSelfMainCityBuilding(): MapBuildingObject {
+        let uniqueId = this.getSelfMainCitySlotId() + "|building_1";
+        return this.getBuildingById(uniqueId);
+    }
+
+    public getBuildingById(uniqueId: string): MapBuildingObject | null {
         const findDatas = this._building_data.filter((buiding) => {
-            return buiding.id === buidingId;
+            return buiding.uniqueId === uniqueId;
         });
         if (findDatas.length > 0) {
             return findDatas[0];
         }
         return null;
     }
-    public fillBuildingStayPos(buildingId: string, newPosions: Vec2[]) {
-        const findBuilding = this.getBuildingById(buildingId);
+    public fillBuildingStayPos(uniqueId: string, newPosions: Vec2[]) {
+        const findBuilding = this.getBuildingById(uniqueId);
         if (findBuilding == null) return;
 
         findBuilding.stayMapPositions = newPosions;
@@ -60,18 +137,6 @@ export class MapBuildingDataMgr {
     public getWormholeBuildings() {
         return this._building_data.filter((buiding) => {
             return buiding.type === MapBuildingType.wormhole;
-        });
-    }
-    public getShowBuildingsNearMapPos(mapPos: Vec2, range: number) {
-        return this._building_data.filter((buiding) => {
-            if (buiding.show) {
-                for (const pos of buiding.stayMapPositions) {
-                    if (Math.abs(pos.x - mapPos.x) < range && Math.abs(pos.y - mapPos.y) < range) {
-                        return true;
-                    }
-                }
-            }
-            return false;
         });
     }
     public getShowBuildingByMapPos(mapPos: Vec2): MapBuildingObject | null {
@@ -93,7 +158,8 @@ export class MapBuildingDataMgr {
 
     private _convertNetDataToObject(element: share.Imapbuilding_info_data): MapBuildingObject {
         const stayPos: Vec2[] = [];
-        for (const templePos of element.stayMapPositions) {
+        for (const poskey in element.stayMapPositions) {
+            let templePos = element.stayMapPositions[poskey];
             stayPos.push(new Vec2(templePos.x, templePos.y));
         }
         if (stayPos.length == 1) {
@@ -121,6 +187,7 @@ export class MapBuildingDataMgr {
             }
         }
         const baseObj: MapBuildingBaseObject = {
+            uniqueId: element.uniqueId,
             id: element.id,
             name: element.name,
             type: element.type,
@@ -152,11 +219,20 @@ export class MapBuildingDataMgr {
             winprogress: element.winprogress,
 
             rebornTime: element.rebornTime == null ? 0 : element.rebornTime * 1000,
+
+            maincityFightPioneerIds: element.maincityFightPioneerIds == null ? [] : element.maincityFightPioneerIds,
+            maincityFightPioneerDatas: new Map(),
         };
         if (element.eventPioneerDatas != null) {
             for (const key in element.eventPioneerDatas) {
                 const temple = element.eventPioneerDatas[key];
                 baseObj.eventPioneerDatas.set(key, PioneerDefine.convertNetDataToObject(temple));
+            }
+        }
+        if (element.maincityFightPioneerDatas != null) {
+            for (const key in element.maincityFightPioneerDatas) {
+                const temple = element.maincityFightPioneerDatas[key];
+                baseObj.maincityFightPioneerDatas.set(key, PioneerDefine.convertNetDataToObject(temple));
             }
         }
 
@@ -187,5 +263,4 @@ export class MapBuildingDataMgr {
             return baseObj;
         }
     }
-    private _initInterval() {}
 }

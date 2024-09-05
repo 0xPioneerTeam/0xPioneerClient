@@ -1,0 +1,210 @@
+{
+    "url": "",
+    "name": "deco_layer",
+    "show": true,
+    "positions": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "rotation": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+    },
+    "scale": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+    },
+    "children": [
+        {
+            "url": "Stone_A.prefab",
+            "name": "Stone_A",
+            "show": true,
+            "positions": {
+                "x": 471.106,
+                "y": 442.146,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 11,
+                    "y": 3
+                }
+            ]
+        },
+        {
+            "url": "Ornamental_01_Group.prefab",
+            "name": "Ornamental_01_Group",
+            "show": true,
+            "positions": {
+                "x": 735.63,
+                "y": 677.054,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 13,
+                    "y": 1
+                }
+            ]
+        },
+        {
+            "url": "Stone_A.prefab",
+            "name": "Stone_A",
+            "show": true,
+            "positions": {
+                "x": 669.677,
+                "y": 328.543,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1,
+                "y": 1,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 13,
+                    "y": 4
+                }
+            ]
+        },
+        {
+            "url": "Barrel_A.prefab",
+            "name": "Barrel_A",
+            "show": true,
+            "positions": {
+                "x": -669.889,
+                "y": -322.759,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 0.6,
+                "y": 0.6,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 2,
+                    "y": 11
+                }
+            ]
+        },
+        {
+            "url": "Ornamental_06_Group.prefab",
+            "name": "Ornamental_06_Group",
+            "show": true,
+            "positions": {
+                "x": -424.16,
+                "y": -188.985,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 2,
+                "y": 2,
+                "z": 1
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 5,
+                    "y": 10
+                },
+                {
+                    "x": 4,
+                    "y": 10
+                }
+            ]
+        },
+        {
+            "url": "Destroyed_Cruise_Group.prefab",
+            "name": "Destroyed_Cruise_Group",
+            "show": true,
+            "positions": {
+                "x": -737.287,
+                "y": -545.688,
+                "z": 0
+            },
+            "rotation": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 0.616,
+                "y": 0.616,
+                "z": 0.616
+            },
+            "children": [],
+            "block": true,
+            "blockData": [
+                {
+                    "x": 0,
+                    "y": 14
+                },
+                {
+                    "x": 1,
+                    "y": 14
+                },
+                {
+                    "x": 2,
+                    "y": 14
+                },
+                {
+                    "x": 3,
+                    "y": 14
+                },
+                {
+                    "x": 4,
+                    "y": 14
+                }
+            ]
+        }
+    ]
+}

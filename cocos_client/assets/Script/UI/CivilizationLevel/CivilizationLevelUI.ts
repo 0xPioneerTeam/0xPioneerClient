@@ -44,9 +44,13 @@ export class CivilizationLevelUI extends ViewController {
         this._curSelectLevel = DataMgr.s.userInfo.data.level;
 
         const contentView = this.node.getChildByPath("Content");
-        // useLanMgr
-        // contentView.getChildByPath("TopView/Title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // contentView.getChildByPath("RightView/MaxTip").getComponent(Label).string = LanMgr.getLanById("107549");
+        // contentView.getChildByPath("TopView/Title").getComponent(Label).string = LanMgr.getLanById("lanreplace200027");
+        // contentView.getChildByPath("LeftView/BuffContent/Empty").getComponent(Label).string = LanMgr.getLanById("lanreplace200028");
+        // contentView.getChildByPath("LeftView/RewardContent/Title").getComponent(Label).string = LanMgr.getLanById("lanreplace200029");
+        // contentView.getChildByPath("LeftView/RewardContent/Empty").getComponent(Label).string = LanMgr.getLanById("lanreplace200028");
+        // contentView.getChildByPath("LeftView/RewardContent/ReceiveButton/Title").getComponent(Label).string = LanMgr.getLanById("lanreplace200030");
+        // contentView.getChildByPath("RightView/MaxTip").getComponent(Label).string = LanMgr.getLanById("lanreplace200031");
+        // contentView.getChildByPath("DevelopButton/Title").getComponent(Label).string = LanMgr.getLanById("lanreplace200032");
 
         this._curLevelTitle = contentView.getChildByPath("TopView/CurLevel/Label").getComponent(Label);
 

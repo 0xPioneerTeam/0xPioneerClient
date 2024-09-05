@@ -22,13 +22,39 @@ message update_name {
     required string name = 1;
 }
 
+// move in map, go to position
+message goto {
+    required share.player_mov_info goto = 1; // goto info
+}
+// stop in map
+message stop {
+    required share.pos2d pos = 1; // stop positoin
+}
+// stop and goto home
+message stophome {
+
+}
+
+// start change map, when tirgger map transport point
+// send this message and start loading new map info
+message changemap_begin {
+}
+
+// after new map loading finish, send change map end msg
+message changemap_end {
+    required uint32 tomapid = 1; // target map id
+}
+
 // rookie
 message player_rookie_update {
     required uint32 rookieStep = 1;
 }
 message player_rookie_wormhole_fight {
     required string pioneerId = 1;
- }
+}
+message player_get_rookie_award {
+    
+}
 
 // ------ chain ------
 message get_pending { }
@@ -49,7 +75,13 @@ message check_unused_tx_status {
 // ------ get data ------
 message get_battle_report { }
 message get_user_settlement_info { }
+message get_new_battle_report { }
 
+// ------ map ------
+// mapinfo: getinfo
+message get_map_info {
+    repeated string slotIds = 1;
+}
 
 // ------ player ------
 // player: talk
@@ -74,6 +106,12 @@ message player_psyc_to_energy {
     required string pioneerId = 1;
     required uint32 psycNum = 2;
 }
+// player: troop2hp
+message player_troop_to_hp {
+    required string pioneerId = 1;
+    required uint32 troopNum = 2;
+    optional string troopId = 3;
+}
 
 
 // ------ pioneer ------
@@ -91,12 +129,14 @@ message player_move {
     required string pioneerId = 1;
     repeated share.pos2d movePath = 2; 
     required string feeTxhash = 3;
+    required bool isReturn = 4;
 }
 // pioneer: gather
 message player_gather_start {
     required string pioneerId = 1;
     required string resourceBuildingId = 2;
     required string feeTxhash = 3;
+    required bool isReturn = 4;
 }
 // pioneer: explore
 message player_explore_start {
@@ -107,20 +147,31 @@ message player_explore_start {
 message player_explore_npc_start {
     required string pioneerId = 1;
     required string npcId = 2;
+    required bool isReturn = 3;
 }
 message player_explore_gangster_start {
     required string pioneerId = 1;
     required string gangsterId = 2;
 }
+message player_explore_maincity {
+    required string buildingId = 2;
+}
+message player_fight_maincity {
+    required string pioneerId = 1;
+    required string buildingId = 2;
+    required bool isReturn = 3;
+}
 // pioneer: fight(map)
 message player_fight_start {
     required string attackerId = 1;
     required string defenderId = 2;
+    required bool isReturn = 4;
 }
 // pioneer: event
 message player_event_start {
     required string pioneerId = 1;
     required string buildingId = 2;
+    required bool isReturn = 4;
 }
 message player_event_generate_enemy {
     required string pioneerId = 1;
@@ -136,7 +187,13 @@ message player_event_exit {
     required string pioneerId = 1;
     required string buildingId = 2;
 }
-
+message player_maincity_back {
+    required string pioneerId = 1;
+    required string buildingId = 2;
+}
+message player_pos_detect {
+    required share.pos2d detect = 1;
+}
 
 // ------ mapbuilding ------
 // mapbuilding: getinfo
@@ -202,6 +259,9 @@ message player_building_pos {
     required string buildingId = 1;
     repeated uint32 pos = 2;
 }
+message player_training_start {
+    repeated share.training_data training = 1;
+}
 
 
 // ------ pioneerNFT ------
@@ -240,6 +300,23 @@ message player_wormhole_fight_start {
     required string buildingId = 1;
 }
 
+message player_wormhole_tp_random {
+    required string buildingId = 1;
+    required string pioneerId = 2;
+}
+message player_wormhole_tp_select {
+    required string buildingId = 1;
+    required string pioneerId = 2;
+    required string tpBuildingId = 3;
+}
+message player_wormhole_tp_back {
+    required string buildingId = 1;
+    required string pioneerId = 2;
+}
+message player_wormhole_tp_tag {
+    required string buildingId = 1;
+    required string pioneerId = 2;
+}
 
 // ------ test ------
 message reborn_all { }

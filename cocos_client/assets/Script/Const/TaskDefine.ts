@@ -157,3 +157,16 @@ export interface TaskStepObject {
     progress: number;
     exp: number;
 }
+
+//---------------------------- Missioin
+export type MissionObjectiveType = number;
+export type MissionObjectiveParamNum = number;
+export interface MissionConfigData {
+    id: string;
+    name: string;
+    description: string;
+    start: number[];
+    objective: [MissionObjectiveType, [any, MissionObjectiveParamNum]];
+    reward: any[];
+    open_quest: string[];
+}

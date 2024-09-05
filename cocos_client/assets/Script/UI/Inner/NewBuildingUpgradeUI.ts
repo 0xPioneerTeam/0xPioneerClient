@@ -9,15 +9,19 @@ import { ConfigInnerBuildingData, InnerBuildingType, UserInnerBuildInfo } from "
 import InnerBuildingConfig from "../../Config/InnerBuildingConfig";
 import InnerBuildingLvlUpConfig from "../../Config/InnerBuildingLvlUpConfig";
 import { NotificationName } from "../../Const/Notification";
-import UIPanelManger from "../../Basic/UIPanelMgr";
+import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { DataMgr } from "../../Data/DataMgr";
-import { UIName } from "../../Const/ConstUIDefine";
+import { HUDName, UIName } from "../../Const/ConstUIDefine";
 import { DelegateUI } from "../DelegateUI";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { RookieStep } from "../../Const/RookieDefine";
 import TalkConfig from "../../Config/TalkConfig";
 import { DialogueUI } from "../Outer/DialogueUI";
+import { RelicTowerUI } from "../RelicTowerUI";
+import { RecruitUI } from "./RecruitUI";
+import { RedPointView } from "../View/RedPointView";
+import { AlterTipView } from "../View/AlterTipView";
 const { ccclass } = _decorator;
 
 @ccclass("NewBuildingUpgradeUI")
@@ -34,6 +38,9 @@ export class NewBuildingUpgradeUI extends ViewController {
     private _resourceContent: Node = null;
     private _resourceItem: Node = null;
     private _actionButton: Node = null;
+    private _recruitButton: Node = null;
+    private _exerciseButton: Node = null;
+    private _artifactButton: Node = null;
 
     public refreshUI(type: InnerBuildingType) {
         this._type = type;
@@ -69,7 +76,7 @@ export class NewBuildingUpgradeUI extends ViewController {
             showName = "MainCity";
         } else if (type == InnerBuildingType.EnergyStation) {
             showName = "EnergyStation";
-        } else if (type == InnerBuildingType.ArtifactStore) {
+        } else {
             showName = "ArtifactStore";
         }
         for (const child of this._titleView.children) {
@@ -119,6 +126,10 @@ export class NewBuildingUpgradeUI extends ViewController {
             // LanMgr.getLanById("107549");
             this._actionButton.getChildByPath("Label").getComponent(Label).string = "Construct";
         }
+
+        this._recruitButton.active = this._innerData.buildType == InnerBuildingType.Barrack && this._innerData.buildLevel >= 1;
+        this._exerciseButton.active = this._innerData.buildType == InnerBuildingType.TrainingCenter && this._innerData.buildLevel >= 1;
+        this._artifactButton.active = this._innerData.buildType == InnerBuildingType.ArtifactStore && this._innerData.buildLevel >= 1;
     }
 
     protected viewDidLoad(): void {
@@ -134,9 +145,27 @@ export class NewBuildingUpgradeUI extends ViewController {
         this._resourceItem = this._resourceContent.getChildByPath("Item");
         this._resourceItem.removeFromParent();
         this._actionButton = contentView.getChildByPath("ActionButton");
+        this._recruitButton = contentView.getChildByPath("RecruitButton");
+        this._exerciseButton = contentView.getChildByPath("ExerciseButton");
+        this._artifactButton = contentView.getChildByPath("ArtifactButton");
 
         NotificationMgr.addListener(NotificationName.ITEM_CHANGE, this.onItemChanged, this);
         // NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_BUILDING_UPGRADE, this._onRookieTapThis, this);
+        // artifact
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+        // recruit
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
+        // exercise
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED, this._refreshExerciseRedPoint, this);
+    }
+
+    protected viewDidStart(): void {
+        super.viewDidStart();
+
+        this._refreshArtifactRedPoint();
+        this._refreshRecruitRedPoint();
+        this._refreshExerciseRedPoint();
     }
 
     protected viewDidAppear(): void {
@@ -162,6 +191,13 @@ export class NewBuildingUpgradeUI extends ViewController {
 
         NotificationMgr.removeListener(NotificationName.ITEM_CHANGE, this.onItemChanged, this);
         // NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_BUILDING_UPGRADE, this._onRookieTapThis, this);
+        // artifact
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._refreshArtifactRedPoint, this);
+        // recruit
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
+        // exercise
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED, this._refreshExerciseRedPoint, this);
     }
     protected viewPopAnimation(): boolean {
         return true;
@@ -170,22 +206,46 @@ export class NewBuildingUpgradeUI extends ViewController {
         return this.node.getChildByPath("__ViewContent");
     }
 
+    //-----------------------------
+    private _refreshArtifactRedPoint() {
+        const redPointValue: number = DataMgr.s.artifact.getAllNewArtifactCount();
+        const redPointView = this.node.getChildByPath("__ViewContent/ArtifactButton/RedPointView").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue);
+    }
+    private _refreshRecruitRedPoint() {
+        const redPointValue: boolean = DataMgr.s.userInfo.getRecruitRedPoint();
+        const redPointView = this.node.getChildByPath("__ViewContent/RecruitButton/RedPointView").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue ? 1 : 0, false);
+    }
+    private _refreshExerciseRedPoint() {
+        const redPointValue: boolean = DataMgr.s.userInfo.getExerciseRedPoint();
+        const redPointView = this.node.getChildByPath("__ViewContent/ExerciseButton/RedPointView").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue ? 1 : 0, false);
+    }
+
     //----------------------------- action
     private async onTapBuildingUpgrade() {
         GameMusicPlayMgr.playTapButtonEffect();
         if (this._innerData == null || this._innerConfig == null || this._costData == null) {
             return;
         }
-        if (DataMgr.s.userInfo.data.level < this._innerConfig.unlock) {
-            // useLanMgr
-            // UIHUDController.showCenterTip(LanMgr.getLanById("201004"));
-            UIHUDController.showCenterTip("Insufficient civilization level");
-            return;
-        }
+
         if (this._innerData.upgrading) {
             UIHUDController.showCenterTip(LanMgr.getLanById("201003"));
             // UIHUDController.showCenterTip("The building is being upgraded, please wait.");
             return;
+        }
+
+        if (this._innerData.buildType != InnerBuildingType.MainCity) {
+            // check maincity level
+            const mainCityLevel = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.MainCity);
+            const maxBuildingUpgradeLevel = InnerBuildingLvlUpConfig.getBuildingLevelData(mainCityLevel, "max_lvlBuilding");
+            if (this._innerData.buildLevel + 1 > maxBuildingUpgradeLevel) {
+                // useLanMgr
+                // UIHUDController.showCenterTip(LanMgr.getLanById("201004"));
+                UIHUDController.showCenterTip("The level limit has been reached. Please upgrade the level of the city hall first.");
+                return;
+            }
         }
 
         let canUpgrade: boolean = true;
@@ -211,6 +271,52 @@ export class NewBuildingUpgradeUI extends ViewController {
 
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+    }
+
+    private async onTapRecruit() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
+        await this.playExitAnimation();
+        UIPanelManger.inst.popPanel(this.node);
+    }
+    private async onTapExercise() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
+
+        await this.playExitAnimation();
+        UIPanelManger.inst.popPanel(this.node);
+    }
+    private async onTapArtifact() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(UIName.RelicTowerUI);
+        if (result.success) {
+            result.node.getComponent(RelicTowerUI).configuration(0);
+        }
+
+        await this.playExitAnimation();
+        UIPanelManger.inst.popPanel(this.node);
+    }
+    private async onTapQuestion() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(HUDName.AlterTip, UIPanelLayerType.HUD);
+        if (!result.success) {
+            return;
+        }
+        let tipLanId = "";
+        if (this._type == InnerBuildingType.MainCity) {
+            tipLanId = "106020";
+        } else if (this._type == InnerBuildingType.Barrack) {
+            tipLanId = "106017";
+        } else if (this._type == InnerBuildingType.ArtifactStore) {
+            tipLanId = "106021";
+        } else if (this._type == InnerBuildingType.House) {
+            tipLanId = "106019";
+        } else if (this._type == InnerBuildingType.InformationStation) {
+            tipLanId = "106016";
+        } else if (this._type == InnerBuildingType.TrainingCenter) {
+            tipLanId = "106018";
+        }
+        result.node.getComponent(AlterTipView).showTip(LanMgr.getLanById(tipLanId));
     }
 
     private async onTapClose() {

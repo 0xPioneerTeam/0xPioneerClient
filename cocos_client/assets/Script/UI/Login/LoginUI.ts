@@ -17,7 +17,7 @@ import { PlayerInfoUI } from "../PlayerInfoUI";
 import { CollectWalletUI } from "../CollectWallet/CollectWalletUI";
 const { ccclass, property } = _decorator;
 
-@ccclass("CompLogin")
+@ccclass("LoginUI")
 export class LoginUI extends ViewController {
     //--------------------------------------- lifeCyc
     private _loginClicked: boolean = false;
@@ -25,7 +25,7 @@ export class LoginUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-        this.node.getChildByPath("AlertView").active = true;
+        this.node.getChildByPath("AlertView").active = false;
     }
     protected viewDidStart(): void {
         super.viewDidStart();
@@ -106,13 +106,13 @@ export class LoginUI extends ViewController {
     private onTapCloseTip() {
         GameMusicPlayMgr.playTapButtonEffect();
         const contentView: Node = this.node.getChildByPath("AlertView/Img");
-        tween()
-            .target(contentView)
-            .to(0.5, { scale: v3(0, 0, 0) }, { easing: "bounceIn" })
-            .call(() => {
-                this.node.getChildByPath("AlertView").active = false;
-            })
-            .start();
+        // tween()
+        //     .target(contentView)
+        //     .to(0.5, { scale: v3(0, 0, 0) }, { easing: "bounceIn" })
+        //     .call(() => {
+        //         this.node.getChildByPath("AlertView").active = false;
+        //     })
+        //     .start();
     }
     private async onTapSetting() {
         GameMusicPlayMgr.playTapButtonEffect();

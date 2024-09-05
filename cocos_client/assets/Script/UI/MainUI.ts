@@ -1,25 +1,25 @@
-import { _decorator, Node, Button, Label, Vec3, UITransform, instantiate, tween, dynamicAtlasManager, find, Prefab } from "cc";
-import { UIName } from "../Const/ConstUIDefine";
-import { TaskListUI } from "./TaskListUI";
-import { NewSettlementUI } from "./NewSettlementUI";
-import ViewController from "../BasicView/ViewController";
+import { _decorator, Button, find, instantiate, Label, Node, Prefab, tween, UITransform, Vec3 } from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
-import { NotificationName } from "../Const/Notification";
-import Config from "../Const/Config";
-import { GAME_ENV_IS_DEBUG, MapMemberFactionType } from "../Const/ConstDefine";
 import UIPanelManger from "../Basic/UIPanelMgr";
-import GameMainHelper from "../Game/Helper/GameMainHelper";
-import { DataMgr } from "../Data/DataMgr";
-import { NFTBackpackUI } from "./NFTBackpackUI";
-import CommonTools from "../Tool/CommonTools";
-import { NetworkMgr } from "../Net/NetworkMgr";
-import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import ViewController from "../BasicView/ViewController";
+import { InnerBuildingType } from "../Const/BuildingDefine";
+import { GAME_ENV_IS_DEBUG } from "../Const/ConstDefine";
+import { UIName } from "../Const/ConstUIDefine";
+import { NotificationName } from "../Const/Notification";
+import { MapPioneerActionType } from "../Const/PioneerDefine";
 import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Const/RookieDefine";
-import TalkConfig from "../Config/TalkConfig";
-import { DialogueUI } from "./Outer/DialogueUI";
-import ItemData from "../Const/Item";
-import { TreasureGettedUI } from "./TreasureGettedUI";
-import { LanMgr } from "../Utils/Global";
+import { DataMgr } from "../Data/DataMgr";
+import GameMainHelper from "../Game/Helper/GameMainHelper";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import { NetworkMgr } from "../Net/NetworkMgr";
+import CommonTools from "../Tool/CommonTools";
+import { GameMgr, LanMgr } from "../Utils/Global";
+import { NewSettlementUI } from "./NewSettlementUI";
+import { NFTBackpackUI } from "./NFTBackpackUI";
+import { RelicTowerUI } from "./RelicTowerUI";
+import { TaskListUI } from "./TaskListUI";
+import { UIHUDController } from "./UIHUDController";
+import { RedPointView } from "./View/RedPointView";
 
 const { ccclass, property } = _decorator;
 
@@ -51,14 +51,32 @@ export class MainUI extends ViewController {
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this.changeLang, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_BUILDING_LATTICE_EDIT_CHANGED, this._onInnerBuildingLatticeEditChanged, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onInnerOuterChanged, this);
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._onInnerBuildingUpgradeFinished, this);
 
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionTypeChange, this);
 
         // rookie
         NotificationMgr.addListener(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, this._onGameMainResourcePlayAnim, this);
         NotificationMgr.addListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_TASK, this._onRookieTapTask, this);
-        NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_DEFEND, this._onRookieTapDefend, this);
+
+        // task
+        NotificationMgr.addListener(NotificationName.TASK_DID_CHANGE, this._refreshTaskRedPoint, this);
+        // nft
+        NotificationMgr.addListener(NotificationName.NFT_LEVEL_UP, this._refreshNFTRedPoint, this);
+        NotificationMgr.addListener(NotificationName.NFT_RANK_UP, this._refreshNFTRedPoint, this);
+        // item
+        NotificationMgr.addListener(NotificationName.RESOURCE_GETTED, this._onGetResource, this);
+        NotificationMgr.addListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshBackpackRedPoint, this);
+        NotificationMgr.addListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshBackpackRedPoint, this);
+        // artifact
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._onArtifactNewChanged, this);
+        NotificationMgr.addListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._onArtifactNewChanged, this);
+        // recruit
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
+        // exercise
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED, this._refreshExerciseRedPoint, this);
 
         this._refreshWorldBoxCountTip();
     }
@@ -70,11 +88,19 @@ export class MainUI extends ViewController {
         this._onInnerOuterChanged();
         this.changeLang();
 
-        const bigGanster = DataMgr.s.pioneer.getById("gangster_3");
-        if (bigGanster != null && bigGanster.show) {
-            this.checkCanShowGansterComingTip(bigGanster.id);
-        }
+        // redPoint
+        this._refreshTaskRedPoint();
+        this._refreshNFTRedPoint();
+        this._refreshBackpackRedPoint();
+        this._refreshArtifactRedPoint();
+        this._refreshRecruitRedPoint();
+        this._refreshExerciseRedPoint();
 
+        // const bigGanster = DataMgr.s.pioneer.getById("gangster_3");
+        // if (bigGanster != null && bigGanster.show) {
+        //     this.checkCanShowGansterComingTip(bigGanster.id);
+        // }
+ 
         this.backpackBtn.node.on(
             Button.EventType.CLICK,
             async () => {
@@ -83,9 +109,6 @@ export class MainUI extends ViewController {
             },
             this
         );
-        let testButtonActive: boolean = GAME_ENV_IS_DEBUG;
-        this.node.getChildByPath("CommonContent/AddHeatButton-001").active = testButtonActive;
-        this.node.getChildByPath("CommonContent/AddHeatButton-002").active = testButtonActive;
     }
 
     protected viewDidDestroy(): void {
@@ -94,13 +117,32 @@ export class MainUI extends ViewController {
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this.changeLang, this);
         NotificationMgr.removeListener(NotificationName.GAME_INNER_BUILDING_LATTICE_EDIT_CHANGED, this._onInnerBuildingLatticeEditChanged, this);
         NotificationMgr.removeListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onInnerOuterChanged, this);
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._onInnerBuildingUpgradeFinished, this);
 
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._onPlayerLvlupChanged, this);
+
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._onPioneerActionTypeChange, this);
 
         NotificationMgr.removeListener(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, this._onGameMainResourcePlayAnim, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_TASK, this._onRookieTapTask, this);
-        NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_DEFEND, this._onRookieTapDefend, this);
+
+        // task
+        NotificationMgr.removeListener(NotificationName.TASK_DID_CHANGE, this._refreshTaskRedPoint, this);
+        // nft
+        NotificationMgr.removeListener(NotificationName.NFT_LEVEL_UP, this._refreshNFTRedPoint, this);
+        NotificationMgr.removeListener(NotificationName.NFT_RANK_UP, this._refreshNFTRedPoint, this);
+        // item
+        NotificationMgr.removeListener(NotificationName.RESOURCE_GETTED, this._onGetResource, this);
+        NotificationMgr.removeListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshBackpackRedPoint, this);
+        NotificationMgr.removeListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshBackpackRedPoint, this);
+        // artifact
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_GET_NEW_ARTIFACT, this._onArtifactNewChanged, this);
+        NotificationMgr.removeListener(NotificationName.ARTIFACTPACK_READ_NEW_ARTIFACT, this._onArtifactNewChanged, this);
+        // recruit
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
+        // exercise
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED, this._refreshExerciseRedPoint, this);
     }
 
     changeLang(): void {
@@ -111,16 +153,50 @@ export class MainUI extends ViewController {
         // this._worldBoxCountTipView.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("107549")
     }
 
+    // red point
+    private _refreshTaskRedPoint() {
+        const redPointValue: number = DataMgr.s.task.getAllDoingTasks().length + DataMgr.s.task.getMissionAllDoing().length;
+        const redPointView = this.node.getChildByPath("CommonContent/TaskButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue);
+    }
+    private _refreshNFTRedPoint() {
+        const redPointValue: number = GameMgr.checkHasNFTCanRed() ? 1 : 0;
+        const redPointView = this.node.getChildByPath("CommonContent/NFTButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue, false);
+    }
+    private _refreshBackpackRedPoint() {
+        const redPointValue: number = DataMgr.s.item.getAllNewItemCount() + DataMgr.s.artifact.getAllNewArtifactCount();
+        const redPointView = this.node.getChildByPath("CommonContent/icon_treasure_box/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue);
+    }
+    private _refreshArtifactRedPoint() {
+        const redPointValue: number = DataMgr.s.artifact.getAllNewArtifactCount();
+        const redPointView = this.node.getChildByPath("CommonContent/ArtifactButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue);
+    }
+    private _refreshRecruitRedPoint() {
+        const redPointValue: boolean = DataMgr.s.userInfo.getRecruitRedPoint();
+        const redPointView = this.node.getChildByPath("CommonContent/RecuritButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue? 1 : 0, false);
+    }
+    private _refreshExerciseRedPoint() {
+        const redPointValue: boolean = DataMgr.s.userInfo.getExerciseRedPoint();
+        const redPointView = this.node.getChildByPath("CommonContent/ExerciseButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(redPointValue? 1 : 0, false);
+    }
+
+    // button
     private _refreshElementShow() {
         const taskButton = this.node.getChildByPath("CommonContent/TaskButton");
         const backpackButton = this.node.getChildByPath("CommonContent/icon_treasure_box");
         const nftButton = this.node.getChildByPath("CommonContent/NFTButton");
-        const defendButton = this.node.getChildByPath("CommonContent/SetDenderButton");
-        const test1Button = this.node.getChildByPath("CommonContent/AddHeatButton-001");
-        const test2Button = this.node.getChildByPath("CommonContent/AddHeatButton-002");
+        const recuritButton = this.node.getChildByPath("CommonContent/RecuritButton");
+        const exerciseButton = this.node.getChildByPath("CommonContent/ExerciseButton");
+        const artifactButton = this.node.getChildByPath("CommonContent/ArtifactButton");
 
         const battleReportButton = this.node.getChildByPath("CommonContent/reportsButton");
         const pioneerListView = this.node.getChildByPath("CommonContent/LeftNode");
+        const arrowContent = this.node.getChildByPath("arrowContent");
         const innerOuterChangeButton = this.node.getChildByPath("CommonContent/InnerOutChangeBtnBg");
 
         const innerBuildButton = this.node.getChildByPath("btnBuild");
@@ -131,10 +207,9 @@ export class MainUI extends ViewController {
         taskButton.active = false;
         backpackButton.active = false;
         nftButton.active = false;
-        defendButton.active = false;
-        test1Button.active = false;
-        test2Button.active = false;
-
+        recuritButton.active = false;
+        exerciseButton.active = false;
+        artifactButton.active = false;
         battleReportButton.active = false;
         pioneerListView.active = false;
         innerOuterChangeButton.active = false;
@@ -150,9 +225,10 @@ export class MainUI extends ViewController {
         if (rookieStep >= RookieStep.FINISH) {
             taskButton.active = true;
             backpackButton.active = true;
-            defendButton.active = true;
-            test1Button.active = GAME_ENV_IS_DEBUG;
-            test2Button.active = GAME_ENV_IS_DEBUG;
+            nftButton.active = true;
+            recuritButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.Barrack) >= 1;
+            exerciseButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.TrainingCenter) >= 1;
+            artifactButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.ArtifactStore) >= 1;
 
             battleReportButton.active = true;
             innerOuterChangeButton.active = true;
@@ -162,34 +238,48 @@ export class MainUI extends ViewController {
             taskTrackView.active = GameMainHelper.instance.isGameShowOuter;
 
             this._worldBoxCountTipView.active = true;
-        } else if (rookieStep >= RookieStep.DEFEND_TAP) {
-            defendButton.active = true;
-            taskButton.active = true;
-
-            battleReportButton.active = true;
-
+        }else if(rookieStep >= RookieStep.GUIDE_1010){
+            nftButton.active = true;
             innerOuterChangeButton.active = true;
-
-            if (rookieStep == RookieStep.DEFEND_TAP) {
-                if (UIPanelManger.inst.panelIsShow(UIName.TaskListUI)) {
-                    UIPanelManger.inst.popPanelByName(UIName.TaskListUI);
-                }
-            }
-        } else if (rookieStep >= RookieStep.MAIN_BUILDING_TAP_1) {
-            taskButton.active = true;
-
-            battleReportButton.active = true;
-
+        }else if(rookieStep >= RookieStep.GUIDE_1001){
             innerOuterChangeButton.active = true;
-        } else if (rookieStep >= RookieStep.TASK_SHOW_TAP_2) {
-            taskButton.active = true;
-
-            battleReportButton.active = true;
-        } else if (rookieStep >= RookieStep.TASK_SHOW_TAP_1) {
-            taskButton.active = true;
         }
+        // } else if (rookieStep >= RookieStep.DEFEND_TAP) {
+        //     defendButton.active = true;
+        //     taskButton.active = true;
 
-        pioneerListView.active = GameMainHelper.instance.isGameShowOuter && (DataMgr.s.pioneer.getAllPlayers(true).length > 1 || GAME_ENV_IS_DEBUG);
+        //     battleReportButton.active = true;
+
+        //     innerOuterChangeButton.active = true;
+
+        //     if (rookieStep == RookieStep.DEFEND_TAP) {
+        //         if (UIPanelManger.inst.panelIsShow(UIName.TaskListUI)) {
+        //             UIPanelManger.inst.popPanelByName(UIName.TaskListUI);
+        //         }
+        //     }
+        // } else if (rookieStep >= RookieStep.MAIN_BUILDING_TAP_1) {
+        //     taskButton.active = true;
+
+        //     battleReportButton.active = true;
+
+        //     innerOuterChangeButton.active = true;
+        // } else if (rookieStep >= RookieStep.TASK_SHOW_TAP_2) {
+        //     taskButton.active = true;
+
+        //     battleReportButton.active = true;
+        // } else if (rookieStep >= RookieStep.TASK_SHOW_TAP_1) {
+        //     taskButton.active = true;
+        // }
+
+        let hasOuterPioneer = false;
+        for (const pioneer of DataMgr.s.pioneer.getAllSelfPlayers()) {
+            if (pioneer.actionType != MapPioneerActionType.inCity) {
+                hasOuterPioneer = true;
+                break;
+            }
+        }
+        pioneerListView.active = GameMainHelper.instance.isGameShowOuter && hasOuterPioneer;
+        arrowContent.active = GameMainHelper.instance.isGameShowOuter;
 
         if (!GameMainHelper.instance.isGameShowOuter && UIPanelManger.inst.panelIsShow(UIName.TaskListUI)) {
             UIPanelManger.inst.popPanelByName(UIName.TaskListUI);
@@ -200,15 +290,6 @@ export class MainUI extends ViewController {
         const newSettle = localStorage.getItem("local_newSettle");
         const view = this.node.getChildByPath("CommonContent/NewSettlementTipView");
         view.active = newSettle != null && newSettle.length > 0 && newSettle.indexOf("|") != -1;
-    }
-    private _refreshInnerOuterChange() {
-        let isEnemy: boolean = false;
-        const building = DataMgr.s.mapBuilding.getBuildingById("building_1");
-
-        if (building != null && building.faction == MapMemberFactionType.enemy) {
-            isEnemy = true;
-        }
-        this.node.getChildByPath("CommonContent/InnerOutChangeBtnBg").active = !isEnemy;
     }
     private checkCanShowGansterComingTip(pioneerId: string) {
         if (pioneerId == "gangster_3") {
@@ -265,32 +346,51 @@ export class MainUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         GameMainHelper.instance.changeInnerBuildingLatticeEdit();
     }
-    private async onTapSetDefender() {
-        GameMusicPlayMgr.playTapButtonEffect();
-        UIPanelManger.inst.pushPanel(UIName.DefenderSetUI);
-    }
-    private async onTapTest() {
-        GameMusicPlayMgr.playTapButtonEffect();
-        const pioneerIds: string[] = ["pioneer_1", "pioneer_2", "pioneer_3"];
-        for (let i = 0; i < pioneerIds.length; i++) {
-            if (DataMgr.s.pioneer.getById(pioneerIds[i], true) == undefined) {
-                continue;
-            }
-            pioneerIds.splice(i, 1);
-            i--;
-        }
-        if (pioneerIds.length > 0) {
-            const randomId = CommonTools.getRandomItem(pioneerIds);
-            NetworkMgr.websocketMsg.player_pioneer_change_show({
-                pioneerId: randomId,
-                show: true,
-            });
-        }
-    }
     private onTapRefreshMap() {
         GameMusicPlayMgr.playTapButtonEffect();
         NetworkMgr.websocketMsg.reborn_all();
     }
+    private async onTapRecruit() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const recruitBuilding = DataMgr.s.innerBuilding.data.get(InnerBuildingType.Barrack);
+        if (recruitBuilding?.upgrading) {
+            UIHUDController.showCenterTip(LanMgr.getLanById("201003"));
+            return;
+        }
+        if (recruitBuilding?.troopIng) {
+            UIHUDController.showCenterTip("Generating");
+            // UIHUDController.showCenterTip("The building is being upgraded, please wait.");
+            return;
+        }
+        UIPanelManger.inst.pushPanel(UIName.RecruitUI);
+    }
+    private async onTapExercise() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const exerciseBuilding = DataMgr.s.innerBuilding.data.get(InnerBuildingType.TrainingCenter);
+        if (exerciseBuilding?.upgrading) {
+            UIHUDController.showCenterTip(LanMgr.getLanById("201003"));
+            return;
+        }
+        if (exerciseBuilding?.tc?.training?.end > new Date().getTime()) {
+            UIHUDController.showCenterTip("Generating");
+            // UIHUDController.showCenterTip("The building is being upgraded, please wait.");
+            return;
+        }
+        UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
+    }
+    private async onTapArtifact() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const artifactBuilding = DataMgr.s.innerBuilding.data.get(InnerBuildingType.ArtifactStore);
+        if (artifactBuilding?.upgrading) {
+            UIHUDController.showCenterTip(LanMgr.getLanById("201003"));
+            return;
+        }
+        const result = await UIPanelManger.inst.pushPanel(UIName.RelicTowerUI);
+        if (result.success) {
+            result.node.getComponent(RelicTowerUI).configuration(0);
+        }
+    }
+
     //----------------------------------------------------- notification
     private _onPioneerShowChanged(data: { id: string; show: boolean }) {
         this.checkCanShowGansterComingTip(data.id);
@@ -315,6 +415,14 @@ export class MainUI extends ViewController {
             localStorage.setItem("local_newSettle", beginLevel + "|" + endLevel);
             this._refreshSettlememntTip();
         }
+    }
+
+    private _onPioneerActionTypeChange() {
+        this._refreshElementShow();
+    }
+
+    private _onInnerBuildingUpgradeFinished() {
+        this._refreshElementShow();
     }
 
     private _onGameMainResourcePlayAnim(data: RookieResourceAnimStruct) {
@@ -405,7 +513,12 @@ export class MainUI extends ViewController {
         }
         item.getComponent(TaskListUI).refreshUI();
     }
-    private _onRookieTapDefend() {
-        this.onTapSetDefender();
+
+    private _onGetResource() {
+        this._refreshNFTRedPoint();
+    }
+    private _onArtifactNewChanged() {
+        this._refreshBackpackRedPoint();
+        this._refreshArtifactRedPoint();
     }
 }

@@ -1,4 +1,264 @@
 {
+  "1000": {
+    "id": "1000",
+    "eng": "Prophet's revelation",
+    "tc": "先知的啟示"
+  },
+  "1001": {
+    "id": "1001",
+    "eng": "Repair the city hall",
+    "tc": "修復市政廳"
+  },
+  "1002": {
+    "id": "1002",
+    "eng": "Build a recruiting office",
+    "tc": "修建募兵處"
+  },
+  "1003": {
+    "id": "1003",
+    "eng": "Build houses",
+    "tc": "修建房屋"
+  },
+  "1004": {
+    "id": "1004",
+    "eng": "Recruit soldiers",
+    "tc": "徵召士兵"
+  },
+  "1005": {
+    "id": "1005",
+    "eng": "Gather resources",
+    "tc": "採集資源"
+  },
+  "1006": {
+    "id": "1006",
+    "eng": "Thermal PIOT",
+    "tc": "熱力PIOT"
+  },
+  "1007": {
+    "id": "1007",
+    "eng": "Open treasure chest",
+    "tc": "打開寶箱"
+  },
+  "1008": {
+    "id": "1008",
+    "eng": "Build barracks",
+    "tc": "修建兵營"
+  },
+  "1009": {
+    "id": "1009",
+    "eng": "Train soldiers",
+    "tc": "訓練士兵"
+  },
+  "1010": {
+    "id": "1010",
+    "eng": "Challenge wild monsters",
+    "tc": "挑戰野怪"
+  },
+  "1011": {
+    "id": "1011",
+    "eng": "Upgrade heroes",
+    "tc": "升級英雄"
+  },
+  "1012": {
+    "id": "1012",
+    "eng": "Wormhole challenge",
+    "tc": "蟲洞挑戰"
+  },
+  "100000": {
+    "id": "100000",
+    "eng": "You’re finally here. The prophecy is about to be fulfilled. You are the future King of Noxus!",
+    "tc": "您終於來了，預言即將成為現實，未來的諾克薩斯之王！"
+  },
+  "100001": {
+    "id": "100001",
+    "eng": "You seem confused, but don't worry, you'll understand soon.",
+    "tc": "看起來您很困惑，沒關係，很快您就明白了"
+  },
+  "100002": {
+    "id": "100002",
+    "eng": "Your subjects have prepared some gifts to welcome you. Please accept them.",
+    "tc": "您的臣民為了迎接您的到來，準備了一些見面禮，還請接受"
+  },
+  "100100": {
+    "id": "100100",
+    "eng": "As you can see, our kingdom has been ravaged by enemies. All the buildings have been reduced to ruins.",
+    "tc": "如您所見，我們的王國遭受到敵人的掠奪，所有建築都被夷為廢墟"
+  },
+  "100101": {
+    "id": "100101",
+    "eng": "Restoring the former glory of Noxus begins with repairing the Town Hall.",
+    "tc": "要重整諾克薩斯的往日榮光，需要從修復市政廳開始"
+  },
+  "100102": {
+    "id": "100102",
+    "eng": "Everything is proceeding as planned. Once the Town Hall is restored, you can build other structures.",
+    "tc": "一切都按照計畫在進行，有了市政廳就能修建其他更多建築了"
+  },
+  "100200": {
+    "id": "100200",
+    "eng": "To fend off imminent enemy attacks, we need to establish our own army first.",
+    "tc": "為了抵禦敵人隨時而來的襲擊，我們需要先組建自己的軍隊"
+  },
+  "100201": {
+    "id": "100201",
+    "eng": "Building a Barracks will provide us with a steady supply of soldiers.",
+    "tc": "修建了募兵處，就能為我們源源不斷提供兵源了"
+  },
+  "100202": {
+    "id": "100202",
+    "eng": "See, that was easy! Now it’s time to recruit some soldiers.",
+    "tc": "看，很容易吧，那接下來就是要招募士兵了"
+  },
+  "100300": {
+    "id": "100300",
+    "eng": "The size of the army is influenced by the number of houses. To recruit more soldiers, we need to build more houses.",
+    "tc": "軍隊的規模受房屋影響，想要招募更多士兵，那就需要修建更多房屋"
+  },
+  "100400": {
+    "id": "100400",
+    "eng": "The people of Noxus have never feared war, and they take pride in joining the army to defend their homeland.",
+    "tc": "諾克薩斯的子民從來不懼怕戰爭，也以加入守衛家園的軍隊為榮"
+  },
+  "100401": {
+    "id": "100401",
+    "eng": "Just make sure to provide enough rations.",
+    "tc": "只要給足糧餉就行"
+  },
+  "100402": {
+    "id": "100402",
+    "eng": "A strong army is essential for rebuilding the royal city.",
+    "tc": "擁有一支具有戰鬥力的軍隊是重建王城的根本"
+  },
+  "100500": {
+    "id": "100500",
+    "eng": "Rapid development cannot rely on the current limited resources.",
+    "tc": "想要快速發展，僅靠現在的這點資源是遠遠不夠的"
+  },
+  "100501": {
+    "id": "100501",
+    "eng": "Sending the army outside the city to gather resources is the safest way to acquire them.",
+    "tc": "將軍隊派到城外去採集資源，是最為安全獲取資源的方式"
+  },
+  "100502": {
+    "id": "100502",
+    "eng": "Resources are the root cause of all wars.",
+    "tc": "資源，所有戰爭的根源都是為了爭奪資源"
+  },
+  "100600": {
+    "id": "100600",
+    "eng": "Oh, there’s another special resource called PIOT.",
+    "tc": "對了，還有一種特殊的資源叫做PIOT"
+  },
+  "100601": {
+    "id": "100601",
+    "eng": "Those who possess PIOT can become rulers with governing authority in the world.",
+    "tc": "擁有PIOT的人可以成為擁有治理權的世界主宰"
+  },
+  "100602": {
+    "id": "100602",
+    "eng": "Using PIOT can directly increase Heat Value, and it can also be used to speed up actions, acquire extra resources, and enhance your returns.",
+    "tc": "使用PIOT可以直接增加熱力值，並且PIOT還可以用於行動提速，額外獲取資源等提升你收益的作用"
+  },
+  "100603": {
+    "id": "100603",
+    "eng": "Heat Value is closely tied to treasure chests. The higher your Heat Value, the more treasure chests you can open daily, increasing your chances of obtaining high-quality rewards.",
+    "tc": "熱力值是一個與寶箱緊密聯繫的數值，熱力值越高，每日可開啟的寶箱數量越多，獲得高品質獎勵的機會也將提升"
+  },
+  "100700": {
+    "id": "100700",
+    "eng": "Treasure chests are the core of your income in this world. Your rewards and the resources that support your actions in the world can all be obtained through treasure chests.",
+    "tc": "寶箱是你在世界中獲得收益的核心，你的收益和支撐你在世界中行動的資源都可以通過寶箱獲得"
+  },
+  "100701": {
+    "id": "100701",
+    "eng": "However, the rewards inside treasure chests are shared by all users, so you need to find ways to claim high-quality rewards before others do.",
+    "tc": "但是寶箱內的獎勵是所有用戶共用的，所以你需要想方設法的比其他人先獲得寶箱內的高品質獎勵。"
+  },
+  "100702": {
+    "id": "100702",
+    "eng": "You’re still a bit confused, aren’t you? No worries, open a treasure chest and see what we can get.",
+    "tc": "你肯定還有些困惑，沒關係，先開一個寶箱，看我們能獲得什麼"
+  },
+  "100703": {
+    "id": "100703",
+    "eng": "Wow, we’ve obtained Psyche Energy, which we usually refer to as PSYC. Your actions will require the support of PSYC.",
+    "tc": "哇哦，我們獲得了靈能，通常我們也稱之為PSYC，你的行動都將會需要PSYC的支持"
+  },
+  "100800": {
+    "id": "100800",
+    "eng": "Curious about what exactly PSYC does?",
+    "tc": "是不是想知道PSYC具體有什麼作用？"
+  },
+  "100801": {
+    "id": "100801",
+    "eng": "Don’t rush. To make our army stronger, let’s build a Barracks first.",
+    "tc": "不急，為了讓我們的軍隊更具有戰鬥力，先修建兵營"
+  },
+  "100900": {
+    "id": "100900",
+    "eng": "Next, train the soldiers to make our army more powerful.",
+    "tc": "接著訓練士兵，讓我們的軍隊更具有戰鬥力"
+  },
+  "100901": {
+    "id": "100901",
+    "eng": "Having an army with different types of units will allow us to handle various complex war scenarios.",
+    "tc": "擁有不同兵種的軍隊，能讓我們應對各種複雜的戰爭環境"
+  },
+  "100902": {
+    "id": "100902",
+    "eng": "Take it step by step; we’ll start by training the most basic infantry.",
+    "tc": "慢慢來，我們先訓練最為初級的步兵"
+  },
+  "101000": {
+    "id": "101000",
+    "eng": "After all that preparation, let’s have the young man face a real challenge.",
+    "tc": "鋪墊了那麼久，讓小夥子真正接受一場挑戰吧"
+  },
+  "101001": {
+    "id": "101001",
+    "eng": "Do you see that enemy outside the city? They’re just scattered troops, nothing to fear.",
+    "tc": "看到城外的那個敵人了嗎，散兵游勇，不足為懼"
+  },
+  "101002": {
+    "id": "101002",
+    "eng": "Let our blades taste the blood of the enemy!",
+    "tc": "讓我們的利刃品嘗敵人的鮮血吧！"
+  },
+  "101100": {
+    "id": "101100",
+    "eng": "A simple battle doesn’t mean we’re strong enough.",
+    "tc": "輕而易舉的戰鬥並不能代表我們已經足夠強大"
+  },
+  "101101": {
+    "id": "101101",
+    "eng": "Training commanding officers can effectively enhance the combat power of the army.",
+    "tc": "訓練帶兵的將領，能有效地提升軍隊的戰鬥力"
+  },
+  "101102": {
+    "id": "101102",
+    "eng": "The simplest way is to level them up.",
+    "tc": "最為簡單的方式，提升他們的等級"
+  },
+  "101200": {
+    "id": "101200",
+    "eng": "On this continent, there are countless others like you who have been summoned.",
+    "tc": "在這片大陸上，有著無數個如你一樣被召喚而來的人"
+  },
+  "101201": {
+    "id": "101201",
+    "eng": "But there will only be one King of Noxus. Will it be you?",
+    "tc": "但諾克薩斯之王只會有一個，會是你嗎？"
+  },
+  "101202": {
+    "id": "101202",
+    "eng": "I don’t know! But I hope it’s you.",
+    "tc": "我不知道！但我希望是你"
+  },
+  "101203": {
+    "id": "101203",
+    "eng": "Go check out your neighboring friends. Let’s see who’s the imposter!",
+    "tc": "去看看你周圍的好鄰居吧，讓我看看誰才是冒牌貨！"
+  },
   "104001": {
     "id": "104001",
     "eng": "No qualification",
@@ -28,6 +288,16 @@
     "id": "104006",
     "eng": "You can change settings by clicking the player avatar in the top-left corner.",
     "tc": "你可以通過點擊左上角的玩家頭像來更改設置。"
+  },
+  "104007": {
+    "id": "104007",
+    "eng": "In progress",
+    "tc": "进行中"
+  },
+  "104008": {
+    "id": "104008",
+    "eng": "Reward available",
+    "tc": "可领奖"
   },
   "105001": {
     "id": "105001",
@@ -116,8 +386,8 @@
   },
   "106008": {
     "id": "106008",
-    "eng": "The rewards from the World Treasure Chest are affected by civilization level, heat value, and exploration value.\r\n\r\n- Civilization Level: Higher levels increase the quality of chests and daily opening limits, and the chance to find rare items.\r\n\r\n- Heat Value: Earned through PSYC and PIOT consumption, it raises the odds of getting head rewards from chests.\r\n\r\n- Exploration Value: Gained by exploring, gathering, building, and warring, it grants opportunities to open the World Treasure Chest.",
-    "tc": "世界寶藏箱的獎勵受到文明等級、熱值和探索值的影響。\r\n\r\n文明等級：等級越高，寶箱的質量和每日開箱限制增加，並且有更高機會找到稀有物品。\r\n\r\n熱值：通過 PSYC 和 PIOT 消費獲得，它提高了從寶箱中獲得頭獎的機率。\r\n\r\n探索值：通過探索、收集、建造和戰爭獲得，它賦予你開啟世界寶藏箱的機會。"
+    "eng": "The rewards from the World Treasure Chest are affected by civilization level, heat value, and exploration value.\n\n- Civilization Level: Higher levels increase the quality of chests and daily opening limits, and the chance to find rare items.\n\n- Heat Value: Earned through PSYC and PIOT consumption, it raises the odds of getting head rewards from chests.\n\n- Exploration Value: Gained by exploring, gathering, building, and warring, it grants opportunities to open the World Treasure Chest.",
+    "tc": "世界寶藏箱的獎勵受到文明等級、熱值和探索值的影響。\n\n文明等級：等級越高，寶箱的質量和每日開箱限制增加，並且有更高機會找到稀有物品。\n\n熱值：通過 PSYC 和 PIOT 消費獲得，它提高了從寶箱中獲得頭獎的機率。\n\n探索值：通過探索、收集、建造和戰爭獲得，它賦予你開啟世界寶藏箱的機會。"
   },
   "106009": {
     "id": "106009",
@@ -136,8 +406,8 @@
   },
   "106012": {
     "id": "106012",
-    "eng": "%s has recovered HP.",
-    "tc": "%s 恢復了 HP。"
+    "eng": "%s Successfully supplemented TOE.",
+    "tc": "%s 成功補充TOE。"
   },
   "106013": {
     "id": "106013",
@@ -153,6 +423,36 @@
     "id": "106015",
     "eng": "Map and Teasure chest refresh countdown: ",
     "tc": "地圖和寶藏箱刷新倒數計時："
+  },
+  "106016": {
+    "id": "106016",
+    "eng": "1.After building the intelligence station, the reconnaissance function can be used.\n\n2.The reconnaissance function can detect the combat power of other players in the main city, and can dispel a certain range of fog through fog reconnaissance.\n\n3.Upgrading the intelligence station can increase the range of dispelling fog.",
+    "tc": "1.建造情報站後，即可使用偵察功能。\n\n2.偵察功能可以偵察其他玩家主城的戰鬥力，對迷霧偵察可以驅散一定範圍的迷霧。\n\n3.陞級情報站可以提升驅散迷霧的範圍。"
+  },
+  "106017": {
+    "id": "106017",
+    "eng": "1.After the establishment of the recruitment committee, conscription can be carried out.\n\n2.When recruiting through the recruitment committee, the number of troops cannot exceed the upper limit of the recruitment committee's capacity, nor can it exceed the population limit.\n\n3.After upgrading the recruitment committee, it can increase the speed of recruitment and the upper limit of accommodating troops, while also reducing the consumption of recruitment.",
+    "tc": "1.建造募兵委後，即可以進行徵兵。\n\n2.通過募兵委徵兵時，兵力不能超過募兵委容納兵力的上限，同時也不能超過人口上限。\n\n3.募兵委升級後，可提升募兵的速度與容納兵力的上限，同時還會降低募兵的消耗。"
+  },
+  "106018": {
+    "id": "106018",
+    "eng": "1.After building the barracks, the soldiers recruited by the recruitment committee can be trained into other branches of the army.\n\n2.The individual health of different branches of the army varies, and the training costs and time also differ.\n\n3.Upgrading the barracks can unlock more trainable units.",
+    "tc": "1.建造兵營後，即可將募兵委徵召的阿兵哥訓練成其他兵種。\n\n2.不同兵種的單兵血量不同，訓練費用與訓練時間也不同。\n\n3.陞級兵營可以解鎖更多可訓練的兵種。"
+  },
+  "106019": {
+    "id": "106019",
+    "eng": "1.Upgrading one's residence can increase the population limit.\n\n2.Soldiers in the recruitment committee, various branches of troops in the barracks, and troops led by characters shall be counted towards the total population, and the total population shall not exceed the population limit.",
+    "tc": "1.陞級居所可提升人口上限。\n\n2.募兵委中的阿兵哥，兵營中的各種兵種，角色帶領的部隊，都會計入人口總數，人口總數不得超過人口上限。"
+  },
+  "106020": {
+    "id": "106020",
+    "eng": "1.Only after building the city hall can other buildings be constructed.\n\n2.The level of other buildings cannot exceed that of the city hall.\n\n3.Upgrading the level of the city hall can increase the upper limit of the level of other buildings.",
+    "tc": "1.建造市政廳後才能建造其他建築。\n\n2.其他建築的等級無法超出市政廳的等級。\n\n3.陞級市政廳等級即可提升其他建築的等級上限。"
+  },
+  "106021": {
+    "id": "106021",
+    "eng": "1.After building the Tower of Babel, players can enshrine artifacts in the tower, and the enshrined artifacts will have the attribute effects of the artifact. At the same time, players can use three artifacts to forge a new artifact.\n\n2.After upgrading the Tower of Babel, players can unlock more artifact worship slots and obtain more artifact effects at the same time.",
+    "tc": "1.建築巴別塔後，玩家可以將神器供奉在巴別塔中，被供奉的神器將發貨神器的内容效果，同時玩家可以用三個神器重新熔煉出一個新神器。\n\n2.玩家陞級巴別塔後，可以解鎖更多的神器供奉比特，玩家可以同時獲得更多的神器效果。"
   },
   "107001": {
     "id": "107001",
@@ -339,6 +639,41 @@
     "eng": "Damaged Gear",
     "tc": "損壞的齒輪"
   },
+  "107100": {
+    "id": "107100",
+    "eng": "Scavenger Soldier",
+    "tc": "游民战士"
+  },
+  "107101": {
+    "id": "107101",
+    "eng": "Wasteland Nomad",
+    "tc": "流浪武士"
+  },
+  "107102": {
+    "id": "107102",
+    "eng": "Wasteland Raider",
+    "tc": "废土武士"
+  },
+  "107103": {
+    "id": "107103",
+    "eng": "Radiation Warrior",
+    "tc": "辐射战士"
+  },
+  "107104": {
+    "id": "107104",
+    "eng": "Steel Guardian",
+    "tc": "钢铁卫士"
+  },
+  "107105": {
+    "id": "107105",
+    "eng": "Doomsday Legion",
+    "tc": "末日军团"
+  },
+  "107106": {
+    "id": "107106",
+    "eng": "Legion of Rescuers",
+    "tc": "拯救者军团"
+  },
   "107549": {
     "id": "107549",
     "eng": "text for English version",
@@ -346,8 +681,18 @@
   },
   "108001": {
     "id": "108001",
-    "eng": "Skill Name",
-    "tc": "技能名稱"
+    "eng": "Insight",
+    "tc": "洞察"
+  },
+  "108002": {
+    "id": "108002",
+    "eng": "Swift Shadow",
+    "tc": "迅影"
+  },
+  "108003": {
+    "id": "108003",
+    "eng": "Divine Eye",
+    "tc": "神眼"
   },
   "109001": {
     "id": "109001",
@@ -789,6 +1134,41 @@
     "eng": "A gear with visible wear or breakage, a reminder of the passage of time and the inevitability of decay.",
     "tc": "一個有明顯磨損或損壞的齒輪，提醒時間的流逝和衰敗的必然性。"
   },
+  "117100": {
+    "id": "117100",
+    "eng": "These warriors are the most common combat units on the wasteland, usually ordinary people who have now picked up weapons to survive. Their equipment is rudimentary, mainly relying on",
+    "tc": "这些战士是废土上最常见的战斗单位，通常是曾经的普通人，现在为了生存而拿起了武器。他们的装备简陋，主要依"
+  },
+  "117101": {
+    "id": "117101",
+    "eng": "These soldiers are destitute warriors wandering among the wasteland, familiar with the terrain and environment, and able to quickly adapt to various battlefield environments.",
+    "tc": "这些战士是游走于废土之间的落魄战士，熟悉地形和环境，能够快速适应各种战场环境。"
+  },
+  "117102": {
+    "id": "117102",
+    "eng": "Warriors who survive in wasteland are more organized, have a fierce combat style, and are skilled in surprise attacks and ambushes.",
+    "tc": "在废土中生存下来的战士，组织更加严密，作战风格凶悍，擅长突袭和伏击。"
+  },
+  "117103": {
+    "id": "117103",
+    "eng": "These soldiers have been exposed to radiation for a long time, causing their bodies to mutate and become stronger and more durable. Their equipment has been further enhanced, possessing a certain level of radiation resistance and the ability to utilize the surrounding environment for combat",
+    "tc": "这些战士长期暴露在辐射环境中，身体发生了变异，变得更加强悍和耐打。他们的装备进一步增强，具备一定的抗辐射能力，并且可以利用周围环境进行作战。"
+  },
+  "117104": {
+    "id": "117104",
+    "eng": "These warriors are the most elite beings on the wasteland, equipped with high-tech armor reconstructed from waste technology. They can withstand huge damage and have the ability to counterattack enemies. Steel guardians are usually the core force of the entire army.",
+    "tc": "这些战士是废土上最精锐的存在，装备着用废旧科技重组的高科技盔甲。他们可以承受巨大的伤害并且有能力反击敌人。钢铁卫士通常是整个军队的核心力量。"
+  },
+  "117105": {
+    "id": "117105",
+    "eng": "The Apocalypse Legion is one of the most powerful warriors on the battlefield, with equipment and combat power several times that of other units. These soldiers are not only powerful in combat, but also able to command and inspire other soldiers to play a greater role in battle.",
+    "tc": "末日军团是战场上最强大的战士之一，他们的装备和战斗力都是其他单位的数倍。这些战士不仅战斗力强大，还能够指挥和激励其他战士，让他们在战斗中发挥更大的作用。"
+  },
+  "117106": {
+    "id": "117106",
+    "eng": "The highest level warriors and commanders not only possess exceptional combat power, but also wield the most powerful weapons and resources, and are capable of commanding an entire army.",
+    "tc": "最高级别的战士和指挥官，他们不仅拥有超强的战斗力，还掌握着最强大的武器和资源，并且够指挥整支军队。"
+  },
   "120001": {
     "id": "120001",
     "eng": "City Hall",
@@ -796,8 +1176,8 @@
   },
   "120002": {
     "id": "120002",
-    "eng": "Barracks",
-    "tc": "兵營"
+    "eng": "Recruiting soldiers",
+    "tc": "募兵委"
   },
   "120003": {
     "id": "120003",
@@ -806,13 +1186,18 @@
   },
   "120004": {
     "id": "120004",
-    "eng": "Energy Station",
-    "tc": "能量站"
+    "eng": "intelligence station",
+    "tc": "情报站"
   },
   "120005": {
     "id": "120005",
     "eng": "Babel Tower",
     "tc": "巴別塔"
+  },
+  "120006": {
+    "id": "120006",
+    "eng": "Barracks",
+    "tc": "兵營"
   },
   "121001": {
     "id": "121001",
@@ -831,13 +1216,18 @@
   },
   "121004": {
     "id": "121004",
-    "eng": "Accelerated energy production efficiency",
-    "tc": "加速能量生產效率"
+    "eng": "Can increase reconnaissance field of view",
+    "tc": "可以增加侦察视野"
   },
   "121005": {
     "id": "121005",
     "eng": "More Relics are able to be acitved",
     "tc": "可以激活更多的遺物"
+  },
+  "121006": {
+    "id": "121006",
+    "eng": "Can train more types of troops",
+    "tc": "可以训练更多兵种"
   },
   "122001": {
     "id": "122001",
@@ -1784,6 +2174,16 @@
     "eng": "Elder's Staff",
     "tc": "長者法杖"
   },
+  "401026": {
+    "id": "401026",
+    "eng": "EXP",
+    "tc": "經驗"
+  },
+  "401027": {
+    "id": "401027",
+    "eng": "Azoth",
+    "tc": "阿佐特"
+  },
   "402001": {
     "id": "402001",
     "eng": "A gem with a heavenly glow.",
@@ -1898,6 +2298,16 @@
     "id": "402025",
     "eng": "You can earn more benefits by burning PIOT, such as more treasure chests, all the items inside the chests, etc.",
     "tc": "你可以通过燃燒 PIOT，例如獲得更多的寶藏箱，寶藏箱中所有的物品等等，來獲得更多好處。"
+  },
+  "402026": {
+    "id": "402026",
+    "eng": "Pioneer upgrade props",
+    "tc": "pioneer陞級道具"
+  },
+  "402027": {
+    "id": "402027",
+    "eng": "Pioneer Advanced Props",
+    "tc": "pioneer昇階道具"
   },
   "501001": {
     "id": "501001",
@@ -2148,6 +2558,61 @@
     "id": "501102",
     "eng": "Resource Shortage",
     "tc": "資源短缺"
+  },
+  "501103": {
+    "id": "501103",
+    "eng": "Wild Resource Collection",
+    "tc": "野外資源收集"
+  },
+  "501104": {
+    "id": "501104",
+    "eng": "Defeat Wild Enemies",
+    "tc": "擊敗野外敵人"
+  },
+  "501105": {
+    "id": "501105",
+    "eng": "City Building Upgrade",
+    "tc": "城内建築升級"
+  },
+  "501106": {
+    "id": "501106",
+    "eng": "Map Exploration of the Unknown",
+    "tc": "地图探索未知"
+  },
+  "501107": {
+    "id": "501107",
+    "eng": "Recruitment",
+    "tc": "募兵"
+  },
+  "501108": {
+    "id": "501108",
+    "eng": "Civilization Breakthrough",
+    "tc": "文明突破"
+  },
+  "501109": {
+    "id": "501109",
+    "eng": "Resource Hoarding",
+    "tc": "物資囤積"
+  },
+  "501110": {
+    "id": "501110",
+    "eng": "Open Treasure Chests",
+    "tc": "开启寶箱"
+  },
+  "501111": {
+    "id": "501111",
+    "eng": "Use Items",
+    "tc": "使用道具"
+  },
+  "501112": {
+    "id": "501112",
+    "eng": "Siege",
+    "tc": "攻城"
+  },
+  "501113": {
+    "id": "501113",
+    "eng": "Find NPCs",
+    "tc": "尋找NPC"
   },
   "502001": {
     "id": "502001",
@@ -2841,8 +3306,8 @@
   },
   "701001": {
     "id": "701001",
-    "eng": "Collection progress:\r\n<color=#ffcc49><size=36>%s%</size></color>",
-    "tc": "收集進度：\r\n<color=#ffcc49><size=36>%s%</size></color>"
+    "eng": "Collection progress:\n<color=#ffcc49><size=36>%s%</size></color>",
+    "tc": "收集進度：\n<color=#ffcc49><size=36>%s%</size></color>"
   },
   "701002": {
     "id": "701002",
@@ -3564,10 +4029,675 @@
     "eng": "Beast Canyon",
     "tc": "巨獸峽谷"
   },
+  "920010": {
+    "id": "920010",
+    "eng": "Gather once",
+    "tc": "完成1次採集"
+  },
+  "920011": {
+    "id": "920011",
+    "eng": "Kill 1 enemy",
+    "tc": "擊殺1個敵人"
+  },
+  "920012": {
+    "id": "920012",
+    "eng": "Gather 2 more times",
+    "tc": "再次完成2次採集"
+  },
+  "920013": {
+    "id": "920013",
+    "eng": "Upgrade intelligence station to level 1",
+    "tc": "升級情报站到1級"
+  },
+  "920014": {
+    "id": "920014",
+    "eng": "Interact with an event once",
+    "tc": "完成1次與事件的交互"
+  },
+  "920015": {
+    "id": "920015",
+    "eng": "Kill 2 more enemies",
+    "tc": "再次擊殺2個敵人"
+  },
+  "920016": {
+    "id": "920016",
+    "eng": "Recruit 100 militia",
+    "tc": "招募一百個民兵"
+  },
+  "920017": {
+    "id": "920017",
+    "eng": "Upgrade civilization to level 2",
+    "tc": "將文明等級提升到2級"
+  },
+  "920018": {
+    "id": "920018",
+    "eng": "Interact with 4 more events",
+    "tc": "再完成4次與事件的交互"
+  },
+  "920019": {
+    "id": "920019",
+    "eng": "Collect 100 stone",
+    "tc": "收集100石料"
+  },
+  "920020": {
+    "id": "920020",
+    "eng": "Collect 200 food",
+    "tc": "收集200食物"
+  },
+  "920021": {
+    "id": "920021",
+    "eng": "Collect 300 wood",
+    "tc": "收集300木材"
+  },
+  "920022": {
+    "id": "920022",
+    "eng": "Upgrade barracks to level 1",
+    "tc": "升級兵營到1級"
+  },
+  "920023": {
+    "id": "920023",
+    "eng": "Collect 500 stone",
+    "tc": "收集500石料"
+  },
+  "920024": {
+    "id": "920024",
+    "eng": "Collect 500 food",
+    "tc": "收集500食物"
+  },
+  "920025": {
+    "id": "920025",
+    "eng": "Collect 500 wood",
+    "tc": "收集500木材"
+  },
+  "920026": {
+    "id": "920026",
+    "eng": "Upgrade intelligence center to level 1",
+    "tc": "升級情報站到1級"
+  },
+  "920027": {
+    "id": "920027",
+    "eng": "Upgrade housing to level 2",
+    "tc": "升級民居到2級"
+  },
+  "920028": {
+    "id": "920028",
+    "eng": "Upgrade town hall to level 2",
+    "tc": "升級市政廳到2級"
+  },
+  "920029": {
+    "id": "920029",
+    "eng": "Upgrade civilization to level 3",
+    "tc": "將文明等級提升到3級"
+  },
+  "920030": {
+    "id": "920030",
+    "eng": "Open a chest",
+    "tc": "開啟一次寶箱"
+  },
+  "920031": {
+    "id": "920031",
+    "eng": "Level up any character",
+    "tc": "提升任意角色等級"
+  },
+  "920032": {
+    "id": "920032",
+    "eng": "Attack and win against another player",
+    "tc": "對其他玩家城池進攻並取勝"
+  },
+  "920033": {
+    "id": "920033",
+    "eng": "Interact with NPC on the map",
+    "tc": "在大地圖上與NPC交互"
+  },
+  "920034": {
+    "id": "920034",
+    "eng": "Interact with 10 events",
+    "tc": "完成10次與事件的交互"
+  },
+  "920035": {
+    "id": "920035",
+    "eng": "Gather 10 times",
+    "tc": "完成10次採集"
+  },
+  "920036": {
+    "id": "920036",
+    "eng": "Upgrade civilization to level 4",
+    "tc": "將文明等級提升到4級"
+  },
+  "920037": {
+    "id": "920037",
+    "eng": "Upgrade barracks to level 2",
+    "tc": "升級兵營到2級"
+  },
+  "920038": {
+    "id": "920038",
+    "eng": "Kill 20 enemies",
+    "tc": "擊殺20個敵人"
+  },
+  "920039": {
+    "id": "920039",
+    "eng": "Gather 20 times",
+    "tc": "完成20次採集"
+  },
+  "920040": {
+    "id": "920040",
+    "eng": "Win 5 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝5次"
+  },
+  "920041": {
+    "id": "920041",
+    "eng": "Collect 1,000 stone",
+    "tc": "收集1000石料"
+  },
+  "920042": {
+    "id": "920042",
+    "eng": "Collect 1,000 food",
+    "tc": "收集1000食物"
+  },
+  "920043": {
+    "id": "920043",
+    "eng": "Collect 1,000 wood",
+    "tc": "收集1000木材"
+  },
+  "920044": {
+    "id": "920044",
+    "eng": "Open 5 chests",
+    "tc": "開啟5次寶箱"
+  },
+  "920045": {
+    "id": "920045",
+    "eng": "Open 10 chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920046": {
+    "id": "920046",
+    "eng": "Upgrade civilization to level 5",
+    "tc": "將文明等級提升到5級"
+  },
+  "920047": {
+    "id": "920047",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920048": {
+    "id": "920048",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920049": {
+    "id": "920049",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920050": {
+    "id": "920050",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920051": {
+    "id": "920051",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920052": {
+    "id": "920052",
+    "eng": "Upgrade civilization to level 6",
+    "tc": "將文明等級提升到6級"
+  },
+  "920053": {
+    "id": "920053",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920054": {
+    "id": "920054",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920055": {
+    "id": "920055",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920056": {
+    "id": "920056",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920057": {
+    "id": "920057",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920058": {
+    "id": "920058",
+    "eng": "Upgrade civilization to level 7",
+    "tc": "將文明等級提升到7級"
+  },
+  "920059": {
+    "id": "920059",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920060": {
+    "id": "920060",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920061": {
+    "id": "920061",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920062": {
+    "id": "920062",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920063": {
+    "id": "920063",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920064": {
+    "id": "920064",
+    "eng": "Upgrade civilization to level 8",
+    "tc": "將文明等級提升到8級"
+  },
+  "920065": {
+    "id": "920065",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920066": {
+    "id": "920066",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920067": {
+    "id": "920067",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920068": {
+    "id": "920068",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920069": {
+    "id": "920069",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920070": {
+    "id": "920070",
+    "eng": "Upgrade civilization to level 9",
+    "tc": "將文明等級提升到9級"
+  },
+  "920071": {
+    "id": "920071",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920072": {
+    "id": "920072",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920073": {
+    "id": "920073",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920074": {
+    "id": "920074",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920075": {
+    "id": "920075",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920076": {
+    "id": "920076",
+    "eng": "Upgrade civilization to level 10",
+    "tc": "將文明等級提升到10級"
+  },
+  "920077": {
+    "id": "920077",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920078": {
+    "id": "920078",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920079": {
+    "id": "920079",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920080": {
+    "id": "920080",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920081": {
+    "id": "920081",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920082": {
+    "id": "920082",
+    "eng": "Upgrade civilization to level 11",
+    "tc": "將文明等級提升到11級"
+  },
+  "920083": {
+    "id": "920083",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920084": {
+    "id": "920084",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920085": {
+    "id": "920085",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920086": {
+    "id": "920086",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920087": {
+    "id": "920087",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920088": {
+    "id": "920088",
+    "eng": "Upgrade civilization to level 12",
+    "tc": "將文明等級提升到12級"
+  },
+  "920089": {
+    "id": "920089",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920090": {
+    "id": "920090",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920091": {
+    "id": "920091",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920092": {
+    "id": "920092",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920093": {
+    "id": "920093",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920094": {
+    "id": "920094",
+    "eng": "Upgrade civilization to level 13",
+    "tc": "將文明等級提升到13級"
+  },
+  "920095": {
+    "id": "920095",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920096": {
+    "id": "920096",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920097": {
+    "id": "920097",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920098": {
+    "id": "920098",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920099": {
+    "id": "920099",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920100": {
+    "id": "920100",
+    "eng": "Upgrade civilization to level 14",
+    "tc": "將文明等級提升到14級"
+  },
+  "920101": {
+    "id": "920101",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920102": {
+    "id": "920102",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920103": {
+    "id": "920103",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920104": {
+    "id": "920104",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920105": {
+    "id": "920105",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920106": {
+    "id": "920106",
+    "eng": "Upgrade civilization to level 15",
+    "tc": "將文明等級提升到15級"
+  },
+  "920107": {
+    "id": "920107",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920108": {
+    "id": "920108",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920109": {
+    "id": "920109",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920110": {
+    "id": "920110",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920111": {
+    "id": "920111",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920112": {
+    "id": "920112",
+    "eng": "Upgrade civilization to level 16",
+    "tc": "將文明等級提升到16級"
+  },
+  "920113": {
+    "id": "920113",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920114": {
+    "id": "920114",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920115": {
+    "id": "920115",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920116": {
+    "id": "920116",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920117": {
+    "id": "920117",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920118": {
+    "id": "920118",
+    "eng": "Upgrade civilization to level 17",
+    "tc": "將文明等級提升到17級"
+  },
+  "920119": {
+    "id": "920119",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920120": {
+    "id": "920120",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920121": {
+    "id": "920121",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920122": {
+    "id": "920122",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920123": {
+    "id": "920123",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920124": {
+    "id": "920124",
+    "eng": "Upgrade civilization to level 18",
+    "tc": "將文明等級提升到18級"
+  },
+  "920125": {
+    "id": "920125",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920126": {
+    "id": "920126",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920127": {
+    "id": "920127",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920128": {
+    "id": "920128",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920129": {
+    "id": "920129",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920130": {
+    "id": "920130",
+    "eng": "Upgrade civilization to level 19",
+    "tc": "將文明等級提升到19級"
+  },
+  "920131": {
+    "id": "920131",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920132": {
+    "id": "920132",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920133": {
+    "id": "920133",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920134": {
+    "id": "920134",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920135": {
+    "id": "920135",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920136": {
+    "id": "920136",
+    "eng": "Upgrade civilization to level 20",
+    "tc": "將文明等級提升到20級"
+  },
+  "920137": {
+    "id": "920137",
+    "eng": "Kill 30 enemies",
+    "tc": "擊殺30個敵人"
+  },
+  "920138": {
+    "id": "920138",
+    "eng": "Gather 30 times",
+    "tc": "完成30次採集"
+  },
+  "920139": {
+    "id": "920139",
+    "eng": "Interact with 10 more events",
+    "tc": "再完成10次與事件的交互"
+  },
+  "920140": {
+    "id": "920140",
+    "eng": "Win 10 attacks against other players",
+    "tc": "對其他玩家城市攻擊並取勝10次"
+  },
+  "920141": {
+    "id": "920141",
+    "eng": "Open 10 more chests",
+    "tc": "開啟10次寶箱"
+  },
+  "920142": {
+    "id": "920142",
+    "eng": "Upgrade civilization to level 21",
+    "tc": "將文明等級提升到21級"
+  },
   "1070011": {
     "id": "1070011",
-    "eng": "Treaty of Kadesh:\r\nCity Vision +1\r\nTroop Vision +1",
-    "tc": "卡迭什條約：\r\n城市視野 +1\r\n部隊視野 +1"
+    "eng": "Treaty of Kadesh:\nCity Vision +1\nTroop Vision +1",
+    "tc": "卡迭什條約：\n城市視野 +1\n部隊視野 +1"
   },
   "1070012": {
     "id": "1070012",
@@ -3596,8 +4726,8 @@
   },
   "1070017": {
     "id": "1070017",
-    "eng": "Domination:\r\nDamage on herd +50%",
-    "tc": "統治：\r\n對牲畜的傷害 +50%"
+    "eng": "Domination:\nDamage on herd +50%",
+    "tc": "統治：\n對牲畜的傷害 +50%"
   },
   "1070018": {
     "id": "1070018",
@@ -3626,8 +4756,8 @@
   },
   "1070023": {
     "id": "1070023",
-    "eng": "Destruction:\r\nDamage on human +15%",
-    "tc": "毀滅：\r\n對人類的傷害 +15%"
+    "eng": "Destruction:\nDamage on human +15%",
+    "tc": "毀滅：\n對人類的傷害 +15%"
   },
   "1070024": {
     "id": "1070024",
@@ -3791,8 +4921,18 @@
   },
   "1080011": {
     "id": "1080011",
-    "eng": "Skill Des",
-    "tc": "技能描述"
+    "eng": "Discover the enemy's weakness and increase attack damage by 20%",
+    "tc": "發現敵人的弱點，提升攻擊傷害20%"
+  },
+  "1080012": {
+    "id": "1080012",
+    "eng": "Every 3 attacks, an additional attack causing 75% damage will be added.",
+    "tc": "每攻擊3次，追加1次造成75%傷害的攻擊"
+  },
+  "1080013": {
+    "id": "1080013",
+    "eng": "Each attack has a 10% chance of causing 200% attack damage",
+    "tc": "每次攻擊有10%幾率造成200%的攻擊傷害"
   },
   "1090051": {
     "id": "1090051",
@@ -3888,5 +5028,30 @@
     "id": "1100141",
     "eng": "It is a hypothetical tunnel through space-time, bridging distant points in the universe and offering a tantalizing shortcut through the cosmos.",
     "tc": "這是一個假想的空間時間隧道，連接宇宙中遙遠的點，提供了一個穿越宇宙的誘人捷徑。"
+  },
+  "1100201": {
+    "id": "1100201",
+    "eng": "The character %s lacks stamina. Should you spend %s of %s to replenish %s stamina for the character? There are %s remaining purchases today.",
+    "tc": "角色%s體力不足，是否花費%s數量的%s為角色補充%s體力，今日剩餘購買次數%s。"
+  },
+  "1100202": {
+    "id": "1100202",
+    "eng": "Investigation requires the consumption of %s psyc. Should we proceed with the investigation.",
+    "tc": "偵查需要消耗%s的psyc，是否進行偵查。"
+  },
+  "1100203": {
+    "id": "1100203",
+    "eng": "Insufficient %s",
+    "tc": "%s不足。"
+  },
+  "1100204": {
+    "id": "1100204",
+    "eng": "When there are no troops, characters can only collect data",
+    "tc": "角色在沒有部隊時，只能進行採集"
+  },
+  "1100205": {
+    "id": "1100205",
+    "eng": "Please follow the prompts to complete the beginner guide. Click on the dialog box above to receive the guide prompt.",
+    "tc": "請按提示完成初學者指南。 点击上面的對話方塊以接收指南提示。"
   }
 }

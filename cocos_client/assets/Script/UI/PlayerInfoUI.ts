@@ -13,15 +13,17 @@ import {
     ScrollView,
     Slider,
     Sprite,
+    Toggle,
     UITransform,
     v2,
     Vec3,
+    Widget,
 } from "cc";
 import { SettlementView } from "./View/SettlementView";
 import ArtifactData from "../Model/ArtifactData";
 import { ArtifactItem } from "./ArtifactItem";
 import { BackpackItem } from "./BackpackItem";
-import { LanMgr, UserInfoMgr, AudioMgr } from "../Utils/Global";
+import { LanMgr, UserInfoMgr, AudioMgr, GameMgr, ClvlMgr } from "../Utils/Global";
 import ViewController from "../BasicView/ViewController";
 import { UIHUDController } from "./UIHUDController";
 import NotificationMgr from "../Basic/NotificationMgr";
@@ -35,6 +37,7 @@ import { NetworkMgr } from "../Net/NetworkMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { GAME_ENV_IS_DEBUG } from "../Const/ConstDefine";
 import { UIName } from "../Const/ConstUIDefine";
+import { RedPointView } from "./View/RedPointView";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerInfoUI")
@@ -62,6 +65,10 @@ export class PlayerInfoUI extends ViewController {
     private _settleUseSelectItems: Node[] = [];
 
     private _langSelectView: Node = null;
+    private _langSelectContentView: Node = null;
+    private _langSelectContetnItem: Node = null;
+
+    private _redPointShowView: Node = null;
 
     public configuration(selectIndex: number, onlyShowSelect: boolean) {
         this._selectIndex = selectIndex;
@@ -119,11 +126,21 @@ export class PlayerInfoUI extends ViewController {
         this._settleSelectItem.active = false;
 
         this._langSelectView = this.node.getChildByName("OptionContainer");
+        this._langSelectContentView = this._langSelectView.getChildByPath("View/Content");
+        this._langSelectContetnItem = this._langSelectContentView.getChildByPath("Item");
+        this._langSelectContetnItem.removeFromParent();
         this._langSelectView.active = false;
+
+        this._redPointShowView = this.node.getChildByPath("Content/tabContents/SettingsContent/RedPointTitle/SwitchButton");
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._onChangeLang, this);
         NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_NAME, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.SETTLEMENT_DATA_CHANGE, this._refreshUI, this);
+
+        NotificationMgr.addListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_DID_CHANGE_HEAT, this._refreshUI, this);
+        NotificationMgr.addListener(NotificationName.USERINFO_CLVL_CONDTION_CHANGE, this._refreshUI, this);
 
         NetworkMgr.websocketMsg.get_user_settlement_info({});
     }
@@ -132,6 +149,9 @@ export class PlayerInfoUI extends ViewController {
         super.viewDidStart();
 
         this._selectLang = LanMgr.getLang();
+        this._initLangView();
+
+        this._refreshRedPointShow();
     }
 
     protected viewDidAppear(): void {
@@ -145,7 +165,12 @@ export class PlayerInfoUI extends ViewController {
 
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this._onChangeLang, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_LEVEL, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_NAME, this._refreshUI, this);
         NotificationMgr.removeListener(NotificationName.SETTLEMENT_DATA_CHANGE, this._refreshUI, this);
+
+        NotificationMgr.removeListener(NotificationName.INNER_BUILDING_UPGRADE_FINISHED, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_DID_CHANGE_HEAT, this._refreshUI, this);
+        NotificationMgr.removeListener(NotificationName.USERINFO_CLVL_CONDTION_CHANGE, this._refreshUI, this);
     }
 
     //-------------------------------- function
@@ -202,6 +227,16 @@ export class PlayerInfoUI extends ViewController {
         this._refreshUI();
     }
 
+    private _initLangView() {
+        const allLangs = LanMgr.getAllLang();
+        allLangs.forEach((value: string, key: string)=> {
+            const langItem = instantiate(this._langSelectContetnItem);
+            langItem.getComponent(Label).string = value;
+            langItem.getComponent(Button).clickEvents[0].customEventData = key;
+            this._langSelectContentView.addChild(langItem);
+        });
+        this._langSelectContentView.getComponent(Layout).updateLayout();
+    }
     private _refreshUI() {
         if (this._settlementItem == null) {
             return;
@@ -216,7 +251,6 @@ export class PlayerInfoUI extends ViewController {
         const achievementBtn = this.node.getChildByPath("Content/tabButtons/AchievementsBtn");
         const settingBtn = this.node.getChildByPath("Content/tabButtons/SettingsBtn");
 
-        const allLangs = LanMgr.getAllLang();
         // useLanMgr
         // infoBtn.getChildByName("Label").getComponent(Label).string = LanMgr.getLanById("107549");
         // summaryBtn.getChildByName("Label").getComponent(Label).string = LanMgr.getLanById("107549");
@@ -235,9 +269,19 @@ export class PlayerInfoUI extends ViewController {
         // this._changeNameView.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
         // this._changeNameView.getChildByPath("Content/UserName").getComponent(EditBox).placeholder = LanMgr.getLanById("107549");
         // this._changeNameView.getChildByPath("Content/ConfirmButton/Label").getComponent(Label).string = LanMgr.getLanById("107549");
-
-        this._langSelectView.getChildByPath("View/Content/English").getComponent(Label).string = allLangs.get("eng");
-        this._langSelectView.getChildByPath("View/Content/TraditionalChinese").getComponent(Label).string = allLangs.get("tc");
+        const langTitles = [];
+        const allLangs = LanMgr.getAllLang();
+        allLangs.forEach((value: string, key: string) => {
+            langTitles.push(value);
+        });
+        for (let i = 0; i < this._langSelectContentView.children.length; i++) {
+            if (i < langTitles.length) {
+                this._langSelectContentView.children[i].active = true;
+                this._langSelectContentView.children[i].getComponent(Label).string = langTitles[i];
+            } else {
+                this._langSelectContentView.children[i].active = false;
+            }
+        }
 
         for (let i = 0; i < this._tabButtons.length; i++) {
             this._tabButtons[i].getChildByName("BtnPageLight").active = i == this._selectIndex;
@@ -275,6 +319,13 @@ export class PlayerInfoUI extends ViewController {
             // useLanMgr
             // currentShowView.getChildByPath("RewardContent/GetHpMax/Content/Title").getComponent(Label).string = LanMgr.getLanById("107549");
             currentShowView.getChildByPath("RewardContent/GetHpMax/Value").getComponent(Label).string = "+" + LvlupConfig.getTotalHpMaxByLvl(currentLevel);
+
+            // red point
+            const clevelUpConditionFinish = ClvlMgr.getCurretLevelUpFinishCondition();
+            currentShowView
+                .getChildByPath("NextLevel/RedPointView")
+                .getComponent(RedPointView)
+                .refreshUI(clevelUpConditionFinish.value >= clevelUpConditionFinish.total ? 1 : 0, false);
         } else if (this._selectIndex == 1) {
             // summary
             const settleViewContent = currentShowView.getChildByPath("PeriodicSettlement/view/content");
@@ -352,6 +403,10 @@ export class PlayerInfoUI extends ViewController {
         } else if (this._selectIndex == 3) {
             // xx reversed
         }
+    }
+
+    private _refreshRedPointShow() {
+        this._redPointShowView.getChildByPath("Selected").active = GameMgr.showRedPoint;
     }
 
     private async _refreshNextLevelView() {
@@ -510,9 +565,15 @@ export class PlayerInfoUI extends ViewController {
     private onTapLangSelectShow() {
         GameMusicPlayMgr.playTapButtonEffect();
         this._langSelectView.active = true;
+        this.scheduleOnce(()=> {
+            this._langSelectView.getChildByPath("View").getComponent(UITransform).height = this._langSelectContentView.getComponent(UITransform).height;
+            this._langSelectView.getChildByPath("View/Bg").getComponent(Widget).updateAlignment();
+        });
         this.node.getChildByPath("Content/tabContents/SettingsContent/LanguageMenu/LanguageBtn/Arrow").angle = 180;
-        this._langSelectView.getChildByPath("View/Content/English/ImgScreenSelect").active = this._selectLang == "eng";
-        this._langSelectView.getChildByPath("View/Content/TraditionalChinese/ImgScreenSelect").active = this._selectLang == "tc";
+        for (let i = 0; i < this._langSelectContentView.children.length; i++) {
+            this._langSelectContentView.children[i].getChildByPath("ImgScreenSelect").active =
+                LanMgr.getAllLang().get(this._selectLang) == this._langSelectContentView.children[i].getComponent(Label).string;
+        }
     }
     private onTapLangItem(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -527,6 +588,12 @@ export class PlayerInfoUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         this._langSelectView.active = false;
         this.node.getChildByPath("Content/tabContents/SettingsContent/LanguageMenu/LanguageBtn/Arrow").angle = 0;
+    }
+
+    private onTapRedPointCheck() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        GameMgr.showRedPoint = !GameMgr.showRedPoint;
+        this._refreshRedPointShow();
     }
 
     private onTapClose() {

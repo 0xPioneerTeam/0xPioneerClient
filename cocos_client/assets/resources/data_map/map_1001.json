@@ -1,0 +1,263 @@
+[
+  {
+    "id": "building_1",
+    "name": "110010",
+    "type": 0,
+    "show": 1,
+    "pos_type": 2,
+    "positions": [
+      7,
+      7
+    ],
+    "node": "city",
+    "level": 1,
+    "progress": null,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": null,
+    "quota": null,
+    "exp": 0,
+    "event": "",
+    "des": "320005",
+    "hp": 240,
+    "attack": 20,
+    "winprogress": 20,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 0
+  },
+  {
+    "id": "building_2",
+    "name": "110002",
+    "type": 3,
+    "show": 1,
+    "pos_type": 1,
+    "positions": [
+      2,
+      13
+    ],
+    "node": "swamp_jungle",
+    "level": 1,
+    "progress": 20,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": [
+      "8002",
+      100
+    ],
+    "quota": 1,
+    "exp": 0,
+    "event": "",
+    "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_3",
+    "name": "110003",
+    "type": 3,
+    "show": 1,
+    "pos_type": 1,
+    "positions": [
+      3,
+      8
+    ],
+    "node": "oasis",
+    "level": 1,
+    "progress": 20,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": [
+      "8001",
+      100
+    ],
+    "quota": 1,
+    "exp": 0,
+    "event": "",
+    "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_4",
+    "name": "110001",
+    "type": 3,
+    "show": 1,
+    "pos_type": 1,
+    "positions": [
+      6,
+      1
+    ],
+    "node": "sand_mineral",
+    "level": 1,
+    "progress": 20,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": [
+      "8003",
+      100
+    ],
+    "quota": 1,
+    "exp": 0,
+    "event": "",
+    "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_5",
+    "name": "110001",
+    "type": 3,
+    "show": 1,
+    "pos_type": 1,
+    "positions": [
+      9,
+      13
+    ],
+    "node": "sand_mineral",
+    "level": 1,
+    "progress": 20,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": [
+      "8003",
+      100
+    ],
+    "quota": 1,
+    "exp": 0,
+    "event": "",
+    "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_6",
+    "name": "110002",
+    "type": 3,
+    "show": 1,
+    "pos_type": 1,
+    "positions": [
+      13,
+      10
+    ],
+    "node": "swamp_jungle",
+    "level": 1,
+    "progress": 20,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": [
+      "8002",
+      100
+    ],
+    "quota": 1,
+    "exp": 0,
+    "event": "",
+    "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_7",
+    "name": "110003",
+    "type": 3,
+    "show": 1,
+    "pos_type": 1,
+    "positions": [
+      14,
+      4
+    ],
+    "node": "oasis",
+    "level": 1,
+    "progress": 20,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": [
+      "8001",
+      100
+    ],
+    "quota": 1,
+    "exp": 0,
+    "event": "",
+    "des": "320005",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_8",
+    "name": "910016",
+    "type": 4,
+    "show": 1,
+    "pos_type": 1,
+    "positions": [
+      1,
+      3
+    ],
+    "node": "laboratory",
+    "level": 3,
+    "progress": 60,
+    "refresh_limit": 3,
+    "time": 15,
+    "resources": null,
+    "quota": null,
+    "exp": 0,
+    "event": "1",
+    "des": "900076",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  },
+  {
+    "id": "building_9",
+    "name": "110014",
+    "type": 6,
+    "show": 1,
+    "pos_type": 1,
+    "positions": [
+      12,
+      7
+    ],
+    "node": "Transfer_Matrix_Group",
+    "level": 1,
+    "progress": null,
+    "refresh_limit": 1,
+    "time": 15,
+    "resources": null,
+    "quota": null,
+    "exp": null,
+    "event": "",
+    "des": "1100141",
+    "hp": null,
+    "attack": null,
+    "winprogress": null,
+    "faction": 0,
+    "defendPioneerIds": [],
+    "cost": 5
+  }
+]

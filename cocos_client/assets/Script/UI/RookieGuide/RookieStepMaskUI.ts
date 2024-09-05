@@ -23,9 +23,10 @@ export class RookieStepMaskUI extends ViewController {
         isDialogUse: boolean = false,
         tapPostionType: RookieTapPositionType = RookieTapPositionType.NORMAL
     ) {
+        
         this.scheduleOnce(() => {
             this._contentView.active = true;
-
+            this.node.active = true;
             const localPos = isFromGameView
                 ? GameMainHelper.instance.getGameCameraWposToUI(worldPos, this.node)
                 : this.node.getComponent(UITransform).convertToNodeSpaceAR(worldPos);
@@ -75,5 +76,10 @@ export class RookieStepMaskUI extends ViewController {
         if (this._nextActionCallback != null) {
             this._nextActionCallback();
         }
+    }
+
+    hide(){
+        this._contentView.active = false;
+        this.node.active = false;
     }
 }

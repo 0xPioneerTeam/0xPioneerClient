@@ -9,12 +9,13 @@ import { NotificationName } from "../../Const/Notification";
 import InnerBuildingLvlUpConfig from "../../Config/InnerBuildingLvlUpConfig";
 import { InnerBuildingType } from "../../Const/BuildingDefine";
 import ItemData from "../../Const/Item";
-import UIPanelManger from "../../Basic/UIPanelMgr";
+import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { DataMgr } from "../../Data/DataMgr";
-import { UIName } from "../../Const/ConstUIDefine";
+import { HUDName, UIName } from "../../Const/ConstUIDefine";
 import { DelegateUI } from "../DelegateUI";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
+import { AlterTipView } from "../View/AlterTipView";
 const { ccclass, property } = _decorator;
 
 @ccclass("RecruitUI")
@@ -26,15 +27,15 @@ export class RecruitUI extends ViewController {
         }
 
         if (initSelectGenerate) {
-            this._selectGenerateNum = Math.min(this._currentGenerateMaxNum(), 1);
+            this._selectGenerateNum = Math.min(this._currentGenerateMaxNum(), 0);
         }
 
-        // useLanMgr
-        // this.node.getChildByPath("__ViewContent/title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/current_res/title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/recruiting/title").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/footer/time/txt").getComponent(Label).string = LanMgr.getLanById("107549");
-        // this.node.getChildByPath("__ViewContent/footer/Button/Label").getComponent(Label).string = LanMgr.getLanById("107549");
+        // this.node.getChildByPath("__ViewContent/title").getComponent(Label).string = LanMgr.getLanById("lanreplace200013");
+        // this.node.getChildByPath("__ViewContent/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200014");
+        // this.node.getChildByPath("__ViewContent/recruiting/title").getComponent(Label).string = LanMgr.getLanById("lanreplace200015");
+        // this.node.getChildByPath("__ViewContent/footer/time/txt").getComponent(Label).string = LanMgr.getLanById("lanreplace200016");
+        // this.node.getChildByPath("__ViewContent/footer/Button/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200017");
+
 
         const currentTroops: number = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop);
 
@@ -63,7 +64,7 @@ export class RecruitUI extends ViewController {
             }
         } else {
             for (const cost of this._costDatas) {
-                const view = instantiate(this._costItem);
+                const view = instantiate(this._costItem);   
                 view.active = true;
                 view.setParent(this._costItem.parent);
                 view.getChildByPath("Icon/8001").active = cost.itemConfigId == ResourceCorrespondingItem.Food;
@@ -115,7 +116,7 @@ export class RecruitUI extends ViewController {
             }
         }
         // maxNum
-        this._maxTroop = 9999999;
+        this._maxTroop = 99999;
         const configMaxTroop = InnerBuildingLvlUpConfig.getBuildingLevelData(barrackBuildingData.buildLevel, "max_barr");
         if (configMaxTroop != null) {
             this._maxTroop = configMaxTroop;
@@ -142,6 +143,11 @@ export class RecruitUI extends ViewController {
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this.changeLang, this);
     }
+    
+    protected viewDidStart(): void {
+        super.viewDidStart();
+        this.refreshUI(true);
+    }
 
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
@@ -162,7 +168,7 @@ export class RecruitUI extends ViewController {
     }
 
     private _currentGenerateMaxNum(): number {
-        let tempUseNum: number = 999999999;
+        let tempUseNum: number = 99999;
         for (const cost of this._costDatas) {
             tempUseNum = Math.min(tempUseNum, DataMgr.s.item.getObj_item_count(cost.itemConfigId) / cost.count, this._maxRecruitTroop);
         }
@@ -175,6 +181,7 @@ export class RecruitUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+        DataMgr.s.userInfo.changeRecruitRedPoint(false);
     }
 
     private onTapGenerateMax() {
@@ -206,7 +213,7 @@ export class RecruitUI extends ViewController {
     }
     private onGenerateSlided(event: Event, customEventData: string) {
         const maxTroop: number = this._currentGenerateMaxNum();
-        const currentSelectTroop: number = Math.max(1, Math.min(Math.floor(this._generateSlider.progress * this._maxRecruitTroop), maxTroop));
+        const currentSelectTroop: number = Math.max(0, Math.min(Math.floor(this._generateSlider.progress * this._maxRecruitTroop), maxTroop));
 
         this._generateSlider.progress = currentSelectTroop / this._maxRecruitTroop;
         if (currentSelectTroop != this._selectGenerateNum) {
@@ -217,10 +224,16 @@ export class RecruitUI extends ViewController {
 
     private async onTapGenerate() {
         GameMusicPlayMgr.playTapButtonEffect();
-        if (this._generateTimeNum <= 0) {
+        if (this._selectGenerateNum <= 0) {
             // useLanMgr
             // LanMgr.getLanById("107549")
             UIHUDController.showCenterTip("Unable to produce");
+            return;
+        }
+        if (this._selectGenerateNum > GameMgr.canAddTroopNum()) {
+            // useLanMgr
+            // LanMgr.getLanById("107549")
+            UIHUDController.showCenterTip("Cannot exceed the total population limit");
             return;
         }
         for (const cost of this._costDatas) {
@@ -232,6 +245,7 @@ export class RecruitUI extends ViewController {
 
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
+        DataMgr.s.userInfo.changeRecruitRedPoint(false);
     }
     private async onTapDelegate() {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -240,5 +254,13 @@ export class RecruitUI extends ViewController {
             return;
         }
         result.node.getComponent(DelegateUI).showUI(InnerBuildingType.Barrack);
+    }
+    private async onTapQuestion() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(HUDName.AlterTip, UIPanelLayerType.HUD);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(AlterTipView).showTip(LanMgr.getLanById("106017"));
     }
 }

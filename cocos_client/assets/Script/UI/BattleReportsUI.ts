@@ -1,14 +1,14 @@
 import { _decorator, Button, Color, instantiate, Label, Layout, Mask, Node, ScrollView, UITransform } from "cc";
 import { BattleReportListItemUI } from "./BattleReportListItemUI";
 import { ButtonEx, ButtonExEventType } from "db://assets/Script/UI/Common/ButtonEx";
-import { BattleReportType, ReportFilterState, ReportsFilterType } from "../Const/BattleReport";
-import { BattleReportsMgr } from "../Utils/Global";
 import ViewController from "../BasicView/ViewController";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import { NetworkMgr } from "../Net/NetworkMgr";
+import { s2c_user, share } from "../Net/msg/WebsocketMsg";
 
 const { ccclass } = _decorator;
 
@@ -26,8 +26,8 @@ export class BattleReportsUI extends ViewController {
     private _markAllAsReadButton: Button = null;
     private _deleteReadReportsButton: Button = null;
 
-    private _filterState: ReportFilterState = new ReportFilterState();
-    private _autoMarkReadSkipFrames = 0;
+    private _filterState: share.Inew_battle_report_type = null;
+    private _reports: share.Inew_battle_report_data[] = [];
 
     private readonly buttonLabelActiveColor: Color = new Color("433824");
     private readonly buttonLabelGrayColor: Color = new Color("817674");
@@ -48,14 +48,11 @@ export class BattleReportsUI extends ViewController {
             const report = reports[i];
             let uiItem: BattleReportListItemUI;
             switch (report.type) {
-                case BattleReportType.Fight:
+                case share.Inew_battle_report_type.fight:
                     uiItem = instantiate(this._fightTypeItemTemplate).getComponent(BattleReportListItemUI);
                     break;
-                case BattleReportType.Mining:
+                case share.Inew_battle_report_type.mining:
                     uiItem = instantiate(this._miningTypeItemTemplate).getComponent(BattleReportListItemUI);
-                    break;
-                case BattleReportType.Exploring:
-                    uiItem = instantiate(this._exploreTypeItemTemplate).getComponent(BattleReportListItemUI);
                     break;
                 default:
                     console.error(`Unknown report type: ${report.type}`);
@@ -68,9 +65,9 @@ export class BattleReportsUI extends ViewController {
             uiItem.node.active = true;
         }
 
-        if (this._permanentLastItem) {
-            this._permanentLastItem.setSiblingIndex(-1);
-        }
+        // if (this._permanentLastItem) {
+        //     this._permanentLastItem.setSiblingIndex(-1);
+        // }
     }
 
     public refreshUIAndResetScroll() {
@@ -117,70 +114,39 @@ export class BattleReportsUI extends ViewController {
         this._markAllAsReadButton = this.node.getChildByPath("frame/markAllAsReadButton").getComponent(Button);
         this._markAllAsReadButton.node.on(Button.EventType.CLICK, this._onClickMarkAllAsRead, this);
 
+        // hide button 
+        this._pendingButton.node.active = false;
+        this._deleteReadReportsButton.node.active = false;
+        this._markAllAsReadButton.node.active = false;
+
         this._reportListScrollView = this.node.getChildByPath("frame/ScrollView").getComponent(ScrollView);
 
-        NotificationMgr.addListener(NotificationName.BATTLE_REPORT_LIST_CHANGED, this.onBattleReportListChanged, this);
+
+        NetworkMgr.websocket.on("get_new_battle_report_res", this.get_new_battle_report_res);
+
+        // request data
+        NetworkMgr.websocketMsg.get_new_battle_report({});
     }
 
     protected viewDidAppear(): void {
-        super.viewDidAppear();
-
-        // Reset filter tab every time enter the reports UI.
-        if (DataMgr.s.battleReport.emergencyCount > 0) {
-            this._filterState.filterType = ReportsFilterType.Pending;
-        } else {
-            this._filterState.filterType = ReportsFilterType.None;
-        }
-        this.refreshUIAndResetScroll();
-
-        this._autoMarkReadSkipFrames = 1;
+        super.viewDidAppear();        
     }
 
     protected viewUpdate(dt: number): void {
         super.viewUpdate(dt);
-        this._autoMarkRead();
     }
 
     protected viewDidDestroy(): void {
-        NotificationMgr.removeListener(NotificationName.BATTLE_REPORT_LIST_CHANGED, this.onBattleReportListChanged, this);
+        NetworkMgr.websocket.off("get_new_battle_report_res", this.get_new_battle_report_res);
     }
 
-    private _autoMarkRead() {
-        // Extra spare frame for engine to doing the layout correctly,
-        // otherwise this will mark all the reports as read.
-        if (this._autoMarkReadSkipFrames > 0) {
-            this._autoMarkReadSkipFrames--;
-            return;
-        }
-        // Mark report as read when center of the item UI is visible.
-        const mask = this._reportListScrollView.node.getChildByName("view").getComponent(Mask);
-        let changed = 0;
-
-        for (const reportUiItem of this._reportUiItems) {
-            if (reportUiItem.report.unread) {
-                const boundingBox = reportUiItem.getComponent(UITransform).getBoundingBoxToWorld();
-                if (mask.isHit(boundingBox.center)) {
-                    reportUiItem.report.unread = false;
-                    changed++;
-                }
-            }
-        }
-        if (changed) {
-            // console.log(`BattleReportsUI auto mark ${changed} reports.`);
-            DataMgr.s.battleReport.saveObj();
-        }
-    }
 
     private _onClickMarkAllAsRead() {
         GameMusicPlayMgr.playTapButtonEffect();
-        DataMgr.s.battleReport.markAllAsRead();
-        this.refreshUI();
     }
 
     private _onClickDeleteReadReports() {
         GameMusicPlayMgr.playTapButtonEffect();
-        DataMgr.s.battleReport.deleteReadReports();
-        this.refreshUIAndResetScroll();
     }
 
     //#region filter group methods
@@ -202,14 +168,13 @@ export class BattleReportsUI extends ViewController {
             Button.EventType.CLICK,
             () => {
                 GameMusicPlayMgr.playTapButtonEffect();
-                this._filterState.filterType = ReportsFilterType.None;
+                this._filterState = null;
                 this.refreshUIAndResetScroll();
             },
             this
         );
 
         // button: Fight/Mining/...
-        // same index as enum BattleReportType
         for (let i = 1; i < this._typeFilterButtons.length; i++) {
             const iCopy = i;
             initButtonStateTransition(this._typeFilterButtons[i]);
@@ -217,8 +182,11 @@ export class BattleReportsUI extends ViewController {
                 Button.EventType.CLICK,
                 () => {
                     GameMusicPlayMgr.playTapButtonEffect();
-                    this._filterState.filterType = ReportsFilterType.ReportType;
-                    this._filterState.reportType = iCopy;
+                    if (i == 1) {
+                        this._filterState = share.Inew_battle_report_type.fight;
+                    } else if (i == 2) {
+                        this._filterState = share.Inew_battle_report_type.mining;
+                    }
                     this.refreshUIAndResetScroll();
                 },
                 this
@@ -231,7 +199,6 @@ export class BattleReportsUI extends ViewController {
             Button.EventType.CLICK,
             () => {
                 GameMusicPlayMgr.playTapButtonEffect();
-                this._filterState.filterType = ReportsFilterType.Pending;
                 this.refreshUIAndResetScroll();
             },
             this
@@ -239,37 +206,25 @@ export class BattleReportsUI extends ViewController {
     }
 
     private _refreshFilterGroup() {
-        const filterType = this._filterState.filterType;
-
-        const filterAllActive = filterType == ReportsFilterType.None;
-        this._typeFilterButtons[0].interactable = !filterAllActive;
-
-        const typeFilterCurrentIndex = filterType == ReportsFilterType.ReportType ? this._filterState.reportType : -1;
-        for (let i = 1; i < this._typeFilterButtons.length; i++) {
-            const active = i == typeFilterCurrentIndex;
-            this._typeFilterButtons[i].interactable = !active;
+        for (let i = 0; i < this._typeFilterButtons.length; i++) {
+            if (this._filterState == null) {
+                this._typeFilterButtons[i].interactable = i != 0;
+            } else if (this._filterState == share.Inew_battle_report_type.fight) {
+                this._typeFilterButtons[i].interactable = i != 1;
+            } else if (this._filterState == share.Inew_battle_report_type.mining) {
+                this._typeFilterButtons[i].interactable = i != 2;
+            }
         }
-
-        const filterPendingActive = filterType == ReportsFilterType.Pending;
-        this._pendingButton.interactable = !filterPendingActive;
     }
 
     private _getReportsFiltered() {
-        const reports = DataMgr.s.battleReport.getObj();
-        if (reports.length == 0) {
+        if (this._reports.length == 0) {
             return [];
         }
-
-        switch (this._filterState.filterType) {
-            case ReportsFilterType.None:
-                return reports;
-            case ReportsFilterType.ReportType:
-                return reports.filter((item) => item.type === this._filterState.reportType);
-            case ReportsFilterType.Pending:
-                return reports.filter((item) => DataMgr.s.battleReport.isReportPending(item));
-            default:
-                console.error(`Unsupported filterType ${this._filterState.filterType}`);
+        if (this._filterState == null) {
+            return this._reports;
         }
+        return this._reports.filter((item) => item.type == this._filterState);
     }
 
     //#endregion
@@ -280,8 +235,13 @@ export class BattleReportsUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
     }
-
-    public onBattleReportListChanged() {
-        this.scheduleOnce(this.refreshUIWithKeepScrollPosition);
+    //------------------------------ websocket
+    private get_new_battle_report_res = (e: any) => {
+        const p: s2c_user.Iget_new_battle_report_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        this._reports = p.data;
+        this.refreshUIAndResetScroll();
     }
 }

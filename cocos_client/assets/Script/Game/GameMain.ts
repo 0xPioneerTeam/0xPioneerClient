@@ -25,9 +25,9 @@ import { GameMgr, ResourcesMgr } from "../Utils/Global";
 import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import { HUDName } from "../Const/ConstUIDefine";
 import { LoadingUI } from "../UI/Loading/LoadingUI";
-import { DataMgr } from "../Data/DataMgr";
-import { RookieStep } from "../Const/RookieDefine";
 import { BundleName } from "../Basic/ResourcesMgr";
+import { DataMgr } from "../Data/DataMgr";
+import RookieStepMgr from "../Manger/RookieStepMgr";
 
 const { ccclass, property } = _decorator;
 
@@ -38,6 +38,7 @@ export class GameMain extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
         GameMainHelper.instance.setGameCamera(find("Main/Canvas/GameCamera").getComponent(Camera));
+        GameMainHelper.instance.setOutScene(this.node.getChildByPath("OutScene"));
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT, this._onRookieWormholeFightCount, this);
     }
@@ -48,6 +49,7 @@ export class GameMain extends ViewController {
         this._refreshUI(false);
 
         GameMgr.enterGameSence = true;
+        NotificationMgr.triggerEvent(NotificationName.GAME_SCENE_ENTER);
     }
 
     protected viewDidAppear(): void {
@@ -71,6 +73,7 @@ export class GameMain extends ViewController {
     //--------------------------------------- function
     private async _refreshUI(loadingAnim: boolean = true) {
         const outerView = this.node.getChildByPath("OutScene");
+
         const isOuterShow: boolean = GameMainHelper.instance.isGameShowOuter;
         if (this._innerView == null) {
             return;
@@ -93,6 +96,14 @@ export class GameMain extends ViewController {
                 result.node.getComponent(LoadingUI).showLoadingProgress(1);
                 this.scheduleOnce(() => {
                     UIPanelManger.inst.popPanel(result.node, UIPanelLayerType.ROOKIE);
+                    if (isOuterShow) {
+                        const mainCity = DataMgr.s.mapBuilding.getBuildingById(DataMgr.s.mapBuilding.getSelfMainCitySlotId() + "|building_1");
+                        if (mainCity == null || mainCity.stayMapPositions.length != 7) {
+                            return;
+                        }
+                        const currentWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(mainCity.stayMapPositions[3].x, mainCity.stayMapPositions[3].y);
+                        GameMainHelper.instance.changeGameCameraWorldPosition(currentWorldPos, true);
+                    }
                 }, 0.2);
             }, 0.3);
         }
@@ -143,13 +154,14 @@ export class GameMain extends ViewController {
 
     private _onRookieWormholeFightCount(data: { playerId: string; resultHp: number; delayTime: number }) {
         const { playerId, resultHp, delayTime } = data;
-        this.scheduleOnce(() => {
-            const pioneer = DataMgr.s.pioneer.getById(playerId);
-            if (pioneer != undefined) {
-                pioneer.hp = resultHp;
-                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
-            }
-            NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { id: playerId });
-        }, delayTime);
+        // wait change
+        // this.scheduleOnce(() => {
+        //     const pioneer = DataMgr.s.pioneer.getById(playerId);
+        //     if (pioneer != undefined) {
+        //         pioneer.hp = resultHp;
+        //         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_HP_CHANGED);
+        //     }
+        //     NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { id: playerId });
+        // }, delayTime);
     }
 }

@@ -1,18 +1,20 @@
 import AbiConfig from "../Config/AbiConfig";
 import ArtifactConfig from "../Config/ArtifactConfig";
 import ArtifactEffectConfig from "../Config/ArtifactEffectConfig";
+import BigMapConfig from "../Config/BigMapConfig";
 import BoxInfoConfig from "../Config/BoxInfoConfig";
 import ChainConfig from "../Config/ChainConfig";
 import ConfigConfig from "../Config/ConfigConfig";
 import DropConfig from "../Config/DropConfig";
 import EvaluationConfig from "../Config/EvaluationConfig";
 import EventConfig from "../Config/EventConfig";
+import GuideConfig from "../Config/GuideConfig";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 import ItemConfig from "../Config/ItemConfig";
 import LanConfig from "../Config/LanConfig";
 import LvlupConfig from "../Config/LvlupConfig";
-import MapBuildingConfig from "../Config/MapBuildingConfig";
+import MissionConfig from "../Config/MissionConfig";
 import NewEventConfig from "../Config/NewEventConfig";
 import NewSubEventConfig from "../Config/NewSubEventConfig";
 import NFTPioneerConfig from "../Config/NFTPioneerConfig";
@@ -25,6 +27,7 @@ import ProtobufConfig from "../Config/ProtobufConfig";
 import TalkConfig from "../Config/TalkConfig";
 import TaskConfig from "../Config/TaskConfig";
 import TaskStepConfigData from "../Config/TaskStepConfig";
+import TroopsConfig from "../Config/TroopsConfig";
 import WorldBoxConfig from "../Config/WorldBoxConfig";
 
 export default class ConfigMgr {
@@ -37,6 +40,7 @@ export default class ConfigMgr {
         if (!(await DropConfig.init())) return false;
         if (!(await EvaluationConfig.init())) return false;
         if (!(await EventConfig.init())) return false;
+        if (!(await GuideConfig.init())) return false;
         if (!(await NewEventConfig.init())) return false;
         if (!(await NewSubEventConfig.init())) return false;
         if (!(await InnerBuildingConfig.init())) return false;
@@ -45,7 +49,6 @@ export default class ConfigMgr {
         if (!(await LanConfig.init())) return false;
         if (!(await LvlupConfig.init())) return false;
         if (!(await PioneerLvlupConfig.init())) return false;
-        if (!(await MapBuildingConfig.init())) return false;
         if (!(await NFTPioneerConfig.init())) return false;
         if (!(await NFTPioneerNameConfig.init())) return false;
         if (!(await NFTSkillConfig.init())) return false;
@@ -53,8 +56,11 @@ export default class ConfigMgr {
         if (!(await PioneerConfig.init())) return false;
         if (!(await TalkConfig.init())) return false;
         if (!(await TaskConfig.init())) return false;
+        if (!(await MissionConfig.init())) return false;
         if (!(await TaskStepConfigData.init())) return false;
+        if (!(await TroopsConfig.init())) return false;
         if (!(await WorldBoxConfig.init())) return false;
+        if (!(await BigMapConfig.init())) return false;
 
         // abi
         const chainIdConfig = ChainConfig.getCurrentConfigId();

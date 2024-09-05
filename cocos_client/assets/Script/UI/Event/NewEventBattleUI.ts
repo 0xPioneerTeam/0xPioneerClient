@@ -15,12 +15,12 @@ const { ccclass, property } = _decorator;
 
 @ccclass("NewEventBattleUI")
 export class NewEventBattleUI extends ViewController {
-    private _pioneerId: string = null;
+    private _pioneerUniqueId: string = null;
     private _building: MapBuildingObject = null;
     private _selectIdx: number = -1;
 
-    public configuration(pioneerId: string, building: MapBuildingObject) {
-        this._pioneerId = pioneerId;
+    public configuration(uniqueId: string, building: MapBuildingObject) {
+        this._pioneerUniqueId = uniqueId;
         this._building = building;
         this._selectIdx = GameMgr.lastEventSelectFightIdx;
         GameMgr.lastEventSelectFightIdx = -1;
@@ -29,7 +29,7 @@ export class NewEventBattleUI extends ViewController {
         const subEventConfig = NewSubEventConfig.getById(building.eventSubId);
         const enemyConfig = PioneerConfig.getById(building.eventWaitFightEnemyId);
 
-        if (this._pioneerId == null || this._building == null || this._selectIdx < 0 || eventConfig == null || subEventConfig == null || enemyConfig == null || this._selectIdx == -1) {
+        if (this._pioneerUniqueId == null || this._building == null || this._selectIdx < 0 || eventConfig == null || subEventConfig == null || enemyConfig == null || this._selectIdx == -1) {
             UIPanelManger.inst.popPanel(this.node);
             return;
         }
@@ -89,8 +89,8 @@ export class NewEventBattleUI extends ViewController {
             UIPanelManger.inst.popPanel(this.node);
 
             NetworkMgr.websocketMsg.player_event_exit({
-                buildingId: this._building.id,
-                pioneerId: this._pioneerId,
+                buildingId: this._building.uniqueId,
+                pioneerId: this._pioneerUniqueId,
             });
         });
     }
@@ -99,8 +99,8 @@ export class NewEventBattleUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
 
         NetworkMgr.websocketMsg.player_event_select({
-            buildingId: this._building.id,
-            pioneerId: this._pioneerId,
+            buildingId: this._building.uniqueId,
+            pioneerId: this._pioneerUniqueId,
             selectIdx: this._selectIdx,
         });
 

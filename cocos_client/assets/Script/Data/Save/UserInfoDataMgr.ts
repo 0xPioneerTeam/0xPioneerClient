@@ -9,9 +9,14 @@ import NetGlobalData from "./Data/NetGlobalData";
 
 export default class UserInfoDataMgr {
     private _data: UserInfoObject = null;
+
+    private _recruitRedPointKey: string = "__UserInfoDataMgrRecruitRedPoint_";
+    private _exerciseRedPointKey: string = "__UserInfoDataMgrExerciseRedPoint_";
     public constructor() {}
     //--------------------------------
-    public loadObj() {
+    public loadObj(walletAddr: string) {
+        this._recruitRedPointKey += walletAddr;
+        this._exerciseRedPointKey += walletAddr;
         this._initData();
     }
     //--------------------------------
@@ -32,6 +37,22 @@ export default class UserInfoDataMgr {
         this._data.name = name;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_NAME);
     }
+
+    public getRecruitRedPoint(): boolean {
+        return localStorage.getItem(this._recruitRedPointKey) == "true" ? true : false;
+    }
+    public getExerciseRedPoint(): boolean {
+        return localStorage.getItem(this._exerciseRedPointKey) == "true" ? true : false;
+    }
+    
+    public changeRecruitRedPoint(show: boolean) {
+        localStorage.setItem(this._recruitRedPointKey, show ? "true" : "false");
+        NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED);
+    }
+    public changeExerciseRedPoint(show: boolean) {
+        localStorage.setItem(this._exerciseRedPointKey, show ? "true" : "false");
+        NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED);
+    }
     //------------------------------------------------------------------------
     private async _initData() {
         if (NetGlobalData.userInfo == null) {
@@ -47,6 +68,8 @@ export default class UserInfoDataMgr {
             id: netData.playerid.toString(),
             name: netData.pname,
             level: netData.level,
+            explorePlayerids: netData.explorePlayerids,
+            battlePower: netData.battlePower,
             exp: netData.exp,
             exploreProgress: netData.treasureProgress,
             treasureDidGetRewards: netData.treasureDidGetRewards,
@@ -62,6 +85,7 @@ export default class UserInfoDataMgr {
             energyGetLimitTimes: netData.limitFetchTimes,
             cityRadialRange: netData.cityRadialRange,
             rookieStep: netData.rookieStep,
+            rookieState: netData.rookieState,
             // lost
             tavernGetPioneerTimestamp: 0,
             wormholeDefenderIds: new Map(),
@@ -75,7 +99,12 @@ export default class UserInfoDataMgr {
             CLvlCondtion: [],
 
             buyEnergyLimitTimes: netData.buyEnergyLimitTimes,
+
+            wormholeTags: [],
+            wormholeMatchTimes: netData.wormholeMatchTimes,
+            wormholeTeleportTimes: netData.wormholeTeleportTimes,
         };
+        
         if (GAME_SKIP_ROOKIE) {
             newObj.rookieStep = RookieStep.FINISH;
             NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
@@ -84,19 +113,19 @@ export default class UserInfoDataMgr {
         if (this._data != null && this._data.rookieStep != null) {
             step = this._data.rookieStep;
         }
-        if (step != null) {
-            // protect step
-            if (
-                newObj.rookieStep == RookieStep.NPC_TALK_3 ||
-                newObj.rookieStep == RookieStep.NPC_TALK_4 ||
-                newObj.rookieStep == RookieStep.NPC_TALK_5 ||
-                newObj.rookieStep == RookieStep.NPC_TALK_7 ||
-                newObj.rookieStep == RookieStep.SYSTEM_TALK_21 ||
-                newObj.rookieStep < step
-            ) {
-                newObj.rookieStep = step;
-            }
-        }
+        // if (step != null) {
+        //     // protect step
+        //     if (
+        //         newObj.rookieStep == RookieStep.NPC_TALK_3 ||
+        //         newObj.rookieStep == RookieStep.NPC_TALK_4 ||
+        //         newObj.rookieStep == RookieStep.NPC_TALK_5 ||
+        //         newObj.rookieStep == RookieStep.NPC_TALK_7 ||
+        //         newObj.rookieStep == RookieStep.SYSTEM_TALK_21 ||
+        //         newObj.rookieStep < step
+        //     ) {
+        //         newObj.rookieStep = step;
+        //     }
+        // }
         if (netData.defender != null) {
             for (const key in netData.defender) {
                 if (netData.defender[key] == null || netData.defender[key] == "") {
@@ -161,6 +190,16 @@ export default class UserInfoDataMgr {
                     }
                 }
                 newObj.CLvlCondtion.push(temp);
+            }
+        }
+        if (netData.wormholeTags != null) {
+            for (const key in netData.wormholeTags) {
+                const temple = netData.wormholeTags[key];
+                newObj.wormholeTags.push({
+                    playerId: temple.playerId.toString(),
+                    playerName: temple.playerName,
+                    tpBuildingId: temple.tpBuildingId
+                });
             }
         }
         return newObj;

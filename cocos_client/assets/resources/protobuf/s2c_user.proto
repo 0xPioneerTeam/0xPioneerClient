@@ -30,6 +30,29 @@ message update_name_res {
     required string name = 2;
 }
 
+// move
+message player_goto {
+    required uint32 instid = 1; // map instance id (player/monster/other obj...)
+    required share.player_mov_info goto = 2; // goto move info
+}
+// stop move
+message player_stop {
+    required uint32 instid = 1; // map instance id (player/monster/other obj...)
+    required share.pos2d pos = 2; // stop position
+}
+// stop and goto home
+message player_stophome {
+    required uint32 instid = 1; // map instance id (player/monster/other obj...)
+    required share.pos2d pos = 2; // stop position
+}
+// change map
+message changemap_res {
+    required int32 res = 1; // error code see {ServerErrorCode}
+    optional uint32 tomapid = 2; // target map id
+    optional uint32 selfInstid = 3; // new map instance id, bind it with player
+    optional share.pos2d pos = 4; // position
+}
+
 
 // rookie
 message player_rookie_finish_res {
@@ -44,6 +67,9 @@ message player_rookie_wormhole_fight_res {
     optional string pioneerId = 2;
     optional uint32 hp = 3;
     repeated share.fight_res fightRes = 4;
+}
+message player_get_rookie_award_res {
+    required int32 res = 1;
 }
 
 
@@ -88,7 +114,38 @@ message get_user_settlement_info_res {
     required int32 res = 1;
     map<string, share.settlement_data> data = 2;
 }
+message get_new_battle_report_res {
+    required int32 res = 1;
+    repeated share.new_battle_report_data data = 2;
+}
 
+
+// ------ map ------
+// get map data
+message get_map_info_res {
+    required int32 res = 1;
+    repeated share.map_info_data info = 2;
+    map<string, share.pioneer_data> user = 3;
+}
+// enter zone
+message player_enterzone {
+    repeated playerinzoneinfo infos = 1; // in zone player info
+}
+message playerinzoneinfo {
+    required uint32 instid = 1; // map instance id (player/monster/other obj...)
+    required uint32 playerid = 2; // player id
+    required string pioneerId = 3;
+    required uint32 ver = 4;  // avatar version, +1 each time avatar/showinfo is changed
+    required share.pos2d pos = 5; // position
+    optional share.player_mov_info goto = 6; // current moving info
+}
+// leave zone
+message player_leavezone {
+    repeated uint32 playerids = 1; // leave zone player ids
+}
+message pioneer_leavezone {
+    repeated string pioneerIds = 1;
+}
 
 // ------ player ------
 // player: talk
@@ -111,6 +168,11 @@ message player_level_up_res {
 }
 // player: psyc2energy
 message player_psyc_to_energy_res {
+    required int32 res = 1;
+    optional string pioneerId = 2;
+}
+// player: troop2hp
+message player_troop_to_hp_res {
     required int32 res = 1;
     optional string pioneerId = 2;
 }
@@ -171,6 +233,16 @@ message player_explore_gangster_start_res {
     optional string pioneerId = 2;
     optional string gangsterId = 3;
 }
+message player_explore_maincity_res {
+    required int32 res = 1;
+    optional string buildingId = 2;
+    optional uint32 battlePower = 5;
+}
+message player_fight_maincity_res {
+    required int32 res = 1;
+    optional string pioneerId = 2;
+    optional string buildingId = 3;
+}
 // pioneer: fight(map)
 message player_fight_start_res {
     required int32 res = 1;
@@ -187,6 +259,18 @@ message player_event_select_res {
 }
 message player_event_exit_res {
     required int32 res = 1;
+}
+message player_maincity_back_res {
+    required int32 res = 1;
+    optional string pioneerId = 2;
+}
+message player_pos_detect_res {
+    required int32 res = 1;
+    optional share.pos2d detect = 2;
+}
+
+message player_get_new_pioneer {
+    repeated share.pioneer_data datas = 1;
 }
 // pioneer: notify
 message sinfo_change {
@@ -257,16 +341,18 @@ message get_user_task_info_res {
 }
 // task: notify
 message user_task_did_change {
-    required share.task_data task = 1;
+    required share.task_info_data task = 1;
 }
 message user_task_action_talk {
     required string talkId= 1;
 }
-message user_task_action_getnewtalk {
-    required string npcId= 1;
-    required string talkId= 2;
+message user_task_talk_info_change {
+    map<string, task_talk_data> canTalkData = 1;
 }
 
+message user_mission_did_change {
+    repeated share.mission_data missions = 1;
+}
 
 // ------ item ------
 message player_item_use_res {
@@ -357,6 +443,10 @@ message player_building_pos_res {
     optional string buildingId = 2;
     repeated uint32 pos = 3;
 }
+message player_training_start_res {
+    required int32 res = 1;
+    repeated share.training_data training = 2;
+}
 // inner-building: notify
 message building_change {
     repeated share.building_data buildings = 1;
@@ -419,6 +509,24 @@ message player_wormhole_fight_res {
     optional string defenderName = 5;
     map<string,string> defenderData = 6;
     optional bool fightResult = 7;
+}
+
+message player_wormhole_tp_random_res {
+    required int32 res = 1;
+    optional string buildingId = 2;
+    optional pos2d tpPos = 3;
+}
+message player_wormhole_tp_select_res {
+    required int32 res = 1;
+    optional string buildingId = 2;
+    optional pos2d tpPos = 3;
+}
+message player_wormhole_tp_back_res {
+    required int32 res = 1;
+    optional string pioneerId = 2;
+}
+message player_wormhole_tp_tag_res {
+    required int32 res = 1;
 }
 
 

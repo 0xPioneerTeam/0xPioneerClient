@@ -37,6 +37,7 @@ export interface StayMapPosition {
 
 // building
 export interface MapBuildingBaseData {
+    uniqueId: string;
     id: string;
     name: string;
     type: MapBuildingType;
@@ -65,6 +66,9 @@ export interface MapBuildingBaseData {
 
     explorePioneerIds: string[];
     rebornTime: number;
+
+    maincityFightPioneerIds: string[];
+    maincityFightPioneerDatas: Map<string, MapPioneerObject>;
 }
 export interface MapBuildingMainCityData extends MapBuildingBaseData {
     hpMax: number;

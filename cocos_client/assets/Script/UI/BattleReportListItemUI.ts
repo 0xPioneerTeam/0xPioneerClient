@@ -1,18 +1,15 @@
-import { _decorator, Button, Component, Label, Node, ProgressBar, RichText, Sprite, SpriteFrame, v3, Widget } from "cc";
+import { _decorator, Button, Component, Label, Node, ProgressBar, RichText, Sprite, SpriteFrame, v2, v3, Vec2, Widget } from "cc";
 import CommonTools from "db://assets/Script/Tool/CommonTools";
-import { BattleReportData, BattleReportExploringData, BattleReportType, LocationInfo } from "../Const/BattleReport";
 import { LanMgr } from "../Utils/Global";
 import { UIName } from "../Const/ConstUIDefine";
 import { LootsPopup } from "./LootsPopup";
-import { UIHUDController } from "./UIHUDController";
-import EventConfig from "../Config/EventConfig";
 import GameMainHelper from "../Game/Helper/GameMainHelper";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
-import { FIGHT_FINISHED_DATA, MINING_FINISHED_DATA } from "../Const/PioneerDefine";
-import { EventUI } from "./Outer/EventUI";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
-
+import { share } from "../Net/msg/WebsocketMsg";
+import { BattleReportDetailUI } from "./BattleReportDetailUI"
+import { MapCharacter } from "../Game/Outer/View/MapCharacter";
 const { ccclass, property } = _decorator;
 
 @ccclass("BattleReportListItemUI")
@@ -86,10 +83,10 @@ export class BattleReportListItemUI extends Component {
     @property({ type: Button, group: "Explore" })
     public branchSelectionButton: Button = null;
 
-    private _locationInfo: LocationInfo = null;
+    private _locationInfo: Vec2 = null;
     private _loots: { id: string; num: number }[] = null;
 
-    private _report: BattleReportData = null;
+    private _report: share.Inew_battle_report_data = null;
     public get report() {
         return this._report;
     }
@@ -98,21 +95,17 @@ export class BattleReportListItemUI extends Component {
         if (this.lootsButton) this.lootsButton.node.on(Button.EventType.CLICK, this.onClickLoots, this);
     }
 
-    public initWithReportData(report: BattleReportData): void {
+    public initWithReportData(report: share.Inew_battle_report_data): void {
         this._report = report;
         if (this.pendingMark) {
-            this.pendingMark.active = DataMgr.s.battleReport.isReportPending(report);
+            this.pendingMark.active = false;
         }
-
         switch (report.type) {
-            case BattleReportType.Fight:
+            case share.Inew_battle_report_type.fight:
                 this._initWithFightReport(report);
                 break;
-            case BattleReportType.Mining:
+            case share.Inew_battle_report_type.mining:
                 this._initWithMiningReport(report);
-                break;
-            case BattleReportType.Exploring:
-                this._initWithExploreReport(report);
                 break;
             default:
                 console.error(`Unknown report type ${report.type}. ${JSON.stringify(report)}`);
@@ -120,120 +113,104 @@ export class BattleReportListItemUI extends Component {
         }
     }
 
-    private _initWithFightReport(report: BattleReportData): void {
-        const data = report.data as FIGHT_FINISHED_DATA;
-        const selfRoleInfo = data.attackerIsSelf ? data.attacker : data.defender;
+    private _initWithFightReport(report: share.Inew_battle_report_data): void {
+        const data = report.fight;
+        const selfRoleInfo = data.selfIsAttacker ? data.attacker : data.defender;
+        const enemyRoleInfo = data.selfIsAttacker ? data.defender : data.attacker;
+        const selfIsWin: boolean = (data.selfIsAttacker && data.attackerWin) || (!data.selfIsAttacker && !data.attackerWin);
 
-        if (data.isWormhole) {
-            for (const child of this.node.getChildByPath("BgAvatar").children) {
-                child.active = child.name == "pioneer_0";
-            }
-            this.node.getChildByPath("BgAvatar-001").active = true;
-            for (const child of this.node.getChildByPath("BgAvatar-001").children) {
-                child.active = child.name == "pioneer_0";
-            }
-            this.node.getChildByPath("name-001").getComponent(Widget).left = 514.95;
-            this.node.getChildByPath("name-001").getComponent(Widget).updateAlignment();
+        this.node.getChildByPath("BgAvatar/RoleView").getComponent(MapCharacter).refreshUI(selfRoleInfo.avatar);
+        this.leftNameLabel.string = selfRoleInfo.nameUseLan ? LanMgr.getLanById(selfRoleInfo.name) : selfRoleInfo.name;
+        this.leftHpBar.progress = selfRoleInfo.hp / selfRoleInfo.hpmax;
+        this.leftHpText.string = `${selfRoleInfo.hp} / ${selfRoleInfo.hpmax}`;
+        this.leftAttackerOrDefenderSign.spriteFrame = data.selfIsAttacker ? this.attackerSign : this.defenderSign;
 
-            this.node.getChildByPath("attackerOrDefenderSign-001").position = v3(13.696, 7.604);
+        this.node.getChildByPath("BgAvatar-001/RoleView").getComponent(MapCharacter).refreshUI(enemyRoleInfo.avatar);
+        this.rightNameLabel.string = enemyRoleInfo.nameUseLan ? LanMgr.getLanById(enemyRoleInfo.name) : enemyRoleInfo.name;
+        this.rightHpBar.progress = enemyRoleInfo.hp / enemyRoleInfo.hpmax;
+        this.rightHpText.string = `${enemyRoleInfo.hp} / ${enemyRoleInfo.hpmax}`;
+        this.rightAttackerOrDefenderSign.spriteFrame = data.selfIsAttacker ? this.defenderSign : this.attackerSign;
+
+        this.fightResultSprite.spriteFrame = selfIsWin ? this.fightResultVictory : this.fightResultDefeat;
+        this.eventTimeLabel.string = CommonTools.formatDateTime(report.timestamp * 1000);
+
+        this._locationInfo = data.location != null ? v2(data.location.x, data.location.y) : null;
+        if (data.location != null) {
+            this.eventLocationLabel.string = this._locationString(this._locationInfo);
         } else {
-            for (const child of this.node.getChildByPath("BgAvatar").children) {
-                child.active = child.name == selfRoleInfo.id;
-            }
-            this.node.getChildByPath("BgAvatar-001").active = false;
-
-            this.node.getChildByPath("name-001").getComponent(Widget).left = 631.868;
-            this.node.getChildByPath("name-001").getComponent(Widget).updateAlignment();
-
-            this.node.getChildByPath("attackerOrDefenderSign-001").position = v3(130.614, 7.604);
+            this.eventLocationLabel.string = "";
         }
+        this._loots = [];
+        for (const item of data.winItems) {
+            this._loots.push({
+                id: item.itemConfigId,
+                num: item.count,
+            });
+        }
+        this.lootsButton.node.active = this._loots.length > 0;
+    }
 
-        this.leftNameLabel.string =
-            LanMgr.getLanById(selfRoleInfo.name).indexOf("LanguageErr") == -1 ? LanMgr.getLanById(selfRoleInfo.name) : selfRoleInfo.name;
-        this.leftHpBar.progress = selfRoleInfo.hp / selfRoleInfo.hpMax;
-        this.leftHpText.string = `${CommonTools.getOneDecimalNum(selfRoleInfo.hp)} / ${CommonTools.getOneDecimalNum(selfRoleInfo.hpMax)}`;
-        this.leftAttackerOrDefenderSign.spriteFrame = data.attackerIsSelf ? this.attackerSign : this.defenderSign;
+    private _initWithMiningReport(report: share.Inew_battle_report_data): void {
+        const data = report.mining;
 
-        const enemyRoleInfo = !data.attackerIsSelf ? data.attacker : data.defender;
-        this.rightNameLabel.string =
-            LanMgr.getLanById(enemyRoleInfo.name).indexOf("LanguageErr") == -1 ? LanMgr.getLanById(enemyRoleInfo.name) : enemyRoleInfo.name;
-        this.rightHpBar.progress = enemyRoleInfo.hp / enemyRoleInfo.hpMax;
-        this.rightHpText.string = `${CommonTools.getOneDecimalNum(enemyRoleInfo.hp)} / ${CommonTools.getOneDecimalNum(enemyRoleInfo.hpMax)}`;
-        this.rightAttackerOrDefenderSign.spriteFrame = !data.attackerIsSelf ? this.attackerSign : this.defenderSign;
+        let pioneerInfo = DataMgr.s.pioneer.getById(data.pioneerUniqueId);
+        const roleName = LanMgr.getLanById(pioneerInfo.name);
+        const duration = data.duration;
 
-        this.fightResultSprite.spriteFrame = data.isWin ? this.fightResultVictory : this.fightResultDefeat;
-        this.eventTimeLabel.string = CommonTools.formatDateTime(report.timestamp);
+        this.node.getChildByPath("BgAvatar/RoleView").getComponent(MapCharacter).refreshUI(pioneerInfo.animType);
+        this.leftNameLabel.string = roleName;
 
-        this._locationInfo = { type: "pos", pos: data.position };
-        if (data.position != null) {
+        this._locationInfo = data.location != null ? v2(data.location.x, data.location.y) : null;
+        if (data.location != null) {
             this.eventLocationLabel.string = this._locationString(this._locationInfo);
         } else {
             this.eventLocationLabel.string = "";
         }
 
-        this._loots = data.rewards;
-        this.lootsButton.node.active = data.rewards.length != 0;
-    }
+        this.timeElapsedLabel.string = LanMgr.replaceLanById("701003", [CommonTools.formatSeconds(duration)]);
 
-    private _initWithMiningReport(report: BattleReportData): void {
-        let buildingInfo = DataMgr.s.mapBuilding.getBuildingById(report.data.buildingId);
-
-        report.data = report.data as MINING_FINISHED_DATA;
-
-        let pioneerInfo = DataMgr.s.pioneer.getById(report.data.pioneerId);
-
-        const roleName = LanMgr.getLanById(pioneerInfo.name);
-        const duration = report.data.duration; // in milliseconds
-        const rewards = report.data.rewards;
-
-        for (const child of this.node.getChildByPath("BgAvatar").children) {
-            child.active = child.name == pioneerInfo.id;
-        }
-        this.leftNameLabel.string = roleName;
-
-        this._locationInfo = { type: "building", buildingId: buildingInfo.id };
-        this.eventLocationLabel.string = this._locationString(this._locationInfo);
-
-        this.timeElapsedLabel.string = LanMgr.replaceLanById("701003", [CommonTools.formatSeconds(Math.floor(duration / 1000))]);
-
-        this.eventTimeLabel.string = CommonTools.formatDateTime(report.timestamp);
+        this.eventTimeLabel.string = CommonTools.formatDateTime(report.timestamp * 1000);
         this.miningResultLabel.string = LanMgr.replaceLanById("701001", ["100"]);
 
-        this._loots = rewards;
-        this.lootsButton.node.active = rewards.length != 0;
+        this._loots = [];
+        for (const item of data.rewards) {
+            this._loots.push({
+                id: item.itemConfigId,
+                num: item.count,
+            });
+        }
+        this.lootsButton.node.active = this._loots.length > 0;
     }
 
-    private _initWithExploreReport(report: BattleReportData): void {
-        let buildingInfo = DataMgr.s.mapBuilding.getBuildingById(report.data.buildingId);
+    // private _initWithExploreReport(report): void {
+    //     let buildingInfo = DataMgr.s.mapBuilding.getBuildingById(report.data.buildingId);
 
-        report.data = report.data as BattleReportExploringData;
+    //     let pioneerInfo = DataMgr.s.pioneer.getById(report.data.pioneerId);
 
-        let pioneerInfo = DataMgr.s.pioneer.getById(report.data.pioneerId);
+    //     const roleName = LanMgr.getLanById(pioneerInfo == null ? "" : pioneerInfo.name);
+    //     const rewards = report.data.rewards;
 
-        const roleName = LanMgr.getLanById(pioneerInfo == null ? "" : pioneerInfo.name);
-        const rewards = report.data.rewards;
+    //     for (const child of this.node.getChildByPath("BgAvatar").children) {
+    //         child.active = child.name == pioneerInfo.id;
+    //     }
+    //     this.leftNameLabel.string = roleName;
+    //     this._locationInfo = { type: "building", buildingId: buildingInfo.id };
+    //     this.eventLocationLabel.string = this._locationString(this._locationInfo);
 
-        for (const child of this.node.getChildByPath("BgAvatar").children) {
-            child.active = child.name == pioneerInfo.id;
-        }
-        this.leftNameLabel.string = roleName;
-        this._locationInfo = { type: "building", buildingId: buildingInfo.id };
-        this.eventLocationLabel.string = this._locationString(this._locationInfo);
+    //     this.eventTimeLabel.string = CommonTools.formatDateTime(report.timestamp);
 
-        this.eventTimeLabel.string = CommonTools.formatDateTime(report.timestamp);
+    //     if (report.data.hasNextStep && !report.data.nextStepFinished) {
+    //         this.eventResultLabel.node.active = false;
+    //         this.branchSelectionButton.node.active = true;
+    //         this.branchSelectionButton.node.on(Button.EventType.CLICK, this.onClickBranchSelection, this);
+    //     } else {
+    //         this.eventResultLabel.node.active = true;
+    //         this.branchSelectionButton.node.active = false;
+    //     }
 
-        if (report.data.hasNextStep && !report.data.nextStepFinished) {
-            this.eventResultLabel.node.active = false;
-            this.branchSelectionButton.node.active = true;
-            this.branchSelectionButton.node.on(Button.EventType.CLICK, this.onClickBranchSelection, this);
-        } else {
-            this.eventResultLabel.node.active = true;
-            this.branchSelectionButton.node.active = false;
-        }
-
-        this._loots = rewards;
-        this.lootsButton.node.active = rewards && rewards.length != 0;
-    }
+    //     this._loots = rewards;
+    //     this.lootsButton.node.active = rewards && rewards.length != 0;
+    // }
 
     private onClickLocation() {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -242,18 +219,9 @@ export class BattleReportListItemUI extends Component {
             return;
         }
 
-        let pos: { x: number; y: number };
-        switch (this._locationInfo.type) {
-            case "pos":
-                pos = this._locationInfo.pos;
-                break;
-            case "building":
-                let building = DataMgr.s.mapBuilding.getBuildingById(this._locationInfo.buildingId);
-                pos = building.stayMapPositions[0];
-                break;
-            default:
-                console.error(`Unknown _locationInfo.type: ${this._locationInfo.type}`);
-                return;
+        let pos: Vec2 = this._locationInfo;
+        if (pos == null) {
+            return;
         }
         UIPanelManger.inst.popPanelByName(UIName.BattleReportUI);
         GameMainHelper.instance.changeGameCameraWorldPosition(GameMainHelper.instance.tiledMapGetPosWorld(pos.x, pos.y), true);
@@ -271,36 +239,13 @@ export class BattleReportListItemUI extends Component {
         }
     }
 
-    async onClickBranchSelection() {
+    private async onClickReport() {
         GameMusicPlayMgr.playTapButtonEffect();
-        const reportData = this.report.data as BattleReportExploringData;
-
-        const building = DataMgr.s.mapBuilding.getBuildingById(reportData.buildingId);
-        const pioneer = DataMgr.s.pioneer.getById(reportData.pioneerId);
-
-        if (pioneer.actionEndTimeStamp > new Date().getTime()) {
-            UIHUDController.showCenterTip(LanMgr.getLanById("203005"));
-            return;
-        }
-
-        const currentEvent = EventConfig.getById(building.eventId);
-        if (currentEvent == null) {
-            UIHUDController.showCenterTip("Error");
-            return;
-        }
-        UIPanelManger.inst.popPanelByName(UIName.BattleReportUI);
-        const result = await UIPanelManger.inst.pushPanel(UIName.BrachEventUI);
-        if (result.success) {
-            result.node.getComponent(EventUI).eventUIShow(reportData.pioneerId, reportData.buildingId, currentEvent);
-        }
+        const result = await UIPanelManger.inst.pushPanel(UIName.BattleReportDetailUI);
+        await result.node.getComponent(BattleReportDetailUI).refreshUI(this._report.fight);
     }
 
-    private _locationString(locationInfo: LocationInfo): string {
-        if (locationInfo.type === "building") {
-            const building = DataMgr.s.mapBuilding.getBuildingById(locationInfo.buildingId);
-            return `${LanMgr.getLanById(building.name)} <color=#a1cb7f>${CommonTools.formatMapPosition(building.stayMapPositions[0])}</color>`;
-        } else {
-            return `${LanMgr.getLanById("701002")} <color=#a1cb7f>${CommonTools.formatMapPosition(locationInfo.pos)}</color>`;
-        }
+    private _locationString(locationInfo: Vec2): string {
+        return `${LanMgr.getLanById("701002")} <color=#a1cb7f>${CommonTools.formatMapPosition({ x: locationInfo.x, y: locationInfo.y })}</color>`;
     }
 }
