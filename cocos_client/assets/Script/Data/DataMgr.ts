@@ -186,7 +186,6 @@ export class DataMgr {
         //     p.rookieStep = RookieStep.LOCAL_DEFEND_TAP_CLOSE;
         // }
         DataMgr.s.userInfo.data.rookieStep = p.rookieStep;
-        DataMgr.s.userInfo.data.rookieStep = p.rookieStep;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
     };
     public static GM_GUIDE(step,state){

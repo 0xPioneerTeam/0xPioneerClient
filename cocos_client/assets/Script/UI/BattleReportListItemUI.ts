@@ -244,28 +244,6 @@ export class BattleReportListItemUI extends Component {
         const result = await UIPanelManger.inst.pushPanel(UIName.BattleReportDetailUI);
         await result.node.getComponent(BattleReportDetailUI).refreshUI(this._report.fight);
     }
-    // async onClickBranchSelection() {
-    //     GameMusicPlayMgr.playTapButtonEffect();
-
-    //     const building = DataMgr.s.mapBuilding.getBuildingById(reportData.buildingId);
-    //     const pioneer = DataMgr.s.pioneer.getById(reportData.pioneerId);
-
-    //     if (pioneer.actionEndTimeStamp > new Date().getTime()) {
-    //         UIHUDController.showCenterTip(LanMgr.getLanById("203005"));
-    //         return;
-    //     }
-
-    //     const currentEvent = EventConfig.getById(building.eventId);
-    //     if (currentEvent == null) {
-    //         UIHUDController.showCenterTip("Error");
-    //         return;
-    //     }
-    //     UIPanelManger.inst.popPanelByName(UIName.BattleReportUI);
-    //     const result = await UIPanelManger.inst.pushPanel(UIName.BrachEventUI);
-    //     if (result.success) {
-    //         result.node.getComponent(EventUI).eventUIShow(reportData.pioneerId, reportData.buildingId, currentEvent);
-    //     }
-    // }
 
     private _locationString(locationInfo: Vec2): string {
         return `${LanMgr.getLanById("701002")} <color=#a1cb7f>${CommonTools.formatMapPosition({ x: locationInfo.x, y: locationInfo.y })}</color>`;

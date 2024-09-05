@@ -4,16 +4,12 @@ import { NFTPioneerObject } from "../Const/NFTPioneerDefine";
 import { GameMgr, ItemMgr, LanMgr } from "../Utils/Global";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { UIName } from "../Const/ConstUIDefine";
-import { NTFLevelUpUI } from "./NTFLevelUpUI";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
-import { NTFRankUpUI } from "./NTFRankUpUI";
 import ConfigConfig from "../Config/ConfigConfig";
 import { ConfigType, NFTRankLimitNumParam, NFTRaritySkillLimitNumParam } from "../Const/Config";
 import NFTSkillConfig from "../Config/NFTSkillConfig";
 import NFTSkillEffectConfig from "../Config/NFTSkillEffectConfig";
-import { NFTSkillDetailUI } from "./NFTSkillDetailUI";
-import { NFTSkillLearnUI } from "./NFTSkillLearnUI";
 import { DataMgr } from "../Data/DataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
@@ -69,7 +65,7 @@ export class NFTInfoUI extends ViewController {
         NotificationMgr.addListener(NotificationName.NFT_RANK_UP, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.NFT_LEARN_SKILL, this._refreshUI, this);
         NotificationMgr.addListener(NotificationName.NFT_FORGET_SKILL, this._refreshUI, this);
-        
+
         NotificationMgr.addListener(NotificationName.ITEM_CHANGE, this._refreshUI, this);
     }
     protected viewDidDestroy(): void {
@@ -238,8 +234,14 @@ export class NFTInfoUI extends ViewController {
         content.getChildByPath("info/RightArrowButton").getComponent(Button).interactable = true;
 
         // red point
-        content.getChildByPath("TabLevel/RedPointView").getComponent(RedPointView).refreshUI(GameMgr.checkNFTCanLevelUp(data.uniqueId) ? 1 : 0, false);
-        content.getChildByPath("TabRank/RedPointView").getComponent(RedPointView).refreshUI(GameMgr.checkNFTCanRankUp(data.uniqueId) ? 1 : 0, false);
+        content
+            .getChildByPath("TabLevel/RedPointView")
+            .getComponent(RedPointView)
+            .refreshUI(GameMgr.checkNFTCanLevelUp(data.uniqueId) ? 1 : 0, false);
+        content
+            .getChildByPath("TabRank/RedPointView")
+            .getComponent(RedPointView)
+            .refreshUI(GameMgr.checkNFTCanRankUp(data.uniqueId) ? 1 : 0, false);
     }
     //---------------------------------------------------- action
     private onTapTab(event: Event, customEventData: string) {
@@ -287,40 +289,13 @@ export class NFTInfoUI extends ViewController {
     private async onTapLevelUp() {
         GameMusicPlayMgr.playTapButtonEffect();
         if (this._NFTDatas != null && this._currentIndex >= 0 && this._currentIndex < this._NFTDatas.length) {
-            // const result = await UIPanelManger.inst.pushPanel(UIName.NFTLevelUpUI);
-            // if (result.success) {
-            //     result.node.getComponent(NTFLevelUpUI).showUI(this._NFTDatas[this._currentIndex]);
-            // }
             NetworkMgr.websocketMsg.player_nft_lvlup({ nftId: this._NFTDatas[this._currentIndex].uniqueId, levelUpNum: 1 });
         }
     }
     private async onTapRankUp() {
         GameMusicPlayMgr.playTapButtonEffect();
         if (this._NFTDatas != null && this._currentIndex >= 0 && this._currentIndex < this._NFTDatas.length) {
-            //     const result = await UIPanelManger.inst.pushPanel(UIName.NFTRankUpUI);
-            //     if (result.success) {
-            //         result.node.getComponent(NTFRankUpUI).showUI(this._NFTDatas[this._currentIndex]);
-            //     }
             NetworkMgr.websocketMsg.player_nft_rankup({ nftId: this._NFTDatas[this._currentIndex].uniqueId, rankUpNum: 1 });
         }
-    }
-    private async onTapSkill(event: Event, customEventData: string) {
-        GameMusicPlayMgr.playTapButtonEffect();
-        const data = this._NFTDatas[this._currentIndex];
-        const index = parseInt(customEventData);
-        const result = await UIPanelManger.inst.pushPanel(UIName.NFTSkillDetailUI);
-        if (!result.success) {
-            return;
-        }
-        result.node.getComponent(NFTSkillDetailUI).showItem(this._skillAllItems[index].worldPosition, data, index);
-    }
-    private async onTapAddSkill() {
-        GameMusicPlayMgr.playTapButtonEffect();
-        const data = this._NFTDatas[this._currentIndex];
-        const result = await UIPanelManger.inst.pushPanel(UIName.NFTSkillLearnUI);
-        if (!result.success) {
-            return;
-        }
-        result.node.getComponent(NFTSkillLearnUI).showItem(data);
     }
 }

@@ -28,7 +28,13 @@ export class BattleReportDetailUI extends ViewController {
     private battle_log: RichText = null;
 
     public refreshUI(fight: share.Inew_battle_report_fight_data) {
-        const fightDatas: share.Ifight_res[] = [...fight.fightRes];
+        const fightDatas: share.Ifight_res[] = [];
+        if (fight.fightRes != null && fight.fightRes.length > 0) {
+            fightDatas.push(...fight.fightRes);
+        }
+        if (fightDatas.length <= 0) {
+            return;
+        }
         const actors: Map<string, share.Inew_battle_report_fight_member_data> = new Map();
         actors.set(fight.attacker.id, fight.attacker);
         actors.set(fight.defender.id, fight.defender);

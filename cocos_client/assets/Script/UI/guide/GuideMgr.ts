@@ -1,5 +1,5 @@
 import { find, Node } from "cc";
-import { RookieStep } from "../../Const/RookieDefine";
+import { RookieStep, RookieStepState } from "../../Const/RookieDefine";
 import { Gswakeup } from "./gscript/Gswakeup";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
@@ -77,6 +77,11 @@ export class GuideMgr{
         if(this._lastRookeStep == rookieStep) return;
         console.log('USERINFO_ROOKE_STEP_CHANGE',rookieStep)
         this._lastRookeStep = rookieStep;
+
+        if (rookieStep == RookieStep.WAKE_UP && DataMgr.s.userInfo.data.rookieState == RookieStepState.FINISH) {
+            // wake up can get, not show anim
+            return;
+        }
         this.showGuide(rookieStep);
     }
 

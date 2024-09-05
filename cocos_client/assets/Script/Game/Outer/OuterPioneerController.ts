@@ -14,14 +14,9 @@ import {
     MapPioneerObject,
     MapPioneerType,
 } from "../../Const/PioneerDefine";
-import { RookieStep } from "../../Const/RookieDefine";
 import { DataMgr } from "../../Data/DataMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
-import RookieStepMgr from "../../Manger/RookieStepMgr";
 import { share } from "../../Net/msg/WebsocketMsg";
-import { NetworkMgr } from "../../Net/NetworkMgr";
-import { EventUI } from "../../UI/Outer/EventUI";
-import { SecretGuardGettedUI } from "../../UI/Outer/SecretGuardGettedUI";
 import { GameMgr, PioneerMgr, UserInfoMgr } from "../../Utils/Global";
 import GameMainHelper from "../Helper/GameMainHelper";
 import { TileMapHelper, TilePos } from "../TiledMap/TileTool";
@@ -33,9 +28,6 @@ import { OuterFightView } from "./View/OuterFightView";
 import { OuterMapCursorView } from "./View/OuterMapCursorView";
 import { OuterOtherPioneerView } from "./View/OuterOtherPioneerView";
 import { OuterRebonAndDestroyView } from "./View/OuterRebonAndDestroyView";
-import PioneerConfig from "../../Config/PioneerConfig";
-import { DialogueUI } from "../../UI/Outer/DialogueUI";
-import TalkConfig from "../../Config/TalkConfig";
 
 const { ccclass, property } = _decorator;
 

@@ -4,3 +4,4 @@ node_modules
 cocos_client/package-lock.json
 .DS_Store
 .vscode/settings.json
+cocos_client.zip

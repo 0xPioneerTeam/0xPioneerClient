@@ -9,7 +9,6 @@ export enum UIName {
     SecretGuardGettedUI = "abresources/prefab/ui/SecretGuardGettedUI",
     TreasureGettedUI = "abresources/prefab/ui/TreasureGettedUI",
     TaskListUI = "abresources/prefab/ui/TaskListUI",
-    BrachEventUI = "abresources/prefab/ui/BrachEventUI",
     CivilizationLevelUpUI = "abresources/prefab/ui/CivilizationLevelUpUI",
     PlayerInfoUI = "abresources/prefab/ui/PlayerInfoUI",
     NewSettlementUI = "abresources/prefab/ui/NewSettlementUI",
@@ -23,22 +22,12 @@ export enum UIName {
     ArtifactInfoUI = "abresources/prefab/ui/ArtifactInfoUI",
     NFTBackpackUI = "abresources/prefab/ui/NFTBackpack",
     NFTInfoUI = "abresources/prefab/ui/NFTInfoUI",
-    NFTViewInfoUI = "abresources/prefab/ui/NFTViewInfoUI",
-    NFTLevelUpUI = "abresources/prefab/ui/NFTLevelUpUI",
-    NFTRankUpUI = "abresources/prefab/ui/NFTRankUpUI",
-    NFTSkillDetailUI = "abresources/prefab/ui/NFTSkillDetailUI",
-    NFTSkillLearnUI = "abresources/prefab/ui/NFTSkillLearnUI",
 
     DelegateUI = "abresources/prefab/ui/DelegateUI",
 
     WorldTreasureTipUI = "abresources/prefab/ui/WorldTreasureTipUI",
 
-    DefenderSelectUI = "abresources/prefab/ui/DefenderSelectUI",
-    DefenderSetUI = "abresources/prefab/ui/DefenderSetUI",
-
     TavernUI = "abresources/prefab/ui/TavernUI",
-
-    MapActionConfrimTipUI = "abresources/prefab/ui/MapActionConfrimTipUI",
 
     CivilizationLevelUI = "abresources/prefab/ui/clevel/CivilizationLevelUI",
     CollectWalletUI = "abresources/prefab/ui/wallet/CollectWalletUI",

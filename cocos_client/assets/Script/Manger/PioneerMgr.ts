@@ -293,7 +293,6 @@ export default class PioneerMgr {
                             result.node.getComponent(TavernUI).configuration(stayBuilding.id);
                         }
                     }
-                } else {
                 }
             }
         }

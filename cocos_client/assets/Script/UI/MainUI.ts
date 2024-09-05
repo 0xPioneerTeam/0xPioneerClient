@@ -60,7 +60,6 @@ export class MainUI extends ViewController {
         NotificationMgr.addListener(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, this._onGameMainResourcePlayAnim, this);
         NotificationMgr.addListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_TASK, this._onRookieTapTask, this);
-        NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_DEFEND, this._onRookieTapDefend, this);
 
         // task
         NotificationMgr.addListener(NotificationName.TASK_DID_CHANGE, this._refreshTaskRedPoint, this);
@@ -110,9 +109,6 @@ export class MainUI extends ViewController {
             },
             this
         );
-        let testButtonActive: boolean = GAME_ENV_IS_DEBUG;
-        this.node.getChildByPath("CommonContent/AddHeatButton-001").active = false;
-        this.node.getChildByPath("CommonContent/AddHeatButton-002").active = false;
     }
 
     protected viewDidDestroy(): void {
@@ -130,7 +126,6 @@ export class MainUI extends ViewController {
         NotificationMgr.removeListener(NotificationName.GAME_MAIN_RESOURCE_PLAY_ANIM, this._onGameMainResourcePlayAnim, this);
         NotificationMgr.removeListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_TASK, this._onRookieTapTask, this);
-        NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAIN_DEFEND, this._onRookieTapDefend, this);
 
         // task
         NotificationMgr.removeListener(NotificationName.TASK_DID_CHANGE, this._refreshTaskRedPoint, this);
@@ -195,12 +190,9 @@ export class MainUI extends ViewController {
         const taskButton = this.node.getChildByPath("CommonContent/TaskButton");
         const backpackButton = this.node.getChildByPath("CommonContent/icon_treasure_box");
         const nftButton = this.node.getChildByPath("CommonContent/NFTButton");
-        const defendButton = this.node.getChildByPath("CommonContent/SetDenderButton");
         const recuritButton = this.node.getChildByPath("CommonContent/RecuritButton");
         const exerciseButton = this.node.getChildByPath("CommonContent/ExerciseButton");
         const artifactButton = this.node.getChildByPath("CommonContent/ArtifactButton");
-        const test1Button = this.node.getChildByPath("CommonContent/AddHeatButton-001");
-        const test2Button = this.node.getChildByPath("CommonContent/AddHeatButton-002");
 
         const battleReportButton = this.node.getChildByPath("CommonContent/reportsButton");
         const pioneerListView = this.node.getChildByPath("CommonContent/LeftNode");
@@ -215,12 +207,9 @@ export class MainUI extends ViewController {
         taskButton.active = false;
         backpackButton.active = false;
         nftButton.active = false;
-        defendButton.active = false;
         recuritButton.active = false;
         exerciseButton.active = false;
         artifactButton.active = false;
-        test1Button.active = false;
-        test2Button.active = false;
         battleReportButton.active = false;
         pioneerListView.active = false;
         innerOuterChangeButton.active = false;
@@ -237,12 +226,9 @@ export class MainUI extends ViewController {
             taskButton.active = true;
             backpackButton.active = true;
             nftButton.active = true;
-            defendButton.active = false;
             recuritButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.Barrack) >= 1;
             exerciseButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.TrainingCenter) >= 1;
             artifactButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.ArtifactStore) >= 1;
-            test1Button.active = false;
-            test2Button.active = false;
 
             battleReportButton.active = true;
             innerOuterChangeButton.active = true;
@@ -359,10 +345,6 @@ export class MainUI extends ViewController {
     private onTapChangeBuildingSetPos() {
         GameMusicPlayMgr.playTapButtonEffect();
         GameMainHelper.instance.changeInnerBuildingLatticeEdit();
-    }
-    private async onTapSetDefender() {
-        GameMusicPlayMgr.playTapButtonEffect();
-        UIPanelManger.inst.pushPanel(UIName.DefenderSetUI);
     }
     private onTapRefreshMap() {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -531,10 +513,6 @@ export class MainUI extends ViewController {
         }
         item.getComponent(TaskListUI).refreshUI();
     }
-    private _onRookieTapDefend() {
-        this.onTapSetDefender();
-    }
-
 
     private _onGetResource() {
         this._refreshNFTRedPoint();

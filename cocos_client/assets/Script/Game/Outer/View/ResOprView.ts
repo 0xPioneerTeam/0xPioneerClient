@@ -224,10 +224,22 @@ export class ResOprView extends Component {
                         actionTypes.push(MapInteractType.WmMatch);
                         actionTypes.push(MapInteractType.WmTeleport);
                     } else {
-                        if (DataMgr.s.userInfo.data.wormholeTags.find((item) => item.tpBuildingId == interactBuilding.uniqueId)) {
-                            actionTypes.push(MapInteractType.WmRecall);
+                        let isEmpty: boolean = false;
+                        const uniqueIdSplit = interactBuilding.uniqueId.split("|");
+                        if (uniqueIdSplit.length == 2) {
+                            const info = GameMgr.getMapSlotData(uniqueIdSplit[0]);
+                            if (info != null && info.playerId == "0") {
+                                isEmpty = true;
+                            }
+                        }
+                        if (isEmpty) {
+
                         } else {
-                            actionTypes.push(MapInteractType.WmMark);
+                            if (DataMgr.s.userInfo.data.wormholeTags.find((item) => item.tpBuildingId == interactBuilding.uniqueId)) {
+                                actionTypes.push(MapInteractType.WmRecall);
+                            } else {
+                                actionTypes.push(MapInteractType.WmMark);
+                            }
                         }
                     }
                     actionTypes.push(MapInteractType.Move);
@@ -248,7 +260,7 @@ export class ResOprView extends Component {
                 }
             }
         }
-        
+
         this._actionItemContent.destroyAllChildren();
         for (const type of actionTypes) {
             const actionItem = instantiate(this._actionItem);
