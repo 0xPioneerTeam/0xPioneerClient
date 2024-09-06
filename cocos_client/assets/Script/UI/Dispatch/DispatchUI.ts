@@ -68,7 +68,7 @@ export class DispatchUI extends ViewController {
 
         // this.node.getChildByPath("ContentView/Title").getComponent(Label).string = LanMgr.getLanById("lanreplace200033");
         // this.node.getChildByPath("ContentView/ReturnTitle").getComponent(Label).string = LanMgr.getLanById("lanreplace200035");
-        // this.node.getChildByPath("ContentView/ListButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200036");
+        this.node.getChildByPath("ContentView/ListButton/Label").getComponent(Label).string = LanMgr.getLanById("850000");
         
         
         const localReturn = localStorage.getItem("__interactReturn");

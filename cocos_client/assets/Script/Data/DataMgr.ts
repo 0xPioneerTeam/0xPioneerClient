@@ -3,7 +3,7 @@ import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
 import ItemData, { ItemType } from "../Const/Item";
 import { NotificationName } from "../Const/Notification";
 import { MapPioneerActionType, MapPioneerType, MapPlayerPioneerObject } from "../Const/PioneerDefine";
-import { c2s_user, s2c_user, share } from "../Net/msg/WebsocketMsg";
+import { c2s_user, s2c_user, share, WebsocketMsg } from "../Net/msg/WebsocketMsg";
 import CLog from "../Utils/CLog";
 import { RunData } from "./RunData";
 import { SaveData } from "./SaveData";
@@ -38,13 +38,41 @@ export class DataMgr {
     public static async init(): Promise<boolean> {
         DataMgr.r = new RunData();
         DataMgr.s = new SaveData();
-        window['DataMgr'] = DataMgr;
+        window["DataMgr"] = DataMgr;
         return true;
     }
 
     ///////////////// websocket
     public static onmsg = (e: any) => {
         CLog.debug("DataMgr/onmsg: e => " + JSON.stringify(e));
+
+        // check need retry
+        const protocol: string = e.data?._data?.c;
+        const data: any = e.data?._data?.d;
+        if (protocol == undefined || data == undefined) {
+            return;
+        }
+        const result = NetworkMgr.websocketMsg.get_fail_retry_data_by_param(protocol, data);
+        if (result.index < 0) {
+            return;
+        }
+        let res: number = data.res;
+        if (res == null) {
+            res = 1;
+        }
+        if (res === 1) {
+            NetworkMgr.websocketMsg.delete_fail_retry_data(result.index);
+            return;
+        }
+
+        setTimeout(() => {
+            NetworkMgr.websocketMsg.send_packet(result.findData.protocol, result.findData.data);
+        }, 500);
+
+        result.findData.retryCount -= 1;
+        if (result.findData.retryCount <= 0) {
+            NetworkMgr.websocketMsg.delete_fail_retry_data(result.index);
+        }
     };
 
     public static enter_game_res = async (e: any) => {
@@ -96,8 +124,7 @@ export class DataMgr {
         DataMgr.s.userInfo.replaceData(p.info);
         const newData = DataMgr.s.userInfo.data;
         //rookie step
-        if(localData.rookieStep != newData.rookieStep || localData.rookieState != newData.rookieState)
-        {
+        if (localData.rookieStep != newData.rookieStep || localData.rookieState != newData.rookieState) {
             NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
         }
         // exp
@@ -131,7 +158,7 @@ export class DataMgr {
             //         },
             //     } as RookieResourceAnimStruct);
             // } else {
-                NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_HEAT);
+            NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_CHANGE_HEAT);
             // }
         }
         // box
@@ -188,7 +215,7 @@ export class DataMgr {
         DataMgr.s.userInfo.data.rookieStep = p.rookieStep;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
     };
-    public static GM_GUIDE(step,state){
+    public static GM_GUIDE(step, state) {
         DataMgr.s.userInfo.data.rookieStep = step;
         DataMgr.s.userInfo.data.rookieState = state;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
@@ -478,6 +505,8 @@ export class DataMgr {
                 if (temple.uniqueId == localDatas[i].uniqueId) {
                     const oldData = localDatas[i];
                     const newData = DataMgr.s.pioneer.replaceData(i, temple);
+                    console.log("exce old: " + JSON.stringify(oldData));
+                    console.log("exce new: " + JSON.stringify(newData));
                     // show
                     if (oldData.show != newData.show) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: newData.uniqueId, show: newData.show });
@@ -507,6 +536,7 @@ export class DataMgr {
                                 }
                             }
                         }
+                        console.log("exce typechanged: " + newData.uniqueId);
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: newData.uniqueId });
                     }
                     // fight
@@ -714,7 +744,7 @@ export class DataMgr {
             return;
         }
         DataMgr.s.eraseShadow.addDetectObj(v2(p.detect.x, p.detect.y));
-    }
+    };
 
     public static player_fight_end = (e: any) => {
         const p: s2c_user.Iplayer_fight_end = e.data;

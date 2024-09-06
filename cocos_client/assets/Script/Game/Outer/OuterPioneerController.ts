@@ -118,8 +118,6 @@ export class OuterPioneerController extends ViewController {
 
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_MAP_PIONEER, this._onRookieTapPioneer, this);
 
-
-
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_NEED_REFRESH, this._refreshUI, this);
         // talk
         NotificationMgr.addListener(NotificationName.TASK_CAN_TALK_CHANGE, this._refreshUI, this);
@@ -207,7 +205,7 @@ export class OuterPioneerController extends ViewController {
             //         }
             //     }
             // }
-            
+
             GameMainHelper.instance.mapInitOver();
         });
         GameMainHelper.instance.mapInitOver();
@@ -496,9 +494,6 @@ export class OuterPioneerController extends ViewController {
     //---------- pioneer
     private _onPioneerActionChanged(data: { uniqueId: string }) {
         const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
-        if (pioneer == undefined || pioneer.type != MapPioneerType.player) {
-            return;
-        }
         if (pioneer.actionType == MapPioneerActionType.moving) {
             this._movingPioneerIds.push(pioneer.uniqueId);
         } else {

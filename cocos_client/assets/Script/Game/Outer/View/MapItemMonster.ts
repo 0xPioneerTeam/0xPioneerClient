@@ -31,7 +31,6 @@ export class MapItemMonster extends Component {
 
     public refreshUI(model: MapPioneerObject) {
         this._model = model;
-
         const infoView = this.node.getChildByPath("InfoView");
 
         infoView.getChildByPath("Gap").getComponent(UITransform).height = this._viewHeightMap[this._model.animType];
@@ -66,26 +65,7 @@ export class MapItemMonster extends Component {
             }
         }
 
-        this.node.active = model.actionType != MapPioneerActionType.fighting;
-
         infoView.getChildByPath("Content/Icon/Difficult").active = model.type == MapPioneerType.hred && model.level > DataMgr.s.artifact.getArtifactLevel();
-    }
-
-    public shadowMode() {
-        this.node.getComponent(UIOpacity).opacity = 100;
-        for (const child of this.node.getChildByPath("role").children) {
-            if (child.active) {
-                this._currentShowMonster = child;
-                child.getChildByPath("idle").active = true;
-                child.getChildByPath("idle/Monster_Shadow").active = false;
-                // view.getChildByPath("walk_left").active = false;
-                // view.getChildByPath("walk_right").active = false;
-                // view.getChildByPath("walk_top").active = false;
-                // view.getChildByPath("walk_bottom").active = false;
-            }
-        }
-        this.node.getChildByPath("InfoView/Content/name").active = false;
-        this._moveCountLabel.node.active = false;
     }
 
     private _moveCountLabel: Label = null;

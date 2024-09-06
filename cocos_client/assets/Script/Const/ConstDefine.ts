@@ -154,3 +154,9 @@ export enum MapInteractType {
     EnterInner,
     MainBack,
 }
+
+export interface WebsocketFailRetryObject {
+    protocol: string;
+    retryCount: number;
+    data: any;
+}

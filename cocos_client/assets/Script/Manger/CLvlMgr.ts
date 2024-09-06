@@ -177,7 +177,6 @@ export default class CLvlMgr {
             }
             this._data.push(clvl);
         }
-        console.log("exce data:", this._data);
         return this._data;
     }
 

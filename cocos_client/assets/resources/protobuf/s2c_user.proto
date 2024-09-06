@@ -185,11 +185,10 @@ message player_exp_change {
 }
 message player_lvlup_change {
     required uint32 hpMaxChangeValue = 1;
-    repeated string showBuildingIds = 2;
-    required uint32 newPsycLimit = 3;
-    required uint32 newLv = 4;
-    repeated share.item_data items = 5;
-    repeated share.artifact_info_data artifacts = 6;
+    required uint32 newPsycLimit = 2;
+    required uint32 newLv = 3;
+    repeated share.item_data items = 4;
+    repeated share.artifact_info_data artifacts = 5;
 }
 
 
@@ -214,8 +213,8 @@ message player_move_res {
 // pioneer: gather
 message player_gather_start_res {
     required int32 res = 1;
-    optional string buildingId = 2;
-    optional string pioneerId = 3;
+    required string buildingId = 2;
+    required string pioneerId = 3;
 }
 // pioneer: explore
 message player_explore_start_res {
@@ -240,16 +239,20 @@ message player_explore_maincity_res {
 }
 message player_fight_maincity_res {
     required int32 res = 1;
-    optional string pioneerId = 2;
-    optional string buildingId = 3;
+    required string pioneerId = 2;
+    required string buildingId = 3;
 }
 // pioneer: fight(map)
 message player_fight_start_res {
     required int32 res = 1;
+    required string attackerId = 2;
+    required string defenderId = 3;
 }
 // pioneer: event
 message player_event_start_res {
     required int32 res = 1;
+    required string buildingId = 2;
+    required string pioneerId = 3;
 }
 message player_event_generate_enemy_res {
     required int32 res = 1;
@@ -513,20 +516,25 @@ message player_wormhole_fight_res {
 
 message player_wormhole_tp_random_res {
     required int32 res = 1;
-    optional string buildingId = 2;
-    optional pos2d tpPos = 3;
+    required string buildingId = 2;
+    required string pioneerId = 3;
+    optional pos2d tpPos = 4;
 }
 message player_wormhole_tp_select_res {
     required int32 res = 1;
     optional string buildingId = 2;
-    optional pos2d tpPos = 3;
+    required string pioneerId = 3;
+    optional pos2d tpPos = 4;
 }
 message player_wormhole_tp_back_res {
     required int32 res = 1;
-    optional string pioneerId = 2;
+    required string buildingId = 2;
+    required string pioneerId = 3;
 }
 message player_wormhole_tp_tag_res {
     required int32 res = 1;
+    required string buildingId = 2;
+    required string pioneerId = 3;
 }
 
 

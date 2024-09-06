@@ -1,5 +1,6 @@
 import NotificationMgr from "../../Basic/NotificationMgr";
 import ProtobufConfig from "../../Config/ProtobufConfig";
+import { WebsocketFailRetryObject } from "../../Const/ConstDefine";
 import { ItemConfigType, ItemType } from "../../Const/Item";
 import { NotificationName } from "../../Const/Notification";
 import { MapPioneerActionType } from "../../Const/PioneerDefine";
@@ -10,6 +11,8 @@ import CLog from "../../Utils/CLog";
 export class WebsocketMsg {
     private _websocket_host: string;
     private _websocket: natrium_ws;
+
+    private _fail_retry_data: WebsocketFailRetryObject[] = [];
 
     public constructor(websocket_host: string = "") {
         this._websocket_host = websocket_host;
@@ -58,14 +61,101 @@ export class WebsocketMsg {
         return true;
     }
 
-    public send_packet(cmd: string, data: any): void {
+    public send_packet(cmd: string, data: any, needRetry: boolean = false): void {
         if (this._websocket.connecter == null) {
             return;
         }
         CLog.debug(`WebsocketMsg, send_packet, cmd:${cmd}, data:`, data);
-
         let pkt = this._websocket.connecter.pcodec.create_protopkt(cmd, data);
         this._websocket.connecter.send_packet(pkt);
+
+        if (!needRetry) {
+            return;
+        }
+        // save need retry data
+        this._fail_retry_data.push({
+            protocol: cmd,
+            retryCount: 3,
+            data: data,
+        });
+    }
+
+    public get fail_retry_data() {
+        return this._fail_retry_data;
+    }
+    public get_fail_retry_data_by_param(protocol: string, data: any): { index: number; findData: WebsocketFailRetryObject } {
+        let index = -1;
+        let findData = null;
+        for (let i = 0; i < this._fail_retry_data.length; i++) {
+            const item = this._fail_retry_data[i];
+            let finded: boolean = false;
+            if (protocol.includes(item.protocol)) {
+                if (protocol == "player_gather_start_res") {
+                    const resData = data as s2c_user.Iplayer_gather_start_res;
+                    const localData = item.data as c2s_user.Iplayer_gather_start;
+                    if (resData.buildingId == localData.resourceBuildingId && resData.pioneerId == localData.pioneerId) {
+                        finded = true;
+                    }
+                } else if (protocol == "player_fight_start_res") {
+                    const resData = data as s2c_user.Iplayer_fight_start_res;
+                    const localData = item.data as c2s_user.Iplayer_fight_start;
+                    if (resData.attackerId == localData.attackerId && resData.defenderId == localData.defenderId) {
+                        finded = true;
+                    }
+                } else if (protocol == "player_event_start_res") {
+                    const resData = data as s2c_user.Iplayer_event_start_res;
+                    const localData = item.data as c2s_user.Iplayer_event_start;
+                    if (resData.buildingId == localData.buildingId && resData.pioneerId == localData.pioneerId) {
+                        finded = true;
+                    }
+                } else if (protocol == "player_fight_maincity_res") {
+                    const resData = data as s2c_user.Iplayer_fight_maincity_res;
+                    const localData = item.data as c2s_user.Iplayer_fight_maincity;
+                    if (resData.buildingId == localData.buildingId && resData.pioneerId == localData.pioneerId) {
+                        finded = true;
+                    }
+                } else if (protocol == "player_wormhole_tp_random_res") {
+                    const resData = data as s2c_user.Iplayer_wormhole_tp_random_res;
+                    const localData = item.data as c2s_user.Iplayer_wormhole_tp_random;
+                    if (resData.buildingId == localData.buildingId && resData.pioneerId == localData.pioneerId) {
+                        finded = true;
+                    }
+                } else if (protocol == "player_wormhole_tp_select_res") {
+                    const resData = data as s2c_user.Iplayer_wormhole_tp_select_res;
+                    const localData = item.data as c2s_user.Iplayer_wormhole_tp_select;
+                    if (resData.buildingId == localData.buildingId && resData.pioneerId == localData.pioneerId) {
+                        finded = true;
+                    }
+                } else if (protocol == "player_wormhole_tp_back_res") {
+                    const resData = data as s2c_user.Iplayer_wormhole_tp_back_res;
+                    const localData = item.data as c2s_user.Iplayer_wormhole_tp_back;
+                    if (resData.buildingId == localData.buildingId && resData.pioneerId == localData.pioneerId) {
+                        finded = true;
+                    }
+                } else if (protocol == "player_wormhole_tp_tag_res") {
+                    const resData = data as s2c_user.Iplayer_wormhole_tp_tag_res;
+                    const localData = item.data as c2s_user.Iplayer_wormhole_tp_tag;
+                    if (resData.buildingId == localData.buildingId && resData.pioneerId == localData.pioneerId) {
+                        finded = true;
+                    }
+                }
+            }
+            if (finded) {
+                index = i;
+                findData = item;
+                break;
+            }
+        }
+        return {
+            index: index,
+            findData: findData,
+        };
+    }
+    public delete_fail_retry_data(index: number) {
+        if (index < 0 || index > this._fail_retry_data.length - 1) {
+            return;
+        }
+        this._fail_retry_data.splice(index, 1);
     }
 
     public login(d: c2s_user.Ilogin): void {
@@ -109,7 +199,7 @@ export class WebsocketMsg {
         this.send_packet("player_talk_select", d);
     }
     public player_gather_start(d: c2s_user.Iplayer_gather_start) {
-        this.send_packet("player_gather_start", d);
+        this.send_packet("player_gather_start", d, true);
     }
     public player_explore_start(d: c2s_user.Iplayer_explore_start) {
         this.send_packet("player_explore_start", d);
@@ -118,7 +208,7 @@ export class WebsocketMsg {
         this.send_packet("player_explore_npc_start", d);
     }
     public player_event_start(d: c2s_user.Iplayer_event_start) {
-        this.send_packet("player_event_start", d);
+        this.send_packet("player_event_start", d, true);
     }
     public player_event_generate_enemy(d: c2s_user.Iplayer_event_generate_enemy) {
         this.send_packet("player_event_generate_enemy", d);
@@ -133,7 +223,7 @@ export class WebsocketMsg {
         this.send_packet("player_explore_maincity", d);
     }
     public player_fight_maincity(d: c2s_user.Iplayer_fight_maincity) {
-        this.send_packet("player_fight_maincity", d);
+        this.send_packet("player_fight_maincity", d, true);
     }
     public player_maincity_back(d: c2s_user.Iplayer_maincity_back) {
         this.send_packet("player_maincity_back", d);
@@ -142,20 +232,20 @@ export class WebsocketMsg {
         this.send_packet("player_pos_detect", d);
     }
     public player_wormhole_tp_random(d: c2s_user.Iplayer_wormhole_tp_random) {
-        this.send_packet("player_wormhole_tp_random", d);
+        this.send_packet("player_wormhole_tp_random", d, true);
     }
     public player_wormhole_tp_select(d: c2s_user.Iplayer_wormhole_tp_select) {
-        this.send_packet("player_wormhole_tp_select", d);
+        this.send_packet("player_wormhole_tp_select", d, true);
     }
     public player_wormhole_tp_back(d: c2s_user.Iplayer_wormhole_tp_back) {
-        this.send_packet("player_wormhole_tp_back", d);
+        this.send_packet("player_wormhole_tp_back", d, true);
     }
     public player_wormhole_tp_tag(d: c2s_user.Iplayer_wormhole_tp_tag) {
-        this.send_packet("player_wormhole_tp_tag", d);
+        this.send_packet("player_wormhole_tp_tag", d, true);
     }
 
     public player_fight_start(d: c2s_user.Iplayer_fight_start) {
-        this.send_packet("player_fight_start", d);
+        this.send_packet("player_fight_start", d, true);
     }
     public player_item_use(d: c2s_user.Iplayer_item_use) {
         this.send_packet("player_item_use", d);
@@ -220,7 +310,7 @@ export class WebsocketMsg {
         // return;
         this.send_packet("player_rookie_update", d);
     }
-    public player_get_rookie_award(d: c2s_user.Iplayer_get_rookie_award){
+    public player_get_rookie_award(d: c2s_user.Iplayer_get_rookie_award) {
         this.send_packet("player_get_rookie_award", d);
     }
     public player_rookie_wormhole_fight(d: c2s_user.Iplayer_rookie_wormhole_fight) {
@@ -637,6 +727,21 @@ export namespace s2c_user {
         buildingId: string;
         pioneerId: string;
     }
+    export interface Iplayer_fight_start_res {
+        res: number;
+        attackerId: string;
+        defenderId: string;
+    }
+    export interface Iplayer_event_start_res {
+        res: number;
+        buildingId: string;
+        pioneerId: string;
+    }
+    export interface Iplayer_fight_maincity_res {
+        res: number;
+        pioneerId: string;
+        buildingId: string;
+    }
     export interface Iplayer_explore_start_res {
         res: number;
         buildingId: string;
@@ -671,19 +776,24 @@ export namespace s2c_user {
     export interface Iplayer_wormhole_tp_random_res {
         res: number;
         buildingId: string;
+        pioneerId: string;
         tpPos: share.pos2d;
     }
     export interface Iplayer_wormhole_tp_select_res {
         res: number;
         buildingId: string;
+        pioneerId: string;
         tpPos: share.pos2d;
     }
     export interface Iplayer_wormhole_tp_back_res {
         res: number;
+        buildingId: string;
         pioneerId: string;
     }
     export interface Iplayer_wormhole_tp_tag_res {
         res: number;
+        buildingId: string;
+        pioneerId: string;
     }
     export interface Iplayer_worldbox_beginner_open_res {
         res: number;
@@ -779,7 +889,6 @@ export namespace s2c_user {
 
     export interface Iplayer_lvlup_change {
         hpMaxChangeValue: number;
-        showBuildingIds: string[];
         newPsycLimit: number;
         newLv: number;
         items: any;
@@ -1104,7 +1213,7 @@ export namespace share {
         rebornTime?: number;
 
         maincityFightPioneerIds?: string[];
-        maincityFightPioneerDatas: { [key: string]: share.Ipioneer_data }; 
+        maincityFightPioneerDatas: { [key: string]: share.Ipioneer_data };
     }
     export interface Iartifact_three_confs {
         confs: Iartifact_three_conf[];

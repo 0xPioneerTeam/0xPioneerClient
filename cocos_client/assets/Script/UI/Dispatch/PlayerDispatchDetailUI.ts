@@ -214,6 +214,14 @@ export class PlayerDispatchDetailUI extends ViewController {
         }
         this._troopLeftLabel.string = Math.max(0, ownedTroopNum - this._addTroopNum).toString();
         this._troopAddEditBox.string = this._addTroopNum.toString();
+
+        let canGenerate: boolean = false;
+        if (this._selectTroopId == "0") {
+            canGenerate = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.Barrack) > 0;
+        } else {
+            canGenerate = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.TrainingCenter) > 0;
+        }
+        this.node.getChildByPath("ContentView/AddTroopView/ConsriptionButton").active = canGenerate;
     }
     private _getOwnedTroopNum(troopId: string) {
         let pioneerNum: number = 0;
