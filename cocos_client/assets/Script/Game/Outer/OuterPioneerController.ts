@@ -603,12 +603,23 @@ export class OuterPioneerController extends ViewController {
         fightView.node.setParent(this.node);
         fightView.node.worldPosition = attackerView.worldPosition;
         fightView.refreshUI(attackerData, defenderData, true);
-
+        for (let uniqueId of [attackerData.uniqueId, defenderData.uniqueId]) {
+            const monster = this.getPioneerByUniqueId(uniqueId);
+            console.log(`=====monster:${monster}`);
+            if (monster && monster.type == MapPioneerType.hred) {
+                console.log(`=====hred:${monster.name}`);
+                monster.getComponent(MapItemMonster).getComponent(UIOpacity).opacity = 0;
+            }
+        }
         const intervalId = setInterval(() => {
             if (fightDatas.length <= 0) {
                 if (this._fightDataMap.has(attackerData.uniqueId)) {
                     const temp = this._fightDataMap.get(attackerData.uniqueId);
                     clearInterval(temp.intervalId);
+                    const monster = this.getPioneerByUniqueId(attackerData.uniqueId);
+                    if (monster && monster.type == MapPioneerType.hred) {
+                        monster.getComponent(MapItemMonster).getComponent(UIOpacity).opacity = 255;
+                    }
                 }
                 return;
             }
