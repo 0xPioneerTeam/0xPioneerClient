@@ -23,8 +23,6 @@ export enum UIName {
     NFTBackpackUI = "abresources/prefab/ui/NFTBackpack",
     NFTInfoUI = "abresources/prefab/ui/NFTInfoUI",
 
-    DelegateUI = "abresources/prefab/ui/DelegateUI",
-
     WorldTreasureTipUI = "abresources/prefab/ui/WorldTreasureTipUI",
 
     TavernUI = "abresources/prefab/ui/TavernUI",

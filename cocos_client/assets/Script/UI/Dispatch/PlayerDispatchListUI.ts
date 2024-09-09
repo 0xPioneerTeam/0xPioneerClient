@@ -32,12 +32,14 @@ export class PlayerDispatchListUI extends ViewController {
         this._refreshUI();
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_DISPATCH_HP_CHANGED, this._onPioneerDispatchHpChange, this);
     }
 
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
 
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_DISPATCH_HP_CHANGED, this._onPioneerDispatchHpChange, this);
     }
 
     protected viewPopAnimation(): boolean {
@@ -88,5 +90,9 @@ export class PlayerDispatchListUI extends ViewController {
     //------------------------ notification
     private _onPioneerHpChange() {
         this._refreshUI();
+    }
+    private async _onPioneerDispatchHpChange() {
+        await this.playExitAnimation();
+        UIPanelManger.inst.popPanel(this.node);
     }
 }

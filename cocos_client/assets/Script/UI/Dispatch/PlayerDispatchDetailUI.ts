@@ -2,7 +2,7 @@ import { _decorator, Button, Component, EditBox, EventTouch, instantiate, Label,
 import ViewController from "../../BasicView/ViewController";
 import { MapPioneerActionType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
-import UIPanelManger from "../../Basic/UIPanelMgr";
+import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { UIName } from "../../Const/ConstUIDefine";
 import { PlayerInfoItem } from "../View/PlayerInfoItem";
 import { DataMgr } from "../../Data/DataMgr";
@@ -454,7 +454,8 @@ export class PlayerDispatchDetailUI extends ViewController {
         for (let i = 0; i < this._infos.length; i++) {
             if (this._infos[i].uniqueId == data.uniqueId) {
                 await this.playExitAnimation();
-                UIPanelManger.inst.popPanel(this.node);
+                UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.UI);
+                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_DISPATCH_HP_CHANGED);
                 break;
             }
         }

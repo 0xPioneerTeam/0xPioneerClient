@@ -51,7 +51,6 @@ export class ExerciseUI extends ViewController {
         // this.node.getChildByPath("__ViewContent/footer/txt_time").getComponent(Label).string = LanMgr.getLanById("lanreplace200011");
         // this.node.getChildByPath("__ViewContent/footer/btn_exercise/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200012");
 
-
         this._title = this.node.getChildByPath("__ViewContent/title").getComponent(Label);
         const contentView = this.node.getChildByPath("__ViewContent");
         this._timeLabel = contentView.getChildByPath("footer/txt_timeVal").getComponent(Label);
@@ -106,8 +105,8 @@ export class ExerciseUI extends ViewController {
             item.getChildByPath("count/plus").on(Node.EventType.TOUCH_CANCEL, this.onTouchEnd, this);
 
             item.getChildByPath("count/ProgressBar/Slider").getComponent(Slider).slideEvents[0].customEventData = index.toString();
-            item.getChildByPath("count/ProgressBar/Slider").on(Node.EventType.TOUCH_END, this.onTapSliderHandleEnd, this)
-            item.getChildByPath("count/ProgressBar/Slider").on(Node.EventType.TOUCH_CANCEL, this.onTapSliderHandleEnd, this)
+            item.getChildByPath("count/ProgressBar/Slider").on(Node.EventType.TOUCH_END, this.onTapSliderHandleEnd, this);
+            item.getChildByPath("count/ProgressBar/Slider").on(Node.EventType.TOUCH_CANCEL, this.onTapSliderHandleEnd, this);
             item.getChildByPath("count/ProgressBar/Slider/Handle").on(Node.EventType.TOUCH_END, this.onTapSliderHandleEnd, this);
             item.getChildByPath("count/ProgressBar/Slider/Handle").on(Node.EventType.TOUCH_CANCEL, this.onTapSliderHandleEnd, this);
 
@@ -180,13 +179,13 @@ export class ExerciseUI extends ViewController {
                         curOtherGenerateNum += this._exerciseData[k].exerciseNum;
                     }
                 }
-                const canAddNum = Math.min(leftOwnedNum - curOtherGenerateNum, this._maxTroopNum - curOtherGenerateNum);
-                if (canAddNum == 0) {
+                const exerciseMaxNum = this._getCurrentExerciseMaxNum(i);
+                if (exerciseMaxNum <= 0) {
                     item.getChildByPath("count/ProgressBar").getComponent(ProgressBar).progress = 0;
                     item.getChildByPath("count/ProgressBar/Slider").getComponent(Slider).progress = 0;
                 } else {
-                    item.getChildByPath("count/ProgressBar").getComponent(ProgressBar).progress = data.exerciseNum / canAddNum;
-                    item.getChildByPath("count/ProgressBar/Slider").getComponent(Slider).progress = data.exerciseNum / canAddNum;
+                    item.getChildByPath("count/ProgressBar").getComponent(ProgressBar).progress = data.exerciseNum / exerciseMaxNum;
+                    item.getChildByPath("count/ProgressBar/Slider").getComponent(Slider).progress = data.exerciseNum / exerciseMaxNum;
                 }
             } else {
                 item.getChildByPath("count").active = false;
@@ -237,21 +236,8 @@ export class ExerciseUI extends ViewController {
         if (index < 0 || index > this._exerciseData.length - 1) {
             return;
         }
-        let curOwnedNum = 0;
-        let curOtherGenerateNum = 0;
-        for (let i = 0; i < this._exerciseData.length; i++) {
-            curOwnedNum += this._exerciseData[i].ownedNum;
-            if (i == index) {
-            } else {
-                curOtherGenerateNum += this._exerciseData[i].exerciseNum;
-            }
-        }
-
+        const exerciseMaxNum = this._getCurrentExerciseMaxNum(index);
         const data = this._exerciseData[index];
-        const addMaxNum = Math.min(
-            this._maxExerciseNum - curOwnedNum - curOtherGenerateNum,
-            DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop) - curOtherGenerateNum
-        );
 
         let changeNum = 1;
         if (this._holdTime > 4) {
@@ -268,11 +254,31 @@ export class ExerciseUI extends ViewController {
         } else {
             updateResultNum -= changeNum;
         }
-        updateResultNum = Math.min(Math.max(0, updateResultNum), addMaxNum);
+        updateResultNum = Math.min(Math.max(0, updateResultNum), exerciseMaxNum);
         if (data.exerciseNum != updateResultNum) {
             data.exerciseNum = updateResultNum;
             this._refreshUI();
         }
+    }
+
+    private _getCurrentExerciseMaxNum(index: number): number {
+        if (index < 0 || index > this._exerciseData.length - 1) {
+            return 0;
+        }
+        const exerciseLimit = this._maxExerciseNum;
+        const troopLimit = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop);
+
+        let curAllOwnedNum = 0;
+        let curOtherGenerateNum = 0;
+        for (let i = 0; i < this._exerciseData.length; i++) {
+            curAllOwnedNum += this._exerciseData[i].ownedNum;
+            if (i == index) {
+            } else {
+                curOtherGenerateNum += this._exerciseData[i].exerciseNum;
+            }
+        }
+        const limitNum = Math.max(0, Math.min(exerciseLimit, troopLimit) - curOtherGenerateNum - curAllOwnedNum);
+        return limitNum;
     }
 
     //--------------------------------- action
@@ -333,31 +339,11 @@ export class ExerciseUI extends ViewController {
         const slider = item.getChildByPath("count/ProgressBar/Slider").getComponent(Slider);
         const progress = item.getChildByPath("count/ProgressBar").getComponent(ProgressBar);
 
-        let curOwnedNum = 0;
-        let curOtherGenerateNum = 0;
-        for (let i = 0; i < this._exerciseData.length; i++) {
-            curOwnedNum += this._exerciseData[i].ownedNum;
-            if (i == index) {
-            } else {
-                curOtherGenerateNum += this._exerciseData[i].exerciseNum;
-            }
-        }
-
-        const addMaxNum = Math.min(
-            this._maxExerciseNum - curOwnedNum - curOtherGenerateNum,
-            DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop) - curOtherGenerateNum
-        );
-
-        if (addMaxNum <= 0) {
-            slider.progress = 0;
-            progress.progress = 0;
-        } else {
-            progress.progress = this._exerciseData[index].exerciseNum / addMaxNum;
-            const currentAddTroop: number = Math.floor(slider.progress * addMaxNum);
-            if (currentAddTroop != this._exerciseData[index].exerciseNum) {
-                this._exerciseData[index].exerciseNum = currentAddTroop;
-                this._refreshUI();
-            }
+        const exerciseMaxNum = this._getCurrentExerciseMaxNum(index);
+        const currentExerciseNum: number = Math.floor(slider.progress * exerciseMaxNum);
+        if (currentExerciseNum != this._exerciseData[index].exerciseNum) {
+            this._exerciseData[index].exerciseNum = currentExerciseNum;
+            this._refreshUI();
         }
     }
     private onTapSliderHandleEnd() {

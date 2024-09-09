@@ -505,8 +505,6 @@ export class DataMgr {
                 if (temple.uniqueId == localDatas[i].uniqueId) {
                     const oldData = localDatas[i];
                     const newData = DataMgr.s.pioneer.replaceData(i, temple);
-                    console.log("exce old: " + JSON.stringify(oldData));
-                    console.log("exce new: " + JSON.stringify(newData));
                     // show
                     if (oldData.show != newData.show) {
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: newData.uniqueId, show: newData.show });
@@ -520,8 +518,7 @@ export class DataMgr {
                         if (
                             newData.type == MapPioneerType.player &&
                             oldData.actionType != MapPioneerActionType.inCity &&
-                            newData.actionType == MapPioneerActionType.inCity &&
-                            newData.hp > 0
+                            newData.actionType == MapPioneerActionType.inCity
                         ) {
                             if (!PioneerMgr.checkWormholeBackPioneer(newData.uniqueId)) {
                                 // local play return
@@ -536,7 +533,6 @@ export class DataMgr {
                                 }
                             }
                         }
-                        console.log("exce typechanged: " + newData.uniqueId);
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: newData.uniqueId });
                     }
                     // fight

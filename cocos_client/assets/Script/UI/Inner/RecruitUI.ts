@@ -12,7 +12,6 @@ import ItemData from "../../Const/Item";
 import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import { HUDName, UIName } from "../../Const/ConstUIDefine";
-import { DelegateUI } from "../DelegateUI";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { AlterTipView } from "../View/AlterTipView";
@@ -246,14 +245,6 @@ export class RecruitUI extends ViewController {
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
         DataMgr.s.userInfo.changeRecruitRedPoint(false);
-    }
-    private async onTapDelegate() {
-        GameMusicPlayMgr.playTapButtonEffect();
-        const result = await UIPanelManger.inst.pushPanel(UIName.DelegateUI);
-        if (!result.success) {
-            return;
-        }
-        result.node.getComponent(DelegateUI).showUI(InnerBuildingType.Barrack);
     }
     private async onTapQuestion() {
         GameMusicPlayMgr.playTapButtonEffect();
