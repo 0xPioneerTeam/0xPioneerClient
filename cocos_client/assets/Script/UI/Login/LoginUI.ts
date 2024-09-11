@@ -15,6 +15,7 @@ import { UIName } from "../../Const/ConstUIDefine";
 import UIPanelManger from "../../Basic/UIPanelMgr";
 import { PlayerInfoUI } from "../PlayerInfoUI";
 import { CollectWalletUI } from "../CollectWallet/CollectWalletUI";
+import { c2s_user } from "../../Net/msg/WebsocketMsg";
 const { ccclass, property } = _decorator;
 
 @ccclass("LoginUI")
@@ -59,12 +60,15 @@ export class LoginUI extends ViewController {
         if (!result.success) {
             return;
         }
-        result.node.getComponent(CollectWalletUI).configuration((method: string)=> {
+        result.node.getComponent(CollectWalletUI).configuration((method: string) => {
             this._loginStart();
             localStorage.setItem("lastLoginMethod", method);
         });
     }
     private onTapStart_chain() {
+        let d: c2s_user.Ilogin = { name: "", uid: "6", token: "666e730d1aac4ba8e77fa99d8ebc00e9-1726042349182-6" };
+        NetworkMgr.websocketMsg.login(d);
+        return;
         if (!DataMgr.r.inited) {
             CLog.warn("LoginUI: game init failed");
             return;
@@ -129,7 +133,7 @@ export class LoginUI extends ViewController {
         if (!result.success) {
             return;
         }
-        result.node.getComponent(CollectWalletUI).configuration((method: string)=> {
+        result.node.getComponent(CollectWalletUI).configuration((method: string) => {
             this._loginStart();
             localStorage.setItem("lastLoginMethod", method);
         });

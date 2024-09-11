@@ -1,5 +1,5 @@
 {
-    "currentConfigId": "dev_local",
+    "currentConfigId": "dev",
     "configs": {
         "dev": {
             "chainId": "534351",

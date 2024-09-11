@@ -9,8 +9,6 @@ import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { ClvlMgr, GameMgr } from "../Utils/Global";
-import { InnerBuildingType } from "../Const/BuildingDefine";
-import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 import { RedPointView } from "./View/RedPointView";
 const { ccclass, property } = _decorator;
 

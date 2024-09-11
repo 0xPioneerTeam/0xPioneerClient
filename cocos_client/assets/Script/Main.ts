@@ -1,4 +1,4 @@
-import { _decorator, Asset, AssetManager, director, Game, game } from "cc";
+import { _decorator, Asset, AssetManager, director, Game, game, sys } from "cc";
 import ViewController from "./BasicView/ViewController";
 import { AudioMgr, LanMgr, LocalDataLoader, ResourcesMgr } from "./Utils/Global";
 import ConfigMgr from "./Manger/ConfigMgr";
@@ -82,8 +82,9 @@ export class Main extends ViewController {
 
     private async _onGameInited() {
         DataMgr.r.inited = true;
-
-        (window as any).hideLoading();
+        if (sys.platform === sys.Platform.DESKTOP_BROWSER) {
+            (window as any).hideLoading();
+        }
     }
 
     private async _onUserLoginSucceed() {
@@ -213,7 +214,6 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("player_wormhole_set_attacker_res", DataMgr.player_wormhole_set_attacker_res);
         NetworkMgr.websocket.on("player_explore_maincity_res", DataMgr.player_explore_maincity_res);
         NetworkMgr.websocket.on("player_pos_detect_res", DataMgr.player_pos_detect_res);
-
 
         NetworkMgr.websocket.on("player_fight_end", DataMgr.player_fight_end);
 
