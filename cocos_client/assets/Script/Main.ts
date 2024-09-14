@@ -18,6 +18,7 @@ import { c2s_user, s2c_user } from "./Net/msg/WebsocketMsg";
 import { BundleName } from "./Basic/ResourcesMgr";
 import { GuideMgr } from "./UI/guide/GuideMgr";
 import RookieStepMgr from "./Manger/RookieStepMgr";
+
 const { ccclass, property } = _decorator;
 
 @ccclass("Main")
@@ -82,9 +83,9 @@ export class Main extends ViewController {
 
     private async _onGameInited() {
         DataMgr.r.inited = true;
-        if (sys.platform === sys.Platform.DESKTOP_BROWSER) {
-            (window as any).hideLoading();
-        }
+        // if (sys.platform === sys.Platform.DESKTOP_BROWSER) {
+        //     (window as any).hideLoading();
+        // }
     }
 
     private async _onUserLoginSucceed() {

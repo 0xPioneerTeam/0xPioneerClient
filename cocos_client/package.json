@@ -1,12 +1,12 @@
 {
-  "name": "test",
-  "uuid": "9511835f-bd80-4b94-a7a9-f0c9486aba9c",
-  "creator": {
-    "version": "3.8.3"
-  },
-  "dependencies": {
-    "buffer": "^6.0.3",
-    "pako": "^2.1.0",
-    "protobufjs": "^7.2.2"
-  }
+    "name": "test",
+    "uuid": "9511835f-bd80-4b94-a7a9-f0c9486aba9c",
+    "creator": {
+        "version": "3.8.3"
+    },
+    "dependencies": {
+        "buffer": "^6.0.3",
+        "pako": "^2.1.0",
+        "protobufjs": "^7.2.2"
+    }
 }

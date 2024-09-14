@@ -66,9 +66,9 @@ export class LoginUI extends ViewController {
         });
     }
     private onTapStart_chain() {
-        let d: c2s_user.Ilogin = { name: "", uid: "6", token: "666e730d1aac4ba8e77fa99d8ebc00e9-1726042349182-6" };
-        NetworkMgr.websocketMsg.login(d);
-        return;
+        // let d: c2s_user.Ilogin = { name: "", uid: "6", token: "666e730d1aac4ba8e77fa99d8ebc00e9-1726042349182-6" };
+        // NetworkMgr.websocketMsg.login(d);
+        // return;
         if (!DataMgr.r.inited) {
             CLog.warn("LoginUI: game init failed");
             return;

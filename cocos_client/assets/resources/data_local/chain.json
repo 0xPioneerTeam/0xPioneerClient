@@ -19,6 +19,24 @@
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
             }
         },
+        "dev_tt": {
+            "chainId": "1",
+            "chainName": "Scroll Sepolia",
+            "nativeCurrency": {
+                "name": "ETH",
+                "symbol": "ETH",
+                "decimals": 18
+            },
+            "rpcUrls": ["https://mainnet.infura.io/v3/"],
+            "blockExplorerUrls": ["https://etherscan.io"],
+            "abi": "deployresult_scrollTestnet",
+            "api": {
+                "ws_host": "wss://apitest.0xpioneerdev.com/wss",
+                "http_host": "https://apitest.0xpioneerdev.com/api",
+                "init": true,
+                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            }
+        },
         "dev_local": {
             "chainId": "534351",
             "chainName": "Scroll Sepolia",
