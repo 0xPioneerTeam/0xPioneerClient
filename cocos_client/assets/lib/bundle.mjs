@@ -1,3 +1,4 @@
+// --- xx change begin
 if (typeof process === "undefined") {
     window.process = {
         env: {
@@ -5,6 +6,7 @@ if (typeof process === "undefined") {
         },
     };
 }
+// --- xx change end
 
 var commonjsGlobal =
     typeof globalThis !== "undefined"
@@ -37034,9 +37036,6 @@ const buildProxyFunction = (
         };
         const propProxyStates = /* @__PURE__ */ new Map();
         const addPropListener = (prop, propProxyState) => {
-            if ((import.meta.env ? import.meta.env.MODE : void 0) !== "production" && propProxyStates.has(prop)) {
-                throw new Error("prop listener already exists");
-            }
             if (listeners.size) {
                 const remove = propProxyState[3](createPropListener(prop));
                 propProxyStates.set(prop, [propProxyState, remove]);
@@ -37056,9 +37055,6 @@ const buildProxyFunction = (
             listeners.add(listener);
             if (listeners.size === 1) {
                 propProxyStates.forEach(([propProxyState, prevRemove], prop) => {
-                    if ((import.meta.env ? import.meta.env.MODE : void 0) !== "production" && prevRemove) {
-                        throw new Error("remove already exists");
-                    }
                     const remove = propProxyState[3](createPropListener(prop));
                     propProxyStates.set(prop, [propProxyState, remove]);
                 });
@@ -37161,9 +37157,6 @@ function proxy(initialObject = {}) {
 }
 function subscribe(proxyObject, callback, notifyInSync) {
     const proxyState = proxyStateMap.get(proxyObject);
-    if ((import.meta.env ? import.meta.env.MODE : void 0) !== "production" && !proxyState) {
-        console.warn("Please use proxy object");
-    }
     let promise;
     const ops = [];
     const addListener = proxyState[3];
@@ -37188,9 +37181,6 @@ function subscribe(proxyObject, callback, notifyInSync) {
 }
 function snapshot(proxyObject, handlePromise) {
     const proxyState = proxyStateMap.get(proxyObject);
-    if ((import.meta.env ? import.meta.env.MODE : void 0) !== "production" && !proxyState) {
-        console.warn("Please use proxy object");
-    }
     const [target, ensureVersion, createSnapshot] = proxyState;
     return createSnapshot(target, ensureVersion(), handlePromise);
 }
@@ -38342,8 +38332,14 @@ null == n$2 || n$2({ LitElement: s });
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const e$2 = (e) => (n) =>
-    "function" == typeof n
+const e$2 = (e) => (n) => {
+	// --- xx change begin
+    if (customElements.get(e)) {
+        console.warn(`Custom element ${e} is already defined.`);
+        return n; // If already defined, return the original function
+    }
+	// --- xx change end
+    return "function" == typeof n
         ? ((e, n) => (customElements.define(e, n), n))(e, n)
         : ((e, n) => {
               const { kind: t, elements: s } = n;
@@ -38355,6 +38351,7 @@ const e$2 = (e) => (n) =>
                   },
               };
           })(e, n);
+};
 
 /**
  * @license
@@ -43750,4 +43747,6 @@ var index = /*#__PURE__*/ Object.freeze({
     },
 });
 
-export { x$1 as EthereumProvider };
+// --- xx change begin
+window.EthereumProvider = x$1;
+// --- xx change end

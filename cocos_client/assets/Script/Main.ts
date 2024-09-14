@@ -83,9 +83,7 @@ export class Main extends ViewController {
 
     private async _onGameInited() {
         DataMgr.r.inited = true;
-        // if (sys.platform === sys.Platform.DESKTOP_BROWSER) {
-        //     (window as any).hideLoading();
-        // }
+        (window as any).hideLoading();
     }
 
     private async _onUserLoginSucceed() {

@@ -4,7 +4,7 @@ import { chain_util } from "./chain_util";
 import CLog from "../../Utils/CLog";
 import ChainConfig from "../../Config/ChainConfig";
 import AbiConfig from "../../Config/AbiConfig";
-import { EthereumProvider } from "../../../lib/bundle.mjs";
+// import { EthereumProvider } from "../../../lib/bundle.mjs";
 import { sys } from "cc";
 
 export const tokenNameETH: string = "eth";
@@ -50,6 +50,7 @@ export class Ethereum extends EventEmitter {
     protected _provider: any;
     protected _signer: any;
     protected _walletType: WalletType | null = null;
+    protected _wallectconnect: any = null;
 
     private _decimals: { [key: string]: bigint } = {};
     private _contracts: { [key: string]: ethers.Contract } = {};
@@ -108,8 +109,7 @@ export class Ethereum extends EventEmitter {
     public async init(walletType: WalletType = WalletType.ethereum): Promise<void> {
         // CLog.info("Ethereum, Init, starting ...");
         let win: any = window;
-        const test = true;
-        if (sys.platform === sys.Platform.DESKTOP_BROWSER && !test) {
+        if (sys.platform === sys.Platform.DESKTOP_BROWSER) {
             let walletTypeDetected = this._walletTypeDetected();
             if (walletTypeDetected != walletType && walletTypeDetected != WalletType.ethereum) walletType = walletTypeDetected;
             this._walletType = walletType;
@@ -174,40 +174,37 @@ export class Ethereum extends EventEmitter {
                     }
                     return;
             }
-        } else if (sys.platform === sys.Platform.MOBILE_BROWSER || test) {
-            console.log("exce wallect2");
-            const projectId = "b1e80faeb09af3ab0b65239209f2923a";
-            const wallectconnect = await EthereumProvider.init({
-                projectId: projectId,
-                metadata: {
-                    name: "My Website",
-                    description: "My Website Description",
-                    url: "https://mywebsite.com", // origin must match your domain & subdomain
-                    icons: ["https://avatars.githubusercontent.com/u/37784886"],
-                },
-                showQrModal: true,
-                chains: [1],
-                optionalChains: [534351],
-                rpcMap: {
-                    1: "https://mainnet.infura.io/v3/",
-                    534351: "https://sepolia-rpc.scroll.io"
-                },
-            });
+        } else if (sys.platform === sys.Platform.MOBILE_BROWSER) {
+            if ((this._wallectconnect === null)) {
+                const projectId = "b1e80faeb09af3ab0b65239209f2923a";
+                this._wallectconnect = await (window as any).EthereumProvider.init({
+                    projectId: projectId,
+                    metadata: {
+                        name: "My Website",
+                        description: "My Website Description",
+                        url: "https://mywebsite.com", // origin must match your domain & subdomain
+                        icons: ["https://avatars.githubusercontent.com/u/37784886"],
+                    },
+                    showQrModal: true,
+                    chains: [534351],
+                    optionalChains: [1],
+                    rpcMap: {
+                        1: "https://mainnet.infura.io/v3/",
+                        534351: "https://sepolia-rpc.scroll.io",
+                    },
+                });
+            }
             if (!this._initCallback) {
                 this._initCallback = true;
-                wallectconnect.on("chainChanged", this._chainChanged);
-                wallectconnect.on("accountsChanged", this._accountChanged);
+                this._wallectconnect.on("chainChanged", this._chainChanged);
+                this._wallectconnect.on("accountsChanged", this._accountChanged);
             }
-            console.log("exce wallect3");
-            await wallectconnect.connect();
-            console.log("exce wallect4");
+            await this._wallectconnect.connect();
             // get wallet info
-            walletType = wallectconnect.session?.peer.metadata.name;
+            walletType = this._wallectconnect.session?.peer.metadata.name;
             this._walletType = walletType;
-
-            this._provider = new win.ethers.BrowserProvider(wallectconnect);
+            this._provider = new win.ethers.BrowserProvider(this._wallectconnect);
         }
-
         await this._provider.send("eth_requestAccounts", []);
         this._signer = await this._provider.getSigner();
         const network = await this._provider.getNetwork();
@@ -218,9 +215,7 @@ export class Ethereum extends EventEmitter {
             CLog.info(`Ethereum, Init, chainId err, config:${curChainConf.chainId}, curr:${network.chainId}`);
             const chainHex = "0x" + Number(curChainConf.chainId).toString(16);
             try {
-                console.log("exce change1");
                 await this._provider.send("wallet_switchEthereumChain", [{ chainId: chainHex }]);
-                console.log("exce change2");
                 CLog.info("Ethereum, switch Init, wallet:" + this._signer.address);
 
                 let d: EthereumEventData_init = {
@@ -231,7 +226,6 @@ export class Ethereum extends EventEmitter {
                 this.emit(EthereumEventType.init, d);
                 return;
             } catch (err: any) {
-                console.log("exce change3:", err);
                 // This error code indicates that the chain has not been added to MetaMask.
                 if (err.error && (err.error.code === 4902 || err.error.code === -32603)) {
                     // Do something
