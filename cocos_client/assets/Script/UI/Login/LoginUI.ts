@@ -25,7 +25,7 @@ export class LoginUI extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-        this.node.getChildByPath("AlertView").active = false;
+        this.node.getChildByPath("AlertView").active = true;
     }
     protected viewDidStart(): void {
         super.viewDidStart();
@@ -106,13 +106,13 @@ export class LoginUI extends ViewController {
     private onTapCloseTip() {
         GameMusicPlayMgr.playTapButtonEffect();
         const contentView: Node = this.node.getChildByPath("AlertView/Img");
-        // tween()
-        //     .target(contentView)
-        //     .to(0.5, { scale: v3(0, 0, 0) }, { easing: "bounceIn" })
-        //     .call(() => {
-        //         this.node.getChildByPath("AlertView").active = false;
-        //     })
-        //     .start();
+        tween()
+            .target(contentView)
+            .to(0.5, { scale: v3(0, 0, 0) }, { easing: "bounceIn" })
+            .call(() => {
+                this.node.getChildByPath("AlertView").active = false;
+            })
+            .start();
     }
     private async onTapSetting() {
         GameMusicPlayMgr.playTapButtonEffect();
