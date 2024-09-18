@@ -32,9 +32,10 @@ export default class GameMainHelper {
     public changeGameCameraZoom(zoom: number, animation: boolean = false) {
         const zoomConfig = ConfigConfig.getConfig(ConfigType.MapScaleMaxAndMin) as MapScaleParam;
         this._gameCameraZoom = Math.max(zoomConfig.scaleMin, Math.min(zoom, zoomConfig.scaleMax));
+        localStorage.setItem("local_outer_map_scale", this._gameCameraZoom.toString());
         if (!this._isGameShowOuter) {
             // new inner max zoom limit 0.8
-            this._gameCameraZoom = Math.min(0.8, this._gameCameraZoom);  
+            this._gameCameraZoom = Math.min(0.8, this._gameCameraZoom);
         }
         if (animation) {
             tween()

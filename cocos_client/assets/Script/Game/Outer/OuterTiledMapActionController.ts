@@ -3,6 +3,7 @@ import {
     CCString,
     Color,
     EventMouse,
+    EventTouch,
     Mask,
     Mat4,
     Node,
@@ -16,6 +17,7 @@ import {
     _decorator,
     instantiate,
     size,
+    sys,
     v2,
     v3,
     view,
@@ -39,7 +41,7 @@ import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { InnerBuildingType, MapBuildingType } from "../../Const/BuildingDefine";
 import { UIName, HUDName } from "../../Const/ConstUIDefine";
 import { MapBuildingMainCityObject, MapBuildingWormholeObject } from "../../Const/MapBuilding";
-import { MapPioneerActionType, MapPioneerObject, MapPioneerType } from "../../Const/PioneerDefine";
+import PioneerDefine, { MapPioneerActionType, MapPioneerObject, MapPioneerType } from "../../Const/PioneerDefine";
 import { RookieStep } from "../../Const/RookieDefine";
 import NetGlobalData from "../../Data/Save/Data/NetGlobalData";
 import { share } from "../../Net/msg/WebsocketMsg";
@@ -101,7 +103,7 @@ export class OuterTiledMapActionController extends ViewController {
     @property(Prefab)
     private gridFogPrefab = null;
 
-    private _mouseDown: boolean = false;
+    private _touchDown: boolean = false;
     private _showOuterCameraPosition: Vec3 = Vec3.ZERO;
     private _showOuterCameraZoom: number = 1;
 
@@ -158,72 +160,71 @@ export class OuterTiledMapActionController extends ViewController {
     protected viewDidStart(): void {
         super.viewDidStart();
 
-        this._mouseDown = false;
         let downx = 0;
         let downy = 0;
+        let pinchingDistance: number = null;
         //make sure the map can be mouse.
         // unknow size,the screen update the the map size if biger.
         this.node._uiProps.uiTransformComp.setContentSize(size(3000000, 3000000));
+
+        const isDesktop = sys.platform === sys.Platform.DESKTOP_BROWSER;
         this.node.on(
-            Node.EventType.MOUSE_DOWN,
-            (event: EventMouse) => {
-                this._mouseDown = true;
+            Node.EventType.TOUCH_START,
+            (event: EventTouch) => {
+                this._touchDown = true;
                 downx = event.getLocation().x;
                 downy = event.getLocation().y;
+                pinchingDistance = null;
             },
             this
         );
-
         this.node.on(
-            Node.EventType.MOUSE_UP,
-            (event: EventMouse) => {
-                this._mouseDown = false;
-                var pos = event.getLocation();
-                if (Math.abs(downx - pos.x) <= 3 && Math.abs(downy - pos.y) <= 3) {
-                    //if pick a empty area.
-                    //let pioneer move to
-                    GameMusicPlayMgr.playTapButtonEffect();
-                    const wpos = GameMainHelper.instance.getGameCameraScreenToWorld(v3(pos.x, pos.y, 0));
-                    this._clickOnMap(wpos);
+            Node.EventType.TOUCH_END,
+            (event: EventTouch) => {
+                if (this._touchDown) {
+                    this._touchDown = false;
+                    var pos = event.getLocation();
+                    if (Math.abs(downx - pos.x) <= 3 && Math.abs(downy - pos.y) <= 3) {
+                        //if pick a empty area.
+                        //let pioneer move to
+                        GameMusicPlayMgr.playTapButtonEffect();
+                        const wpos = GameMainHelper.instance.getGameCameraScreenToWorld(v3(pos.x, pos.y, 0));
+                        this._clickOnMap(wpos);
+                    }
                 }
             },
             this
         );
 
         this.node.on(
-            Node.EventType.MOUSE_LEAVE,
-            (event: EventMouse) => {
-                this._mouseDown = false;
+            Node.EventType.TOUCH_CANCEL,
+            (event: EventTouch) => {
+                this._touchDown = false;
             },
             this
         );
 
-        this.node.on(
-            Node.EventType.MOUSE_WHEEL,
-            (event: EventMouse) => {
-                let zoom = GameMainHelper.instance.gameCameraZoom;
-                if (event.getScrollY() > 0) {
-                    zoom -= 0.05;
-                } else {
-                    zoom += 0.05;
-                }
-                GameMainHelper.instance.changeGameCameraZoom(zoom);
-                if (Config.canSaveLocalData) {
-                    localStorage.setItem("local_outer_map_scale", zoom.toString());
-                }
-                this._fixCameraPos(GameMainHelper.instance.gameCameraPosition.clone());
-            },
-            this
-        );
-
-        this.node.on(
-            Node.EventType.MOUSE_MOVE,
-            (event: EventMouse) => {
-                GameMainHelper.instance.changeCursor(ECursorType.Common);
-                if (this._mouseDown) {
-                    let pos = GameMainHelper.instance.gameCameraPosition.clone().add(new Vec3(-event.movementX, event.movementY, 0));
-                    this._fixCameraPos(pos);
-                } else {
+        if (isDesktop) {
+            this.node.on(
+                Node.EventType.MOUSE_WHEEL,
+                (event: EventMouse) => {
+                    let zoom = GameMainHelper.instance.gameCameraZoom;
+                    if (event.getScrollY() > 0) {
+                        zoom -= 0.05;
+                    } else {
+                        zoom += 0.05;
+                    }
+                    GameMainHelper.instance.changeGameCameraZoom(zoom);
+                    this._fixCameraPos(GameMainHelper.instance.gameCameraPosition.clone());
+                },
+                this
+            );
+            this.node.on(
+                Node.EventType.MOUSE_MOVE,
+                (event: EventMouse) => {
+                    if (this._touchDown) {
+                        return;
+                    }
                     if (GameMainHelper.instance.isTiledMapHelperInited) {
                         let pos = event.getLocation();
                         let wpos = GameMainHelper.instance.getGameCameraScreenToWorld(v3(pos.x, pos.y, 0));
@@ -236,23 +237,7 @@ export class OuterTiledMapActionController extends ViewController {
                                 const stayBuilding = DataMgr.s.mapBuilding.getShowBuildingByMapPos(v2(tp.x, tp.y));
 
                                 if (stayBuilding != null && stayBuilding.show) {
-                                    // if (stayBuilding.type == MapBuildingType.city && stayBuilding.faction != MapMemberFactionType.enemy) {
-                                    //     const centerPos = stayBuilding.stayMapPositions[3];
-                                    //     const visionPositions = [];
-                                    //     let radialRange = DataMgr.s.userInfo.data.cityRadialRange;
-                                    //     GameMgr.getAfterExtraEffectPropertyByBuilding(
-                                    //         InnerBuildingType.MainCity,
-                                    //         GameExtraEffectType.CITY_RADIAL_RANGE,
-                                    //         radialRange
-                                    //     );
-                                    //     const extAround = GameMainHelper.instance.tiledMapGetExtAround(centerPos, radialRange - 1);
-                                    //     for (const temple of extAround) {
-                                    //         visionPositions.push(v2(temple.x, temple.y));
-                                    //     }
-                                    //     this._mapCursorView.show(stayBuilding.stayMapPositions, Color.WHITE, visionPositions, Color.BLUE);
-                                    // } else {
                                     this._mapCursorView.show(stayBuilding.stayMapPositions, Color.WHITE);
-                                    // }
                                     GameMainHelper.instance.changeCursor(ECursorType.Action);
                                 } else {
                                     const isBlock = GameMainHelper.instance.tiledMapIsBlock(v2(tp.x, tp.y));
@@ -290,9 +275,6 @@ export class OuterTiledMapActionController extends ViewController {
                                 }
                                 this._shadowCursorView.hide();
                             } else {
-                                // this._mapCursorView.hide();
-                                // GameMainHelper.instance.changeCursor(ECursorType.Error);
-                                // show white
                                 this._mapCursorView.hide();
                                 this._shadowCursorView.show([v2(tp.x, tp.y)], Color.WHITE);
                             }
@@ -303,6 +285,40 @@ export class OuterTiledMapActionController extends ViewController {
                     } else {
                         this._mapCursorView.hide();
                         this._shadowCursorView.hide();
+                    }
+                },
+                this
+            );
+        }
+        this.node.on(
+            Node.EventType.TOUCH_MOVE,
+            (event: EventTouch) => {
+                if (event.getTouches().length >= 2) {
+                    let zoom = GameMainHelper.instance.gameCameraZoom;
+                    const touches = event.getTouches();
+                    const touch1 = touches[0].getLocation();
+                    const touch2 = touches[1].getLocation();
+                    const currentDistance = touch1.subtract(touch2).length();
+                    if (pinchingDistance == null) {
+                    } else {
+                        const scaleFactor = pinchingDistance / currentDistance;
+                        zoom *= scaleFactor;
+                        GameMainHelper.instance.changeGameCameraZoom(zoom);
+                        this._fixCameraPos(GameMainHelper.instance.gameCameraPosition.clone());
+                    }
+                    pinchingDistance = currentDistance;
+                } else {
+                    if (this._touchDown) {
+                        let pos = GameMainHelper.instance.gameCameraPosition
+                            .clone()
+                            .add(
+                                new Vec3(
+                                    -event.getDeltaX() * GameMainHelper.instance.gameCameraZoom,
+                                    -event.getDeltaY() * GameMainHelper.instance.gameCameraZoom,
+                                    0
+                                )
+                            );
+                        this._fixCameraPos(pos);
                     }
                 }
             },
@@ -669,8 +685,8 @@ export class OuterTiledMapActionController extends ViewController {
             targetWorldPos,
             step,
             async (actionType: MapInteractType, targetName: string, costEnergy: number) => {
-                this["_actionViewActioned"] = true;
-                this._mouseDown = false;
+                this["_actionViewActioned"] = false;
+                this._touchDown = false;
                 this._mapActionCursorView.hide();
                 this._shadowActionCursorView.hide();
                 if (actionType == MapInteractType.EnterInner) {

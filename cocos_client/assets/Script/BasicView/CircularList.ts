@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Button, Label, tween, Vec3, Mask, Gradient, Graphics, Color, color, UITransform, instantiate, v3, UIOpacity } from "cc";
+import { _decorator, Component, Node, Button, Label, tween, Vec3, Mask, Gradient, Graphics, Color, color, UITransform, instantiate, v3, UIOpacity, CCInteger } from "cc";
 const { ccclass, property } = _decorator;
 
 export interface CircularListDelegate {
@@ -80,16 +80,16 @@ export class CircularList extends Component {
         return this._canCircular;
     }
 
-    @property([Node])
+    @property(Node)
     private itemNode: Node = null;
 
-    @property(Number)
+    @property(CCInteger)
     private visibleItemCount: number = 3;
 
-    @property(Number)
+    @property(CCInteger)
     private itemWidht: number = 232;
 
-    @property(Number)
+    @property(CCInteger)
     private itemGap: number = 100;
 
     private _allItemNum: number = 0;

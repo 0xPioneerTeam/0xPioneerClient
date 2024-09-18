@@ -1,14 +1,14 @@
-import { _decorator, Component, EventHandler, EventTouch, Node, NodeEventType, tween, v3, Vec3 } from "cc";
+import { _decorator, CCInteger, Component, EventHandler, EventTouch, Node, NodeEventType, tween, v3, Vec3 } from "cc";
 
 const { ccclass, property } = _decorator;
 
 @ccclass
 export default class LongPressTriggerContinuouslyButton extends Component {
 
-    @property(Number)
+    @property(CCInteger)
     private triggerTime: number = 1;
     
-    @property(Number)
+    @property(CCInteger)
     private holdTriggerInterval: number = 0.1;
 
     @property(EventHandler)
