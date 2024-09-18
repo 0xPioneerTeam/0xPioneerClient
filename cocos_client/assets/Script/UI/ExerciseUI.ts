@@ -267,17 +267,17 @@ export class ExerciseUI extends ViewController {
         }
         const exerciseLimit = this._maxExerciseNum;
         const troopLimit = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop);
-
         let curAllOwnedNum = 0;
         let curOtherGenerateNum = 0;
         for (let i = 0; i < this._exerciseData.length; i++) {
             curAllOwnedNum += this._exerciseData[i].ownedNum;
             if (i == index) {
+
             } else {
                 curOtherGenerateNum += this._exerciseData[i].exerciseNum;
             }
         }
-        const limitNum = Math.max(0, Math.min(exerciseLimit, troopLimit) - curOtherGenerateNum - curAllOwnedNum);
+        const limitNum = Math.max(0, Math.min(exerciseLimit - curAllOwnedNum, troopLimit - curOtherGenerateNum));
         return limitNum;
     }
 
@@ -340,6 +340,11 @@ export class ExerciseUI extends ViewController {
         const progress = item.getChildByPath("count/ProgressBar").getComponent(ProgressBar);
 
         const exerciseMaxNum = this._getCurrentExerciseMaxNum(index);
+        if (exerciseMaxNum <= 0) {
+            slider.progress = 0;
+            progress.progress = 0;
+            return;
+        }
         const currentExerciseNum: number = Math.floor(slider.progress * exerciseMaxNum);
         if (currentExerciseNum != this._exerciseData[index].exerciseNum) {
             this._exerciseData[index].exerciseNum = currentExerciseNum;

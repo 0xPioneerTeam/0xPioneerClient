@@ -27,6 +27,7 @@ export default class ButtonExtension extends Component {
             }
             this.__cooldowning = false;
             this.__finishInteractable = false;
+            this.node.off("click", this._onClickWithDelay, this);
             this.node.on("click", this._onClickWithDelay, this);
         };
         Button.prototype.onDisable = function () {
@@ -36,7 +37,9 @@ export default class ButtonExtension extends Component {
             this.node.off("click", this._onClickWithDelay, this);
         };
         Button.prototype["_onClickWithDelay"] = function (event) {
+            console.log("exce b: " + this.interactable);
             if (this.interactable) {
+                console.log("exce button delaybegin:", this.node.name);
                 this.interactable = false;
                 this.__finishInteractable = true;
                 if (originalOnClick) {
@@ -44,10 +47,11 @@ export default class ButtonExtension extends Component {
                 }
                 this.__cooldowning = true;
                 // use settimeout, because of onDisable schiedule will not action
-                setTimeout(()=> {
-                    this.interactable = this.__finishInteractable;
+                this.scheduleOnce(() => {
                     this.__cooldowning = false;
-                }, self.disableDuration * 1000);
+                    this.interactable = this.__finishInteractable;
+                    console.log("exce button delayend:", this.node.name + ", en: " + this.__finishInteractable);
+                }, self.disableDuration);
             }
         };
         // listen interactable change
@@ -60,8 +64,10 @@ export default class ButtonExtension extends Component {
                 // If interactable is changed during cooldown, save the new value to be restored after the cooldown ends.
                 if (this.__cooldowning) {
                     this.__finishInteractable = value;
+                    console.log("exce button set:" + value);
+                } else {
+                    originalDescriptor.set.call(this, value);
                 }
-                originalDescriptor.set.call(this, value);
             },
             configurable: true,
         });

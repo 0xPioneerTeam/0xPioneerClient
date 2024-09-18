@@ -34,25 +34,6 @@ export default class PioneerMgr {
             DataMgr.s.pioneer.didMoveStep(uniqueId);
         }
     }
-    public showFakeWormholeFight(attackerPlayerName: string) {
-        const wormholePioneer = DataMgr.s.pioneer.getById("wormhole_token");
-        const mainCity = DataMgr.s.mapBuilding.getBuildingById("building_1");
-
-        if (wormholePioneer == null || mainCity == null) {
-            return;
-        }
-        const wormholePioneerConfig = PioneerConfig.getById("wormhole_token");
-        wormholePioneer.stayPos = wormholePioneerConfig != null ? v2(wormholePioneerConfig.pos[0].x, wormholePioneerConfig.pos[0].y) : v2(28, 17);
-        wormholePioneer.name = attackerPlayerName;
-        wormholePioneer.show = true;
-        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_CHANGED, { uniqueId: wormholePioneer.id, show: wormholePioneer.show });
-
-        const moveData = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(wormholePioneer.stayPos, mainCity.stayMapPositions[0]);
-        if (!moveData.canMove) {
-            return;
-        }
-        DataMgr.s.pioneer.beginMove(wormholePioneer.id, moveData.path);
-    }
 
     public fight(attacker: MapPioneerObject, pioneerDefender: MapPioneerObject) {
         const isAttackBuilding: boolean = false;

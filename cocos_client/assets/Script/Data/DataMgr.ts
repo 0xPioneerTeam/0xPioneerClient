@@ -523,12 +523,15 @@ export class DataMgr {
                             if (!PioneerMgr.checkWormholeBackPioneer(newData.uniqueId)) {
                                 // local play return
                                 const targetPos = GameMgr.getMainCityGatePos();
-                                if (targetPos != null) {
+                                const moveData = GameMgr.findTargetLeastMovePath(oldData.stayPos, targetPos, [], []);
+                                if (moveData.status !== 1 || moveData.path.length <= 0) {
+                                    
+                                } else {
                                     (newData as MapPlayerPioneerObject).needReturn = true;
                                     newData.stayPos = oldData.stayPos;
                                     DataMgr.s.pioneer.beginMove(
                                         newData.uniqueId,
-                                        GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(oldData.stayPos, targetPos).path
+                                        moveData.path
                                     );
                                 }
                             }

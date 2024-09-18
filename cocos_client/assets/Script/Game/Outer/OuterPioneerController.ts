@@ -1,4 +1,4 @@
-import { _decorator, Color, dynamicAtlasManager, instantiate, Node, Prefab, sp, v2, v3, Vec2, Vec3 } from "cc";
+import { _decorator, Color, dynamicAtlasManager, instantiate, Node, Prefab, sp, UIOpacity, v2, v3, Vec2, Vec3 } from "cc";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import UIPanelManger from "../../Basic/UIPanelMgr";
 import ViewController from "../../BasicView/ViewController";
@@ -28,6 +28,7 @@ import { OuterFightView } from "./View/OuterFightView";
 import { OuterMapCursorView } from "./View/OuterMapCursorView";
 import { OuterOtherPioneerView } from "./View/OuterOtherPioneerView";
 import { OuterRebonAndDestroyView } from "./View/OuterRebonAndDestroyView";
+import { OuterShadowController } from "./OuterShadowController";
 
 const { ccclass, property } = _decorator;
 
@@ -596,6 +597,11 @@ export class OuterPioneerController extends ViewController {
         const { fightDatas, isWin, attackerData, defenderData } = data;
         const attackerView = this._pioneerMap.get(attackerData.uniqueId);
         if (attackerView == null) {
+            return;
+        }
+        const tp = GameMainHelper.instance.tiledMapGetTiledPosByWorldPos(attackerView.worldPosition);
+        const shadowController = this.node.getComponent(OuterShadowController);
+        if (shadowController.tiledMapIsAllBlackShadow(tp.x, tp.y)) {
             return;
         }
         GameMusicPlayMgr.playBeginFightEffect();

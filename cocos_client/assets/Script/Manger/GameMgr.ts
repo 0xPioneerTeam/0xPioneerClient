@@ -15,7 +15,15 @@ import { RookieStep } from "../Const/RookieDefine";
 import { ClvlMgr, LanMgr } from "../Utils/Global";
 import { CLvlEffectType } from "../Const/Lvlup";
 import ConfigConfig from "../Config/ConfigConfig";
-import { BuyEnergyCoefficientParam, BuyEnergyLimitParam, BuyEnergyPriceParam, BuyEnergyThresParam, ConfigType, InitMaxTroopNumParam, OneStepCostEnergyParam } from "../Const/Config";
+import {
+    BuyEnergyCoefficientParam,
+    BuyEnergyLimitParam,
+    BuyEnergyPriceParam,
+    BuyEnergyThresParam,
+    ConfigType,
+    InitMaxTroopNumParam,
+    OneStepCostEnergyParam,
+} from "../Const/Config";
 import ItemConfig from "../Config/ItemConfig";
 import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import { HUDName } from "../Const/ConstUIDefine";
@@ -35,7 +43,6 @@ export default class GameMgr {
     public enterGameSence: boolean = false;
 
     public lastEventSelectFightIdx: number = -1;
-
 
     public canAddTroopNum(): number {
         return this.getMaxTroopNum() - this.getAllTroopNum();
@@ -283,10 +290,22 @@ export default class GameMgr {
         const centerPos = mainCity.stayMapPositions[3];
         return v2(centerPos.x, centerPos.y + 2);
     }
-    public findTargetLeastMovePath(beginPos: Vec2, targetPos: Vec2, sparePositions: Vec2[], stayPostions: Vec2[]): TilePos[] {
-        let movePaths: TilePos[] = [];
+    /**
+     * findTargetLeastMovePath
+     * @param beginPos
+     * @param targetPos
+     * @param sparePositions
+     * @param stayPostions
+     * @returns status: 1-canMove -1-param error -2-too long
+     */
+    public findTargetLeastMovePath(beginPos: Vec2, targetPos: Vec2, sparePositions: Vec2[], stayPostions: Vec2[]): { status: number; path: TilePos[] } {
+        let movePath: TilePos[] = [];
         if (beginPos == null || targetPos == null) {
-            return movePaths;
+            return { status: -1, path: movePath };
+        }
+        const moveGap = Math.abs(beginPos.x - targetPos.x) + Math.abs(beginPos.y - targetPos.y);
+        if (moveGap >= 200) {
+            return { status: -2, path: movePath };
         }
         if (sparePositions.length > 0) {
             // building: find least move path
@@ -302,16 +321,16 @@ export default class GameMgr {
                 }
             }
             if (minMovePath != null) {
-                movePaths = minMovePath;
+                movePath = minMovePath;
             }
         } else {
             // pioneer or land
             const toPosMoveData = GameMainHelper.instance.tiledMapGetTiledMovePathByTiledPos(beginPos, targetPos, stayPostions);
             if (toPosMoveData.canMove) {
-                movePaths = toPosMoveData.path;
+                movePath = toPosMoveData.path;
             }
         }
-        return movePaths;
+        return { status: 1, path: movePath };
     }
 
     //--------------------------- effect
@@ -577,8 +596,6 @@ export default class GameMgr {
         }
         return true;
     }
-
-
 
     public constructor() {
         this._showRedPoint = true;

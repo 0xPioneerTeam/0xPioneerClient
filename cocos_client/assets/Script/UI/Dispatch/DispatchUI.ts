@@ -199,26 +199,22 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
                 targetStayPostions = [this._interactPioneer.stayPos];
             }
         }
-        const moveGap = Math.abs(beginPos.x - this._targetPos.x) + Math.abs(beginPos.y - this._targetPos.y);
-        if (moveGap >= 200) {
-            itemCostView.getChildByPath("Content/Value").getComponent(Label).string = ">99";
-            itemCostView.getChildByPath("CostTime/Value").getComponent(Label).string = "--:--:--";
-        } else {
-            const movePath: TilePos[] = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
-            const trueCostEnergy: number =
+        let costEnergy: number = 0;
+        const moveData = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
+        if (moveData.status === 1) {
+            costEnergy =
                 this._interactType == MapInteractType.MainBack
                     ? 0
-                    : GameMgr.getMapActionCostEnergy(movePath.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
-            if (trueCostEnergy > 99) {
-                itemCostView.getChildByPath("Content/Value").getComponent(Label).string = ">99";
-                itemCostView.getChildByPath("CostTime/Value").getComponent(Label).string = "--:--:--";
-            } else {
-                itemCostView.getChildByPath("Content/Value").getComponent(Label).string = trueCostEnergy + "";
-                const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / player.speed;
-                itemCostView.getChildByPath("CostTime/Value").getComponent(Label).string = CommonTools.formatSeconds(
-                    perStepTime * movePath.length * (this._isReturn ? 1 : 1)
-                );
-            }
+                    : GameMgr.getMapActionCostEnergy(moveData.path.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
+
+            itemCostView.getChildByPath("Content/Value").getComponent(Label).string = costEnergy + "";
+            const perStepTime: number = (GameMainHelper.instance.tiledMapTilewidth * 0.5) / player.speed;
+            itemCostView.getChildByPath("CostTime/Value").getComponent(Label).string = CommonTools.formatSeconds(
+                perStepTime * moveData.path.length * (this._isReturn ? 1 : 1)
+            );
+        } else {
+            itemCostView.getChildByPath("Content/Value").getComponent(Label).string = ">99";
+            itemCostView.getChildByPath("CostTime/Value").getComponent(Label).string = "--:--:--";
         }
     }
 
@@ -254,17 +250,16 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
                 targetStayPostions = [this._interactPioneer.stayPos];
             }
         }
-        const moveGap = Math.abs(beginPos.x - this._targetPos.x) + Math.abs(beginPos.y - this._targetPos.y);
-        if (moveGap >= 200) {
-            // donnot use a* to calculate move path
+        const moveData = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
+        if (moveData.status !== 1) {
             NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Energy");
             return;
         }
-        const movePath: TilePos[] = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
         const trueCostEnergy: number =
             this._interactType == MapInteractType.MainBack
                 ? 0
-                : GameMgr.getMapActionCostEnergy(movePath.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
+                : GameMgr.getMapActionCostEnergy(moveData.path.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
+        
         if (player.energyMax < trueCostEnergy) {
             NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Energy");
             return;
@@ -310,7 +305,7 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
 
         UIPanelManger.inst.popPanel(this.node);
         if (this._actionCallback != null) {
-            this._actionCallback(true, player.uniqueId, movePath, this._isReturn);
+            this._actionCallback(true, player.uniqueId, moveData.path, this._isReturn);
         }
     }
 }
