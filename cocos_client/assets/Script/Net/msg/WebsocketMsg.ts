@@ -900,6 +900,11 @@ export namespace s2c_user {
         data: { [key: string]: share.Isettlement_data };
     }
 
+    export interface Iborad_cast_msg {
+        msg: string;
+        type: string;
+    }
+
     export interface Iget_new_battle_report_res {
         res: number;
         data: share.Inew_battle_report_data[];

@@ -217,7 +217,7 @@ export class CircularList extends Component {
             console.error("null deletage");
             return;
         }
-        let beginIndex: number = this._currentIndex - 1;
+        let beginIndex: number = this._canCircular ? this._currentIndex - 1 : this._currentIndex;
         if (beginIndex < 0) {
             beginIndex += this._allItemNum;
         }

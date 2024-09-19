@@ -284,4 +284,5 @@ export enum protobuf_s2c {
     // ------ test ------
     reborn_all_res = 60000,
     reset_data_res = 60001,
+    borad_cast_msg = 60002,
 }

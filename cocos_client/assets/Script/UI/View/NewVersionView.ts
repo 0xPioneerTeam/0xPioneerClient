@@ -9,14 +9,13 @@ import { LanMgr } from "../../Utils/Global";
 
 const { ccclass, property } = _decorator;
 
-@ccclass("NetAlterView")
-export class NetAlterView extends ViewController {
+@ccclass("NewVersionView")
+export class NewVersionView extends ViewController {
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
         // this.node.getChildByPath("Content/Title").getComponent(Label).string = LanMgr.getLanById("lanreplace200005");
-        // this.node.getChildByPath("Content/Tip").getComponent(Label).string = LanMgr.getLanById("lanreplace200006");
-        // this.node.getChildByPath("Content/ReconnectButton/name").getComponent(Label).string = LanMgr.getLanById("lanreplace200007");
+        // this.node.getChildByPath("Content/Tip").getComponent(Label).string = LanMgr.getLanById("lanreplace200041");
         // this.node.getChildByPath("Content/ReloadButton/name").getComponent(Label).string = LanMgr.getLanById("lanreplace200008");
     }
 
@@ -36,27 +35,27 @@ export class NetAlterView extends ViewController {
     }
 
     //-------------------------------- action
-    private async onTapReconnect() {
-        GameMusicPlayMgr.playTapButtonEffect();
-        await this.playExitAnimation();
-        UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.ROOKIE);
+    // private async onTapReconnect() {
+    //     GameMusicPlayMgr.playTapButtonEffect();
+    //     await this.playExitAnimation();
+    //     UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.ROOKIE);
 
-        DataMgr.r.reconnects++;
-        CLog.info(`Main/reconnect, count: ${DataMgr.r.reconnects}`);
-        let r = await NetworkMgr.websocketConnect();
-        if (r) {
-            CLog.info(`Main/reconnect success [${DataMgr.r.reconnects}]`);
-            if (DataMgr.r.wallet.addr) {
-                CLog.info(`Main/reconnect: websocket login starting`);
-                NetworkMgr.websocketMsg.login(DataMgr.r.loginInfo);
-            }
-        }
-    }
+    //     DataMgr.r.reconnects++;
+    //     CLog.info(`Main/reconnect, count: ${DataMgr.r.reconnects}`);
+    //     let r = await NetworkMgr.websocketConnect();
+    //     if (r) {
+    //         CLog.info(`Main/reconnect success [${DataMgr.r.reconnects}]`);
+    //         if (DataMgr.r.wallet.addr) {
+    //             CLog.info(`Main/reconnect: websocket login starting`);
+    //             NetworkMgr.websocketMsg.login(DataMgr.r.loginInfo);
+    //         }
+    //     }
+    // }
 
     private async onTapReload() {
         GameMusicPlayMgr.playTapButtonEffect();
         window.location.reload();
         await this.playExitAnimation();
-        UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.ROOKIE);
+        UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.HUD);
     }
 }

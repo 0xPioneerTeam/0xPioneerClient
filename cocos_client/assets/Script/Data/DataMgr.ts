@@ -12,8 +12,8 @@ import { GameMgr, LanMgr, PioneerMgr, UserInfoMgr } from "../Utils/Global";
 import NetGlobalData from "./Save/Data/NetGlobalData";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import ArtifactData from "../Model/ArtifactData";
-import UIPanelManger from "../Basic/UIPanelMgr";
-import { UIName } from "../Const/ConstUIDefine";
+import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
+import { HUDName, UIName } from "../Const/ConstUIDefine";
 import { TreasureGettedUI } from "../UI/TreasureGettedUI";
 import CommonTools from "../Tool/CommonTools";
 import ItemConfig from "../Config/ItemConfig";
@@ -23,7 +23,7 @@ import GameMainHelper from "../Game/Helper/GameMainHelper";
 import TalkConfig from "../Config/TalkConfig";
 import { DialogueUI } from "../UI/Outer/DialogueUI";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
-import { ResourceCorrespondingItem } from "../Const/ConstDefine";
+import { GAME_VERSION, ResourceCorrespondingItem } from "../Const/ConstDefine";
 import { RookieResourceAnim, RookieResourceAnimStruct, RookieStep } from "../Const/RookieDefine";
 import { ArtifactInfoUI } from "../UI/ArtifactInfoUI";
 import { NewEventUI } from "../UI/Event/NewEventUI";
@@ -1101,4 +1101,21 @@ export class DataMgr {
         DataMgr.s.settlement.refreshData(p.data);
         NotificationMgr.triggerEvent(NotificationName.SETTLEMENT_DATA_CHANGE);
     };
+
+    //------------------------------------- board cast 
+    public static borad_cast_msg = (e: any) => {
+        console.log('exce e: ', e);
+        const p: s2c_user.Iborad_cast_msg = e.data;
+        if (p.msg === "web_update") {
+            console.log("exce type: " + p.type);
+            const boardData: any = p.type.length > 0 ? JSON.parse(p.type) : null;
+            console.log("exce data:", boardData);
+            if (boardData != null && boardData.target_version != null) {
+                const newVersion = boardData.target_version;
+                if (newVersion > GAME_VERSION) {
+                    UIPanelManger.inst.pushPanel(HUDName.NewVersionView, UIPanelLayerType.HUD);
+                }
+            }
+        }
+    }
 }

@@ -545,6 +545,10 @@ message reborn_all_res {
 message reset_data_res {
     required int32 res = 1;
 }
+message borad_cast_msg {
+    required string msg = 1;
+    required string type = 2;
+}
 
 
 

@@ -37,7 +37,6 @@ export default class ButtonExtension extends Component {
             this.node.off("click", this._onClickWithDelay, this);
         };
         Button.prototype["_onClickWithDelay"] = function (event) {
-            console.log("exce b: " + this.interactable);
             if (this.interactable) {
                 console.log("exce button delaybegin:", this.node.name);
                 this.interactable = false;
@@ -64,7 +63,7 @@ export default class ButtonExtension extends Component {
                 // If interactable is changed during cooldown, save the new value to be restored after the cooldown ends.
                 if (this.__cooldowning) {
                     this.__finishInteractable = value;
-                    console.log("exce button set:" + value);
+                    console.log("exce button __finishInteractable:" + value);
                 } else {
                     originalDescriptor.set.call(this, value);
                 }

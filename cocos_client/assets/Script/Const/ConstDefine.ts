@@ -5,6 +5,7 @@ export const GAME_JUMP_SWITCH_IS_OPEN = true;
 export const GAME_SKIP_ROOKIE = false;
 export const GAME_ENV_IS_DEBUG = true;
 export const PioneerGameTest = false;
+export const GAME_VERSION = 1;
 
 export const TILEMAP_SIZE = 16; //tileMap layer size 16*16
 
