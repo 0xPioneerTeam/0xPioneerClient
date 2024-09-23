@@ -35,6 +35,8 @@ export class PlayerListUI extends Component {
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._refreshPlayerList, this);
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_INTERACT_SELECT_CHANGED, this._refreshPlayerList, this);
+
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_FIGHT_BEGIN, this._refreshPlayerList, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_FIGHT_END, this._refreshPlayerList, this);
@@ -52,6 +54,8 @@ export class PlayerListUI extends Component {
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._refreshPlayerList, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._refreshPlayerList, this);
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_INTERACT_SELECT_CHANGED, this._refreshPlayerList, this);
+
 
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_FIGHT_BEGIN, this._refreshPlayerList, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_FIGHT_END, this._refreshPlayerList, this);
@@ -101,14 +105,17 @@ export class PlayerListUI extends Component {
         const index = parseInt(customEventData);
         if (GameMainHelper.instance.isGameShowOuter) {
             if (index < this._pioneers.length) {
-                const currentMapPos = this._pioneers[index].stayPos;
+                const currentPioneer = this._pioneers[index];
+                if (currentPioneer.uniqueId == DataMgr.s.pioneer.getInteractSelectUnqueId()) {
+                    DataMgr.s.pioneer.clearInteractSelected();
+                    return;
+                }
+                const currentMapPos = currentPioneer.stayPos;
                 if (currentMapPos != null) {
                     const currentWorldPos = GameMainHelper.instance.tiledMapGetPosWorld(currentMapPos.x, currentMapPos.y);
                     GameMainHelper.instance.changeGameCameraWorldPosition(currentWorldPos, true);
                 }
-                DataMgr.s.pioneer.changeCurrentAction(this._pioneers[index].uniqueId);
-                this._refreshPlayerList();
-                NotificationMgr.triggerEvent(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE);
+                DataMgr.s.pioneer.changeInteractSelected(currentPioneer.uniqueId);
             }
         }
     }

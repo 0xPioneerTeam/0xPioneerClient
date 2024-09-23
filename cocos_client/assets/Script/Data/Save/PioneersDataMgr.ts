@@ -12,6 +12,7 @@ export class PioneersDataMgr {
     private _pioneers: MapPioneerObject[] = [];
     private _currentActionUniqueId: string = null;
     private _selfPioneerUnqueIds: string[] = [];
+    private _interactSelectedUniqueId: string = null;
     public constructor() {}
     //-------------------------------- public
     public loadObj() {
@@ -61,6 +62,9 @@ export class PioneersDataMgr {
     public getCurrentPlayer(): MapPlayerPioneerObject | undefined {
         return this._pioneers.find((p) => p.uniqueId === this._currentActionUniqueId && p.type === MapPioneerType.player) as MapPlayerPioneerObject;
     }
+    public getInteractSelectUnqueId(): string | null {
+        return this._interactSelectedUniqueId;
+    }
     //-------------- change
     public createFakeData(uniqueId: string, pos: Vec2) {
         const pioneerId: string = uniqueId.split("|")[1];
@@ -100,7 +104,7 @@ export class PioneersDataMgr {
         };
         return obj;
     }
-    
+
     public createNPCData(uniqueId: string, pos: Vec2) {
         const pioneerId: string = uniqueId.split("|")[1];
         const animType = PioneerConfig.getById(pioneerId)?.animType;
@@ -139,7 +143,6 @@ export class PioneersDataMgr {
         };
         return obj;
     }
-
 
     public addData(data: share.Ipioneer_data, isSelfPioneer: boolean = false) {
         const isExit = this._pioneers.findIndex((item) => item.uniqueId == data.uniqueId) != -1;
@@ -188,11 +191,22 @@ export class PioneersDataMgr {
     public changeCurrentAction(uniqueId: string) {
         this._currentActionUniqueId = uniqueId;
     }
+    public changeInteractSelected(uniqueId: string) {
+        this._interactSelectedUniqueId = uniqueId;
+        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_INTERACT_SELECT_CHANGED);
+    }
+    public clearInteractSelected() {
+        this._interactSelectedUniqueId = null;
+        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_INTERACT_SELECT_CHANGED);
+    }
     public changeActionType(uniqueId: string, type: MapPioneerActionType) {
         const findPioneer = this.getById(uniqueId);
         if (findPioneer == undefined) return;
         findPioneer.actionType = type;
         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: uniqueId });
+        if (findPioneer.actionType === MapPioneerActionType.inCity && findPioneer.uniqueId === this._interactSelectedUniqueId) {
+            this.clearInteractSelected();
+        }
     }
     // move
     public beginMove(uniqueId: string, movePaths: TilePos[], forceShowMovePath: boolean = false) {
@@ -255,5 +269,12 @@ export class PioneersDataMgr {
         for (const key in NetGlobalData.mapBuildings.pioneers) {
             this._pioneers.push(PioneerDefine.convertNetDataToObject(NetGlobalData.mapBuildings.pioneers[key]));
         }
+
+        NotificationMgr.addListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onGameInnerAndOuterChanged, this);
+    }
+
+    //---------------------------- notifiy
+    private _onGameInnerAndOuterChanged() {
+        this.clearInteractSelected();
     }
 }

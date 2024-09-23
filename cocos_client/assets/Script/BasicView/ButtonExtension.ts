@@ -25,9 +25,12 @@ export default class ButtonExtension extends Component {
             if (originalOnEnable) {
                 originalOnEnable.call(this);
             }
-            this.__cooldowning = false;
-            this.__finishInteractable = false;
-            this.node.off("click", this._onClickWithDelay, this);
+            if (this.__cooldowning != null && this.__cooldowning == true) {
+                // protect orginal state
+            } else {
+                this.__cooldowning = false;
+                this.__finishInteractable = false;
+            }
             this.node.on("click", this._onClickWithDelay, this);
         };
         Button.prototype.onDisable = function () {
@@ -38,7 +41,6 @@ export default class ButtonExtension extends Component {
         };
         Button.prototype["_onClickWithDelay"] = function (event) {
             if (this.interactable) {
-                console.log("exce button delaybegin:", this.node.name);
                 this.interactable = false;
                 this.__finishInteractable = true;
                 if (originalOnClick) {
@@ -49,7 +51,6 @@ export default class ButtonExtension extends Component {
                 this.scheduleOnce(() => {
                     this.__cooldowning = false;
                     this.interactable = this.__finishInteractable;
-                    console.log("exce button delayend:", this.node.name + ", en: " + this.__finishInteractable);
                 }, self.disableDuration);
             }
         };
@@ -63,7 +64,6 @@ export default class ButtonExtension extends Component {
                 // If interactable is changed during cooldown, save the new value to be restored after the cooldown ends.
                 if (this.__cooldowning) {
                     this.__finishInteractable = value;
-                    console.log("exce button __finishInteractable:" + value);
                 } else {
                     originalDescriptor.set.call(this, value);
                 }

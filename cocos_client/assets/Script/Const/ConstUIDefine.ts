@@ -61,4 +61,5 @@ export enum HUDName {
     Alter = "abresources/prefab/hud/AlterView",
     AlterTip = "abresources/prefab/hud/AlterTipView",
     NewVersionView = "abresources/prefab/hud/NewVersionView",
+    ReplenishTroopsView = "abresources/prefab/hud/ReplenishTroopsView"
 }

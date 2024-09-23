@@ -12,17 +12,17 @@ import NotificationMgr from "../../../Basic/NotificationMgr";
 import { NotificationName } from "../../../Const/Notification";
 import { RookieStep } from "../../../Const/RookieDefine";
 import CommonTools from "../../../Tool/CommonTools";
+import { TilePos } from "../../TiledMap/TileTool";
 const { ccclass, property } = _decorator;
 
 @ccclass("ResOprView")
 export class ResOprView extends Component {
-    private _targetName: string = "";
-
     private _actionItem: Node = null;
     private _actionItemContent: Node = null;
 
-    public interactBuilding: MapBuildingObject;
-    public interactPioneer: MapPioneerObject;
+    private _interactBuilding: MapBuildingObject;
+    private _interactPioneer: MapPioneerObject;
+    private _targetPos: Vec2;
 
     public async show(
         isShadow: boolean,
@@ -30,13 +30,13 @@ export class ResOprView extends Component {
         interactPioneer: MapPioneerObject,
         targetPos: Vec2,
         targetWorldPos: Vec3,
-        step: number,
-        confirmCallback: (actionType: MapInteractType, targetName: string, costEnergy: number) => void
+        confirmCallback: (pioneerUnqueId: string, actionType: MapInteractType, movePath: TilePos[]) => void
     ) {
         this.node.active = true;
         this.node.worldPosition = targetWorldPos;
-        this.interactBuilding = interactBuilding;
-        this.interactPioneer = interactPioneer;
+        this._interactBuilding = interactBuilding;
+        this._interactPioneer = interactPioneer;
+        this._targetPos = targetPos;
 
         const infoView = this.node.getChildByPath("InfoView");
         const actionView = this.node.getChildByPath("ActionView");
@@ -73,8 +73,6 @@ export class ResOprView extends Component {
                 name = LanMgr.getLanById("320001");
             }
         }
-
-        this._targetName = name;
 
         //name
         infoView.getChildByPath("Top/Name").getComponent(Label).string = name;
@@ -233,7 +231,6 @@ export class ResOprView extends Component {
                             }
                         }
                         if (isEmpty) {
-
                         } else {
                             if (DataMgr.s.userInfo.data.wormholeTags.find((item) => item.tpBuildingId == interactBuilding.uniqueId)) {
                                 actionTypes.push(MapInteractType.WmRecall);
@@ -261,6 +258,28 @@ export class ResOprView extends Component {
             }
         }
 
+        let moveData: { status: number; path: TilePos[] } = null;
+        const interactUnqueId = DataMgr.s.pioneer.getInteractSelectUnqueId();
+        if (interactUnqueId != null) {
+            let sparePositions: Vec2[] = [];
+            let targetStayPostions: Vec2[] = [];
+            if (interactBuilding != null) {
+                sparePositions = interactBuilding.stayMapPositions.slice();
+                targetStayPostions = interactBuilding.stayMapPositions.slice();
+                if (interactBuilding.type == MapBuildingType.city && sparePositions.length == 7) {
+                    // center pos cannot use to cal move path
+                    sparePositions.splice(3, 1);
+                }
+            } else if (interactPioneer != null) {
+                if (interactPioneer.type == MapPioneerType.player || interactPioneer.type == MapPioneerType.npc) {
+                    targetStayPostions = [interactPioneer.stayPos];
+                }
+            }
+            const tempPioneer = DataMgr.s.pioneer.getById(interactUnqueId);
+            if (tempPioneer != null) {
+                moveData = GameMgr.findTargetLeastMovePath(tempPioneer.stayPos, targetPos, sparePositions, targetStayPostions);
+            }
+        }
         this._actionItemContent.destroyAllChildren();
         for (const type of actionTypes) {
             const actionItem = instantiate(this._actionItem);
@@ -345,10 +364,24 @@ export class ResOprView extends Component {
                 // title = LanMgr.getLanById("107549");
                 title = "Back";
             }
-            const costEnergy = GameMgr.getMapActionCostEnergy(step, interactBuilding != null ? interactBuilding.uniqueId : null);
+            let costEnergy: number = 0;
+            const costView = actionItem.getChildByPath("CostView");
+            if (interactUnqueId != null) {
+                costView.active = true;
+                if (moveData.status === 1) {
+                    costEnergy =
+                        type == MapInteractType.MainBack
+                            ? 0
+                            : GameMgr.getMapActionCostEnergy(moveData.path.length, interactBuilding != null ? interactBuilding.uniqueId : null);
+                    actionItem.getChildByPath("CostView/CostLabel").getComponent(Label).string = "-" + costEnergy;
+                } else {
+                    actionItem.getChildByPath("CostView/CostLabel").getComponent(Label).string = ">99";
+                }
+            } else {
+                costView.active = false;
+            }
             actionItem.getChildByPath("Title").getComponent(Label).string = title;
-            actionItem.getChildByPath("CostView/CostLabel").getComponent(Label).string = "-" + costEnergy;
-            actionItem.getComponent(Button).clickEvents[0].customEventData = type + "|" + costEnergy;
+            actionItem.getComponent(Button).clickEvents[0].customEventData = type.toString();
             this._actionItemContent.addChild(actionItem);
         }
         this._confirmCallback = confirmCallback;
@@ -382,7 +415,7 @@ export class ResOprView extends Component {
     public get isShow() {
         return this.node.active;
     }
-    private _confirmCallback: (actionType: MapInteractType, targetName: string, costEnergy: number) => void = null;
+    private _confirmCallback: (pioneerUnqueId: string, actionType: MapInteractType, movePath: TilePos[]) => void = null;
     protected onLoad(): void {
         this._actionItemContent = this.node.getChildByPath("ActionView/Action");
         this._actionItem = this._actionItemContent.getChildByPath("Item");
@@ -397,20 +430,34 @@ export class ResOprView extends Component {
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAP_ACTION, this._oRookieTapMapAction, this);
     }
 
-    private onTapAction(event: Event, customEventData: string) {
+    private async onTapAction(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
-        const data = customEventData.split("|");
-        const actionType = parseInt(data[0]);
-        const costEnergy = parseInt(data[1]);
-        if (this._confirmCallback != null) {
-            this._confirmCallback(actionType, this._targetName, costEnergy);
+        const interactType = parseInt(customEventData);
+        let player = null;
+        const interactUniqueId = DataMgr.s.pioneer.getInteractSelectUnqueId();
+        if (interactUniqueId != null) {
+            player = DataMgr.s.pioneer.getById(interactUniqueId);
+        }
+        if (player == null) {
+            this.hide();
+            if (this._confirmCallback != null) {
+                this._confirmCallback(null, interactType, []);
+            }
+            return;
+        }
+        const result = await GameMgr.checkMapCanInteractAndCalulcateMovePath(player, interactType, this._interactBuilding, this._interactPioneer, this._targetPos);
+        if (!result.enable) {
+            return;
         }
         this.hide();
+        if (this._confirmCallback != null) {
+            this._confirmCallback(player.uniqueId ,interactType, result.movePath);
+        }
     }
     private onTapDifficult() {
         GameMusicPlayMgr.playTapButtonEffect();
         if (this._confirmCallback != null) {
-            this._confirmCallback(null, null, null);
+            this._confirmCallback(null, null, []);
         }
         this.hide();
 

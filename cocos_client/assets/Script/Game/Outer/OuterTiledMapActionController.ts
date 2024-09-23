@@ -40,7 +40,7 @@ import { Rect } from "cc";
 import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import { InnerBuildingType, MapBuildingType } from "../../Const/BuildingDefine";
 import { UIName, HUDName } from "../../Const/ConstUIDefine";
-import { MapBuildingMainCityObject, MapBuildingWormholeObject } from "../../Const/MapBuilding";
+import { MapBuildingMainCityObject, MapBuildingObject, MapBuildingWormholeObject } from "../../Const/MapBuilding";
 import PioneerDefine, { MapPioneerActionType, MapPioneerObject, MapPioneerType } from "../../Const/PioneerDefine";
 import { RookieStep } from "../../Const/RookieDefine";
 import NetGlobalData from "../../Data/Save/Data/NetGlobalData";
@@ -154,7 +154,7 @@ export class OuterTiledMapActionController extends ViewController {
 
         this._initTileMap();
 
-        NotificationMgr.addListener(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE, this._onHideActionView, this);
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_INTERACT_SELECT_CHANGED, this._onHideActionView, this);
         NotificationMgr.addListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onHideActionView, this);
     }
     protected viewDidStart(): void {
@@ -360,7 +360,7 @@ export class OuterTiledMapActionController extends ViewController {
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
 
-        NotificationMgr.removeListener(NotificationName.GAME_OUTER_ACTION_ROLE_CHANGE, this._onHideActionView, this);
+        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_INTERACT_SELECT_CHANGED, this._onHideActionView, this);
         NotificationMgr.removeListener(NotificationName.GAME_INNER_AND_OUTER_CHANGED, this._onHideActionView, this);
     }
     //------------------------------------
@@ -673,9 +673,6 @@ export class OuterTiledMapActionController extends ViewController {
             CLog.error("action cann't show");
             return;
         }
-        // fake step
-        let step = 10;
-        const speed = 200;
         // show action panel
         await this._actionView.show(
             isShadow,
@@ -683,12 +680,14 @@ export class OuterTiledMapActionController extends ViewController {
             stayPioneer,
             taregtPos,
             targetWorldPos,
-            step,
-            async (actionType: MapInteractType, targetName: string, costEnergy: number) => {
+            async (pioneerUnqueId: string, actionType: MapInteractType, movePath: TilePos[]) => {
                 this["_actionViewActioned"] = false;
                 this._touchDown = false;
                 this._mapActionCursorView.hide();
                 this._shadowActionCursorView.hide();
+                if (actionType == null) {
+                    return;
+                }
                 if (actionType == MapInteractType.EnterInner) {
                     GameMainHelper.instance.changeInnerAndOuterShow();
                     return;
@@ -718,6 +717,15 @@ export class OuterTiledMapActionController extends ViewController {
                     }
                     return;
                 }
+                if (pioneerUnqueId != null) {
+                    const localReturn = localStorage.getItem("__interactReturn");
+                    const isReturn = localReturn == "false" ? false : true;
+                    this._pioneerInteract(pioneerUnqueId, actionType, movePath, isReturn, stayBuilding, stayPioneer);
+                    this._mapActionCursorView.hide();
+                    this._shadowActionCursorView.hide();
+                    return;
+                }
+                // select patch pioneer
                 const result = await UIPanelManger.inst.pushPanel(UIName.DispatchUI);
                 if (result.success) {
                     result.node
@@ -727,63 +735,10 @@ export class OuterTiledMapActionController extends ViewController {
                             stayBuilding,
                             stayPioneer,
                             taregtPos,
-                            costEnergy,
-                            step,
-                            speed,
                             async (confirmed: boolean, actionPioneerUnqueId: string, movePaths: TilePos[], isReturn: boolean) => {
                                 const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerUnqueId);
                                 if (confirmed && currentActionPioneer != undefined) {
-                                    if (isReturn) {
-                                        PioneerMgr.addActionOverReturnPioneer(currentActionPioneer.uniqueId);
-                                    }
-                                    if (stayBuilding != null) {
-                                        let slow: boolean = false;
-                                        if (actionType == MapInteractType.Collect && stayBuilding.gatherPioneerIds.length > 0) {
-                                            slow = true;
-                                        } else if (actionType == MapInteractType.Event && stayBuilding.eventPioneerIds.length > 0) {
-                                            slow = true;
-                                        }
-                                        if (slow) {
-                                            NotificationMgr.triggerEvent(
-                                                NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP,
-                                                "Your troops arrived late and were already attacked first."
-                                            );
-                                            return;
-                                        }
-                                    }
-                                    let targetType: MapMemberTargetType = null;
-                                    let targetUnqueId: string = null;
-                                    let extra: any = {};
-                                    if (stayBuilding != null) {
-                                        targetType = MapMemberTargetType.building;
-                                        targetUnqueId = stayBuilding.uniqueId;
-                                    } else if (stayPioneer != null) {
-                                        targetType = MapMemberTargetType.pioneer;
-                                        targetUnqueId = stayPioneer.uniqueId;
-                                    }
-
-                                    if (actionType == MapInteractType.WmTeleport) {
-                                        // select teleport target
-                                        const result = await UIPanelManger.inst.pushPanel(UIName.WormholeTpSelectUI);
-                                        if (result.success) {
-                                            result.node.getComponent(WormholeTpSelectUI).configuration((tpBuildingId: string) => {
-                                                extra.tpBuildingId = tpBuildingId;
-                                                this._doInteract(
-                                                    currentActionPioneer.uniqueId,
-                                                    targetType,
-                                                    targetUnqueId,
-                                                    actionType,
-                                                    extra,
-                                                    movePaths,
-                                                    isReturn
-                                                );
-                                            });
-                                        }
-                                        return;
-                                    }
-                                    this._doInteract(currentActionPioneer.uniqueId, targetType, targetUnqueId, actionType, extra, movePaths, isReturn);
-                                } else {
-                                    // outPioneerController.clearPioneerFootStep(currentActionPioneer.id);
+                                    this._pioneerInteract(currentActionPioneer.uniqueId, actionType, movePaths, isReturn, stayBuilding, stayPioneer);
                                 }
                                 this._mapActionCursorView.hide();
                                 this._shadowActionCursorView.hide();
@@ -1094,7 +1049,57 @@ export class OuterTiledMapActionController extends ViewController {
         // }
     }
 
-    private _doInteract(
+    private async _pioneerInteract(
+        interactUnqueId: string,
+        actionType: MapInteractType,
+        movePath: TilePos[],
+        isReturn: boolean,
+        stayBuilding: MapBuildingObject,
+        stayPioneer: MapPioneerObject
+    ) {
+        if (interactUnqueId == null) {
+            return;
+        }
+        if (isReturn) {
+            PioneerMgr.addActionOverReturnPioneer(interactUnqueId);
+        }
+        if (stayBuilding != null) {
+            let slow: boolean = false;
+            if (actionType == MapInteractType.Collect && stayBuilding.gatherPioneerIds.length > 0) {
+                slow = true;
+            } else if (actionType == MapInteractType.Event && stayBuilding.eventPioneerIds.length > 0) {
+                slow = true;
+            }
+            if (slow) {
+                NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Your troops arrived late and were already attacked first.");
+                return;
+            }
+        }
+        let targetType: MapMemberTargetType = null;
+        let targetUnqueId: string = null;
+        let extra: any = {};
+        if (stayBuilding != null) {
+            targetType = MapMemberTargetType.building;
+            targetUnqueId = stayBuilding.uniqueId;
+        } else if (stayPioneer != null) {
+            targetType = MapMemberTargetType.pioneer;
+            targetUnqueId = stayPioneer.uniqueId;
+        }
+
+        if (actionType == MapInteractType.WmTeleport) {
+            // select teleport target
+            const result = await UIPanelManger.inst.pushPanel(UIName.WormholeTpSelectUI);
+            if (result.success) {
+                result.node.getComponent(WormholeTpSelectUI).configuration((tpBuildingId: string) => {
+                    extra.tpBuildingId = tpBuildingId;
+                    this._doInteractAction(interactUnqueId, targetType, targetUnqueId, actionType, extra, movePath, isReturn);
+                });
+            }
+            return;
+        }
+        this._doInteractAction(interactUnqueId, targetType, targetUnqueId, actionType, extra, movePath, isReturn);
+    }
+    private _doInteractAction(
         actionPioneerUnqueId: string,
         targetType: MapMemberTargetType,
         targetId: string,

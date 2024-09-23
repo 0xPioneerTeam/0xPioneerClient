@@ -2,11 +2,11 @@ import { random, sp, v2, Vec2 } from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import { InnerBuildingType, MapBuildingType, UserInnerBuildInfo } from "../Const/BuildingDefine";
-import { GAME_ENV_IS_DEBUG, GameExtraEffectType, MapMemberTargetType, ResourceCorrespondingItem } from "../Const/ConstDefine";
+import { GAME_ENV_IS_DEBUG, GameExtraEffectType, MapInteractType, MapMemberTargetType, ResourceCorrespondingItem } from "../Const/ConstDefine";
 import ItemData from "../Const/Item";
 import { MapBuildingObject } from "../Const/MapBuilding";
 import { NotificationName } from "../Const/Notification";
-import { MapPioneerObject, MapPlayerPioneerObject } from "../Const/PioneerDefine";
+import { MapPioneerActionType, MapPioneerObject, MapPioneerType, MapPlayerPioneerObject } from "../Const/PioneerDefine";
 import { TaskCondition, TaskConditionType, TaskStepObject } from "../Const/TaskDefine";
 import { DataMgr } from "../Data/DataMgr";
 import CommonTools from "../Tool/CommonTools";
@@ -23,6 +23,8 @@ import {
     ConfigType,
     InitMaxTroopNumParam,
     OneStepCostEnergyParam,
+    WormholeMatchConsumeParam,
+    WormholeTeleportConsumeParam,
 } from "../Const/Config";
 import ItemConfig from "../Config/ItemConfig";
 import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
@@ -36,13 +38,14 @@ import { share } from "../Net/msg/WebsocketMsg";
 import TroopsConfig from "../Config/TroopsConfig";
 import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 import PioneerLvlupConfig from "../Config/PioneerLvlupConfig";
+import { ReplenishTroopsView } from "../UI/View/ReplenishTroopsView";
 
 export default class GameMgr {
     public rookieTaskExplainIsShow: boolean = false;
-
     public enterGameSence: boolean = false;
-
     public lastEventSelectFightIdx: number = -1;
+
+    private _dispatchReplenishTroopAfterEnergyUnqueId: string = null;
 
     public canAddTroopNum(): number {
         return this.getMaxTroopNum() - this.getAllTroopNum();
@@ -268,6 +271,99 @@ export default class GameMgr {
         }
         const perStepCostEnergy = (ConfigConfig.getConfig(ConfigType.OneStepCostEnergy) as OneStepCostEnergyParam).cost;
         return perStepCostEnergy * moveStep + buildingCost;
+    }
+
+    public async checkMapCanInteractAndCalulcateMovePath(
+        player: MapPlayerPioneerObject,
+        interactType: MapInteractType,
+        interactBuilding: MapBuildingObject,
+        interactPioneer: MapPioneerObject,
+        targetPos: Vec2
+    ): Promise<{
+        enable: boolean;
+        movePath: TilePos[];
+    }> {
+        this._dispatchReplenishTroopAfterEnergyUnqueId = null;
+
+        if (player.actionType != MapPioneerActionType.inCity && player.actionType != MapPioneerActionType.staying) {
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("203002"));
+            return { enable: false, movePath: [] };
+        }
+        let beginPos: Vec2 = player.stayPos;
+        let sparePositions: Vec2[] = [];
+        let targetStayPostions: Vec2[] = [];
+        if (interactBuilding != null) {
+            sparePositions = interactBuilding.stayMapPositions.slice();
+            targetStayPostions = interactBuilding.stayMapPositions.slice();
+            if (interactBuilding.type == MapBuildingType.city && sparePositions.length == 7) {
+                // center pos cannot use to cal move path
+                sparePositions.splice(3, 1);
+            }
+        } else if (interactPioneer != null) {
+            if (interactPioneer.type == MapPioneerType.player || interactPioneer.type == MapPioneerType.npc) {
+                targetStayPostions = [interactPioneer.stayPos];
+            }
+        }
+        const moveData = this.findTargetLeastMovePath(beginPos, targetPos, sparePositions, targetStayPostions);
+        if (moveData.status !== 1) {
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Energy");
+            return { enable: false, movePath: [] };
+        }
+        const trueCostEnergy: number =
+            interactType == MapInteractType.MainBack
+                ? 0
+                : this.getMapActionCostEnergy(moveData.path.length, interactBuilding != null ? interactBuilding.uniqueId : null);
+
+        if (player.energyMax < trueCostEnergy) {
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Energy");
+            return { enable: false, movePath: [] };
+        }
+        if (player.energy < trueCostEnergy && trueCostEnergy <= player.energyMax) {
+            // replenish energy
+            this.showBuyEnergyTip(player.uniqueId);
+
+            if (interactType != MapInteractType.Collect && interactType != MapInteractType.MainBack && player.hp <= 0) {
+                this._dispatchReplenishTroopAfterEnergyUnqueId = player.uniqueId;
+            }
+
+            return { enable: false, movePath: [] };
+        }
+        if (interactType != MapInteractType.Collect && interactType != MapInteractType.MainBack && player.hp <= 0) {
+            const result = await UIPanelManger.inst.pushPanel(HUDName.ReplenishTroopsView, UIPanelLayerType.HUD);
+            if (result.success) {
+                result.node.getComponent(ReplenishTroopsView).configuration(player.uniqueId);
+            }
+            return { enable: false, movePath: [] };
+        }
+        let times: number = 0;
+        let consumeConfigs: [number, string, number][] = null;
+        if (interactType == MapInteractType.WmMatch) {
+            times = DataMgr.s.userInfo.data.wormholeMatchTimes;
+            consumeConfigs = (ConfigConfig.getConfig(ConfigType.WormholeMatchConsume) as WormholeMatchConsumeParam).consumes;
+        } else if (interactType == MapInteractType.WmTeleport) {
+            times = DataMgr.s.userInfo.data.wormholeTeleportTimes;
+            consumeConfigs = (ConfigConfig.getConfig(ConfigType.WormholeTeleportConsume) as WormholeTeleportConsumeParam).consumes;
+        }
+        if (consumeConfigs != null) {
+            let consume: [number, string, number] = null;
+            for (const element of consumeConfigs) {
+                if (element[0] == times + 1) {
+                    consume = element;
+                    break;
+                }
+            }
+            if (consume == null) {
+                consume = consumeConfigs[consumeConfigs.length - 1];
+            }
+            if (consume != null) {
+                let ownedNum: number = DataMgr.s.item.getObj_item_count(consume[1]);
+                if (ownedNum < consume[2]) {
+                    NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Resouces");
+                    return { enable: false, movePath: [] };
+                }
+            }
+        }
+        return { enable: true, movePath: moveData.path };
     }
 
     //-----------------------------------------------------------------
@@ -603,5 +699,26 @@ export default class GameMgr {
         if (redPointValue != null && redPointValue == "false") {
             this._showRedPoint = false;
         }
+
+        NotificationMgr.addListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._onPioneerEnergyChanged, this);
+    }
+
+    //-------------------------- notify
+    private async _onPioneerEnergyChanged(data: { uniqueId: string }) {
+        if (this._dispatchReplenishTroopAfterEnergyUnqueId != data.uniqueId) {
+            return;
+        }
+        const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
+        if (pioneer == null || pioneer.type != MapPioneerType.player) {
+            return;
+        }
+        if (pioneer.hp > 0) {
+            return;
+        }
+        const result = await UIPanelManger.inst.pushPanel(HUDName.ReplenishTroopsView, UIPanelLayerType.HUD);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(ReplenishTroopsView).configuration(data.uniqueId);
     }
 }

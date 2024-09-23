@@ -27,9 +27,6 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
     private _interactBuilding: MapBuildingObject;
     private _interactPioneer: MapPioneerObject;
     private _targetPos: Vec2;
-    private _tempShowCostEnergy: number = 0;
-    private _step: number;
-    private _moveSpeed: number = 0;
     private _actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, movePath: TilePos[], isReturn: boolean) => void = null;
 
     private _isReturn: boolean = true;
@@ -37,31 +34,23 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
     private _returnTitle: Node = null;
     private _returnSwitchButton: Node = null;
     private _playerShowView: CircularList = null;
-    private _playerContentView: Node = null;
     private _playerLeftSwitchButton: Node = null;
     private _playerRightSwitchButton: Node = null;
     private _playerItem: Node = null;
 
     private _playerShowData: MapPlayerPioneerObject[] = [];
-    private _playerShowItems: Node[] = [];
 
     public configuration(
         interactType: MapInteractType,
         interactBuilding: MapBuildingObject,
         interactPioneer: MapPioneerObject,
         targetPos: Vec2,
-        tempShowCostEnergy: number,
-        step: number,
-        moveSpeed: number,
         actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, movePath: TilePos[], isReturn: boolean) => void
     ) {
         this._interactType = interactType;
         this._interactBuilding = interactBuilding;
         this._interactPioneer = interactPioneer;
         this._targetPos = targetPos;
-        this._tempShowCostEnergy = tempShowCostEnergy;
-        this._step = step;
-        this._moveSpeed = moveSpeed;
         this._actionCallback = actionCallback;
         this._refreshUI();
     }
@@ -218,7 +207,7 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
         }
     }
 
-    public circularListTapItem(index: number): void {
+    public async circularListTapItem(index: number): Promise<void> {
         GameMusicPlayMgr.playTapButtonEffect();
         if (index < 0 || index > this._playerShowData.length - 1) {
             return;
@@ -227,85 +216,13 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
         if (player == undefined) {
             return;
         }
-        if (player.actionType != MapPioneerActionType.inCity && player.actionType != MapPioneerActionType.staying) {
-            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("203002"));
+        const result = await GameMgr.checkMapCanInteractAndCalulcateMovePath(player, this._interactType, this._interactBuilding, this._interactPioneer, this._targetPos);
+        if (!result.enable) {
             return;
         }
-        if (this._interactType != MapInteractType.Collect && this._interactType != MapInteractType.MainBack && player.hp <= 0) {
-            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("1100204"));
-            return;
-        }
-        let beginPos: Vec2 = player.stayPos;
-        let sparePositions: Vec2[] = [];
-        let targetStayPostions: Vec2[] = [];
-        if (this._interactBuilding != null) {
-            sparePositions = this._interactBuilding.stayMapPositions.slice();
-            targetStayPostions = this._interactBuilding.stayMapPositions.slice();
-            if (this._interactBuilding.type == MapBuildingType.city && sparePositions.length == 7) {
-                // center pos cannot use to cal move path
-                sparePositions.splice(3, 1);
-            }
-        } else if (this._interactPioneer != null) {
-            if (this._interactPioneer.type == MapPioneerType.player || this._interactPioneer.type == MapPioneerType.npc) {
-                targetStayPostions = [this._interactPioneer.stayPos];
-            }
-        }
-        const moveData = GameMgr.findTargetLeastMovePath(beginPos, this._targetPos, sparePositions, targetStayPostions);
-        if (moveData.status !== 1) {
-            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Energy");
-            return;
-        }
-        const trueCostEnergy: number =
-            this._interactType == MapInteractType.MainBack
-                ? 0
-                : GameMgr.getMapActionCostEnergy(moveData.path.length, this._interactBuilding != null ? this._interactBuilding.uniqueId : null);
-        
-        if (player.energyMax < trueCostEnergy) {
-            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Energy");
-            return;
-        }
-        if (player.energy < trueCostEnergy) {
-            if (trueCostEnergy < 99) {
-                GameMgr.showBuyEnergyTip(player.uniqueId);
-            } else {
-                //todo show message
-                //NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById(""));
-            }
-            return;
-        }
-
-        let times: number = 0;
-        let consumeConfigs: [number, string, number][] = null;
-        if (this._interactType == MapInteractType.WmMatch) {
-            times = DataMgr.s.userInfo.data.wormholeMatchTimes;
-            consumeConfigs = (ConfigConfig.getConfig(ConfigType.WormholeMatchConsume) as WormholeMatchConsumeParam).consumes;
-        } else if (this._interactType == MapInteractType.WmTeleport) {
-            times = DataMgr.s.userInfo.data.wormholeTeleportTimes;
-            consumeConfigs = (ConfigConfig.getConfig(ConfigType.WormholeTeleportConsume) as WormholeTeleportConsumeParam).consumes;
-        }
-        if (consumeConfigs != null) {
-            let consume: [number, string, number] = null;
-            for (const element of consumeConfigs) {
-                if (element[0] == times + 1) {
-                    consume = element;
-                    break;
-                }
-            }
-            if (consume == null) {
-                consume = consumeConfigs[consumeConfigs.length - 1];
-            }
-            if (consume != null) {
-                let ownedNum: number = DataMgr.s.item.getObj_item_count(consume[1]);
-                if (ownedNum < consume[2]) {
-                    NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Insufficient Resouces");
-                    return;
-                }
-            }
-        }
-
         UIPanelManger.inst.popPanel(this.node);
         if (this._actionCallback != null) {
-            this._actionCallback(true, player.uniqueId, moveData.path, this._isReturn);
+            this._actionCallback(true, player.uniqueId, result.movePath, this._isReturn);
         }
     }
 }

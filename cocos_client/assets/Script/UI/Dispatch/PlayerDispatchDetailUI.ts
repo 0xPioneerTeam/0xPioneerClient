@@ -50,6 +50,9 @@ export class PlayerDispatchDetailUI extends ViewController {
 
         this._selectTroopId = "0";
         this._addTroopNum = 0;
+        // switch button
+        this.node.getChildByPath("ContentView/LeftSwitchButton").active = infos.length > 1;
+        this.node.getChildByPath("ContentView/RightSwitchButton").active = infos.length > 1;
         this._initTroopSelect();
         this._refreshUI();
     }

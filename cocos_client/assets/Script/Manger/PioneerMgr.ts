@@ -170,7 +170,7 @@ export default class PioneerMgr {
                         // old logic: get more hp
                         // wait TODO
                     } else {
-                        pioneerDataMgr.changeActionType(uniqueId, MapPioneerActionType.idle);
+                        pioneerDataMgr.changeActionType(uniqueId, MapPioneerActionType.staying);
                     }
                 } else if (pioneer.faction == MapMemberFactionType.enemy && interactPioneer.faction == MapMemberFactionType.enemy) {
                 } else {

@@ -41,7 +41,7 @@ export class PlayerItemUI extends Component {
             busy.active = true;
         }
         //selected
-        this._selectedView.active = DataMgr.s.pioneer.getCurrentPlayer().uniqueId == model.uniqueId;
+        this._selectedView.active = DataMgr.s.pioneer.getInteractSelectUnqueId() == model.uniqueId;
         //hp
         if (model.troopId != null && model.troopId != "" && model.troopId != "0") {
             this._hpRate = parseInt(TroopsConfig.getById(model.troopId).hp_training);

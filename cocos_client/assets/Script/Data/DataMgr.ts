@@ -536,6 +536,9 @@ export class DataMgr {
                                 }
                             }
                         }
+                        if (newData.uniqueId === DataMgr.s.pioneer.getInteractSelectUnqueId() && newData.actionType === MapPioneerActionType.inCity) {
+                            DataMgr.s.pioneer.clearInteractSelected();
+                        }
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: newData.uniqueId });
                     }
                     // fight
@@ -1104,12 +1107,9 @@ export class DataMgr {
 
     //------------------------------------- board cast 
     public static borad_cast_msg = (e: any) => {
-        console.log('exce e: ', e);
         const p: s2c_user.Iborad_cast_msg = e.data;
         if (p.msg === "web_update") {
-            console.log("exce type: " + p.type);
             const boardData: any = p.type.length > 0 ? JSON.parse(p.type) : null;
-            console.log("exce data:", boardData);
             if (boardData != null && boardData.target_version != null) {
                 const newVersion = boardData.target_version;
                 if (newVersion > GAME_VERSION) {

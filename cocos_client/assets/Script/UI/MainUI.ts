@@ -342,6 +342,11 @@ export class MainUI extends ViewController {
             result.node.getComponent(NFTBackpackUI);
         }
     }
+    private onTapReinforceTroops() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        UIPanelManger.inst.pushPanel(UIName.PlayerDispatchListUI);
+    }
+
     private onTapChangeBuildingSetPos() {
         GameMusicPlayMgr.playTapButtonEffect();
         GameMainHelper.instance.changeInnerBuildingLatticeEdit();
