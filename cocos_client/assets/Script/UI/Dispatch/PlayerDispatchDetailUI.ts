@@ -15,6 +15,7 @@ import TroopsConfig from "../../Config/TroopsConfig";
 import { GameMgr, LanMgr } from "../../Utils/Global";
 import { InnerBuildingType } from "../../Const/BuildingDefine";
 import InnerBuildingLvlUpConfig from "../../Config/InnerBuildingLvlUpConfig";
+import { s2c_user } from "../../Net/msg/WebsocketMsg";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerDispatchDetailUI")
@@ -100,7 +101,7 @@ export class PlayerDispatchDetailUI extends ViewController {
         NotificationMgr.addListener(NotificationName.RESOURCE_GETTED, this._onResourceGetted, this);
         NotificationMgr.addListener(NotificationName.INNER_BUILDING_TRAIN_FINISHED, this._onNewTroopGetted, this);
 
-        NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
+        NetworkMgr.websocket.on("player_troop_to_hp_res", this._onPlayerTroopToHpRes);
     }
 
     protected viewDidDestroy(): void {
@@ -109,7 +110,7 @@ export class PlayerDispatchDetailUI extends ViewController {
         NotificationMgr.removeListener(NotificationName.RESOURCE_GETTED, this._onResourceGetted, this);
         NotificationMgr.removeListener(NotificationName.INNER_BUILDING_TRAIN_FINISHED, this._onNewTroopGetted, this);
 
-        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
+        NetworkMgr.websocket.off("player_troop_to_hp_res", this._onPlayerTroopToHpRes);
     }
 
     protected viewPopAnimation(): boolean {
@@ -453,12 +454,15 @@ export class PlayerDispatchDetailUI extends ViewController {
         this._refreshUI();
     }
 
-    private async _onPioneerHpChange(data: { uniqueId: string }) {
+    private _onPlayerTroopToHpRes = async (e: any) => {
+        const p: s2c_user.Iplayer_troop_to_hp_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
         for (let i = 0; i < this._infos.length; i++) {
-            if (this._infos[i].uniqueId == data.uniqueId) {
+            if (this._infos[i].uniqueId == p.pioneerId) {
                 await this.playExitAnimation();
                 UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.UI);
-                NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_DISPATCH_HP_CHANGED);
                 break;
             }
         }

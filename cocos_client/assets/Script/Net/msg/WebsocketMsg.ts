@@ -909,6 +909,15 @@ export namespace s2c_user {
         res: number;
         data: share.Inew_battle_report_data[];
     }
+
+    export interface Iplayer_troop_to_hp_res {
+        res: number;
+        pioneerId: string;
+    }
+    export interface Iplayer_psyc_to_energy_res {
+        res: number;
+        pioneerId: string;
+    }
 }
 
 export namespace share {

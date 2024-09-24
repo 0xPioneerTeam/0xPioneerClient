@@ -9,6 +9,8 @@ import { PlayerDispatchDetailUI } from "./PlayerDispatchDetailUI";
 import { MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
+import { NetworkMgr } from "../../Net/NetworkMgr";
+import { s2c_user } from "../../Net/msg/WebsocketMsg";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerDispatchListUI")
@@ -32,14 +34,16 @@ export class PlayerDispatchListUI extends ViewController {
         this._refreshUI();
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
-        NotificationMgr.addListener(NotificationName.MAP_PIONEER_DISPATCH_HP_CHANGED, this._onPioneerDispatchHpChange, this);
+
+        NetworkMgr.websocket.on("player_troop_to_hp_res", this._onPlayerTroopToHpRes);
     }
 
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
 
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
-        NotificationMgr.removeListener(NotificationName.MAP_PIONEER_DISPATCH_HP_CHANGED, this._onPioneerDispatchHpChange, this);
+
+        NetworkMgr.websocket.off("player_troop_to_hp_res", this._onPlayerTroopToHpRes);
     }
 
     protected viewPopAnimation(): boolean {
@@ -91,8 +95,12 @@ export class PlayerDispatchListUI extends ViewController {
     private _onPioneerHpChange() {
         this._refreshUI();
     }
-    private async _onPioneerDispatchHpChange() {
+    private _onPlayerTroopToHpRes = async (e: any) => {
+        const p: s2c_user.Iplayer_troop_to_hp_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
-    }
+    };
 }

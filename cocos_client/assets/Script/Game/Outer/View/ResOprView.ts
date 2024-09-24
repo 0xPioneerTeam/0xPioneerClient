@@ -13,6 +13,8 @@ import { NotificationName } from "../../../Const/Notification";
 import { RookieStep } from "../../../Const/RookieDefine";
 import CommonTools from "../../../Tool/CommonTools";
 import { TilePos } from "../../TiledMap/TileTool";
+import { NetworkMgr } from "../../../Net/NetworkMgr";
+import { s2c_user } from "../../../Net/msg/WebsocketMsg";
 const { ccclass, property } = _decorator;
 
 @ccclass("ResOprView")
@@ -23,6 +25,8 @@ export class ResOprView extends Component {
     private _interactBuilding: MapBuildingObject;
     private _interactPioneer: MapPioneerObject;
     private _targetPos: Vec2;
+    private _lastDisableInteractType: MapInteractType = null;
+
 
     public async show(
         isShadow: boolean,
@@ -422,16 +426,33 @@ export class ResOprView extends Component {
         this._actionItem.removeFromParent();
     }
 
-    start() {}
+    start() {
+        NetworkMgr.websocket.on("player_troop_to_hp_res", this._onPlayerTroopToHpRes);
+        NetworkMgr.websocket.on("player_psyc_to_energy_res", this._onPlayerPsycToEnergyRes);
+    }
 
     update(deltaTime: number) {}
 
     protected onDestroy(): void {
-        NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_MAP_ACTION, this._oRookieTapMapAction, this);
+        NetworkMgr.websocket.off("player_troop_to_hp_res", this._onPlayerTroopToHpRes);
+        NetworkMgr.websocket.off("player_psyc_to_energy_res", this._onPlayerPsycToEnergyRes);
     }
 
+    private _checkReplenishDispatchCondtion(uniqueId: string) {
+        if (this._lastDisableInteractType == null) {
+            return;
+        }
+        const interactUniqueId = DataMgr.s.pioneer.getInteractSelectUnqueId();
+        if (interactUniqueId != uniqueId) {
+            return;
+        }
+        this.onTapAction(null, this._lastDisableInteractType.toString());
+    }
+
+    //--------------------------- action
     private async onTapAction(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
+        this._lastDisableInteractType = null;
         const interactType = parseInt(customEventData);
         let player = null;
         const interactUniqueId = DataMgr.s.pioneer.getInteractSelectUnqueId();
@@ -447,6 +468,7 @@ export class ResOprView extends Component {
         }
         const result = await GameMgr.checkMapCanInteractAndCalulcateMovePath(player, interactType, this._interactBuilding, this._interactPioneer, this._targetPos);
         if (!result.enable) {
+            this._lastDisableInteractType = interactType;
             return;
         }
         this.hide();
@@ -467,11 +489,22 @@ export class ResOprView extends Component {
         NotificationMgr.triggerEvent(NotificationName.GAME_JUMP_INNER_AND_SHOW_RELIC_TOWER);
     }
 
+
+
+
     //----------------------------- notification
-    private _oRookieTapMapAction(data: { tapIndex: string }) {
-        if (data == null || data.tapIndex == null) {
+    private _onPlayerTroopToHpRes = (e: any) => {
+        const p: s2c_user.Iplayer_troop_to_hp_res = e.data;
+        if (p.res !== 1) {
             return;
         }
-        this.hide();
-    }
+        this._checkReplenishDispatchCondtion(p.pioneerId);
+    };
+    private _onPlayerPsycToEnergyRes = (e: any) => {
+        const p: s2c_user.Iplayer_psyc_to_energy_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        this._checkReplenishDispatchCondtion(p.pioneerId);
+    };
 }

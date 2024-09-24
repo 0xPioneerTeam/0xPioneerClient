@@ -15,10 +15,10 @@ import { MapBuildingObject } from "../../Const/MapBuilding";
 import { TilePos } from "../../Game/TiledMap/TileTool";
 import { MapBuildingType } from "../../Const/BuildingDefine";
 import { MapInteractType, ResourceData } from "../../Const/ConstDefine";
-import ConfigConfig from "../../Config/ConfigConfig";
-import { ConfigType, WormholeMatchConsumeParam, WormholeTeleportConsumeParam } from "../../Const/Config";
 import { UIHUDController } from "../UIHUDController";
 import { CircularList, CircularListDelegate } from "../../BasicView/CircularList";
+import { NetworkMgr } from "../../Net/NetworkMgr";
+import { s2c_user } from "../../Net/msg/WebsocketMsg";
 const { ccclass, property } = _decorator;
 
 @ccclass("DispatchUI")
@@ -30,6 +30,7 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
     private _actionCallback: (confirmed: boolean, actionPioneerUnqueId: string, movePath: TilePos[], isReturn: boolean) => void = null;
 
     private _isReturn: boolean = true;
+    private _lastDisableItemIndex: number = -1;
 
     private _returnTitle: Node = null;
     private _returnSwitchButton: Node = null;
@@ -85,6 +86,9 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
 
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
         NotificationMgr.addListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._onPioneerEnergyChange, this);
+
+        NetworkMgr.websocket.on("player_troop_to_hp_res", this._onPlayerTroopToHpRes);
+        NetworkMgr.websocket.on("player_psyc_to_energy_res", this._onPlayerPsycToEnergyRes);
     }
 
     protected viewDidDestroy(): void {
@@ -92,6 +96,9 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
 
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_HP_CHANGED, this._onPioneerHpChange, this);
         NotificationMgr.removeListener(NotificationName.MAP_PIONEER_ENERGY_CHANGED, this._onPioneerEnergyChange, this);
+
+        NetworkMgr.websocket.off("player_troop_to_hp_res", this._onPlayerTroopToHpRes);
+        NetworkMgr.websocket.off("player_psyc_to_energy_res", this._onPlayerPsycToEnergyRes);
     }
 
     //------------------------------- local function
@@ -132,6 +139,17 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
         this._returnTitle.active = this._returnSwitchButton.active;
     }
 
+    private _checkReplenishDispatchCondtion(uniqueId: string) {
+        if (this._lastDisableItemIndex < 0 || this._lastDisableItemIndex > this._playerShowData.length - 1) {
+            return;
+        }
+        const player = this._playerShowData[this._lastDisableItemIndex];
+        if (player.uniqueId != uniqueId) {
+            return;
+        }
+        this.circularListTapItem(this._lastDisableItemIndex);
+    }
+
     //-------------------------- action
     private onTapClose() {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -166,6 +184,22 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
         this._prepareData();
         this._refreshUI();
     }
+
+    private _onPlayerTroopToHpRes = (e: any) => {
+        const p: s2c_user.Iplayer_troop_to_hp_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        this._checkReplenishDispatchCondtion(p.pioneerId);
+    };
+    private _onPlayerPsycToEnergyRes = (e: any) => {
+        const p: s2c_user.Iplayer_psyc_to_energy_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        this._checkReplenishDispatchCondtion(p.pioneerId);
+    };
+
     //------------------------------------------------ CircularListDelegate
     public circularListTotalNum(): number {
         return this._playerShowData.length;
@@ -212,12 +246,20 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
         if (index < 0 || index > this._playerShowData.length - 1) {
             return;
         }
+        this._lastDisableItemIndex = -1;
         const player = this._playerShowData[index];
         if (player == undefined) {
             return;
         }
-        const result = await GameMgr.checkMapCanInteractAndCalulcateMovePath(player, this._interactType, this._interactBuilding, this._interactPioneer, this._targetPos);
+        const result = await GameMgr.checkMapCanInteractAndCalulcateMovePath(
+            player,
+            this._interactType,
+            this._interactBuilding,
+            this._interactPioneer,
+            this._targetPos
+        );
         if (!result.enable) {
+            this._lastDisableItemIndex = index;
             return;
         }
         UIPanelManger.inst.popPanel(this.node);
