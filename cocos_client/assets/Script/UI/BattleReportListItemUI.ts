@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, Label, Node, ProgressBar, RichText, Sprite, SpriteFrame, v2, v3, Vec2, Widget } from "cc";
+import { _decorator, Button, Component, Label, Node, ProgressBar, RichText, sp, Sprite, SpriteFrame, v2, v3, Vec2, Widget } from "cc";
 import CommonTools from "db://assets/Script/Tool/CommonTools";
 import { LanMgr } from "../Utils/Global";
 import { UIName } from "../Const/ConstUIDefine";
@@ -8,8 +8,11 @@ import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { share } from "../Net/msg/WebsocketMsg";
-import { BattleReportDetailUI } from "./BattleReportDetailUI"
+import { BattleReportDetailUI } from "./BattleReportDetailUI";
 import { MapCharacter } from "../Game/Outer/View/MapCharacter";
+import ItemData from "../Model/ItemData";
+import ArtifactData from "../Model/ArtifactData";
+import { NetworkMgr } from "../Net/NetworkMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("BattleReportListItemUI")
@@ -84,16 +87,14 @@ export class BattleReportListItemUI extends Component {
     public branchSelectionButton: Button = null;
 
     private _locationInfo: Vec2 = null;
-    private _loots: { id: string; num: number }[] = null;
+    private _loots: (share.Iitem_data | share.Iartifact_info_data)[] = null;
 
     private _report: share.Inew_battle_report_data = null;
     public get report() {
         return this._report;
     }
 
-    protected onLoad() {
-        if (this.lootsButton) this.lootsButton.node.on(Button.EventType.CLICK, this.onClickLoots, this);
-    }
+    protected onLoad() {}
 
     public initWithReportData(report: share.Inew_battle_report_data): void {
         this._report = report;
@@ -107,6 +108,10 @@ export class BattleReportListItemUI extends Component {
             case share.Inew_battle_report_type.mining:
                 this._initWithMiningReport(report);
                 break;
+            case share.Inew_battle_report_type.task:
+                this._initWithTaskReport(report);
+                break;
+
             default:
                 console.error(`Unknown report type ${report.type}. ${JSON.stringify(report)}`);
                 break;
@@ -140,14 +145,20 @@ export class BattleReportListItemUI extends Component {
         } else {
             this.eventLocationLabel.string = "";
         }
-        this._loots = [];
-        for (const item of data.winItems) {
-            this._loots.push({
-                id: item.itemConfigId,
-                num: item.count,
-            });
+
+        this._loots = [...report.fight.winArtifacts, ...report.fight.winItems];
+        if (this._loots.length > 0) {
+            this.lootsButton.node.active = true;
+            if (report.getted) {
+                this.lootsButton.node.getChildByPath("Label").getComponent(Label).string = "Spoils of war";
+                this.lootsButton.getComponent(Button).clickEvents[0].customEventData = "loots";
+            } else {
+                this.lootsButton.node.getChildByPath("Label").getComponent(Label).string = "Claim Spoils";
+                this.lootsButton.getComponent(Button).clickEvents[0].customEventData = "recivie|" + report.id;
+            }
+        } else {
+            this.lootsButton.node.active = false;
         }
-        this.lootsButton.node.active = this._loots.length > 0;
     }
 
     private _initWithMiningReport(report: share.Inew_battle_report_data): void {
@@ -172,14 +183,45 @@ export class BattleReportListItemUI extends Component {
         this.eventTimeLabel.string = CommonTools.formatDateTime(report.timestamp * 1000);
         this.miningResultLabel.string = LanMgr.replaceLanById("701001", ["100"]);
 
-        this._loots = [];
-        for (const item of data.rewards) {
-            this._loots.push({
-                id: item.itemConfigId,
-                num: item.count,
-            });
+        this._loots = [...report.mining.rewards];
+        if (this._loots.length > 0) {
+            this.lootsButton.node.active = true;
+            if (report.getted) {
+                this.lootsButton.node.getChildByPath("Label").getComponent(Label).string = "Spoils of war";
+                this.lootsButton.getComponent(Button).clickEvents[0].customEventData = "loots";
+            } else {
+                this.lootsButton.node.getChildByPath("Label").getComponent(Label).string = "Claim Spoils";
+                this.lootsButton.getComponent(Button).clickEvents[0].customEventData = "recivie|" + report.id;
+            }
+        } else {
+            this.lootsButton.node.active = false;
         }
-        this.lootsButton.node.active = this._loots.length > 0;
+    }
+
+    private _initWithTaskReport(report: share.Inew_battle_report_data): void {
+        const data = report.task;
+
+        this.node.getChildByPath("name").getComponent(Label).string = LanMgr.getLanById(data.name);
+        this.node.getChildByPath("description").getComponent(RichText).string = LanMgr.getLanById(data.description);
+
+        const progressView = this.node.getChildByPath("ProgressView");
+        progressView.getChildByPath("Progress").getComponent(Label).string = data.progress + "/" + data.total;
+
+        this._loots = [...report.task.rewards];
+        if (this._loots.length > 0) {
+            this.lootsButton.node.active = true;
+            if (report.getted) {
+                this.lootsButton.node.getChildByPath("Label").getComponent(Label).string = "Spoils of war";
+                this.lootsButton.getComponent(Button).clickEvents[0].customEventData = "loots";
+            } else {
+                this.lootsButton.node.getChildByPath("Label").getComponent(Label).string = "Claim Spoils";
+                this.lootsButton.getComponent(Button).clickEvents[0].customEventData = "recivie|" + report.id;
+            }
+            progressView.setPosition(v3(progressView.position.x, 9, 0));
+        } else {
+            this.lootsButton.node.active = false;
+            progressView.setPosition(v3(progressView.position.x, -17, 0));
+        }
     }
 
     // private _initWithExploreReport(report): void {
@@ -227,15 +269,25 @@ export class BattleReportListItemUI extends Component {
         GameMainHelper.instance.changeGameCameraWorldPosition(GameMainHelper.instance.tiledMapGetPosWorld(pos.x, pos.y), true);
     }
 
-    private async onClickLoots() {
+    private async onClickLoots(event: Event, customEvnetData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
-        if (!this._loots) {
-            console.error("BattleReportListItemUI._loots empty");
-            return;
-        }
-        const result = await UIPanelManger.inst.pushPanel(UIName.LootsPopup);
-        if (result.success) {
-            result.node.getComponent(LootsPopup).showItems(this._loots);
+        if (customEvnetData == "loots") {
+            if (this._loots.length <= 0) {
+                return;
+            }
+            const result = await UIPanelManger.inst.pushPanel(UIName.LootsPopup);
+            if (result.success) {
+                result.node.getComponent(LootsPopup).showItems(this._loots);
+            }
+        } else if (customEvnetData.includes("recivie")) {
+            const split = customEvnetData.split("|");
+            if (split.length != 2) {
+                return;
+            }
+            const id = split[1];
+            NetworkMgr.websocketMsg.receive_new_battle_report_reward({
+                id: parseInt(id),
+            });
         }
     }
 

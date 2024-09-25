@@ -338,6 +338,9 @@ export class WebsocketMsg {
     public get_new_battle_report(d: c2s_user.Iget_new_battle_report) {
         this.send_packet("get_new_battle_report", d);
     }
+    public receive_new_battle_report_reward(d: c2s_user.Ireceive_new_battle_report_reward) {
+        this.send_packet("receive_new_battle_report_reward", d);
+    }
 
     public reborn_all() {
         this.send_packet("reborn_all", {});
@@ -612,6 +615,9 @@ export namespace c2s_user {
     export interface Iget_user_settlement_info {}
 
     export interface Iget_new_battle_report {}
+    export interface Ireceive_new_battle_report_reward {
+        id: number;
+    }
 
     export interface Isave_archives {
         archives: string;
@@ -908,6 +914,10 @@ export namespace s2c_user {
     export interface Iget_new_battle_report_res {
         res: number;
         data: share.Inew_battle_report_data[];
+    }
+    export interface Ireceive_new_battle_report_reward_res {
+        res: number;
+        id: number;
     }
 
     export interface Iplayer_troop_to_hp_res {
@@ -1305,6 +1315,7 @@ export namespace share {
     export enum Inew_battle_report_type {
         fight = 0,
         mining,
+        task
     }
     export enum Inew_battle_report_fight_member_type {
         pioneer = 0,
@@ -1331,7 +1342,7 @@ export namespace share {
         fightRes: Ifight_res[];
 
         winItems: Iitem_data[];
-        winArtifacts: Iartifact_data[];
+        winArtifacts: Iartifact_info_data[];
     }
     export interface Inew_battle_report_mining_data {
         pioneerUniqueId: string;
@@ -1340,13 +1351,23 @@ export namespace share {
 
         rewards: Iitem_data[];
     }
+    export interface Inew_battle_report_task_data {
+        name: string;
+        description: string;
+        progress: number;
+        total: number;
+        rewards: Iitem_data[];
+    }
     export interface Inew_battle_report_data {
+        id: number;
         type: Inew_battle_report_type;
         // s
         timestamp: number;
         unread: boolean;
+        getted: boolean;
         fight?: Inew_battle_report_fight_data;
         mining?: Inew_battle_report_mining_data;
+        task?: Inew_battle_report_task_data;
     }
 
     export interface Iwormhole_tag_data {

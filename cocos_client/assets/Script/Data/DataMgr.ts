@@ -525,19 +525,19 @@ export class DataMgr {
                                 const targetPos = GameMgr.getMainCityGatePos();
                                 const moveData = GameMgr.findTargetLeastMovePath(oldData.stayPos, targetPos, [], []);
                                 if (moveData.status !== 1 || moveData.path.length <= 0) {
-                                    
                                 } else {
                                     (newData as MapPlayerPioneerObject).needReturn = true;
                                     newData.stayPos = oldData.stayPos;
-                                    DataMgr.s.pioneer.beginMove(
-                                        newData.uniqueId,
-                                        moveData.path
-                                    );
+                                    DataMgr.s.pioneer.beginMove(newData.uniqueId, moveData.path);
                                 }
                             }
                         }
                         if (newData.uniqueId === DataMgr.s.pioneer.getInteractSelectUnqueId() && newData.actionType === MapPioneerActionType.inCity) {
                             DataMgr.s.pioneer.clearInteractSelected();
+                        }
+                        if (newData.actionType != MapPioneerActionType.mining && oldData.actionType == MapPioneerActionType.mining) {
+                            // gather over
+                            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("1100207"));
                         }
                         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { uniqueId: newData.uniqueId });
                     }
@@ -756,6 +756,7 @@ export class DataMgr {
             return;
         }
         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { uniqueId: uniqueId });
+        NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP,  LanMgr.getLanById("1100207"));
     };
 
     public static player_wormhole_tp_random_res = (e: any) => {
@@ -1105,7 +1106,7 @@ export class DataMgr {
         NotificationMgr.triggerEvent(NotificationName.SETTLEMENT_DATA_CHANGE);
     };
 
-    //------------------------------------- board cast 
+    //------------------------------------- board cast
     public static borad_cast_msg = (e: any) => {
         const p: s2c_user.Iborad_cast_msg = e.data;
         if (p.msg === "web_update") {
@@ -1117,5 +1118,5 @@ export class DataMgr {
                 }
             }
         }
-    }
+    };
 }

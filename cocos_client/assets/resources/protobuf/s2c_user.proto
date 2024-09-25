@@ -118,7 +118,10 @@ message get_new_battle_report_res {
     required int32 res = 1;
     repeated share.new_battle_report_data data = 2;
 }
-
+message receive_new_battle_report_reward_res {
+    required int32 res = 1;
+    optional uint32 id = 2;
+}
 
 // ------ map ------
 // get map data

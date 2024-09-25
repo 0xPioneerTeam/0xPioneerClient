@@ -517,11 +517,14 @@ message battle_report_data {
 }
 
 message new_battle_report_data {
-    required uint32 type = 1;
-    required uint32 timestamp = 2;
-    required bool unread = 3;
-    optional new_battle_report_fight_data fight = 4;
-    optional new_battle_report_mining_data mining = 5;
+    required uint32 id = 1;
+    required uint32 type = 2;
+    required uint32 timestamp = 3;
+    required bool unread = 4;
+    required bool getted = 5;
+    optional new_battle_report_fight_data fight = 6;
+    optional new_battle_report_mining_data mining = 7;
+    optional new_battle_report_task_data task = 8;
 }
 
 message new_battle_report_fight_data {
@@ -540,6 +543,13 @@ message new_battle_report_mining_data {
     optional pos2d location = 2;
     required uint32 duration = 3;
     repeated item_data rewards = 4;
+}
+message new_battle_report_task_data {
+    required string name = 1;
+    required string description = 2;
+    required uint32 progress = 3;
+    required uint32 total = 4;
+    repeated item_data rewards = 5;
 }
 
 message new_battle_report_fight_member_data {

@@ -18,6 +18,7 @@ export class BattleReportsUI extends ViewController {
     private _fightTypeItemTemplate: Node = null;
     private _miningTypeItemTemplate: Node = null;
     private _exploreTypeItemTemplate: Node = null;
+    private _taskTypeItemTemplate: Node = null;
     private _permanentLastItem: Node = null;
     private _reportListScrollView: ScrollView = null;
     /** all / fight / mining / ... */
@@ -54,6 +55,10 @@ export class BattleReportsUI extends ViewController {
                 case share.Inew_battle_report_type.mining:
                     uiItem = instantiate(this._miningTypeItemTemplate).getComponent(BattleReportListItemUI);
                     break;
+                case share.Inew_battle_report_type.task:
+                    uiItem = instantiate(this._taskTypeItemTemplate).getComponent(BattleReportListItemUI);
+                    break;
+
                 default:
                     console.error(`Unknown report type: ${report.type}`);
                     continue;
@@ -100,6 +105,9 @@ export class BattleReportsUI extends ViewController {
         this._fightTypeItemTemplate.active = false;
         this._miningTypeItemTemplate = this.node.getChildByPath("frame/ScrollView/view/content/miningTypeItemTemplate");
         this._miningTypeItemTemplate.active = false;
+        this._taskTypeItemTemplate = this.node.getChildByPath("frame/ScrollView/view/content/taskTypeItemTemplate");
+        this._taskTypeItemTemplate.active = false;
+
         this._exploreTypeItemTemplate = this.node.getChildByPath("frame/ScrollView/view/content/exploreTypeItemTemplate");
         this._exploreTypeItemTemplate.active = false;
         this._permanentLastItem = this.node.getChildByPath("frame/ScrollView/view/content/permanentLastItem");
@@ -123,6 +131,7 @@ export class BattleReportsUI extends ViewController {
 
 
         NetworkMgr.websocket.on("get_new_battle_report_res", this.get_new_battle_report_res);
+        NetworkMgr.websocket.on("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
 
         // request data
         NetworkMgr.websocketMsg.get_new_battle_report({});
@@ -138,6 +147,7 @@ export class BattleReportsUI extends ViewController {
 
     protected viewDidDestroy(): void {
         NetworkMgr.websocket.off("get_new_battle_report_res", this.get_new_battle_report_res);
+        NetworkMgr.websocket.off("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
     }
 
 
@@ -186,6 +196,8 @@ export class BattleReportsUI extends ViewController {
                         this._filterState = share.Inew_battle_report_type.fight;
                     } else if (i == 2) {
                         this._filterState = share.Inew_battle_report_type.mining;
+                    } else if (i == 3) {
+                        this._filterState = share.Inew_battle_report_type.task;
                     }
                     this.refreshUIAndResetScroll();
                 },
@@ -213,6 +225,8 @@ export class BattleReportsUI extends ViewController {
                 this._typeFilterButtons[i].interactable = i != 1;
             } else if (this._filterState == share.Inew_battle_report_type.mining) {
                 this._typeFilterButtons[i].interactable = i != 2;
+            } else if (this._filterState == share.Inew_battle_report_type.task) {
+                this._typeFilterButtons[i].interactable = i != 3;
             }
         }
     }
@@ -243,5 +257,18 @@ export class BattleReportsUI extends ViewController {
         }
         this._reports = p.data;
         this.refreshUIAndResetScroll();
+    }
+    private receive_new_battle_report_reward_res = (e: any) => {
+        const p: s2c_user.Ireceive_new_battle_report_reward_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        for (let i = 0; i < this._reports.length; i++) {
+            if (p.id == this._reports[i].id) {
+                this._reports[i].getted = true;
+                break;
+            }
+        }
+        this.refreshUI();
     }
 }

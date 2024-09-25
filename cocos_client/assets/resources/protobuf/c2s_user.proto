@@ -76,6 +76,9 @@ message check_unused_tx_status {
 message get_battle_report { }
 message get_user_settlement_info { }
 message get_new_battle_report { }
+message receive_new_battle_report_reward {
+    required uint32 id = 1;
+}
 
 // ------ map ------
 // mapinfo: getinfo
