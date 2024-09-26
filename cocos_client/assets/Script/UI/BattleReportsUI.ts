@@ -58,6 +58,10 @@ export class BattleReportsUI extends ViewController {
                 case share.Inew_battle_report_type.task:
                     uiItem = instantiate(this._taskTypeItemTemplate).getComponent(BattleReportListItemUI);
                     break;
+                case share.Inew_battle_report_type.explore:
+                    uiItem = instantiate(this._exploreTypeItemTemplate).getComponent(BattleReportListItemUI);
+                    break;
+                
 
                 default:
                     console.error(`Unknown report type: ${report.type}`);
@@ -192,12 +196,14 @@ export class BattleReportsUI extends ViewController {
                 Button.EventType.CLICK,
                 () => {
                     GameMusicPlayMgr.playTapButtonEffect();
-                    if (i == 1) {
+                    if (i == 2) {
                         this._filterState = share.Inew_battle_report_type.fight;
-                    } else if (i == 2) {
+                    } else if (i == 4) {
                         this._filterState = share.Inew_battle_report_type.mining;
-                    } else if (i == 3) {
+                    } else if (i == 1) {
                         this._filterState = share.Inew_battle_report_type.task;
+                    } else if (i == 3) {
+                        this._filterState = share.Inew_battle_report_type.explore;
                     }
                     this.refreshUIAndResetScroll();
                 },
@@ -222,10 +228,12 @@ export class BattleReportsUI extends ViewController {
             if (this._filterState == null) {
                 this._typeFilterButtons[i].interactable = i != 0;
             } else if (this._filterState == share.Inew_battle_report_type.fight) {
-                this._typeFilterButtons[i].interactable = i != 1;
-            } else if (this._filterState == share.Inew_battle_report_type.mining) {
                 this._typeFilterButtons[i].interactable = i != 2;
+            } else if (this._filterState == share.Inew_battle_report_type.mining) {
+                this._typeFilterButtons[i].interactable = i != 4;
             } else if (this._filterState == share.Inew_battle_report_type.task) {
+                this._typeFilterButtons[i].interactable = i != 1;
+            } else if (this._filterState == share.Inew_battle_report_type.explore) {
                 this._typeFilterButtons[i].interactable = i != 3;
             }
         }

@@ -1049,6 +1049,10 @@ export class DataMgr {
                 if (!runDatas[i].isGetted && p.task.isGetted) {
                     NotificationMgr.triggerEvent(NotificationName.TASK_NEW_GETTED);
                 }
+                if (runDatas[i].stepIndex != p.task.stepIndex || (!runDatas[i].isFinished && p.task.isFinished)) {
+                    // finished
+                    NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("1100207"));
+                }
                 runDatas[i] = p.task;
                 NotificationMgr.triggerEvent(NotificationName.TASK_DID_CHANGE);
                 break;
@@ -1074,12 +1078,16 @@ export class DataMgr {
     public static user_mission_did_change = (e: any) => {
         let p: s2c_user.Iuser_mission_did_change = e.data;
         let getNew: boolean = false;
+        let finished: boolean = false;
         const rundata = DataMgr.s.task.getMissionAll();
         for (const newMission of p.missions) {
             let isExit: boolean = false;
             for (const localMission of rundata) {
                 if (newMission.missionId == localMission.missionId) {
                     isExit = true;
+                    if (!localMission.isComplete && newMission.isComplete) {
+                        finished = true;
+                    }
                     localMission.missionObjCount = newMission.missionObjCount;
                     localMission.isComplete = newMission.isComplete;
                     break;
@@ -1092,6 +1100,9 @@ export class DataMgr {
         }
         if (getNew) {
             NotificationMgr.triggerEvent(NotificationName.TASK_NEW_GETTED);
+        }
+        if (finished) {
+            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("1100207"));
         }
         NotificationMgr.triggerEvent(NotificationName.TASK_DID_CHANGE);
     };

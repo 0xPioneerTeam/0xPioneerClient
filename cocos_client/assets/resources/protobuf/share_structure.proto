@@ -525,6 +525,7 @@ message new_battle_report_data {
     optional new_battle_report_fight_data fight = 6;
     optional new_battle_report_mining_data mining = 7;
     optional new_battle_report_task_data task = 8;
+    optional new_battle_report_explore_data explore = 9;
 }
 
 message new_battle_report_fight_data {
@@ -549,6 +550,13 @@ message new_battle_report_task_data {
     required string description = 2;
     required uint32 progress = 3;
     required uint32 total = 4;
+    repeated item_data rewards = 5;
+}
+message new_battle_report_explore_data {
+    required string pioneerUniqueId = 1;
+    optional pos2d location = 2;
+    required uint32 layers = 3;
+    required bool isWin = 4;
     repeated item_data rewards = 5;
 }
 

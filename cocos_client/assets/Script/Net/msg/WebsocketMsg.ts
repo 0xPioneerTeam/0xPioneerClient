@@ -1315,7 +1315,8 @@ export namespace share {
     export enum Inew_battle_report_type {
         fight = 0,
         mining,
-        task
+        task,
+        explore,
     }
     export enum Inew_battle_report_fight_member_type {
         pioneer = 0,
@@ -1358,6 +1359,13 @@ export namespace share {
         total: number;
         rewards: Iitem_data[];
     }
+    export interface Inew_battle_report_explore_data {
+        pioneerUniqueId: string;
+        location?: pos2d;
+        layers: number;
+        isWin: boolean;
+        rewards: Iitem_data[];
+    }
     export interface Inew_battle_report_data {
         id: number;
         type: Inew_battle_report_type;
@@ -1368,6 +1376,7 @@ export namespace share {
         fight?: Inew_battle_report_fight_data;
         mining?: Inew_battle_report_mining_data;
         task?: Inew_battle_report_task_data;
+        explore?: Inew_battle_report_explore_data;
     }
 
     export interface Iwormhole_tag_data {

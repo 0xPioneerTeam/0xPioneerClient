@@ -111,6 +111,9 @@ export class BattleReportListItemUI extends Component {
             case share.Inew_battle_report_type.task:
                 this._initWithTaskReport(report);
                 break;
+            case share.Inew_battle_report_type.explore:
+                this._initWithExploreReport(report);
+                break;
 
             default:
                 console.error(`Unknown report type ${report.type}. ${JSON.stringify(report)}`);
@@ -224,35 +227,37 @@ export class BattleReportListItemUI extends Component {
         }
     }
 
-    // private _initWithExploreReport(report): void {
-    //     let buildingInfo = DataMgr.s.mapBuilding.getBuildingById(report.data.buildingId);
+    private _initWithExploreReport(report: share.Inew_battle_report_data): void {
+        const data = report.explore;
 
-    //     let pioneerInfo = DataMgr.s.pioneer.getById(report.data.pioneerId);
+        let pioneerInfo = DataMgr.s.pioneer.getById(data.pioneerUniqueId);
+        const roleName = LanMgr.getLanById(pioneerInfo.name);
+        const layers = data.layers;
 
-    //     const roleName = LanMgr.getLanById(pioneerInfo == null ? "" : pioneerInfo.name);
-    //     const rewards = report.data.rewards;
+        this.node.getChildByPath("BgAvatar/RoleView").getComponent(MapCharacter).refreshUI(pioneerInfo.animType);
+        this.leftNameLabel.string = roleName;
 
-    //     for (const child of this.node.getChildByPath("BgAvatar").children) {
-    //         child.active = child.name == pioneerInfo.id;
-    //     }
-    //     this.leftNameLabel.string = roleName;
-    //     this._locationInfo = { type: "building", buildingId: buildingInfo.id };
-    //     this.eventLocationLabel.string = this._locationString(this._locationInfo);
+        this._locationInfo = data.location != null ? v2(data.location.x, data.location.y) : null;
+        if (data.location != null) {
+            this.eventLocationLabel.string = this._locationString(this._locationInfo);
+        } else {
+            this.eventLocationLabel.string = "";
+        }
 
-    //     this.eventTimeLabel.string = CommonTools.formatDateTime(report.timestamp);
+        this.timeElapsedLabel.string = "Explore layers: " + layers;
 
-    //     if (report.data.hasNextStep && !report.data.nextStepFinished) {
-    //         this.eventResultLabel.node.active = false;
-    //         this.branchSelectionButton.node.active = true;
-    //         this.branchSelectionButton.node.on(Button.EventType.CLICK, this.onClickBranchSelection, this);
-    //     } else {
-    //         this.eventResultLabel.node.active = true;
-    //         this.branchSelectionButton.node.active = false;
-    //     }
+        this.node.getChildByPath("ResultWin").active = data.isWin;
+        this.node.getChildByPath("ResultFail").active = !data.isWin;
 
-    //     this._loots = rewards;
-    //     this.lootsButton.node.active = rewards && rewards.length != 0;
-    // }
+        this._loots = [...report.explore.rewards];
+        if (this._loots.length > 0) {
+            this.lootsButton.node.active = true;
+            this.lootsButton.node.getChildByPath("Label").getComponent(Label).string = "Spoils of war";
+            this.lootsButton.getComponent(Button).clickEvents[0].customEventData = "loots";
+        } else {
+            this.lootsButton.node.active = false;
+        }
+    }
 
     private onClickLocation() {
         GameMusicPlayMgr.playTapButtonEffect();

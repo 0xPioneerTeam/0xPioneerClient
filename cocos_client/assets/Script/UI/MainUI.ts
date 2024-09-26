@@ -190,6 +190,7 @@ export class MainUI extends ViewController {
         const taskButton = this.node.getChildByPath("CommonContent/TaskButton");
         const backpackButton = this.node.getChildByPath("CommonContent/icon_treasure_box");
         const nftButton = this.node.getChildByPath("CommonContent/NFTButton");
+        const reinforceButton = this.node.getChildByPath("CommonContent/ReinforceTroopsButton");
         const recuritButton = this.node.getChildByPath("CommonContent/RecuritButton");
         const exerciseButton = this.node.getChildByPath("CommonContent/ExerciseButton");
         const artifactButton = this.node.getChildByPath("CommonContent/ArtifactButton");
@@ -207,6 +208,7 @@ export class MainUI extends ViewController {
         taskButton.active = false;
         backpackButton.active = false;
         nftButton.active = false;
+        reinforceButton.active = false;
         recuritButton.active = false;
         exerciseButton.active = false;
         artifactButton.active = false;
@@ -225,6 +227,7 @@ export class MainUI extends ViewController {
         if (rookieStep >= RookieStep.FINISH) {
             taskButton.active = true;
             backpackButton.active = true;
+            reinforceButton.active = true;
             nftButton.active = true;
             recuritButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.Barrack) >= 1;
             exerciseButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.TrainingCenter) >= 1;

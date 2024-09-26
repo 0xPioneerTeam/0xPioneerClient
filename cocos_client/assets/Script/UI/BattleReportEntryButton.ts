@@ -1,61 +1,93 @@
-import {_decorator, Button, Component, Label} from 'cc';
-import {UIName} from '../Const/ConstUIDefine';
-import NotificationMgr from '../Basic/NotificationMgr';
-import { NotificationName } from '../Const/Notification';
-import UIPanelManger from '../Basic/UIPanelMgr';
-import { DataMgr } from '../Data/DataMgr';
-import GameMusicPlayMgr from '../Manger/GameMusicPlayMgr';
+import { _decorator, Button, Component, Label, rect } from "cc";
+import { UIName } from "../Const/ConstUIDefine";
+import NotificationMgr from "../Basic/NotificationMgr";
+import { NotificationName } from "../Const/Notification";
+import UIPanelManger from "../Basic/UIPanelMgr";
+import { DataMgr } from "../Data/DataMgr";
+import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
+import { NetworkMgr } from "../Net/NetworkMgr";
+import { s2c_user, share } from "../Net/msg/WebsocketMsg";
+import { RedPointView } from "./View/RedPointView";
 
-const {ccclass} = _decorator;
+const { ccclass } = _decorator;
 
-
-@ccclass('BattleReportEntryButton')
+@ccclass("BattleReportEntryButton")
 export class BattleReportEntryButton extends Component {
-    protected onEnable() {
+
+    private _reports: share.Inew_battle_report_data[] = [];
+
+    private _redPointView: RedPointView = null;
+
+    protected start(): void {
+
+        this._redPointView = this.node.getChildByPath("RedPointView").getComponent(RedPointView);
+
         this.node.on(Button.EventType.CLICK, this.onClickButton, this);
-        this.updateBattleReportsUnreadCount();
+
+        NetworkMgr.websocket.on("get_new_battle_report_res", this.get_new_battle_report_res);
+        NetworkMgr.websocket.on("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
+
+        NetworkMgr.websocketMsg.get_new_battle_report({});
     }
 
-    protected onDisable() {
+    protected onDestroy(): void {
         this.node.off(Button.EventType.CLICK, this.onClickButton, this);
+
+        NetworkMgr.websocket.off("get_new_battle_report_res", this.get_new_battle_report_res);
+        NetworkMgr.websocket.off("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
     }
 
+    private _refreshRedPoint() {
+        let redCount: number = 0;
+        for (const report of this._reports) {
+            if (report.getted) {
+                continue;
+            }
+            if (report.type == share.Inew_battle_report_type.explore) {
+                continue;
+            }
+            if (report.type == share.Inew_battle_report_type.mining && report.mining.rewards.length <= 0) {
+                continue;
+            }
+            if (report.type == share.Inew_battle_report_type.fight && report.fight.winItems.length <= 0 && report.fight.winArtifacts.length <= 0) {
+                continue;
+            }
+            if (report.type == share.Inew_battle_report_type.task && report.task.rewards.length <= 0) {
+                continue;
+            }
+            redCount += 1;
+        }
+        this._redPointView.refreshUI(redCount, true);
+        this.node.getChildByPath("icon_WarReport_1").active = redCount <= 0;
+        this.node.getChildByPath("icon_WarReport_2").active = redCount > 0;
+    }
+
+    //------------------------------- action
     private async onClickButton() {
         GameMusicPlayMgr.playTapButtonEffect();
         await UIPanelManger.inst.pushPanel(UIName.BattleReportUI);
     }
 
-    private updateBattleReportsUnreadCount() {
-        const icon_WarReport_1 = this.node.getChildByName('icon_WarReport_1');
-        const icon_WarReport_2 = this.node.getChildByName('icon_WarReport_2');
-        const icon_WarReport_3 = this.node.getChildByName('icon_WarReport_3');
-        const emergencyCountLabel = this.node.getChildByName('emergencyCountLabel').getComponent(Label);
-
-        const label = this.node.getChildByName('unreadCountLabel').getComponent(Label);
-        const count = 0;
-        if (count != 0) {
-            label.string = Math.min(count, 99).toString();
-            label.node.active = true;
-            icon_WarReport_1.active = false;
-            icon_WarReport_2.active = true;
-        } else {
-            label.node.active = false;
-            icon_WarReport_1.active = true;
-            icon_WarReport_2.active = false;
+    //------------------------------- notify
+    private get_new_battle_report_res = (e: any) => {
+        const p: s2c_user.Iget_new_battle_report_res = e.data;
+        if (p.res !== 1) {
+            return;
         }
+        this._reports = p.data;
+        this._refreshRedPoint();
+    };
 
-        const emergencyReportCount = 0;
-        if (emergencyReportCount != 0) {
-            icon_WarReport_3.active = true;
-            emergencyCountLabel.string = Math.min(emergencyReportCount, 99).toString();
-            emergencyCountLabel.node.active = true;
-        } else {
-            icon_WarReport_3.active = false;
-            emergencyCountLabel.node.active = false;
+    private receive_new_battle_report_reward_res = (e: any) => {
+        const p: s2c_user.Ireceive_new_battle_report_reward_res = e.data;
+        if (p.res !== 1) {
+            return;
         }
-    }
-
-    onBattleReportListChanged() {
-        this.updateBattleReportsUnreadCount();
-    }
+        for (const report of this._reports) {
+            if (report.id == p.id) {
+                report.getted = true;
+                break;
+            }
+        }
+        this._refreshRedPoint();    }
 }
