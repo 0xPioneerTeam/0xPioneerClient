@@ -1,4 +1,20 @@
-import { _decorator, Button, Component, EditBox, EventTouch, instantiate, Label, Layout, Node, ProgressBar, Slider, tween, v3 } from "cc";
+import {
+    _decorator,
+    Button,
+    Component,
+    EditBox,
+    EventTouch,
+    instantiate,
+    Label,
+    Layout,
+    Node,
+    ProgressBar,
+    RichText,
+    RichTextComponent,
+    Slider,
+    tween,
+    v3,
+} from "cc";
 import ViewController from "../../BasicView/ViewController";
 import { MapPioneerActionType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
@@ -32,13 +48,15 @@ export class PlayerDispatchDetailUI extends ViewController {
     private _infoItem: Node = null;
     private _atkLabel: Label = null;
     private _defLabel: Label = null;
+    private _toeLabel: Label = null;
     private _hpLabel: Label = null;
     private _speedLabel: Label = null;
     private _intLabel: Label = null;
 
+    private _troopIconOwnLabel: Label = null;
     private _troopProgress: ProgressBar = null;
     private _troopSlider: Slider = null;
-    private _troopLeftLabel: Label = null;
+    private _troopLeftLabel: RichText = null;
     private _troopAddEditBox: EditBox = null;
 
     private _troopSelectView: Node = null;
@@ -66,17 +84,18 @@ export class PlayerDispatchDetailUI extends ViewController {
         // this.node.getChildByPath("ContentView/AddTroopView/CompleteButton/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200039");
         // this.node.getChildByPath("ContentView/AddTroopView/ConsriptionButton/name").getComponent(Label).string = LanMgr.getLanById("lanreplace200040");
 
-
         this._infoItem = this.node.getChildByPath("ContentView/Info");
         this._atkLabel = this.node.getChildByPath("ContentView/PropertyView/ATK/Value").getComponent(Label);
         this._defLabel = this.node.getChildByPath("ContentView/PropertyView/DEF/Value").getComponent(Label);
+        this._toeLabel = this.node.getChildByPath("ContentView/PropertyView/TOE/Value").getComponent(Label);
         this._hpLabel = this.node.getChildByPath("ContentView/PropertyView/HP/Value").getComponent(Label);
         this._speedLabel = this.node.getChildByPath("ContentView/PropertyView/SPD/Value").getComponent(Label);
         this._intLabel = this.node.getChildByPath("ContentView/PropertyView/INT/Value").getComponent(Label);
 
+        this._troopIconOwnLabel = this.node.getChildByPath("ContentView/AddTroopView/img_Select/Value").getComponent(Label);
         this._troopProgress = this.node.getChildByPath("ContentView/AddTroopView/ProgressBar").getComponent(ProgressBar);
         this._troopSlider = this.node.getChildByPath("ContentView/AddTroopView/ProgressBar/Slider").getComponent(Slider);
-        this._troopLeftLabel = this.node.getChildByPath("ContentView/AddTroopView/LeftValue").getComponent(Label);
+        this._troopLeftLabel = this.node.getChildByPath("ContentView/AddTroopView/LeftValue").getComponent(RichText);
         this._troopAddEditBox = this.node.getChildByPath("ContentView/AddTroopView/Control/Value").getComponent(EditBox);
 
         this._troopSelectView = this.node.getChildByPath("TroopSelectContentView");
@@ -96,7 +115,6 @@ export class PlayerDispatchDetailUI extends ViewController {
 
     protected viewDidStart(): void {
         super.viewDidStart();
-
 
         NotificationMgr.addListener(NotificationName.RESOURCE_GETTED, this._onResourceGetted, this);
         NotificationMgr.addListener(NotificationName.INNER_BUILDING_TRAIN_FINISHED, this._onNewTroopGetted, this);
@@ -172,6 +190,7 @@ export class PlayerDispatchDetailUI extends ViewController {
         let troopName = "";
         let troopLevel = null;
         let ownedTroopNum = 0;
+        let hpRate: number = 1;
         if (this._selectTroopId != null) {
             if (this._selectTroopId == "0") {
                 troopName = "Common";
@@ -180,6 +199,7 @@ export class PlayerDispatchDetailUI extends ViewController {
                 const troopConfig = TroopsConfig.getById(this._selectTroopId);
                 troopName = LanMgr.getLanById(troopConfig.name);
                 troopLevel = parseInt(troopConfig.id) - 50000 + 1;
+                hpRate = parseInt(troopConfig.hp_training);
             }
             ownedTroopNum = this._getOwnedTroopNum(this._selectTroopId);
         }
@@ -204,7 +224,8 @@ export class PlayerDispatchDetailUI extends ViewController {
         this._infoItem.getComponent(PlayerInfoItem).refreshUI(info);
         this._atkLabel.string = info.attack.toString();
         this._defLabel.string = info.defend.toString();
-        this._hpLabel.string = info.hpMax.toString();
+        this._toeLabel.string = info.hpMax.toString();
+        this._hpLabel.string = (this._addTroopNum * hpRate).toString();
         this._speedLabel.string = info.speed.toString();
         this._intLabel.string = nft.iq.toString();
 
@@ -216,7 +237,8 @@ export class PlayerDispatchDetailUI extends ViewController {
             this._troopProgress.progress = this._addTroopNum / addMaxNum;
             this._troopSlider.progress = this._addTroopNum / addMaxNum;
         }
-        this._troopLeftLabel.string = Math.max(0, ownedTroopNum - this._addTroopNum).toString();
+        this._troopIconOwnLabel.string = ownedTroopNum.toString();
+        this._troopLeftLabel.string = `Preparation count: <color=#8EDA61>${Math.max(0, ownedTroopNum - this._addTroopNum).toString()}</color>`;
         this._troopAddEditBox.string = this._addTroopNum.toString();
 
         let canGenerate: boolean = false;
@@ -400,7 +422,7 @@ export class PlayerDispatchDetailUI extends ViewController {
         if (this._selectTroopId == "0") {
             await UIPanelManger.inst.pushPanel(UIName.RecruitUI);
         } else {
-           await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
+            await UIPanelManger.inst.pushPanel(UIName.ExerciseUI);
         }
     }
     private onTapOneClickSupplement() {
@@ -466,5 +488,5 @@ export class PlayerDispatchDetailUI extends ViewController {
                 break;
             }
         }
-    }
+    };
 }

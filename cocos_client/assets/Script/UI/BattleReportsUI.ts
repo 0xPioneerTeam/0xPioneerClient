@@ -9,6 +9,7 @@ import { DataMgr } from "../Data/DataMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import { s2c_user, share } from "../Net/msg/WebsocketMsg";
+import { read } from "original-fs";
 
 const { ccclass } = _decorator;
 
@@ -27,79 +28,17 @@ export class BattleReportsUI extends ViewController {
     private _markAllAsReadButton: Button = null;
     private _deleteReadReportsButton: Button = null;
 
-    private _filterState: share.Inew_battle_report_type = null;
-    private _reports: share.Inew_battle_report_data[] = [];
+    private _filterState: share.Inew_battle_report_type = share.Inew_battle_report_type.all;
+    private _perPageNum: number = 20;
+    private _reportMap: Map<number, { page: number; data: share.Inew_battle_report_data[] }> = new Map();
 
     private readonly buttonLabelActiveColor: Color = new Color("433824");
     private readonly buttonLabelGrayColor: Color = new Color("817674");
 
-    public refreshUI() {
-        this._refreshFilterGroup();
-
-        for (const item of this._reportUiItems) {
-            item.node.destroy();
-        }
-        this._reportUiItems = [];
-
-        const reports = this._getReportsFiltered();
-        if (!reports) return;
-
-        // traverse backwards to display later report first
-        for (let i = reports.length - 1; i >= 0; i--) {
-            const report = reports[i];
-            let uiItem: BattleReportListItemUI;
-            switch (report.type) {
-                case share.Inew_battle_report_type.fight:
-                    uiItem = instantiate(this._fightTypeItemTemplate).getComponent(BattleReportListItemUI);
-                    break;
-                case share.Inew_battle_report_type.mining:
-                    uiItem = instantiate(this._miningTypeItemTemplate).getComponent(BattleReportListItemUI);
-                    break;
-                case share.Inew_battle_report_type.task:
-                    uiItem = instantiate(this._taskTypeItemTemplate).getComponent(BattleReportListItemUI);
-                    break;
-                case share.Inew_battle_report_type.explore:
-                    uiItem = instantiate(this._exploreTypeItemTemplate).getComponent(BattleReportListItemUI);
-                    break;
-                
-
-                default:
-                    console.error(`Unknown report type: ${report.type}`);
-                    continue;
-            }
-
-            this._reportUiItems.push(uiItem);
-            uiItem.initWithReportData(report);
-            uiItem.node.setParent(this._fightTypeItemTemplate.parent);
-            uiItem.node.active = true;
-        }
-
-        // if (this._permanentLastItem) {
-        //     this._permanentLastItem.setSiblingIndex(-1);
-        // }
-    }
-
     public refreshUIAndResetScroll() {
-        this.refreshUI();
+        this._refreshUI();
         this._reportListScrollView.stopAutoScroll();
         this._reportListScrollView.scrollToTop();
-    }
-
-    public refreshUIWithKeepScrollPosition() {
-        // save scroll state
-        const scrollOffsetBefore = this._reportListScrollView.getScrollOffset();
-        const layoutComp = this._fightTypeItemTemplate.parent.getComponent(Layout);
-        const scrollViewContentHeightBefore = layoutComp.getComponent(UITransform).height;
-
-        this.refreshUI();
-        layoutComp.updateLayout();
-
-        // restore scroll position and keep the position of items on screen
-        const heightDiff = layoutComp.getComponent(UITransform).height - scrollViewContentHeightBefore;
-        if (heightDiff > 0) {
-            this._reportListScrollView.stopAutoScroll();
-            this._reportListScrollView.scrollToOffset(scrollOffsetBefore.add2f(0, heightDiff));
-        }
     }
 
     protected viewDidLoad(): void {
@@ -126,23 +65,21 @@ export class BattleReportsUI extends ViewController {
         this._markAllAsReadButton = this.node.getChildByPath("frame/markAllAsReadButton").getComponent(Button);
         this._markAllAsReadButton.node.on(Button.EventType.CLICK, this._onClickMarkAllAsRead, this);
 
-        // hide button 
+        // hide button
         this._pendingButton.node.active = false;
         this._deleteReadReportsButton.node.active = false;
         this._markAllAsReadButton.node.active = false;
 
         this._reportListScrollView = this.node.getChildByPath("frame/ScrollView").getComponent(ScrollView);
 
-
         NetworkMgr.websocket.on("get_new_battle_report_res", this.get_new_battle_report_res);
         NetworkMgr.websocket.on("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
 
-        // request data
-        NetworkMgr.websocketMsg.get_new_battle_report({});
+        this._refreshUI();
     }
 
     protected viewDidAppear(): void {
-        super.viewDidAppear();        
+        super.viewDidAppear();
     }
 
     protected viewUpdate(dt: number): void {
@@ -154,6 +91,60 @@ export class BattleReportsUI extends ViewController {
         NetworkMgr.websocket.off("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
     }
 
+    private _refreshUI() {
+        this._refreshFilterGroup();
+
+        for (const item of this._reportUiItems) {
+            item.node.destroy();
+        }
+        this._reportUiItems = [];
+
+        const data = this._getReportsFiltered();
+        if (data == null) {
+            NetworkMgr.websocketMsg.get_new_battle_report({
+                type: this._filterState,
+                page: 1,
+                num: this._perPageNum,
+            });
+            return;
+        }
+        // traverse backwards to display later report first
+        for (let i = 0; i < data.data.length; i++) {
+            const report = data.data[i];
+            let uiItem: BattleReportListItemUI;
+            switch (report.type) {
+                case share.Inew_battle_report_type.fight:
+                    uiItem = instantiate(this._fightTypeItemTemplate).getComponent(BattleReportListItemUI);
+                    break;
+                case share.Inew_battle_report_type.mining:
+                    uiItem = instantiate(this._miningTypeItemTemplate).getComponent(BattleReportListItemUI);
+                    break;
+                case share.Inew_battle_report_type.task:
+                    uiItem = instantiate(this._taskTypeItemTemplate).getComponent(BattleReportListItemUI);
+                    break;
+                case share.Inew_battle_report_type.explore:
+                    uiItem = instantiate(this._exploreTypeItemTemplate).getComponent(BattleReportListItemUI);
+                    break;
+
+                default:
+                    console.error(`Unknown report type: ${report.type}`);
+                    continue;
+            }
+
+            this._reportUiItems.push(uiItem);
+            uiItem.initWithReportData(report);
+            uiItem.node.setParent(this._fightTypeItemTemplate.parent);
+            uiItem.node.active = true;
+        }
+        if (this._reportUiItems.length > 0) {
+            this._permanentLastItem.active = true;
+            this._permanentLastItem.setSiblingIndex(-1);
+            this._permanentLastItem.getChildByPath("NoMoreTip").active = data.page == -1;
+            this._permanentLastItem.getChildByPath("GetModeButton").active = data.page != -1;
+        } else {
+            this._permanentLastItem.active = false;
+        }
+    }
 
     private _onClickMarkAllAsRead() {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -182,7 +173,7 @@ export class BattleReportsUI extends ViewController {
             Button.EventType.CLICK,
             () => {
                 GameMusicPlayMgr.playTapButtonEffect();
-                this._filterState = null;
+                this._filterState = share.Inew_battle_report_type.all;
                 this.refreshUIAndResetScroll();
             },
             this
@@ -239,16 +230,13 @@ export class BattleReportsUI extends ViewController {
         }
     }
 
-    private _getReportsFiltered() {
-        if (this._reports.length == 0) {
-            return [];
+    private _getReportsFiltered(): { page: number; data: share.Inew_battle_report_data[] } {
+        if (!this._reportMap.has(this._filterState)) {
+            return null;
         }
-        if (this._filterState == null) {
-            return this._reports;
-        }
-        return this._reports.filter((item) => item.type == this._filterState);
+        const data = this._reportMap.get(this._filterState);
+        return data;
     }
-
     //#endregion
 
     //---------------------------------------------------
@@ -257,26 +245,52 @@ export class BattleReportsUI extends ViewController {
         GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.popPanel(this.node);
     }
+    private onTapGetMore() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        let reportData = this._reportMap.get(this._filterState);
+        if (reportData == null) {
+            return;
+        }
+        NetworkMgr.websocketMsg.get_new_battle_report({
+            type: this._filterState,
+            page: reportData.page,
+            num: this._perPageNum,
+        });
+    }
     //------------------------------ websocket
     private get_new_battle_report_res = (e: any) => {
         const p: s2c_user.Iget_new_battle_report_res = e.data;
         if (p.res !== 1) {
             return;
         }
-        this._reports = p.data;
-        this.refreshUIAndResetScroll();
-    }
+        let reportData = this._reportMap.get(this._filterState);
+        if (reportData == null) {
+            reportData = { page: 1, data: [] };
+            this._reportMap.set(this._filterState, reportData);
+        }
+        if (p.data.length >= this._perPageNum) {
+            reportData.page += 1;
+        } else {
+            reportData.page = -1;
+        }
+        reportData.data.push(...p.data);
+        this._refreshUI();
+    };
     private receive_new_battle_report_reward_res = (e: any) => {
         const p: s2c_user.Ireceive_new_battle_report_reward_res = e.data;
         if (p.res !== 1) {
             return;
         }
-        for (let i = 0; i < this._reports.length; i++) {
-            if (p.id == this._reports[i].id) {
-                this._reports[i].getted = true;
+        let reportData = this._reportMap.get(this._filterState);
+        if (reportData == null) {
+            return;
+        }
+        for (let i = 0; i < reportData.data.length; i++) {
+            if (p.id == reportData.data[i].id) {
+                reportData.data[i].getted = true;
                 break;
             }
         }
-        this.refreshUI();
-    }
+        this._refreshUI();
+    };
 }

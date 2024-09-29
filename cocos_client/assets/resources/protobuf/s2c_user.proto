@@ -116,7 +116,12 @@ message get_user_settlement_info_res {
 }
 message get_new_battle_report_res {
     required int32 res = 1;
-    repeated share.new_battle_report_data data = 2;
+    optional int32 type = 2;
+    repeated share.new_battle_report_data data = 3;
+}
+message get_new_battle_report_red_point_res {
+    required int32 res = 1;
+    optional uint32 num = 2;
 }
 message receive_new_battle_report_reward_res {
     required int32 res = 1;

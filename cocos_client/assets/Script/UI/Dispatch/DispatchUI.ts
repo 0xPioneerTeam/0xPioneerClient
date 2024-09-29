@@ -64,7 +64,8 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
         this.node.getChildByPath("ContentView/ListButton/Label").getComponent(Label).string = LanMgr.getLanById("850000");
 
         const localReturn = localStorage.getItem("__interactReturn");
-        this._isReturn = localReturn == "false" ? false : true;
+        this._isReturn = localReturn == "true" ? true : false;
+
 
         this._returnTitle = this.node.getChildByPath("ContentView/ReturnTitle");
         this._returnSwitchButton = this.node.getChildByPath("ContentView/ReturnSwitchButton");

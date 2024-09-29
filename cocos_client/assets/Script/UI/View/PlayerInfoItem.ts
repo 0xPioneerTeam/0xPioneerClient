@@ -1,6 +1,6 @@
 import { _decorator, Color, Component, Label, Layout, Node, ProgressBar } from "cc";
 import { MapPioneerActionType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
-import { LanMgr } from "../../Utils/Global";
+import { GameMgr, LanMgr } from "../../Utils/Global";
 import { DataMgr } from "../../Data/DataMgr";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
@@ -107,21 +107,9 @@ export class PlayerInfoItem extends Component {
         }
         this.levelLabel.string = "Lv." + nft.level;
 
-        let hpMax: number = 0;
-        let hp: number = info.hp;
-        if (info.troopId != null) {
-            if (info.troopId == "0") {
-                hpMax = info.hpMax;
-            } else {
-                const troopConfig = TroopsConfig.getById(info.troopId);
-                if (troopConfig != null) {
-                    hpMax = info.hpMax * parseInt(troopConfig.hp_training);
-                }
-            }
-        }
-
-        this.hpProgress.progress = hp / hpMax;
-        this.hpLabel.string = hp + "/" + hpMax;
+        const toeNum = GameMgr.convertHpToTroopNum(info.hp, info.troopId);
+        this.hpProgress.progress = toeNum / info.hpMax;
+        this.hpLabel.string = toeNum + "/" + info.hpMax;
         
         this.apProgress.progress = info.energy / info.energyMax;
         this.apLabel.string = info.energy + "/" + info.energyMax;

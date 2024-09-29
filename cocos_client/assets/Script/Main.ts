@@ -253,8 +253,6 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("borad_cast_msg", DataMgr.borad_cast_msg);
 
         NotificationMgr.addListener(NotificationName.FAKE_ROOKIESTEP_CHANGE, this._onFakeRookieStepChange, this);
-   
-        
     }
 
     private async reconnect() {

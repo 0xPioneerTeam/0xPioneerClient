@@ -33,7 +33,8 @@ export enum protobuf_c2s {
     get_battle_report = 500,
     get_user_settlement_info = 501,
     get_new_battle_report = 502,
-    receive_new_battle_report_reward = 503,
+    get_new_battle_report_red_point = 503,
+    receive_new_battle_report_reward = 504,
 
     // ------ player ------
     // player: talk
@@ -157,7 +158,8 @@ export enum protobuf_s2c {
     get_battle_report_res = 10600,
     get_user_settlement_info_res = 10601,
     get_new_battle_report_res = 10602,
-    receive_new_battle_report_reward_res = 10603,
+    get_new_battle_report_red_point_res = 10603,
+    receive_new_battle_report_reward_res = 10604,
 
     // ------ player ------
     // player: talk

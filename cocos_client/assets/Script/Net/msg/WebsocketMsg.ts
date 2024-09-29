@@ -338,6 +338,9 @@ export class WebsocketMsg {
     public get_new_battle_report(d: c2s_user.Iget_new_battle_report) {
         this.send_packet("get_new_battle_report", d);
     }
+    public get_new_battle_report_red_point(d: c2s_user.Iget_new_battle_report_red_point) {
+        this.send_packet("get_new_battle_report_red_point", d);
+    }
     public receive_new_battle_report_reward(d: c2s_user.Ireceive_new_battle_report_reward) {
         this.send_packet("receive_new_battle_report_reward", d);
     }
@@ -614,7 +617,12 @@ export namespace c2s_user {
 
     export interface Iget_user_settlement_info {}
 
-    export interface Iget_new_battle_report {}
+    export interface Iget_new_battle_report {
+        type: number;
+        page: number;
+        num: number;
+    }
+    export interface Iget_new_battle_report_red_point {}
     export interface Ireceive_new_battle_report_reward {
         id: number;
     }
@@ -913,7 +921,12 @@ export namespace s2c_user {
 
     export interface Iget_new_battle_report_res {
         res: number;
+        type: share.Inew_battle_report_type;
         data: share.Inew_battle_report_data[];
+    }
+    export interface Iget_new_battle_report_red_point_res {
+        res: number;
+        num: number;
     }
     export interface Ireceive_new_battle_report_reward_res {
         res: number;
@@ -1313,6 +1326,7 @@ export namespace share {
     }
 
     export enum Inew_battle_report_type {
+        all = -1,
         fight = 0,
         mining,
         task,

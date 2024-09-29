@@ -16,5 +16,6 @@ export interface TroopExerciseObject {
     ownedNum: number;
     exerciseNum: number;
     costTime: number;
+    hpRate: number;
     costResource: [string, number][];
 }
