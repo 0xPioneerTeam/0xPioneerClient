@@ -25,8 +25,6 @@ export enum UIName {
 
     WorldTreasureTipUI = "abresources/prefab/ui/WorldTreasureTipUI",
 
-    TavernUI = "abresources/prefab/ui/TavernUI",
-
     CivilizationLevelUI = "abresources/prefab/ui/clevel/CivilizationLevelUI",
     CollectWalletUI = "abresources/prefab/ui/wallet/CollectWalletUI",
 
@@ -44,6 +42,8 @@ export enum UIName {
     RelicTowerUI = "abresources/prefab/ui/builidng_action/RelicTowerUI",
     RelicTowerSelectUI = "abresources/prefab/ui/builidng_action/RelicTowerSelectUI",
     ExerciseUI = "abresources/prefab/ui/builidng_action/ExerciseUI",
+
+    WorldRankUI = "abresources/prefab/ui/world_rank/WorldRankUI",
 
     // bundle 2
     NewBuildingUpgradeUI = "abresources_2/prefab/ui/NewBuildingUpgradeUI",

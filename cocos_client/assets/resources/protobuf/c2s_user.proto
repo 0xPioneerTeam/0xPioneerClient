@@ -75,7 +75,12 @@ message check_unused_tx_status {
 // ------ get data ------
 message get_battle_report { }
 message get_user_settlement_info { }
-message get_new_battle_report { }
+message get_new_battle_report {
+    required int32 type = 1; //new_battle_report_type
+    required uint32 page = 2; // frome 1
+    required uint32 num = 3; 
+}
+message get_new_battle_report_red_point { }
 message receive_new_battle_report_reward {
     required uint32 id = 1;
 }

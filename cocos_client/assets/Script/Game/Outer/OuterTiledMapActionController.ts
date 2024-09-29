@@ -719,7 +719,7 @@ export class OuterTiledMapActionController extends ViewController {
                 }
                 if (pioneerUnqueId != null) {
                     const localReturn = localStorage.getItem("__interactReturn");
-                    const isReturn = localReturn == "false" ? false : true;
+                    const isReturn = localReturn == "true" ? true : false;
                     this._pioneerInteract(pioneerUnqueId, actionType, movePath, isReturn, stayBuilding, stayPioneer);
                     this._mapActionCursorView.hide();
                     this._shadowActionCursorView.hide();

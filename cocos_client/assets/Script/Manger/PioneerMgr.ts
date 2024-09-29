@@ -21,8 +21,6 @@ import { PioneersDataMgr } from "../Data/Save/PioneersDataMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { UIName } from "../Const/ConstUIDefine";
-import { TavernUI } from "../UI/Outer/TavernUI";
-import PioneerConfig from "../Config/PioneerConfig";
 
 export default class PioneerMgr {
     public initData() {
@@ -264,16 +262,6 @@ export default class PioneerMgr {
                             isReturn: this._checkActionSendParamRetrun(uniqueId),
                         });
                     }, interactDelayTime);
-                }
-            } else if (stayBuilding.type == MapBuildingType.tavern) {
-                if (pioneer.type == MapPioneerType.player) {
-                    const tavern = stayBuilding as MapBuildingTavernObject;
-                    if (tavern.tavernCountdownTime <= 0) {
-                        const result = await UIPanelManger.inst.pushPanel(UIName.TavernUI);
-                        if (result.success) {
-                            result.node.getComponent(TavernUI).configuration(stayBuilding.id);
-                        }
-                    }
                 }
             }
         }

@@ -93,6 +93,7 @@ export class ExerciseUI extends ViewController {
                 ownedNum: DataMgr.s.innerBuilding.getOwnedExecriseTroopNum(config.id),
                 exerciseNum: 0,
                 costTime: parseInt(config.time_training),
+                hpRate: parseInt(config.hp_training),
                 costResource: config.rec_cost_training,
             });
 
@@ -170,6 +171,7 @@ export class ExerciseUI extends ViewController {
                 item.getChildByPath("count").active = true;
                 item.getChildByPath("gp_lock").active = false;
                 item.getChildByPath("count/lbl_cav").getComponent(Label).string = data.name;
+                item.getChildByPath("count/SingleHp").getComponent(Label).string = "Single Soldier Hp: " +  data.hpRate.toString();
                 item.getChildByPath("count/lbl_count").getComponent(Label).string = data.exerciseNum.toString();
 
                 let curOtherGenerateNum = 0;

@@ -93,7 +93,7 @@ export default class GameMgr {
     }
 
     public convertHpToTroopNum(hp: number, troopId: string) {
-        if (troopId == "0") {
+        if (troopId == null || troopId == "0") {
             return Math.ceil(hp);
         } else {
             const troop_config = TroopsConfig.getById(troopId);
