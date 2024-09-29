@@ -299,6 +299,11 @@
     "eng": "Reward available",
     "tc": "可领奖"
   },
+  "104009": {
+    "id": "104009",
+    "eng": "No troops to replenish, please go recruit soldiers.",
+    "tc": "无兵力可补充，请前往招募士兵。"
+  },
   "105001": {
     "id": "105001",
     "eng": "Common",
@@ -5058,5 +5063,15 @@
     "id": "1100205",
     "eng": "Please follow the prompts to complete the beginner guide. Click on the dialog box above to receive the guide prompt.",
     "tc": "請按提示完成初學者指南。 点击上面的對話方塊以接收指南提示。"
+  },
+  "1100206": {
+    "id": "1100206",
+    "eng": "Automatically replenish troops for this character?",
+    "tc": "是否自動為該角色補充兵力？"
+  },
+  "1100207": {
+    "id": "1100207",
+    "eng": "Please go to the battle report interface to claim the reward.",
+    "tc": "獎勵請前往戰報介面領取。"
   }
 }
