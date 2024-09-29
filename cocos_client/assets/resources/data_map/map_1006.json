@@ -30,66 +30,6 @@
     "cost": 5
   },
   {
-    "id": "building_2",
-    "name": "110002",
-    "type": 3,
-    "show": 1,
-    "pos_type": 1,
-    "positions": [
-      14,
-      1
-    ],
-    "node": "swamp_jungle",
-    "level": 1,
-    "progress": 20,
-    "refresh_limit": 1,
-    "time": 15,
-    "resources": [
-      "8002",
-      100
-    ],
-    "quota": 1,
-    "exp": 0,
-    "event": "",
-    "des": "320005",
-    "hp": null,
-    "attack": null,
-    "winprogress": null,
-    "faction": 0,
-    "defendPioneerIds": [],
-    "cost": 5
-  },
-  {
-    "id": "building_3",
-    "name": "110003",
-    "type": 3,
-    "show": 1,
-    "pos_type": 1,
-    "positions": [
-      5,
-      13
-    ],
-    "node": "oasis",
-    "level": 1,
-    "progress": 20,
-    "refresh_limit": 1,
-    "time": 15,
-    "resources": [
-      "8001",
-      100
-    ],
-    "quota": 1,
-    "exp": 0,
-    "event": "",
-    "des": "320005",
-    "hp": null,
-    "attack": null,
-    "winprogress": null,
-    "faction": 0,
-    "defendPioneerIds": [],
-    "cost": 5
-  },
-  {
     "id": "building_4",
     "name": "110001",
     "type": 3,
@@ -98,36 +38,6 @@
     "positions": [
       6,
       7
-    ],
-    "node": "sand_mineral",
-    "level": 1,
-    "progress": 20,
-    "refresh_limit": 1,
-    "time": 15,
-    "resources": [
-      "8003",
-      100
-    ],
-    "quota": 1,
-    "exp": 0,
-    "event": "",
-    "des": "320005",
-    "hp": null,
-    "attack": null,
-    "winprogress": null,
-    "faction": 0,
-    "defendPioneerIds": [],
-    "cost": 5
-  },
-  {
-    "id": "building_5",
-    "name": "110001",
-    "type": 3,
-    "show": 1,
-    "pos_type": 1,
-    "positions": [
-      8,
-      1
     ],
     "node": "sand_mineral",
     "level": 1,
