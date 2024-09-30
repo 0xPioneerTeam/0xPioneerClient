@@ -4,13 +4,14 @@ import UIPanelManger from "../../Basic/UIPanelMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import { PlayerInfoItem } from "../View/PlayerInfoItem";
-import { UIName } from "../../Const/ConstUIDefine";
+import { HUDName, UIName } from "../../Const/ConstUIDefine";
 import { PlayerDispatchDetailUI } from "./PlayerDispatchDetailUI";
 import { MapPlayerPioneerObject } from "../../Const/PioneerDefine";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import { s2c_user } from "../../Net/msg/WebsocketMsg";
+import { GameMgr } from "../../Utils/Global";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerDispatchListUI")
@@ -67,6 +68,8 @@ export class PlayerDispatchListUI extends ViewController {
             view.setParent(this._playerContentView);
             view.getComponent(PlayerInfoItem).refreshUI(player);
             view.getComponent(Button).clickEvents[0].customEventData = this._showPlayers.length.toString();
+            view.getChildByPath("ExtraView/ToeAddButton").getComponent(Button).clickEvents[0].customEventData = this._showPlayers.length.toString();
+            view.getChildByPath("ExtraView/EnergyAddButton").getComponent(Button).clickEvents[0].customEventData = this._showPlayers.length.toString();
 
             this._showPlayers.push(player);
         }
@@ -89,6 +92,18 @@ export class PlayerDispatchListUI extends ViewController {
             return;
         }
         result.node.getComponent(PlayerDispatchDetailUI).configuration(this._showPlayers, index);
+    }
+    private async onTapEnergy(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const index = parseInt(customEventData);
+        if (index < 0 || index > this._showPlayers.length - 1) {
+            return;
+        }
+        const player = this._showPlayers[index];
+        if (player == undefined) {
+            return;
+        }
+        GameMgr.showBuyEnergyTip(player.uniqueId);
     }
 
     //------------------------ notification
