@@ -3771,8 +3771,8 @@
   },
   "900045": {
     "id": "900045",
-    "eng": "Consume 5% of the troop strength to obtain a random item",
-    "tc": "消耗5%兵力，獲得一個隨機道具"
+    "eng": "The abandoned base where soldiers may die during excavation due to encountering traps",
+    "tc": "挖掘過程可能會因遭遇機關而有士兵死亡的廢棄基地"
   },
   "900046": {
     "id": "900046",
@@ -3944,6 +3944,311 @@
     "eng": "A canyon rumored to be haunted by giant beasts",
     "tc": "傳聞有巨獸出沒的峽谷"
   },
+  "901001": {
+    "id": "901001",
+    "eng": "A deserted base appears in front of you. It was once a key location in the war and may still contain leftover weapons, but it is also filled with traps.",
+    "tc": "眼前出現了一個廢棄基地，基地曾是戰爭中的關鍵地點，現在裡面可能還殘存著武器，但也佈滿了陷阱。"
+  },
+  "901002": {
+    "id": "901002",
+    "eng": "The atmosphere in the forest feels strange, full of peculiar energy. Rare items may be hidden here, but the area is also swarming with dangerous magical creatures.",
+    "tc": "森林中的環境充滿了異常的氣氛，充滿了奇異的能量。這裡或許藏有稀有的道具，但也充斥著危險的魔物。"
+  },
+  "901003": {
+    "id": "901003",
+    "eng": "The war-torn tower might house important war relics, but the structure is highly unstable and could collapse at any moment.",
+    "tc": "戰爭遺留下的高塔中可能藏有重要的戰爭遺物，但塔的結構已經極為不穩定，可能隨時坍塌。"
+  },
+  "901004": {
+    "id": "901004",
+    "eng": "This was a wartime shelter, and it might hold valuable supplies, but it could also have been occupied by hostile survivors.",
+    "tc": "這是戰爭期間的避難所，裡面可能儲存著豐富的補給，但也可能已經被其他敵對倖存者佔據。"
+  },
+  "901005": {
+    "id": "901005",
+    "eng": "Enemy forces have taken over this city. They control important resources. While there are plenty of supplies here, engaging in direct conflict may lead to a large-scale battle.",
+    "tc": "敵對勢力佔領了這座城市，他們控制著重要的資源。雖然這裡有大量物資，但正面衝突可能會引發大規模戰鬥。"
+  },
+  "901006": {
+    "id": "901006",
+    "eng": "You’ve discovered a large number of crates, though it's unclear if they contain the supplies you need.",
+    "tc": "你發現了大量的箱子，不知其中是否裝有你需要的物資。"
+  },
+  "901007": {
+    "id": "901007",
+    "eng": "You’ve found a small number of crates, but it's unclear if they contain the supplies you need.",
+    "tc": "你發現了少量的箱子，不知其中是否裝有你需要的物資。"
+  },
+  "901008": {
+    "id": "901008",
+    "eng": "You find an ancient treasure chest in the ruins, covered with mysterious runes that emit a faint glow. The chest looks intact, possibly containing valuable treasures or powerful equipment, but it may also hide dangers or curses.",
+    "tc": "你在一片廢墟中發現了一個古老的寶箱，表面佈滿了神秘的符文，散發著微弱的光芒。寶箱看起來完好無損，可能藏有豐富的寶藏或強大的裝備，但也可能隱藏著危險或詛咒。"
+  },
+  "901009": {
+    "id": "901009",
+    "eng": "You encounter a group of soldiers fleeing from enemy forces. They look exhausted and ask for shelter. Taking them in might strengthen your forces, but their loyalty is uncertain.",
+    "tc": "你在前行的路上遇到了一群從敵對勢力中逃亡的士兵，他們看起來精疲力盡，向你尋求庇護。接納他們可能會增強你的力量，但他們的忠誠度存疑。"
+  },
+  "901010": {
+    "id": "901010",
+    "eng": "You and your troops discover a hidden hot spring in a barren wasteland. The warm water emanates a healing aura. The spring contains mysterious minerals that can help restore your soldiers' stamina and morale.",
+    "tc": "你和部隊在一片荒蕪的廢土中發現了一處隱秘的溫泉，溫暖的水流散發出療癒的氣息。溫泉水中含有神秘的礦物質，能夠幫助恢復士兵的體力和士氣。"
+  },
+  "901011": {
+    "id": "901011",
+    "eng": "You and your troops delve into a dark spider's nest, surrounded by massive webs. You hear faint whispers and the sound of scuttling. You feel uneasy.",
+    "tc": "你和部隊深入一片黑暗的蜘蛛巢穴，周圍佈滿了巨大的蜘蛛網，隱隱約約聽到低語聲和輕微的爬行聲。你感到一陣不安。"
+  },
+  "901012": {
+    "id": "901012",
+    "eng": "At the heart of the nest, you find a thread shimmering with faint light, seemingly infused with mysterious energy. Someone appears to be trapped in it.",
+    "tc": "在巢穴的中心，你發現了一條閃爍著微光的蛛絲，似乎蘊含著神秘的能量。好像有人被困在其中。"
+  },
+  "901013": {
+    "id": "901013",
+    "eng": "You encounter a rebel faction opposing the current ruling order. Their leader proposes an alliance, claiming that together you can overthrow the enemy forces for mutual gain, but you know he has his own ambitions.",
+    "tc": "你遇到了一支反抗現有統治秩序的叛軍，他們的領袖向你提出合作，聲稱一起推翻現有的敵對勢力將帶來共同的利益，但你知道他也有自己的野心。"
+  },
+  "901014": {
+    "id": "901014",
+    "eng": "You discover an altar radiating an evil aura, with food offerings placed upon it.",
+    "tc": "你發現了一個散發著邪惡氣息的祭壇，祭壇上供奉著很多食物。"
+  },
+  "901015": {
+    "id": "901015",
+    "eng": "Your troops encounter an exploration team. They share that they’ve lost many members during their mission and request to borrow some of your soldiers to complete the exploration, offering a share of the findings in return.",
+    "tc": "你的部隊遇到了一個探索小隊，在與他們交談的過程中得知他們因為探索損失了很多成員，他們想向你借兵來完成探索，並願意與你分享探索收益。"
+  },
+  "902001": {
+    "id": "902001",
+    "eng": "Raid the base",
+    "tc": "突襲基地"
+  },
+  "902002": {
+    "id": "902002",
+    "eng": "Avoid it",
+    "tc": "避而遠之"
+  },
+  "902003": {
+    "id": "902003",
+    "eng": "Split your troops into two teams",
+    "tc": "兵分兩路"
+  },
+  "902004": {
+    "id": "902004",
+    "eng": "Full army assault",
+    "tc": "全軍突擊"
+  },
+  "902005": {
+    "id": "902005",
+    "eng": "Explore the tower",
+    "tc": "探索高塔"
+  },
+  "902006": {
+    "id": "902006",
+    "eng": "Avoid it",
+    "tc": "避而遠之"
+  },
+  "902007": {
+    "id": "902007",
+    "eng": "Raid the shelter",
+    "tc": "突襲避難所"
+  },
+  "902008": {
+    "id": "902008",
+    "eng": "Sneak in quietly",
+    "tc": "偷偷潛入"
+  },
+  "902009": {
+    "id": "902009",
+    "eng": "Send a small team",
+    "tc": "小隊潛入"
+  },
+  "902010": {
+    "id": "902010",
+    "eng": "Launch a frontal assault",
+    "tc": "正面強攻"
+  },
+  "902011": {
+    "id": "902011",
+    "eng": "Open the crates",
+    "tc": "打開箱子"
+  },
+  "902012": {
+    "id": "902012",
+    "eng": "Open them carefully",
+    "tc": "冒險打開"
+  },
+  "902013": {
+    "id": "902013",
+    "eng": "Accept them into your ranks",
+    "tc": "接納他們"
+  },
+  "902014": {
+    "id": "902014",
+    "eng": "Rest by the hot spring",
+    "tc": "在溫泉旁停下"
+  },
+  "902015": {
+    "id": "902015",
+    "eng": "Proceed cautiously",
+    "tc": "選擇小心前進"
+  },
+  "902016": {
+    "id": "902016",
+    "eng": "Rush into the nest",
+    "tc": "快速衝進巢穴"
+  },
+  "902017": {
+    "id": "902017",
+    "eng": "Rescue the trapped person",
+    "tc": "解救被困人"
+  },
+  "902018": {
+    "id": "902018",
+    "eng": "Search for treasure",
+    "tc": "尋找寶藏"
+  },
+  "902019": {
+    "id": "902019",
+    "eng": "Offer food and form an alliance",
+    "tc": "提供食物遞交結盟"
+  },
+  "902020": {
+    "id": "902020",
+    "eng": "Refuse the alliance",
+    "tc": "拒絕結盟"
+  },
+  "902021": {
+    "id": "902021",
+    "eng": "Steal the food",
+    "tc": "偷走食物"
+  },
+  "902022": {
+    "id": "902022",
+    "eng": "Defeat the cultists",
+    "tc": "擊敗邪教徒"
+  },
+  "902023": {
+    "id": "902023",
+    "eng": "Agree to lend soldiers",
+    "tc": "同意借兵"
+  },
+  "903001": {
+    "id": "903001",
+    "eng": "It may yield resources, but it could also trigger defense mechanisms.",
+    "tc": "可能獲得資源，也可能會觸發防禦機制。"
+  },
+  "903002": {
+    "id": "903002",
+    "eng": "Abandon the base investigation.",
+    "tc": "放棄調查基地。"
+  },
+  "903003": {
+    "id": "903003",
+    "eng": "Send a split force to minimize the risk of your entire army being trapped, though this increases the overall risk.",
+    "tc": "分兵進入，這樣可以避免全軍陷入陷阱，但也面臨著更高的風險。"
+  },
+  "903004": {
+    "id": "903004",
+    "eng": "Lead your troops to forcefully traverse the forest. Though you’ll pass quickly, your forces may suffer irreversible damage.",
+    "tc": "帶領部隊強行穿越森林。雖然能夠快速通過，但部隊可能會遭遇侵蝕，部分士兵會受到不可逆轉的傷害。"
+  },
+  "903005": {
+    "id": "903005",
+    "eng": "Lead your troops to climb the tower. If it collapses, the entire squad could be in danger.",
+    "tc": "帶領部隊攀登高塔。如果塔坍塌，整個小隊可能會陷入危機。"
+  },
+  "903006": {
+    "id": "903006",
+    "eng": "Abandon the tower exploration.",
+    "tc": "放棄探索高塔。"
+  },
+  "903007": {
+    "id": "903007",
+    "eng": "Send your troops to raid the shelter. If successful, you may acquire valuable supplies, but soldiers may die, and there could be traps in the shelter.",
+    "tc": "派出部隊突襲避難所。如果成功，你可能獲得大量補給，但這也可能導致一些士兵陣亡，且避難所可能有陷阱。"
+  },
+  "903008": {
+    "id": "903008",
+    "eng": "Sneak in quietly to avoid combat, but the chances and amount of supplies found will decrease.",
+    "tc": "偷偷潛入，可以有效地避免戰鬥，但是找到補給的機率和數量也會降低。"
+  },
+  "903009": {
+    "id": "903009",
+    "eng": "Send a small team to infiltrate for an ambush. Success can lower the enemy's level, but failure will increase it.",
+    "tc": "派遣小隊潛入，進行偷襲。成功的話可以降低敵人的等級，如果偷襲失敗將會增加敵人等級。"
+  },
+  "903010": {
+    "id": "903010",
+    "eng": "Lead your forces in a frontal attack to reclaim the city. This will be a standard siege battle.",
+    "tc": "率領部隊正面進攻，強行奪回城市。這將是一場標準的攻城戰。"
+  },
+  "903011": {
+    "id": "903011",
+    "eng": "Gather supplies.",
+    "tc": "獲取物資。"
+  },
+  "903012": {
+    "id": "903012",
+    "eng": "You’re fully committed, ready to face any traps or monsters that may appear, while hoping to obtain powerful weapons, resources, or other useful items.",
+    "tc": "你將全力以赴，準備應對任何可能出現的陷阱或怪物，同時也期待能從中獲得強大的武器、資源或其他有用的物品。"
+  },
+  "903013": {
+    "id": "903013",
+    "eng": "This may increase your forces, but if they aren’t loyal, they could betray you at a crucial moment or become a burden by consuming resources.",
+    "tc": "這樣可以增加兵力，但如果他們不忠誠，可能在關鍵時刻背叛你，或者成為資源消耗的負擔。"
+  },
+  "903014": {
+    "id": "903014",
+    "eng": "You decide to rest your troops by the hot spring, letting them soak in the water to recover their strength and morale. This will replenish your forces.",
+    "tc": "你決定指揮部隊在溫泉中休息，浸泡在水中恢復疲憊的身心。這將會補充你部隊的兵力和士氣。"
+  },
+  "903015": {
+    "id": "903015",
+    "eng": "Try to quietly pass through the nest. If you're lucky, you might find hidden resources and regain some soldiers.",
+    "tc": "嘗試安靜地穿過巢穴。幸運的話，你可能會發現隱藏在暗處的資源，補充部分兵力。"
+  },
+  "903016": {
+    "id": "903016",
+    "eng": "Decide to rush into the nest, breaking through the spider webs. This may attract giant spiders lurking in the shadows to fight your troops.",
+    "tc": "決定快速衝進巢穴，打破蜘蛛網。可能會引來藏在角落裡的巨型蜘蛛與隊伍展開戰鬥。"
+  },
+  "903017": {
+    "id": "903017",
+    "eng": "If successful, your troops may be able to replenish some of their strength.",
+    "tc": "如果成功，你的部隊可能能夠補充一些兵力。"
+  },
+  "903018": {
+    "id": "903018",
+    "eng": "You follow the energy signals, searching the cave for unknown treasures, which may lead to combat.",
+    "tc": "你決定順著能量的感應，去尋找洞穴中是否有未知的寶藏，可能會發生戰鬥。"
+  },
+  "903019": {
+    "id": "903019",
+    "eng": "This may allow you to avoid a direct confrontation with the rebels.",
+    "tc": "這樣可以避免與叛軍的直接對抗。"
+  },
+  "903020": {
+    "id": "903020",
+    "eng": "You refuse to collaborate with the rebels. You will face their attacks head-on, but if victorious, you will gain the rebels' supplies.",
+    "tc": "你拒絕與叛軍合作，你將直面叛軍的進攻，但如果勝利你也將會得到叛軍的物資。"
+  },
+  "903021": {
+    "id": "903021",
+    "eng": "Take the food offerings.",
+    "tc": "獲得供奉的食物。"
+  },
+  "903022": {
+    "id": "903022",
+    "eng": "Defeat the cultists and possibly obtain even more food.",
+    "tc": "擊敗邪教徒，可能會獲得更多的食物。"
+  },
+  "903023": {
+    "id": "903023",
+    "eng": "Your troops decrease, but you gain exploration rewards.",
+    "tc": "部隊減少並獲得探索收益。"
+  },
   "910001": {
     "id": "910001",
     "eng": "",
@@ -4038,6 +4343,81 @@
     "id": "910019",
     "eng": "Beast Canyon",
     "tc": "巨獸峽谷"
+  },
+  "911001": {
+    "id": "911001",
+    "eng": "The abandoned base",
+    "tc": "廢棄的基地"
+  },
+  "911002": {
+    "id": "911002",
+    "eng": "Magic-polluted forest",
+    "tc": "被魔法污染的森林"
+  },
+  "911003": {
+    "id": "911003",
+    "eng": "Tower in the ruins",
+    "tc": "廢墟中的高塔"
+  },
+  "911004": {
+    "id": "911004",
+    "eng": "Underground shelter",
+    "tc": "地下避難所"
+  },
+  "911005": {
+    "id": "911005",
+    "eng": "Occupied city ruins",
+    "tc": "被佔領的城市廢墟"
+  },
+  "911006": {
+    "id": "911006",
+    "eng": "Large amount",
+    "tc": "大量的"
+  },
+  "911007": {
+    "id": "911007",
+    "eng": "Small amount",
+    "tc": "少量的"
+  },
+  "911008": {
+    "id": "911008",
+    "eng": "The temptation of the treasure chest",
+    "tc": "寶箱的誘惑"
+  },
+  "911009": {
+    "id": "911009",
+    "eng": "Encounter fleeing soldiers",
+    "tc": "遇到逃亡的士兵"
+  },
+  "911010": {
+    "id": "911010",
+    "eng": "Hot spring supplies",
+    "tc": "溫泉補給"
+  },
+  "911011": {
+    "id": "911011",
+    "eng": "The depths of the nest",
+    "tc": "深處的巢穴"
+  },
+  "911012": {
+    "id": "911012",
+    "eng": "Mysterious spider silk",
+    "tc": "神秘的蛛絲"
+  },
+  "911013": {
+    "id": "911013",
+    "eng": "Rebel leader",
+    "tc": "叛軍領袖"
+  },
+  "911014": {
+    "id": "911014",
+    "eng": "Evil ritual",
+    "tc": "邪惡祭祀"
+  },
+  "911015": {
+    "id": "911015",
+    "eng": "Borrowing soldiers",
+    "tc": "借兵"
   },
   "920010": {
     "id": "920010",
