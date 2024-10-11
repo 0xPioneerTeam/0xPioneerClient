@@ -51,6 +51,12 @@ export enum ConfigType {
     InitMaxTroopNum = "500002",
 
     DetectCost = "500003",
+
+    // rank
+    DailyRankingEnabled = "500004",
+    MonthlyRankingEnabled = "500005",
+    SeasonRankingEnabled = "500006",
+    SeasonRankingDuration = "500007"
 }
 
 export interface ConfigData {
@@ -178,4 +184,21 @@ export interface InitMaxTroopNumParam extends ConfigData {
 }
 export interface DetectCostParam extends ConfigData {
     cost: number;
+}
+
+
+export interface DailyRankingEnabledParam extends ConfigData {
+    enabled: boolean;
+    beginTimestamp: number;
+}
+export interface  MonthlyRankingEnabledParam extends ConfigData {
+    enabled: boolean;
+    beginTimestamp: number;
+}
+export interface SeasonRankingEnabledParam extends ConfigData {
+    enabled: boolean;
+    beginTimestamp: number;
+}
+export interface SeasonRankingDurationParam extends ConfigData {
+    duration: number;
 }

@@ -68,22 +68,22 @@ export default class ConfigConfig {
                 temple = {
                     type: key,
                     limit: param[0],
-                }
+                };
             } else if (key == ConfigType.BuyEnergyPrice) {
                 temple = {
                     type: key,
                     prices: param,
-                }
+                };
             } else if (key == ConfigType.BuyEnergyThres) {
                 temple = {
                     type: key,
                     thresholds: param[0],
-                }
+                };
             } else if (key == ConfigType.BuyEnergyCoefficient) {
                 temple = {
                     type: key,
                     coefficient: param[0],
-                }
+                };
             } else if (key == ConfigType.BattleReportMaxKeepDays) {
                 temple = {
                     type: key,
@@ -196,22 +196,45 @@ export default class ConfigConfig {
                 temple = {
                     type: key,
                     consumes: param,
-                }
+                };
             } else if (key == ConfigType.WormholeTeleportConsume) {
                 temple = {
                     type: key,
                     consumes: param,
-                }
+                };
             } else if (key == ConfigType.InitMaxTroopNum) {
                 temple = {
                     type: key,
                     num: param[0],
-                }
+                };
             } else if (key == ConfigType.DetectCost) {
                 temple = {
                     type: key,
                     cost: param[0],
-                }
+                };
+            } else if (key == ConfigType.DailyRankingEnabled) {
+                temple = {
+                    type: key,
+                    enabled: param[0] == 1,
+                    beginTimestamp: param[1][0] * 1000,
+                };
+            } else if (key == ConfigType.MonthlyRankingEnabled) {
+                temple = {
+                    type: key,
+                    enabled: param[0] == 1,
+                    beginTimestamp: param[1][0] * 1000,
+                };
+            } else if (key == ConfigType.SeasonRankingEnabled) {
+                temple = {
+                    type: key,
+                    enabled: param[0] == 1,
+                    beginTimestamp: param[1][0] * 1000,
+                };
+            } else if (key == ConfigType.SeasonRankingDuration) {
+                temple = {
+                    type: key,
+                    duration: param[0],
+                };
             }
             this._config.set(key as ConfigType, temple);
         }

@@ -201,6 +201,41 @@ export default class CommonTools {
         return `${year}/${month}/${day} ${this.formatTimestamp(timestamp)}`;
     }
 
+    public static formatTimeLeft(timeInSeconds: number): string {
+        const days = Math.floor(timeInSeconds / (24 * 3600));
+        const hours = Math.floor((timeInSeconds % (24 * 3600)) / 3600);
+        const minutes = Math.floor((timeInSeconds % 3600) / 60);
+
+        if (days > 0) {
+            return `${days} days ${hours} hours`;
+        } else if (hours > 0) {
+            return `${hours} hours ${minutes} minutes`;
+        } else {
+            return `${minutes} minutes`;
+        }
+    }
+    public static getNumberWithSuffix(num: number): string {
+        if (num % 100 >= 11 && num % 100 <= 13) {
+            return `${num}th`;
+        }
+        switch (num % 10) {
+            case 1:
+                return `${num}st`;
+            case 2:
+                return `${num}nd`;
+            case 3:
+                return `${num}rd`;
+            default:
+                return `${num}th`;
+        }
+    }
+    public static getCurrentMonthAbbreviation(): string {
+        const monthAbbreviations = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const today = new Date();
+        const monthIndex = today.getMonth();
+        return monthAbbreviations[monthIndex];
+    }
+
     public static mapsAreEqual<K, V>(map1: Map<K, V>, map2: Map<K, V>): boolean {
         if (map1.size !== map2.size) {
             return false;

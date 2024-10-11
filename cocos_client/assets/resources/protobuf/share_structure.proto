@@ -526,6 +526,7 @@ message new_battle_report_data {
     optional new_battle_report_mining_data mining = 7;
     optional new_battle_report_task_data task = 8;
     optional new_battle_report_explore_data explore = 9;
+    optional new_battle_report_rank_data rank = 10;
 }
 
 message new_battle_report_fight_data {
@@ -557,6 +558,13 @@ message new_battle_report_explore_data {
     optional pos2d location = 2;
     required uint32 layers = 3;
     required bool isWin = 4;
+    repeated item_data rewards = 5;
+}
+message new_battle_report_rank_data {
+    required uint32 seasonType = 1;
+    required uint32 rankType = 2;
+    required uint32 rank = 3;
+    required uint32 score = 4;
     repeated item_data rewards = 5;
 }
 
@@ -617,4 +625,11 @@ message settlement_data {
 message training_data {
     required string id = 1; // troopId
     required uint32 num = 2; // troopNum
+}
+
+message rank_list_data {
+    required string id = 1;
+    required string name = 2;
+    required uint32 rank = 3;
+    required uint32 score = 4;
 }

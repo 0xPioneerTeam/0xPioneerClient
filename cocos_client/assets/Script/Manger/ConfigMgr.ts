@@ -24,6 +24,7 @@ import NFTSkillEffectConfig from "../Config/NFTSkillEffectConfig";
 import PioneerConfig from "../Config/PioneerConfig";
 import PioneerLvlupConfig from "../Config/PioneerLvlupConfig";
 import ProtobufConfig from "../Config/ProtobufConfig";
+import RankRewardConfig from "../Config/RankRewardConfig";
 import TalkConfig from "../Config/TalkConfig";
 import TaskConfig from "../Config/TaskConfig";
 import TaskStepConfigData from "../Config/TaskStepConfig";
@@ -61,6 +62,7 @@ export default class ConfigMgr {
         if (!(await TroopsConfig.init())) return false;
         if (!(await WorldBoxConfig.init())) return false;
         if (!(await BigMapConfig.init())) return false;
+        if (!(await RankRewardConfig.init())) return false;
 
         // abi
         const chainIdConfig = ChainConfig.getCurrentConfigId();

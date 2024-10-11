@@ -47,4 +47,5 @@ export enum ServerErrorCode {
     ResPort_PlayerAlreadyInMine = -2025,
     ResPort_MineOutputItemError = -2026,
     ResPlayer_NotInThisMine = -2106,
+    ResPlayerRankNotExist = -2107,
 }

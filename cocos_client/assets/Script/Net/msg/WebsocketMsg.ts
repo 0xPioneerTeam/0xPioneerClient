@@ -4,6 +4,7 @@ import { WebsocketFailRetryObject } from "../../Const/ConstDefine";
 import { ItemConfigType, ItemType } from "../../Const/Item";
 import { NotificationName } from "../../Const/Notification";
 import { MapPioneerActionType } from "../../Const/PioneerDefine";
+import { rank_season_type, rank_type } from "../../Const/rank_define";
 import { natrium_ws } from "../../natrium/client/natrium_ws";
 import { registermsg } from "../../natrium/share/msgs/registermsg";
 import CLog from "../../Utils/CLog";
@@ -345,6 +346,11 @@ export class WebsocketMsg {
         this.send_packet("receive_new_battle_report_reward", d);
     }
 
+    //----------- rank
+    public get_rank(d: c2s_user.Iget_rank) {
+        this.send_packet("get_rank", d);
+    }
+
     public reborn_all() {
         this.send_packet("reborn_all", {});
     }
@@ -632,6 +638,11 @@ export namespace c2s_user {
     }
 
     export interface Iplayer_get_rookie_award {}
+
+    export interface Iget_rank {
+        seasonType: number;
+        rankType: number;
+    }
 }
 
 export namespace s2c_user {
@@ -940,6 +951,14 @@ export namespace s2c_user {
     export interface Iplayer_psyc_to_energy_res {
         res: number;
         pioneerId: string;
+    }
+
+    export interface Iget_rank_res {
+        res: number;
+        seasonType: number;
+        rankType: number;
+        listData: share.Irank_list_data[];
+        seasonRound: number;
     }
 }
 
@@ -1331,6 +1350,7 @@ export namespace share {
         mining,
         task,
         explore,
+        rank,
     }
     export enum Inew_battle_report_fight_member_type {
         pioneer = 0,
@@ -1380,6 +1400,13 @@ export namespace share {
         isWin: boolean;
         rewards: Iitem_data[];
     }
+    export interface Inew_battle_report_rank_data {
+        seasonType: rank_season_type;
+        rankType: rank_type;
+        rank: number;
+        score: number;
+        rewards: Iitem_data[];
+    }
     export interface Inew_battle_report_data {
         id: number;
         type: Inew_battle_report_type;
@@ -1391,6 +1418,7 @@ export namespace share {
         mining?: Inew_battle_report_mining_data;
         task?: Inew_battle_report_task_data;
         explore?: Inew_battle_report_explore_data;
+        rank?: Inew_battle_report_rank_data;
     }
 
     export interface Iwormhole_tag_data {
@@ -1401,5 +1429,12 @@ export namespace share {
     export interface Itraining_data {
         id: string;
         num: number;
+    }
+
+    export interface Irank_list_data {
+        id: string;
+        name: string;
+        rank: number;
+        score: number;
     }
 }

@@ -326,6 +326,12 @@ message player_wormhole_tp_tag {
     required string pioneerId = 2;
 }
 
+// ------ rank ------
+message get_rank {
+    required uint32 seasonType = 1;
+    required uint32 rankType = 2;
+}
+
 // ------ test ------
 message reborn_all { }
 message reset_data { }

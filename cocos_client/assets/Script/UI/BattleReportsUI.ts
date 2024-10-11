@@ -18,8 +18,9 @@ export class BattleReportsUI extends ViewController {
     private _reportUiItems: BattleReportListItemUI[] = [];
     private _fightTypeItemTemplate: Node = null;
     private _miningTypeItemTemplate: Node = null;
-    private _exploreTypeItemTemplate: Node = null;
     private _taskTypeItemTemplate: Node = null;
+    private _exploreTypeItemTemplate: Node = null;
+    private _rankTypeItemTemplate: Node = null;
     private _permanentLastItem: Node = null;
     private _reportListScrollView: ScrollView = null;
     /** all / fight / mining / ... */
@@ -50,9 +51,10 @@ export class BattleReportsUI extends ViewController {
         this._miningTypeItemTemplate.active = false;
         this._taskTypeItemTemplate = this.node.getChildByPath("frame/ScrollView/view/content/taskTypeItemTemplate");
         this._taskTypeItemTemplate.active = false;
-
         this._exploreTypeItemTemplate = this.node.getChildByPath("frame/ScrollView/view/content/exploreTypeItemTemplate");
         this._exploreTypeItemTemplate.active = false;
+        this._rankTypeItemTemplate = this.node.getChildByPath("frame/ScrollView/view/content/rankTypeItemTemplate");
+        this._rankTypeItemTemplate.active = false;
         this._permanentLastItem = this.node.getChildByPath("frame/ScrollView/view/content/permanentLastItem");
 
         const filterGroupRoot = this.node.getChildByPath("frame/navbar/reportTypeFilterGroup");
@@ -125,6 +127,9 @@ export class BattleReportsUI extends ViewController {
                 case share.Inew_battle_report_type.explore:
                     uiItem = instantiate(this._exploreTypeItemTemplate).getComponent(BattleReportListItemUI);
                     break;
+                case share.Inew_battle_report_type.rank:
+                    uiItem = instantiate(this._rankTypeItemTemplate).getComponent(BattleReportListItemUI);
+                    break;
 
                 default:
                     console.error(`Unknown report type: ${report.type}`);
@@ -167,27 +172,16 @@ export class BattleReportsUI extends ViewController {
             onButtonApplyTransition(button, button.interactable ? "normal" : "disabled");
         }
 
-        // button: All
-        initButtonStateTransition(this._typeFilterButtons[0]);
-        this._typeFilterButtons[0].node.on(
-            Button.EventType.CLICK,
-            () => {
-                GameMusicPlayMgr.playTapButtonEffect();
-                this._filterState = share.Inew_battle_report_type.all;
-                this.refreshUIAndResetScroll();
-            },
-            this
-        );
-
-        // button: Fight/Mining/...
-        for (let i = 1; i < this._typeFilterButtons.length; i++) {
-            const iCopy = i;
+        // button: action
+        for (let i = 0; i < this._typeFilterButtons.length; i++) {
             initButtonStateTransition(this._typeFilterButtons[i]);
             this._typeFilterButtons[i].node.on(
                 Button.EventType.CLICK,
                 () => {
                     GameMusicPlayMgr.playTapButtonEffect();
-                    if (i == 2) {
+                    if (i == 0) {
+                        this._filterState = share.Inew_battle_report_type.all;
+                    } else if (i == 2) {
                         this._filterState = share.Inew_battle_report_type.fight;
                     } else if (i == 4) {
                         this._filterState = share.Inew_battle_report_type.mining;
@@ -195,6 +189,8 @@ export class BattleReportsUI extends ViewController {
                         this._filterState = share.Inew_battle_report_type.task;
                     } else if (i == 3) {
                         this._filterState = share.Inew_battle_report_type.explore;
+                    } else if (i == 5) {
+                        this._filterState = share.Inew_battle_report_type.rank;
                     }
                     this.refreshUIAndResetScroll();
                 },
@@ -216,7 +212,7 @@ export class BattleReportsUI extends ViewController {
 
     private _refreshFilterGroup() {
         for (let i = 0; i < this._typeFilterButtons.length; i++) {
-            if (this._filterState == null) {
+            if (this._filterState == share.Inew_battle_report_type.all) {
                 this._typeFilterButtons[i].interactable = i != 0;
             } else if (this._filterState == share.Inew_battle_report_type.fight) {
                 this._typeFilterButtons[i].interactable = i != 2;
@@ -226,6 +222,8 @@ export class BattleReportsUI extends ViewController {
                 this._typeFilterButtons[i].interactable = i != 1;
             } else if (this._filterState == share.Inew_battle_report_type.explore) {
                 this._typeFilterButtons[i].interactable = i != 3;
+            } else if (this._filterState == share.Inew_battle_report_type.rank) {
+                this._typeFilterButtons[i].interactable = i != 5;
             }
         }
     }

@@ -68,8 +68,8 @@ export class NetworkMgr {
         if (r.res == "OK") {
             let d: c2s_user.Ilogin = { name: "", uid: r.data.uid, token: r.data.token };
             // login designated account
-            // d.uid = "2";
-            // d.token = "8b99a1cffb23cdebe103fecd83e309ec-1724238715129-2";
+            // d.uid = "9";
+            // d.token = "4111d3eef3662326324e5928088a53a6-1726775785271-9";
             this.websocketMsg.login(d);
             return d;
         } else {

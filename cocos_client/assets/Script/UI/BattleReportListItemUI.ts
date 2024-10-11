@@ -13,6 +13,7 @@ import { MapCharacter } from "../Game/Outer/View/MapCharacter";
 import ItemData from "../Model/ItemData";
 import ArtifactData from "../Model/ArtifactData";
 import { NetworkMgr } from "../Net/NetworkMgr";
+import { rank_season_type, rank_type } from "../Const/rank_define";
 const { ccclass, property } = _decorator;
 
 @ccclass("BattleReportListItemUI")
@@ -113,6 +114,9 @@ export class BattleReportListItemUI extends Component {
                 break;
             case share.Inew_battle_report_type.explore:
                 this._initWithExploreReport(report);
+                break;
+            case share.Inew_battle_report_type.rank:
+                this._initWithRankReport(report);
                 break;
 
             default:
@@ -254,6 +258,48 @@ export class BattleReportListItemUI extends Component {
             this.lootsButton.node.active = true;
             this.lootsButton.node.getChildByPath("Label").getComponent(Label).string = "Spoils of war";
             this.lootsButton.getComponent(Button).clickEvents[0].customEventData = "loots";
+        } else {
+            this.lootsButton.node.active = false;
+        }
+    }
+
+    private _initWithRankReport(report: share.Inew_battle_report_data): void {
+        const data = report.rank;
+        // name
+        this.node.getChildByPath("name").getComponent(Label).string = DataMgr.s.userInfo.data.name;
+        // score
+        let scoreTitle = "";
+        if (data.rankType == rank_type.explore) {
+            scoreTitle = "Explore";
+        } else if (data.rankType == rank_type.fight) {
+            scoreTitle = "BattlePower";
+        } else if (data.rankType == rank_type.psyc) {
+            scoreTitle = "PSYC";
+        }
+        this.node.getChildByPath("score").getComponent(Label).string = scoreTitle + ": " + data.score;
+        // season title
+        let seasonTitle = "";
+        if (data.seasonType == rank_season_type.daily) {
+            seasonTitle = "Daily";
+        } else if (data.seasonType == rank_season_type.monthly) {
+            seasonTitle = "Monthly";
+        } else if (data.seasonType == rank_season_type.season) {
+            seasonTitle = "Season";
+        }
+        this.node.getChildByPath("Rank/Title").getComponent(Label).string = seasonTitle;
+        // rank
+        this.node.getChildByPath("Rank/Value").getComponent(Label).string = data.rank.toString();
+
+        this._loots = [...report.rank.rewards];
+        if (this._loots.length > 0) {
+            this.lootsButton.node.active = true;
+            if (report.getted) {
+                this.lootsButton.node.getChildByPath("Label").getComponent(Label).string = "Spoils of war";
+                this.lootsButton.getComponent(Button).clickEvents[0].customEventData = "loots";
+            } else {
+                this.lootsButton.node.getChildByPath("Label").getComponent(Label).string = "Claim Spoils";
+                this.lootsButton.getComponent(Button).clickEvents[0].customEventData = "recivie|" + report.id;
+            }
         } else {
             this.lootsButton.node.active = false;
         }

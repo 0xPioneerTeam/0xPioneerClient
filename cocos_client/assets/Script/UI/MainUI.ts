@@ -191,6 +191,7 @@ export class MainUI extends ViewController {
         const backpackButton = this.node.getChildByPath("CommonContent/icon_treasure_box");
         const nftButton = this.node.getChildByPath("CommonContent/NFTButton");
         const reinforceButton = this.node.getChildByPath("CommonContent/ReinforceTroopsButton");
+        const rankButton = this.node.getChildByPath("CommonContent/RankButton");
         const recuritButton = this.node.getChildByPath("CommonContent/RecuritButton");
         const exerciseButton = this.node.getChildByPath("CommonContent/ExerciseButton");
         const artifactButton = this.node.getChildByPath("CommonContent/ArtifactButton");
@@ -209,6 +210,7 @@ export class MainUI extends ViewController {
         backpackButton.active = false;
         nftButton.active = false;
         reinforceButton.active = false;
+        rankButton.active = false;
         recuritButton.active = false;
         exerciseButton.active = false;
         artifactButton.active = false;
@@ -228,6 +230,7 @@ export class MainUI extends ViewController {
             taskButton.active = true;
             backpackButton.active = true;
             reinforceButton.active = true;
+            rankButton.active = true;
             nftButton.active = true;
             recuritButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.Barrack) >= 1;
             exerciseButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.TrainingCenter) >= 1;
@@ -357,6 +360,10 @@ export class MainUI extends ViewController {
     private onTapRefreshMap() {
         GameMusicPlayMgr.playTapButtonEffect();
         NetworkMgr.websocketMsg.reborn_all();
+    }
+    private async onTapRank() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        UIPanelManger.inst.pushPanel(UIName.WorldRankUI);
     }
     private async onTapRecruit() {
         GameMusicPlayMgr.playTapButtonEffect();

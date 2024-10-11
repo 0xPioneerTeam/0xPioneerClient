@@ -120,6 +120,9 @@ export enum protobuf_c2s {
     player_wormhole_tp_back = 1505,
     player_wormhole_tp_tag = 1506,
 
+    // ------ rank ------
+    get_rank = 1601,
+
     // ------ test ------
     reborn_all = 6600,
     reset_data = 6601,
@@ -284,6 +287,9 @@ export enum protobuf_s2c {
     // wormhole: notify
     player_wormhole_fight_attacked_res = 11650,
     player_wormhole_fight_res = 11651,
+
+    // ------ rank ------
+    get_rank_res = 11701,
 
     // ------ test ------
     reborn_all_res = 60000,
