@@ -957,6 +957,8 @@ export namespace s2c_user {
         res: number;
         seasonType: number;
         rankType: number;
+        beginTime: number;
+        endTime: number;
         listData: share.Irank_list_data[];
         seasonRound: number;
     }

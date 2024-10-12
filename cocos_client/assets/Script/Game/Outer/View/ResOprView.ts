@@ -419,6 +419,13 @@ export class ResOprView extends Component {
     public get isShow() {
         return this.node.active;
     }
+    public get interactBuilding() {
+        return this._interactBuilding;
+    }
+    public get interactPioneer() {
+        return this._interactPioneer;
+    }
+
     private _confirmCallback: (pioneerUnqueId: string, actionType: MapInteractType, movePath: TilePos[]) => void = null;
     protected onLoad(): void {
         this._actionItemContent = this.node.getChildByPath("ActionView/Action");

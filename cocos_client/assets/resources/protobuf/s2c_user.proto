@@ -553,8 +553,10 @@ message get_rank_res {
     required int32 res = 1;
     required uint32 seasonType = 2;
     required uint32 rankType = 3;
-    repeated share.rank_list_data listData = 4;
-    optional int32 seasonRound = 5;
+    optional uint32 beginTime = 4;
+    optional uint32 endTime = 5;
+    repeated share.rank_list_data listData = 6;
+    optional int32 seasonRound = 7;
 }
 
 // ------ test ------

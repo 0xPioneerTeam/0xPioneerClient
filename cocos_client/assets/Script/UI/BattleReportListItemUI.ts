@@ -303,7 +303,7 @@ export class BattleReportListItemUI extends Component {
         } else {
             this.lootsButton.node.active = false;
         }
-    }
+    } 
 
     private onClickLocation() {
         GameMusicPlayMgr.playTapButtonEffect();

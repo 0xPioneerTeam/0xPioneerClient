@@ -113,7 +113,7 @@ export class PlayerInfoItem extends Component {
         
         this.apProgress.progress = info.energy / info.energyMax;
         this.apLabel.string = info.energy + "/" + info.energyMax;
-        this.fightLabel.string = (info.attack * 75 + info.hp * 12 + info.defend * 100).toString();
+        this.fightLabel.string = (info.attack * 75 + toeNum * 12 + info.defend * 100).toString();
         this.fightLabel.node.parent.getComponent(Layout).updateLayout();
 
         let status: string = "";

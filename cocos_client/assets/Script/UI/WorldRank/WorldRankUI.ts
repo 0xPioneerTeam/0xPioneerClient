@@ -117,6 +117,8 @@ export class WorldRankUI extends ViewController {
 
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
+
+        NetworkMgr.websocket.off("get_rank_res", this.get_rank_res);
     }
 
     private _refreshUI(request: boolean = false) {
@@ -292,8 +294,6 @@ export class WorldRankUI extends ViewController {
                         if (daily_config != null) {
                             if (daily_config.enabled) {
                                 temp.open = true;
-                                temp.begin_time = daily_config.beginTimestamp;
-                                temp.end_time = daily_config.beginTimestamp + 24 * 60 * 60 * 1000;
                             }
                         }
                     }
@@ -304,8 +304,6 @@ export class WorldRankUI extends ViewController {
                         if (monthly_config != null) {
                             if (monthly_config.enabled) {
                                 temp.open = true;
-                                temp.begin_time = monthly_config.beginTimestamp;
-                                temp.end_time = monthly_config.beginTimestamp + 30 * 24 * 60 * 60 * 1000;
                             }
                         }
                     }
@@ -316,11 +314,6 @@ export class WorldRankUI extends ViewController {
                         if (season_config != null) {
                             if (season_config.enabled) {
                                 temp.open = true;
-                                temp.begin_time = season_config.beginTimestamp;
-                                const season_duration_config = ConfigConfig.getConfig(ConfigType.SeasonRankingDuration) as SeasonRankingDurationParam;
-                                if (season_duration_config != null) {
-                                    temp.end_time = season_config.beginTimestamp + season_duration_config.duration * 24 * 60 * 60 * 1000;
-                                }
                             }
                         }
                     }
@@ -396,6 +389,13 @@ export class WorldRankUI extends ViewController {
         }
         if (p.seasonType != this._seasonType || p.rankType != this._type) {
             return;
+        }
+        for (const element of this._rankConfigData) {
+            if (element.type == p.seasonType) {
+                element.begin_time = p.beginTime * 1000;
+                element.end_time = p.endTime * 1000;
+                break;
+            }
         }
         this._rankListData = p.listData;
         this._seasonRound = p.seasonRound;
