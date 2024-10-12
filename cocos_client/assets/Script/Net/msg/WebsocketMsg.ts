@@ -350,6 +350,9 @@ export class WebsocketMsg {
     public get_rank(d: c2s_user.Iget_rank) {
         this.send_packet("get_rank", d);
     }
+    public get_rank_red_point(d: c2s_user.Iget_rank_red_point) {
+        this.send_packet("get_rank_red_point", d);
+    }
 
     public reborn_all() {
         this.send_packet("reborn_all", {});
@@ -643,6 +646,7 @@ export namespace c2s_user {
         seasonType: number;
         rankType: number;
     }
+    export interface Iget_rank_red_point {}
 }
 
 export namespace s2c_user {
@@ -961,6 +965,11 @@ export namespace s2c_user {
         endTime: number;
         listData: share.Irank_list_data[];
         seasonRound: number;
+    }
+
+    export interface Iget_rank_red_point_res {
+        res: number;
+        num: number;
     }
 }
 

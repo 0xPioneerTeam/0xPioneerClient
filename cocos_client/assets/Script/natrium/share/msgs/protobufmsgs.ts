@@ -122,6 +122,7 @@ export enum protobuf_c2s {
 
     // ------ rank ------
     get_rank = 1601,
+    get_rank_red_point = 1602,
 
     // ------ test ------
     reborn_all = 6600,
@@ -290,6 +291,7 @@ export enum protobuf_s2c {
 
     // ------ rank ------
     get_rank_res = 11701,
+    get_rank_red_point_res = 11702,
 
     // ------ test ------
     reborn_all_res = 60000,

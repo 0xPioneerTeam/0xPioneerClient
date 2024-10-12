@@ -558,6 +558,10 @@ message get_rank_res {
     repeated share.rank_list_data listData = 6;
     optional int32 seasonRound = 7;
 }
+message get_rank_red_point_res {
+    required int32 res = 1;
+    optional uint32 num = 2;
+}
 
 // ------ test ------
 message reborn_all_res {

@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, instantiate, Label, Layout, Node, ScrollView, Sprite } from "cc";
+import { _decorator, Button, Color, Component, instantiate, Label, Layout, Node, ScrollView, Sprite } from "cc";
 import ViewController from "../../BasicView/ViewController";
 import { rank_data, rank_reward_config, rank_season_type, rank_type } from "../../Const/rank_define";
 import { ConfigType, DailyRankingEnabledParam, MonthlyRankingEnabledParam, SeasonRankingDurationParam, SeasonRankingEnabledParam } from "../../Const/Config";
@@ -10,9 +10,10 @@ import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import UIPanelManger from "../../Basic/UIPanelMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import CommonTools from "../../Tool/CommonTools";
-import { LanMgr } from "../../Utils/Global";
+import { ItemMgr, LanMgr } from "../../Utils/Global";
 import ItemData from "../../Const/Item";
 import { BackpackItem } from "../BackpackItem";
+import ItemConfig from "../../Config/ItemConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("WorldRankUI")
@@ -121,7 +122,7 @@ export class WorldRankUI extends ViewController {
         NetworkMgr.websocket.off("get_rank_res", this.get_rank_res);
     }
 
-    private _refreshUI(request: boolean = false) {
+    private async _refreshUI(request: boolean = false) {
         let curRankConfigData: rank_data = this._rankConfigData.find((item) => {
             return item.type === this._seasonType;
         });
@@ -130,7 +131,9 @@ export class WorldRankUI extends ViewController {
         }
         //---------------------- tabbutton
         this._seasonTabButtons.forEach((value: Node, key: rank_season_type) => {
-            value.getComponent(Sprite).grayscale = key != this._seasonType;
+            value.getChildByPath("Selected").active = key == this._seasonType;
+            value.getChildByPath("Common").active = key != this._seasonType;
+            value.getChildByPath("Label").getComponent(Label).color = key == this._seasonType ? new Color().fromHEX("#433824") : new Color().fromHEX("#817674");
         });
 
         let needInitType: boolean = false;
@@ -159,7 +162,9 @@ export class WorldRankUI extends ViewController {
         }
         this._typeTabButtons.forEach((value: Node, key: rank_type) => {
             if (value.active) {
-                value.getComponent(Sprite).grayscale = key != this._type;
+                value.getChildByPath("Selected").active = key == this._type;
+                value.getChildByPath("Common").active = key != this._type;
+                value.getChildByPath("Label").getComponent(Label).color = key == this._type ? new Color().fromHEX("#433824") : new Color().fromHEX("#817674");
             }
         });
 
@@ -253,7 +258,11 @@ export class WorldRankUI extends ViewController {
             for (const element of data.reward) {
                 const backpackItem = instantiate(this._rewardBackpackItem);
                 backpackItem.setParent(backpackContent);
-                backpackItem.getComponent(BackpackItem).refreshUI(new ItemData(element[0].toString(), element[1]));
+                const config = ItemConfig.getById(element[0].toString());
+                // icon
+                backpackItem.getChildByPath("Icon").getComponent(Sprite).spriteFrame = await ItemMgr.getItemIcon(config.icon);
+                // num
+                backpackItem.getChildByPath("Num").getComponent(Label).string = element[1].toString();
             }
             backpackContent.getComponent(Layout).updateLayout();
         }
@@ -365,8 +374,9 @@ export class WorldRankUI extends ViewController {
     }
 
     //---------------------------------- action
-    private onTapClose() {
+    private async onTapClose() {
         GameMusicPlayMgr.playTapButtonEffect();
+        await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node);
     }
     private onTapSeasonTab(event: Event, customEventData: string) {

@@ -331,6 +331,7 @@ message get_rank {
     required uint32 seasonType = 1;
     required uint32 rankType = 2;
 }
+message get_rank_red_point { }
 
 // ------ test ------
 message reborn_all { }

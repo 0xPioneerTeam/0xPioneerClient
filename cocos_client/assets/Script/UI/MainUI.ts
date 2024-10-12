@@ -20,6 +20,7 @@ import { RelicTowerUI } from "./RelicTowerUI";
 import { TaskListUI } from "./TaskListUI";
 import { UIHUDController } from "./UIHUDController";
 import { RedPointView } from "./View/RedPointView";
+import { s2c_user } from "../Net/msg/WebsocketMsg";
 
 const { ccclass, property } = _decorator;
 
@@ -30,6 +31,8 @@ export class MainUI extends ViewController {
 
     @property(Prefab)
     private resourceFlyAnim: Prefab = null;
+
+    private _worldRankRedPointNum: number = 0;
 
     private _animView: Node = null;
 
@@ -79,6 +82,9 @@ export class MainUI extends ViewController {
         NotificationMgr.addListener(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED, this._refreshExerciseRedPoint, this);
 
         this._refreshWorldBoxCountTip();
+
+        NetworkMgr.websocket.on("get_rank_res", this.get_rank_res);
+        NetworkMgr.websocket.on("get_rank_red_point_res", this.get_rank_red_point_res);
     }
 
     protected async viewDidStart(): Promise<void> {
@@ -95,12 +101,13 @@ export class MainUI extends ViewController {
         this._refreshArtifactRedPoint();
         this._refreshRecruitRedPoint();
         this._refreshExerciseRedPoint();
+        NetworkMgr.websocketMsg.get_rank_red_point({});
 
         // const bigGanster = DataMgr.s.pioneer.getById("gangster_3");
         // if (bigGanster != null && bigGanster.show) {
         //     this.checkCanShowGansterComingTip(bigGanster.id);
         // }
- 
+
         this.backpackBtn.node.on(
             Button.EventType.CLICK,
             async () => {
@@ -143,6 +150,9 @@ export class MainUI extends ViewController {
         NotificationMgr.removeListener(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED, this._refreshRecruitRedPoint, this);
         // exercise
         NotificationMgr.removeListener(NotificationName.INNER_BUILDING_TRAIN_REDPOINT_CHANGED, this._refreshExerciseRedPoint, this);
+
+        NetworkMgr.websocket.off("get_rank_res", this.get_rank_res);
+        NetworkMgr.websocket.off("get_rank_red_point_res", this.get_rank_red_point_res);
     }
 
     changeLang(): void {
@@ -177,12 +187,16 @@ export class MainUI extends ViewController {
     private _refreshRecruitRedPoint() {
         const redPointValue: boolean = DataMgr.s.userInfo.getRecruitRedPoint();
         const redPointView = this.node.getChildByPath("CommonContent/RecuritButton/RedPoint").getComponent(RedPointView);
-        redPointView.refreshUI(redPointValue? 1 : 0, false);
+        redPointView.refreshUI(redPointValue ? 1 : 0, false);
     }
     private _refreshExerciseRedPoint() {
         const redPointValue: boolean = DataMgr.s.userInfo.getExerciseRedPoint();
         const redPointView = this.node.getChildByPath("CommonContent/ExerciseButton/RedPoint").getComponent(RedPointView);
-        redPointView.refreshUI(redPointValue? 1 : 0, false);
+        redPointView.refreshUI(redPointValue ? 1 : 0, false);
+    }
+    private _refreshWorldRankRedPoint() {
+        const redPointView = this.node.getChildByPath("CommonContent/RankButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(this._worldRankRedPointNum, false);
     }
 
     // button
@@ -244,10 +258,10 @@ export class MainUI extends ViewController {
             taskTrackView.active = GameMainHelper.instance.isGameShowOuter;
 
             this._worldBoxCountTipView.active = true;
-        }else if(rookieStep >= RookieStep.GUIDE_1010){
+        } else if (rookieStep >= RookieStep.GUIDE_1010) {
             nftButton.active = true;
             innerOuterChangeButton.active = true;
-        }else if(rookieStep >= RookieStep.GUIDE_1001){
+        } else if (rookieStep >= RookieStep.GUIDE_1001) {
             innerOuterChangeButton.active = true;
         }
         // } else if (rookieStep >= RookieStep.DEFEND_TAP) {
@@ -535,5 +549,22 @@ export class MainUI extends ViewController {
     private _onArtifactNewChanged() {
         this._refreshBackpackRedPoint();
         this._refreshArtifactRedPoint();
+    }
+
+    //----------------------------------- socket nofify
+    private get_rank_red_point_res = (e: any) => {
+        const p: s2c_user.Iget_rank_red_point_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        this._worldRankRedPointNum = p.num;
+        this._refreshWorldRankRedPoint();
+    };
+    private get_rank_res = (e: any) => {
+        const p: s2c_user.Iget_rank_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        NetworkMgr.websocketMsg.get_rank_red_point({});
     }
 }
