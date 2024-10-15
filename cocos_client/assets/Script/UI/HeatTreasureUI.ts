@@ -292,11 +292,16 @@ export class HeatTreasureUI extends Component {
         if (!result.success) {
             return;
         }
-        result.node.getComponent(AlterView).showTip(LanMgr.replaceLanById("104005", [costPiotNum]), () => {
-            NetworkMgr.websocketMsg.player_piot_to_heat({
-                piotNum: costPiotNum,
-            });
-        });
+        result.node.getComponent(AlterView).showTip(
+            LanMgr.replaceLanById("104005", [costPiotNum]),
+            () => {
+                NetworkMgr.websocketMsg.player_piot_to_heat({
+                    piotNum: costPiotNum,
+                });
+            },
+            null,
+            RookieStep.GUIDE_1006
+        );
     }
     private onTapDetail() {
         GameMusicPlayMgr.playTapButtonEffect();

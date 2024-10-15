@@ -12,7 +12,7 @@ export class PlayerItemUI extends Component {
         this._nameLabel = this.node.getChildByName("name").getComponent(Label);
         this._statusView = this.node.getChildByName("status");
         this._rebirthCountView = this.node.getChildByName("RebirthCount");
-        this._selectedView = this.node.getChildByName("Selected");
+        this._selectedView = this.node.getChildByPath("bg/Selected");
         this._hpView = this.node.getChildByName("Hp");
         //name
         this._nameLabel.string = LanMgr.getLanById(model.name);

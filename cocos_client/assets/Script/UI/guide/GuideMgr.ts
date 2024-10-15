@@ -18,25 +18,22 @@ import { Gs1011 } from "./gscript/Gs1011";
 import { Gs1012 } from "./gscript/Gs1012";
 import { Gs1004 } from "./gscript/Gs1004";
 
-
-export class GuideMgr{
-
+export class GuideMgr {
     private static _instance: GuideMgr;
-    public static get ins(){
-        if(!GuideMgr._instance){
+    public static get ins() {
+        if (!GuideMgr._instance) {
             GuideMgr._instance = new GuideMgr();
-            
         }
         return GuideMgr._instance;
     }
 
-    private _guideScripts:{[index:string]:any};
+    private _guideScripts: { [index: string]: any };
 
-    private _rookieNode:Node;
+    private _rookieNode: Node;
 
-    private _lastRookeStep:RookieStep;
+    private _lastRookeStep: RookieStep;
 
-    initGuideData(){
+    initGuideData() {
         this._guideScripts = {};
         // this._guideScripts[RookieStep.WAKE_UP] = Gswakeup;
         this._guideScripts[RookieStep.WAKE_UP] = Gswakeup;
@@ -56,26 +53,24 @@ export class GuideMgr{
         NotificationMgr.addListener(NotificationName.USERINFO_ROOKE_STEP_CHANGE, this._onRookieStepChange, this);
     }
 
-    public async showGuide(step:RookieStep){
+    public async showGuide(step: RookieStep) {
         let children = this._rookieNode.children;
-        children.forEach(child=>{
+        children.forEach((child) => {
             let comp = child.getComponent(GsBase);
-            if(comp && comp.onlyOneGudie){
+            if (comp && comp.onlyOneGudie) {
                 comp.endDestroy();
             }
         });
         const script = this._guideScripts[step];
-        if(!script) return;
-        console.log("showGuide",step);
-        let node = new Node('guide_'+step);
+        if (!script) return;
+        let node = new Node("guide_" + step);
         node.addComponent(script);
         this._rookieNode.addChild(node);
     }
 
-    private _onRookieStepChange(){
+    private _onRookieStepChange() {
         const rookieStep = DataMgr.s.userInfo.data.rookieStep;
-        if(this._lastRookeStep == rookieStep) return;
-        console.log('USERINFO_ROOKE_STEP_CHANGE',rookieStep)
+        if (this._lastRookeStep == rookieStep) return;
         this._lastRookeStep = rookieStep;
 
         if (rookieStep == RookieStep.WAKE_UP && DataMgr.s.userInfo.data.rookieState == RookieStepState.FINISH) {
@@ -84,7 +79,4 @@ export class GuideMgr{
         }
         this.showGuide(rookieStep);
     }
-
-
-
 }

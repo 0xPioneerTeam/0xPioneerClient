@@ -9,95 +9,67 @@ import { InnerBuildingType, MapBuildingType } from "../../../Const/BuildingDefin
 import { DataMgr } from "../../../Data/DataMgr";
 import { TileMapHelper } from "../../../Game/TiledMap/TileTool";
 import { UIHUDController } from "../../UIHUDController";
-import { LanMgr } from "../../../Utils/Global";
+import { GameMgr, LanMgr } from "../../../Utils/Global";
 import { OuterBuildingView } from "../../../Game/Outer/View/OuterBuildingView";
 import { MapBuildingObject } from "../../../Const/MapBuilding";
+import { RookieFinishCondition } from "../../../Const/RookieDefine";
 
-
-export class Gs1005 extends GsBase{
-
-    private _buildData:MapBuildingObject = null;
-    private _resBuilding:OuterBuildingView = null;
+export class Gs1005 extends GsBase {
+    private _buildData: MapBuildingObject = null;
+    private _resBuilding: OuterBuildingView = null;
     gsStart() {
         super.gsStart();
     }
 
     protected update(dt: number): void {
-        let isGameShowOuter = GameMainHelper.instance.isGameShowOuter;
-        if(!isGameShowOuter)
-        {
-            this._guide_step = 1;
-            return;
-        }
-        if(!this._shadowController){
-            this.initBinding();
-            return;
-        }
-        if(!this._resBuilding){
-            let buildInfo = this._findResourceBuilding();
-            if(buildInfo){
-                this._buildData = buildInfo;
-                this._resBuilding = this._buildingController.getBuildingView(buildInfo.uniqueId);
-            }
-        }
-        if(this._resBuilding){
-            if(!this._resBuilding.node){
-                this._resBuilding = null;
+        const finishConditions = DataMgr.s.userInfo.data.rookieFinishConditions;
+        if (finishConditions.indexOf(RookieFinishCondition.Collect) != -1) {
+            let isGameShowOuter = GameMainHelper.instance.isGameShowOuter;
+            if (!isGameShowOuter) {
+                this._guide_step = 1;
                 return;
             }
-            let ExploreView = this._resBuilding.node.getChildByPath("ExploreView")
-            if(ExploreView.active){
-                //collecting
-                this._guide_step = -1;
+            if (!this._shadowController) {
+                this.initBinding();
                 return;
             }
-            let actionView = this._tileMapController.actionView;
-            if(!actionView.node.active){
-                this._guide_step = 2;
-                return;
+            if (!this._resBuilding) {
+                let buildInfo = GameMgr.findInViewBuildingInfo(MapBuildingType.resource);
+                if (buildInfo) {
+                    this._buildData = buildInfo;
+                    this._resBuilding = this._buildingController.getBuildingView(buildInfo.uniqueId);
+                }
             }
-            if(actionView.interactBuilding != this._buildData){
-                actionView.node.active = false;
-                //worning
-                UIHUDController.showCenterTip(LanMgr.getLanById("1100205"));
-                return;
-            }else{
-                this._guide_step = 3;
+            if (this._resBuilding) {
+                if (!this._resBuilding.node) {
+                    this._resBuilding = null;
+                    return;
+                }
+                let ExploreView = this._resBuilding.node.getChildByPath("ExploreView");
+                if (ExploreView.active) {
+                    //collecting
+                    this._guide_step = -1;
+                    return;
+                }
+                let actionView = this._tileMapController.actionView;
+                if (!actionView.node.active) {
+                    this._guide_step = 2;
+                    return;
+                }
+                if (actionView.interactBuilding != this._buildData) {
+                    actionView.node.active = false;
+                    //worning
+                    UIHUDController.showCenterTip(LanMgr.getLanById("1100205"));
+                    return;
+                } else {
+                    this._guide_step = 3;
+                }
             }
+        } else if (finishConditions.indexOf(RookieFinishCondition.BattleReportCollect) != -1) {
+            this._guide_step = 4;
         }
     }
 
-    _findResourceBuilding(){
-        let citySlot = DataMgr.s.mapBuilding.getSelfMainCitySlotId();
-        let buildingData = DataMgr.s.mapBuilding.getObj_building();
-        let resBds = buildingData.filter(building=>{
-            if(building.type != MapBuildingType.resource){
-                return false;
-            }
-            if(building.uniqueId.split("|")[0] != citySlot){
-                return false;
-            }
-            if(this._shadowController.tiledMapIsAllBlackShadow(building.stayMapPositions[0].x,building.stayMapPositions[0].y)){
-                return false;
-            }
-            return true;
-        });
-        const mainCity = DataMgr.s.mapBuilding.getSelfMainCityBuilding();
-        let cityPos = TileMapHelper.INS.getPos(mainCity.stayMapPositions[0].x,mainCity.stayMapPositions[0].y);
-        let minBuilding;
-        let minLen = 99999;
-        resBds.forEach(building=>{
-            let buildingPos = TileMapHelper.INS.getPos(building.stayMapPositions[0].x,building.stayMapPositions[0].y);
-            let len = TileMapHelper.INS.Path_DistPos(cityPos,buildingPos);
-            if(len < minLen){
-                minLen = len;
-                minBuilding = building;
-            }
-        });
-        return minBuilding;
-    }
-
-    
     protected onEnable(): void {
         NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_TASK_PANEL, this._onTapGuideTask, this);
     }
@@ -105,21 +77,26 @@ export class Gs1005 extends GsBase{
     protected onDisable(): void {
         NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_TASK_PANEL, this._onTapGuideTask, this);
     }
-    
-    _onTapGuideTask(){
+
+    _onTapGuideTask() {
         this.initBinding();
-        if(this._guide_step == 1){
+        if (this._guide_step == 1) {
             const innerOuterChangeButton = this.mainUI.node.getChildByPath("CommonContent/InnerOutChangeBtnBg");
-            RookieStepMgr.instance().maskView.configuration(false, innerOuterChangeButton.worldPosition, innerOuterChangeButton.getComponent(UITransform).contentSize, () => {
-                RookieStepMgr.instance().maskView.hide();
-                GameMusicPlayMgr.playTapButtonEffect();
-                GameMainHelper.instance.changeInnerAndOuterShow();
-                this._guide_step = 2;
-            });
+            RookieStepMgr.instance().maskView.configuration(
+                false,
+                innerOuterChangeButton.worldPosition,
+                innerOuterChangeButton.getComponent(UITransform).contentSize,
+                () => {
+                    RookieStepMgr.instance().maskView.hide();
+                    GameMusicPlayMgr.playTapButtonEffect();
+                    GameMainHelper.instance.changeInnerAndOuterShow();
+                    this._guide_step = 2;
+                }
+            );
         }
-        if(this._guide_step == 2){
+        if (this._guide_step == 2) {
             const view = this._resBuilding.node;
-            if(!view){
+            if (!view) {
                 return;
             }
             this.fouceMainCity();
@@ -128,19 +105,19 @@ export class Gs1005 extends GsBase{
                 GameMusicPlayMgr.playTapButtonEffect();
                 this._tileMapController._clickOnMap(view.worldPosition);
                 this._guide_step = 3;
-                this.scheduleOnce(()=>{
+                this.scheduleOnce(() => {
                     this._onTapGuideTask();
-                },0.5);
+                }, 0.5);
             });
         }
-        if(this._guide_step == 3){
+        if (this._guide_step == 3) {
             let actionView = this._tileMapController.actionView;
-            if(!actionView){
+            if (!actionView) {
                 return;
             }
-            let node = actionView.node.getChildByPath('ActionView/Action');
+            let node = actionView.node.getChildByPath("ActionView/Action");
             let view = node.children[0];
-            if(!view){
+            if (!view) {
                 return;
             }
             RookieStepMgr.instance().maskView.configuration(true, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
@@ -148,11 +125,17 @@ export class Gs1005 extends GsBase{
                 RookieStepMgr.instance().maskView.hide();
                 let btn = view.getComponent(Button);
                 let event = new Event(NodeEventType.TOUCH_START);
-                EventHandler.emitEvents(btn.clickEvents,event);
+                EventHandler.emitEvents(btn.clickEvents, event);
             });
         }
-        
+        if (this._guide_step == 4) {
+            const reportsButton = this.mainUI.node.getChildByPath("CommonContent/reportsButton");
+            RookieStepMgr.instance().maskView.configuration(false, reportsButton.worldPosition, reportsButton.getComponent(UITransform).contentSize, () => {
+                RookieStepMgr.instance().maskView.hide();
+                let button = reportsButton.getComponent(Button);
+                let event = new Event(NodeEventType.TOUCH_START);
+                EventHandler.emitEvents(button.clickEvents, event);
+            });
+        }
     }
-
-
 }

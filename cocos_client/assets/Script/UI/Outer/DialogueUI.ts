@@ -14,23 +14,43 @@ import { s2c_user } from "../../Net/msg/WebsocketMsg";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { RookieStep } from "../../Const/RookieDefine";
 import TaskConfig from "../../Config/TaskConfig";
+import RookieStepMgr from "../../Manger/RookieStepMgr";
 const { ccclass, property } = _decorator;
 
 @ccclass("DialogueUI")
 export class DialogueUI extends ViewController {
-    public dialogShow(talk: TalkConfigData, talkOverCallback: () => void = null) {
+    public dialogShow(talk: TalkConfigData, talkOverCallback: () => void = null, fromRookie: boolean = false) {
         if (talk.messsages == null || talk.messsages.length <= 0) {
             UIPanelManger.inst.popPanel(this.node);
             return;
         }
         this._talk = talk;
         this._talkOverCallback = talkOverCallback;
+        this._fromRookie = fromRookie;
+
         this._dialogStep = 0;
         this._refreshUI();
+    }
+    public getOptionalView() {
+        if (!this._fromRookie) {
+            return null;
+        }
+
+        const dialogView = this.node.getChildByName("Dialog");
+        const selectView = this.node.getChildByName("SelectView");
+
+        const currentMesssage = this._talk.messsages[this._dialogStep];
+        if (currentMesssage.select != null && currentMesssage.select.length > 0) {
+            return selectView.getChildByName("Button_0");
+        } else {
+            return dialogView.getChildByName("NextButton");
+        }
     }
 
     private _talk: TalkConfigData = null;
     private _talkOverCallback: () => void;
+    private _fromRookie: boolean = false;
+
     private _dialogStep: number = 0;
     private _roleNames: string[] = ["artisan", "doomsdayGangBigTeam", "doomsdayGangSpy", "doomsdayGangTeam", "hunter", "prophetess", "rebels", "secretGuard"];
     private _roleViewNameMap: Map<NPCNameLangType, string> = new Map();
@@ -47,8 +67,6 @@ export class DialogueUI extends ViewController {
         NetworkMgr.websocket.on("player_talk_select_res", this._on_player_talk_select_res);
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._refreshUI, this);
-
-        NotificationMgr.addListener(NotificationName.ROOKIE_GUIDE_TAP_DIALOGUE, this._onRookieTapThis, this);
     }
 
     protected viewDidStart(): void {}
@@ -59,8 +77,6 @@ export class DialogueUI extends ViewController {
         NetworkMgr.websocket.off("player_talk_select_res", this._on_player_talk_select_res);
 
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this._refreshUI, this);
-
-        NotificationMgr.removeListener(NotificationName.ROOKIE_GUIDE_TAP_DIALOGUE, this._onRookieTapThis, this);
     }
 
     private async _refreshUI() {
@@ -137,23 +153,6 @@ export class DialogueUI extends ViewController {
                     button.active = false;
                 }
             }
-        }
-        let view: Node = null;
-        const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
-        if (rookieStep != RookieStep.FINISH) {
-            if (currentMesssage.select != null && currentMesssage.select.length > 0) {
-                view = selectView.getChildByName("Button_0");
-            } else {
-                view = dialogView.getChildByName("dialog_bg");
-            }
-        }
-        if (view != null) {
-            // -1: next  >=0: action
-            let tapIndex: string = "-1";
-            if (currentMesssage.select != null && currentMesssage.select.length > 0) {
-                tapIndex = view.getComponent(Button).clickEvents[0].customEventData;
-            }
-            NotificationMgr.triggerEvent(NotificationName.ROOKIE_GUIDE_NEED_MASK_SHOW, { tag: "dialogue", view: view, tapIndex: tapIndex });
         }
     }
 
@@ -237,14 +236,6 @@ export class DialogueUI extends ViewController {
         });
     }
 
-    //------------------------------------------------ notificaiton
-    private _onRookieTapThis(data: { tapIndex: string }) {
-        if (data.tapIndex == "-1") {
-            this.onTapNext();
-        } else {
-            this.onTapAction(null, data.tapIndex);
-        }
-    }
     //------------------------------------------------ socket notification
     private _on_player_talk_select_res = (e: any) => {
         const p: s2c_user.Iplayer_talk_select_res = e.data;

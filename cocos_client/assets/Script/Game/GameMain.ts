@@ -94,6 +94,7 @@ export class GameMain extends ViewController {
             }
             this.scheduleOnce(() => {
                 result.node.getComponent(LoadingUI).showLoadingProgress(1);
+                NotificationMgr.triggerEvent(NotificationName.GAME_INNER_AND_OUTER_CHANGE_FINISHED);
                 this.scheduleOnce(() => {
                     UIPanelManger.inst.popPanel(result.node, UIPanelLayerType.ROOKIE);
                     if (isOuterShow) {
@@ -106,6 +107,8 @@ export class GameMain extends ViewController {
                     }
                 }, 0.2);
             }, 0.3);
+        } else {
+            NotificationMgr.triggerEvent(NotificationName.GAME_INNER_AND_OUTER_CHANGE_FINISHED);
         }
     }
 

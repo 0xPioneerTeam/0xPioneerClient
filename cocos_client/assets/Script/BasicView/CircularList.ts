@@ -79,6 +79,14 @@ export class CircularList extends Component {
     public canCircular(): boolean {
         return this._canCircular;
     }
+    public getItemNode(index: number): Node {
+        // be like error function, temp use
+        if (index < 0 || index > this._useItems.length - 1) {
+            return null;
+        }
+        return this._useItems[index];
+    }
+
 
     @property(Node)
     private itemNode: Node = null;

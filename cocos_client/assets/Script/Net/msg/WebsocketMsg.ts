@@ -1041,6 +1041,7 @@ export namespace share {
         cityRadialRange: number;
         rookieStep: number;
         rookieState: number;
+        rookieFinishConditions: number[];
         generateTroopInfo?: troop_info_data;
         generateEnergyInfo?: energy_info_data;
 

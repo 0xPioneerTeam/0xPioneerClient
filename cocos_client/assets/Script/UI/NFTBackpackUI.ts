@@ -27,6 +27,13 @@ export class NFTBackpackUI extends ViewController {
     private _sortMenu: Node = null;
     private _menuArrow: Node = null;
 
+    public getOptionalView() {
+        if(this._itemContent != null && this._itemContent.children.length > 0) {
+            return this._itemContent.children[0];
+        }
+        return null;
+    }
+
     protected viewDidLoad(): void {
         super.viewDidLoad();
 

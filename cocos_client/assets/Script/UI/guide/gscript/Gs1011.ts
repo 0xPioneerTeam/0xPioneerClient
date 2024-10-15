@@ -49,6 +49,4 @@ export class Gs1011 extends GsBase{
             });
         }
     }
-
-
 }

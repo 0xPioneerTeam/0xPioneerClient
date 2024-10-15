@@ -16,6 +16,8 @@ import GuideConfig from "../../../Config/GuideConfig";
 
 export class Gswakeup extends GsBase {
 
+    
+
     public async start() {
         super.start();
         await UIPanelManger.inst.pushPanel(UIName.RookieGuide);
@@ -70,7 +72,7 @@ export class Gswakeup extends GsBase {
                 view.getComponent(MapPioneer).refreshUI(actionPioneer);
                 UIPanelManger.inst.popPanelByName(UIName.RookieGuide);
                 if (talkId) {
-                    NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_TRIGGER_LEFT_TALK, { talkId: talkId });
+                    NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_TRIGGER_LEFT_TALK, { talkId: talkId, fromRookie: true });
                 }
                 this.endDestroy();
             }, 6.8);

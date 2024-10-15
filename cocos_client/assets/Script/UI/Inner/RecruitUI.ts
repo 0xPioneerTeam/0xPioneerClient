@@ -35,7 +35,6 @@ export class RecruitUI extends ViewController {
         // this.node.getChildByPath("__ViewContent/footer/time/txt").getComponent(Label).string = LanMgr.getLanById("lanreplace200016");
         // this.node.getChildByPath("__ViewContent/footer/Button/Label").getComponent(Label).string = LanMgr.getLanById("lanreplace200017");
 
-
         const currentTroops: number = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop);
 
         this._totalTroop.string = this._maxTroop.toString();
@@ -63,7 +62,7 @@ export class RecruitUI extends ViewController {
             }
         } else {
             for (const cost of this._costDatas) {
-                const view = instantiate(this._costItem);   
+                const view = instantiate(this._costItem);
                 view.active = true;
                 view.setParent(this._costItem.parent);
                 view.getChildByPath("Icon/8001").active = cost.itemConfigId == ResourceCorrespondingItem.Food;
@@ -76,6 +75,15 @@ export class RecruitUI extends ViewController {
             }
         }
     }
+    public getOptionalView() {
+        if (this._isMaxTaped) {
+            return this.node.getChildByPath("__ViewContent/footer/Button");
+        } else {
+            return this.node.getChildByPath("__ViewContent/recruiting/control/Button");
+        }
+    }
+
+    private _isMaxTaped: boolean = false;
 
     private _perTroopTime: number = 0.001;
     private _costDatas: ItemData[] = [];
@@ -142,7 +150,7 @@ export class RecruitUI extends ViewController {
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this.changeLang, this);
     }
-    
+
     protected viewDidStart(): void {
         super.viewDidStart();
         this.refreshUI(true);
@@ -185,6 +193,7 @@ export class RecruitUI extends ViewController {
 
     private onTapGenerateMax() {
         GameMusicPlayMgr.playTapButtonEffect();
+        this._isMaxTaped = true;
         const maxTroop: number = this._currentGenerateMaxNum();
         if (maxTroop != this._selectGenerateNum) {
             this._selectGenerateNum = maxTroop;

@@ -55,6 +55,13 @@ export class DispatchUI extends ViewController implements CircularListDelegate {
         this._actionCallback = actionCallback;
         this._refreshUI();
     }
+    public getOptionalView() {
+        if (this._playerShowView == null) {
+            return null;
+        } 
+        return this._playerShowView.getItemNode(0);
+    }
+
 
     protected viewDidLoad(): void {
         super.viewDidLoad();

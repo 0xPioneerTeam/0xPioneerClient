@@ -1,35 +1,9 @@
-import {
-    CCString,
-    Color,
-    Component,
-    EventMouse,
-    Layout,
-    Node,
-    Prefab,
-    Rect,
-    Sprite,
-    SpriteFrame,
-    UIOpacity,
-    UITransform,
-    Vec2,
-    Vec3,
-    _decorator,
-    color,
-    find,
-    instantiate,
-    rect,
-    tween,
-    v2,
-    v3,
-} from "cc";
+import { Color, Layout, Node, Prefab, Rect, Sprite, UIOpacity, UITransform, Vec2, Vec3, _decorator, instantiate, rect, tween, v2, v3 } from "cc";
 import ViewController from "../../BasicView/ViewController";
-import { InnerBuildingLatticeShowType, InnerBuildingLatticeStruct, InnerBuildingType, UserInnerBuildInfo } from "../../Const/BuildingDefine";
+import { InnerBuildingLatticeShowType, InnerBuildingLatticeStruct, InnerBuildingType } from "../../Const/BuildingDefine";
 import { InnerBuildingView } from "./View/InnerBuildingView";
 import InnerBuildingConfig from "../../Config/InnerBuildingConfig";
 import { LanMgr, ResourcesMgr } from "../../Utils/Global";
-import { InnerMainCityBuildingView } from "./View/InnerMainCityBuildingView";
-import { InnerBarracksBuildingView } from "./View/InnerBarracksBuildingView";
-import { InnerEnergyStationBuildingView } from "./View/InnerEnergyStationBuildingView";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import GameMainHelper from "../Helper/GameMainHelper";
@@ -186,7 +160,7 @@ export class InnerBuildingControllerRe extends ViewController {
         }
     }
 
-    public getBuildingByKey(key:InnerBuildingType){
+    public getBuildingByKey(key: InnerBuildingType) {
         return this._buildingMap.get(key);
     }
 

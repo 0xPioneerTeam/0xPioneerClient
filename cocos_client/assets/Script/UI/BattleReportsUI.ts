@@ -10,6 +10,7 @@ import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import { s2c_user, share } from "../Net/msg/WebsocketMsg";
 import { read } from "original-fs";
+import { RookieStep } from "../Const/RookieDefine";
 
 const { ccclass } = _decorator;
 
@@ -35,6 +36,25 @@ export class BattleReportsUI extends ViewController {
 
     private readonly buttonLabelActiveColor: Color = new Color("433824");
     private readonly buttonLabelGrayColor: Color = new Color("817674");
+
+    public getOptionalView(rookieStep: RookieStep): Node {
+        const findItem = this._reportUiItems.find((item) => {
+            let isFind: boolean = false;
+            const data: share.Inew_battle_report_data = item["__findData"];
+            if (!data.getted) {
+                if (rookieStep == RookieStep.GUIDE_1005 && data.type == share.Inew_battle_report_type.mining) {
+                    isFind = true;
+                } else if (rookieStep == RookieStep.GUIDE_1010 && data.type == share.Inew_battle_report_type.fight) {
+                    isFind = true;
+                }
+            }
+            return isFind;
+        });
+        if (findItem == undefined) {
+            return null;
+        }
+        return findItem.node.getChildByPath("lootsButton");
+    }
 
     public refreshUIAndResetScroll() {
         this._refreshUI();
@@ -137,6 +157,7 @@ export class BattleReportsUI extends ViewController {
             }
 
             this._reportUiItems.push(uiItem);
+            uiItem["__findData"] = report;
             uiItem.initWithReportData(report);
             uiItem.node.setParent(this._fightTypeItemTemplate.parent);
             uiItem.node.active = true;

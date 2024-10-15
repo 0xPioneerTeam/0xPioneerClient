@@ -66,8 +66,9 @@ export class UIMainRootController extends ViewController {
         MouseCursor.SetCursorStyle(ECursorStyle.url, this.cursorImages[type].nativeUrl);
     }
 
-    private async _onUserInfoDidTriggerLeftTalk(data: { talkId: string }) {
-        const config = TalkConfig.getById(data.talkId);
+    private async _onUserInfoDidTriggerLeftTalk(data: { talkId: string, fromRookie: boolean }) {
+        const { talkId, fromRookie } = data;
+        const config = TalkConfig.getById(talkId);
         if (config == null) {
             return;
         }
@@ -75,6 +76,6 @@ export class UIMainRootController extends ViewController {
         if (!result.success) {
             return;
         }
-        result.node.getComponent(DialogueUI).dialogShow(config);
+        result.node.getComponent(DialogueUI).dialogShow(config, null, fromRookie);
     }
 }

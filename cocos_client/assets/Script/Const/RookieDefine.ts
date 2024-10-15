@@ -24,6 +24,19 @@ export enum RookieStepState {
     FINISH = 1,
 }
 
+export enum RookieFinishCondition {
+    Talk = 1,
+    Recruit,
+    Collect,
+    BattleReportCollect,
+    LevelUpPiot,
+    OpenWorldBox,
+    Training,
+    FightMonster,
+    BattleReportFightMonster,
+    WormholeTp,
+}  
+
 export enum RookieResourceAnim {
     PIONEER_0_TO_GOLD,
     GOLD_TO_HEAT,

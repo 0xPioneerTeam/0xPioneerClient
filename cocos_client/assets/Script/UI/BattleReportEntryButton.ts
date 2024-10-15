@@ -22,7 +22,6 @@ export class BattleReportEntryButton extends Component {
 
         this._redPointView = this.node.getChildByPath("RedPointView").getComponent(RedPointView);
 
-        this.node.on(Button.EventType.CLICK, this.onClickButton, this);
 
         NetworkMgr.websocket.on("get_new_battle_report_red_point_res", this.get_new_battle_report_red_point_res);
         NetworkMgr.websocket.on("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
@@ -31,8 +30,6 @@ export class BattleReportEntryButton extends Component {
     }
 
     protected onDestroy(): void {
-        this.node.off(Button.EventType.CLICK, this.onClickButton, this);
-
         NetworkMgr.websocket.off("get_new_battle_report_red_point_res", this.get_new_battle_report_red_point_res);
         NetworkMgr.websocket.off("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
     }

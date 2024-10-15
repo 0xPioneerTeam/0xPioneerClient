@@ -259,7 +259,21 @@ export class MainUI extends ViewController {
 
             this._worldBoxCountTipView.active = true;
         } else if (rookieStep >= RookieStep.GUIDE_1010) {
+            recuritButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.Barrack) >= 1;
             nftButton.active = true;
+            battleReportButton.active = true;
+            innerOuterChangeButton.active = true;
+        } else if (rookieStep >= RookieStep.GUIDE_1009) {
+            recuritButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.Barrack) >= 1;
+            exerciseButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.TrainingCenter) >= 1;
+            battleReportButton.active = true;
+            innerOuterChangeButton.active = true;
+        } else if (rookieStep >= RookieStep.GUIDE_1005) {
+            recuritButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.Barrack) >= 1;
+            battleReportButton.active = true;
+            innerOuterChangeButton.active = true;
+        } else if (rookieStep >= RookieStep.GUIDE_1004) {
+            recuritButton.active = DataMgr.s.innerBuilding.getInnerBuildingLevel(InnerBuildingType.Barrack) >= 1;
             innerOuterChangeButton.active = true;
         } else if (rookieStep >= RookieStep.GUIDE_1001) {
             innerOuterChangeButton.active = true;
@@ -566,5 +580,5 @@ export class MainUI extends ViewController {
             return;
         }
         NetworkMgr.websocketMsg.get_rank_red_point({});
-    }
+    };
 }

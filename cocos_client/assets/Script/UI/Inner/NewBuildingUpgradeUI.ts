@@ -37,6 +37,13 @@ export class NewBuildingUpgradeUI extends ViewController {
     private _exerciseButton: Node = null;
     private _artifactButton: Node = null;
 
+    public get type() {
+        return this._type;
+    }
+    public getOptionalView() {
+        return this._actionButton;
+    }
+
     public refreshUI(type: InnerBuildingType) {
         this._type = type;
 

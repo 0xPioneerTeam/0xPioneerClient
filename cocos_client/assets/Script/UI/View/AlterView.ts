@@ -12,14 +12,23 @@ const { ccclass, property } = _decorator;
 
 @ccclass("AlterView")
 export class AlterView extends ViewController {
-    public showTip(tip: string, confirmCallback: () => void = null, cancelCallback: () => void = null) {
+    public showTip(tip: string, confirmCallback: () => void = null, cancelCallback: () => void = null, rookieStep: RookieStep = null) {
         this.node.getChildByPath("Content/Tip").getComponent(Label).string = tip;
         this._confirmCallback = confirmCallback;
         this._cancelCallback = cancelCallback;
+        this._rookieStep = rookieStep;
+    }
+    public getOptionalView(rookieStep: RookieStep): Node {
+        if (rookieStep == this._rookieStep) {
+            return this.node.getChildByPath("Content/ConfrimButton");
+        }
+        return null;
     }
 
     private _confirmCallback: () => void = null;
     private _cancelCallback: () => void = null;
+    private _rookieStep: RookieStep = null;
+
     protected viewDidLoad(): void {
         super.viewDidLoad();
 

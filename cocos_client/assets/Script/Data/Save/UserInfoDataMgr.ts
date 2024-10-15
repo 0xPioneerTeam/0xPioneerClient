@@ -2,7 +2,7 @@ import NotificationMgr from "../../Basic/NotificationMgr";
 import { GAME_SKIP_ROOKIE } from "../../Const/ConstDefine";
 import { CLvlCondition, CLvlConditionType } from "../../Const/Lvlup";
 import { NotificationName } from "../../Const/Notification";
-import { RookieStep } from "../../Const/RookieDefine";
+import { RookieFinishCondition, RookieStep } from "../../Const/RookieDefine";
 import { UserInfoObject } from "../../Const/UserInfoDefine";
 import { share } from "../../Net/msg/WebsocketMsg";
 import NetGlobalData from "./Data/NetGlobalData";
@@ -44,7 +44,7 @@ export default class UserInfoDataMgr {
     public getExerciseRedPoint(): boolean {
         return localStorage.getItem(this._exerciseRedPointKey) == "true" ? true : false;
     }
-    
+
     public changeRecruitRedPoint(show: boolean) {
         localStorage.setItem(this._recruitRedPointKey, show ? "true" : "false");
         NotificationMgr.triggerEvent(NotificationName.INNER_BUILDING_RECRUIT_REDPOINT_CHANGED);
@@ -86,6 +86,7 @@ export default class UserInfoDataMgr {
             cityRadialRange: netData.cityRadialRange,
             rookieStep: netData.rookieStep,
             rookieState: netData.rookieState,
+            rookieFinishConditions: netData.rookieFinishConditions,
             // lost
             tavernGetPioneerTimestamp: 0,
             wormholeDefenderIds: new Map(),
@@ -104,7 +105,7 @@ export default class UserInfoDataMgr {
             wormholeMatchTimes: netData.wormholeMatchTimes,
             wormholeTeleportTimes: netData.wormholeTeleportTimes,
         };
-        
+
         if (GAME_SKIP_ROOKIE) {
             newObj.rookieStep = RookieStep.FINISH;
             NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
@@ -160,33 +161,33 @@ export default class UserInfoDataMgr {
                     if (temp.type == CLvlConditionType.CollectSpecificLevelResourceToSpecificTimes) {
                         temp.collect = {
                             level: parseInt(params[1]),
-                            times: 0
+                            times: 0,
                         };
                     } else if (temp.type == CLvlConditionType.ExploreSpecificLevelEventToSpecificTimes) {
                         temp.explore = {
                             level: parseInt(params[1]),
-                            times: 0
-                        }
+                            times: 0,
+                        };
                     } else if (temp.type == CLvlConditionType.GetSpecificRankPioneerToSpecificNum) {
                         temp.getRankPioneer = {
                             rank: parseInt(params[1]),
-                            num: 0
-                        }
+                            num: 0,
+                        };
                     } else if (temp.type == CLvlConditionType.GetSpecificLevelPioneerToSpecificNum) {
                         temp.getLevelPioneer = {
                             level: parseInt(params[1]),
-                            num: 0
-                        }
+                            num: 0,
+                        };
                     } else if (temp.type == CLvlConditionType.CostSpecificResourceToSpecificNum) {
                         temp.cost = {
                             itemId: params[1],
-                            num: 0
+                            num: 0,
                         };
                     } else if (temp.type == CLvlConditionType.KillSpecificMonsterToSpecificNum) {
                         temp.kill = {
                             level: parseInt(params[1]),
                             num: 0,
-                        }
+                        };
                     }
                 }
                 newObj.CLvlCondtion.push(temp);
@@ -198,7 +199,7 @@ export default class UserInfoDataMgr {
                 newObj.wormholeTags.push({
                     playerId: temple.playerId.toString(),
                     playerName: temple.playerName,
-                    tpBuildingId: temple.tpBuildingId
+                    tpBuildingId: temple.tpBuildingId,
                 });
             }
         }

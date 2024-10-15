@@ -23,7 +23,6 @@ export class RookieStepMaskUI extends ViewController {
         isDialogUse: boolean = false,
         tapPostionType: RookieTapPositionType = RookieTapPositionType.NORMAL
     ) {
-        
         this.scheduleOnce(() => {
             this._contentView.active = true;
             this.node.active = true;
@@ -53,6 +52,12 @@ export class RookieStepMaskUI extends ViewController {
             this._nextActionCallback = nextActionCallback;
         });
     }
+    public get instructView() {
+        return this._instructView;
+    }
+    public isShow() {
+        return this.node.active && this._contentView.active;
+    }
 
     protected viewDidLoad(): void {
         super.viewDidLoad();
@@ -78,7 +83,7 @@ export class RookieStepMaskUI extends ViewController {
         }
     }
 
-    hide(){
+    hide() {
         this._contentView.active = false;
         this.node.active = false;
     }

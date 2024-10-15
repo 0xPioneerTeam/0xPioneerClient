@@ -1,4 +1,4 @@
-import { random, sp, v2, Vec2 } from "cc";
+import { find, random, sp, v2, Vec2 } from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import { InnerBuildingType, MapBuildingType, UserInnerBuildInfo } from "../Const/BuildingDefine";
@@ -32,13 +32,14 @@ import { HUDName } from "../Const/ConstUIDefine";
 import { AlterView } from "../UI/View/AlterView";
 import { NetworkMgr } from "../Net/NetworkMgr";
 import { UIHUDController } from "../UI/UIHUDController";
-import { TilePos } from "../Game/TiledMap/TileTool";
+import { TileMapHelper, TilePos } from "../Game/TiledMap/TileTool";
 import BigMapConfig from "../Config/BigMapConfig";
 import { share } from "../Net/msg/WebsocketMsg";
 import TroopsConfig from "../Config/TroopsConfig";
 import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 import PioneerLvlupConfig from "../Config/PioneerLvlupConfig";
 import { ReplenishTroopsView } from "../UI/View/ReplenishTroopsView";
+import { OuterShadowController } from "../Game/Outer/OuterShadowController";
 
 export default class GameMgr {
     public rookieTaskExplainIsShow: boolean = false;
@@ -46,6 +47,82 @@ export default class GameMgr {
     public lastEventSelectFightIdx: number = -1;
 
     private _dispatchReplenishTroopAfterEnergyUnqueId: string = null;
+
+    public findInViewBuildingInfo(buildingType: MapBuildingType): MapBuildingObject {
+        const outScene = find("Main/Canvas/GameContent/Game/OutScene");
+        if (outScene == null) {
+            return null;
+        }
+        const shadowController: OuterShadowController = outScene.getComponent(OuterShadowController);
+        if (shadowController == null) {
+            return;
+        }
+        let citySlot = DataMgr.s.mapBuilding.getSelfMainCitySlotId();
+        let buildingData = DataMgr.s.mapBuilding.getObj_building();
+        let resBds = buildingData.filter((building) => {
+            if (building.type != buildingType) {
+                return false;
+            }
+            if (building.uniqueId.split("|")[0] != citySlot) {
+                return false;
+            }
+            if (shadowController.tiledMapIsAllBlackShadow(building.stayMapPositions[0].x, building.stayMapPositions[0].y)) {
+                return false;
+            }
+            return true;
+        });
+        const mainCity = DataMgr.s.mapBuilding.getSelfMainCityBuilding();
+        let cityPos = TileMapHelper.INS.getPos(mainCity.stayMapPositions[0].x, mainCity.stayMapPositions[0].y);
+        let findBuilding: MapBuildingObject = null;
+        let minLen = 99999;
+        resBds.forEach((building) => {
+            let buildingPos = TileMapHelper.INS.getPos(building.stayMapPositions[0].x, building.stayMapPositions[0].y);
+            let len = TileMapHelper.INS.Path_DistPos(cityPos, buildingPos);
+            if (len < minLen) {
+                minLen = len;
+                findBuilding = building;
+            }
+        });
+        return findBuilding;
+    }
+
+    public findInViewPioneerInfo(pioneerType: MapPioneerType): MapPioneerObject {
+        const outScene = find("Main/Canvas/GameContent/Game/OutScene");
+        if (outScene == null) {
+            return null;
+        }
+        const shadowController: OuterShadowController = outScene.getComponent(OuterShadowController);
+        if (shadowController == null) {
+            return;
+        }
+        let citySlot = DataMgr.s.mapBuilding.getSelfMainCitySlotId();
+        let pioneers = DataMgr.s.pioneer.getAll();
+        let resBds = pioneers.filter((pioneer) => {
+            if (pioneer.type != pioneerType) {
+                return false;
+            }
+            if (pioneer.uniqueId.split("|")[0] != citySlot) {
+                return false;
+            }
+            if (shadowController.tiledMapIsAllBlackShadow(pioneer.stayPos.x, pioneer.stayPos.y)) {
+                return false;
+            }
+            return true;
+        });
+        const mainCity = DataMgr.s.mapBuilding.getSelfMainCityBuilding();
+        let cityPos = TileMapHelper.INS.getPos(mainCity.stayMapPositions[0].x, mainCity.stayMapPositions[0].y);
+        let findPioneer: MapPioneerObject = null;
+        let minLen = 99999;
+        resBds.forEach((pioneer) => {
+            let buildingPos = TileMapHelper.INS.getPos(pioneer.stayPos.x, pioneer.stayPos.y);
+            let len = TileMapHelper.INS.Path_DistPos(cityPos, buildingPos);
+            if (len < minLen) {
+                minLen = len;
+                findPioneer = pioneer;
+            }
+        });
+        return findPioneer;
+    }
 
     public canAddTroopNum(): number {
         return this.getMaxTroopNum() - this.getAllTroopNum();

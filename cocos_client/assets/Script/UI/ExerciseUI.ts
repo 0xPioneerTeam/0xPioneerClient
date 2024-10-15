@@ -24,6 +24,8 @@ const { ccclass, property } = _decorator;
 
 @ccclass("ExerciseUI")
 export class ExerciseUI extends ViewController {
+    private _isAddTaped: boolean = false;
+
     private _maxTroopNum: number = 0;
     private _maxExerciseNum: number = 0;
     private _exerciseData: TroopExerciseObject[] = [];
@@ -42,6 +44,17 @@ export class ExerciseUI extends ViewController {
     private _itemScrollView: ManualNestedScrollView = null;
     private _list_Content: Node;
     private _exerciseItem: Node;
+
+    public getOptionalView() {
+        if (this._isAddTaped) {
+            return this.node.getChildByPath("__ViewContent/footer/btn_exercise");
+        } else {
+            if (this._list_Content != null && this._list_Content.children.length > 0) {
+                return this._list_Content.children[0].getChildByPath("count/plus");
+            }
+            return null;
+        }
+    }
 
     protected viewDidLoad(): void {
         super.viewDidLoad();
@@ -171,7 +184,7 @@ export class ExerciseUI extends ViewController {
                 item.getChildByPath("count").active = true;
                 item.getChildByPath("gp_lock").active = false;
                 item.getChildByPath("count/lbl_cav").getComponent(Label).string = data.name;
-                item.getChildByPath("count/SingleHp").getComponent(Label).string = "Single Soldier Hp: " +  data.hpRate.toString();
+                item.getChildByPath("count/SingleHp").getComponent(Label).string = "Single Soldier Hp: " + data.hpRate.toString();
                 item.getChildByPath("count/lbl_count").getComponent(Label).string = data.exerciseNum.toString();
 
                 let curOtherGenerateNum = 0;
@@ -253,6 +266,7 @@ export class ExerciseUI extends ViewController {
         let updateResultNum = data.exerciseNum;
         if (!isMinus) {
             updateResultNum += changeNum;
+            this._isAddTaped = true;
         } else {
             updateResultNum -= changeNum;
         }
@@ -274,7 +288,6 @@ export class ExerciseUI extends ViewController {
         for (let i = 0; i < this._exerciseData.length; i++) {
             curAllOwnedNum += this._exerciseData[i].ownedNum;
             if (i == index) {
-
             } else {
                 curOtherGenerateNum += this._exerciseData[i].exerciseNum;
             }

@@ -32,6 +32,13 @@ export default class InnerBuildingDataMgr {
         }
         return level;
     }
+    public getInnerBuildingUpgrading(buildingType: InnerBuildingType) {
+        let upgrading: boolean = false;
+        if (this._data.has(buildingType)) {
+            upgrading = this._data.get(buildingType).upgrading;
+        }
+        return upgrading;
+    }
     public getOwnedExecriseTroopNum(troopId: string): number {
         const tc = this._data.get(InnerBuildingType.TrainingCenter).tc;
         if (tc == null) {

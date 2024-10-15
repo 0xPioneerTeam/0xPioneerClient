@@ -338,7 +338,7 @@ export default class GameMainHelper {
 
         const leftTalkIds: string[] = DataMgr.s.userInfo.data.talkIds;
         if (leftTalkIds != null && leftTalkIds.length > 0) {
-            NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_TRIGGER_LEFT_TALK, { talkId: leftTalkIds.splice(0, 1)[0] });
+            NotificationMgr.triggerEvent(NotificationName.USERINFO_DID_TRIGGER_LEFT_TALK, { talkId: leftTalkIds.splice(0, 1)[0], fromRookie: false });
         }
     }
     public get isMapInitOver(): boolean {
