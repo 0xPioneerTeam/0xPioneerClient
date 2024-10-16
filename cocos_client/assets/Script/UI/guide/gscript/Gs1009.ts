@@ -30,7 +30,7 @@ export class Gs1009 extends GsBase {
     _onTapGuideTask() {
         this.initBinding();
         if (this._guide_step == 1) {
-            let ExerciseButton = find("Main/UI_Canvas/UI_ROOT/NewBuildingUpgradeUI/__ViewContent/ExerciseButton");
+            const ExerciseButton = this.mainUI.node.getChildByPath("CommonContent/ExerciseButton");
             RookieStepMgr.instance().maskView.configuration(false, ExerciseButton.worldPosition, ExerciseButton.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
                 let button = ExerciseButton.getComponent(Button);

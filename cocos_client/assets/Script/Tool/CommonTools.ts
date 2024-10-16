@@ -130,6 +130,12 @@ export default class CommonTools {
         return today === 0 ? 7 : today;
     }
 
+    public static getStartOfNextDayTimstamp(): number {
+        const now = new Date();
+        const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 0);
+        return tomorrow.getTime();
+    }
+
     /**
      * @param timestamp
      * @param format HH:MM:SS   HHH MMM

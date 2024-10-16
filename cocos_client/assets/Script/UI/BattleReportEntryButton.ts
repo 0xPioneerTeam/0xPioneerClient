@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, Label, rect } from "cc";
+import { _decorator, Button, Component, Label, rect, tween, Tween } from "cc";
 import { UIName } from "../Const/ConstUIDefine";
 import NotificationMgr from "../Basic/NotificationMgr";
 import { NotificationName } from "../Const/Notification";
@@ -13,15 +13,12 @@ const { ccclass } = _decorator;
 
 @ccclass("BattleReportEntryButton")
 export class BattleReportEntryButton extends Component {
-
     private _redPointValue: number = 0;
 
     private _redPointView: RedPointView = null;
 
     protected start(): void {
-
         this._redPointView = this.node.getChildByPath("RedPointView").getComponent(RedPointView);
-
 
         NetworkMgr.websocket.on("get_new_battle_report_red_point_res", this.get_new_battle_report_red_point_res);
         NetworkMgr.websocket.on("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
@@ -38,6 +35,20 @@ export class BattleReportEntryButton extends Component {
         this._redPointView.refreshUI(this._redPointValue, true);
         this.node.getChildByPath("icon_WarReport_1").active = this._redPointValue <= 0;
         this.node.getChildByPath("icon_WarReport_2").active = this._redPointValue > 0;
+
+        if (this._redPointValue > 0) {
+            if (this.node["__isTweening"] == null) {
+                tween()
+                    .target(this.node)
+                    .repeatForever(tween().to(0.15, { angle: -6 }).to(0.15, { angle: 0 }).to(0.15, { angle: -6 }).to(0.15, { angle: 0 }).delay(0.6))
+                    .start();
+                this.node["__isTweening"] = true;
+            }
+        } else {
+            Tween.stopAllByTarget(this.node);
+            this.node.angle = 0;
+            this.node["__isTweening"] = null;
+        }
     }
 
     //------------------------------- action
@@ -62,5 +73,5 @@ export class BattleReportEntryButton extends Component {
             return;
         }
         NetworkMgr.websocketMsg.get_new_battle_report_red_point({});
-    }
+    };
 }

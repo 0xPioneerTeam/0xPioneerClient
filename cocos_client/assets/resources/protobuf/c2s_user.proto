@@ -82,7 +82,7 @@ message get_new_battle_report {
 }
 message get_new_battle_report_red_point { }
 message receive_new_battle_report_reward {
-    required uint32 id = 1;
+    required int32 id = 1;
 }
 
 // ------ map ------

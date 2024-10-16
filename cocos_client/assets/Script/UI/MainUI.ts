@@ -337,7 +337,7 @@ export class MainUI extends ViewController {
     private _refreshWorldBoxCountTip() {
         this.schedule(() => {
             this._worldBoxCountTipView.getChildByPath("Content/Time").getComponent(Label).string = CommonTools.formatSeconds(
-                Math.max(0, (DataMgr.s.userInfo.data.boxRefreshTimestamp - new Date().getTime()) / 1000)
+                Math.max(0, (CommonTools.getStartOfNextDayTimstamp() - new Date().getTime()) / 1000)
             );
         }, 1);
     }
