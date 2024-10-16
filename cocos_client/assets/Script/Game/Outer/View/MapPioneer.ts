@@ -287,26 +287,28 @@ export class MapPioneer extends Component {
         }
 
         if (this._model.actionType == MapPioneerActionType.moving) {
-            leftWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.left;
-            rightWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.right;
-            topWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.top;
-            bottomWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.bottom;
-
-            let showWalkView = null;
-            if (leftWalkView.active) {
-                showWalkView = leftWalkView;
-            } else if (rightWalkView.active) {
-                showWalkView = rightWalkView;
-            } else if (topWalkView.active) {
-                showWalkView = topWalkView;
-            } else if (bottomWalkView.active) {
-                showWalkView = bottomWalkView;
-            }
-            if (showWalkView != null) {
-                for (const child of showWalkView.children) {
-                    const animation: Animation = child.getComponent(Animation);
-                    if (animation != null) {
-                        animation.getState(animation.defaultClip.name).speed = animation.defaultClip?.speed * 2;
+            if (this.node.activeInHierarchy) {
+                leftWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.left;
+                rightWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.right;
+                topWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.top;
+                bottomWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.bottom;
+    
+                let showWalkView = null;
+                if (leftWalkView.active) {
+                    showWalkView = leftWalkView;
+                } else if (rightWalkView.active) {
+                    showWalkView = rightWalkView;
+                } else if (topWalkView.active) {
+                    showWalkView = topWalkView;
+                } else if (bottomWalkView.active) {
+                    showWalkView = bottomWalkView;
+                }
+                if (showWalkView != null) {
+                    for (const child of showWalkView.children) {
+                        const animation: Animation = child.getComponent(Animation);
+                        if (animation != null) {
+                            animation.getState(animation.defaultClip.name).speed = animation.defaultClip?.speed * 2;
+                        }
                     }
                 }
             }
