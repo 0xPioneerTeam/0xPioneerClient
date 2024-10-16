@@ -426,7 +426,7 @@
   },
   "106015": {
     "id": "106015",
-    "eng": "Map and Teasure chest refresh countdown: ",
+    "eng": "Map refresh countdown: ",
     "tc": "地圖和寶藏箱刷新倒數計時："
   },
   "106016": {
@@ -5453,5 +5453,10 @@
     "id": "1100207",
     "eng": "Please go to the battle report interface to claim the reward.",
     "tc": "獎勵請前往戰報介面領取。"
+  },
+  "1100208": {
+    "id": "1100208",
+    "eng": "After the ranking list ends, you can check in the battle report whether you have received ranking rewards",
+    "tc": "排行榜結束後可在戰報中查看是否獲得排行獎勵"
   }
 }
