@@ -300,8 +300,11 @@ export default class RookieStepMgr {
                     if (this._tileMapController != null) {
                         const actionView = this._tileMapController.actionView;
                         if (actionView != null && actionView.node.activeInHierarchy) {
-                            this._showOptionalTip(actionView.node.getChildByPath("ActionView/Action").children[0].worldPosition, true);
-                            return;
+                            const tempAction = actionView.node.getChildByPath("ActionView/Action");
+                            if (tempAction != null && tempAction.children.length > 0) {
+                                this._showOptionalTip(tempAction.children[0].worldPosition, true);
+                                return;
+                            }
                         }
                     }
 
