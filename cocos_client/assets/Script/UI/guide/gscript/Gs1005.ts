@@ -13,6 +13,7 @@ import { GameMgr, LanMgr } from "../../../Utils/Global";
 import { OuterBuildingView } from "../../../Game/Outer/View/OuterBuildingView";
 import { MapBuildingObject } from "../../../Const/MapBuilding";
 import { RookieFinishCondition } from "../../../Const/RookieDefine";
+import { MapPioneerActionType } from "../../../Const/PioneerDefine";
 
 export class Gs1005 extends GsBase {
     private _buildData: MapBuildingObject = null;
@@ -99,9 +100,22 @@ export class Gs1005 extends GsBase {
             if (!view) {
                 return;
             }
+            let isPioneerActioning: boolean = false;
+            for (const pioneer of DataMgr.s.pioneer.getAll()) {
+                if (pioneer.actionType == MapPioneerActionType.moving || pioneer.actionType == MapPioneerActionType.mining) {
+                    isPioneerActioning = true;
+                    break;
+                }
+            }
+            if (isPioneerActioning) {
+                return;
+            }
             this.fouceMainCity();
             RookieStepMgr.instance().maskView.configuration(true, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
+                if (!view.isValid) {
+                    return;
+                }
                 GameMusicPlayMgr.playTapButtonEffect();
                 this._tileMapController._clickOnMap(view.worldPosition);
                 this._guide_step = 3;

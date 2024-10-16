@@ -6,10 +6,11 @@ import RookieStepMgr from "../../../Manger/RookieStepMgr";
 import { GsBase } from "./GsBase";
 import { DataMgr } from "../../../Data/DataMgr";
 import { TileMapHelper } from "../../../Game/TiledMap/TileTool";
-import { MapPioneerType } from "../../../Const/PioneerDefine";
+import { MapPioneerActionType, MapPioneerType } from "../../../Const/PioneerDefine";
 import { UIHUDController } from "../../UIHUDController";
 import { GameMgr, LanMgr } from "../../../Utils/Global";
 import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
+import { RookieFinishCondition } from "../../../Const/RookieDefine";
 
 export class Gs1010 extends GsBase {
     private _resMonster: Node;
@@ -19,36 +20,41 @@ export class Gs1010 extends GsBase {
     }
 
     protected update(dt: number): void {
-        let isGameShowOuter = GameMainHelper.instance.isGameShowOuter;
-        if (!isGameShowOuter) {
-            this._guide_step = 1;
-            return;
-        }
-        if (!this._shadowController) {
-            this.initBinding();
-            return;
-        }
-        if (!this._resMonster) {
-            let monsterData = GameMgr.findInViewPioneerInfo(MapPioneerType.hred);
-            if (monsterData) {
-                this._monsterData = monsterData;
-                this._resMonster = this._pioneerController.getPioneerByUniqueId(monsterData.uniqueId);
-            }
-        }
-        if (this._resMonster) {
-            let actionView = this._tileMapController.actionView;
-            if (!actionView.node.active) {
-                this._guide_step = 2;
+        const finishConditions = DataMgr.s.userInfo.data.rookieFinishConditions;
+        if (finishConditions.indexOf(RookieFinishCondition.FightMonster) != -1) {
+            let isGameShowOuter = GameMainHelper.instance.isGameShowOuter;
+            if (!isGameShowOuter) {
+                this._guide_step = 1;
                 return;
             }
-            if (actionView.interactPioneer != this._monsterData) {
-                actionView.node.active = false;
-                //worning
-                UIHUDController.showCenterTip(LanMgr.getLanById("1100205"));
+            if (!this._shadowController) {
+                this.initBinding();
                 return;
-            } else {
-                this._guide_step = 3;
             }
+            if (!this._resMonster) {
+                let monsterData = GameMgr.findInViewPioneerInfo(MapPioneerType.hred);
+                if (monsterData) {
+                    this._monsterData = monsterData;
+                    this._resMonster = this._pioneerController.getPioneerByUniqueId(monsterData.uniqueId);
+                }
+            }
+            if (this._resMonster) {
+                let actionView = this._tileMapController.actionView;
+                if (!actionView.node.active) {
+                    this._guide_step = 2;
+                    return;
+                }
+                if (actionView.interactPioneer != this._monsterData) {
+                    actionView.node.active = false;
+                    //worning
+                    UIHUDController.showCenterTip(LanMgr.getLanById("1100205"));
+                    return;
+                } else {
+                    this._guide_step = 3;
+                }
+            }
+        } else if (finishConditions.indexOf(RookieFinishCondition.BattleReportFightMonster) != -1) {
+            this._guide_step = 4;
         }
     }
 
@@ -81,9 +87,22 @@ export class Gs1010 extends GsBase {
             if (!view) {
                 return;
             }
+            let isPioneerActioning: boolean = false;
+            for (const pioneer of DataMgr.s.pioneer.getAll()) {
+                if (pioneer.actionType == MapPioneerActionType.moving || pioneer.actionType == MapPioneerActionType.fighting) {
+                    isPioneerActioning = true;
+                    break;
+                }
+            }
+            if (isPioneerActioning) {
+                return;
+            }
             this.fouceMainCity();
             RookieStepMgr.instance().maskView.configuration(true, view.worldPosition, view.getComponent(UITransform).contentSize, () => {
                 RookieStepMgr.instance().maskView.hide();
+                if (!view.isValid) {
+                    return;
+                }
                 GameMusicPlayMgr.playTapButtonEffect();
                 this._tileMapController._clickOnMap(view.worldPosition);
                 this._guide_step = 3;
@@ -108,6 +127,15 @@ export class Gs1010 extends GsBase {
                 let btn = view.getComponent(Button);
                 let event = new Event(NodeEventType.TOUCH_START);
                 EventHandler.emitEvents(btn.clickEvents, event);
+            });
+        }
+        if (this._guide_step == 4) {
+            const reportsButton = this.mainUI.node.getChildByPath("CommonContent/reportsButton");
+            RookieStepMgr.instance().maskView.configuration(false, reportsButton.worldPosition, reportsButton.getComponent(UITransform).contentSize, () => {
+                RookieStepMgr.instance().maskView.hide();
+                let button = reportsButton.getComponent(Button);
+                let event = new Event(NodeEventType.TOUCH_START);
+                EventHandler.emitEvents(button.clickEvents, event);
             });
         }
     }
