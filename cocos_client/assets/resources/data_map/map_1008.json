@@ -16,7 +16,7 @@
     "time": 15,
     "resources": [
       "8002",
-      100
+      200
     ],
     "quota": 1,
     "exp": 0,
@@ -27,7 +27,7 @@
     "winprogress": null,
     "faction": 0,
     "defendPioneerIds": [],
-    "cost": 5
+    "cost": 10
   },
   {
     "id": "building_4",
@@ -46,7 +46,7 @@
     "time": 15,
     "resources": [
       "8001",
-      100
+      200
     ],
     "quota": 1,
     "exp": 0,
@@ -57,7 +57,7 @@
     "winprogress": null,
     "faction": 0,
     "defendPioneerIds": [],
-    "cost": 5
+    "cost": 10
   },
   {
     "id": "building_5",
@@ -76,7 +76,7 @@
     "time": 15,
     "resources": [
       "8003",
-      100
+      200
     ],
     "quota": 1,
     "exp": 0,
@@ -87,7 +87,7 @@
     "winprogress": null,
     "faction": 0,
     "defendPioneerIds": [],
-    "cost": 5
+    "cost": 10
   },
   {
     "id": "building_7",

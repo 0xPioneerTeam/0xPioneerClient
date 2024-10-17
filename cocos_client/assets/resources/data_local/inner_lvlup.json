@@ -44,7 +44,7 @@
     ],
     "prefab_barr": "Barracks_Group",
     "desc_barr": "121002",
-    "max_barr": 500,
+    "max_barr": 800,
     "time_barr": 0.2,
     "rec_cost_barr": "[[8001,10]]",
     "prefab_house": "Pioneer_house",

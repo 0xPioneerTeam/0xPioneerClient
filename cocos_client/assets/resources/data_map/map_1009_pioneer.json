@@ -5,22 +5,27 @@
     "type": "3",
     "friendly": 0,
     "show": 1,
-    "level": 1,
-    "refresh_limit": null,
+    "level": 3,
+    "refresh_limit": 1,
     "des": "1090402",
     "nft_pioneer": "",
-    "hp": 80,
-    "attack": 8,
+    "hp": 55,
+    "attack": 18,
     "def": 0,
     "spd": 5,
-    "winprogress": 40,
+    "winprogress": 60,
     "exp": 0,
     "animType": "rebels",
     "drop": [
       [
         1,
-        "8007",
-        50
+        "8005",
+        660
+      ],
+      [
+        4,
+        "40003",
+        1
       ]
     ],
     "pos": [
@@ -36,22 +41,27 @@
     "type": "3",
     "friendly": 0,
     "show": 1,
-    "level": 1,
-    "refresh_limit": null,
+    "level": 3,
+    "refresh_limit": 1,
     "des": "1090402",
     "nft_pioneer": "",
-    "hp": 100,
-    "attack": 10,
+    "hp": 62,
+    "attack": 20,
     "def": 0,
     "spd": 5,
-    "winprogress": 40,
+    "winprogress": 60,
     "exp": 0,
     "animType": "doomsdayGangTeam",
     "drop": [
       [
         1,
-        "8007",
-        50
+        "8005",
+        660
+      ],
+      [
+        4,
+        "40003",
+        1
       ]
     ],
     "pos": [
@@ -67,22 +77,27 @@
     "type": "4",
     "friendly": 0,
     "show": 1,
-    "level": 1,
+    "level": 4,
     "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
-    "hp": 60,
-    "attack": 15,
+    "hp": 100,
+    "attack": 32,
     "def": 0,
     "spd": 5,
-    "winprogress": 40,
+    "winprogress": 60,
     "exp": 0,
     "animType": "monster_a_1",
     "drop": [
       [
         1,
-        "8001",
-        20
+        "8005",
+        960
+      ],
+      [
+        4,
+        "40004",
+        1
       ]
     ],
     "pos": [
@@ -98,22 +113,27 @@
     "type": "4",
     "friendly": 0,
     "show": 1,
-    "level": 2,
+    "level": 4,
     "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
-    "hp": 60,
-    "attack": 15,
+    "hp": 110,
+    "attack": 28,
     "def": 0,
     "spd": 5,
-    "winprogress": 40,
+    "winprogress": 60,
     "exp": 0,
     "animType": "monster_sandspider",
     "drop": [
       [
         1,
-        "8001",
-        50
+        "8005",
+        960
+      ],
+      [
+        4,
+        "40004",
+        1
       ]
     ],
     "pos": [
@@ -129,22 +149,27 @@
     "type": "4",
     "friendly": 0,
     "show": 1,
-    "level": 3,
-    "refresh_limit": 3,
+    "level": 4,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
-    "hp": 120,
-    "attack": 25,
+    "hp": 95,
+    "attack": 35,
     "def": 0,
     "spd": 5,
-    "winprogress": 40,
+    "winprogress": 60,
     "exp": 0,
     "animType": "monster_spiderqueen",
     "drop": [
       [
         1,
-        "8001",
-        100
+        "8005",
+        960
+      ],
+      [
+        4,
+        "40004",
+        1
       ]
     ],
     "pos": [
@@ -178,22 +203,27 @@
     "type": "4",
     "friendly": 0,
     "show": 1,
-    "level": 2,
-    "refresh_limit": 2,
+    "level": 5,
+    "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
-    "hp": 60,
-    "attack": 15,
+    "hp": 213,
+    "attack": 67,
     "def": 0,
     "spd": 5,
-    "winprogress": 40,
+    "winprogress": 70,
     "exp": 0,
     "animType": "monster_sandspider",
     "drop": [
       [
         1,
-        "8001",
-        40
+        "8005",
+        1620
+      ],
+      [
+        4,
+        "40005",
+        1
       ]
     ],
     "pos": [
@@ -209,22 +239,27 @@
     "type": "4",
     "friendly": 0,
     "show": 1,
-    "level": 1,
+    "level": 5,
     "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
-    "hp": 60,
-    "attack": 15,
+    "hp": 200,
+    "attack": 70,
     "def": 0,
     "spd": 5,
-    "winprogress": 40,
+    "winprogress": 70,
     "exp": 0,
     "animType": "monster_a_1",
     "drop": [
       [
         1,
-        "8001",
-        20
+        "8005",
+        1620
+      ],
+      [
+        4,
+        "40005",
+        1
       ]
     ],
     "pos": [

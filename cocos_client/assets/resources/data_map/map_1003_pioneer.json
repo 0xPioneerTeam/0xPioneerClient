@@ -121,11 +121,11 @@
     "friendly": 0,
     "show": 1,
     "level": 1,
-    "refresh_limit": null,
+    "refresh_limit": 1,
     "des": "1090402",
     "nft_pioneer": "",
-    "hp": 80,
-    "attack": 8,
+    "hp": 15,
+    "attack": 2,
     "def": 0,
     "spd": 5,
     "winprogress": 40,
@@ -134,8 +134,13 @@
     "drop": [
       [
         1,
-        "8007",
-        20
+        "8005",
+        200
+      ],
+      [
+        4,
+        "40001",
+        1
       ]
     ],
     "pos": [
@@ -155,8 +160,8 @@
     "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
-    "hp": 60,
-    "attack": 15,
+    "hp": 14,
+    "attack": 3,
     "def": 0,
     "spd": 5,
     "winprogress": 40,
@@ -165,8 +170,13 @@
     "drop": [
       [
         1,
-        "8001",
-        30
+        "8005",
+        200
+      ],
+      [
+        4,
+        "40001",
+        1
       ]
     ],
     "pos": [
@@ -214,8 +224,8 @@
     "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
-    "hp": 40,
-    "attack": 10,
+    "hp": 16,
+    "attack": 2,
     "def": 0,
     "spd": 5,
     "winprogress": 40,
@@ -224,8 +234,13 @@
     "drop": [
       [
         1,
-        "8001",
-        30
+        "8005",
+        200
+      ],
+      [
+        4,
+        "40001",
+        1
       ]
     ],
     "pos": [
@@ -259,12 +274,12 @@
     "type": "4",
     "friendly": 0,
     "show": 1,
-    "level": 2,
+    "level": 1,
     "refresh_limit": 1,
     "des": "1090401",
     "nft_pioneer": "",
-    "hp": 60,
-    "attack": 18,
+    "hp": 10,
+    "attack": 4,
     "def": 0,
     "spd": 5,
     "winprogress": 40,
@@ -273,8 +288,13 @@
     "drop": [
       [
         1,
-        "8001",
-        60
+        "8005",
+        200
+      ],
+      [
+        4,
+        "40001",
+        1
       ]
     ],
     "pos": [
