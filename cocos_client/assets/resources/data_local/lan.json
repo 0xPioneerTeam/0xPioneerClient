@@ -2181,8 +2181,8 @@
   },
   "401026": {
     "id": "401026",
-    "eng": "Gene Key",
-    "tc": "基因鑰匙"
+    "eng": "EXP",
+    "tc": "經驗"
   },
   "401027": {
     "id": "401027",
@@ -5421,8 +5421,8 @@
   },
   "1100201": {
     "id": "1100201",
-    "eng": "The character %s has insufficient stamina. Would you like to spend %s amount of %s or %s amount of %s to replenish %s stamina for the character? You have %s purchase attempts remaining today.",
-    "tc": "角色%s體力不足，是否花費%s數量的%s或者%s數量的%s為角色補充%s體力，今日剩餘購買次數%s。"
+    "eng": "The character %s lacks stamina. Should you spend %s of %s to replenish %s stamina for the character? There are %s remaining purchases today.",
+    "tc": "角色%s體力不足，是否花費%s數量的%s為角色補充%s體力，今日剩餘購買次數%s。"
   },
   "1100202": {
     "id": "1100202",
