@@ -127,6 +127,9 @@ message receive_new_battle_report_reward_res {
     required int32 res = 1;
     optional int32 id = 2;
 }
+message new_battle_report_have_new_reward {
+    required int32 res = 1;
+}
 
 // ------ map ------
 // get map data

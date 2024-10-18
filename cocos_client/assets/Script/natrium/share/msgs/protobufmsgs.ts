@@ -164,6 +164,7 @@ export enum protobuf_s2c {
     get_new_battle_report_res = 10602,
     get_new_battle_report_red_point_res = 10603,
     receive_new_battle_report_reward_res = 10604,
+    new_battle_report_have_new_reward = 10605,
 
     // ------ player ------
     // player: talk

@@ -28,6 +28,8 @@ export class ResourceGettedView extends ViewController {
                 itemView.getChildByPath("IconTip/Icon/8004").active = item.itemConfigId == ResourceCorrespondingItem.Troop;
                 itemView.getChildByPath("IconTip/Icon/8005").active = item.itemConfigId == ResourceCorrespondingItem.Energy;
                 itemView.getChildByPath("IconTip/Icon/8006").active = item.itemConfigId == ResourceCorrespondingItem.Gold;
+                itemView.getChildByPath("IconTip/Icon/8007").active = item.itemConfigId == ResourceCorrespondingItem.NFTExp;
+                itemView.getChildByPath("IconTip/Icon/8008").active = item.itemConfigId == ResourceCorrespondingItem.NFTRankExp;
                 itemView.getChildByPath("IconTip/Name").getComponent(Label).string = LanMgr.getLanById(config.itemName);
                 itemView.getChildByPath("IconTip/Num").getComponent(Label).string = "+" + item.count;
             } else if (!!(item as string)) {

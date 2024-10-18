@@ -22,6 +22,7 @@ export class BattleReportEntryButton extends Component {
 
         NetworkMgr.websocket.on("get_new_battle_report_red_point_res", this.get_new_battle_report_red_point_res);
         NetworkMgr.websocket.on("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
+        NetworkMgr.websocket.on("new_battle_report_have_new_reward", this.new_battle_report_have_new_reward);
 
         NetworkMgr.websocketMsg.get_new_battle_report_red_point({});
     }
@@ -29,6 +30,7 @@ export class BattleReportEntryButton extends Component {
     protected onDestroy(): void {
         NetworkMgr.websocket.off("get_new_battle_report_red_point_res", this.get_new_battle_report_red_point_res);
         NetworkMgr.websocket.off("receive_new_battle_report_reward_res", this.receive_new_battle_report_reward_res);
+        NetworkMgr.websocket.off("new_battle_report_have_new_reward", this.new_battle_report_have_new_reward);
     }
 
     private _refreshRedPoint() {
@@ -69,6 +71,14 @@ export class BattleReportEntryButton extends Component {
 
     private receive_new_battle_report_reward_res = (e: any) => {
         const p: s2c_user.Ireceive_new_battle_report_reward_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        NetworkMgr.websocketMsg.get_new_battle_report_red_point({});
+    };
+
+    private new_battle_report_have_new_reward = (e: any) => {
+        const p: s2c_user.Inew_battle_report_have_new_reward = e.data;
         if (p.res !== 1) {
             return;
         }

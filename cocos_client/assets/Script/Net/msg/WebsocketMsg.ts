@@ -947,6 +947,9 @@ export namespace s2c_user {
         res: number;
         id: number;
     }
+    export interface Inew_battle_report_have_new_reward {
+        res: number;
+    }
 
     export interface Iplayer_troop_to_hp_res {
         res: number;
