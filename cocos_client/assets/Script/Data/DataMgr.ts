@@ -756,7 +756,7 @@ export class DataMgr {
             return;
         }
         NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_FIGHT_END, { uniqueId: uniqueId });
-        NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP,  LanMgr.getLanById("1100207"));
+        NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("1100207"));
     };
 
     public static player_wormhole_tp_random_res = (e: any) => {
