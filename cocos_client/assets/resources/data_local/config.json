@@ -75,12 +75,32 @@
   },
   "10011": {
     "id": "10011",
-    "**NOTES**": "energy purchase price",
+    "**NOTES**": "energy purchase price psyc",
     "para": [
       [
         "8005",
         50000
-      ],
+      ]
+    ]
+  },
+  "10012": {
+    "id": "10012",
+    "**NOTES**": "energy purchase threshold",
+    "para": [
+      0
+    ]
+  },
+  "10013": {
+    "id": "10013",
+    "**NOTES**": "energy purchase constant",
+    "para": [
+      0.2
+    ]
+  },
+  "10014": {
+    "id": "10014",
+    "**NOTES**": "energy purchase price piot",
+    "para": [
       [
         "8006",
         20
@@ -125,20 +145,6 @@
         "8006",
         200
       ]
-    ]
-  },
-  "10012": {
-    "id": "10012",
-    "**NOTES**": "energy purchase threshold",
-    "para": [
-      10
-    ]
-  },
-  "10013": {
-    "id": "10013",
-    "**NOTES**": "energy purchase constant",
-    "para": [
-      0.2
     ]
   },
   "20001": {
