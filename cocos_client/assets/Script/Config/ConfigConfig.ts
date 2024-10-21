@@ -69,7 +69,12 @@ export default class ConfigConfig {
                     type: key,
                     limit: param[0],
                 };
-            } else if (key == ConfigType.BuyEnergyPrice) {
+            } else if (key == ConfigType.BuyEnergyPricePsyc) {
+                temple = {
+                    type: key,
+                    prices: param,
+                };
+            } else if (key == ConfigType.BuyEnergyPricePiot) {
                 temple = {
                     type: key,
                     prices: param,

@@ -1,10 +1,10 @@
 import { _decorator, Color, dynamicAtlasManager, instantiate, Node, Prefab, sp, UIOpacity, v2, v3, Vec2, Vec3 } from "cc";
 import NotificationMgr from "../../Basic/NotificationMgr";
-import UIPanelManger from "../../Basic/UIPanelMgr";
+import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import ViewController from "../../BasicView/ViewController";
 import EventConfig from "../../Config/EventConfig";
 import { GameExtraEffectType, PioneerGameTest } from "../../Const/ConstDefine";
-import { UIName } from "../../Const/ConstUIDefine";
+import { HUDName, UIName } from "../../Const/ConstUIDefine";
 import { NotificationName } from "../../Const/Notification";
 import {
     MapFightObject,
@@ -29,6 +29,7 @@ import { OuterMapCursorView } from "./View/OuterMapCursorView";
 import { OuterOtherPioneerView } from "./View/OuterOtherPioneerView";
 import { OuterRebonAndDestroyView } from "./View/OuterRebonAndDestroyView";
 import { OuterShadowController } from "./OuterShadowController";
+import { ReplenishEnergyView } from "../../UI/View/ReplenishEnergyView";
 
 const { ccclass, property } = _decorator;
 
@@ -713,14 +714,17 @@ export class OuterPioneerController extends ViewController {
         }, 5);
     }
 
-    private _onPioneerEnergyChanged(data: { uniqueId: string }) {
+    private async _onPioneerEnergyChanged(data: { uniqueId: string }) {
         const pioneer = DataMgr.s.pioneer.getById(data.uniqueId);
         if (pioneer == undefined) {
             return;
         }
         if (pioneer.energy <= 0) {
-            // wait change
-            GameMgr.showBuyEnergyTip(pioneer.uniqueId);
+            const result = await UIPanelManger.inst.pushPanel(HUDName.ReplenishEnergyView, UIPanelLayerType.HUD);
+            if (!result.success) {
+                return;
+            }
+            result.node.getComponent(ReplenishEnergyView).configuration(pioneer.uniqueId);
         }
     }
 }

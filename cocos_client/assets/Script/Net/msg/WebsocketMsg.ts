@@ -415,7 +415,9 @@ export namespace c2s_user {
     }
     export interface Iplayer_psyc_to_energy {
         pioneerId: string;
-        psycNum: number;
+        buyType: number;
+        itemId: string;
+        itemNum: number;
     }
 
     export interface Iget_map_info {
@@ -1061,6 +1063,7 @@ export namespace share {
         lvlupConds: { [key: string]: number };
 
         buyEnergyLimitTimes: number;
+        buyEnergyPiotTimes: number;
 
         wormholeTags: share.Iwormhole_tag_data[];
 

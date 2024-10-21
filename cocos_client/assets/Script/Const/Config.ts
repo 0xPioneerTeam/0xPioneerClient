@@ -9,9 +9,10 @@ export enum ConfigType {
     MainCityEnergyTipThreshold = "10005",
 
     BuyEnergyLimit = "10010",
-    BuyEnergyPrice = "10011",
+    BuyEnergyPricePsyc = "10011",
     BuyEnergyThres = "10012",
     BuyEnergyCoefficient = "10013",
+    BuyEnergyPricePiot = "10014",
 
     BattleReportMaxKeepDays = "110000",
     BattleReportMaxKeepRecords = "110002",
@@ -56,7 +57,7 @@ export enum ConfigType {
     DailyRankingEnabled = "500004",
     MonthlyRankingEnabled = "500005",
     SeasonRankingEnabled = "500006",
-    SeasonRankingDuration = "500007"
+    SeasonRankingDuration = "500007",
 }
 
 export interface ConfigData {
@@ -161,8 +162,12 @@ export interface BuyEnergyLimitParam extends ConfigData {
     limit: number;
 }
 
-export interface BuyEnergyPriceParam extends ConfigData {
-    prices: number[];
+export interface BuyEnergyPricePsycParam extends ConfigData {
+    prices: [string, number][];
+}
+
+export interface BuyEnergyPricePiotParam extends ConfigData {
+    prices: [string, number][];
 }
 
 export interface BuyEnergyThresParam extends ConfigData {
@@ -186,12 +191,11 @@ export interface DetectCostParam extends ConfigData {
     cost: number;
 }
 
-
 export interface DailyRankingEnabledParam extends ConfigData {
     enabled: boolean;
     beginTimestamp: number;
 }
-export interface  MonthlyRankingEnabledParam extends ConfigData {
+export interface MonthlyRankingEnabledParam extends ConfigData {
     enabled: boolean;
     beginTimestamp: number;
 }

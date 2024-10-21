@@ -68,6 +68,7 @@ export interface UserInfoObject {
     CLvlCondtion: CLvlCondition[];
 
     buyEnergyLimitTimes: number;
+    buyEnergyPiotTimes: number;
 
     wormholeTags: WormholeTagObject[];
     wormholeMatchTimes: number;

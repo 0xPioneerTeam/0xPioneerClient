@@ -74,6 +74,7 @@ message player_sinfo {
     map<string, uint32> lvlupConds = 61;
 
     required uint32 buyEnergyLimitTimes = 62;
+    required uint32 buyEnergyPiotTimes = 63;
 
     required uint32 battlePower = 70;
     repeated uint32 explorePlayerids = 71;

@@ -100,6 +100,7 @@ export default class UserInfoDataMgr {
             CLvlCondtion: [],
 
             buyEnergyLimitTimes: netData.buyEnergyLimitTimes,
+            buyEnergyPiotTimes: netData.buyEnergyPiotTimes,
 
             wormholeTags: [],
             wormholeMatchTimes: netData.wormholeMatchTimes,

@@ -1,20 +1,12 @@
-import { _decorator, Component, Label, Node, tween, v3 } from "cc";
+import { _decorator, Label, Node } from "cc";
 import ViewController from "../../BasicView/ViewController";
 import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import { NetworkMgr } from "../../Net/NetworkMgr";
-import CLog from "../../Utils/CLog";
 import { LanMgr } from "../../Utils/Global";
-import { UIName } from "../../Const/ConstUIDefine";
-import { MapPioneerActionType, MapPioneerObject, MapPioneerType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
-import { PlayerDispatchDetailUI } from "../Dispatch/PlayerDispatchDetailUI";
-import { GAME_ENV_IS_DEBUG, ResourceCorrespondingItem } from "../../Const/ConstDefine";
-import NotificationMgr from "../../Basic/NotificationMgr";
-import { NotificationName } from "../../Const/Notification";
-import TroopsConfig from "../../Config/TroopsConfig";
-import { InnerBuildingType } from "../../Const/BuildingDefine";
-import InnerBuildingLvlUpConfig from "../../Config/InnerBuildingLvlUpConfig";
+import { MapPioneerType, MapPlayerPioneerObject } from "../../Const/PioneerDefine";
+
 import ConfigConfig from "../../Config/ConfigConfig";
 import {
     ConfigType,
@@ -25,12 +17,23 @@ import {
     BuyEnergyPricePsycParam,
 } from "../../Const/Config";
 import ItemConfig from "../../Config/ItemConfig";
+import { UIHUDController } from "../UIHUDController";
+import { ItemConfigData } from "../../Const/Item";
 
 const { ccclass, property } = _decorator;
 
 @ccclass("ReplenishEnergyView")
 export class ReplenishEnergyView extends ViewController {
     private _pioneer: MapPlayerPioneerObject = null;
+    private _limitLeft: boolean = false;
+    private _psycPrice: number = 99999;
+    private _psycItemId: string = "";
+    private _psycItemConfig: ItemConfigData = null;
+
+    private _piotPrice: number = 99999;
+    private _piotItemId: string = "";
+    private _piotItemConfig: ItemConfigData = null;
+
     public configuration(uniqueId: string) {
         const pioneer = DataMgr.s.pioneer.getById(uniqueId);
         if (pioneer == undefined || pioneer.type != MapPioneerType.player) {
@@ -38,10 +41,10 @@ export class ReplenishEnergyView extends ViewController {
             return;
         }
         this._pioneer = pioneer as MapPlayerPioneerObject;
-    }
-
-    protected viewDidLoad(): void {
-        super.viewDidLoad();
+        const nft = DataMgr.s.nftPioneer.getNFTById(this._pioneer.NFTId);
+        if (nft == null) {
+            return;
+        }
 
         const buyLimit = (ConfigConfig.getConfig(ConfigType.BuyEnergyLimit) as BuyEnergyLimitParam).limit;
         const buyPricePsyc = (ConfigConfig.getConfig(ConfigType.BuyEnergyPricePsyc) as BuyEnergyPricePsycParam).prices;
@@ -49,13 +52,40 @@ export class ReplenishEnergyView extends ViewController {
         const buyThres = (ConfigConfig.getConfig(ConfigType.BuyEnergyThres) as BuyEnergyThresParam).thresholds;
         const buyCoefficient = (ConfigConfig.getConfig(ConfigType.BuyEnergyCoefficient) as BuyEnergyCoefficientParam).coefficient;
 
-        const itemId: string = buyPrices[nft.rank - 1][0];
-        const itemConfig = ItemConfig.getById(itemId);
-        if (itemConfig == null) {
+        const psycPriceData = buyPricePsyc[Math.min(buyPricePsyc.length - 1, nft.rank - 1)];
+        this._psycItemId = psycPriceData[0];
+        this._psycItemConfig = ItemConfig.getById(this._psycItemId);
+        if (this._psycItemConfig == null) {
             return;
         }
+        this._psycPrice = psycPriceData[1] - Math.floor(Math.min(buyThres, pioneer.energy) * buyCoefficient);
 
-        const price = buyPrices[nft.rank - 1][1] - Math.floor(Math.min(buyThres, pioneer.energy) * buyCoefficient);
+        const piotPriceData = buyPricePiot[Math.min(buyPricePiot.length - 1, DataMgr.s.userInfo.data.buyEnergyPiotTimes)];
+        this._piotItemId = piotPriceData[0];
+        this._piotItemConfig = ItemConfig.getById(this._piotItemId);
+        if (this._piotItemConfig == null) {
+            return;
+        }
+        this._piotPrice = piotPriceData[1];
+
+        this.node.getChildByPath("Content/PsycButton/Value").getComponent(Label).string = this._psycPrice.toString();
+        this.node.getChildByPath("Content/PiotButton/Value").getComponent(Label).string = this._piotPrice.toString();
+
+        this.node.getChildByPath("Content/Tip").getComponent(Label).string = LanMgr.replaceLanById("1100201", [
+            LanMgr.getLanById(this._pioneer.name),
+            this._psycPrice,
+            LanMgr.getLanById(this._psycItemConfig.itemName),
+            this._piotPrice,
+            LanMgr.getLanById(this._piotItemConfig.itemName),
+            this._pioneer.energyMax - this._pioneer.energy,
+            Math.max(0, buyLimit - DataMgr.s.userInfo.data.buyEnergyLimitTimes),
+        ]);
+
+        this._limitLeft = buyLimit > DataMgr.s.userInfo.data.buyEnergyLimitTimes;
+    }
+
+    protected viewDidLoad(): void {
+        super.viewDidLoad();
     }
 
     protected viewDidAppear(): void {
@@ -74,66 +104,50 @@ export class ReplenishEnergyView extends ViewController {
     }
 
     //-------------------------------- action
-    private async onTapAuto() {
+    private async onTapPsycBuy() {
         GameMusicPlayMgr.playTapButtonEffect();
-        if (this._pioneer.actionType != MapPioneerActionType.inCity) {
-            // use lan
-            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "Not within the city, unable to replenish troops");
-            return;
-        }
-        const limit = this._pioneer.hpMax;
-        let useTroopId: string = "0";
-        let useTroopNum: number = 0;
-        const origianlTroopNum = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Troop);
-        let maxHp: number = Math.min(limit, origianlTroopNum);
-        useTroopNum = maxHp;
 
-        const troopsConfig = TroopsConfig.getAll();
-        let unlockTroops = [];
-        const troopBuildingData = DataMgr.s.innerBuilding.data.get(InnerBuildingType.TrainingCenter);
-        if (troopBuildingData != null) {
-            unlockTroops = InnerBuildingLvlUpConfig.getUnlockTroops(troopBuildingData.buildLevel);
-        }
-        for (const key in troopsConfig) {
-            if (Object.prototype.hasOwnProperty.call(troopsConfig, key)) {
-                const element = troopsConfig[key];
-                if (!unlockTroops.includes(element.id)) {
-                    continue;
-                }
-                const otherTroopNum = DataMgr.s.innerBuilding.getOwnedExecriseTroopNum(element.id);
-                const tempTroopNum = Math.min(limit, otherTroopNum);
-                const tempMaxHp = tempTroopNum * parseInt(element.hp_training);
-                if (tempMaxHp > maxHp) {
-                    maxHp = tempMaxHp;
-                    useTroopId = element.id;
-                    useTroopNum = tempTroopNum;
-                }
-            }
-        }
-        if (maxHp <= 0) {
-            NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, LanMgr.getLanById("104009"));
+        if (!this._limitLeft) {
+            UIHUDController.showCenterTip(LanMgr.getLanById("1100202"));
             return;
         }
-        NetworkMgr.websocketMsg.player_troop_to_hp({
+        if (this._psycPrice > DataMgr.s.item.getObj_item_count(this._psycItemId)) {
+            UIHUDController.showCenterTip(LanMgr.replaceLanById("1100203", [LanMgr.getLanById(this._psycItemConfig.itemName)]));
+            return;
+        }
+        NetworkMgr.websocketMsg.player_psyc_to_energy({
             pioneerId: this._pioneer.uniqueId,
-            troopNum: useTroopNum,
-            troopId: useTroopId,
+            itemId: this._psycItemId,
+            itemNum: this._psycPrice,
+            buyType: 0,
         });
 
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.HUD);
     }
-    private async onTapManual() {
+
+    private async onTapPiotBuy() {
         GameMusicPlayMgr.playTapButtonEffect();
 
-        const result = await UIPanelManger.inst.pushPanel(UIName.PlayerDispatchDetailUI);
-        if (!result.success) {
+        if (!this._limitLeft) {
+            UIHUDController.showCenterTip(LanMgr.getLanById("1100202"));
             return;
         }
-        result.node.getComponent(PlayerDispatchDetailUI).configuration([this._pioneer], 0);
+        if (this._piotPrice > DataMgr.s.item.getObj_item_count(this._piotItemId)) {
+            UIHUDController.showCenterTip(LanMgr.replaceLanById("1100203", [LanMgr.getLanById(this._piotItemConfig.itemName)]));
+            return;
+        }
+        NetworkMgr.websocketMsg.player_psyc_to_energy({
+            pioneerId: this._pioneer.uniqueId,
+            itemId: this._piotItemId,
+            itemNum: this._piotPrice,
+            buyType: 1,
+        });
+
         await this.playExitAnimation();
         UIPanelManger.inst.popPanel(this.node, UIPanelLayerType.HUD);
     }
+
     private async onTapCancel() {
         GameMusicPlayMgr.playTapButtonEffect();
 

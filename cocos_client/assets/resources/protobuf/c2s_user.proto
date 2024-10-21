@@ -112,7 +112,9 @@ message player_level_up {
 // player: psyc2energy
 message player_psyc_to_energy {
     required string pioneerId = 1;
-    required uint32 psycNum = 2;
+    required uint32 buyType = 2;
+    required string itemId = 3;
+    required uint32 itemNum = 4;
 }
 // player: troop2hp
 message player_troop_to_hp {

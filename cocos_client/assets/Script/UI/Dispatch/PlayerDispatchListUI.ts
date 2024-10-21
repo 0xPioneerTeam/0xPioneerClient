@@ -1,6 +1,6 @@
 import { _decorator, Button, Component, instantiate, Label, Layout, Node, ScrollView, Toggle, UITransform, Vec2, Widget } from "cc";
 import ViewController from "../../BasicView/ViewController";
-import UIPanelManger from "../../Basic/UIPanelMgr";
+import UIPanelManger, { UIPanelLayerType } from "../../Basic/UIPanelMgr";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import { DataMgr } from "../../Data/DataMgr";
 import { PlayerInfoItem } from "../View/PlayerInfoItem";
@@ -12,6 +12,7 @@ import { NotificationName } from "../../Const/Notification";
 import { NetworkMgr } from "../../Net/NetworkMgr";
 import { s2c_user } from "../../Net/msg/WebsocketMsg";
 import { GameMgr } from "../../Utils/Global";
+import { ReplenishEnergyView } from "../View/ReplenishEnergyView";
 const { ccclass, property } = _decorator;
 
 @ccclass("PlayerDispatchListUI")
@@ -103,7 +104,11 @@ export class PlayerDispatchListUI extends ViewController {
         if (player == undefined) {
             return;
         }
-        GameMgr.showBuyEnergyTip(player.uniqueId);
+        const result = await UIPanelManger.inst.pushPanel(HUDName.ReplenishEnergyView, UIPanelLayerType.HUD);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(ReplenishEnergyView).configuration(player.uniqueId);
     }
 
     //------------------------ notification

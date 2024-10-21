@@ -1,8 +1,8 @@
-import { find, random, sp, v2, Vec2 } from "cc";
+import { find, v2, Vec2 } from "cc";
 import NotificationMgr from "../Basic/NotificationMgr";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import { InnerBuildingType, MapBuildingType, UserInnerBuildInfo } from "../Const/BuildingDefine";
-import { GAME_ENV_IS_DEBUG, GameExtraEffectType, MapInteractType, MapMemberTargetType, ResourceCorrespondingItem } from "../Const/ConstDefine";
+import { GameExtraEffectType, MapInteractType, MapMemberTargetType, ResourceCorrespondingItem } from "../Const/ConstDefine";
 import ItemData from "../Const/Item";
 import { MapBuildingObject } from "../Const/MapBuilding";
 import { NotificationName } from "../Const/Notification";
@@ -15,23 +15,9 @@ import { RookieStep } from "../Const/RookieDefine";
 import { ClvlMgr, LanMgr } from "../Utils/Global";
 import { CLvlEffectType } from "../Const/Lvlup";
 import ConfigConfig from "../Config/ConfigConfig";
-import {
-    BuyEnergyCoefficientParam,
-    BuyEnergyLimitParam,
-    BuyEnergyPriceParam,
-    BuyEnergyThresParam,
-    ConfigType,
-    InitMaxTroopNumParam,
-    OneStepCostEnergyParam,
-    WormholeMatchConsumeParam,
-    WormholeTeleportConsumeParam,
-} from "../Const/Config";
-import ItemConfig from "../Config/ItemConfig";
+import { ConfigType, InitMaxTroopNumParam, OneStepCostEnergyParam, WormholeMatchConsumeParam, WormholeTeleportConsumeParam } from "../Const/Config";
 import UIPanelManger, { UIPanelLayerType } from "../Basic/UIPanelMgr";
 import { HUDName } from "../Const/ConstUIDefine";
-import { AlterView } from "../UI/View/AlterView";
-import { NetworkMgr } from "../Net/NetworkMgr";
-import { UIHUDController } from "../UI/UIHUDController";
 import { TileMapHelper, TilePos } from "../Game/TiledMap/TileTool";
 import BigMapConfig from "../Config/BigMapConfig";
 import { share } from "../Net/msg/WebsocketMsg";
@@ -40,6 +26,7 @@ import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 import PioneerLvlupConfig from "../Config/PioneerLvlupConfig";
 import { ReplenishTroopsView } from "../UI/View/ReplenishTroopsView";
 import { OuterShadowController } from "../Game/Outer/OuterShadowController";
+import { ReplenishEnergyView } from "../UI/View/ReplenishEnergyView";
 
 export default class GameMgr {
     public rookieTaskExplainIsShow: boolean = false;
@@ -176,67 +163,6 @@ export default class GameMgr {
             const troop_config = TroopsConfig.getById(troopId);
             return Math.ceil(hp / Number(troop_config.hp_training));
         }
-    }
-
-    public async showBuyEnergyTip(uniqueId: string) {
-        const pioneer = DataMgr.s.pioneer.getById(uniqueId) as MapPlayerPioneerObject;
-        const nft = DataMgr.s.nftPioneer.getNFTById(pioneer?.NFTId);
-        if (pioneer == undefined || nft == null) {
-            return;
-        }
-        const buyLimit = (ConfigConfig.getConfig(ConfigType.BuyEnergyLimit) as BuyEnergyLimitParam).limit;
-        const buyPrices = (ConfigConfig.getConfig(ConfigType.BuyEnergyPrice) as BuyEnergyPriceParam).prices;
-        const buyThres = (ConfigConfig.getConfig(ConfigType.BuyEnergyThres) as BuyEnergyThresParam).thresholds;
-        const buyCoefficient = (ConfigConfig.getConfig(ConfigType.BuyEnergyCoefficient) as BuyEnergyCoefficientParam).coefficient;
-
-        if (GAME_ENV_IS_DEBUG) {
-            if (buyThres >= buyPrices[0] / buyCoefficient) {
-                NotificationMgr.triggerEvent(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, "CHECK THE ENERGY CONFIG");
-                return;
-            }
-        }
-
-        const itemId: string = buyPrices[nft.rank - 1][0];
-        const itemConfig = ItemConfig.getById(itemId);
-        if (itemConfig == null) {
-            return;
-        }
-
-        const price = buyPrices[nft.rank - 1][1] - Math.floor(Math.min(buyThres, pioneer.energy) * buyCoefficient);
-
-        const result = await UIPanelManger.inst.pushPanel(HUDName.Alter, UIPanelLayerType.HUD);
-        if (!result.success) {
-            return;
-        }
-        result.node
-            .getComponent(AlterView)
-            .showTip(
-                LanMgr.replaceLanById("1100201", [
-                    LanMgr.getLanById(pioneer.name),
-                    price,
-                    LanMgr.getLanById(itemConfig.itemName),
-                    pioneer.energyMax - pioneer.energy,
-                    buyLimit - DataMgr.s.userInfo.data.buyEnergyLimitTimes,
-                ]),
-                () => {
-                    if (DataMgr.s.userInfo.data.buyEnergyLimitTimes >= buyLimit) {
-                        // buy limit
-                        UIHUDController.showCenterTip(LanMgr.getLanById("1100202"));
-                        return;
-                    }
-
-                    if (price > DataMgr.s.item.getObj_item_count(itemId)) {
-                        // insufficient resource
-                        UIHUDController.showCenterTip(LanMgr.replaceLanById("1100203", [LanMgr.getLanById(itemConfig.itemName)]));
-                        return;
-                    }
-
-                    NetworkMgr.websocketMsg.player_psyc_to_energy({
-                        pioneerId: uniqueId,
-                        psycNum: price,
-                    });
-                }
-            );
     }
 
     public getResourceBuildingRewardAndQuotaMax(building: MapBuildingObject): { reward: ItemData; quotaMax: number } {
@@ -397,7 +323,10 @@ export default class GameMgr {
         }
         if (player.energy < trueCostEnergy && trueCostEnergy <= player.energyMax) {
             // replenish energy
-            this.showBuyEnergyTip(player.uniqueId);
+            const result = await UIPanelManger.inst.pushPanel(HUDName.ReplenishEnergyView, UIPanelLayerType.HUD);
+            if (result.success) {
+                result.node.getComponent(ReplenishEnergyView).configuration(player.uniqueId);
+            }
 
             if (interactType != MapInteractType.Collect && interactType != MapInteractType.MainBack && player.hp <= 0) {
                 this._dispatchReplenishTroopAfterEnergyUnqueId = player.uniqueId;

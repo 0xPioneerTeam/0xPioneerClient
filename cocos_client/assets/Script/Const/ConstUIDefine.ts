@@ -47,7 +47,6 @@ export enum UIName {
 
     // bundle 2
     NewBuildingUpgradeUI = "abresources_2/prefab/ui/NewBuildingUpgradeUI",
-    
 }
 
 export enum GameName {
@@ -61,5 +60,6 @@ export enum HUDName {
     Alter = "abresources/prefab/hud/AlterView",
     AlterTip = "abresources/prefab/hud/AlterTipView",
     NewVersionView = "abresources/prefab/hud/NewVersionView",
-    ReplenishTroopsView = "abresources/prefab/hud/ReplenishTroopsView"
+    ReplenishTroopsView = "abresources/prefab/hud/ReplenishTroopsView",
+    ReplenishEnergyView = "abresources/prefab/hud/ReplenishEnergyView",
 }
