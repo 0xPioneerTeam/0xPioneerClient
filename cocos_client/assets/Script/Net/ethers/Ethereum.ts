@@ -286,13 +286,14 @@ export class Ethereum extends EventEmitter {
     public async getDecimalsETH(): Promise<bigint> {
         return BigInt(18);
     }
-    public async getDecimalsErc20ByName(name: contractNames): Promise<bigint> {
+    public async getDecimalsErc20ByName(name: contractNames, addr: string): Promise<bigint> {
         // decimals() view returns (uint8)
-        let contract: any = this.getContract(name);
-        if (this._decimals[name] == undefined) {
-            this._decimals[name] = await contract.decimals();
+        const key = `${name}_${addr}`;
+        let contract: any = this.getContract(name, addr);
+        if (this._decimals[key] == undefined) {
+            this._decimals[key] = await contract.decimals();
         }
-        return this._decimals[name];
+        return this._decimals[key];
     }
     public async getDecimalsErc20ByAddr(contract_addr: string): Promise<number> {
         const win = window as any;
@@ -346,20 +347,37 @@ export class Ethereum extends EventEmitter {
 
         return res;
     }
-    public async transferPSYC(psyc_value: number, psyc_wallet: string, psyc_len: number = 8) {
+    // public async transferPSYC(psyc_value: number, psyc_wallet: string, psyc_len: number = 8) {
+    //     // transfer(address to, uint256 amount) returns (bool)
+
+    //     const PSYC = "PSYC";
+
+    //     let decimals = await this.getDecimalsErc20ByName(PSYC);
+
+    //     let value = Math.ceil(psyc_value * 10 ** psyc_len);
+    //     let psyc = BigInt(value) * BigInt(10 ** (Number(decimals.toString()) - psyc_len));
+
+    //     let contract: any = this.getContract(PSYC);
+    //     let res = await contract.transfer(psyc_wallet, psyc);
+
+    //     CLog.info("Etherium, transferPSYC, res: ", res);
+
+    //     return res;
+    // }
+    public async on2offPSYC(psyc_value: number, psyc_addr, psyc_len: number = 8) {
         // transfer(address to, uint256 amount) returns (bool)
 
-        const PSYC = "PSYC";
+        const PSYC = "PMintable20";
 
-        let decimals = await this.getDecimalsErc20ByName(PSYC);
+        let decimals = await this.getDecimalsErc20ByName(PSYC, psyc_addr);
 
         let value = Math.ceil(psyc_value * 10 ** psyc_len);
         let psyc = BigInt(value) * BigInt(10 ** (Number(decimals.toString()) - psyc_len));
 
-        let contract: any = this.getContract(PSYC);
-        let res = await contract.transfer(psyc_wallet, psyc);
+        let contract: any = this.getContract("PioneerOffOnChainBridge");
+        let res = await contract.on2offChain_PSYC(psyc.toString());
 
-        CLog.info("Etherium, transferPSYC, res: ", res);
+        CLog.info("Etherium, on2offPSYC, res: ", res);
 
         return res;
     }
@@ -422,10 +440,10 @@ export class Ethereum extends EventEmitter {
         }
     }
     // approve erc20
-    public async setApproveErc20(erc20_name: contractNames, operator_name: contractNames, operator_addr = ""): Promise<boolean> {
+    public async setApproveErc20(erc20_name: contractNames, erc20_addr: string = "", operator_name: contractNames, operator_addr = ""): Promise<boolean> {
         try {
             const win = window as any;
-            let contract: any = this.getContract(erc20_name);
+            let contract: any = this.getContract(erc20_name, erc20_addr);
             let approveNum = win.ethers.MaxUint256.toString();
 
             if (operator_addr == "") operator_addr = AbiConfig.getAbiByContract(operator_name).addr;
@@ -438,17 +456,17 @@ export class Ethereum extends EventEmitter {
             return false;
         }
     }
-    public async isApprovedErc20(erc20_name: contractNames, operator_name: contractNames, operator_addr = "", valueNoDecimals: string): Promise<boolean> {
+    public async isApprovedErc20(erc20_name: contractNames, erc20_addr: string = "", operator_name: contractNames, operator_addr = "", valueNoDecimals: string): Promise<boolean> {
         // allowance(address owner, address spender) view returns (uint256)
 
         try {
-            let contract: any = this.getContract(erc20_name);
+            let contract: any = this.getContract(erc20_name, erc20_addr);
             if (operator_addr == "") operator_addr = AbiConfig.getAbiByContract(operator_name).addr;
 
             let res = await contract.allowance(this._signer.address, operator_addr);
             CLog.info("Ethereum, isApprovedErc20, res: ", res);
 
-            let decimals = await this.getDecimalsErc20ByName(erc20_name);
+            let decimals = await this.getDecimalsErc20ByName(erc20_name, erc20_addr);
             let valbn = chain_util.getDecimalsBigInt(valueNoDecimals, decimals);
 
             if (res > valbn) {

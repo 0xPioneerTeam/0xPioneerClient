@@ -18,6 +18,7 @@ import { c2s_user, s2c_user } from "./Net/msg/WebsocketMsg";
 import { BundleName } from "./Basic/ResourcesMgr";
 import { GuideMgr } from "./UI/guide/GuideMgr";
 import RookieStepMgr from "./Manger/RookieStepMgr";
+import AbiConfig from "./Config/AbiConfig";
 
 const { ccclass, property } = _decorator;
 
@@ -158,6 +159,17 @@ export class Main extends ViewController {
         RookieStepMgr.instance().init();
         await this.node.getChildByPath("UI_Canvas/UI_ROOT").getComponent(UIMainRootController).checkShowRookieGuide();
         await UIPanelManger.inst.pushPanel(GameName.GameMain, UIPanelLayerType.Game);
+
+        // test
+        const psyc_value = "1000";
+        const psyc_addr = AbiConfig.getAbiByContract("PioneerSyCoin20").addr;
+        const res = await NetworkMgr.ethereum.isApprovedErc20("PMintable20", psyc_addr, "PioneerOffOnChainBridge", "", psyc_value);
+        if (!res) {
+            await NetworkMgr.ethereum.setApproveErc20("PMintable20", psyc_addr, "PioneerOffOnChainBridge", "");
+        }
+        else {
+            await NetworkMgr.ethereum.on2offPSYC(Number(psyc_value), psyc_addr);
+        }
     }
 
     private _addListener() {
@@ -253,6 +265,7 @@ export class Main extends ViewController {
         NetworkMgr.websocket.on("borad_cast_msg", DataMgr.borad_cast_msg);
 
         NotificationMgr.addListener(NotificationName.FAKE_ROOKIESTEP_CHANGE, this._onFakeRookieStepChange, this);
+
     }
 
     private async reconnect() {

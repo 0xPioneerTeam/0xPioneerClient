@@ -1,3 +1,4 @@
+import AbiConfig from "../../Config/AbiConfig";
 import { Ethereum, ZeroAddress, tokenNameETH } from "../ethers/Ethereum";
 import { chain_util } from "../ethers/chain_util";
 
@@ -47,6 +48,16 @@ export class EthereumMsg {
     public async transferPSYC(psyc_value: number, psyc_wallet: string, psyc_len: number = 8) {
         return await this._ethereum.transferPSYC(psyc_value, psyc_wallet, psyc_len);
     }
+    // public async getBalancePSYC(): Promise<string> {
+    //     const abi = AbiConfig.getAbiByContract("PioneerSyCoin20");
+    //     const addr = abi.addr;
+    //     return await this.getBalanceErc20(addr);
+    // }
+    // public async getBalancePIOT(): Promise<string> {
+    //     const abi = AbiConfig.getAbiByContract("PioneerToken20");
+    //     const addr = abi.addr;
+    //     return await this.getBalanceErc20(addr);
+    // }
 
     // approve
     // ERC20
