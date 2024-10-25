@@ -66,7 +66,7 @@ export default class ConfigMgr {
 
         // abi
         const chainIdConfig = ChainConfig.getCurrentConfigId();
-        if (Number(chainIdConfig) > 0) {
+        if (chainIdConfig != null && chainIdConfig.length > 0) {
             const chainConf = ChainConfig.getByChainId(chainIdConfig);
             if (!(await AbiConfig.init(chainConf.abi))) return false;
         }

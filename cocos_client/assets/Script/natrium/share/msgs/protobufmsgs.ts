@@ -120,6 +120,9 @@ export enum protobuf_c2s {
     player_wormhole_tp_back = 1505,
     player_wormhole_tp_tag = 1506,
 
+    player_psyc_transform_to_online = 1507,
+    player_piot_transform_to_online = 1508,
+
     // ------ rank ------
     get_rank = 1601,
     get_rank_red_point = 1602,
@@ -285,7 +288,8 @@ export enum protobuf_s2c {
     player_wormhole_tp_select_res = 11604,
     player_wormhole_tp_back_res = 11605,
     player_wormhole_tp_tag_res = 11606,
-
+    player_psyc_transform_to_online_res = 11607,
+    player_piot_transform_to_online_res = 11608,
     // wormhole: notify
     player_wormhole_fight_attacked_res = 11650,
     player_wormhole_fight_res = 11651,

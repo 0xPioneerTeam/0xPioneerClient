@@ -328,12 +328,21 @@ message player_wormhole_tp_tag {
     required string pioneerId = 2;
 }
 
+message player_psyc_transform_to_online {
+    required uint32 num = 1;
+}
+
+message player_piot_transform_to_online {
+    required uint32 num = 1;
+}
+
 // ------ rank ------
 message get_rank {
     required uint32 seasonType = 1;
     required uint32 rankType = 2;
 }
 message get_rank_red_point { }
+
 
 // ------ test ------
 message reborn_all { }

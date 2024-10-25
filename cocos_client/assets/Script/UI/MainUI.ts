@@ -21,6 +21,7 @@ import { TaskListUI } from "./TaskListUI";
 import { UIHUDController } from "./UIHUDController";
 import { RedPointView } from "./View/RedPointView";
 import { s2c_user } from "../Net/msg/WebsocketMsg";
+import AbiConfig from "../Config/AbiConfig";
 
 const { ccclass, property } = _decorator;
 
@@ -432,6 +433,11 @@ export class MainUI extends ViewController {
         if (result.success) {
             result.node.getComponent(RelicTowerUI).configuration(0);
         }
+    }
+
+    private async onTapChain() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        UIPanelManger.inst.pushPanel(UIName.InteractChainUI);
     }
 
     //----------------------------------------------------- notification

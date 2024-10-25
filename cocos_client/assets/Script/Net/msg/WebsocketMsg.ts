@@ -328,6 +328,13 @@ export class WebsocketMsg {
         this.send_packet("player_wormhole_fight_start", d);
     }
 
+    public player_psyc_transform_to_online(d: c2s_user.Iplayer_psyc_transform_to_online) {
+        this.send_packet("player_psyc_transform_to_online", d);
+    }
+    public player_piot_transform_to_online(d: c2s_user.Iplayer_piot_transform_to_online) {
+        this.send_packet("player_piot_transform_to_online", d);
+    }
+
     public fetch_user_psyc(d: c2s_user.Ifetch_user_psyc) {
         this.send_packet("fetch_user_psyc", d);
     }
@@ -622,6 +629,13 @@ export namespace c2s_user {
     }
     export interface Iplayer_wormhole_fight_start {
         buildingId: string;
+    }
+
+    export interface Iplayer_psyc_transform_to_online {
+        num: number;
+    }
+    export interface Iplayer_piot_transform_to_online {
+        num: number;
     }
 
     export interface Ifetch_user_psyc {}

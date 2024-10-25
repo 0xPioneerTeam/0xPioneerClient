@@ -159,17 +159,6 @@ export class Main extends ViewController {
         RookieStepMgr.instance().init();
         await this.node.getChildByPath("UI_Canvas/UI_ROOT").getComponent(UIMainRootController).checkShowRookieGuide();
         await UIPanelManger.inst.pushPanel(GameName.GameMain, UIPanelLayerType.Game);
-
-        // test
-        const psyc_value = "1000";
-        const psyc_addr = AbiConfig.getAbiByContract("PioneerSyCoin20").addr;
-        const res = await NetworkMgr.ethereum.isApprovedErc20("PMintable20", psyc_addr, "PioneerOffOnChainBridge", "", psyc_value);
-        if (!res) {
-            await NetworkMgr.ethereum.setApproveErc20("PMintable20", psyc_addr, "PioneerOffOnChainBridge", "");
-        }
-        else {
-            await NetworkMgr.ethereum.on2offPSYC(Number(psyc_value), psyc_addr);
-        }
     }
 
     private _addListener() {

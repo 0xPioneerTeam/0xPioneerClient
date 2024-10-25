@@ -548,7 +548,13 @@ message player_wormhole_tp_tag_res {
     required string pioneerId = 3;
 }
 
+message player_psyc_transform_to_online_res {
+     required int32 res = 1;
+}
 
+message player_piot_transform_to_online_res {
+     required int32 res = 1;
+}
 
 
 // ------ rank ------

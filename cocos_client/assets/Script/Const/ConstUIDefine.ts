@@ -45,6 +45,8 @@ export enum UIName {
 
     WorldRankUI = "abresources/prefab/ui/world_rank/WorldRankUI",
 
+    InteractChainUI = "abresources/prefab/ui/interact_chain/InteractChainUI",
+
     // bundle 2
     NewBuildingUpgradeUI = "abresources_2/prefab/ui/NewBuildingUpgradeUI",
 }

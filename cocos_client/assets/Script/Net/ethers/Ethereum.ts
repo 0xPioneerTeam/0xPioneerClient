@@ -175,7 +175,7 @@ export class Ethereum extends EventEmitter {
                     return;
             }
         } else if (sys.platform === sys.Platform.MOBILE_BROWSER) {
-            if ((this._wallectconnect === null)) {
+            if (this._wallectconnect === null) {
                 const projectId = "b1e80faeb09af3ab0b65239209f2923a";
                 this._wallectconnect = await (window as any).EthereumProvider.init({
                     projectId: projectId,
@@ -365,21 +365,36 @@ export class Ethereum extends EventEmitter {
     //     return res;
     // }
     public async on2offPSYC(psyc_value: number, psyc_addr, psyc_len: number = 8) {
-        // transfer(address to, uint256 amount) returns (bool)
-
+        // on2offChain_PIOT(uint256 value)
         const PSYC = "PMintable20";
-
         let decimals = await this.getDecimalsErc20ByName(PSYC, psyc_addr);
 
         let value = Math.ceil(psyc_value * 10 ** psyc_len);
         let psyc = BigInt(value) * BigInt(10 ** (Number(decimals.toString()) - psyc_len));
-
         let contract: any = this.getContract("PioneerOffOnChainBridge");
         let res = await contract.on2offChain_PSYC(psyc.toString());
 
         CLog.info("Etherium, on2offPSYC, res: ", res);
 
         return res;
+    }
+    public async on2offPIOT(piot_value: number, piot_addr, piot_len: number = 8) {
+        // on2offChain_PIOT(uint256 value)
+        const PIOT = "PMintable20";
+        let decimals = await this.getDecimalsErc20ByName(PIOT, piot_addr);
+
+        let value = Math.ceil(piot_value * 10 ** piot_len);
+        let piot = BigInt(value) * BigInt(10 ** (Number(decimals.toString()) - piot_len));
+        let contract: any = this.getContract("PioneerOffOnChainBridge");
+        let res = await contract.on2offChain_PIOT(piot.toString());
+        CLog.info("Etherium, on2offPIOT, res: ", res);
+        return res;
+    }
+    public async getBalanceErc20IntNum(addr): Promise<number> {
+        const main_addr = "PMintable20";
+        const decimals = await this.getDecimalsErc20ByName(main_addr, addr);
+        const bigIntValue = await this.getBalanceErc20ByAddr(addr);
+        return Number(bigIntValue / BigInt(10 ** Number(decimals.toString())));
     }
 
     // approve 1155
@@ -447,7 +462,6 @@ export class Ethereum extends EventEmitter {
             let approveNum = win.ethers.MaxUint256.toString();
 
             if (operator_addr == "") operator_addr = AbiConfig.getAbiByContract(operator_name).addr;
-
             const res = await contract.approve(operator_addr, approveNum);
             CLog.info("Ethereum, setApproveErc20, res: ", res);
             return true;
@@ -456,7 +470,13 @@ export class Ethereum extends EventEmitter {
             return false;
         }
     }
-    public async isApprovedErc20(erc20_name: contractNames, erc20_addr: string = "", operator_name: contractNames, operator_addr = "", valueNoDecimals: string): Promise<boolean> {
+    public async isApprovedErc20(
+        erc20_name: contractNames,
+        erc20_addr: string = "",
+        operator_name: contractNames,
+        operator_addr = "",
+        valueNoDecimals: string
+    ): Promise<boolean> {
         // allowance(address owner, address spender) view returns (uint256)
 
         try {
