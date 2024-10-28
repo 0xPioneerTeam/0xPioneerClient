@@ -1,4 +1,4 @@
-import { _decorator, Button, Component, EditBox, instantiate, Label, Layout, Node } from "cc";
+import { _decorator, Button, Color, Component, CurveRange, EditBox, instantiate, Label, Layout, Node } from "cc";
 import ViewController from "../../BasicView/ViewController";
 import { LanMgr } from "../../Utils/Global";
 import UIPanelManger from "../../Basic/UIPanelMgr";
@@ -13,37 +13,34 @@ const { ccclass, property } = _decorator;
 
 @ccclass("InteractChainUI")
 export class InteractChainUI extends ViewController {
-    private _psycOnlineLabel: Label = null;
-    private _psycOnlineInput: EditBox = null;
-    private _psycOfflineLabel: Label = null;
-    private _psycOfflineInput: EditBox = null;
+    private _tabPsycButton = null;
+    private _tabPiotButton = null;
 
-    private _piotOnlineLabel: Label = null;
-    private _piotOnlineInput: EditBox = null;
-    private _piotOfflineLabel: Label = null;
-    private _piotOfflineInput: EditBox = null;
+    /**
+     * 0-psyc  1-piot
+     */
+    private _tabIndex: number = 0;
 
-    private _onlinePsycNum: number = 0;
-    private _offlinePsycNum: number = 0;
-    private _onlinePiotNum: number = 0;
-    private _offlinePiotNum: number = 0;
+    private _onlineConvertValue: number = 0;
+    private _offlineConvertValue: number = 0;
 
     private _psycAddr: string = null;
     private _piotAddr: string = null;
+
+    public configuration(tabIndex: number) {
+        if (this._tabIndex == tabIndex) {
+            return;
+        }
+        this._tabIndex = tabIndex;
+        this._refreshUI();
+    }
 
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
         const contentView = this.node.getChildByPath("__ViewContent");
-        this._psycOnlineLabel = contentView.getChildByPath("Psyc/Online").getComponent(Label);
-        this._psycOnlineInput = contentView.getChildByPath("Psyc/OnlineEditBox").getComponent(EditBox);
-        this._psycOfflineLabel = contentView.getChildByPath("Psyc/Offline").getComponent(Label);
-        this._psycOfflineInput = contentView.getChildByPath("Psyc/OfflineEditBox").getComponent(EditBox);
-
-        this._piotOnlineLabel = contentView.getChildByPath("Piot/Online").getComponent(Label);
-        this._piotOnlineInput = contentView.getChildByPath("Piot/OnlineEditBox").getComponent(EditBox);
-        this._piotOfflineLabel = contentView.getChildByPath("Piot/Offline").getComponent(Label);
-        this._piotOfflineInput = contentView.getChildByPath("Piot/OfflineEditBox").getComponent(EditBox);
+        this._tabPsycButton = contentView.getChildByPath("TabButtons/PsycButton");
+        this._tabPiotButton = contentView.getChildByPath("TabButtons/PiotButton");
 
         this._psycAddr = AbiConfig.getAbiByContract("PioneerSyCoin20").addr;
         this._piotAddr = AbiConfig.getAbiByContract("PioneerToken20").addr;
@@ -70,40 +67,99 @@ export class InteractChainUI extends ViewController {
     }
 
     private async _refreshUI() {
-        if (this._psycAddr == null || this._piotAddr == null) {
+        if (this._tabIndex == 0 && this._psycAddr == null) {
             return;
         }
-        this._onlinePsycNum = await NetworkMgr.ethereum.getBalanceErc20IntNum(this._psycAddr);
-        this._offlinePsycNum = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Energy);
+        if (this._tabIndex == 1 && this._piotAddr == null) {
+            return;
+        }
 
-        this._onlinePiotNum = await NetworkMgr.ethereum.getBalanceErc20IntNum(this._piotAddr);
-        this._offlinePiotNum = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Gold);
+        const tabButtons = [this._tabPsycButton, this._tabPiotButton];
+        for (let i = 0; i < tabButtons.length; i++) {
+            const tabButton = tabButtons[i];
+            tabButton.getChildByPath("Common").active = this._tabIndex != i;
+            tabButton.getChildByPath("Light").active = this._tabIndex == i;
+            tabButton.getChildByPath("Label").getComponent(Label).color = this._tabIndex == i ? new Color(66, 53, 35) : new Color(122, 114, 111);
+        }
 
-        this._psycOnlineLabel.string = "Online: " + this._onlinePsycNum;
-        this._psycOfflineLabel.string = "Offline: " + this._offlinePsycNum;
+        this.node.getChildByPath("__ViewContent/PiotView").active = false;
+        this.node.getChildByPath("__ViewContent/PsycView").active = false;
 
-        this._piotOnlineLabel.string = "Online: " + this._onlinePiotNum;
-        this._piotOfflineLabel.string = "Offline: " + this._offlinePiotNum;
+        let currentView: Node = null;
+        let onlineValue: number = 0;
+        let offlineValue: number = 0;
+        if (this._tabIndex == 0) {
+            currentView = this.node.getChildByPath("__ViewContent/PsycView");
+
+            onlineValue = await NetworkMgr.ethereum.getBalanceErc20IntNum(this._psycAddr);
+            offlineValue = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Energy);
+        } else if (this._tabIndex == 1) {
+            currentView = this.node.getChildByPath("__ViewContent/PiotView");
+
+            onlineValue = await NetworkMgr.ethereum.getBalanceErc20IntNum(this._piotAddr);
+            offlineValue = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Gold);
+        }
+        if (currentView == null) {
+            return;
+        }
+        currentView.active = true;
+        currentView.getChildByPath("OnlineView/Value").getComponent(Label).string = onlineValue.toString();
+        currentView.getChildByPath("OfflineView/Value").getComponent(Label).string = offlineValue.toString();
+        currentView.getChildByPath("OnlineView/Control/Value").getComponent(Label).string = this._onlineConvertValue.toString();
+        currentView.getChildByPath("OfflineView/Control/Value").getComponent(Label).string = this._offlineConvertValue.toString();
     }
 
     //------------------------ action
-    private async onTapDeposit(event: Event, customEventData: string) {
+    private onTapTab(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
         const index = parseInt(customEventData);
-
-        let currAddr: string = null;
-        let currInputNum: number = null;
-        let currMaxNum: number = null;
+        if (this._tabIndex == index) {
+            return;
+        }
+        this._tabIndex = index;
+        this._onlineConvertValue = 0;
+        this._offlineConvertValue = 0;
+        this._refreshUI();
+    }
+    private onTapConvertNumAdd(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const index = parseInt(customEventData);
         if (index == 0) {
+            this._onlineConvertValue += 1;
+        } else if (index == 1) {
+            this._offlineConvertValue += 1;
+        }
+        this._refreshUI();
+    }
+    private onTapConvertNumReduce(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const index = parseInt(customEventData);
+        if (index == 0) {
+            this._onlineConvertValue -= 1;
+            if (this._onlineConvertValue < 0) {
+                this._onlineConvertValue = 0;
+            }
+        } else if (index == 1) {
+            this._offlineConvertValue -= 1;
+            if (this._offlineConvertValue < 0) {
+                this._offlineConvertValue = 0;
+            }
+        }
+        this._refreshUI();
+    }
+    private async onTapDeposit(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
+        let currAddr: string = null;
+        let currInputNum: number = this._onlineConvertValue;
+        let currMaxNum: number = null;
+        if (this._tabIndex == 0) {
             // psyc
             currAddr = this._psycAddr;
-            currInputNum = parseInt(this._psycOnlineInput.string);
-            currMaxNum = this._onlinePsycNum;
+            currMaxNum = parseInt(this.node.getChildByPath("__ViewContent/PsycView/OnlineView/Value").getComponent(Label).string);
         } else {
             // piot
             currAddr = this._piotAddr;
-            currInputNum = parseInt(this._piotOnlineInput.string);
-            currMaxNum = this._onlinePiotNum;
+            currMaxNum = parseInt(this.node.getChildByPath("__ViewContent/PiotView/OnlineView/Value").getComponent(Label).string);
         }
         if (currAddr == null || currInputNum == null || currMaxNum == null) {
             return;
@@ -116,7 +172,7 @@ export class InteractChainUI extends ViewController {
             await NetworkMgr.ethereum.setApproveErc20("PMintable20", currAddr, "PioneerOffOnChainBridge", "");
             return;
         }
-        if (index == 0) {
+        if (this._tabIndex == 0) {
             await NetworkMgr.ethereum.on2offPSYC(currInputNum, currAddr);
         } else {
             await NetworkMgr.ethereum.on2offPIOT(currInputNum, currAddr);
@@ -125,18 +181,14 @@ export class InteractChainUI extends ViewController {
     }
     private onTapWithdraw(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
-        const index = parseInt(customEventData);
-
-        let currInputNum: number = null;
+        let currInputNum: number = this._offlineConvertValue;
         let currMaxNum: number = null;
-        if (index == 0) {
+        if (this._tabIndex == 0) {
             // psyc
-            currInputNum = parseInt(this._psycOfflineInput.string);
-            currMaxNum = this._offlinePsycNum;
+            currMaxNum = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Energy);
         } else {
             // piot
-            currInputNum = parseInt(this._piotOfflineInput.string);
-            currMaxNum = this._offlinePiotNum;
+            currMaxNum = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Gold);
         }
 
         if (currInputNum == null || currMaxNum == null) {
@@ -146,7 +198,7 @@ export class InteractChainUI extends ViewController {
             return;
         }
 
-        if (index == 0) {
+        if (this._tabIndex == 0) {
             NetworkMgr.websocketMsg.player_psyc_transform_to_online({ num: currInputNum });
         } else {
             NetworkMgr.websocketMsg.player_piot_transform_to_online({ num: currInputNum });

@@ -15,7 +15,7 @@
             "blockExplorerUrls": [
                 "https://sepolia.scrollscan.com"
             ],
-            "abi": "deployresult_scrollTestnet",
+            "abi": "deployresult_scrollTest",
             "api": {
                 "ws_host": "wss://api.0xpioneerdapp.com/wss",
                 "http_host": "https://api.0xpioneerdapp.com/api",
@@ -37,7 +37,7 @@
             "blockExplorerUrls": [
                 "https://sepolia.scrollscan.com"
             ],
-            "abi": "deployresult_scrollTestnet",
+            "abi": "deployresult_scrollTest",
             "api": {
                 "ws_host": "wss://apitest.0xpioneerdev.com/wss",
                 "http_host": "https://apitest.0xpioneerdev.com/api",
@@ -59,7 +59,7 @@
             "blockExplorerUrls": [
                 "https://sepolia.scrollscan.com"
             ],
-            "abi": "deployresult_scrollTestnet",
+            "abi": "deployresult_scrollTest",
             "api": {
                 "ws_host": "ws://127.0.0.1:4091",
                 "http_host": "http://127.0.0.1:8080",

@@ -250,11 +250,10 @@ export class Main extends ViewController {
         //settlement
         NetworkMgr.websocket.on("get_user_settlement_info_res", DataMgr.get_user_settlement_info_res);
 
-        // boardcast 
+        // boardcast
         NetworkMgr.websocket.on("borad_cast_msg", DataMgr.borad_cast_msg);
 
         NotificationMgr.addListener(NotificationName.FAKE_ROOKIESTEP_CHANGE, this._onFakeRookieStepChange, this);
-
     }
 
     private async reconnect() {

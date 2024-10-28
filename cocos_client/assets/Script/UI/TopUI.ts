@@ -10,6 +10,7 @@ import { DataMgr } from "../Data/DataMgr";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 import { ClvlMgr, GameMgr } from "../Utils/Global";
 import { RedPointView } from "./View/RedPointView";
+import { InteractChainUI } from "./InteractChain/InteractChainUI";
 const { ccclass, property } = _decorator;
 
 @ccclass("TopUI")
@@ -117,6 +118,14 @@ export default class TopUI extends Component {
             return;
         }
         await UIPanelManger.inst.pushPanel(UIName.PlayerInfoUI);
+    }
+    private async onTapConvert(event: Event, customEventData: string) {
+        GameMusicPlayMgr.playTapButtonEffect();
+        const result = await UIPanelManger.inst.pushPanel(UIName.InteractChainUI);
+        if (!result.success) {
+            return;
+        }
+        result.node.getComponent(InteractChainUI).configuration(parseInt(customEventData));
     }
     //----------------------------------------------- notification
     private _onPlayerExpChanged(data: { exp: number }): void {

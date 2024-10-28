@@ -434,12 +434,6 @@ export class MainUI extends ViewController {
             result.node.getComponent(RelicTowerUI).configuration(0);
         }
     }
-
-    private async onTapChain() {
-        GameMusicPlayMgr.playTapButtonEffect();
-        UIPanelManger.inst.pushPanel(UIName.InteractChainUI);
-    }
-
     //----------------------------------------------------- notification
     private _onPioneerShowChanged(data: { id: string; show: boolean }) {
         this.checkCanShowGansterComingTip(data.id);
