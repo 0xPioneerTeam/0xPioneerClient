@@ -90,13 +90,18 @@ export class InteractChainUI extends ViewController {
         let offlineValue: number = 0;
         if (this._tabIndex == 0) {
             currentView = this.node.getChildByPath("__ViewContent/PsycView");
-
-            onlineValue = await NetworkMgr.ethereum.getBalanceErc20IntNum(this._psycAddr);
+            NetworkMgr.ethereum.getBalanceErc20IntNum(this._psycAddr).then((value) => {
+                onlineValue = value;
+                currentView.getChildByPath("OnlineView/Value").getComponent(Label).string = onlineValue.toString();
+            });
             offlineValue = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Energy);
         } else if (this._tabIndex == 1) {
             currentView = this.node.getChildByPath("__ViewContent/PiotView");
 
-            onlineValue = await NetworkMgr.ethereum.getBalanceErc20IntNum(this._piotAddr);
+            NetworkMgr.ethereum.getBalanceErc20IntNum(this._piotAddr).then((value) => {
+                onlineValue = value;
+                currentView.getChildByPath("OnlineView/Value").getComponent(Label).string = onlineValue.toString();
+            });
             offlineValue = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Gold);
         }
         if (currentView == null) {
