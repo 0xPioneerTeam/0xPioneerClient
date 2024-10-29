@@ -9,6 +9,8 @@ import { DataMgr } from "../../Data/DataMgr";
 import { ResourceCorrespondingItem } from "../../Const/ConstDefine";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
+import ChainConfig from "../../Config/ChainConfig";
+import { rmSync } from "original-fs";
 const { ccclass, property } = _decorator;
 
 @ccclass("InteractChainUI")
@@ -184,29 +186,44 @@ export class InteractChainUI extends ViewController {
         }
         this._refreshUI();
     }
-    private onTapWithdraw(event: Event, customEventData: string) {
+    private async onTapWithdraw(event: Event, customEventData: string) {
         GameMusicPlayMgr.playTapButtonEffect();
         let currInputNum: number = this._offlineConvertValue;
         let currMaxNum: number = null;
+        let currFee: number = null;
+        let currAddr: string = null;
+
+        const chainChargeConfig = ChainConfig.getByChainId(ChainConfig.getCurrentConfigId());
+        if (chainChargeConfig == null) {
+            return;
+        }
         if (this._tabIndex == 0) {
             // psyc
             currMaxNum = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Energy);
+            currFee = chainChargeConfig.charge.fee.mintpsyc;
+            currAddr = chainChargeConfig.charge.addr.mintpsyc;
         } else {
             // piot
             currMaxNum = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Gold);
+            currFee = chainChargeConfig.charge.fee.mintpiot;
+            currAddr = chainChargeConfig.charge.addr.mintpiot;
         }
 
-        if (currInputNum == null || currMaxNum == null) {
+        if (currInputNum == null || currMaxNum == null || currFee == null || currAddr == null) {
             return;
         }
         if (currInputNum <= 0 || currInputNum > currMaxNum) {
             return;
         }
 
+        const result = await NetworkMgr.ethereumMsg.transferETH(currFee, currAddr);
+        if (result == null || result.status != 1 || result.hash == null || result.hash == "") {
+            return;
+        }
         if (this._tabIndex == 0) {
-            NetworkMgr.websocketMsg.player_psyc_transform_to_online({ num: currInputNum });
+            NetworkMgr.websocketMsg.player_psyc_transform_to_online({ num: currInputNum, txhash: result.hash });
         } else {
-            NetworkMgr.websocketMsg.player_piot_transform_to_online({ num: currInputNum });
+            NetworkMgr.websocketMsg.player_piot_transform_to_online({ num: currInputNum, txhash: result.hash });
         }
     }
 

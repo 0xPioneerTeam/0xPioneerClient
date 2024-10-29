@@ -22,4 +22,14 @@ export interface ChainConfigsConfigData {
         init: boolean;
         fee_psyc: string;
     };
+    charge: {
+        addr: {
+            mintpsyc: string;
+            mintpiot: string;
+        };
+        fee: {
+            mintpsyc: number;
+            mintpiot: number;
+        };
+    };
 }

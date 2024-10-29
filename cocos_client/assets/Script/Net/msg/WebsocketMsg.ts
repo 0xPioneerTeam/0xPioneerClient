@@ -633,9 +633,11 @@ export namespace c2s_user {
 
     export interface Iplayer_psyc_transform_to_online {
         num: number;
+        txhash: string;
     }
     export interface Iplayer_piot_transform_to_online {
         num: number;
+        txhash: string;
     }
 
     export interface Ifetch_user_psyc {}

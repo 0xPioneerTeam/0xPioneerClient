@@ -330,10 +330,12 @@ message player_wormhole_tp_tag {
 
 message player_psyc_transform_to_online {
     required uint32 num = 1;
+    required string txhash = 2;
 }
 
 message player_piot_transform_to_online {
     required uint32 num = 1;
+    required string txhash = 2;
 }
 
 // ------ rank ------

@@ -1,5 +1,5 @@
 {
-    "currentConfigId": "dev",
+    "currentConfigId": "dev_local",
     "configs": {
         "PROD": {
             "chainId": "534351",
@@ -9,18 +9,24 @@
                 "symbol": "ETH",
                 "decimals": 18
             },
-            "rpcUrls": [
-                "https://sepolia-rpc.scroll.io"
-            ],
-            "blockExplorerUrls": [
-                "https://sepolia.scrollscan.com"
-            ],
+            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
+            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
             "abi": "deployresult_scrollTest",
             "api": {
                 "ws_host": "wss://api.0xpioneerdapp.com/wss",
                 "http_host": "https://api.0xpioneerdapp.com/api",
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            },
+            "charge": {
+                "addr": {
+                    "mintpsyc": "0xb935B63E7C8152673E5c4E95D26D19189a06794f",
+                    "mintpiot": "0xb935B63E7C8152673E5c4E95D26D19189a06794f"
+                },
+                "fee": {
+                    "mintpsyc": 0.0001,
+                    "mintpiot": 0.0001
+                }
             }
         },
         "dev": {
@@ -31,18 +37,24 @@
                 "symbol": "ETH",
                 "decimals": 18
             },
-            "rpcUrls": [
-                "https://sepolia-rpc.scroll.io"
-            ],
-            "blockExplorerUrls": [
-                "https://sepolia.scrollscan.com"
-            ],
+            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
+            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
             "abi": "deployresult_scrollTest",
             "api": {
                 "ws_host": "wss://apitest.0xpioneerdev.com/wss",
                 "http_host": "https://apitest.0xpioneerdev.com/api",
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            },
+            "charge": {
+                "addr": {
+                    "mintpsyc": "0xb935B63E7C8152673E5c4E95D26D19189a06794f",
+                    "mintpiot": "0xb935B63E7C8152673E5c4E95D26D19189a06794f"
+                },
+                "fee": {
+                    "mintpsyc": 0.0001,
+                    "mintpiot": 0.0001
+                }
             }
         },
         "dev_local": {
@@ -53,18 +65,24 @@
                 "symbol": "ETH",
                 "decimals": 18
             },
-            "rpcUrls": [
-                "https://sepolia-rpc.scroll.io"
-            ],
-            "blockExplorerUrls": [
-                "https://sepolia.scrollscan.com"
-            ],
+            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
+            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
             "abi": "deployresult_scrollTest",
             "api": {
                 "ws_host": "ws://127.0.0.1:4091",
                 "http_host": "http://127.0.0.1:8080",
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            },
+            "charge": {
+                "addr": {
+                    "mintpsyc": "0xb935B63E7C8152673E5c4E95D26D19189a06794f",
+                    "mintpiot": "0xb935B63E7C8152673E5c4E95D26D19189a06794f"
+                },
+                "fee": {
+                    "mintpsyc": 0.0001,
+                    "mintpiot": 0.0001
+                }
             }
         },
         "dev_test": {
@@ -75,18 +93,24 @@
                 "symbol": "ETH",
                 "decimals": 18
             },
-            "rpcUrls": [
-                "https://sepolia-rpc.scroll.io"
-            ],
-            "blockExplorerUrls": [
-                "https://sepolia.scrollscan.com"
-            ],
+            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
+            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
             "abi": "deployresult_scrollTestnet",
             "api": {
                 "ws_host": "ws://18.167.224.150:5091",
                 "http_host": "http://18.167.224.150:9080",
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            },
+            "charge": {
+                "addr": {
+                    "mintpsyc": "0xb935B63E7C8152673E5c4E95D26D19189a06794f",
+                    "mintpiot": "0xb935B63E7C8152673E5c4E95D26D19189a06794f"
+                },
+                "fee": {
+                    "mintpsyc": 0.0001,
+                    "mintpiot": 0.0001
+                }
             }
         },
         "dev_test_2": {
@@ -97,18 +121,24 @@
                 "symbol": "ETH",
                 "decimals": 18
             },
-            "rpcUrls": [
-                "https://sepolia-rpc.scroll.io"
-            ],
-            "blockExplorerUrls": [
-                "https://sepolia.scrollscan.com"
-            ],
+            "rpcUrls": ["https://sepolia-rpc.scroll.io"],
+            "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
             "abi": "deployresult_scrollTestnet",
             "api": {
                 "ws_host": "ws://16.163.109.112:5091",
                 "http_host": "http://16.163.109.112:9080",
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            },
+            "charge": {
+                "addr": {
+                    "mintpsyc": "0xb935B63E7C8152673E5c4E95D26D19189a06794f",
+                    "mintpiot": "0xb935B63E7C8152673E5c4E95D26D19189a06794f"
+                },
+                "fee": {
+                    "mintpsyc": 0.0001,
+                    "mintpiot": 0.0001
+                }
             }
         }
     }
