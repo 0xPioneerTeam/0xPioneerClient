@@ -459,6 +459,16 @@
     "eng": "1.After building the Tower of Babel, players can enshrine artifacts in the tower, and the enshrined artifacts will have the attribute effects of the artifact. At the same time, players can use three artifacts to forge a new artifact.\n\n2.After upgrading the Tower of Babel, players can unlock more artifact worship slots and obtain more artifact effects at the same time.",
     "tc": "1.建築巴別塔後，玩家可以將神器供奉在巴別塔中，被供奉的神器將發貨神器的内容效果，同時玩家可以用三個神器重新熔煉出一個新神器。\n\n2.玩家陞級巴別塔後，可以解鎖更多的神器供奉比特，玩家可以同時獲得更多的神器效果。"
   },
+  "106022": {
+    "id": "106022",
+    "eng": "Honor Points + %s",
+    "tc": "荣誉点 + %s"
+  },
+  "106023": {
+    "id": "106023",
+    "eng": "%sInsufficient, unable to purchase",
+    "tc": "%s不足，无法购买"
+  },
   "107001": {
     "id": "107001",
     "eng": "Eye of Pharaoh",
@@ -1238,6 +1248,186 @@
     "id": "122001",
     "eng": "staff effect description",
     "tc": "職員效果描述"
+  },
+  "150001": {
+    "id": "150001",
+    "eng": "Insight",
+    "tc": "洞察"
+  },
+  "150002": {
+    "id": "150002",
+    "eng": "Swift Shadow",
+    "tc": "迅影"
+  },
+  "150003": {
+    "id": "150003",
+    "eng": "Divine Eye",
+    "tc": "神眼"
+  },
+  "150004": {
+    "id": "150004",
+    "eng": "Battle Intent",
+    "tc": "戰意"
+  },
+  "150005": {
+    "id": "150005",
+    "eng": "Overload",
+    "tc": "重載"
+  },
+  "150006": {
+    "id": "150006",
+    "eng": "Blood Bull",
+    "tc": "血牛"
+  },
+  "150007": {
+    "id": "150007",
+    "eng": "Weakening",
+    "tc": "弱化"
+  },
+  "150008": {
+    "id": "150008",
+    "eng": "Devour",
+    "tc": "吞食"
+  },
+  "150009": {
+    "id": "150009",
+    "eng": "Slaughter",
+    "tc": "殺戮"
+  },
+  "150010": {
+    "id": "150010",
+    "eng": "Amplify",
+    "tc": "增效"
+  },
+  "150011": {
+    "id": "150011",
+    "eng": "Vengeance",
+    "tc": "復仇"
+  },
+  "150012": {
+    "id": "150012",
+    "eng": "Blood Fury",
+    "tc": "血怒"
+  },
+  "150013": {
+    "id": "150013",
+    "eng": "Foam",
+    "tc": "泡沫"
+  },
+  "150014": {
+    "id": "150014",
+    "eng": "Loyalty",
+    "tc": "忠誠"
+  },
+  "150015": {
+    "id": "150015",
+    "eng": "Agility",
+    "tc": "迅捷"
+  },
+  "150016": {
+    "id": "150016",
+    "eng": "Divine Speed",
+    "tc": "神行"
+  },
+  "150017": {
+    "id": "150017",
+    "eng": "Bomb",
+    "tc": "炸彈"
+  },
+  "150018": {
+    "id": "150018",
+    "eng": "Blaze",
+    "tc": "熾焰"
+  },
+  "150019": {
+    "id": "150019",
+    "eng": "Limb Severing",
+    "tc": "斷肢"
+  },
+  "150020": {
+    "id": "150020",
+    "eng": "Paralysis",
+    "tc": "麻痹"
+  },
+  "150021": {
+    "id": "150021",
+    "eng": "Charm",
+    "tc": "魅惑"
+  },
+  "160001": {
+    "id": "160001",
+    "eng": "Powerful Strike",
+    "tc": "強力擊破"
+  },
+  "160002": {
+    "id": "160002",
+    "eng": "Stealth Combo",
+    "tc": "隱匿連擊"
+  },
+  "160003": {
+    "id": "160003",
+    "eng": "Weakening Strike",
+    "tc": "虛弱打擊"
+  },
+  "160004": {
+    "id": "160004",
+    "eng": "Battle Burst",
+    "tc": "戰意爆發"
+  },
+  "160005": {
+    "id": "160005",
+    "eng": "Mental Shock",
+    "tc": "精神震盪"
+  },
+  "160006": {
+    "id": "160006",
+    "eng": "Blood for Blood",
+    "tc": "以血還血"
+  },
+  "160008": {
+    "id": "160008",
+    "eng": "Demon Curse",
+    "tc": "惡魔禁咒"
+  },
+  "160010": {
+    "id": "160010",
+    "eng": "Heavy Armor",
+    "tc": "重裝機甲"
+  },
+  "160011": {
+    "id": "160011",
+    "eng": "Radiant Will",
+    "tc": "光輝旨意"
+  },
+  "160012": {
+    "id": "160012",
+    "eng": "Unyielding Spirit",
+    "tc": "不屈意志"
+  },
+  "160013": {
+    "id": "160013",
+    "eng": "Holy Baptism",
+    "tc": "聖光洗禮"
+  },
+  "160014": {
+    "id": "160014",
+    "eng": "Vengeful Retribution",
+    "tc": "睚眦必報"
+  },
+  "160015": {
+    "id": "160015",
+    "eng": "Time Reversal",
+    "tc": "時光逆流"
+  },
+  "160016": {
+    "id": "160016",
+    "eng": "Rebirth",
+    "tc": "涅槃重生"
+  },
+  "160017": {
+    "id": "160017",
+    "eng": "Dance of Death",
+    "tc": "死亡璇舞"
   },
   "200001": {
     "id": "200001",
@@ -5458,5 +5648,185 @@
     "id": "1100208",
     "eng": "After the ranking list ends, you can check in the battle report whether you have received ranking rewards",
     "tc": "排行榜結束後可在戰報中查看是否獲得排行獎勵"
+  },
+  "1150001": {
+    "id": "1150001",
+    "eng": "Discover the enemy's weakness, increasing attack damage by 10%.",
+    "tc": "發現敵人的弱點，提升攻擊傷害10%。"
+  },
+  "1150002": {
+    "id": "1150002",
+    "eng": "Every 3 attacks, add an extra attack dealing 75% damage.",
+    "tc": "每攻擊3次，追加1次造成75%傷害的攻擊。"
+  },
+  "1150003": {
+    "id": "1150003",
+    "eng": "Each attack has a 10% chance to deal 150% attack damage.",
+    "tc": "每次攻擊有10%機率造成150%的攻擊傷害。"
+  },
+  "1150004": {
+    "id": "1150004",
+    "eng": "Every 3 attacks, increase attack power by 5%, up to a maximum of 100%.",
+    "tc": "每攻擊3次，提升5%攻擊力，最多提升100%。"
+  },
+  "1150005": {
+    "id": "1150005",
+    "eng": "Max HP increased by 50%.",
+    "tc": "體力上限提升50%。"
+  },
+  "1150006": {
+    "id": "1150006",
+    "eng": "Gain an additional 20% health bonus.",
+    "tc": "額外獲得20%的血量加成效果。"
+  },
+  "1150007": {
+    "id": "1150007",
+    "eng": "Decrease enemy attack power by 10%.",
+    "tc": "降低敵人攻擊力10%。"
+  },
+  "1150008": {
+    "id": "1150008",
+    "eng": "Upon entering battle, 20% chance to reduce the enemy's max HP by 10% and increase your own max HP by the same amount.",
+    "tc": "進入戰鬥後，20%機率降低敵方生命上限10%，並為自己提供相同的生命上限。"
+  },
+  "1150009": {
+    "id": "1150009",
+    "eng": "Instantly restore 10% of your HP after killing an enemy.",
+    "tc": "殺死敵人後立即回復自身生命10%。"
+  },
+  "1150010": {
+    "id": "1150010",
+    "eng": "Resource gathering efficiency increased by 20%.",
+    "tc": "物資採集效率提升20%。"
+  },
+  "1150011": {
+    "id": "1150011",
+    "eng": "Reflect 15% of the damage received back to the attacker.",
+    "tc": "受到傷害的同時反噬給攻擊者所受到傷害的15%。"
+  },
+  "1150012": {
+    "id": "1150012",
+    "eng": "Lose 1% HP with each attack, but increase attack power by 3%.",
+    "tc": "每次攻擊損失1%生命值，攻擊力提升3%。"
+  },
+  "1150013": {
+    "id": "1150013",
+    "eng": "Convert 20% of current HP into a shield, with shield strength equal to lost HP. Shield disappears after the battle.",
+    "tc": "將當前血量的20%轉換為護盾效果，護盾效果數值為耗損血量的1倍，戰鬥結束後護盾消失。"
+  },
+  "1150014": {
+    "id": "1150014",
+    "eng": "Increase march speed by 20% for allies within 100 meters.",
+    "tc": "為100格範圍內的隊友提供20%的行軍速度加成。"
+  },
+  "1150015": {
+    "id": "1150015",
+    "eng": "Each attack has a 30% chance to add an extra hit, dealing 50% damage.",
+    "tc": "每次攻擊都有30%機率額外多出手1次，造成50%的傷害。"
+  },
+  "1150016": {
+    "id": "1150016",
+    "eng": "Increase scouting march speed by 100%.",
+    "tc": "偵察時行軍速度提升100%。"
+  },
+  "1150017": {
+    "id": "1150017",
+    "eng": "Self-destruct upon entering battle, losing 10% HP but dealing damage equal to 25% of the enemy’s max HP.",
+    "tc": "進入戰鬥後自爆，損耗自身10%生命，造成敵方25%生命上限傷害。"
+  },
+  "1150018": {
+    "id": "1150018",
+    "eng": "Deal an additional 20% damage on attacks.",
+    "tc": "攻擊時額外造成20%的傷害。"
+  },
+  "1150019": {
+    "id": "1150019",
+    "eng": "Use tentacles to block damage upon entering battle; first turn grants immunity to 50% of attack damage.",
+    "tc": "進入戰鬥後用觸手抵擋傷害，第1回合將豁免攻擊50%傷害。"
+  },
+  "1150020": {
+    "id": "1150020",
+    "eng": "Each turn has a 5% chance to disable the enemy's actions for that turn.",
+    "tc": "每回合有5%機率讓敵方本回合無法出手。"
+  },
+  "1150021": {
+    "id": "1150021",
+    "eng": "Upon entering battle, there is a 5% chance to instantly kill the enemy.",
+    "tc": "進入戰鬥時，有5%機率立即殺死敵人。"
+  },
+  "1160001": {
+    "id": "1160001",
+    "eng": "Deals a critical hit with 100%/150%/200% attack power.",
+    "tc": "造成100%/150%/200%攻擊力的致命一擊"
+  },
+  "1160002": {
+    "id": "1160002",
+    "eng": "Attacks twice consecutively, each hit dealing 75%/100%/150% attack power damage.",
+    "tc": "連續攻擊兩次，每次造成75%/100%/150%攻擊力的傷害"
+  },
+  "1160003": {
+    "id": "1160003",
+    "eng": "Deals 100% attack power damage to the enemy and reduces the enemy's next attack damage by 10%/20%/30%.",
+    "tc": "對敵方造成100%攻擊力的傷害，並減少敵人下次攻擊的10%/20%/30%傷害"
+  },
+  "1160004": {
+    "id": "1160004",
+    "eng": "Increases attack power by 10%/15%/20% for the next 2 turns, gaining an additional 10 skill points with each attack.",
+    "tc": "接下來的2回合，攻擊力提升10%/15%/20%，每次攻擊後額外獲得10點戰技值。"
+  },
+  "1160005": {
+    "id": "1160005",
+    "eng": "Deals 150% attack power damage to the enemy and prevents them from accumulating skill points for 1/2/3 turns.",
+    "tc": "對敵方造成150%攻擊力的傷害，並使其無法積攢戰技值，持續1/2/3回合。"
+  },
+  "1160006": {
+    "id": "1160006",
+    "eng": "Consumes 10%/15%/20% of current HP to deal 200%/250%/300% attack power damage.",
+    "tc": "消耗10%/15%/20%當前生命值，造成200%/250%/300%攻擊力的傷害"
+  },
+  "1160008": {
+    "id": "1160008",
+    "eng": "Reduces the enemy’s attack power by 10%/15%/20% and increases own attack power by 10%/20%/30% for 2 turns.",
+    "tc": "降低對方10%/15%/20%的攻擊力，並提升自身10%/20%/30%的攻擊力，持續2回合"
+  },
+  "1160010": {
+    "id": "1160010",
+    "eng": "Instantly gains a shield equal to 20%/35%/50% of current HP, lasting for 2 turns.",
+    "tc": "立即獲得相當於當前生命值20%/35%/50%的護盾，護盾持續2回合"
+  },
+  "1160011": {
+    "id": "1160011",
+    "eng": "Instantly clears the enemy’s skill points and increases own attack power by 10%/20%/30% based on the amount of skill points removed.",
+    "tc": "立即清空敵人戰技值，並按照扣除戰技值的10%/20%/30%提升自身攻擊力"
+  },
+  "1160012": {
+    "id": "1160012",
+    "eng": "For the next 2 turns, converts 15%/20%/30% of damage taken each turn into HP.",
+    "tc": "接下來的2回合內，每回合受到傷害的15%/20%/30%轉換為自身血量"
+  },
+  "1160013": {
+    "id": "1160013",
+    "eng": "For the next 2 turns, the enemy cannot gain skill points, and recovers 10%/15%/20% of own HP each turn.",
+    "tc": "接下來的2回合內，敵人無法獲得戰技值，並每回合回復自身血量10%/15%/20%"
+  },
+  "1160014": {
+    "id": "1160014",
+    "eng": "For the next 2 turns, each time attacked, triggers a counterattack dealing 100%/150%/200% attack power damage.",
+    "tc": "接下來的2回合內，每次受到攻擊將觸發反擊效果，造成攻擊力100%/150%/200%的傷害"
+  },
+  "1160015": {
+    "id": "1160015",
+    "eng": "Recovers 20%/35%/50% of the damage taken in the past 2 turns as HP.",
+    "tc": "回復過去2回合中所受到的傷害20%/35%/50%生命值"
+  },
+  "1160016": {
+    "id": "1160016",
+    "eng": "For the next 2 turns, if dealt a fatal blow, instantly recovers 10%/20%/30% HP and increases attack power by 10%.",
+    "tc": "接下來的2回合內，如遭受到致命打擊，將立即回復10%/20%/30%的生命值並提升10%攻擊力"
+  },
+  "1160017": {
+    "id": "1160017",
+    "eng": "For the next 2 turns, weakens the enemy's attack power by 10%/20%/30%, and “Charm” effect can be triggered each turn.",
+    "tc": "接下來的2回合內，削弱敵人攻擊力10%/20%/30%，並每回合均可觸發「魅惑」效果"
   }
 }

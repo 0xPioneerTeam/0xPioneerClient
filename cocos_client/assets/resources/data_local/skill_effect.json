@@ -6,7 +6,9 @@
     "triggercondition": null,
     "eff_target": 0,
     "para": null,
-    "add": null,
+    "add": [
+      510001
+    ],
     "imperviousrounds": null,
     "des": ""
   },
@@ -17,7 +19,9 @@
     "triggercondition": null,
     "eff_target": 0,
     "para": null,
-    "add": null,
+    "add": [
+      510002
+    ],
     "imperviousrounds": null,
     "des": ""
   },
@@ -28,7 +32,9 @@
     "triggercondition": null,
     "eff_target": 0,
     "para": null,
-    "add": null,
+    "add": [
+      510003
+    ],
     "imperviousrounds": null,
     "des": ""
   },
@@ -39,7 +45,9 @@
     "triggercondition": null,
     "eff_target": 0,
     "para": null,
-    "add": null,
+    "add": [
+      510004
+    ],
     "imperviousrounds": null,
     "des": ""
   },
@@ -464,9 +472,7 @@
         0
       ]
     ],
-    "add": [
-      510001
-    ],
+    "add": null,
     "imperviousrounds": null,
     "des": ""
   },
@@ -489,9 +495,7 @@
         0.75
       ]
     ],
-    "add": [
-      510002
-    ],
+    "add": null,
     "imperviousrounds": null,
     "des": ""
   },
@@ -513,9 +517,7 @@
         1.5
       ]
     ],
-    "add": [
-      510003
-    ],
+    "add": null,
     "imperviousrounds": null,
     "des": ""
   },
@@ -538,9 +540,7 @@
         1
       ]
     ],
-    "add": [
-      510004
-    ],
+    "add": null,
     "imperviousrounds": null,
     "des": ""
   },

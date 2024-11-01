@@ -234,6 +234,20 @@
       400
     ]
   },
+  "210007": {
+    "id": "210007",
+    "**NOTES**": "attack a city energy",
+    "para": [
+      10
+    ]
+  },
+  "210008": {
+    "id": "210008",
+    "**NOTES**": "honor points",
+    "para": [
+      100
+    ]
+  },
   "300001": {
     "id": "300001",
     "**NOTES**": "world map group: type - building random number",
