@@ -188,6 +188,14 @@ export class NFTInfoUI extends ViewController {
         // talent (old skill)
         const skillConfig = NFTSkillConfig.getById(data.skills[0].id);
         const skillEffectConfig = NFTSkillEffectConfig.getDesByIds(skillConfig.effect);
+        content.getChildByPath("TabLevel/content/talent/name").getComponent(Label).string = LanMgr.getLanById(skillConfig.name);
+        content.getChildByPath("TabLevel/content/talent/desc").getComponent(Label).string = skillEffectConfig;
+        for (const child of content.getChildByPath("TabLevel/content/talent/Icon").children) {
+            child.active = child.name == skillConfig.icon;
+        }
+        // Battle Skill
+        const skillConfig = NFTSkillConfig.getById(data.skills[1].id);
+        const skillEffectConfig = NFTSkillEffectConfig.getDesByIds(skillConfig.effect);
         content.getChildByPath("TabLevel/content/skill/name").getComponent(Label).string = LanMgr.getLanById(skillConfig.name);
         content.getChildByPath("TabLevel/content/skill/desc").getComponent(Label).string = skillEffectConfig;
         for (const child of content.getChildByPath("TabLevel/content/skill/Icon").children) {
