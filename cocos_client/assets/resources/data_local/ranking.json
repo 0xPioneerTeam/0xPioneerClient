@@ -97,6 +97,104 @@
     ],
     "minimum": 10
   },
+  "8": {
+    "id": "8",
+    "season_type": 3,
+    "ranking_type": 4,
+    "ranking_lower": 1,
+    "ranking_upper": 1,
+    "reward": [
+      [
+        8006,
+        500
+      ]
+    ],
+    "minimum": 100
+  },
+  "9": {
+    "id": "9",
+    "season_type": 3,
+    "ranking_type": 4,
+    "ranking_lower": 2,
+    "ranking_upper": 2,
+    "reward": [
+      [
+        8006,
+        300
+      ]
+    ],
+    "minimum": 100
+  },
+  "10": {
+    "id": "10",
+    "season_type": 3,
+    "ranking_type": 4,
+    "ranking_lower": 3,
+    "ranking_upper": 3,
+    "reward": [
+      [
+        8006,
+        200
+      ]
+    ],
+    "minimum": 100
+  },
+  "11": {
+    "id": "11",
+    "season_type": 3,
+    "ranking_type": 4,
+    "ranking_lower": 4,
+    "ranking_upper": 5,
+    "reward": [
+      [
+        8006,
+        50
+      ]
+    ],
+    "minimum": 100
+  },
+  "12": {
+    "id": "12",
+    "season_type": 3,
+    "ranking_type": 4,
+    "ranking_lower": 6,
+    "ranking_upper": 7,
+    "reward": [
+      [
+        8006,
+        40
+      ]
+    ],
+    "minimum": 100
+  },
+  "13": {
+    "id": "13",
+    "season_type": 3,
+    "ranking_type": 4,
+    "ranking_lower": 8,
+    "ranking_upper": 10,
+    "reward": [
+      [
+        8006,
+        20
+      ]
+    ],
+    "minimum": 100
+  },
+  "14": {
+    "id": "14",
+    "season_type": 3,
+    "ranking_type": 4,
+    "ranking_lower": 11,
+    "ranking_upper": 50,
+    "reward": [
+      [
+        8006,
+        10
+      ]
+    ],
+    "minimum": 100
+  },
   "null": {
     "id": null,
     "season_type": null,

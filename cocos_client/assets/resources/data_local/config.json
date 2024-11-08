@@ -651,9 +651,9 @@
     "id": "500006",
     "**NOTES**": "season start time",
     "para": [
-      0,
+      1,
       [
-        0
+        1731069545
       ]
     ]
   },
@@ -661,7 +661,7 @@
     "id": "500007",
     "**NOTES**": "season duration",
     "para": [
-      15
+      10
     ]
   }
 }
