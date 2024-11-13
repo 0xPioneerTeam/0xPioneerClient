@@ -4,12 +4,20 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      510001
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          510001
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500002": {
@@ -17,12 +25,20 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      510002
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          510002
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500003": {
@@ -30,12 +46,20 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      510003
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          510003
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500004": {
@@ -43,12 +67,20 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      510004
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          510004
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500005": {
@@ -56,15 +88,20 @@
     "type": 1,
     "skilltriggertype": 1,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      3,
       [
-        0.5
+        8,
+        [
+          0.5
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": null,
     "des": ""
   },
   "500006": {
@@ -72,15 +109,20 @@
     "type": 1,
     "skilltriggertype": 1,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      10,
       [
-        0.2
+        10,
+        [
+          0.2
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": null,
     "des": ""
   },
   "500007": {
@@ -88,12 +130,20 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 1,
-    "para": null,
-    "add": [
-      510007
+    "eff_target": [
+      1
     ],
+    "para": [
+      [
+        27,
+        [
+          510007
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500008": {
@@ -106,18 +156,29 @@
         0.2
       ]
     ],
-    "eff_target": 1,
+    "eff_target": [
+      1,
+      0
+    ],
     "para": [
-      11,
       [
-        3,
-        0.1
+        11,
+        [
+          3,
+          0.1
+        ]
+      ],
+      [
+        12,
+        [
+          3,
+          0.1
+        ]
       ]
     ],
-    "add": [
-      501008
-    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500009": {
@@ -125,12 +186,20 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      501009
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          501009
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500010": {
@@ -138,31 +207,41 @@
     "type": 1,
     "skilltriggertype": 1,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      14,
       [
-        0.2
+        14,
+        [
+          0.2
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": null,
     "des": ""
   },
   "500011": {
     "id": "500011",
     "type": 1,
-    "skilltriggertype": 4,
+    "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      0
+    ],
     "para": [
-      16,
       [
-        0.15
+        27,
+        [
+          501011
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500012": {
@@ -175,18 +254,27 @@
         1
       ]
     ],
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      11,
       [
-        1,
-        0.01
+        11,
+        [
+          1,
+          0.01
+        ]
+      ],
+      [
+        27,
+        [
+          501012
+        ]
       ]
     ],
-    "add": [
-      501012
-    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "500013": {
@@ -194,18 +282,23 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      15,
       [
-        2,
-        1,
-        0.2,
-        2
+        15,
+        [
+          2,
+          1,
+          0.2,
+          2
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500014": {
@@ -213,16 +306,21 @@
     "type": 1,
     "skilltriggertype": 1,
     "triggercondition": null,
-    "eff_target": 2,
+    "eff_target": [
+      2
+    ],
     "para": [
-      20,
       [
-        100,
-        0.2
+        20,
+        [
+          100,
+          0.2
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": null,
     "des": ""
   },
   "500015": {
@@ -230,12 +328,20 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      501015
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          501015
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500016": {
@@ -243,16 +349,21 @@
     "type": 1,
     "skilltriggertype": 1,
     "triggercondition": null,
-    "eff_target": 2,
+    "eff_target": [
+      2
+    ],
     "para": [
-      20,
       [
-        1,
-        1
+        20,
+        [
+          1,
+          1
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": null,
     "des": ""
   },
   "500017": {
@@ -260,18 +371,29 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0,
+      1
+    ],
     "para": [
-      11,
       [
-        1,
-        0.1
+        11,
+        [
+          1,
+          0.1
+        ]
+      ],
+      [
+        11,
+        [
+          1,
+          0.25
+        ]
       ]
     ],
-    "add": [
-      501017
-    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500018": {
@@ -279,12 +401,20 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      501018
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          501018
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500019": {
@@ -292,12 +422,20 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      501019
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          501019
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500020": {
@@ -305,12 +443,20 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      501020
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          501020
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "500021": {
@@ -318,32 +464,41 @@
     "type": 1,
     "skilltriggertype": 2,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1
+    ],
     "para": [
-      23,
       [
-        0.05
+        23,
+        [
+          0.05
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
-  "501008": {
-    "id": "501008",
-    "type": 3,
-    "skilltriggertype": 7,
+  "501011": {
+    "id": "501011",
+    "type": 1,
+    "skilltriggertype": 4,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      1
+    ],
     "para": [
-      12,
       [
-        3,
-        0.1
+        16,
+        [
+          0.15
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "501012": {
@@ -351,17 +506,21 @@
     "type": 3,
     "skilltriggertype": 7,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      6,
       [
-        0.03,
-        1,
-        10
+        6,
+        [
+          0.03,
+          -1
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "501015": {
@@ -374,34 +533,22 @@
         1
       ]
     ],
-    "eff_target": 1,
+    "eff_target": [
+      1
+    ],
     "para": [
-      2,
       [
-        0.3,
-        1,
-        0.5
+        2,
+        [
+          0.3,
+          1,
+          0.5
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
-    "des": ""
-  },
-  "501017": {
-    "id": "501017",
-    "type": 3,
-    "skilltriggertype": 7,
-    "triggercondition": null,
-    "eff_target": 1,
-    "para": [
-      11,
-      [
-        1,
-        0.25
-      ]
-    ],
-    "add": null,
-    "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "501018": {
@@ -414,16 +561,21 @@
         1
       ]
     ],
-    "eff_target": 1,
+    "eff_target": [
+      1
+    ],
     "para": [
-      3,
       [
-        1,
-        1.2
+        3,
+        [
+          1,
+          0.2
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "501019": {
@@ -431,15 +583,20 @@
     "type": 3,
     "skilltriggertype": 7,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      0
+    ],
     "para": [
-      21,
       [
-        0.5
+        21,
+        [
+          0.5
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": 1,
+    "times": 1,
     "des": ""
   },
   "501020": {
@@ -447,15 +604,20 @@
     "type": 3,
     "skilltriggertype": 5,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1
+    ],
     "para": [
-      22,
       [
-        0.05
+        22,
+        [
+          0.05
+        ]
       ]
     ],
     "add": null,
-    "imperviousrounds": null,
+    "imperviousrounds": 1,
+    "times": -1,
     "des": ""
   },
   "510001": {
@@ -463,17 +625,20 @@
     "type": 3,
     "skilltriggertype": 7,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      1,
       [
-        0.1,
-        0,
-        0
+        1,
+        [
+          0.1
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "510002": {
@@ -486,17 +651,22 @@
         3
       ]
     ],
-    "eff_target": 1,
+    "eff_target": [
+      1
+    ],
     "para": [
-      2,
       [
-        1,
-        1,
-        0.75
+        2,
+        [
+          1,
+          1,
+          0.75
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "510003": {
@@ -509,16 +679,21 @@
         1
       ]
     ],
-    "eff_target": 1,
+    "eff_target": [
+      1
+    ],
     "para": [
-      3,
       [
-        0.1,
-        1.5
+        3,
+        [
+          0.1,
+          0.5
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "510004": {
@@ -531,34 +706,42 @@
         3
       ]
     ],
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      6,
       [
-        0.05,
-        1,
-        1
+        6,
+        [
+          0.05,
+          1
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "510007": {
     "id": "510007",
     "type": 1,
-    "skilltriggertype": 2,
+    "skilltriggertype": 7,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      0
+    ],
     "para": [
-      13,
       [
-        0.1,
-        0
+        13,
+        [
+          0.1
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": 1,
     "des": ""
   },
   "510009": {
@@ -568,16 +751,21 @@
     "triggercondition": [
       3
     ],
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      12,
       [
-        1,
-        0.1
+        12,
+        [
+          1,
+          0.1
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600001": {
@@ -585,17 +773,22 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1
+    ],
     "para": [
-      2,
       [
-        1,
-        1,
-        1
+        2,
+        [
+          1,
+          1,
+          1
+        ]
       ]
     ],
     "add": null,
-    "imperviousrounds": 0,
+    "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600002": {
@@ -603,17 +796,22 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1
+    ],
     "para": [
-      2,
       [
-        1,
         2,
-        0.75
+        [
+          1,
+          2,
+          0.75
+        ]
       ]
     ],
     "add": null,
-    "imperviousrounds": 0,
+    "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600003": {
@@ -621,19 +819,29 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1,
+      1
+    ],
     "para": [
-      2,
       [
-        1,
-        1,
-        1
+        2,
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      [
+        27,
+        [
+          601003
+        ]
       ]
     ],
-    "add": [
-      601003
-    ],
-    "imperviousrounds": 0,
+    "add": null,
+    "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600004": {
@@ -641,19 +849,21 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      6,
       [
-        0.1,
-        0,
-        0
+        27,
+        [
+          6010041,
+          601004
+        ]
       ]
     ],
-    "add": [
-      601004
-    ],
-    "imperviousrounds": 2,
+    "add": null,
+    "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600005": {
@@ -661,19 +871,29 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1,
+      1
+    ],
     "para": [
-      2,
       [
-        1,
-        1,
-        1.5
+        2,
+        [
+          1,
+          1,
+          1.5
+        ]
+      ],
+      [
+        27,
+        [
+          601005
+        ]
       ]
     ],
-    "add": [
-      601005
-    ],
-    "imperviousrounds": 0,
+    "add": null,
+    "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600006": {
@@ -681,18 +901,30 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0,
+      1
+    ],
     "para": [
-      11,
+      [
+        11,
+        [
+          2,
+          0.1
+        ]
+      ],
       [
         2,
-        0.1
+        [
+          1,
+          1,
+          2
+        ]
       ]
     ],
-    "add": [
-      601006
-    ],
-    "imperviousrounds": 0,
+    "add": null,
+    "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600008": {
@@ -700,19 +932,27 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1,
+      0
+    ],
     "para": [
-      13,
       [
-        0.1,
-        1,
-        1
+        13,
+        [
+          0.1
+        ]
+      ],
+      [
+        27,
+        [
+          601008
+        ]
       ]
     ],
-    "add": [
-      601008
-    ],
+    "add": null,
     "imperviousrounds": 2,
+    "times": -1,
     "des": ""
   },
   "600010": {
@@ -720,18 +960,23 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      15,
       [
-        2,
-        2,
-        0.2,
-        1
+        15,
+        [
+          2,
+          2,
+          0.2,
+          1
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": 2,
+    "times": -1,
     "des": ""
   },
   "600011": {
@@ -739,17 +984,27 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1,
+      0
+    ],
     "para": [
-      17,
       [
-        1
+        17,
+        [
+          1
+        ]
+      ],
+      [
+        18,
+        [
+          0.1
+        ]
       ]
     ],
-    "add": [
-      601011
-    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600012": {
@@ -757,12 +1012,20 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      601012
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          610012
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600013": {
@@ -770,14 +1033,24 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1,
+      0
+    ],
     "para": [
-      9
+      [
+        9
+      ],
+      [
+        27,
+        [
+          610013
+        ]
+      ]
     ],
-    "add": [
-      601013
-    ],
+    "add": null,
     "imperviousrounds": 2,
+    "times": -1,
     "des": ""
   },
   "600014": {
@@ -785,12 +1058,20 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      601014
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          601014
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600015": {
@@ -798,7 +1079,9 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
       25,
       [
@@ -808,6 +1091,7 @@
     ],
     "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600016": {
@@ -815,12 +1099,20 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 0,
-    "para": null,
-    "add": [
-      601016
+    "eff_target": [
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          601016
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "600017": {
@@ -828,12 +1120,27 @@
     "type": 2,
     "skilltriggertype": 6,
     "triggercondition": null,
-    "eff_target": 1,
-    "para": null,
-    "add": [
-      611017
+    "eff_target": [
+      1,
+      0
     ],
+    "para": [
+      [
+        27,
+        [
+          601017
+        ]
+      ],
+      [
+        27,
+        [
+          611017
+        ]
+      ]
+    ],
+    "add": null,
     "imperviousrounds": null,
+    "times": -1,
     "des": ""
   },
   "601003": {
@@ -841,16 +1148,21 @@
     "type": 3,
     "skilltriggertype": 7,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      0
+    ],
     "para": [
-      5,
       [
-        1,
-        0.1
+        5,
+        [
+          1,
+          0.1
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": 1,
+    "times": -1,
     "des": ""
   },
   "601004": {
@@ -863,15 +1175,20 @@
         1
       ]
     ],
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      7,
       [
-        10
+        7,
+        [
+          10
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": 2,
+    "times": -1,
     "des": ""
   },
   "601008": {
@@ -884,65 +1201,21 @@
         1
       ]
     ],
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      12,
       [
-        2,
-        0.05
+        12,
+        [
+          2,
+          0.05
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": 2,
-    "des": ""
-  },
-  "601011": {
-    "id": "601011",
-    "type": 3,
-    "skilltriggertype": 7,
-    "triggercondition": null,
-    "eff_target": 1,
-    "para": [
-      18,
-      [
-        0.1
-      ]
-    ],
-    "add": null,
-    "imperviousrounds": null,
-    "des": ""
-  },
-  "601012": {
-    "id": "601012",
-    "type": 3,
-    "skilltriggertype": 4,
-    "triggercondition": null,
-    "eff_target": 0,
-    "para": [
-      19,
-      [
-        0.15
-      ]
-    ],
-    "add": null,
-    "imperviousrounds": 2,
-    "des": ""
-  },
-  "601013": {
-    "id": "601013",
-    "type": 3,
-    "skilltriggertype": 5,
-    "triggercondition": null,
-    "eff_target": 0,
-    "para": [
-      12,
-      [
-        1,
-        0.1
-      ]
-    ],
-    "add": null,
-    "imperviousrounds": 2,
+    "times": -1,
     "des": ""
   },
   "601014": {
@@ -950,35 +1223,51 @@
     "type": 3,
     "skilltriggertype": 4,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1
+    ],
     "para": [
-      24,
       [
-        1
+        2,
+        [
+          1,
+          1,
+          1
+        ]
       ]
     ],
     "add": null,
     "imperviousrounds": 2,
+    "times": -1,
     "des": ""
   },
   "601016": {
     "id": "601016",
     "type": 3,
-    "skilltriggertype": 7,
-    "triggercondition": [
-      4
+    "skilltriggertype": 8,
+    "triggercondition": null,
+    "eff_target": [
+      0,
+      0
     ],
-    "eff_target": 0,
     "para": [
-      26,
       [
-        0.1
+        26,
+        [
+          0.1
+        ]
+      ],
+      [
+        6,
+        [
+          0.1,
+          -1
+        ]
       ]
     ],
-    "add": [
-      611016
-    ],
+    "add": null,
     "imperviousrounds": 2,
+    "times": 1,
     "des": ""
   },
   "601017": {
@@ -986,19 +1275,20 @@
     "type": 3,
     "skilltriggertype": 7,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      0
+    ],
     "para": [
-      13,
       [
-        0.1,
-        1,
-        1
+        13,
+        [
+          0.1
+        ]
       ]
     ],
-    "add": [
-      601017
-    ],
+    "add": null,
     "imperviousrounds": 2,
+    "times": 1,
     "des": ""
   },
   "610005": {
@@ -1006,48 +1296,60 @@
     "type": 3,
     "skilltriggertype": 7,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      0
+    ],
     "para": [
-      9
+      [
+        9
+      ]
     ],
     "add": null,
     "imperviousrounds": 1,
+    "times": -1,
     "des": ""
   },
-  "610006": {
-    "id": "610006",
+  "610012": {
+    "id": "610012",
     "type": 3,
-    "skilltriggertype": 7,
+    "skilltriggertype": 4,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      0
+    ],
     "para": [
-      2,
       [
-        1,
-        1,
-        2
+        19,
+        [
+          0.15
+        ]
       ]
     ],
     "add": null,
-    "imperviousrounds": 0,
+    "imperviousrounds": 2,
+    "times": -1,
     "des": ""
   },
-  "611016": {
-    "id": "611016",
+  "610013": {
+    "id": "610013",
     "type": 3,
-    "skilltriggertype": 7,
+    "skilltriggertype": 5,
     "triggercondition": null,
-    "eff_target": 0,
+    "eff_target": [
+      0
+    ],
     "para": [
-      6,
       [
-        0.1,
-        1,
-        1
+        12,
+        [
+          2,
+          0.1
+        ]
       ]
     ],
     "add": null,
-    "imperviousrounds": null,
+    "imperviousrounds": 2,
+    "times": -1,
     "des": ""
   },
   "611017": {
@@ -1055,15 +1357,41 @@
     "type": 3,
     "skilltriggertype": 5,
     "triggercondition": null,
-    "eff_target": 1,
+    "eff_target": [
+      1
+    ],
     "para": [
-      23,
       [
-        0.05
+        23,
+        [
+          0.05
+        ]
       ]
     ],
     "add": null,
-    "imperviousrounds": null,
+    "imperviousrounds": 2,
+    "times": -1,
+    "des": ""
+  },
+  "6010041": {
+    "id": "6010041",
+    "type": 3,
+    "skilltriggertype": 7,
+    "triggercondition": null,
+    "eff_target": [
+      0
+    ],
+    "para": [
+      [
+        1,
+        [
+          0.1
+        ]
+      ]
+    ],
+    "add": null,
+    "imperviousrounds": 2,
+    "times": -1,
     "des": ""
   }
 }
