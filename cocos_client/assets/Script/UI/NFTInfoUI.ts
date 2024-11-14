@@ -186,12 +186,12 @@ export class NFTInfoUI extends ViewController {
         content.getChildByPath("TabRank/content/Rank_Cost/Btn").getComponent(Sprite).spriteFrame = canRankup ? this.btn_enable : this.btn_disable;
         content.getChildByPath("TabRank/content/Rank_Cost/Btn/Label").getComponent(Label).string = data.rank >= data.rankLimit ? "Max" : "Rank Up";
         // talent (old skill)
-        const skillConfig = NFTSkillConfig.getById(data.skills[0].id);
-        const skillEffectConfig = NFTSkillEffectConfig.getDesByIds(skillConfig.effect);
-        content.getChildByPath("TabLevel/content/talent/name").getComponent(Label).string = LanMgr.getLanById(skillConfig.name);
-        content.getChildByPath("TabLevel/content/talent/desc").getComponent(Label).string = skillEffectConfig;
+        const talentConfig = NFTSkillConfig.getById(data.skills[0].id);
+        const talentEffectConfig = NFTSkillEffectConfig.getDesByIds(skillConfig.effect);
+        content.getChildByPath("TabLevel/content/talent/name").getComponent(Label).string = LanMgr.getLanById(talentConfig.name);
+        content.getChildByPath("TabLevel/content/talent/desc").getComponent(Label).string = talentEffectConfig;
         for (const child of content.getChildByPath("TabLevel/content/talent/Icon").children) {
-            child.active = child.name == skillConfig.icon;
+            child.active = child.name == talentConfig.icon;
         }
         // Battle Skill
         const skillConfig = NFTSkillConfig.getById(data.skills[1].id);
