@@ -19,7 +19,6 @@ export enum protobuf_c2s {
 
     // ------ rookie ------
     player_rookie_update = 300,
-    player_rookie_wormhole_fight = 301,
     player_get_rookie_award = 302,
 
     // ------ chain ------
@@ -149,7 +148,6 @@ export enum protobuf_s2c {
 
     // ------ rookie ------
     player_rookie_update_res = 10400,
-    player_rookie_wormhole_fight_res = 10401,
     player_get_rookie_award_res = 10402,
 
     // ------ chain ------

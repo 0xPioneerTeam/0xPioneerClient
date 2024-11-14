@@ -218,70 +218,69 @@ export class MapPioneer extends Component {
                     let attacker = this._model;
                     let defender: MapPioneerObject = null;
                     const fightDatas = this._model.fightData.slice();
-
-                    if (this._model.actionType == MapPioneerActionType.eventing && this._model.actionBuildingId != null) {
-                        const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
-                        if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(this._model.uniqueId)) {
-                            attacker = currentBuilding.eventPioneerDatas.get(this._model.uniqueId);
-                        }
-                        if (fightDatas[0].attackerId == attacker.uniqueId) {
-                            if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(fightDatas[0].defenderId)) {
-                                defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].defenderId);
-                            }
-                        } else {
-                            if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(fightDatas[0].attackerId)) {
-                                defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].attackerId);
-                            }
-                        }
-                    } else if (this._model.actionType == MapPioneerActionType.maincityFighting && this._model.actionBuildingId != null) {
-                        const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
-                        if (currentBuilding != null && currentBuilding.maincityFightPioneerDatas.has(this._model.uniqueId)) {
-                            if (currentBuilding.maincityFightPioneerDatas.has(this._model.uniqueId)) {
-                                attacker = currentBuilding.maincityFightPioneerDatas.get(this._model.uniqueId);
-                            }
-                            if (currentBuilding.maincityFightPioneerDatas.has(this._model.actionFightId)) {
-                                defender = currentBuilding.maincityFightPioneerDatas.get(this._model.actionFightId);
-                            }
-                        }
-                    } else {
-                        if (fightDatas[0].attackerId == attacker.uniqueId) {
-                            defender = DataMgr.s.pioneer.getById(fightDatas[0].defenderId);
-                        } else {
-                            defender = DataMgr.s.pioneer.getById(fightDatas[0].attackerId);
-                        }
-                    }
+                    // if (this._model.actionType == MapPioneerActionType.eventing && this._model.actionBuildingId != null) {
+                    //     const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
+                    //     if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(this._model.uniqueId)) {
+                    //         attacker = currentBuilding.eventPioneerDatas.get(this._model.uniqueId);
+                    //     }
+                    //     if (fightDatas[0].attackerId == attacker.uniqueId) {
+                    //         if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(fightDatas[0].defenderId)) {
+                    //             defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].defenderId);
+                    //         }
+                    //     } else {
+                    //         if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(fightDatas[0].attackerId)) {
+                    //             defender = currentBuilding.eventPioneerDatas.get(fightDatas[0].attackerId);
+                    //         }
+                    //     }
+                    // } else if (this._model.actionType == MapPioneerActionType.maincityFighting && this._model.actionBuildingId != null) {
+                    //     const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
+                    //     if (currentBuilding != null && currentBuilding.maincityFightPioneerDatas.has(this._model.uniqueId)) {
+                    //         if (currentBuilding.maincityFightPioneerDatas.has(this._model.uniqueId)) {
+                    //             attacker = currentBuilding.maincityFightPioneerDatas.get(this._model.uniqueId);
+                    //         }
+                    //         if (currentBuilding.maincityFightPioneerDatas.has(this._model.actionFightId)) {
+                    //             defender = currentBuilding.maincityFightPioneerDatas.get(this._model.actionFightId);
+                    //         }
+                    //     }
+                    // } else {
+                    //     if (fightDatas[0].attackerId == attacker.uniqueId) {
+                    //         defender = DataMgr.s.pioneer.getById(fightDatas[0].defenderId);
+                    //     } else {
+                    //         defender = DataMgr.s.pioneer.getById(fightDatas[0].attackerId);
+                    //     }
+                    // }
                     
-                    if (attacker != null && defender != null) {
-                        // attacker is self, defender is enemy
-                        let attackerHpRate = 1;
-                        if (attacker["troopId"] != null && attacker["troopId"] != "" && attacker["troopId"] != "0") {
-                            attackerHpRate = parseInt(TroopsConfig.getById(attacker["troopId"]).hp_training);
-                        }
-                        let defenderHpRate = 1;
-                        if (defender["troopId"] != null && defender["troopId"] != "" && defender["troopId"] != "0") {
-                            defenderHpRate = parseInt(TroopsConfig.getById(defender["troopId"]).hp_training);
-                        }
-                        NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, {
-                            fightDatas: this._model.fightData.slice(),
-                            isWin: this._model.fightResultWin,
-                            attackerData: {
-                                uniqueId: attacker.uniqueId,
-                                id: attacker.id,
-                                name: attacker.name,
-                                animType: attacker.animType,
-                                hp: attacker.hp,
-                                hpmax: attacker.hpMax * attackerHpRate,
-                            },
-                            defenderData: {
-                                uniqueId: defender.uniqueId,
-                                id: defender.id,
-                                name: defender.name,
-                                animType: defender.animType,
-                                hp: defender.hp,
-                                hpmax: defender.hpMax * defenderHpRate,
-                            },
-                        });
-                    }
+                    // if (attacker != null && defender != null) {
+                    //     // attacker is self, defender is enemy
+                    //     let attackerHpRate = 1;
+                    //     if (attacker["troopId"] != null && attacker["troopId"] != "" && attacker["troopId"] != "0") {
+                    //         attackerHpRate = parseInt(TroopsConfig.getById(attacker["troopId"]).hp_training);
+                    //     }
+                    //     let defenderHpRate = 1;
+                    //     if (defender["troopId"] != null && defender["troopId"] != "" && defender["troopId"] != "0") {
+                    //         defenderHpRate = parseInt(TroopsConfig.getById(defender["troopId"]).hp_training);
+                    //     }
+                    //     NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, {
+                    //         fightDatas: this._model.fightData.slice(),
+                    //         isWin: this._model.fightResultWin,
+                    //         attackerData: {
+                    //             uniqueId: attacker.uniqueId,
+                    //             id: attacker.id,
+                    //             name: attacker.name,
+                    //             animType: attacker.animType,
+                    //             hp: attacker.hp,
+                    //             hpmax: attacker.hpMax * attackerHpRate,
+                    //         },
+                    //         defenderData: {
+                    //             uniqueId: defender.uniqueId,
+                    //             id: defender.id,
+                    //             name: defender.name,
+                    //             animType: defender.animType,
+                    //             hp: defender.hp,
+                    //             hpmax: defender.hpMax * defenderHpRate,
+                    //         },
+                    //     });
+                    // }
                 }
             }
         }

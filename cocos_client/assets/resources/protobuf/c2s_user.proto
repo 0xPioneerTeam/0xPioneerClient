@@ -49,9 +49,6 @@ message changemap_end {
 message player_rookie_update {
     required uint32 rookieStep = 1;
 }
-message player_rookie_wormhole_fight {
-    required string pioneerId = 1;
-}
 message player_get_rookie_award {
     
 }

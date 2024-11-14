@@ -182,7 +182,6 @@ export class Main extends ViewController {
 
         NetworkMgr.websocket.on("sinfo_change", DataMgr.sinfo_change);
         NetworkMgr.websocket.on("player_rookie_update_res", DataMgr.player_rookie_update_res);
-        NetworkMgr.websocket.on("player_rookie_wormhole_fight_res", DataMgr.player_rookie_wormhole_fight_res);
         // item changed
         NetworkMgr.websocket.on("storhouse_change", DataMgr.storhouse_change);
         // artifact
