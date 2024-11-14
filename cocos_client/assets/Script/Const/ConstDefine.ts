@@ -41,6 +41,7 @@ export enum ResourceCorrespondingItem {
     Gold = "8006",
     NFTExp = "8007",
     NFTRankExp = "8008",
+    Honor = "8009",
 }
 
 export enum NPCNameLangType {
