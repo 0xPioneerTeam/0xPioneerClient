@@ -11,6 +11,7 @@ export enum rank_type {
     explore = 1,
     fight = 2,
     psyc = 3,
+    honor = 4,
 }
 
 export interface rank_reward_config {
@@ -31,6 +32,7 @@ export interface rank_data {
     explore_open: boolean;
     fight_open: boolean;
     psyc_open: boolean;
+    honor_open: boolean;
 }
 
 export interface rank_reward_data {

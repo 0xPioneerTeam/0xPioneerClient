@@ -75,6 +75,7 @@ export class WorldRankUI extends ViewController {
         this._typeTabButtons.set(rank_type.explore, viewContent.getChildByPath("TypeTabView/ExploreButton"));
         this._typeTabButtons.set(rank_type.fight, viewContent.getChildByPath("TypeTabView/FightButton"));
         this._typeTabButtons.set(rank_type.psyc, viewContent.getChildByPath("TypeTabView/PSYCButton"));
+        this._typeTabButtons.set(rank_type.honor, viewContent.getChildByPath("TypeTabView/HonorButton"));
 
         this._rankContent = viewContent.getChildByPath("RankView/ContentView");
         this._commonRankContent = this._rankContent.getChildByPath("OtherView/ScrollView/View/Content");
@@ -145,6 +146,8 @@ export class WorldRankUI extends ViewController {
                 open = curRankConfigData.fight_open;
             } else if (key == rank_type.psyc) {
                 open = curRankConfigData.psyc_open;
+            } else if (key == rank_type.honor) {
+                open = curRankConfigData.honor_open;
             }
             value.active = open;
             if (!open && key == this._type) {
@@ -152,13 +155,15 @@ export class WorldRankUI extends ViewController {
             }
         });
         if (needInitType) {
-            if (this._typeTabButtons.get(rank_type.explore).active) {
+            if (this._typeTabButtons.get(rank_type.honor).active) {
+                this._type = rank_type.honor;
+            } else if (this._typeTabButtons.get(rank_type.explore).active) {
                 this._type = rank_type.explore;
             } else if (this._typeTabButtons.get(rank_type.fight).active) {
                 this._type = rank_type.fight;
             } else if (this._typeTabButtons.get(rank_type.psyc).active) {
                 this._type = rank_type.psyc;
-            }
+            } 
         }
         this._typeTabButtons.forEach((value: Node, key: rank_type) => {
             if (value.active) {
@@ -295,6 +300,7 @@ export class WorldRankUI extends ViewController {
                 explore_open: false,
                 fight_open: false,
                 psyc_open: false,
+                honor_open: false,
             };
             switch (type) {
                 case rank_season_type.daily:
@@ -332,7 +338,8 @@ export class WorldRankUI extends ViewController {
                 temp.explore_open = RankRewardConfig.checkRankOpen(temp.type, rank_type.explore);
                 temp.fight_open = RankRewardConfig.checkRankOpen(temp.type, rank_type.fight);
                 temp.psyc_open = RankRewardConfig.checkRankOpen(temp.type, rank_type.psyc);
-                if (!temp.explore_open && !temp.fight_open && !temp.psyc_open) {
+                temp.honor_open = RankRewardConfig.checkRankOpen(temp.type, rank_type.honor);
+                if (!temp.explore_open && !temp.fight_open && !temp.psyc_open && !temp.honor_open) {
                     temp.open = false;
                 }
             }
