@@ -1404,28 +1404,28 @@
     "eng": "Unyielding Spirit",
     "tc": "不屈意志"
   },
-  "160013": {
-    "id": "160013",
+  "160014": {
+    "id": "160014",
     "eng": "Holy Baptism",
     "tc": "聖光洗禮"
   },
-  "160014": {
-    "id": "160014",
+  "160015": {
+    "id": "160015",
     "eng": "Vengeful Retribution",
     "tc": "睚眦必報"
   },
-  "160015": {
-    "id": "160015",
+  "160016": {
+    "id": "160016",
     "eng": "Time Reversal",
     "tc": "時光逆流"
   },
-  "160016": {
-    "id": "160016",
+  "160018": {
+    "id": "160018",
     "eng": "Rebirth",
     "tc": "涅槃重生"
   },
-  "160017": {
-    "id": "160017",
+  "160021": {
+    "id": "160021",
     "eng": "Dance of Death",
     "tc": "死亡璇舞"
   },
@@ -5804,28 +5804,28 @@
     "eng": "For the next 2 turns, converts 15%/20%/30% of damage taken each turn into HP.",
     "tc": "接下來的2回合內，每回合受到傷害的15%/20%/30%轉換為自身血量"
   },
-  "1160013": {
-    "id": "1160013",
+  "1160014": {
+    "id": "1160014",
     "eng": "For the next 2 turns, the enemy cannot gain skill points, and recovers 10%/15%/20% of own HP each turn.",
     "tc": "接下來的2回合內，敵人無法獲得戰技值，並每回合回復自身血量10%/15%/20%"
   },
-  "1160014": {
-    "id": "1160014",
+  "1160015": {
+    "id": "1160015",
     "eng": "For the next 2 turns, each time attacked, triggers a counterattack dealing 100%/150%/200% attack power damage.",
     "tc": "接下來的2回合內，每次受到攻擊將觸發反擊效果，造成攻擊力100%/150%/200%的傷害"
   },
-  "1160015": {
-    "id": "1160015",
+  "1160016": {
+    "id": "1160016",
     "eng": "Recovers 20%/35%/50% of the damage taken in the past 2 turns as HP.",
     "tc": "回復過去2回合中所受到的傷害20%/35%/50%生命值"
   },
-  "1160016": {
-    "id": "1160016",
+  "1160018": {
+    "id": "1160018",
     "eng": "For the next 2 turns, if dealt a fatal blow, instantly recovers 10%/20%/30% HP and increases attack power by 10%.",
     "tc": "接下來的2回合內，如遭受到致命打擊，將立即回復10%/20%/30%的生命值並提升10%攻擊力"
   },
-  "1160017": {
-    "id": "1160017",
+  "1160021": {
+    "id": "1160021",
     "eng": "For the next 2 turns, weakens the enemy's attack power by 10%/20%/30%, and “Charm” effect can be triggered each turn.",
     "tc": "接下來的2回合內，削弱敵人攻擊力10%/20%/30%，並每回合均可觸發「魅惑」效果"
   }
