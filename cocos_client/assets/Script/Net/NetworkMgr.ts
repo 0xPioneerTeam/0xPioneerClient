@@ -68,14 +68,28 @@ export class NetworkMgr {
         if (r.res == "OK") {
             let d: c2s_user.Ilogin = { name: "", uid: r.data.uid, token: r.data.token };
             // login designated account
-            // d.uid = "9";
-            // d.token = "4111d3eef3662326324e5928088a53a6-1726775785271-9";
+            // d.uid = "353";
+            // d.token = "41bdd296ee9343bb9ecdbb17e9a5978a-1732045616031-353";
             this.websocketMsg.login(d);
             return d;
         } else {
             if (r.code === -7) {
                 UIHUDController.showCenterTip("Not Qualified");
             }
+        }
+        return null;
+    }
+
+    public static async FakeOnlyAccountLoginServer(inputaccount: string): Promise<c2s_user.Ilogin | null> {
+        if (inputaccount == null || inputaccount.length < 0) {
+            return;
+        }
+        let r = await this.httpMsg.fakeAccountVerify(inputaccount);
+        console.log("exce r: ", r);
+        if (r.res == "OK") {
+            let d: c2s_user.Ilogin = { name: "", uid: r.data.uid, token: r.data.token };
+            this.websocketMsg.login(d);
+            return d;
         }
         return null;
     }

@@ -6,6 +6,7 @@ export const GAME_SKIP_ROOKIE = false;
 export const GAME_ENV_IS_DEBUG = false;
 export const PioneerGameTest = false;
 export const GAME_VERSION = 1;
+export const GAME_USE_FAKE_ACCOUNT_LOGIN = true;
 
 export const TILEMAP_SIZE = 16; //tileMap layer size 16*16
 
