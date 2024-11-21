@@ -16,6 +16,7 @@ import UIPanelManger from "../../Basic/UIPanelMgr";
 import { PlayerInfoUI } from "../PlayerInfoUI";
 import { CollectWalletUI } from "../CollectWallet/CollectWalletUI";
 import { c2s_user } from "../../Net/msg/WebsocketMsg";
+import { GAME_USE_FAKE_ACCOUNT_LOGIN } from "../../Const/ConstDefine";
 const { ccclass, property } = _decorator;
 
 @ccclass("LoginUI")
@@ -27,6 +28,9 @@ export class LoginUI extends ViewController {
         super.viewDidLoad();
 
         this.node.getChildByPath("AlertView").active = true;
+
+        this.node.getChildByName("StartView").active = !GAME_USE_FAKE_ACCOUNT_LOGIN;
+        this.node.getChildByName("LoginView").active = GAME_USE_FAKE_ACCOUNT_LOGIN;
     }
     protected viewDidStart(): void {
         super.viewDidStart();
@@ -90,21 +94,23 @@ export class LoginUI extends ViewController {
         if (this._loginClicked) return;
         this._loginClicked = true;
 
-        let canEnter: boolean = false;
-        const whiteList = ConfigConfig.getConfig(ConfigType.LoginWhiteList) as LoginWhiteListParam;
-        if (whiteList == null || whiteList.whiteList == null || whiteList.whiteList.length <= 0) {
-            canEnter = true;
-        } else {
-            for (const temple of whiteList.whiteList) {
-                if (temple.toUpperCase() === md5(codeEditBox.string).toUpperCase()) {
-                    canEnter = true;
-                    break;
-                }
-            }
-        }
-        if (canEnter) {
-            NotificationMgr.triggerEvent(NotificationName.USER_LOGIN_SUCCEED);
-        }
+        await NetworkMgr.FakeOnlyAccountLoginServer(codeEditBox.string);
+        this._loginClicked = false;
+        // let canEnter: boolean = false;
+        // const whiteList = ConfigConfig.getConfig(ConfigType.LoginWhiteList) as LoginWhiteListParam;
+        // if (whiteList == null || whiteList.whiteList == null || whiteList.whiteList.length <= 0) {
+        //     canEnter = true;
+        // } else {
+        //     for (const temple of whiteList.whiteList) {
+        //         if (temple.toUpperCase() === md5(codeEditBox.string).toUpperCase()) {
+        //             canEnter = true;
+        //             break;
+        //         }
+        //     }
+        // }
+        // if (canEnter) {
+        //     NotificationMgr.triggerEvent(NotificationName.USER_LOGIN_SUCCEED);
+        // }
     }
 
     private onTapCloseTip() {

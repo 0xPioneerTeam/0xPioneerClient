@@ -36,6 +36,10 @@ export class HttpMsg {
         let r = await this.http_post("/verify", { walletaddr, signmsg, chainid, signature, walletType });
         return r;
     }
+    public async fakeAccountVerify(inputaccount: string) {
+        let r = await this.http_post("/verify", { onlyaccount: true, inputaccount });
+        return r;
+    }
 
     public async get_star_list(): Promise<any> {
         let r = await this.http_post("/get_star_list", {});
