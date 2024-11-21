@@ -48,7 +48,7 @@ export interface Icombat_battle_attack {
 }
 export interface Icombat_battle_spirit {
     /**
-     * 1-spirit round  2-beattacked
+     * 1-spirit round  2-be attacked
      */
     type: number;
     spiritchange: number;

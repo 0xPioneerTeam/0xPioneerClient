@@ -213,11 +213,42 @@ export class MapPioneer extends Component {
                     break;
             }
 
-            if (this._model.actionType == MapPioneerActionType.fighting || this._model.actionType == MapPioneerActionType.eventing || this._model.actionType == MapPioneerActionType.maincityFighting) {
+            if (
+                this._model.actionType == MapPioneerActionType.fighting ||
+                this._model.actionType == MapPioneerActionType.eventing ||
+                this._model.actionType == MapPioneerActionType.maincityFighting
+            ) {
                 if (this._model.fightData != null && this._model.fightData.length > 0) {
                     let attacker = this._model;
                     let defender: MapPioneerObject = null;
                     const fightDatas = this._model.fightData.slice();
+                    console.log(this._model);
+                    // console.log(fightDatas);
+                    let attackerHpRate = 1;
+                    let defenderHpRate = 1;
+                    defender = DataMgr.s.pioneer.getById(this._model.actionFightId);
+                    console.log(this._model.actionFightId);
+                    console.log(attacker)
+                    NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_SHOW_FIGHT_ANIM, {
+                        fightDatas: this._model.fightData.slice(),
+                        isWin: this._model.fightResultWin,
+                        attackerData: {
+                            uniqueId: attacker.uniqueId,
+                            id: attacker.id,
+                            name: attacker.name,
+                            animType: attacker.animType,
+                            hp: attacker.hp,
+                            hpmax: attacker.hpMax * attackerHpRate,
+                        },
+                        defenderData: {
+                            uniqueId: defender.uniqueId,
+                            id: defender.id,
+                            name: defender.name,
+                            animType: defender.animType,
+                            hp: defender.hp,
+                            hpmax: defender.hpMax * defenderHpRate,
+                        },
+                    });
                     // if (this._model.actionType == MapPioneerActionType.eventing && this._model.actionBuildingId != null) {
                     //     const currentBuilding = DataMgr.s.mapBuilding.getBuildingById(this._model.actionBuildingId);
                     //     if (currentBuilding != null && currentBuilding.eventPioneerDatas.has(this._model.uniqueId)) {
@@ -249,7 +280,7 @@ export class MapPioneer extends Component {
                     //         defender = DataMgr.s.pioneer.getById(fightDatas[0].attackerId);
                     //     }
                     // }
-                    
+
                     // if (attacker != null && defender != null) {
                     //     // attacker is self, defender is enemy
                     //     let attackerHpRate = 1;
@@ -291,7 +322,7 @@ export class MapPioneer extends Component {
                 rightWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.right;
                 topWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.top;
                 bottomWalkView.active = this._model.moveDirection == MapPioneerMoveDirection.bottom;
-    
+
                 let showWalkView = null;
                 if (leftWalkView.active) {
                     showWalkView = leftWalkView;

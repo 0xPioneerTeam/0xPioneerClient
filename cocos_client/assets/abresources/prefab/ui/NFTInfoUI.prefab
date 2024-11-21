@@ -23719,7 +23719,6 @@
     "__type__": "d7756y/IZNG+68J27MVRsrw",
     "_name": "",
     "_objFlags": 0,
-    "__editorExtras__": {},
     "node": {
       "__id__": 1
     },
@@ -23743,7 +23742,7 @@
       "__uuid__": "63c2271f-8b56-428a-8c03-ca78209cf9ce@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
-    "_id": ""
+    "_id": "ce0zh+B2lIqqlO5GcZsGvh"
   },
   {
     "__type__": "cc.CompPrefabInfo",
