@@ -1,5 +1,6 @@
 import NotificationMgr from "../../Basic/NotificationMgr";
 import ProtobufConfig from "../../Config/ProtobufConfig";
+import { Icombat_battle_reprot_item } from "../../Const/CombatBattleReportDefine";
 import { WebsocketFailRetryObject } from "../../Const/ConstDefine";
 import { ItemConfigType, ItemType } from "../../Const/Item";
 import { NotificationName } from "../../Const/Notification";
@@ -314,9 +315,6 @@ export class WebsocketMsg {
     public player_get_rookie_award(d: c2s_user.Iplayer_get_rookie_award) {
         this.send_packet("player_get_rookie_award", d);
     }
-    public player_rookie_wormhole_fight(d: c2s_user.Iplayer_rookie_wormhole_fight) {
-        this.send_packet("player_rookie_wormhole_fight", d);
-    }
 
     public player_wormhole_set_defender(d: c2s_user.Iplayer_wormhole_set_defender) {
         this.send_packet("player_wormhole_set_defender", d);
@@ -615,9 +613,6 @@ export namespace c2s_user {
     export interface Iplayer_rookie_update {
         rookieStep: number;
     }
-    export interface Iplayer_rookie_wormhole_fight {
-        pioneerId: string;
-    }
     export interface Iplayer_wormhole_set_defender {
         pioneerId: string;
         index: number;
@@ -711,12 +706,6 @@ export namespace s2c_user {
     export interface Iplayer_rookie_update_res {
         res: number;
         rookieStep: number;
-    }
-    export interface Iplayer_rookie_wormhole_fight_res {
-        res: number;
-        pioneerId: string;
-        hp: number;
-        fightRes: share.Ifight_res[];
     }
     export interface Istorhouse_change {
         iteminfo: share.Iitem_data[];
@@ -1193,9 +1182,7 @@ export namespace share {
         actionBuildingId?: string;
         killerId?: string;
         NFTId?: string;
-
-        actionFightBeginRes: Ifight_effect_trigger_res[];
-        actionFightRes: Ifight_res[];
+        actionFightRes: Icombat_battle_reprot_item[];
         actionFightWinner: number;
         rebirthStartTime?: number;
         rebirthEndTime?: number;
@@ -1204,17 +1191,6 @@ export namespace share {
         rebornTime?: number;
 
         troopId?: string;
-    }
-    export interface Ifight_res {
-        attackerId: string;
-        defenderId: string;
-        hp: number;
-        effectRes: Ifight_effect_trigger_res[];
-    }
-    export interface Ifight_effect_trigger_res {
-        actionId: string;
-        skillId: string;
-        effectId: string;
     }
 
     export interface Infts_data {
@@ -1408,7 +1384,7 @@ export namespace share {
         attacker: Inew_battle_report_fight_member_data;
         defender: Inew_battle_report_fight_member_data;
 
-        fightRes: Ifight_res[];
+        fightRes: Icombat_battle_reprot_item[];
 
         winItems: Iitem_data[];
         winArtifacts: Iartifact_info_data[];

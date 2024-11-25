@@ -5,6 +5,7 @@ import { ItemConfigType } from "./Item";
 import { share } from "../Net/msg/WebsocketMsg";
 import PioneerConfig from "../Config/PioneerConfig";
 import CommonTools from "../Tool/CommonTools";
+import { Icombat_battle_reprot_item } from "./CombatBattleReportDefine";
 
 export interface PioneerConfigData {
     id: string;
@@ -180,7 +181,7 @@ export interface MapPioneerData {
     actionBuildingId?: string;
     actionEventId?: string;
 
-    fightData?: share.Ifight_res[];
+    fightData?: Icombat_battle_reprot_item[];
     fightResultWin?: boolean;
 
     rebornTime: number;

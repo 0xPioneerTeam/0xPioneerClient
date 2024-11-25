@@ -1,6 +1,5 @@
 {
-
-    "currentConfigId": "dev_local",
+    "currentConfigId": "dev",
     "configs": {
         "PROD": {
             "chainId": "534351",
@@ -98,8 +97,8 @@
             "blockExplorerUrls": ["https://sepolia.scrollscan.com"],
             "abi": "deployresult_scrollTestnet",
             "api": {
-                "ws_host": "ws://18.167.224.150:5091",
-                "http_host": "http://18.167.224.150:9080",
+                "ws_host": "ws://18.163.210.71:5091",
+                "http_host": "http://18.163.210.71:9080",
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
             },

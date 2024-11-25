@@ -3,7 +3,7 @@ import { ItemConfigType } from "./Item";
 
 export const GAME_JUMP_SWITCH_IS_OPEN = true;
 export const GAME_SKIP_ROOKIE = false;
-export const GAME_ENV_IS_DEBUG = false;
+export const GAME_ENV_IS_DEBUG = true;
 export const PioneerGameTest = false;
 export const GAME_VERSION = 1;
 export const GAME_USE_FAKE_ACCOUNT_LOGIN = false;
@@ -42,6 +42,7 @@ export enum ResourceCorrespondingItem {
     Gold = "8006",
     NFTExp = "8007",
     NFTRankExp = "8008",
+    Honor = "8009",
 }
 
 export enum NPCNameLangType {

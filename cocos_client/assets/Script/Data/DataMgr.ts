@@ -220,26 +220,6 @@ export class DataMgr {
         DataMgr.s.userInfo.data.rookieState = state;
         NotificationMgr.triggerEvent(NotificationName.USERINFO_ROOKE_STEP_CHANGE);
     }
-    public static player_rookie_wormhole_fight_res = (e: any) => {
-        // wait change
-        // const p: s2c_user.Iplayer_rookie_wormhole_fight_res = e.data;
-        // if (p.res !== 1) {
-        //     return;
-        // }
-        // const player = DataMgr.s.pioneer.getById(p.pioneerId) as MapPlayerPioneerObject;
-        // if (player == undefined) {
-        //     return;
-        // }
-        // player.actionType = MapPioneerActionType.fighting;
-        // player.fightData = p.fightRes;
-        // player.fightResultWin = true;
-        // NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ACTIONTYPE_CHANGED, { id: player.id });
-        // NotificationMgr.triggerEvent(NotificationName.MAP_PIONEER_ROOKIE_WORMHOLE_FIGHT_COUNT, {
-        //     playerId: player.id,
-        //     resultHp: p.hp,
-        //     delayTime: p.fightRes.length + 1,
-        // });
-    };
     //------------------------------------- item
     public static storhouse_change = async (e: any) => {
         const p: s2c_user.Istorhouse_change = e.data;

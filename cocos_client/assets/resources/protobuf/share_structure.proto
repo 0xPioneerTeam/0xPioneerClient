@@ -195,8 +195,7 @@ message pioneer_data {
     optional string actionBuildingId = 68;
     repeated pos2d movePath = 69;
 
-    repeated fight_effect_trigger_res actionFightBeginRes = 70;
-    repeated fight_res actionFightRes = 71;
+    repeated combat_battle_reprot_item actionFightRes = 71;
     optional string actionFightId = 72;
     optional uint32 actionFightWinner = 73;
     optional uint32 actionFightHp = 74;
@@ -260,8 +259,7 @@ message map_pioneer_data {
     optional string actionEventId = 30;
     optional string actionBuildingId = 31;
 
-    repeated fight_effect_trigger_res actionFightBeginRes = 32;
-    repeated fight_res actionFightRes = 33;
+    repeated combat_battle_reprot_item actionFightRes = 33;
     optional string actionFightId = 34;
     optional uint32 actionFightWinner = 35;
     optional uint32 actionFightHp = 36;
@@ -281,18 +279,6 @@ message map_pioneer_data {
     optional uint32 rebornTime = 47;
 
     optional string troopId = 48;
-}
-message fight_res {
-    required string attackerId = 1;
-    required string defenderId = 2;
-    required uint32 hp = 3;
-    repeated fight_effect_trigger_res effectRes = 4;
-}
-
-message fight_effect_trigger_res {
-    required string actionId = 1;
-    required string skillId = 2;
-    required string effectId = 3;
 }
 
 message user_map_member_status {
@@ -537,8 +523,7 @@ message new_battle_report_fight_data {
     optional pos2d location = 3;
     required new_battle_report_fight_member_data attacker = 4;
     required new_battle_report_fight_member_data defender = 5;
-    repeated fight_effect_trigger_res fightBeginRes = 6;
-    repeated fight_res fightRes = 7;
+    repeated combat_battle_reprot_item fightRes = 7;
     repeated item_data winItems = 8;
     repeated artifact_info_data winArtifacts = 9;
 }
@@ -635,3 +620,62 @@ message rank_list_data {
     required uint32 rank = 3;
     required uint32 score = 4;
 }
+
+
+
+
+message combat_battle_reprot_item {
+    required string actionUniqueid = 1;
+    required string targetUniqueid = 2;
+    required string actionType = 3;
+
+    optional combat_battle_attack attack = 4;
+    optional combat_battle_spirit spirit = 5;
+    optional combat_battle_effect effect = 6;
+}
+
+message combat_battle_attack {
+    required uint32 resultDamage = 1;
+    required uint32 destroyShield = 2;
+}
+message combat_battle_spirit {
+    required uint32 type = 1;
+    required int32 spiritChange = 2;
+}
+message combat_battle_effect {
+    required uint32 type = 1;
+    required string effectid = 2;
+
+    optional string buffid = 3;
+    optional combat_battle_effect_damage_change damageChange = 4;
+    optional combat_battle_effect_attackpower_change attackPowerChange = 5;
+    optional int32 spiritChange = 6;
+    optional combat_battle_effect_hp_change hpChange = 7;
+    optional int32 shieldChange = 8;
+    optional combat_battle_effect_beattackdamage_change beAttackDamagechange = 9;
+    optional int32 noAttackRound = 10;
+    optional combat_battle_attack attackAction = 11;
+    optional combat_battle_attack attackExtraDamage = 12;
+    optional int32 noSpiritRound = 13;
+}
+
+message combat_battle_effect_damage_change {
+    required int32 effectRound = 1;
+    required float rate = 2;
+}
+message combat_battle_effect_attackpower_change {
+    required int32 effectRound = 1;
+    required uint32 changeType = 2;
+    required float num = 3;
+}
+message combat_battle_effect_hp_change {
+    required int32 healthChange = 1;
+    required int32 healthMaxChange = 2;
+}
+message combat_battle_effect_beattackdamage_change {
+    required int32 effectRound = 1;
+    required float rate = 2;
+}
+
+
+

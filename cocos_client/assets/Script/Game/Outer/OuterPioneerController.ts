@@ -30,7 +30,8 @@ import { OuterOtherPioneerView } from "./View/OuterOtherPioneerView";
 import { OuterRebonAndDestroyView } from "./View/OuterRebonAndDestroyView";
 import { OuterShadowController } from "./OuterShadowController";
 import { ReplenishEnergyView } from "../../UI/View/ReplenishEnergyView";
-
+import { Icombat_battle_reprot_item } from "../../Const/CombatBattleReportDefine";
+// import {Icombat_battle_reprot_item}  from "../../Const/CombatBattleReportDefine.ts"
 const { ccclass, property } = _decorator;
 
 @ccclass("OuterPioneerController")
@@ -38,6 +39,7 @@ export class OuterPioneerController extends ViewController {
     @property(Prefab)
     private onlyFightPrefab: Prefab = null;
 
+    // private const playerSpritLimit = 100;
     public hideMovingPioneerAction() {
         if (this._actionPioneerView != null) {
             this._actionPioneerView.destroy();
@@ -103,7 +105,7 @@ export class OuterPioneerController extends ViewController {
             defenderHp: number;
             defenderHpmax: number;
             view: OuterFightView;
-            intervalId: number;
+            intervalId?: number;
         }
     > = new Map();
     private _footPathMap: Map<string, Node[]> = new Map();
@@ -594,7 +596,9 @@ export class OuterPioneerController extends ViewController {
         this.node.getComponent(OuterTiledMapActionController).sortMapItemSiblingIndex();
     }
 
-    private _onShowFightAnim(data: { fightDatas: share.Ifight_res[]; isWin: boolean; attackerData: MapFightObject; defenderData: MapFightObject }) {
+    private async _onShowFightAnim(data: { fightDatas: Icombat_battle_reprot_item[]; isWin: boolean; attackerData: MapFightObject; defenderData: MapFightObject }) {
+        // let fightDatas = fakeFightData;
+        // let defenderData = fakeDefenderData;
         const { fightDatas, isWin, attackerData, defenderData } = data;
         const attackerView = this._pioneerMap.get(attackerData.uniqueId);
         if (attackerView == null) {
@@ -609,7 +613,9 @@ export class OuterPioneerController extends ViewController {
         const fightView = instantiate(this.fightPrefab).getComponent(OuterFightView);
         fightView.node.setParent(this.node);
         fightView.node.worldPosition = attackerView.worldPosition;
-        fightView.refreshUI(attackerData, defenderData, true);
+        fightView.initRoles(fightDatas[0], attackerData, defenderData);
+        // fightView.refreshUI(attackerData, defenderData, true);
+        //hide map monster before battle start
         for (let uniqueId of [attackerData.uniqueId, defenderData.uniqueId]) {
             const monster = this.getPioneerByUniqueId(uniqueId);
             console.log(`=====monster:${monster}`);
@@ -618,41 +624,55 @@ export class OuterPioneerController extends ViewController {
                 monster.getComponent(MapItemMonster).getComponent(UIOpacity).opacity = 0;
             }
         }
-        const intervalId = setInterval(() => {
-            if (fightDatas.length <= 0) {
-                if (this._fightDataMap.has(attackerData.uniqueId)) {
-                    const temp = this._fightDataMap.get(attackerData.uniqueId);
-                    clearInterval(temp.intervalId);
-                    const monster = this.getPioneerByUniqueId(attackerData.uniqueId);
-                    if (monster && monster.type == MapPioneerType.hred) {
-                        monster.getComponent(MapItemMonster).getComponent(UIOpacity).opacity = 255;
-                    }
-                }
-                return;
-            }
-            const tempFightData = fightDatas.shift();
-            if (tempFightData.attackerId == attackerData.uniqueId) {
-                // attacker action
-                defenderData.hp -= tempFightData.hp;
-                fightView.attackAnim(attackerData, defenderData, tempFightData.hp, true);
-            } else {
-                attackerData.hp -= tempFightData.hp;
-                fightView.attackAnim(attackerData, defenderData, tempFightData.hp, false);
-            }
-            // fightView.refreshUI(
-            //     {
-            //         name: attackerData.name,
-            //         hp: attackerData.hp,
-            //         hpMax: attackerData.hpmax,
-            //     },
-            //     {
-            //         name: defenderData.name,
-            //         hp: defenderData.hp,
-            //         hpMax: defenderData.hpmax,
-            //     },
-            //     true
-            // );
-        }, 1000) as unknown as number;
+        //start battle round display old version use same timeout
+        // const intervalId = setInterval(() => {
+        //     //battle finished to show or hide monster on map
+        //     if (fightDatas.length <= 0) {
+        //         if (this._fightDataMap.has(attackerData.uniqueId)) {
+        //             const temp = this._fightDataMap.get(attackerData.uniqueId);
+        //             clearInterval(temp.intervalId);
+        //             const monster = this.getPioneerByUniqueId(attackerData.uniqueId);
+        //             if (monster && monster.type == MapPioneerType.hred) {
+        //                 monster.getComponent(MapItemMonster).getComponent(UIOpacity).opacity = 255;
+        //             }
+        //         }
+        //         return;
+        //     }
+        //     const tempFightData = fightDatas.shift();
+        //     fightView.doAction(tempFightData);
+
+        //     // if (tempFightData.attackerId == attackerData.uniqueId) {
+        //     //     // attacker action
+        //     //     defenderData.hp -= tempFightData.hp;
+        //     //     fightView.attackAnim(attackerData, defenderData, tempFightData.hp, true);
+        //     // } else {
+        //     //     attackerData.hp -= tempFightData.hp;
+        //     //     fightView.attackAnim(attackerData, defenderData, tempFightData.hp, false);
+        //     // }
+
+        //     // fightView.refreshUI(
+        //     //     {
+        //     //         name: attackerData.name,
+        //     //         hp: attackerData.hp,
+        //     //         hpMax: attackerData.hpmax,
+        //     //     },
+        //     //     {
+        //     //         name: defenderData.name,
+        //     //         hp: defenderData.hp,
+        //     //         hpMax: defenderData.hpmax,
+        //     //     },
+        //     //     true
+        //     // );
+        // }, 600) as unknown as number;
+        for (const item:Icombat_battle_reprot_item of fightDatas) {
+            //battle finished to show or hide monster on map
+            console.log(item);
+            await fightView.doAction(item);
+        }
+        const monster = this.getPioneerByUniqueId(attackerData.uniqueId);
+        if (monster && monster.type == MapPioneerType.hred) {
+            monster.getComponent(MapItemMonster).getComponent(UIOpacity).opacity = 255;
+        }
         this._fightDataMap.set(attackerData.uniqueId, {
             isWin: isWin,
             attackerId: attackerData.uniqueId,
@@ -664,7 +684,7 @@ export class OuterPioneerController extends ViewController {
             defenderHp: defenderData.hp,
             defenderHpmax: defenderData.hpmax,
             view: fightView,
-            intervalId: intervalId,
+            // intervalId: intervalId,
         });
     }
     private _onFightEnd(data: { uniqueId: string }) {
@@ -672,7 +692,7 @@ export class OuterPioneerController extends ViewController {
             return;
         }
         const fightData = this._fightDataMap.get(data.uniqueId);
-        clearInterval(fightData.intervalId);
+        // clearInterval(fightData.intervalId);
 
         const resultView = instantiate(this.fightResultPrefab);
         resultView.setParent(this.node);

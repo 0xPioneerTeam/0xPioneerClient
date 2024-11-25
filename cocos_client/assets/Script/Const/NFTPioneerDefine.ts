@@ -18,14 +18,21 @@ export interface NFTPioneerNameConfigData {
 export interface NFTPioneerSkillConfigData {
     id: string;
     name: string;
+    describe: string;
     rank: number;
+    type:number;
     effect: string[];
     icon: string;
 }
 export interface NFTPioneerSkillEffectConfigData {
     id: string;
     type: GameExtraEffectType;
+    skilltriggertype: number;
+    triggercondition: number[]|null;
+    eff_target: number;
     para: GameSingleParamEffectType | GameDoubleParamEffectType;
+    add: number[];
+    imperviousrounds: number|null;
     des: string;
 }
 
