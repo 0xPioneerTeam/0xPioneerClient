@@ -145,6 +145,7 @@ export class ResOprView extends Component {
                                 fightValueView.getChildByPath("Value").getComponent(Label).string = battlePower.toString();
                                 // wait code: use honor to show
                                 // ...
+                                fightValueView.getChildByPath("Honor/HonorValue").getComponent(Label).string = info.honer != null ? info.honer.toString() : "0";
                             }
                         }
                     }

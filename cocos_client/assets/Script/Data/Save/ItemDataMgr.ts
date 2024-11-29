@@ -76,7 +76,7 @@ export class ItemDataMgr {
         if (change.count > 0) {
             let isBackpackShow: boolean = true;
             if (config.itemType == ItemType.Resource) {
-                if (config.configId != ResourceCorrespondingItem.NFTExp && config.configId != ResourceCorrespondingItem.NFTRankExp) {
+                if (config.configId != ResourceCorrespondingItem.NFTExp && config.configId != ResourceCorrespondingItem.NFTRankExp && config.configId != ResourceCorrespondingItem.Honor) {
                     isBackpackShow = false;
                 }
             }

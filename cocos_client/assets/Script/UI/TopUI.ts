@@ -29,6 +29,8 @@ export default class TopUI extends Component {
 
     @property(Label)
     txtEnergy: Label = null;
+    @property(Label)
+    txtHonor: Label = null;
 
     @property(ProgressBar)
     lvProgress: ProgressBar = null;
@@ -74,7 +76,7 @@ export default class TopUI extends Component {
         this.txtPlayerLV.string = "C.LV" + info.level;
         this.txtMoney.string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Gold).toString();
         this.txtEnergy.string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Energy).toString();
-
+        this.txtHonor.string = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Honor).toString();
         const levelUpFinishCondition = ClvlMgr.getCurretLevelUpFinishCondition();
         this.txtLvProgress.string = levelUpFinishCondition.value + "/" + levelUpFinishCondition.total;
         this.lvProgress.progress = Math.min(1, levelUpFinishCondition.value / levelUpFinishCondition.total);

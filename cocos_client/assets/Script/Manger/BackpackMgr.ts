@@ -14,7 +14,7 @@ export default class BackpackMgr {
                 return false;
             }
             // 8007 and 8008 resource is special show in backpack
-            return config.itemType != ItemType.Resource || config.configId == ResourceCorrespondingItem.NFTExp || config.configId == ResourceCorrespondingItem.NFTRankExp;
+            return config.itemType != ItemType.Resource || config.configId == ResourceCorrespondingItem.NFTExp || config.configId == ResourceCorrespondingItem.NFTRankExp|| config.configId == ResourceCorrespondingItem.Honor;
         });
 
         const artifact = DataMgr.s.artifact.getObj();
