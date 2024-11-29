@@ -5,7 +5,7 @@ import { InnerBuildingType, MapBuildingType } from "../../../Const/BuildingDefin
 import { GameMgr, ItemMgr, LanMgr } from "../../../Utils/Global";
 import ItemConfig from "../../../Config/ItemConfig";
 import PioneerConfig from "../../../Config/PioneerConfig";
-import { GAME_JUMP_SWITCH_IS_OPEN, MapInteractType } from "../../../Const/ConstDefine";
+import { GAME_JUMP_SWITCH_IS_OPEN, MapInteractType, ResourceCorrespondingItem } from "../../../Const/ConstDefine";
 import GameMusicPlayMgr from "../../../Manger/GameMusicPlayMgr";
 import { DataMgr } from "../../../Data/DataMgr";
 import NotificationMgr from "../../../Basic/NotificationMgr";
@@ -26,7 +26,6 @@ export class ResOprView extends Component {
     private _interactPioneer: MapPioneerObject;
     private _targetPos: Vec2;
     private _lastDisableInteractType: MapInteractType = null;
-
 
     public async show(
         isShadow: boolean,
@@ -116,11 +115,19 @@ export class ResOprView extends Component {
                         const info = GameMgr.getMapSlotData(uniqueIdSplit[0]);
                         if (info != undefined) {
                             let cityName: string = "";
+                            let battlePower: number = 0;
+                            // use this to show
+                            let honor: number = 0;
                             if (uniqueIdSplit[0] == DataMgr.s.mapBuilding.getSelfMainCitySlotId()) {
                                 cityName = DataMgr.s.userInfo.data.name;
+                                battlePower = DataMgr.s.userInfo.data.battlePower;
+                                honor = DataMgr.s.item.getObj_item_count(ResourceCorrespondingItem.Honor);
                             } else {
                                 cityName = info.pname;
+                                battlePower = info.battlePower != null ? info.battlePower : 0;
+                                honor = info.honor;
                             }
+                            console.log("exce honor: " + honor);
                             infoView.getChildByPath("Top/Name").getComponent(Label).string = cityName;
                             mainCityBuildingInfo.getChildByPath("Leader/Value").getComponent(Label).string = cityName;
                             mainCityBuildingInfo.getChildByPath("Civilization/Value").getComponent(Label).string = info.level.toString();
@@ -135,7 +142,9 @@ export class ResOprView extends Component {
                             } else {
                                 lockView.active = false;
                                 fightValueView.active = true;
-                                fightValueView.getChildByPath("Value").getComponent(Label).string = info.battlePower != null ? info.battlePower.toString() : "";
+                                fightValueView.getChildByPath("Value").getComponent(Label).string = battlePower.toString();
+                                // wait code: use honor to show
+                                // ...
                             }
                         }
                     }
@@ -473,14 +482,20 @@ export class ResOprView extends Component {
             }
             return;
         }
-        const result = await GameMgr.checkMapCanInteractAndCalulcateMovePath(player, interactType, this._interactBuilding, this._interactPioneer, this._targetPos);
+        const result = await GameMgr.checkMapCanInteractAndCalulcateMovePath(
+            player,
+            interactType,
+            this._interactBuilding,
+            this._interactPioneer,
+            this._targetPos
+        );
         if (!result.enable) {
             this._lastDisableInteractType = interactType;
             return;
         }
         this.hide();
         if (this._confirmCallback != null) {
-            this._confirmCallback(player.uniqueId ,interactType, result.movePath);
+            this._confirmCallback(player.uniqueId, interactType, result.movePath);
         }
     }
     private onTapDifficult() {
@@ -495,9 +510,6 @@ export class ResOprView extends Component {
         }
         NotificationMgr.triggerEvent(NotificationName.GAME_JUMP_INNER_AND_SHOW_RELIC_TOWER);
     }
-
-
-
 
     //----------------------------- notification
     private _onPlayerTroopToHpRes = (e: any) => {

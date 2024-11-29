@@ -28,6 +28,15 @@ import { ReplenishTroopsView } from "../UI/View/ReplenishTroopsView";
 import { OuterShadowController } from "../Game/Outer/OuterShadowController";
 import { ReplenishEnergyView } from "../UI/View/ReplenishEnergyView";
 
+export interface MapCityInfo {
+    templeConfigId: string;
+    playerId: string;
+    pname: string;
+    level: number;
+    battlePower: number;
+    honor: number;
+}
+
 export default class GameMgr {
     public rookieTaskExplainIsShow: boolean = false;
     public enterGameSence: boolean = false;
@@ -576,8 +585,8 @@ export default class GameMgr {
         return originalValue;
     }
 
-    private _slotIdToTempleConfigMap: Map<string, { templeConfigId: string; playerId: string; pname: string; level: number; battlePower: number }> = new Map();
-    public setSlotIdToTempleConfigData(slotId: string, data: { templeConfigId: string; playerId: string; pname: string; level: number; battlePower: number }) {
+    private _slotIdToTempleConfigMap: Map<string, MapCityInfo> = new Map();
+    public setSlotIdToTempleConfigData(slotId: string, data: MapCityInfo) {
         if (slotId == null || data == null) {
             return;
         }

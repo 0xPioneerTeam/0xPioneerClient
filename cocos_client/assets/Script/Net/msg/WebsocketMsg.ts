@@ -1233,6 +1233,7 @@ export namespace share {
         pname: string;
         level: number;
         battlePower: number;
+        honor: number;
         templateConfigId: string;
         buildings: { [key: string]: Imapbuilding_info_data };
         pioneers: { [key: string]: Ipioneer_data };

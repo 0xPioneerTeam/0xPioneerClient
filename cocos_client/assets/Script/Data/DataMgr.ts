@@ -99,6 +99,7 @@ export class DataMgr {
                     pname: p.data.info.sinfo.pname,
                     level: p.data.info.sinfo.level,
                     battlePower: p.data.info.sinfo.battlePower,
+                    honor: 0,
                 });
 
                 NotificationMgr.triggerEvent(NotificationName.USER_LOGIN_SUCCEED);
@@ -397,6 +398,7 @@ export class DataMgr {
                 pname: info.pname,
                 level: info.level,
                 battlePower: info.battlePower,
+                honor: info.honor,
             });
         }
         for (const key in p.user) {

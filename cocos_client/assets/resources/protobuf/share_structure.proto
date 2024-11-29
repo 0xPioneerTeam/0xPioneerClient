@@ -427,6 +427,7 @@ message map_info_data {
     optional string pname = 7;
     optional uint32 level = 8;
     optional uint32 battlePower = 9;
+    optional uint32 honor = 10;
 }
 
 message map_building_info_data {
