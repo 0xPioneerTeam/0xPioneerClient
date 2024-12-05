@@ -9,6 +9,7 @@ export enum UIName {
     SecretGuardGettedUI = "abresources/prefab/ui/SecretGuardGettedUI",
     TreasureGettedUI = "abresources/prefab/ui/TreasureGettedUI",
     TaskListUI = "abresources/prefab/ui/TaskListUI",
+    IdleUI = "abresources/prefab/ui/IdleUI",
     CivilizationLevelUpUI = "abresources/prefab/ui/CivilizationLevelUpUI",
     PlayerInfoUI = "abresources/prefab/ui/PlayerInfoUI",
     NewSettlementUI = "abresources/prefab/ui/NewSettlementUI",

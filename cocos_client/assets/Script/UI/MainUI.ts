@@ -22,6 +22,7 @@ import { UIHUDController } from "./UIHUDController";
 import { RedPointView } from "./View/RedPointView";
 import { s2c_user } from "../Net/msg/WebsocketMsg";
 import AbiConfig from "../Config/AbiConfig";
+import { IdleUI } from "./IdleUI";
 
 const { ccclass, property } = _decorator;
 
@@ -370,6 +371,19 @@ export class MainUI extends ViewController {
         }
         await result.node.getComponent(TaskListUI).refreshUI();
     }
+
+    private async onTapIdle() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        if (UIPanelManger.inst.panelIsShow(UIName.IdleUI)) {
+            return;
+        }
+        const result = await UIPanelManger.inst.pushPanel(UIName.IdleUI);
+        if (!result.success) {
+            return;
+        }
+        await result.node.getComponent(IdleUI).refreshUI();
+    }
+
     private async onTapNFT() {
         GameMusicPlayMgr.playTapButtonEffect();
         const result = await UIPanelManger.inst.pushPanel(UIName.NFTBackpackUI);
