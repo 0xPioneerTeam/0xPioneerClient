@@ -4,7 +4,7 @@
     "type": 1,
     "name": "战斗（要换成lanid）",
     "description": "战斗（要换成lanid）",
-    "duration": 60,
+    "duration": 3,
     "reward": [
       [
         "8003",

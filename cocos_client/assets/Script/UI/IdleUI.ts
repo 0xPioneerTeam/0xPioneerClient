@@ -56,33 +56,6 @@ export class IdleUI extends ViewController {
         NetworkMgr.websocket.on("idle_task_change", this.idle_task_change);
 
         NetworkMgr.websocketMsg.get_idle_task_list();
-
-
-        // test begin
-        this._data = [];
-        const p  = {
-            tasks: [
-                { id: "1", startTime: 0, status: 0 },
-                { id: "2", startTime: 0, status: 0 },
-                { id: "3", startTime: 0, status: 0 },
-                { id: "4", startTime: 0, status: 0 },
-                { id: "5", startTime: 0, status: 0 },
-                { id: "6", startTime: 0, status: 0 },
-            ]
-        };
-
-        for (const element of p.tasks) {
-            const config = IdleTaskConfig.getById(element.id);
-            this._data.push({
-                id: element.id,
-                type: config.type,
-                startTime: element.startTime,
-                status: element.status,
-                duration: config.duration * 60,
-            });
-        }
-        this._refreshIdleUI();
-        // test end
     }
 
     protected viewDidStart(): void {
