@@ -9,6 +9,7 @@ import DropConfig from "../Config/DropConfig";
 import EvaluationConfig from "../Config/EvaluationConfig";
 import EventConfig from "../Config/EventConfig";
 import GuideConfig from "../Config/GuideConfig";
+import IdleTaskConfig from "../Config/IdleTaskConfig";
 import InnerBuildingConfig from "../Config/InnerBuildingConfig";
 import InnerBuildingLvlUpConfig from "../Config/InnerBuildingLvlUpConfig";
 import ItemConfig from "../Config/ItemConfig";
@@ -63,6 +64,7 @@ export default class ConfigMgr {
         if (!(await WorldBoxConfig.init())) return false;
         if (!(await BigMapConfig.init())) return false;
         if (!(await RankRewardConfig.init())) return false;
+        if (!(await IdleTaskConfig.init())) return false;
 
         // abi
         const chainIdConfig = ChainConfig.getCurrentConfigId();

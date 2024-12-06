@@ -1,0 +1,104 @@
+{
+  "1": {
+    "id": "1",
+    "type": 1,
+    "name": "战斗（要换成lanid）",
+    "description": "战斗（要换成lanid）",
+    "duration": 60,
+    "reward": [
+      [
+        "8003",
+        100
+      ],
+      [
+        "8002",
+        100
+      ]
+    ]
+  },
+  "2": {
+    "id": "2",
+    "type": 1,
+    "name": "战斗（要换成lanid）",
+    "description": "战斗（要换成lanid）",
+    "duration": 480,
+    "reward": [
+      [
+        "8003",
+        100
+      ],
+      [
+        "8002",
+        100
+      ]
+    ]
+  },
+  "3": {
+    "id": "3",
+    "type": 1,
+    "name": "战斗（要换成lanid）",
+    "description": "战斗（要换成lanid）",
+    "duration": 960,
+    "reward": [
+      [
+        "8003",
+        100
+      ],
+      [
+        "8002",
+        100
+      ]
+    ]
+  },
+  "4": {
+    "id": "4",
+    "type": 2,
+    "name": "采集（要换成lanid）",
+    "description": "采集（要换成lanid）",
+    "duration": 60,
+    "reward": [
+      [
+        "8003",
+        100
+      ],
+      [
+        "8002",
+        100
+      ]
+    ]
+  },
+  "5": {
+    "id": "5",
+    "type": 2,
+    "name": "采集（要换成lanid）",
+    "description": "采集（要换成lanid）",
+    "duration": 480,
+    "reward": [
+      [
+        "8003",
+        100
+      ],
+      [
+        "8002",
+        100
+      ]
+    ]
+  },
+  "6": {
+    "id": "6",
+    "type": 2,
+    "name": "采集（要换成lanid）",
+    "description": "采集（要换成lanid）",
+    "duration": 960,
+    "reward": [
+      [
+        "8003",
+        100
+      ],
+      [
+        "8002",
+        100
+      ]
+    ]
+  }
+}

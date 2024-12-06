@@ -36,6 +36,8 @@ export class MainUI extends ViewController {
 
     private _worldRankRedPointNum: number = 0;
 
+    private _idleTaskRedPointNum: number = 0;
+
     private _animView: Node = null;
 
     private _gangsterComingTipView: Node = null;
@@ -87,6 +89,11 @@ export class MainUI extends ViewController {
 
         NetworkMgr.websocket.on("get_rank_res", this.get_rank_res);
         NetworkMgr.websocket.on("get_rank_red_point_res", this.get_rank_red_point_res);
+
+        NetworkMgr.websocket.on("get_idle_task_red_point_res", this.get_idle_task_red_point_res);
+        NetworkMgr.websocket.on("idle_task_red_point_change", this.idle_task_red_point_change);
+
+        NetworkMgr.websocketMsg.get_idle_task_red_point({});
     }
 
     protected async viewDidStart(): Promise<void> {
@@ -155,6 +162,9 @@ export class MainUI extends ViewController {
 
         NetworkMgr.websocket.off("get_rank_res", this.get_rank_res);
         NetworkMgr.websocket.off("get_rank_red_point_res", this.get_rank_red_point_res);
+
+        NetworkMgr.websocket.off("get_idle_task_red_point_res", this.get_rank_red_point_res);
+        NetworkMgr.websocket.off("idle_task_red_point_change", this.idle_task_red_point_change);
     }
 
     changeLang(): void {
@@ -199,6 +209,10 @@ export class MainUI extends ViewController {
     private _refreshWorldRankRedPoint() {
         const redPointView = this.node.getChildByPath("CommonContent/RankButton/RedPoint").getComponent(RedPointView);
         redPointView.refreshUI(this._worldRankRedPointNum, false);
+    }
+    private _refreshIdleTaskRedPoint() {
+        const redPointView = this.node.getChildByPath("CommonContent/IdleTaskButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(this._idleTaskRedPointNum, false);
     }
 
     // button
@@ -594,5 +608,19 @@ export class MainUI extends ViewController {
             return;
         }
         NetworkMgr.websocketMsg.get_rank_red_point({});
+    };
+
+    private get_idle_task_red_point_res = (e: any) => {
+        const p: s2c_user.Iget_idle_task_red_point_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        this._idleTaskRedPointNum = p.num;
+        this._refreshIdleTaskRedPoint();
+    };
+    private idle_task_red_point_change = (e: any) => {
+        const p: s2c_user.Iidle_task_red_point_change = e.data;
+        this._idleTaskRedPointNum = p.num;
+        this._refreshIdleTaskRedPoint();
     };
 }

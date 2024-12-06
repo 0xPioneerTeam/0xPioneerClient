@@ -678,5 +678,11 @@ message combat_battle_effect_beattackdamage_change {
     required float rate = 2;
 }
 
-
+// ------- idle task -------
+message idle_task {
+    required string id = 1;
+    required float startTime = 2;
+    required uint32 status = 3;
+    optional string workingPioneerUnqueId = 4;
+}
 

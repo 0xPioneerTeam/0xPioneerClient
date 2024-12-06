@@ -566,6 +566,28 @@ message get_rank_red_point_res {
     optional uint32 num = 2;
 }
 
+// ------- idle task -------
+message get_idle_task_list_res {
+    required int32 res = 1;
+    repeated share.idle_task tasks = 2;
+}
+message idle_task_change {
+    repeated share.idle_task tasks = 2;
+}
+message get_idle_task_red_point_res {
+    required int32 res = 1;
+    optional uint32 num = 2;
+}
+message idle_task_red_point_change {
+    required uint32 num = 1;
+}
+message dispatch_pioneer_to_idle_task_res {
+    required int32 res = 1;
+}
+message get_idle_task_reward_res {
+    required int32 res = 1;
+}
+
 // ------ test ------
 message reborn_all_res {
     required int32 res = 1;

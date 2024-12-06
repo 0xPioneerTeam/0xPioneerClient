@@ -30,6 +30,9 @@ import { BackpackArrangeType, BackpackCategoryType } from "../Const/ConstDefine"
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 // import { IdleItem } from "./IdleItem";
 import { IdleItem } from "./IdleItem";
+import { NetworkMgr } from "../Net/NetworkMgr";
+import { s2c_user, share } from "../Net/msg/WebsocketMsg";
+import IdleTaskConfig from "../Config/IdleTaskConfig";
 const { ccclass, property } = _decorator;
 
 @ccclass("IdleUI")
@@ -41,16 +44,45 @@ export class IdleUI extends ViewController {
 
     private _idleContent: Node = null;
 
-
     protected viewDidLoad(): void {
         super.viewDidLoad();
 
-
         this._idleContent = this.node.getChildByPath("__ViewContent/Items/ScrollView/View/Content");
-
 
         NotificationMgr.addListener(NotificationName.CHANGE_LANG, this._refreshIdleUI, this);
         // NotificationMgr.addListener(NotificationName.ITEM_CHANGE, this._refreshBackpackUI, this);
+
+        NetworkMgr.websocket.on("get_idle_task_list_res", this.get_idle_task_list_res);
+        NetworkMgr.websocket.on("idle_task_change", this.idle_task_change);
+
+        NetworkMgr.websocketMsg.get_idle_task_list();
+
+
+        // test begin
+        this._data = [];
+        const p  = {
+            tasks: [
+                { id: "1", startTime: 0, status: 0 },
+                { id: "2", startTime: 0, status: 0 },
+                { id: "3", startTime: 0, status: 0 },
+                { id: "4", startTime: 0, status: 0 },
+                { id: "5", startTime: 0, status: 0 },
+                { id: "6", startTime: 0, status: 0 },
+            ]
+        };
+
+        for (const element of p.tasks) {
+            const config = IdleTaskConfig.getById(element.id);
+            this._data.push({
+                id: element.id,
+                type: config.type,
+                startTime: element.startTime,
+                status: element.status,
+                duration: config.duration * 60,
+            });
+        }
+        this._refreshIdleUI();
+        // test end
     }
 
     protected viewDidStart(): void {
@@ -64,6 +96,8 @@ export class IdleUI extends ViewController {
 
         NotificationMgr.removeListener(NotificationName.CHANGE_LANG, this._refreshIdleUI, this);
         // NotificationMgr.removeListener(NotificationName.ITEM_CHANGE, this._refreshBackpackUI, this);
+        NetworkMgr.websocket.off("get_idle_task_list_res", this.get_idle_task_list_res);
+        NetworkMgr.websocket.off("idle_task_change", this.idle_task_change);
     }
 
     protected viewPopAnimation(): boolean {
@@ -77,27 +111,17 @@ export class IdleUI extends ViewController {
         await this._refreshIdleUI();
     }
     private async _refreshIdleUI() {
+        console.log("exce data: ", this._data);
         // this._data = [BackpackMgr.getBackpack(this._currentCategoryType, this._currentArrangeType);]
-        this._data = [
-            { status: 1, startTime: 1733419620, duration: 3600, type: 0 },
-            { status: 0, startTime: 1733419410, duration: 5000, type: 1 },
-            { status: 2, startTime: 1733419430, duration: 5000, type: 0 },
-            { status: 0, startTime: 1733419440, duration: 5000, type: 1 },
-        ];
         this._idleContent.removeAllChildren();
         for (let i = 0; i < this._data.length; i++) {
             let itemView = null;
             itemView = instantiate(this.itemPrb);
             this._idleContent.addChild(itemView);
             itemView.getComponent(IdleItem).refreshUI(this._data[i], false);
-
-
         }
         this._idleContent.getComponent(Layout).updateLayout();
-
-
     }
-
 
     private async onTapClose() {
         GameMusicPlayMgr.playTapButtonEffect();
@@ -129,4 +153,36 @@ export class IdleUI extends ViewController {
         }
     }
 
+    private get_idle_task_list_res = (e: any) => {
+        const p: s2c_user.Iget_idle_task_list_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        this._data = [];
+        for (const element of p.tasks) {
+            const config = IdleTaskConfig.getById(element.id);
+            this._data.push({
+                id: element.id,
+                type: config.type,
+                startTime: element.startTime,
+                status: element.status,
+                duration: config.duration * 60,
+            });
+        }
+        this._refreshIdleUI();
+    };
+
+    private idle_task_change = (e: any) => {
+        const p: s2c_user.Iidle_task_change = e.data;
+        for (const element of this._data) {
+            for (const temp of p.tasks) {
+                if (element.id == temp.id) {
+                    element.startTime = temp.startTime;
+                    element.status = temp.status;
+                    break;
+                }
+            }
+        }
+        this._refreshIdleUI();
+    }
 }

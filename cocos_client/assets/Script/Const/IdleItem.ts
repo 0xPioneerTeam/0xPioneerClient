@@ -1,7 +1,6 @@
 export enum IdleType {
-    Fight = 0,
-    Collection = 1,
-
+    Fight = 1,
+    Collection = 2,
 }
 
 export enum IdleStatus {
@@ -11,11 +10,9 @@ export enum IdleStatus {
 }
 
 export class IdleItemData {
-    status: IdleStatus;// 0-normal,1-equipped,2-forbidden
-    startTime:number;
-    duration:number;
-
+    id: string;
+    status: IdleStatus; // 0-normal,1-equipped,2-forbidden
+    startTime: number;
+    duration: number;
     type: IdleType;
-
-
 }

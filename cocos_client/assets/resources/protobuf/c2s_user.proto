@@ -342,6 +342,17 @@ message get_rank {
 }
 message get_rank_red_point { }
 
+// ------- idle task -------
+message get_idle_task_list { }
+message get_idle_task_red_point { }
+message dispatch_pioneer_to_idle_task { 
+    required string taskId = 1;
+    required string pioneerUnqueId = 2;
+}
+message get_idle_task_reward {
+    required string taskId = 1;
+}
+
 
 // ------ test ------
 message reborn_all { }

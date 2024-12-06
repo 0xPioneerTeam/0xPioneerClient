@@ -11,6 +11,7 @@ const { ccclass, property } = _decorator;
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { UIName, HUDName } from "../Const/ConstUIDefine";
 import { IdleDispatchUI } from "../UI/Dispatch/IdleDispatchUI";
+import { NetworkMgr } from "../Net/NetworkMgr";
 
 @ccclass("IdleItem")
 export class IdleItem extends Component {
@@ -146,12 +147,22 @@ export class IdleItem extends Component {
     }
 
     public async onTapStart() {
+        if (this._itemData == null) {
+            return;
+        }
         // select patch pioneer
         let actionType = null;
         let stayBuilding = null;
         let stayPioneer = null;
         let taregtPos = null;
         const result = await UIPanelManger.inst.pushPanel(UIName.IdleDispatchUI);
+
+        return;
+        // todo, dispatch after get pioneer unqueid
+        NetworkMgr.websocketMsg.dispatch_pioneer_to_idle_task({
+            taskId: this._itemData.id,
+            pioneerUnqueId: "",
+        });
         // if (result.success) {
         //     result.node
         //         .getComponent(DispatchUI)
@@ -169,6 +180,16 @@ export class IdleItem extends Component {
         //             }
         //         );
         // }
+    }
+
+    // todo, get reward button show
+    private _onTapGetReward() {
+        if (this._itemData == null) {
+            return;
+        }
+        NetworkMgr.websocketMsg.get_idle_task_reward({
+            taskId: this._itemData.id,
+        });
     }
 
     protected onLoad(): void {}

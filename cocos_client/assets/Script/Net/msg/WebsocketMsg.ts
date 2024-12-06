@@ -369,6 +369,20 @@ export class WebsocketMsg {
     public save_archives(d: c2s_user.Isave_archives) {
         this.send_packet("save_archives", d);
     }
+
+    //----------- idle task
+    public get_idle_task_red_point(d: c2s_user.Iget_idle_task_red_point) {
+        this.send_packet("get_idle_task_red_point", d);
+    }
+    public get_idle_task_list() {
+        this.send_packet("get_idle_task_list", {});
+    }
+    public dispatch_pioneer_to_idle_task(d: c2s_user.Idispatch_pioneer_to_idle_task) {
+        this.send_packet("dispatch_pioneer_to_idle_task", d);
+    }
+    public get_idle_task_reward(d: c2s_user.Iget_idle_task_reward) {
+        this.send_packet("get_idle_task_reward", d);
+    }
 }
 
 export const WebsocketEvent = {
@@ -660,6 +674,15 @@ export namespace c2s_user {
         rankType: number;
     }
     export interface Iget_rank_red_point {}
+
+    export interface Iget_idle_task_red_point {}
+    export interface Idispatch_pioneer_to_idle_task {
+        taskId: string;
+        pioneerUnqueId: string;
+    }
+    export interface Iget_idle_task_reward {
+        taskId: string;
+    }
 }
 
 export namespace s2c_user {
@@ -980,6 +1003,21 @@ export namespace s2c_user {
     export interface Iget_rank_red_point_res {
         res: number;
         num: number;
+    }
+
+    export interface Iget_idle_task_red_point_res {
+        res: number;
+        num: number;
+    }
+    export interface Iidle_task_red_point_change {
+        num: number;
+    }
+    export interface Iget_idle_task_list_res {
+        res: number;
+        tasks: share.Iidle_task_data[];
+    }
+    export interface Iidle_task_change {
+        tasks: share.Iidle_task_data[];
     }
 }
 
@@ -1447,5 +1485,20 @@ export namespace share {
         name: string;
         rank: number;
         score: number;
+    }
+
+    export interface Iidle_task_data {
+        id: string;
+        workingPioneerUnqueId: string;
+
+        /**
+         * 时间戳， 秒
+         */
+        startTime: number;
+
+        /**
+         * 0-idle 1-working 2-finish
+         */
+        status: number;
     }
 }
