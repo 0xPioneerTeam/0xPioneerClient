@@ -33,6 +33,7 @@ export enum UIName {
     NewEventBattleUI = "abresources/prefab/ui/event/NewEventBattleUI",
 
     DispatchUI = "abresources/prefab/ui/dispatch/DispatchUI",
+    IdleDispatchUI = "abresources/prefab/ui/dispatch/IdleDispatchUI",
     PlayerDispatchListUI = "abresources/prefab/ui/dispatch/PlayerDispatchListUI",
     PlayerDispatchDetailUI = "abresources/prefab/ui/dispatch/PlayerDispatchDetailUI",
     BattleReportDetailUI = "abresources/prefab/ui/BattleReportDetailUI",

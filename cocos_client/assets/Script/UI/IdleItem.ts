@@ -10,7 +10,7 @@ import { DataMgr } from "../Data/DataMgr";
 const { ccclass, property } = _decorator;
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { UIName, HUDName } from "../Const/ConstUIDefine";
-import { DispatchUI } from "../UI/Dispatch/DispatchUI";
+import { IdleDispatchUI } from "../UI/Dispatch/IdleDispatchUI";
 
 @ccclass("IdleItem")
 export class IdleItem extends Component {
@@ -151,7 +151,7 @@ export class IdleItem extends Component {
         let stayBuilding = null;
         let stayPioneer = null;
         let taregtPos = null;
-        const result = await UIPanelManger.inst.pushPanel(UIName.DispatchUI);
+        const result = await UIPanelManger.inst.pushPanel(UIName.IdleDispatchUI);
         // if (result.success) {
         //     result.node
         //         .getComponent(DispatchUI)
