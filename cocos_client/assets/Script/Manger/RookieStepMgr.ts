@@ -12,7 +12,7 @@ import { InnerBuildingControllerRe } from "../Game/Inner/InnerBuildingController
 import { NewBuildingUpgradeUI } from "../UI/Inner/NewBuildingUpgradeUI";
 import { InnerBuildingType, MapBuildingType } from "../Const/BuildingDefine";
 import { RecruitUI } from "../UI/Inner/RecruitUI";
-import { DispatchUI } from "../UI/Dispatch/UI";
+import { DispatchUI } from "../UI/Dispatch/DispatchUI";
 import { OuterTiledMapActionController } from "../Game/Outer/OuterTiledMapActionController";
 import { OuterBuildingController } from "../Game/Outer/OuterBuildingController";
 import { GameMgr } from "../Utils/Global";
