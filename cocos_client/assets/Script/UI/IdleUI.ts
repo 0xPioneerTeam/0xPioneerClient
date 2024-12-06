@@ -26,7 +26,7 @@ import { IdleItemData } from "../Const/IdleItem";
 import { NotificationName } from "../Const/Notification";
 import UIPanelManger from "../Basic/UIPanelMgr";
 import { DataMgr } from "../Data/DataMgr";
-import { BackpackArrangeType, BackpackCategoryType } from "../Const/ConstDefine";
+// import { BackpackArrangeType, BackpackCategoryType } from "../Const/ConstDefine";
 import GameMusicPlayMgr from "../Manger/GameMusicPlayMgr";
 // import { IdleItem } from "./IdleItem";
 import { IdleItem } from "./IdleItem";
@@ -140,6 +140,7 @@ export class IdleUI extends ViewController {
                 startTime: element.startTime,
                 status: element.status,
                 duration: config.duration * 60,
+                reward: config.reward
             });
         }
         this._refreshIdleUI();

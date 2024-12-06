@@ -64,6 +64,18 @@ export class IdleItem extends Component {
         if (this._itemData == null) {
             return;
         }
+
+        const rewardNodes = this.node.getChildByPath("bg/rewords");
+
+        this._itemData.reward.forEach(async (reward) => {
+            // const item = ItemMgr.getItem(reward[0]);
+            console.log("idle reward item:", item);
+            const costIcon = await ItemMgr.getItemIcon("icon_" + reward[0]);
+            rewardNodes.children[this._itemData.reward.indexOf(reward)].getChildByName("icon").getComponent(cc.Sprite).spriteFrame = costIcon;
+            rewardNodes.children[this._itemData.reward.indexOf(reward)].active = true;
+            rewardNodes.children[this._itemData.reward.indexOf(reward)].getChildByName("num").getComponent(cc.Label).string = reward[1].toString();
+        });
+
         console.log("idle duration:", this._itemData.duration);
         this.durationLabel.string = this.formatTimeLimit(this._itemData.duration);
         switch (this._itemData.type) {
@@ -88,6 +100,7 @@ export class IdleItem extends Component {
             case IdleStatus.Doing:
                 break;
             case IdleStatus.Finish:
+                this.progressBar.progress = 1;
                 this.node.getChildByPath("bg/Fight").active = false;
                 this.node.getChildByPath("bg/Collection").active = false;
                 this.node.getChildByPath("bg/Wait").active = false;
@@ -96,6 +109,8 @@ export class IdleItem extends Component {
                 this._current = 0;
                 break;
             case IdleStatus.Wait:
+                this.progressBar.progress = 0;
+                this.timeCount.string = this.formatTime(this._itemData.duration);
                 this.node.getChildByPath("bg/Fight").active = false;
                 this.node.getChildByPath("bg/Collection").active = false;
                 this.node.getChildByPath("bg/Wait").active = true;
@@ -152,17 +167,28 @@ export class IdleItem extends Component {
         }
         // select patch pioneer
         let actionType = null;
-        let stayBuilding = null;
-        let stayPioneer = null;
-        let taregtPos = null;
+        // let stayBuilding = null;
+        // let stayPioneer = null;
+        // let taregtPos = null;
         const result = await UIPanelManger.inst.pushPanel(UIName.IdleDispatchUI);
+        if (result.success) {
+            result.node.getComponent(IdleDispatchUI).configuration(this._itemData.type, async (confirmed: boolean, actionPioneerUnqueId: string) => {
+                console.log("dispatch:", actionPioneerUnqueId);
+                if (confirmed) {
+                    const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerUnqueId);
+                    // todo, dispatch after get pioneer unqueid
+                    NetworkMgr.websocketMsg.dispatch_pioneer_to_idle_task({
+                        taskId: this._itemData.id,
+                        pioneerUnqueId: actionPioneerUnqueId,
+                    });
+                    // this.refreshUI(this._itemData, false);
+                    return;
+                }
+            });
+        }
 
         return;
-        // todo, dispatch after get pioneer unqueid
-        NetworkMgr.websocketMsg.dispatch_pioneer_to_idle_task({
-            taskId: this._itemData.id,
-            pioneerUnqueId: "",
-        });
+
         // if (result.success) {
         //     result.node
         //         .getComponent(DispatchUI)

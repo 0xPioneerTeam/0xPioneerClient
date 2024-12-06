@@ -174,11 +174,11 @@ export class IdleDispatchUI extends ViewController implements CircularListDelega
         GameMusicPlayMgr.playTapButtonEffect();
         UIPanelManger.inst.pushPanel(UIName.PlayerDispatchListUI);
     }
-    private onReturnCheckToggle() {
-        this._isReturn = !this._isReturn;
-        localStorage.setItem("__interactReturn", this._isReturn.toString());
-        // this._returnSwitchButton.getChildByPath("Selected").active = this._isReturn;
-    }
+    // private onReturnCheckToggle() {
+    //     this._isReturn = !this._isReturn;
+    //     localStorage.setItem("__interactReturn", this._isReturn.toString());
+    //     // this._returnSwitchButton.getChildByPath("Selected").active = this._isReturn;
+    // }
     //----------------------------------------------- notification
     // private _onPioneerHpChange() {
     //     this._prepareData();
@@ -189,20 +189,20 @@ export class IdleDispatchUI extends ViewController implements CircularListDelega
     //     this._refreshUI();
     // }
 
-    private _onPlayerTroopToHpRes = (e: any) => {
-        const p: s2c_user.Iplayer_troop_to_hp_res = e.data;
-        if (p.res !== 1) {
-            return;
-        }
-        this._checkReplenishDispatchCondtion(p.pioneerId);
-    };
-    private _onPlayerPsycToEnergyRes = (e: any) => {
-        const p: s2c_user.Iplayer_psyc_to_energy_res = e.data;
-        if (p.res !== 1) {
-            return;
-        }
-        this._checkReplenishDispatchCondtion(p.pioneerId);
-    };
+    // private _onPlayerTroopToHpRes = (e: any) => {
+    //     const p: s2c_user.Iplayer_troop_to_hp_res = e.data;
+    //     if (p.res !== 1) {
+    //         return;
+    //     }
+    //     this._checkReplenishDispatchCondtion(p.pioneerId);
+    // };
+    // private _onPlayerPsycToEnergyRes = (e: any) => {
+    //     const p: s2c_user.Iplayer_psyc_to_energy_res = e.data;
+    //     if (p.res !== 1) {
+    //         return;
+    //     }
+    //     this._checkReplenishDispatchCondtion(p.pioneerId);
+    // };
 
     //------------------------------------------------ CircularListDelegate
     public circularListTotalNum(): number {
@@ -255,20 +255,20 @@ export class IdleDispatchUI extends ViewController implements CircularListDelega
         if (player == undefined) {
             return;
         }
-        const result = await GameMgr.checkMapCanInteractAndCalulcateMovePath(
-            player,
-            this._interactType,
-            this._interactBuilding,
-            this._interactPioneer,
-            this._targetPos
-        );
-        if (!result.enable) {
-            this._lastDisableItemIndex = index;
-            return;
-        }
+        // const result = await GameMgr.checkMapCanInteractAndCalulcateMovePath(
+        //     player,
+        //     this._interactType,
+        //     this._interactBuilding,
+        //     this._interactPioneer,
+        //     this._targetPos
+        // );
+        // if (!result.enable) {
+        //     this._lastDisableItemIndex = index;
+        //     return;
+        // }
         UIPanelManger.inst.popPanel(this.node);
         if (this._actionCallback != null) {
-            this._actionCallback(true, player.uniqueId, result.movePath, this._isReturn);
+            this._actionCallback(true, player.uniqueId);
         }
     }
 }

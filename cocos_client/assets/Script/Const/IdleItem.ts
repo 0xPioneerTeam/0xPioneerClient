@@ -15,4 +15,5 @@ export class IdleItemData {
     startTime: number;
     duration: number;
     type: IdleType;
+    reward: [[string, number]];
 }
