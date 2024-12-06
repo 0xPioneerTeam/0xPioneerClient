@@ -55,6 +55,7 @@ export enum MapPioneerActionType {
     eventing = "eventing",
     staying = "staying",
     maincityFighting = "maincityFighting",
+    idleTasking = "idleTasking",
 }
 
 export enum MapPioneerType {

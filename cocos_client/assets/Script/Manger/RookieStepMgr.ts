@@ -289,7 +289,8 @@ export default class RookieStepMgr {
                     if (
                         pioneer.actionType == MapPioneerActionType.moving ||
                         pioneer.actionType == MapPioneerActionType.fighting ||
-                        pioneer.actionType == MapPioneerActionType.mining
+                        pioneer.actionType == MapPioneerActionType.mining ||
+                        pioneer.actionType == MapPioneerActionType.idleTasking
                     ) {
                         isPioneerActioning = true;
                         break;
