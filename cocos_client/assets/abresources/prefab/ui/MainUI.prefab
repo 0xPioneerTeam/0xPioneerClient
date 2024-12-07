@@ -12276,7 +12276,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": -566.98,
-      "y": 165.35500000000002,
+      "y": 167,
       "z": 0
     },
     "_lrot": {
@@ -12440,7 +12440,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "spriteFrame",
+    "_name": "icon_Role",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -12728,7 +12728,7 @@
     "_target": null,
     "_left": 351.02,
     "_right": 0,
-    "_top": 325.645,
+    "_top": 324,
     "_bottom": 0,
     "_horizontalCenter": 0,
     "_verticalCenter": 0,
