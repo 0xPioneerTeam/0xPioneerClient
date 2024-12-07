@@ -80,7 +80,7 @@ export class IdleItem extends Component {
         this.node.getChildByPath("bg/cost").getChildByName("icon").getComponent(cc.Sprite).spriteFrame = costIcon;
         this.node.getChildByPath("bg/cost").getChildByName("num").getComponent(cc.Label).string = this._itemData.cost[1].toString();
 
-        console.log("idle duration:", this._itemData.duration);
+        // console.log("idle duration:", this._itemData.duration);
         this.durationLabel.string = this.formatTimeLimit(this._itemData.duration);
         switch (this._itemData.type) {
             case IdleType.Fight:
@@ -101,17 +101,6 @@ export class IdleItem extends Component {
                 break;
         }
         switch (this._itemData.status) {
-            case IdleStatus.Doing:
-                break;
-            case IdleStatus.Finish:
-                this.progressBar.progress = 1;
-                this.node.getChildByPath("bg/Fight").active = false;
-                this.node.getChildByPath("bg/Collection").active = false;
-                this.node.getChildByPath("bg/Wait").active = false;
-                this.node.getChildByPath("bg/Fin").active = true;
-                this.node.getChildByPath("bg/Fin/Ani").getComponent(cc.Animation).play();
-                this._current = 0;
-                break;
             case IdleStatus.Wait:
                 this.progressBar.progress = 0;
                 this.timeCount.string = this.formatTime(this._itemData.duration);
@@ -121,10 +110,24 @@ export class IdleItem extends Component {
                 this.node.getChildByPath("bg/Wait").getComponent(cc.Animation).play();
                 this.node.getChildByPath("bg/Fin").active = false;
                 this._current = 0;
+                this.node.getChildByPath("bg/IdleBtn/Label").getComponent(cc.Label).string = "Start";
+                break;
+            case IdleStatus.Doing:
+                this.node.getChildByPath("bg/IdleBtn/Label").getComponent(cc.Label).string = "Working";
+                break;
+            case IdleStatus.Finish:
+                this.progressBar.progress = 1;
+                this.node.getChildByPath("bg/Fight").active = false;
+                this.node.getChildByPath("bg/Collection").active = false;
+                this.node.getChildByPath("bg/Wait").active = false;
+                this.node.getChildByPath("bg/Fin").active = true;
+                this.node.getChildByPath("bg/Fin/Ani").getComponent(cc.Animation).play();
+                this._current = 0;
+                this.node.getChildByPath("bg/IdleBtn/Label").getComponent(cc.Label).string = "Finish";
                 break;
         }
         if (this._itemData.startTime) {
-            const currentTime = Date.now() / 1000; //milliseconds
+            const currentTime = Math.floor(Date.now() / 1000); //milliseconds
             this._endTime = this._itemData.startTime + this._itemData.duration;
             this._current = Math.min(currentTime - this._itemData.startTime, this._itemData.duration);
             this.progressBar.progress = this._current / this._itemData.duration;
@@ -139,13 +142,18 @@ export class IdleItem extends Component {
     }
 
     update(dt: number) {
-        if (this._itemData.status === IdleStatus.Doing && Date.now / 1000 < this._endTime) {
+        // console.log("idle id:", this._itemData.id);
+        // console.log("idle item current time:", this._current);
+        // console.log("idle item duration:", this._itemData.duration)
+        // console.log("endtime:", this._endTime);
+        if (this._itemData.status === IdleStatus.Doing && Date.now() / 1000 < this._endTime) {
             this._current += dt;
+
             if (this._current <= this._itemData.duration) {
                 this.progressBar.progress = this._current / this._itemData.duration;
 
                 const remainingTime = this._itemData.duration - (Date.now() / 1000 - this._itemData.startTime);
-
+                // console.log("idle item remaining time:", remainingTime);
                 // turn left time to string
                 // const totalSeconds = remainingTime;
                 // const hours = Math.floor(totalSeconds / 3600);
@@ -163,6 +171,10 @@ export class IdleItem extends Component {
                 this._current = 0;
             }
         }
+        else if (this._itemData.status === IdleStatus.Doing && Date.now() / 1000 >= this._endTime) {
+            // console.log("idle item end",Date.now() / 1000, this._endTime);
+            // this._itemData.status = 2;
+        }
     }
 
     public async onTapStart() {
@@ -170,46 +182,33 @@ export class IdleItem extends Component {
             return;
         }
         // select patch pioneer
-        let actionType = null;
+        // let actionType = null;
         // let stayBuilding = null;
         // let stayPioneer = null;
         // let taregtPos = null;
-        const result = await UIPanelManger.inst.pushPanel(UIName.IdleDispatchUI);
-        if (result.success) {
-            result.node.getComponent(IdleDispatchUI).configuration(this._itemData.type, async (confirmed: boolean, actionPioneerUnqueId: string) => {
-                console.log("dispatch:", actionPioneerUnqueId);
-                if (confirmed) {
-                    const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerUnqueId);
-                    // todo, dispatch after get pioneer unqueid
-                    NetworkMgr.websocketMsg.dispatch_pioneer_to_idle_task({
-                        taskId: this._itemData.id,
-                        pioneerUnqueId: actionPioneerUnqueId,
-                    });
-                    // this.refreshUI(this._itemData, false);
-                    return;
-                }
-            });
+        if (this._itemData.status === IdleStatus.Wait) {
+            const result = await UIPanelManger.inst.pushPanel(UIName.IdleDispatchUI);
+            if (result.success) {
+                result.node.getComponent(IdleDispatchUI).configuration(this._itemData.type, async (confirmed: boolean, actionPioneerUnqueId: string) => {
+                    console.log("dispatch:", actionPioneerUnqueId);
+                    if (confirmed) {
+                        const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerUnqueId);
+                        // todo, dispatch after get pioneer unqueid
+                        NetworkMgr.websocketMsg.dispatch_pioneer_to_idle_task({
+                            taskId: this._itemData.id,
+                            pioneerUnqueId: actionPioneerUnqueId,
+                        });
+                        // this.refreshUI(this._itemData, false);
+                        return;
+                    }
+                });
+            }
+        }
+        if (this._itemData.status === IdleStatus.Finish) {
+            this._onTapGetReward();
         }
 
         return;
-
-        // if (result.success) {
-        //     result.node
-        //         .getComponent(DispatchUI)
-        //         .configuration(
-        //             actionType,
-        //             stayBuilding,
-        //             stayPioneer,
-        //             taregtPos,
-        //             async (confirmed: boolean, actionPioneerUnqueId: string, movePaths: TilePos[], isReturn: boolean) => {
-        //                 const currentActionPioneer = DataMgr.s.pioneer.getById(actionPioneerUnqueId);
-        //                 if (confirmed && currentActionPioneer != undefined) {
-        //                     this._pioneerInteract(currentActionPioneer.uniqueId, actionType, movePaths, isReturn, stayBuilding, stayPioneer);
-        //                 }
-
-        //             }
-        //         );
-        // }
     }
 
     // todo, get reward button show

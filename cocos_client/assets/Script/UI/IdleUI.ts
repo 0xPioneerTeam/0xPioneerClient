@@ -128,6 +128,7 @@ export class IdleUI extends ViewController {
 
     private get_idle_task_list_res = (e: any) => {
         const p: s2c_user.Iget_idle_task_list_res = e.data;
+        console.log("get_idle_task_list_res: ", p);
         if (p.res !== 1) {
             return;
         }
@@ -144,6 +145,7 @@ export class IdleUI extends ViewController {
                 cost: config.cost,
             });
         }
+        console.log("this._data: ", this._data)
         this._refreshIdleUI();
     };
 

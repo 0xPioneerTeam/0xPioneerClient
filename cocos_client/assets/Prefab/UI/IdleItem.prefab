@@ -3391,7 +3391,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "btn_Page_Light_Small",
+    "_name": "IdleBtn",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -3510,7 +3510,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 134.3515625,
+      "width": 95.1328125,
       "height": 54.4
     },
     "_anchorPoint": {
@@ -3546,7 +3546,7 @@
       "b": 255,
       "a": 255
     },
-    "_string": "START",
+    "_string": "Start",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 40,
