@@ -87,7 +87,7 @@ export class IdleItem extends Component {
                 this.node.getChildByPath("bg/Fight").active = true;
                 this.node.getChildByPath("bg/Collection").active = false;
                 this.node.getChildByPath("bg/Fight/Ani").getComponent(cc.Animation).play();
-                this.type.string = "Fight";
+                this.type.string = "Conquer";
                 this.node.getChildByPath("bg/IdleType/Fight").active = true;
                 this.node.getChildByPath("bg/IdleType/Collection").active = false;
                 break;
@@ -95,7 +95,7 @@ export class IdleItem extends Component {
                 this.node.getChildByPath("bg/Fight").active = false;
                 this.node.getChildByPath("bg/Collection").active = true;
                 this.node.getChildByPath("bg/Collection/Ani").getComponent(cc.Animation).play();
-                this.type.string = "Collection";
+                this.type.string = "Explore";
                 this.node.getChildByPath("bg/IdleType/Fight").active = false;
                 this.node.getChildByPath("bg/IdleType/Collection").active = true;
                 break;
@@ -113,7 +113,7 @@ export class IdleItem extends Component {
                 this.node.getChildByPath("bg/IdleBtn/Label").getComponent(cc.Label).string = "Start";
                 break;
             case IdleStatus.Doing:
-                this.node.getChildByPath("bg/IdleBtn/Label").getComponent(cc.Label).string = "Working";
+                this.node.getChildByPath("bg/IdleBtn/Label").getComponent(cc.Label).string = "Doing";
                 break;
             case IdleStatus.Finish:
                 this.progressBar.progress = 1;
@@ -132,7 +132,7 @@ export class IdleItem extends Component {
             this._current = Math.min(currentTime - this._itemData.startTime, this._itemData.duration);
             this.progressBar.progress = this._current / this._itemData.duration;
             console.log("idle progress:", this.progressBar.progress);
-
+            console.log("idle item end", this._endTime);
             if (currentTime >= this._endTime) {
                 console.log("idle item end", this._endTime);
                 this._itemData.status = 1;
@@ -171,9 +171,9 @@ export class IdleItem extends Component {
                 this._current = 0;
             }
         }
-        else if (this._itemData.status === IdleStatus.Doing && Date.now() / 1000 >= this._endTime) {
-            // console.log("idle item end",Date.now() / 1000, this._endTime);
-            // this._itemData.status = 2;
+        else if (this._itemData.status === IdleStatus.Doing &&this._itemData.startTime&& Date.now() / 1000 >= this._itemData.startTime+this._itemData.duration) {
+            console.log("update idle item end", this._endTime);
+            this._itemData.status = 2;
         }
     }
 
@@ -221,7 +221,9 @@ export class IdleItem extends Component {
         });
     }
 
-    protected onLoad(): void {}
+    protected onLoad(): void {
+        this._endTime = this._itemData.startTime + this._itemData.duration;
+    }
 
     protected start(): void {
         // this.node.getChildByPath("/bg/Fight").active = true;
