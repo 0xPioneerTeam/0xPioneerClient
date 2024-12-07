@@ -225,6 +225,7 @@ export class IdleItem extends Component {
     protected onLoad(): void {}
 
     protected start(): void {
+        this.node.getChildByPath("/bg/Fight").active = true;
         this.node.getChildByPath("/bg/Fight").getComponent(cc.Animation).play(s);
         // NotificationMgr.addListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshRedPoint, this);
         // NotificationMgr.addListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshRedPoint, this);

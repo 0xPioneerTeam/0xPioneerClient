@@ -140,7 +140,8 @@ export class IdleUI extends ViewController {
                 startTime: element.startTime,
                 status: element.status,
                 duration: config.duration * 60,
-                reward: config.reward
+                reward: config.reward,
+                cost: config.cost,
             });
         }
         this._refreshIdleUI();
