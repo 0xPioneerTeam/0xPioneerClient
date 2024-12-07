@@ -16,4 +16,5 @@ export class IdleItemData {
     duration: number;
     type: IdleType;
     reward: [[string, number]];
+    cost: [string, number];
 }

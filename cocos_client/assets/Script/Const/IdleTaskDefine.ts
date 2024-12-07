@@ -5,4 +5,5 @@ export interface IdleTaskConfigData {
     description: string;
     duration: number;
     reward: [[string, number]];
+    cost: [string, number];
 }

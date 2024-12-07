@@ -76,6 +76,10 @@ export class IdleItem extends Component {
             rewardNodes.children[this._itemData.reward.indexOf(reward)].getChildByName("num").getComponent(cc.Label).string = reward[1].toString();
         });
 
+        const costIcon = await ItemMgr.getItemIcon("icon_" + this._itemData.cost[0]);
+        this.node.getChildByPath("bg/cost").getChildByName("icon").getComponent(cc.Sprite).spriteFrame = costIcon;
+        this.node.getChildByPath("bg/cost").getChildByName("num").getComponent(cc.Label).string = this._itemData.cost[1].toString();
+
         console.log("idle duration:", this._itemData.duration);
         this.durationLabel.string = this.formatTimeLimit(this._itemData.duration);
         switch (this._itemData.type) {
