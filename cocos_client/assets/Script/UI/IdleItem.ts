@@ -104,6 +104,7 @@ export class IdleItem extends Component {
             case IdleStatus.Wait:
                 this.progressBar.progress = 0;
                 this.timeCount.string = this.formatTime(this._itemData.duration);
+                this.node.getChildByPath("bg/status").getComponent(cc.Label).string = "Idle";
                 this.node.getChildByPath("bg/Fight").active = false;
                 this.node.getChildByPath("bg/Collection").active = false;
                 this.node.getChildByPath("bg/Wait").active = true;
@@ -113,9 +114,11 @@ export class IdleItem extends Component {
                 this.node.getChildByPath("bg/IdleBtn/Label").getComponent(cc.Label).string = "Start";
                 break;
             case IdleStatus.Doing:
+                this.node.getChildByPath("bg/status").getComponent(cc.Label).string = "Doing";
                 this.node.getChildByPath("bg/IdleBtn/Label").getComponent(cc.Label).string = "Doing";
                 break;
             case IdleStatus.Finish:
+                this.node.getChildByPath("bg/status").getComponent(cc.Label).string = "Finish";
                 this.progressBar.progress = 1;
                 this.node.getChildByPath("bg/Fight").active = false;
                 this.node.getChildByPath("bg/Collection").active = false;
