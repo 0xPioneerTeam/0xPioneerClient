@@ -155,7 +155,7 @@ export class IdleItem extends Component {
             if (this._current <= this._itemData.duration) {
                 this.progressBar.progress = this._current / this._itemData.duration;
 
-                const remainingTime = this._itemData.duration - (Date.now() / 1000 - this._itemData.startTime);
+                const remainingTime = Math.min((this._itemData.duration - (Date.now() / 1000 - this._itemData.startTime)),this._itemData.duration);
                 // console.log("idle item remaining time:", remainingTime);
                 // turn left time to string
                 // const totalSeconds = remainingTime;
