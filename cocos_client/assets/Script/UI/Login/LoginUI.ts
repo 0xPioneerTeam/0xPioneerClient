@@ -7,7 +7,7 @@ import { NotificationName } from "../../Const/Notification";
 import ChainConfig from "../../Config/ChainConfig";
 import CLog from "../../Utils/CLog";
 import { DataMgr } from "../../Data/DataMgr";
-import { NetworkMgr } from "../../Net/NetworkMgr";
+import { ChainType, NetworkMgr } from "../../Net/NetworkMgr";
 import { ConfigType, LoginWhiteListParam } from "../../Const/Config";
 import { AudioMgr } from "../../Utils/Global";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
@@ -16,6 +16,7 @@ import UIPanelManger from "../../Basic/UIPanelMgr";
 import { PlayerInfoUI } from "../PlayerInfoUI";
 import { CollectWalletUI } from "../CollectWallet/CollectWalletUI";
 import { c2s_user } from "../../Net/msg/WebsocketMsg";
+import { WalletType } from "../../Net/ethers/Ethereum";
 const { ccclass, property } = _decorator;
 
 @ccclass("LoginUI")
@@ -51,19 +52,21 @@ export class LoginUI extends ViewController {
     //--------------------------------------- action
     private async onTapStart() {
         GameMusicPlayMgr.playTapButtonEffect();
-        const lastLoginMethod = localStorage.getItem("lastLoginMethod");
-        if (lastLoginMethod != null) {
-            this._loginStart();
-            return;
-        }
-        const result = await UIPanelManger.inst.pushPanel(UIName.CollectWalletUI);
-        if (!result.success) {
-            return;
-        }
-        result.node.getComponent(CollectWalletUI).configuration((method: string) => {
-            this._loginStart();
-            localStorage.setItem("lastLoginMethod", method);
-        });
+        this._loginStart();
+
+        // const lastLoginMethod = localStorage.getItem("lastLoginMethod");
+        // if (lastLoginMethod != null) {
+        //     this._loginStart();
+        //     return;
+        // }
+        // const result = await UIPanelManger.inst.pushPanel(UIName.CollectWalletUI);
+        // if (!result.success) {
+        //     return;
+        // }
+        // result.node.getComponent(CollectWalletUI).configuration((method: string) => {
+        //     this._loginStart();
+        //     localStorage.setItem("lastLoginMethod", method);
+        // });
     }
     private onTapStart_chain() {
         // let d: c2s_user.Ilogin = { name: "", uid: "6", token: "666e730d1aac4ba8e77fa99d8ebc00e9-1726042349182-6" };
@@ -73,7 +76,10 @@ export class LoginUI extends ViewController {
             CLog.warn("LoginUI: game init failed");
             return;
         }
-        NetworkMgr.ethereum.init();
+
+        const chainConf = ChainConfig.getCurrentChainConfig();
+        const chainType = chainConf.chainType == ChainType.aptos ? ChainType.aptos : ChainType.ethereum;
+        NetworkMgr.walletInit(chainType);
     }
 
     private async onTapLogin() {

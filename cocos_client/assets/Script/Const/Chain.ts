@@ -7,6 +7,7 @@ export interface ChainConfigData {
 
 export interface ChainConfigsConfigData {
     chainId: string;
+    chainType?: string;
     chainName: string;
     nativeCurrency: {
         name: string;

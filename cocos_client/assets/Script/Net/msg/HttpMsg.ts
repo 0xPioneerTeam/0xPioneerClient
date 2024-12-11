@@ -32,8 +32,8 @@ export class HttpMsg {
         return await this._http.connecter.post(url, data);
     }
 
-    public async verify(walletaddr: string, signmsg: string, chainid: string, signature: string, walletType: string): Promise<any> {
-        let r = await this.http_post("/verify", { walletaddr, signmsg, chainid, signature, walletType });
+    public async verify(walletaddr: string, signmsg: string, chainid: string, signature: string, walletType: string, chainType: string, publickey: string, fullMessage: string): Promise<any> {
+        let r = await this.http_post("/verify", { walletaddr, signmsg, chainid, signature, walletType, chainType, publickey, fullMessage });
         return r;
     }
 

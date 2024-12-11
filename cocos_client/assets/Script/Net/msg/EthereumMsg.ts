@@ -1,5 +1,5 @@
 import { Ethereum, ZeroAddress, tokenNameETH } from "../ethers/Ethereum";
-import { chain_util } from "../ethers/chain_util";
+import { chain_util } from "./chain_util";
 
 export class EthereumMsg {
     private _ethereum: Ethereum;

@@ -18,6 +18,7 @@ import { c2s_user, s2c_user } from "./Net/msg/WebsocketMsg";
 import { BundleName } from "./Basic/ResourcesMgr";
 import { GuideMgr } from "./UI/guide/GuideMgr";
 import RookieStepMgr from "./Manger/RookieStepMgr";
+import { AptosEventData_init, AptosEventType } from "./Net/aptos/aptos";
 
 const { ccclass, property } = _decorator;
 
@@ -166,6 +167,8 @@ export class Main extends ViewController {
         NetworkMgr.ethereum.on(EthereumEventType.accountChanged, this.accountChanged_res);
         NetworkMgr.ethereum.on(EthereumEventType.chainChanged, this.chainChanged_res);
         NetworkMgr.ethereum.on(EthereumEventType.init, this.init_res);
+        // --- aptos
+        NetworkMgr.aptos.on(AptosEventType.init, this.aptos_init_res);
         // --- websocket connection
         NetworkMgr.websocket.on("disconnected", this.disconnected);
         NetworkMgr.websocket.on("connected", this.connected);
@@ -279,6 +282,18 @@ export class Main extends ViewController {
             CLog.error("Main/disconnected: retry connecting failed");
         }
     };
+
+    private aptos_init_res = async (e: any) => {
+        let d: AptosEventData_init = e.data;
+        if (d.res === 0) {
+            CLog.debug("aptos_init_res", d);
+            let r = await NetworkMgr.LoginServer(d.account, d.walletType);
+            if (r?.token) {
+                DataMgr.r.wallet.type = d.walletType;
+                DataMgr.r.loginInfo = r;
+            }
+        }
+    }
 
     private init_res = async (e: any) => {
         let d: EthereumEventData_init = e.data;

@@ -1,5 +1,5 @@
 import { EventEmitter } from "../../natrium/util/event_emmiter";
-import { chain_util } from "./chain_util";
+import { chain_util } from "../msg/chain_util";
 
 import CLog from "../../Utils/CLog";
 import ChainConfig from "../../Config/ChainConfig";
@@ -17,6 +17,7 @@ export const enum WalletType {
     metamask = "metamask",
     bitizen = "bitizen",
     tokenpocket = "tokenpocket",
+    aptos = "aptos",
 }
 
 export const enum EthereumEventType {

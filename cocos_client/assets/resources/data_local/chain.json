@@ -1,5 +1,5 @@
 {
-    "currentConfigId": "dev",
+    "currentConfigId": "aptosdev",
     "configs": {
         "PROD": {
             "chainId": "534351",
@@ -107,6 +107,52 @@
             "api": {
                 "ws_host": "ws://16.163.109.112:5091",
                 "http_host": "http://16.163.109.112:9080",
+                "init": true,
+                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            }
+        },
+        "aptosdev": {
+            "chainId": "1",
+            "chainType": "aptos",
+            "chainName": "movement",
+            "nativeCurrency": {
+                "name": "",
+                "symbol": "",
+                "decimals": 18
+            },
+            "rpcUrls": [
+                "https://sepolia-rpc.scroll.io"
+            ],
+            "blockExplorerUrls": [
+                "https://sepolia.scrollscan.com"
+            ],
+            "abi": "deployresult_scrollTestnet",
+            "api": {
+                "ws_host": "wss://apimv.0xpioneerdev.com/wss",
+                "http_host": "https://apimv.0xpioneerdev.com/api",
+                "init": true,
+                "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
+            }
+        },
+        "aptosdev_local": {
+            "chainId": "1",
+            "chainType": "aptos",
+            "chainName": "movement",
+            "nativeCurrency": {
+                "name": "",
+                "symbol": "",
+                "decimals": 18
+            },
+            "rpcUrls": [
+                "https://sepolia-rpc.scroll.io"
+            ],
+            "blockExplorerUrls": [
+                "https://sepolia.scrollscan.com"
+            ],
+            "abi": "deployresult_scrollTestnet",
+            "api": {
+                "ws_host": "ws://127.0.0.1:4091",
+                "http_host": "http://127.0.0.1:8080",
                 "init": true,
                 "fee_psyc": "0xD7AeFD4E76Cd20955cce13f062DF51df96BdADcf"
             }
