@@ -1,0 +1,27 @@
+{
+  "1": {
+    "id": "1",
+    "threshold": 4,
+    "benefit": 5
+  },
+  "2": {
+    "id": "2",
+    "threshold": 8,
+    "benefit": 10
+  },
+  "3": {
+    "id": "3",
+    "threshold": 12,
+    "benefit": 20
+  },
+  "4": {
+    "id": "4",
+    "threshold": 16,
+    "benefit": 30
+  },
+  "5": {
+    "id": "5",
+    "threshold": 22,
+    "benefit": 50
+  }
+}
