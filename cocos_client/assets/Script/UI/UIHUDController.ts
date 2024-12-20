@@ -62,9 +62,9 @@ export class UIHUDController extends ViewController {
         NotificationMgr.removeListener(NotificationName.GAME_SHOW_RESOURCE_TYPE_TIP, this._onUseResourceGettedViewShowTip, this);
     }
 
-    private _showResouceGettedView(tips: (ItemData | string)[]) {
+    private _showResouceGettedView(tips: (ItemData | string)[], src: string = null) {
         if (this._resourceGettedView != null) {
-            this._resourceGettedView.showTip(tips);
+            this._resourceGettedView.showTip(tips, src);
         }
     }
     //---------------------------------- notifiaction
@@ -72,8 +72,8 @@ export class UIHUDController extends ViewController {
         // UIPanelManger.inst.pushPanel(HUDName.NetAlterView, UIPanelLayerType.ROOKIE);
     }
 
-    private async _resourceGetted(data: { item: ItemData }) {
-        this._showResouceGettedView([data.item]);
+    private async _resourceGetted(data: { item: ItemData, src: string }) {
+        this._showResouceGettedView([data.item], data.src);
     }
 
     private _innerBuildingUpgradeFinished(buildingType: InnerBuildingType) {

@@ -141,7 +141,7 @@ export class TreasureGettedUI extends ViewController {
                     //     } as RookieResourceAnimStruct);
                     // } else {
                         for (const item of items) {
-                            DataMgr.s.item.countChanged(item);
+                            DataMgr.s.item.countChanged(item, "worldbox_open");
                         }
                         for (const artifact of artifacts) {
                             DataMgr.s.artifact.countChanged(artifact);

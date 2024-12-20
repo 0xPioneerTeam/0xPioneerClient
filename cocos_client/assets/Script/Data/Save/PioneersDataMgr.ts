@@ -100,6 +100,7 @@ export class PioneersDataMgr {
             killerId: "",
             NFTId: "",
             rebornTime: 0,
+            NFTInitLinkId: null,
             troopId: "0",
         };
         return obj;
@@ -140,6 +141,8 @@ export class PioneersDataMgr {
             NFTId: "",
             rebornTime: 0,
             troopId: "0",
+
+            NFTInitLinkId: null
         };
         return obj;
     }

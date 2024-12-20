@@ -195,6 +195,7 @@ export interface MapPlayerPioneerData extends MapPioneerData {
     NFTId: string;
     troopId: string;
     needReturn?: boolean;
+    NFTInitLinkId?: string;
 }
 
 export interface MapPioneerObject extends MapPioneerData {
@@ -269,6 +270,7 @@ export default class PioneerDefine {
                 rebirthEndTime: currentTime + (temple.rebirthEndTime - temple.rebirthStartTime) * 1000,
                 killerId: temple.killerId,
                 troopId: temple.troopId,
+                NFTInitLinkId: temple.NFTInitLinkId,
             };
             return playerObj;
         } else {
