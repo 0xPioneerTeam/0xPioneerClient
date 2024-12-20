@@ -18,6 +18,7 @@ import LvlupConfig from "../Config/LvlupConfig";
 import MissionConfig from "../Config/MissionConfig";
 import NewEventConfig from "../Config/NewEventConfig";
 import NewSubEventConfig from "../Config/NewSubEventConfig";
+import NFTHandBookConfig from "../Config/NFTHandBookConfig";
 import NFTPioneerConfig from "../Config/NFTPioneerConfig";
 import NFTPioneerNameConfig from "../Config/NFTPioneerNameConfig";
 import NFTSkillConfig from "../Config/NFTSkillConfig";
@@ -52,6 +53,7 @@ export default class ConfigMgr {
         if (!(await LvlupConfig.init())) return false;
         if (!(await PioneerLvlupConfig.init())) return false;
         if (!(await NFTPioneerConfig.init())) return false;
+        if (!(await NFTHandBookConfig.init())) return false;
         if (!(await NFTPioneerNameConfig.init())) return false;
         if (!(await NFTSkillConfig.init())) return false;
         if (!(await NFTSkillEffectConfig.init())) return false;

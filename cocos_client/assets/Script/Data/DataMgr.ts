@@ -224,15 +224,15 @@ export class DataMgr {
     //------------------------------------- item
     public static storhouse_change = async (e: any) => {
         const p: s2c_user.Istorhouse_change = e.data;
-        this._resourceRefresh(p.iteminfo);
+        this._resourceRefresh(p.iteminfo, p.src);
     };
 
-    private static async _resourceRefresh(iteminfo: ItemData[]) {
+    private static async _resourceRefresh(iteminfo: ItemData[], src: string = null) {
         const nonResourceGettedItems = [];
         for (const item of iteminfo) {
             const change = new ItemData(item.itemConfigId, item.count);
             change.addTimeStamp = item.addTimeStamp;
-            DataMgr.s.item.countChanged(change);
+            DataMgr.s.item.countChanged(change, src);
 
             if (item.count > 0) {
                 const config = ItemConfig.getById(item.itemConfigId);

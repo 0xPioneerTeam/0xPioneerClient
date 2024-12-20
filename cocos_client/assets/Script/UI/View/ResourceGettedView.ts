@@ -1,7 +1,7 @@
 import { _decorator, Component, Details, instantiate, Label, Layout, Node, Tween, tween, UIOpacity, v3 } from "cc";
 import ViewController from "../../BasicView/ViewController";
 import { ResourceCorrespondingItem } from "../../Const/ConstDefine";
-import { ItemMgr, LanMgr } from "../../Utils/Global";
+import { GameMgr, ItemMgr, LanMgr } from "../../Utils/Global";
 import ItemConfig from "../../Config/ItemConfig";
 import ItemData from "../../Const/Item";
 import { UserInnerBuildInfo } from "../../Const/BuildingDefine";
@@ -12,7 +12,7 @@ const { ccclass, property } = _decorator;
 @ccclass("ResourceGettedView")
 export class ResourceGettedView extends ViewController {
     //--------------------------------- public
-    public showTip(items: (ItemData | string)[]) {
+    public showTip(items: (ItemData | string)[], src: string = null) {
         for (const item of items) {
             const itemView = instantiate(this._showItem);
             if (item instanceof ItemData) {
@@ -32,6 +32,13 @@ export class ResourceGettedView extends ViewController {
                 itemView.getChildByPath("IconTip/Icon/8008").active = item.itemConfigId == ResourceCorrespondingItem.NFTRankExp;
                 itemView.getChildByPath("IconTip/Name").getComponent(Label).string = LanMgr.getLanById(config.itemName);
                 itemView.getChildByPath("IconTip/Num").getComponent(Label).string = "+" + item.count;
+
+                if (src == "worldbox_open" || src == "worldbox_open_select") {
+                    const rate = GameMgr.getIllustrationEffectValue();
+                    if (rate > 0) {
+                        itemView.getChildByPath("IconTip/Num").getComponent(Label).string += `(+${rate * 100}%)`;
+                    }
+                }
             } else if (!!(item as string)) {
                 itemView.getChildByPath("IconTip").active = false;
                 itemView.getChildByPath("TextTip").active = true;

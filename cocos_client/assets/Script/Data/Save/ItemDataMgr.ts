@@ -63,7 +63,7 @@ export class ItemDataMgr {
     }
 
     //--------------------------------------------------
-    public countChanged(change: ItemData): void {
+    public countChanged(change: ItemData, src: string = null): void {
         if (change.count == 0) {
             return;
         }
@@ -115,7 +115,7 @@ export class ItemDataMgr {
         }
         if (change.count > 0) {
             if (config.itemType == ItemType.Resource) {
-                NotificationMgr.triggerEvent(NotificationName.RESOURCE_GETTED, { item: change });
+                NotificationMgr.triggerEvent(NotificationName.RESOURCE_GETTED, { item: change, src: src });
             }
         } else if (change.count < 0) {
             if (config.itemType == ItemType.Resource) {
