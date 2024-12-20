@@ -369,6 +369,7 @@ message player_item_use_res {
 // item: notify
 message storhouse_change {
     repeated share.item_data iteminfo = 1;
+    optional string src = 2;
 }
 
 

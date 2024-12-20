@@ -27,6 +27,8 @@ import PioneerLvlupConfig from "../Config/PioneerLvlupConfig";
 import { ReplenishTroopsView } from "../UI/View/ReplenishTroopsView";
 import { OuterShadowController } from "../Game/Outer/OuterShadowController";
 import { ReplenishEnergyView } from "../UI/View/ReplenishEnergyView";
+import NFTPioneerConfig from "../Config/NFTPioneerConfig";
+import NFTHandBookConfig from "../Config/NFTHandBookConfig";
 
 export interface MapCityInfo {
     templeConfigId: string;
@@ -707,6 +709,41 @@ export default class GameMgr {
         }
         return true;
     }
+
+    //#region nftIllustration begin
+    public getIllustrationEffectValue(): number {
+        const nftConfigs = NFTPioneerConfig.getAll();
+        const ownedNft = DataMgr.s.pioneer.getAllSelfPlayers();
+        let ownedNum: number = 0;
+        for (const key in nftConfigs) {
+            if (Object.prototype.hasOwnProperty.call(nftConfigs, key)) {
+                const element = nftConfigs[key];
+                let owned = false;
+                for (const ownedElement of ownedNft) {
+                    if (ownedElement.NFTInitLinkId == element.id) {
+                        owned = true;
+                        break;
+                    }
+                }
+                if (owned) {
+                    ownedNum += 1;
+                }
+            }
+        }
+        let value: number = 0;
+        const handBookConfigs = NFTHandBookConfig.getAll();
+        for (const key in handBookConfigs) {
+            if (Object.prototype.hasOwnProperty.call(handBookConfigs, key)) {
+                const element = handBookConfigs[key];
+                if (ownedNum >= element.threshold) {
+                    value = element.benefit / 100;
+                }
+            }
+        }
+        return value;
+    }
+
+    //#region nftIllustration end
 
     public constructor() {
         this._showRedPoint = true;

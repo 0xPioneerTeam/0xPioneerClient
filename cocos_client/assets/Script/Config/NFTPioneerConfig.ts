@@ -32,4 +32,8 @@ export default class NFTPioneerConfig {
         }
         return null;
     }
+
+    public static getAll() {
+        return this._confs;
+    }
 }

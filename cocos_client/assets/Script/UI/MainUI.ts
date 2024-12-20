@@ -236,6 +236,7 @@ export class MainUI extends ViewController {
         const rewardView = this.node.getChildByPath("CommonContent/HeatTreasureUI");
         const taskTrackView = this.node.getChildByPath("CommonContent/TaskTrackingUI");
         const idleTaskButton = this.node.getChildByPath("CommonContent/IdleTaskButton");
+        const illustrationButton = this.node.getChildByPath("CommonContent/NFTIllustrationButton");
 
         taskButton.active = false;
         backpackButton.active = false;
@@ -249,6 +250,7 @@ export class MainUI extends ViewController {
         pioneerListView.active = false;
         innerOuterChangeButton.active = false;
         idleTaskButton.active = false
+        illustrationButton.active = false;
         innerBuildButton.active = false;
 
         rewardView.active = true;
@@ -259,6 +261,7 @@ export class MainUI extends ViewController {
         const rookieStep: RookieStep = DataMgr.s.userInfo.data.rookieStep;
         if (rookieStep >= RookieStep.FINISH) {
             idleTaskButton.active = true;
+            illustrationButton.active = true;
             taskButton.active = true;
             backpackButton.active = true;
             reinforceButton.active = true;
@@ -398,6 +401,11 @@ export class MainUI extends ViewController {
             return;
         }
         await result.node.getComponent(IdleUI).refreshUI();
+    }
+
+    private async onTapNFTIllustration() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        UIPanelManger.inst.pushPanel(UIName.NFIllustrationUI);
     }
 
     private async onTapNFT() {

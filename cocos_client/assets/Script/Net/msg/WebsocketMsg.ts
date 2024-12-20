@@ -732,6 +732,7 @@ export namespace s2c_user {
     }
     export interface Istorhouse_change {
         iteminfo: share.Iitem_data[];
+        src?: string;
     }
     export interface Iartifact_change {
         iteminfo: share.Iartifact_info_data[];
@@ -1229,6 +1230,8 @@ export namespace share {
         rebornTime?: number;
 
         troopId?: string;
+
+        NFTInitLinkId?: string;
     }
 
     export interface Infts_data {

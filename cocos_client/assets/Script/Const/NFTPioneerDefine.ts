@@ -8,6 +8,7 @@ export interface NFTPioneerConfigData {
     property: number[][];
     growth: number[][];
     skill: string[];
+    skin: string;
 }
 
 export interface NFTPioneerNameConfigData {
@@ -67,4 +68,22 @@ export interface NFTPioneerObject {
     workingBuildingId: InnerBuildingType;
 
     addTimeStamp: number;
+}
+
+export interface NFTHandBookConfigData {
+    id: string;
+    threshold: number;
+    benefit: number;
+}
+
+export interface NFTIllustrationItemObject {
+    id: string;
+    name: string;
+    skin: string;
+    owned: boolean;
+}
+export interface NFTIllustrationBuffItemObject {
+    needNum: number;
+    benefit: number;
+    effect: boolean;
 }
