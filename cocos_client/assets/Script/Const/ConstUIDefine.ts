@@ -11,6 +11,9 @@ export enum UIName {
     TaskListUI = "abresources/prefab/ui/TaskListUI",
     IdleUI = "abresources/prefab/ui/IdleUI",
     NFIllustrationUI = "abresources/prefab/ui/nft_illustration/NFIllustrationUI",
+    WarOrderUI = "abresources/prefab/ui/war_order/WarOrderUI",
+
+    WarOrderTaskUI ="abresources/prefab/ui/war_order/WarOrderTaskUI",
     CivilizationLevelUpUI = "abresources/prefab/ui/CivilizationLevelUpUI",
     PlayerInfoUI = "abresources/prefab/ui/PlayerInfoUI",
     NewSettlementUI = "abresources/prefab/ui/NewSettlementUI",

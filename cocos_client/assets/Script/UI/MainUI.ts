@@ -408,6 +408,11 @@ export class MainUI extends ViewController {
         UIPanelManger.inst.pushPanel(UIName.NFIllustrationUI);
     }
 
+    private async onTapWarOrder() {
+        GameMusicPlayMgr.playTapButtonEffect();
+        UIPanelManger.inst.pushPanel(UIName.WarOrderUI);
+    }
+
     private async onTapNFT() {
         GameMusicPlayMgr.playTapButtonEffect();
         const result = await UIPanelManger.inst.pushPanel(UIName.NFTBackpackUI);
