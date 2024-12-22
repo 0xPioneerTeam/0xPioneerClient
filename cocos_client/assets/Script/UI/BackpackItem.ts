@@ -1,15 +1,15 @@
-import { _decorator, Component, Sprite, SpriteFrame, Node } from 'cc';
+import { _decorator, Component, Sprite, SpriteFrame, Node } from "cc";
 import * as cc from "cc";
-import { ItemMgr } from '../Utils/Global';
-import ItemConfig from '../Config/ItemConfig';
-import ItemData from '../Const/Item';
-import NotificationMgr from '../Basic/NotificationMgr';
-import { NotificationName } from '../Const/Notification';
-import { RedPointView } from './View/RedPointView';
-import { DataMgr } from '../Data/DataMgr';
+import { ItemMgr } from "../Utils/Global";
+import ItemConfig from "../Config/ItemConfig";
+import ItemData from "../Const/Item";
+import NotificationMgr from "../Basic/NotificationMgr";
+import { NotificationName } from "../Const/Notification";
+import { RedPointView } from "./View/RedPointView";
+import { DataMgr } from "../Data/DataMgr";
 const { ccclass, property } = _decorator;
 
-@ccclass('BackpackItem')
+@ccclass("BackpackItem")
 export class BackpackItem extends Component {
     private _itemData: ItemData = null;
     private _showRedPoint: boolean = false;
@@ -37,8 +37,7 @@ export class BackpackItem extends Component {
         }
     }
 
-    protected onLoad(): void {
-    }
+    protected onLoad(): void {}
 
     protected start(): void {
         NotificationMgr.addListener(NotificationName.BACKPACK_GET_NEW_ITEM, this._refreshRedPoint, this);
@@ -50,8 +49,23 @@ export class BackpackItem extends Component {
         NotificationMgr.removeListener(NotificationName.BACKPACK_READ_NEW_ITEM, this._refreshRedPoint, this);
     }
 
-
     private _refreshRedPoint() {
         this.refreshUI(this._itemData, this._showRedPoint);
+    }
+
+    private grayColor() {
+        const propView = this.node.getChildByPath("Prop");
+        for (let i = 1; i <= 5; i++) {
+            propView.getChildByPath("Level" + i).getComponent(cc.Sprite).color = new cc.Color(63, 63, 63,255);
+        }
+        propView.getChildByPath("Icon").getComponent(cc.Sprite).color = new cc.Color(63, 63, 63,255);
+    }
+
+    private normalColor() {
+        const propView = this.node.getChildByPath("Prop");
+        for (let i = 1; i <= 5; i++) {
+            propView.getChildByPath("Level" + i).getComponent(cc.Sprite).color = cc.Color.WHITE;
+        }
+        propView.getChildByPath("Icon").getComponent(cc.Sprite).color = cc.Color.WHITE;
     }
 }

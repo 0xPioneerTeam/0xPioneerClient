@@ -1,16 +1,8 @@
 import { _decorator, Button, Color, instantiate, Label, Layout, Node, ProgressBar, RichText, Sprite, SpriteFrame, UITransform, v3 } from "cc";
 import ViewController from "../../BasicView/ViewController";
-import { ArtifactMgr, ItemMgr, LanMgr } from "../../Utils/Global";
-import { DataMgr } from "../../Data/DataMgr";
-import ItemConfig from "../../Config/ItemConfig";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import UIPanelManger from "../../Basic/UIPanelMgr";
 import { UIName } from "../../Const/ConstUIDefine";
-import { ItemConfigType } from "../../Const/Item";
-import ArtifactConfig from "../../Config/ArtifactConfig";
-import ConfigConfig from "../../Config/ConfigConfig";
-import { ConfigType, WorldBoxThresholdParam, WorldTreasureBoxRarityShowNameParam } from "../../Const/Config";
-import { InnerBuildingType } from "../../Const/BuildingDefine";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import { NetworkMgr } from "../../Net/NetworkMgr";
@@ -65,6 +57,10 @@ export class WarOrderUI extends ViewController {
     }
 
     private async _refreshUI() {
+        //TODO: set level and lefttime and progress
+        this.time.string = "20:00";
+        this.level.string = "20";
+        this.node.getChildByPath("Content/TopView/ProgressBar").getComponent(ProgressBar).progress = 0.2;
         this.rewardContent.removeAllChildren();
         for (let i = 0; i < this._orderList.length; i++) {
             const item = instantiate(this.rewardItem)
@@ -80,6 +76,7 @@ export class WarOrderUI extends ViewController {
 
     private onTapClaim() {
         GameMusicPlayMgr.playTapButtonEffect();
+        //TODO: claim reward
     }
 
     private onTapTask() {

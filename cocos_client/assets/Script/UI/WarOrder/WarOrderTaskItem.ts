@@ -63,6 +63,7 @@ export class WarOrderTaskItem extends Component {
                 break;
             case 1:
                 GameMusicPlayMgr.playTapButtonEffect();
+                //TODO: claim task exp
                 break;
         }
     }

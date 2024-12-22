@@ -70,7 +70,5 @@ export class WarOrderTaskUI extends ViewController {
         UIPanelManger.inst.popPanel(this.node);
     }
 
-    private onTapClaim() {
-        GameMusicPlayMgr.playTapButtonEffect();
-    }
+
 }

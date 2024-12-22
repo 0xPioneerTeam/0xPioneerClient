@@ -32,6 +32,7 @@ export class WarOrderItem extends Component {
             this.premiumReward.active = true;
             this.premiumReward.getComponent(UIOpacity).opacity = 255;
             this.premiumReward.getComponent(BackpackItem).refreshUI(new ItemData(data.highrward[0],data.highrward[1]));
+            this.premiumReward.getComponent(BackpackItem).grayColor();
         }
         else{
             this.premiumReward.active = true;
