@@ -14,38 +14,29 @@ import { InnerBuildingType } from "../../Const/BuildingDefine";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import { NetworkMgr } from "../../Net/NetworkMgr";
+import { WarOrderTaskConfigData } from "../../Const/WarOrderDefine";
+import WarOrderTaskConfig from "../../Config/WarOrderTaskConfig";
+import {WarOrderTaskItem} from "./WarOrderTaskItem";
 const { ccclass, property } = _decorator;
 
 @ccclass("WarOrderTaskUI")
 export class WarOrderTaskUI extends ViewController {
-    @property(cc.Label)
-    private taskType: Label = null;
-
-    @property(cc.Label)
-    private desc: Label = null;
-    @property(cc.Label)
-    private exp: Label = null;
-    @property(cc.Label)
-    private progress: Label = null;
-    @property(cc.Button)
-    private confirmButton: Button = null;
-
-    @property(cc.Sprite)
-    private finish: Sprite = null;
-
     @property(cc.Node)
     private taskContent: Node = null;
 
     @property(cc.Node)
     private taskItem: Node = null;
+
+    private _taskList: WarOrderTaskConfigData[] = [];
     protected viewDidLoad(): void {
         super.viewDidLoad();
-
+        this._taskList = WarOrderTaskConfig.getAll();
         this._refreshUI();
     }
 
     protected viewDidStart(): void {
         super.viewDidStart();
+
     }
 
     protected viewPopAnimation(): boolean {
@@ -65,8 +56,12 @@ export class WarOrderTaskUI extends ViewController {
     }
 
     private async _refreshUI() {
-        for (let i = 0; i < 5; i++) {
-            this.taskContent.addChild(instantiate(this.taskItem));
+        this.taskContent.removeAllChildren();
+        for (let i = 0; i < this._taskList.length; i++) {
+            const task = { ...this._taskList[i], finish: 1 };
+            const taskItemInst = instantiate(this.taskItem);
+            this.taskContent.addChild(taskItemInst);
+            taskItemInst.getComponent(WarOrderTaskItem).refreshUI(task);
         }
     }
     private async onTapClose() {
@@ -77,8 +72,5 @@ export class WarOrderTaskUI extends ViewController {
 
     private onTapClaim() {
         GameMusicPlayMgr.playTapButtonEffect();
-
     }
-
-
 }

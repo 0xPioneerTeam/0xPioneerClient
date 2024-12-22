@@ -32,7 +32,8 @@ import TaskConfig from "../Config/TaskConfig";
 import TaskStepConfigData from "../Config/TaskStepConfig";
 import TroopsConfig from "../Config/TroopsConfig";
 import WorldBoxConfig from "../Config/WorldBoxConfig";
-
+import WarOrderConfig from "../Config/WarOrderConfig";
+import WarOrderTaskConfig from "../Config/WarOrderTaskConfig";
 export default class ConfigMgr {
     public static async init(): Promise<boolean> {
         if (!(await ArtifactConfig.init())) return false;
@@ -67,6 +68,8 @@ export default class ConfigMgr {
         if (!(await BigMapConfig.init())) return false;
         if (!(await RankRewardConfig.init())) return false;
         if (!(await IdleTaskConfig.init())) return false;
+        if (!(await WarOrderConfig.init())) return false;
+        if (!(await WarOrderTaskConfig.init())) return false;
 
         // abi
         const chainIdConfig = ChainConfig.getCurrentConfigId();

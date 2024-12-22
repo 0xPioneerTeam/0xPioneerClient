@@ -5,7 +5,7 @@ import { DataMgr } from "../../Data/DataMgr";
 import ItemConfig from "../../Config/ItemConfig";
 import GameMusicPlayMgr from "../../Manger/GameMusicPlayMgr";
 import UIPanelManger from "../../Basic/UIPanelMgr";
-import {  UIName } from "../../Const/ConstUIDefine";
+import { UIName } from "../../Const/ConstUIDefine";
 import { ItemConfigType } from "../../Const/Item";
 import ArtifactConfig from "../../Config/ArtifactConfig";
 import ConfigConfig from "../../Config/ConfigConfig";
@@ -14,6 +14,9 @@ import { InnerBuildingType } from "../../Const/BuildingDefine";
 import NotificationMgr from "../../Basic/NotificationMgr";
 import { NotificationName } from "../../Const/Notification";
 import { NetworkMgr } from "../../Net/NetworkMgr";
+import { WarOrderConfigData } from "../../Const/WarOrderDefine";
+import WarOrderConfig from "../../Config/WarOrderConfig";
+import { WarOrderItem } from "./WarOrderItem";
 const { ccclass, property } = _decorator;
 
 @ccclass("WarOrderUI")
@@ -33,14 +36,16 @@ export class WarOrderUI extends ViewController {
 
     @property(cc.Node)
     private rewardItem: Node = null;
+    private _orderList: WarOrderConfigData[] = [];
     protected viewDidLoad(): void {
         super.viewDidLoad();
-
+        this._orderList = WarOrderConfig.getAll();
         this._refreshUI();
     }
 
     protected viewDidStart(): void {
         super.viewDidStart();
+
     }
 
     protected viewPopAnimation(): boolean {
@@ -56,13 +61,15 @@ export class WarOrderUI extends ViewController {
     }
 
     private resetUI() {
-
         this._refreshUI();
     }
 
     private async _refreshUI() {
-        for (let i=0;i<5;i++){
-            this.rewardContent.addChild(instantiate(this.rewardItem));
+        this.rewardContent.removeAllChildren();
+        for (let i = 0; i < this._orderList.length; i++) {
+            const item = instantiate(this.rewardItem)
+            this.rewardContent.addChild(item);
+            item.getComponent(WarOrderItem).refreshUI(this._orderList[i]);
         }
     }
     private async onTapClose() {
@@ -73,7 +80,6 @@ export class WarOrderUI extends ViewController {
 
     private onTapClaim() {
         GameMusicPlayMgr.playTapButtonEffect();
-        UIPanelManger.inst.pushPanel(UIName.WarOrderTaskUI);
     }
 
     private onTapTask() {
