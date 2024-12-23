@@ -391,6 +391,10 @@ export class WebsocketMsg {
     public get_battle_pass(d: c2s_user.Iget_battle_pass) {
         this.send_packet("get_battle_pass", d);
     }
+
+    public get_battle_pass_res(d: c2s_user.Iget_battle_pass_res) {
+        this.send_packet("get_battle_pass_res", d);
+    }
 }
 
 export const WebsocketEvent = {
@@ -695,6 +699,7 @@ export namespace c2s_user {
     //--------------- battle pass
     export interface Iget_battle_pass_red_point {}
     export interface Iget_battle_pass {}
+    export interface Iget_battle_pass_res {}
 }
 
 export namespace s2c_user {

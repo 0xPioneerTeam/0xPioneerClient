@@ -15,3 +15,24 @@ export interface WarOrderTaskConfigData {
     value?: number;
     total?: number;
 }
+
+export interface BattlePass {
+    res: number;
+    endTime?: string;
+    exp?: number;
+    unLock?: boolean;
+    dailyTasks: BattlePassTask[];
+    weeklyTasks: BattlePassTask[];
+    seasonTasks: BattlePassTask[];
+    freeRewardIds?: string;
+    highRewardIds?: string;
+}
+
+export interface BattlePassTask {
+    id: string;
+    type: number;
+    value: number;
+    total: number;
+    finished: boolean;
+    exp: number;
+}

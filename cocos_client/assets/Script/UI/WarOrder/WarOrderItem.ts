@@ -16,12 +16,16 @@ export class WarOrderItem extends Component {
     start() {
 
     }
-    refreshUI(data:WarOrderConfigData) {
+    refreshUI(data:WarOrderConfigData,freeRewardIds:string="",highRewardIds:string="",unLock:boolean=false) {
         this.title.string = data.id;
         if(data.freererward){
             this.basicReward.active = true;
             this.basicReward.getComponent(UIOpacity).opacity = 255;
             this.basicReward.getComponent(BackpackItem).refreshUI(new ItemData(data.freererward[0],data.freererward[1]));
+            if(data.id<=parseInt(freeRewardIds)){
+                this.basicReward.getComponent(BackpackItem).grayColor();
+                this.basicReward.getChildByName("Get").active = true;
+            }
         }
         else{
             this.basicReward.active = true;
@@ -32,12 +36,18 @@ export class WarOrderItem extends Component {
             this.premiumReward.active = true;
             this.premiumReward.getComponent(UIOpacity).opacity = 255;
             this.premiumReward.getComponent(BackpackItem).refreshUI(new ItemData(data.highrward[0],data.highrward[1]));
-            this.premiumReward.getComponent(BackpackItem).grayColor();
+            if(data.id<=parseInt(highRewardIds)){
+                this.premiumReward.getComponent(BackpackItem).grayColor();
+                this.premiumReward.getChildByName("Get").active = true;
+            }
+            if(!unLock){
+                this.premiumReward.getComponent(BackpackItem).grayColor();
+            }
         }
         else{
             this.premiumReward.active = true;
             this.premiumReward.getComponent(UIOpacity).opacity = 0;
-            this.basicReward.getChildByName("Get").active = false;
+            this.premiumReward.getChildByName("Get").active = false;
         }
     }
 }
