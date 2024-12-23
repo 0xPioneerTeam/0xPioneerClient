@@ -87,6 +87,8 @@ export class WarOrderTaskUI extends ViewController {
     }
 
     private get_battle_pass_res(data: any) {
-        this._refreshUI(data);
+        if (data) {
+            this._refreshUI(data.data);
+        }
     }
 }
