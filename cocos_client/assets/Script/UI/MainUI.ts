@@ -37,6 +37,7 @@ export class MainUI extends ViewController {
     private _worldRankRedPointNum: number = 0;
 
     private _idleTaskRedPointNum: number = 0;
+    private _battlePassRedPointNum: number = 0;
 
     private _animView: Node = null;
 
@@ -93,7 +94,11 @@ export class MainUI extends ViewController {
         NetworkMgr.websocket.on("get_idle_task_red_point_res", this.get_idle_task_red_point_res);
         NetworkMgr.websocket.on("idle_task_red_point_change", this.idle_task_red_point_change);
 
+        NetworkMgr.websocket.on("get_battle_pass_red_point_res", this.get_battle_pass_red_point_res);
+        NetworkMgr.websocket.on("battle_pass_red_point_change", this.battle_pass_red_point_change);
+
         NetworkMgr.websocketMsg.get_idle_task_red_point({});
+        NetworkMgr.websocketMsg.get_battle_pass_red_point({});
     }
 
     protected async viewDidStart(): Promise<void> {
@@ -213,6 +218,11 @@ export class MainUI extends ViewController {
     private _refreshIdleTaskRedPoint() {
         const redPointView = this.node.getChildByPath("CommonContent/IdleTaskButton/RedPoint").getComponent(RedPointView);
         redPointView.refreshUI(this._idleTaskRedPointNum, false);
+    }
+    private _refreshBattlePassRedPoint() {
+        console.log("exce rep: " + this._battlePassRedPointNum);
+        const redPointView = this.node.getChildByPath("CommonContent/WarOrderButton/RedPoint").getComponent(RedPointView);
+        redPointView.refreshUI(this._battlePassRedPointNum, false);
     }
 
     // button
@@ -638,4 +648,18 @@ export class MainUI extends ViewController {
         this._idleTaskRedPointNum = p.num;
         this._refreshIdleTaskRedPoint();
     };
+
+    private get_battle_pass_red_point_res = (e: any) => {
+        const p: s2c_user.Iget_battle_pass_red_point_res = e.data;
+        if (p.res !== 1) {
+            return;
+        }
+        this._battlePassRedPointNum = p.num;
+        this._refreshBattlePassRedPoint();
+    }
+    private battle_pass_red_point_change = (e: any) => {
+        const p: s2c_user.Ibattle_pass_red_point_change = e.data;
+        this._battlePassRedPointNum = p.num;
+        this._refreshBattlePassRedPoint();
+    }
 }

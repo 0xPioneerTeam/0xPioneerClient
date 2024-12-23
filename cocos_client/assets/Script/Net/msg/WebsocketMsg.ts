@@ -383,6 +383,14 @@ export class WebsocketMsg {
     public get_idle_task_reward(d: c2s_user.Iget_idle_task_reward) {
         this.send_packet("get_idle_task_reward", d);
     }
+
+    //----------- battle pass
+    public get_battle_pass_red_point(d: c2s_user.Iget_battle_pass_red_point) {
+        this.send_packet("get_battle_pass_red_point", d);
+    }
+    public get_battle_pass(d: c2s_user.Iget_battle_pass) {
+        this.send_packet("get_battle_pass", d);
+    }
 }
 
 export const WebsocketEvent = {
@@ -683,6 +691,10 @@ export namespace c2s_user {
     export interface Iget_idle_task_reward {
         taskId: string;
     }
+
+    //--------------- battle pass
+    export interface Iget_battle_pass_red_point {}
+    export interface Iget_battle_pass {}
 }
 
 export namespace s2c_user {
@@ -1019,6 +1031,15 @@ export namespace s2c_user {
     }
     export interface Iidle_task_change {
         tasks: share.Iidle_task_data[];
+    }
+
+    //------------------ battle pass
+    export interface Iget_battle_pass_red_point_res {
+        res: number;
+        num: number;
+    }
+    export interface Ibattle_pass_red_point_change {
+        num: number;
     }
 }
 

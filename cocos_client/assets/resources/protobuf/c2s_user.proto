@@ -354,6 +354,15 @@ message get_idle_task_reward {
 }
 
 
+// ------- battle pass -------
+message get_battle_pass { }
+message get_battle_pass_red_point { }
+message get_battle_pass_reward {
+    required string rewardId = 1;
+    required bool isHigh = 2;
+}
+
+
 // ------ test ------
 message reborn_all { }
 message reset_data { }

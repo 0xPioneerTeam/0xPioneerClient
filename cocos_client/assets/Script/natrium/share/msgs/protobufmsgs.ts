@@ -122,16 +122,20 @@ export enum protobuf_c2s {
     player_psyc_transform_to_online = 1507,
     player_piot_transform_to_online = 1508,
 
-    // ------ idle task ------
+    // ------ rank ------
     get_rank = 1601,
     get_rank_red_point = 1602,
 
-    // ------ rank ------
+    // ------ idle task ------
     get_idle_task_list = 1701,
     get_idle_task_red_point = 1702,
     dispatch_pioneer_to_idle_task = 1703,
     get_idle_task_reward = 1704,
 
+    // ------ battle pass ------
+    get_battle_pass = 1801,
+    get_battle_pass_red_point = 1802,
+    get_battle_pass_reward = 1803,
 
     // ------ test ------
     reborn_all = 6600,
@@ -310,6 +314,13 @@ export enum protobuf_s2c {
     idle_task_red_point_change = 11804,
     dispatch_pioneer_to_idle_task_res = 11805,
     get_idle_task_reward_res = 11806,
+
+    // ------ battle pass ------
+    get_battle_pass_res = 11901,
+    get_battle_pass_red_point_res = 11902,
+    get_battle_pass_reward_res = 11903,
+    battle_pass_change = 11904,
+    battle_pass_red_point_change = 11905,
 
     // ------ test ------
     reborn_all_res = 60000,

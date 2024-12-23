@@ -589,6 +589,39 @@ message get_idle_task_reward_res {
     required int32 res = 1;
 }
 
+// ------- battle pass -------
+message get_battle_pass_res {
+    required int32 res = 1;
+    optional uint32 endTime = 2;
+    optional int32 exp = 3;
+    optional bool unLock = 4;
+    repeated share.battle_pass_task_data dailyTasks = 5;
+    repeated share.battle_pass_task_data weeklyTasks = 6;
+    repeated share.battle_pass_task_data seasonTasks = 7;
+    optional string freeRewardIds = 8;
+    optional string highRewardIds = 9;
+}
+message get_battle_pass_red_point_res {
+    required int32 res = 1;
+    optional uint32 num = 2;
+}
+message get_battle_pass_reward_res {
+    required int32 res = 1;
+}
+message battle_pass_change {
+    optional uint32 endTime = 2;
+    optional int32 exp = 3;
+    optional bool unLock = 4;
+    repeated share.battle_pass_task_data dailyTasks = 5;
+    repeated share.battle_pass_task_data weeklyTasks = 6;
+    repeated share.battle_pass_task_data seasonTasks = 7;
+    optional string freeRewardIds = 8;
+    optional string highRewardIds = 9;
+}
+message battle_pass_red_point_change {
+    required uint32 num = 1;
+}
+
 // ------ test ------
 message reborn_all_res {
     required int32 res = 1;

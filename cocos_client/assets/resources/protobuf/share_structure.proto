@@ -686,3 +686,13 @@ message idle_task {
     optional string workingPioneerUnqueId = 4;
 }
 
+// ------- battle pass -------
+message battle_pass_task_data {
+    required string id = 1;
+    required int32 type = 2;
+    required int32 value = 3;
+    required int32 total = 4;
+    required bool finished = 5;
+    required int32 exp = 6;
+}
+

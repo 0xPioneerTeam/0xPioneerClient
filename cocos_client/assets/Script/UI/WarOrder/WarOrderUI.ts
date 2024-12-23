@@ -13,31 +13,35 @@ const { ccclass, property } = _decorator;
 
 @ccclass("WarOrderUI")
 export class WarOrderUI extends ViewController {
-    @property(cc.Label)
+    @property(Label)
     private level: Label = null;
 
-    @property(cc.Label)
+    @property(Label)
     private time: Label = null;
-    @property(cc.Button)
+    @property(Button)
     private taskBtn: Button = null;
-    @property(cc.Button)
+    @property(Button)
     private claimBtn: Button = null;
 
-    @property(cc.Node)
+    @property(Node)
     private rewardContent: Node = null;
 
-    @property(cc.Node)
+    @property(Node)
     private rewardItem: Node = null;
     private _orderList: WarOrderConfigData[] = [];
     protected viewDidLoad(): void {
         super.viewDidLoad();
         this._orderList = WarOrderConfig.getAll();
+        
+        // NetworkMgr.websocket.on("get_battle_pass_res", this.get_battle_pass_res);
+        // NetworkMgr.websocket.on("battle_pass_change", this.battle_pass_change);
+        // NetworkMgr.websocketMsg.get_battle_pass({});
+
         this._refreshUI();
     }
 
     protected viewDidStart(): void {
         super.viewDidStart();
-
     }
 
     protected viewPopAnimation(): boolean {
@@ -63,7 +67,7 @@ export class WarOrderUI extends ViewController {
         this.node.getChildByPath("Content/TopView/ProgressBar").getComponent(ProgressBar).progress = 0.2;
         this.rewardContent.removeAllChildren();
         for (let i = 0; i < this._orderList.length; i++) {
-            const item = instantiate(this.rewardItem)
+            const item = instantiate(this.rewardItem);
             this.rewardContent.addChild(item);
             item.getComponent(WarOrderItem).refreshUI(this._orderList[i]);
         }
