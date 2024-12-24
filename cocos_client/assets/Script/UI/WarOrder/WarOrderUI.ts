@@ -71,13 +71,13 @@ export class WarOrderUI extends ViewController {
 
     private async _refreshUI(data: BattlePass = null) {
         //TODO: set level and lefttime and progress
+        let currentLevel: number = 0;
         if (data) {
             if (data?.endTime) {
                 this.time.string = this.formatTime(data.endTime);
             }
             if (data?.exp) {
                 let currentExp: number = data.exp;
-                let currentLevel: number = 0;
                 for (let i = 0; i < this._orderList.length; i++) {
                     if (currentExp > this._orderList[i].exp) {
                         currentExp -= this._orderList[i].exp;
@@ -86,7 +86,7 @@ export class WarOrderUI extends ViewController {
                         break;
                     }
                 }
-                this.level.string = (currentLevel + 1).toString();
+                this.level.string = (currentLevel).toString();
                 this.node.getChildByPath("Content/TopView/ProgressBar").getComponent(ProgressBar).progress = currentExp / this._orderList[currentLevel].exp;
             } else {
                 this.node.getChildByPath("Content/TopView/ProgressBar").getComponent(ProgressBar).progress = 0;
@@ -96,12 +96,13 @@ export class WarOrderUI extends ViewController {
             this.level.string = "0";
             this.node.getChildByPath("Content/TopView/ProgressBar").getComponent(ProgressBar).progress = 0;
         }
+        currentLevel +=1;
         this.rewardContent.removeAllChildren();
         //refresh warorder item
         for (let i = 0; i < this._orderList.length; i++) {
             const item = instantiate(this.rewardItem);
             this.rewardContent.addChild(item);
-            item.getComponent(WarOrderItem).refreshUI(this._orderList[i], data?.freeRewardIds, data?.highRewardIds, data?.unLock);
+            item.getComponent(WarOrderItem).refreshUI(this._orderList[i], data?.freeRewardIds, data?.highRewardIds, data?.unLock,currentLevel);
         }
     }
     private async onTapClose() {
@@ -113,6 +114,8 @@ export class WarOrderUI extends ViewController {
     private onTapClaim() {
         GameMusicPlayMgr.playTapButtonEffect();
         //TODO: claim reward
+        NetworkMgr.websocketMsg.get_battle_pass_reward({});
+        NetworkMgr.websocketMsg.get_battle_pass({});
     }
 
     private onTapTask() {

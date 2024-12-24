@@ -35,21 +35,15 @@ export class WarOrderTaskItem extends Component {
         this.desc.string = LanMgr.getLanById(data.description) || "No description";
         this.exp.string = data.exp[0];
         this.progress.string = `${data.value??0}/${data.total??0}`;
-        switch (data.finished??0) {
+        switch (data.finished??false) {
             //todo
-            case 0:
+            case false:
                 this.btn.node.active = true;
                 this.finished.node.active = false;
                 this.btn.getComponent(Sprite).spriteFrame = this.btn_disable;
                 break;
-            //finished
-            case 1:
-                this.btn.node.active = true;
-                this.finished.node.active = false;
-                this.btn.getComponent(Sprite).spriteFrame = this.btn_enable;
-                break;
             //rewarded
-            case 2:
+            case true:
                 this.btn.node.active = false;
                 this.finished.node.active = true;
                 this.btn.getComponent(Sprite).spriteFrame = this.btn_disable;

@@ -16,7 +16,7 @@ export class WarOrderItem extends Component {
     start() {
 
     }
-    refreshUI(data:WarOrderConfigData,freeRewardIds:string="",highRewardIds:string="",unLock:boolean=false) {
+    refreshUI(data:WarOrderConfigData,freeRewardIds:string="",highRewardIds:string="",unLock:boolean=false,level:number=1) {
         this.title.string = data.id;
         if(data.freererward){
             this.basicReward.active = true;
@@ -25,6 +25,12 @@ export class WarOrderItem extends Component {
             if(data.id<=parseInt(freeRewardIds)){
                 this.basicReward.getComponent(BackpackItem).grayColor();
                 this.basicReward.getChildByName("Get").active = true;
+            }
+            else{
+                this.basicReward.getChildByName("Get").active = false;
+            }
+            if(data.id>level){
+                this.basicReward.getComponent(BackpackItem).grayColor();
             }
         }
         else{
@@ -40,7 +46,13 @@ export class WarOrderItem extends Component {
                 this.premiumReward.getComponent(BackpackItem).grayColor();
                 this.premiumReward.getChildByName("Get").active = true;
             }
+            else{
+                this.premiumReward.getChildByName("Get").active = false;
+            }
             if(!unLock){
+                this.premiumReward.getComponent(BackpackItem).grayColor();
+            }
+            if(data.id>level){
                 this.premiumReward.getComponent(BackpackItem).grayColor();
             }
         }

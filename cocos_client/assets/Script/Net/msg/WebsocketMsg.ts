@@ -391,6 +391,10 @@ export class WebsocketMsg {
     public get_battle_pass(d: c2s_user.Iget_battle_pass) {
         this.send_packet("get_battle_pass", d);
     }
+
+    public get_battle_pass_reward(d: any) {
+        this.send_packet("get_battle_pass_reward", d);
+    }
 }
 
 export const WebsocketEvent = {
