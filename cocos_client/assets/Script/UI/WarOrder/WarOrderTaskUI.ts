@@ -21,10 +21,10 @@ const { ccclass, property } = _decorator;
 
 @ccclass("WarOrderTaskUI")
 export class WarOrderTaskUI extends ViewController {
-    @property(cc.Node)
+    @property(Node)
     private taskContent: Node = null;
 
-    @property(cc.Node)
+    @property(Node)
     private taskItem: Node = null;
 
     private _taskList: WarOrderTaskConfigData[] = [];
@@ -50,6 +50,8 @@ export class WarOrderTaskUI extends ViewController {
 
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
+
+        NetworkMgr.websocket.off("get_battle_pass_res", this.get_battle_pass_res);
     }
 
     private resetUI() {
@@ -86,9 +88,9 @@ export class WarOrderTaskUI extends ViewController {
         UIPanelManger.inst.popPanel(this.node);
     }
 
-    private get_battle_pass_res(data: any) {
+    private get_battle_pass_res = (data: any) => {
         if (data) {
             this._refreshUI(data.data);
         }
-    }
+    };
 }

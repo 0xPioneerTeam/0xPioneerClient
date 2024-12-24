@@ -55,6 +55,8 @@ export class WarOrderUI extends ViewController {
 
     protected viewDidDestroy(): void {
         super.viewDidDestroy();
+
+        NetworkMgr.websocket.off("get_battle_pass_res", this.get_battle_pass_res);
     }
 
     private resetUI() {
@@ -71,7 +73,7 @@ export class WarOrderUI extends ViewController {
         //TODO: set level and lefttime and progress
         if (data) {
             if (data?.endTime) {
-                this.time.string = formatTime(data.endTime);
+                this.time.string = this.formatTime(data.endTime);
             }
             if (data?.exp) {
                 let currentExp: number = data.exp;
@@ -118,7 +120,7 @@ export class WarOrderUI extends ViewController {
         UIPanelManger.inst.pushPanel(UIName.WarOrderTaskUI);
     }
 
-    private get_battle_pass_res(data: any) {
+    private get_battle_pass_res = (data: any) => {
         console.log("get_battle_pass_res", data);
         const p: BattlePass = data.data;
         this._refreshUI(p);

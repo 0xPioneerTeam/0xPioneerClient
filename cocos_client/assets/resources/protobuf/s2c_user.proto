@@ -598,8 +598,8 @@ message get_battle_pass_res {
     repeated share.battle_pass_task_data dailyTasks = 5;
     repeated share.battle_pass_task_data weeklyTasks = 6;
     repeated share.battle_pass_task_data seasonTasks = 7;
-    optional string freeRewardIds = 8;
-    optional string highRewardIds = 9;
+    repeated string freeRewardIds = 8;
+    repeated string highRewardIds = 9;
 }
 message get_battle_pass_red_point_res {
     required int32 res = 1;
@@ -615,8 +615,8 @@ message battle_pass_change {
     repeated share.battle_pass_task_data dailyTasks = 5;
     repeated share.battle_pass_task_data weeklyTasks = 6;
     repeated share.battle_pass_task_data seasonTasks = 7;
-    optional string freeRewardIds = 8;
-    optional string highRewardIds = 9;
+    repeated string freeRewardIds = 8;
+    repeated string highRewardIds = 9;
 }
 message battle_pass_red_point_change {
     required uint32 num = 1;
