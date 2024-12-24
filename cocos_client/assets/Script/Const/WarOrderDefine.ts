@@ -17,15 +17,15 @@ export interface WarOrderTaskConfigData {
 }
 
 export interface BattlePass {
-    res: number;
+    res?: number;
     endTime?: string;
     exp?: number;
     unLock?: boolean;
     dailyTasks: BattlePassTask[];
     weeklyTasks: BattlePassTask[];
     seasonTasks: BattlePassTask[];
-    freeRewardIds?: string;
-    highRewardIds?: string;
+    freeRewardMaxId?: string;
+    highRewardMaxId?: string;
 }
 
 export interface BattlePassTask {

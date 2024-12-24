@@ -53,7 +53,7 @@ export class BackpackItem extends Component {
         this.refreshUI(this._itemData, this._showRedPoint);
     }
 
-    private grayColor() {
+    public grayColor() {
         const propView = this.node.getChildByPath("Prop");
         for (let i = 1; i <= 5; i++) {
             propView.getChildByPath("Level" + i).getComponent(cc.Sprite).color = new cc.Color(63, 63, 63,255);

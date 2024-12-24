@@ -139,7 +139,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1920,
+      "width": 1920.0000000000002,
       "height": 1080
     },
     "_anchorPoint": {
@@ -6659,8 +6659,8 @@
       "__id__": 1
     },
     "component": "",
-    "_componentId": "bcf056cd2lNkIrrrRxtfb3M",
-    "handler": "onTapDevelop",
+    "_componentId": "e05f4xi1QpD4IR2JRkn9rgf",
+    "handler": "onTapClaim",
     "customEventData": ""
   },
   {
@@ -6834,7 +6834,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1920,
+      "width": 1920.0000000000002,
       "height": 1080
     },
     "_anchorPoint": {
@@ -6908,8 +6908,12 @@
     "claimBtn": {
       "__id__": 300
     },
-    "leftBtn": null,
-    "rightBtn": null,
+    "leftBtn": {
+      "__id__": 258
+    },
+    "rightBtn": {
+      "__id__": 258
+    },
     "rewardContent": {
       "__id__": 145
     },

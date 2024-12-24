@@ -392,7 +392,7 @@ export class WebsocketMsg {
         this.send_packet("get_battle_pass", d);
     }
 
-    public get_battle_pass_reward(d: any) {
+    public get_battle_pass_reward(d: c2s_user.Iget_battle_pass_reward) {
         this.send_packet("get_battle_pass_reward", d);
     }
 }
@@ -699,6 +699,7 @@ export namespace c2s_user {
     //--------------- battle pass
     export interface Iget_battle_pass_red_point {}
     export interface Iget_battle_pass {}
+    export interface Iget_battle_pass_reward {}
 }
 
 export namespace s2c_user {

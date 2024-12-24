@@ -31,19 +31,18 @@ export class WarOrderTaskItem extends Component {
         this.task_data = data;
         this.node.getChildByPath("type").getComponent(Sprite).spriteFrame = this.type_bg[data.type[0] - 1];
         this.type.string = this.type_name[data.type[0] - 1];
-        this.progress.string = data.progress;
         this.desc.string = LanMgr.getLanById(data.description) || "No description";
-        this.exp.string = data.exp[0];
-        this.progress.string = `${data.value??0}/${data.total??0}`;
-        switch (data.finished??false) {
+        this.exp.string = data.exp[0].toString();
+        this.progress.string = `${data.value ?? 0}/${data.total ?? 0}`;
+        switch (data.finished) {
             //todo
-            case false:
+            case 0:
                 this.btn.node.active = true;
                 this.finished.node.active = false;
                 this.btn.getComponent(Sprite).spriteFrame = this.btn_disable;
                 break;
             //rewarded
-            case true:
+            case 1:
                 this.btn.node.active = false;
                 this.finished.node.active = true;
                 this.btn.getComponent(Sprite).spriteFrame = this.btn_disable;

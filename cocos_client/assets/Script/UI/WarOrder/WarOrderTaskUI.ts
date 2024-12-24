@@ -67,7 +67,7 @@ export class WarOrderTaskUI extends ViewController {
                 const taskInfo = WarOrderTaskConfig.getById(task.id);
                 taskInfo.value = task.value;
                 taskInfo.total = task.total;
-                taskInfo.finished = task.finished;
+                taskInfo.finished = task.finished ? 1 : 0;
                 const taskItemInst = instantiate(this.taskItem);
                 this.taskContent.addChild(taskItemInst);
                 taskItemInst.getComponent(WarOrderTaskItem).refreshUI(taskInfo);
