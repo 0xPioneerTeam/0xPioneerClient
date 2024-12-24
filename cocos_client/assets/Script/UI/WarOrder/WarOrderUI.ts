@@ -95,7 +95,6 @@ export class WarOrderUI extends ViewController {
                         break;
                     }
                 }
-                this.level.string = (currentLevel).toString();
                 this.node.getChildByPath("Content/TopView/ProgressBar").getComponent(ProgressBar).progress = currentExp / this._orderList[currentLevel].exp;
             } else {
                 this.node.getChildByPath("Content/TopView/ProgressBar").getComponent(ProgressBar).progress = 0;
@@ -106,6 +105,7 @@ export class WarOrderUI extends ViewController {
             this.node.getChildByPath("Content/TopView/ProgressBar").getComponent(ProgressBar).progress = 0;
         }
         currentLevel +=1;
+        this.level.string = (currentLevel).toString();
         this.rewardContent.removeAllChildren();
         //refresh warorder item
         for (let i = 0; i < this._orderList.length; i++) {
