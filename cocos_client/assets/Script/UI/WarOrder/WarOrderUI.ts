@@ -24,6 +24,12 @@ export class WarOrderUI extends ViewController {
     @property(Button)
     private claimBtn: Button = null;
 
+    @property(Button)
+    private leftBtn: Button = null;
+
+    @property(Button)
+    private rightBtn: Button = null;
+
     @property(Node)
     private rewardContent: Node = null;
 
@@ -39,6 +45,9 @@ export class WarOrderUI extends ViewController {
         NetworkMgr.websocketMsg.get_battle_pass({});
 
         this._refreshUI();
+
+        this.leftBtn.node.on('click', this.onLeftBtnClick, this);
+        this.rightBtn.node.on('click', this.onRightBtnClick, this);
     }
 
     protected viewDidStart(): void {
@@ -127,5 +136,17 @@ export class WarOrderUI extends ViewController {
         console.log("get_battle_pass_res", data);
         const p: BattlePass = data.data;
         this._refreshUI(p);
+    }
+
+    private onLeftBtnClick(): void {
+        const scrollView = this.node.getChildByPath("Content/LeftView/Content/ScrollView").getComponent(cc.ScrollView);
+        const itemWidth = this.rewardItem.width;
+        scrollView.scrollToOffset(cc.v2(Math.abs(scrollView.getScrollOffset().x )- itemWidth, 0), 0.3);
+    }
+
+    private onRightBtnClick(): void {
+        const scrollView = this.node.getChildByPath("Content/LeftView/Content/ScrollView").getComponent(cc.ScrollView);
+        const itemWidth = this.rewardItem.width;
+        scrollView.scrollToOffset(cc.v2(Math.abs(scrollView.getScrollOffset().x )+ itemWidth, 0), 0.3);
     }
 }
