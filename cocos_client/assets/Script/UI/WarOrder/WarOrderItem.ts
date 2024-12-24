@@ -1,7 +1,7 @@
 import { _decorator, Component, Node, Label, Sprite, SpriteFrame, UIOpacity } from "cc";
 import { WarOrderConfigData } from "../../Const/WarOrderDefine";
 import { BackpackItem } from "../BackpackItem";
-import ItemData from "../../Const/item";
+import ItemData from "../../Model/ItemData";
 const { ccclass, property } = _decorator;
 
 @ccclass("WarOrderItem")

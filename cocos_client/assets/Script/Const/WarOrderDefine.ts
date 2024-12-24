@@ -18,7 +18,7 @@ export interface WarOrderTaskConfigData {
 
 export interface BattlePass {
     res?: number;
-    endTime?: string;
+    endTime?: number;
     exp?: number;
     unLock?: boolean;
     dailyTasks: BattlePassTask[];

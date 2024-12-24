@@ -10,6 +10,7 @@ import { WarOrderConfigData, BattlePass, BattlePassTask } from "../../Const/WarO
 import WarOrderConfig from "../../Config/WarOrderConfig";
 import { WarOrderItem } from "./WarOrderItem";
 import { s2c_user } from "../../Net/msg/WebsocketMsg";
+import CommonTools from "../../Tool/CommonTools";
 const { ccclass, property } = _decorator;
 
 @ccclass("WarOrderUI")
@@ -76,10 +77,8 @@ export class WarOrderUI extends ViewController {
         this._refreshUI();
     }
 
-    //format timestamp to Day:Hour,timestamp is string
-    private formatTime(timestamp: string) {
-        const date = new Date(parseInt(timestamp) * 1000);
-        return `${date.getDay()} Days ${date.getHours()} Hours`;
+    private formatTime(timestamp: number) {
+        return CommonTools.formatTimeLeft(timestamp - new Date().getTime() / 1000);
     }
 
     private async _refreshUI(data: BattlePass = null) {
