@@ -220,7 +220,6 @@ export class MainUI extends ViewController {
         redPointView.refreshUI(this._idleTaskRedPointNum, false);
     }
     private _refreshBattlePassRedPoint() {
-        console.log("exce rep: " + this._battlePassRedPointNum);
         const redPointView = this.node.getChildByPath("CommonContent/WarOrderButton/RedPoint").getComponent(RedPointView);
         redPointView.refreshUI(this._battlePassRedPointNum, false);
     }
@@ -247,6 +246,7 @@ export class MainUI extends ViewController {
         const taskTrackView = this.node.getChildByPath("CommonContent/TaskTrackingUI");
         const idleTaskButton = this.node.getChildByPath("CommonContent/IdleTaskButton");
         const illustrationButton = this.node.getChildByPath("CommonContent/NFTIllustrationButton");
+        const battlePassButton = this.node.getChildByPath("CommonContent/WarOrderButton");
 
         taskButton.active = false;
         backpackButton.active = false;
@@ -262,6 +262,7 @@ export class MainUI extends ViewController {
         idleTaskButton.active = false
         illustrationButton.active = false;
         innerBuildButton.active = false;
+        battlePassButton.active = false;
 
         rewardView.active = true;
         taskTrackView.active = false;
@@ -272,6 +273,7 @@ export class MainUI extends ViewController {
         if (rookieStep >= RookieStep.FINISH) {
             idleTaskButton.active = true;
             illustrationButton.active = true;
+            battlePassButton.active = true;
             taskButton.active = true;
             backpackButton.active = true;
             reinforceButton.active = true;
